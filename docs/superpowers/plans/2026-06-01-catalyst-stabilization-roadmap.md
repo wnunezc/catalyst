@@ -27,10 +27,11 @@
    - Evidencia en `docs/audits/source-operational-cleanup/`.
    - Plan detallado en `docs/superpowers/plans/2026-06-01-phase-2-source-operational-cleanup.md`.
 
-4. **Fortalecer checks automaticos** — Siguiente fase activa.
+4. **Fortalecer checks automaticos** — Finalizada.
    - Crear una puerta local estandar de calidad.
    - Reducir dependencia de memoria manual.
    - Documentar que checks bloquean cambios.
+   - Commit: `c301b05` (`add quality gate command`).
 
 5. **Auditar seguridad primero** — Completada por confirmacion explicita del usuario.
    - Secretos, `.env`, `secrets.json`, DKIM, uploads publicos.
@@ -38,7 +39,7 @@
    - Evidencia: `docs/audits/security-first/2026-06-01-security-first-audit.md`.
    - Hardening consolidado: `903019b` (`implement phase 5 security hardening`).
 
-6. **Auditar arquitectura** — Pendiente.
+6. **Auditar arquitectura** — Siguiente fase activa.
    - Core framework vs demo/app ejemplo.
    - Rutas sin duenio, clases duplicadas, controladores grandes.
    - Docs desalineadas y deuda DevTools.
