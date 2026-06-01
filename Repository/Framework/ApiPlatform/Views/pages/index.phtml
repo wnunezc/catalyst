@@ -1,0 +1,103 @@
+<div class="admin-surface admin-surface-shell apiplatform-admin-page">
+    {{> "components._admin-page-header" }}
+
+    {{#if has_created_token}}
+        <section class="card border-success shadow-sm mb-3">
+            <div class="card-body">
+                <div class="small text-uppercase fw-semibold text-success mb-2">{{ t:apiplatform.created_token.title }}</div>
+                <p class="mb-2">{{ t:apiplatform.created_token.description }}</p>
+                <pre class="apiplatform-token-secret mb-0">{{ created_token_plain_text }}</pre>
+            </div>
+        </section>
+    {{/if}}
+
+    <div class="row g-3 mb-3">
+        <div class="col-xl-5">
+            <section class="card border-0 shadow-sm h-100">
+                <div class="card-header">
+                    <h2 class="h5 mb-1">{{ t:apiplatform.form.card_title }}</h2>
+                    <p class="text-muted mb-0">{{ t:apiplatform.form.card_description }}</p>
+                </div>
+                <div class="card-body">
+                    {{> "components._admin-form-builder" }}
+                </div>
+            </section>
+        </div>
+        <div class="col-xl-7">
+            <section class="card border-0 shadow-sm h-100">
+                <div class="card-header">
+                    <h2 class="h5 mb-1">{{ t:apiplatform.catalog.title }}</h2>
+                    <p class="text-muted mb-0">{{ t:apiplatform.catalog.description }}</p>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-sm align-middle mb-0">
+                            <thead>
+                            <tr>
+                                <th>{{ t:apiplatform.catalog.columns.method }}</th>
+                                <th>{{ t:apiplatform.catalog.columns.path }}</th>
+                                <th>{{ t:apiplatform.catalog.columns.permission }}</th>
+                                <th>{{ t:apiplatform.catalog.columns.description }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{#each catalog_routes}}
+                                <tr>
+                                    <td><span class="badge text-bg-dark">{{ method }}</span></td>
+                                    <td><code>{{ path }}</code></td>
+                                    <td>{{ permission }}</td>
+                                    <td>{{ description }}</td>
+                                </tr>
+                            {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <section class="card border-0 shadow-sm">
+        <div class="card-header">
+            <h2 class="h5 mb-1">{{ t:apiplatform.tokens.title }}</h2>
+            <p class="text-muted mb-0">{{ t:apiplatform.tokens.description }}</p>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-sm align-middle mb-0">
+                    <thead>
+                    <tr>
+                        <th>{{ t:apiplatform.tokens.columns.name }}</th>
+                        <th>{{ t:apiplatform.tokens.columns.prefix }}</th>
+                        <th>{{ t:apiplatform.tokens.columns.user }}</th>
+                        <th>{{ t:apiplatform.tokens.columns.abilities }}</th>
+                        <th>{{ t:apiplatform.tokens.columns.expires }}</th>
+                        <th>{{ t:apiplatform.tokens.columns.last_used }}</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each tokens_rows}}
+                        <tr>
+                            <td>{{ name }}</td>
+                            <td><code>{{ token_prefix }}</code></td>
+                            <td>#{{ user_id }}</td>
+                            <td>{{ abilities_label }}</td>
+                            <td>{{ expires_label }}</td>
+                            <td>{{ last_used_label }}</td>
+                            <td class="text-end">
+                                <form data-catalyst="form" method="POST" action="{{ revoke_url }}" class="d-inline">
+                                    {{{ @root.csrfField }}}
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">{{ t:apiplatform.tokens.actions.revoke }}</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {{else}}
+                        <tr><td colspan="7" class="text-muted">{{ t:apiplatform.tokens.empty }}</td></tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>

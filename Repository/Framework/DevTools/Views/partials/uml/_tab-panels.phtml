@@ -1,0 +1,173 @@
+<div class="uml-tab-frame">
+    <div id="uml-tab-bootstrap" class="uml-tab-content active p-3" role="tabpanel" aria-labelledby="uml-tab-button-bootstrap" tabindex="0">
+        <h2 class="uml-section-title">{{ t:uml.bootstrap.title }}</h2>
+        <p class="text-muted small mb-3">{{ t:uml.bootstrap.description }}</p>
+        <div class="card uml-diagram-wrap">
+            <div class="mermaid">{{{ bootstrap_diagram_html }}}</div>
+        </div>
+    </div>
+
+    <div id="uml-tab-lifecycle" class="uml-tab-content p-3" role="tabpanel" aria-labelledby="uml-tab-button-lifecycle" tabindex="0" hidden>
+        <h2 class="uml-section-title">{{ t:uml.lifecycle.title }}</h2>
+        <p class="text-muted small mb-3">{{ t:uml.lifecycle.description }}</p>
+        <div class="card uml-diagram-wrap">
+            <div class="mermaid">{{{ lifecycle_diagram_html }}}</div>
+        </div>
+    </div>
+
+    <div id="uml-tab-constants" class="uml-tab-content p-3" role="tabpanel" aria-labelledby="uml-tab-button-constants" tabindex="0" hidden>
+        <h2 class="uml-section-title">{{ t:uml.constants.title }}</h2>
+        <p class="text-muted small mb-3">{{ t:uml.constants.description }}</p>
+
+        <h6 class="uml-section-title mt-2">
+            <code>boot-core/constant/sys-constant.php</code>
+            <span class="badge text-bg-secondary ms-2">{{ t:uml.constants.sys.badge }}</span>
+        </h6>
+        <div class="table-responsive mb-4">
+            <table class="table table-sm table-bordered small align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="uml-col-18">{{ t:uml.constants.columns.constant }}</th>
+                        <th class="uml-col-15">{{ t:uml.constants.columns.type }}</th>
+                        <th>{{ t:uml.constants.columns.description }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each constants_sys_rows}}
+                    <tr>
+                        <td><code>{{ this.name }}</code></td>
+                        <td>{{ this.type }}</td>
+                        <td>{{ this.description }}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+
+        <h6 class="uml-section-title mt-2">
+            <code>boot-core/constant/env-constant.php</code>
+            <span class="badge text-bg-success ms-2">{{ t:uml.constants.env.badge }}</span>
+        </h6>
+        <p class="text-muted small mb-2">{{ t:uml.constants.env.description }}</p>
+        <div class="table-responsive mb-4">
+            <table class="table table-sm table-bordered small align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="uml-col-22">{{ t:uml.constants.columns.constant }}</th>
+                        <th class="uml-col-12">{{ t:uml.constants.columns.type }}</th>
+                        <th>{{ t:uml.constants.env.key_description }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each constants_env_rows}}
+                    <tr>
+                        <td><code>{{ this.name }}</code></td>
+                        <td>{{ this.type }}</td>
+                        <td>{{ this.description }}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="uml-tab-config" class="uml-tab-content p-3" role="tabpanel" aria-labelledby="uml-tab-button-config" tabindex="0" hidden>
+        <h2 class="uml-section-title">{{ t:uml.config.title }}</h2>
+        <p class="text-muted small mb-3">{{ t:uml.config.description }}</p>
+        <div class="card uml-diagram-wrap">
+            <div class="mermaid">{{{ config_diagram_html }}}</div>
+        </div>
+
+        <h6 class="uml-section-title mt-4">{{ t:uml.config.quick_reference_title }}</h6>
+        <div class="table-responsive mb-2">
+            <table class="table table-sm table-bordered small align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="uml-col-15">{{ t:uml.config.columns.section_key }}</th>
+                        <th class="uml-col-30">{{ t:uml.config.columns.json_file }}</th>
+                        <th>{{ t:uml.config.columns.primary_consumers }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each config_rows}}
+                    <tr>
+                        <td><code>{{ this.key }}</code></td>
+                        <td><code>{{ this.file }}</code></td>
+                        <td>{{ this.description }}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+        <p class="text-muted small">{{ t:uml.config.priority_note }}</p>
+    </div>
+
+    <div id="uml-tab-middleware" class="uml-tab-content p-3" role="tabpanel" aria-labelledby="uml-tab-button-middleware" tabindex="0" hidden>
+        <h2 class="uml-section-title">{{ t:uml.middleware.title }}</h2>
+        <p class="text-muted small mb-3">{{ t:uml.middleware.description }}</p>
+        <div class="card uml-diagram-wrap">
+            <div class="mermaid">{{{ middleware_diagram_html }}}</div>
+        </div>
+
+        <h6 class="uml-section-title mt-4">{{ t:uml.middleware.reference_title }}</h6>
+        <div class="table-responsive mb-2">
+            <table class="table table-sm table-bordered small align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="uml-col-30">{{ t:uml.middleware.columns.class }}</th>
+                        <th class="uml-col-12">{{ t:uml.middleware.columns.layer }}</th>
+                        <th>{{ t:uml.middleware.columns.behaviour }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each middleware_rows}}
+                    <tr>
+                        <td><code>{{ this.class_name }}</code></td>
+                        <td>{{ this.layer }}</td>
+                        <td>{{ this.behaviour }}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="uml-tab-layers" class="uml-tab-content p-3" role="tabpanel" aria-labelledby="uml-tab-button-layers" tabindex="0" hidden>
+        <h2 class="uml-section-title">{{ t:uml.layers.title }}</h2>
+        <p class="text-muted small mb-3">{{ t:uml.layers.description }}</p>
+        <div class="card uml-diagram-wrap uml-diagram-wrap--layer-map">
+            <div class="mermaid">{{{ layers_diagram_html }}}</div>
+        </div>
+
+        <h6 class="uml-section-title mt-4">{{ t:uml.layers.inventory_title }}</h6>
+        <div class="row g-3 mb-3">
+            {{#each layer_cards}}
+            <div class="col-12 col-xl-6">
+                <div class="card uml-layer-card h-100">
+                    <div class="card-body">
+                        <h3 class="uml-layer-card-title">{{ this.title }}</h3>
+                        <p class="text-muted small mb-3">{{ this.description }}</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            {{#each this.badges}}
+                            <span class="uml-layer-badge">{{ this }}</span>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+
+        <h6 class="uml-section-title mt-4">{{ layers_loaded_sections_heading }}</h6>
+        {{#if json_sections}}
+        <p class="text-muted small mb-2">{{ layers_loaded_sections_path_description }}</p>
+        <div class="d-flex flex-wrap gap-2 mb-3">
+            {{#each json_sections}}
+            <span class="badge badge-json">{{ this }}</span>
+            {{/each}}
+        </div>
+        {{else}}
+        <p class="text-muted small mt-3"><em>{{ layers_loaded_sections_empty }}</em></p>
+        {{/if}}
+    </div>
+</div>

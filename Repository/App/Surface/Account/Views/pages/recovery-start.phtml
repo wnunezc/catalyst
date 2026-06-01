@@ -1,0 +1,29 @@
+<main class="account-guest-gateway account-recovery-public" data-account-recovery="start">
+    <section class="account-guest-gateway__card account-guest-gateway__card--wide">
+        <span class="account-eyebrow">{{ t:account.recovery_public.eyebrow }}</span>
+        <h1>{{ t:account.recovery_public.start_title }}</h1>
+        <p>{{ t:account.recovery_public.start_lead }}</p>
+        <div class="account-recovery-options">
+            <a href="/forgot-password" class="account-recovery-options__item">
+                <i class="ti ti-key"></i>
+                <strong>{{ t:account.recovery_public.forgot_password }}</strong>
+                <span>{{ t:account.recovery_public.forgot_password_hint }}</span>
+            </a>
+            <a href="/account-recovery/mfa" class="account-recovery-options__item">
+                <i class="ti ti-2fa"></i>
+                <strong>{{ t:account.recovery_public.lost_mfa }}</strong>
+                <span>{{ t:account.recovery_public.lost_mfa_hint }}</span>
+            </a>
+            <a href="/account-recovery/support" class="account-recovery-options__item">
+                <i class="ti ti-mail-x"></i>
+                <strong>{{ t:account.recovery_public.lost_email }}</strong>
+                <span>{{ t:account.recovery_public.lost_email_hint }}</span>
+            </a>
+            <a href="/account-recovery/compromised" class="account-recovery-options__item">
+                <i class="ti ti-alert-triangle"></i>
+                <strong>{{ t:account.recovery_public.compromised }}</strong>
+                <span>{{ t:account.recovery_public.compromised_hint }}</span>
+            </a>
+        </div>
+    </section>
+</main>

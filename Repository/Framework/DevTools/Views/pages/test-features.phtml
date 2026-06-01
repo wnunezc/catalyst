@@ -1,0 +1,32 @@
+<div class="ui-showcase tf-admin-page">
+    {{> "../partials/_tf-header" }}
+
+    <div class="alert alert-info border-0 shadow-sm">
+        <strong>{{ t:devtools.harness.boundary_title }}:</strong>
+        {{ t:devtools.harness.boundary_prefix }}
+        <a href="{{ operations_url }}" class="alert-link">/operations</a>.
+        {{ t:devtools.harness.boundary_suffix }}
+    </div>
+
+    <div class="container-fluid px-0">
+        <div class="row g-3">
+            {{> "../partials/_tf-flash" }}
+            {{> "../partials/_tf-toasters" }}
+            {{> "../partials/_tf-modals" }}
+            {{> "../partials/_tf-js-enhancements" }}
+            {{> "../partials/_tf-form-events" }}
+            {{> "../partials/_tf-json-inspection" }}
+            {{> "../partials/_tf-database" }}
+            {{> "../partials/_tf-infrastructure" }}
+            {{> "../partials/_tf-system-info" }}
+            {{> "../partials/_tf-i18n" }}
+            {{> "../partials/_tf-validator" }}
+            {{> "../partials/_tf-file-upload" }}
+            {{> "../partials/_tf-mail" }}
+            {{> "../partials/_tf-auth" }}
+            {{> "../partials/_tf-rbac" }}
+            {{> "../partials/_tf-orm" }}
+            {{> "../partials/_tf-endpoints" }}
+        </div>
+    </div>
+</div>

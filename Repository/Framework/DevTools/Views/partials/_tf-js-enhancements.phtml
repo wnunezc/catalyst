@@ -1,0 +1,22 @@
+<div class="col-12 col-lg-6">
+    <div class="section-card">
+        <div class="card-header"><i class="fa-solid fa-bolt me-2"></i>{{ t:devtools.js_enhancements.title }}</div>
+        <div class="card-body">
+            <p class="text-muted small mb-2">{{ t:devtools.js_enhancements.description }}</p>
+            <div class="btn-group-wrap mb-3">
+                <button
+                    class="btn btn-dark btn-sm"
+                    data-action="partial-refresh"
+                    data-url="/test-features/api/js-enhancements/partial-refresh"
+                    data-wait-message="{{ t:devtools.js_enhancements.wait_message }}"
+                >
+                    {{ t:devtools.js_enhancements.run_partial_refresh }}
+                </button>
+            </div>
+            <div id="js-enhancements-target" class="border rounded p-3 bg-body-tertiary">
+                <div class="fw-semibold">{{ t:devtools.js_enhancements.initial_block }}</div>
+                <p class="text-muted small mb-0">{{ t:devtools.js_enhancements.pending_verification }}</p>
+            </div>
+        </div>
+    </div>
+</div>

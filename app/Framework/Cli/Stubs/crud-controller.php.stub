@@ -1,0 +1,453 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\{{Module}}\Controllers;
+
+use App\{{Module}}\Requests\{{RequestClass}};
+use Catalyst\Entities\{{Entity}};
+use Catalyst\Framework\Admin\Form\FormBuilder;
+use Catalyst\Framework\Admin\Grid\DataGrid;
+use Catalyst\Framework\Controllers\Controller;
+use Catalyst\Framework\Http\Request;
+use Catalyst\Framework\Http\Response;
+use Catalyst\Framework\Http\UploadedFile;
+use Catalyst\Helpers\Exceptions\OptimisticLockException;
+
+final class {{ControllerClass}} extends Controller
+{
+    private const string BASE_URL = '/{{RouteUri}}';
+    private const string TITLE = '{{PluralTitle}}';
+    private const string SINGULAR = '{{SingularTitle}}';
+    private const string SEARCH_FIELD = '{{SearchField}}';
+    private const string DEFAULT_SORT = '{{DefaultSort}}';
+    private const bool SOFT_DELETES = {{SoftDeletes}};
+
+    /**
+     * @var string[]
+     */
+    private const array UPLOAD_FIELDS = {{UploadFields}};
+
+    public function index(Request $request): Response
+    {
+        $this->authorizeResource('view-any', '{{ResourceKey}}');
+
+        $gridBuilder = DataGrid::make()
+            ->baseUrl(self::BASE_URL)
+            ->title(self::TITLE . ' Listing', 'Generated administrative catalog powered by the framework datagrid.')
+            ->emptyState(
+                'No records found',
+                'Create the first record to activate this administrative surface.',
+                [
+                    'label' => '{{CreateLabel}}',
+                    'href' => self::BASE_URL . '/create',
+                    'class' => 'btn btn-primary btn-sm',
+                    'icon' => 'fa-solid fa-plus',
+                ]
+            )
+            ->columns({{GridColumns}})
+            ->filters({{GridFilters}})
+            ->actions($this->rowActions())
+            ->bulkActions($this->bulkActions())
+            ->exportFormats([
+                'csv' => [
+                    'label' => 'Export CSV',
+                    'icon' => 'fa-solid fa-file-csv',
+                ],
+            ], '{{RouteUri}}-catalog')
+            ->defaultSort(self::DEFAULT_SORT)
+            ->pagination(10, [10, 25, 50])
+            ->searchPlaceholder('Search by ' . strtolower(self::SEARCH_FIELD))
+            ->provider(fn (array $state): array => $this->queryGrid($state));
+
+        if ($gridBuilder->exportFormat($request) === 'csv') {
+            return $gridBuilder->exportCsv($request);
+        }
+
+        $grid = $gridBuilder->resolve($request);
+
+        return $this->view('{{ViewNamespace}}.index', [
+            'title' => self::TITLE,
+            'pageTitle' => self::TITLE,
+            'grid' => $grid,
+        ], 200, 'admin');
+    }
+
+    public function create(Request $request): Response
+    {
+        $this->authorizeResource('create', '{{ResourceKey}}');
+
+        return $this->renderForm('Create ' . self::SINGULAR, null);
+    }
+
+    public function store({{RequestClass}} $request): Response
+    {
+        $this->authorizeResource('create', '{{ResourceKey}}');
+        {{Entity}}::create($this->normalizePayload($request->validated()));
+        $this->toast('success', self::SINGULAR . ' created successfully.');
+
+        return $this->redirect(self::BASE_URL);
+    }
+
+    public function edit(Request $request, string $id): Response
+    {
+        $record = $this->findRecord((int) $id);
+
+        if ($record === null) {
+            $this->flash()->error(self::SINGULAR . ' not found.');
+
+            return $this->redirect(self::BASE_URL);
+        }
+
+        $this->authorizeResource('view', '{{ResourceKey}}', $record->toArray());
+
+        return $this->renderForm('Edit ' . self::SINGULAR, $record->toArray());
+    }
+
+    public function update({{RequestClass}} $request, string $id): Response
+    {
+        $record = $this->findRecord((int) $id);
+
+        if ($record === null) {
+            $this->flash()->error(self::SINGULAR . ' not found.');
+
+            return $this->redirect(self::BASE_URL);
+        }
+
+        $this->authorizeResource('update', '{{ResourceKey}}', $record->toArray());
+
+        try {
+            $record->fill($this->normalizePayload($request->validated(), $record));
+            $record->save();
+        } catch (OptimisticLockException $e) {
+            $this->rememberValidationState(
+                $request->all(),
+                ['lock_version' => [$e->getMessage()]]
+            );
+            $this->flash()->error($e->getMessage());
+
+            return $this->redirect(self::BASE_URL . '/' . (int) $id . '/edit');
+        }
+
+        $this->toast('success', self::SINGULAR . ' updated successfully.');
+
+        return $this->redirect(self::BASE_URL);
+    }
+
+    public function destroy(Request $request, string $id): Response
+    {
+        $record = $this->findRecord((int) $id);
+
+        if ($record === null) {
+            $this->flash()->error(self::SINGULAR . ' not found.');
+
+            return $this->redirect(self::BASE_URL);
+        }
+
+        $this->authorizeResource('delete', '{{ResourceKey}}', $record->toArray());
+
+        if (self::SOFT_DELETES && method_exists($record, 'trashed') && $record->trashed()) {
+            $record->forceDelete();
+            $this->toast('success', self::SINGULAR . ' permanently deleted.');
+        } else {
+            $record->delete();
+            $this->toast('success', self::SINGULAR . (self::SOFT_DELETES ? ' archived successfully.' : ' deleted successfully.'));
+        }
+
+        return $this->redirect(self::BASE_URL);
+    }
+
+    public function bulkDestroy(Request $request): Response
+    {
+        $this->authorizeResource('bulk-delete', '{{ResourceKey}}');
+        $records = $this->selectedRecords($request);
+
+        if ($records === []) {
+            $this->flash()->error('Select at least one record.');
+
+            return $this->redirect(self::BASE_URL);
+        }
+
+        foreach ($records as $record) {
+            if (self::SOFT_DELETES && method_exists($record, 'trashed') && $record->trashed()) {
+                $record->forceDelete();
+                continue;
+            }
+
+            $record->delete();
+        }
+
+        $this->toast('success', count($records) . ' record(s) processed.');
+
+        return $this->redirect(self::BASE_URL);
+    }
+
+    public function restore(Request $request, string $id): Response
+    {
+        if (!self::SOFT_DELETES) {
+            return $this->redirect(self::BASE_URL);
+        }
+
+        $record = $this->findRecord((int) $id);
+
+        if ($record === null || !method_exists($record, 'restore')) {
+            $this->flash()->error(self::SINGULAR . ' not found.');
+
+            return $this->redirect(self::BASE_URL);
+        }
+
+        $this->authorizeResource('restore', '{{ResourceKey}}', $record->toArray());
+
+        $record->restore();
+        $this->toast('success', self::SINGULAR . ' restored successfully.');
+
+        return $this->redirect(self::BASE_URL);
+    }
+
+    public function bulkRestore(Request $request): Response
+    {
+        if (!self::SOFT_DELETES) {
+            return $this->redirect(self::BASE_URL);
+        }
+
+        $this->authorizeResource('bulk-restore', '{{ResourceKey}}');
+
+        $records = $this->selectedRecords($request);
+
+        if ($records === []) {
+            $this->flash()->error('Select at least one deleted record.');
+
+            return $this->redirect(self::BASE_URL);
+        }
+
+        foreach ($records as $record) {
+            if (method_exists($record, 'restore')) {
+                $record->restore();
+            }
+        }
+
+        $this->toast('success', count($records) . ' record(s) restored.');
+
+        return $this->redirect(self::BASE_URL);
+    }
+
+    /**
+     * @param array<string, mixed> $state
+     * @return array{rows: array<int, array<string, mixed>>, total: int}
+     */
+    private function queryGrid(array $state): array
+    {
+        $query = {{Entity}}::query();
+        $search = trim((string) ($state['search'] ?? ''));
+
+        if ($search !== '') {
+            $query->where(self::SEARCH_FIELD, 'LIKE', '%' . $search . '%');
+        }
+
+        foreach ({{FilterFields}} as $field) {
+            $value = trim((string) ($state['filters'][$field] ?? ''));
+
+            if ($value !== '') {
+                $query->where($field, 'LIKE', '%' . $value . '%');
+            }
+        }
+
+        if (self::SOFT_DELETES) {
+            $trashed = (string) ($state['filters']['trashed'] ?? '');
+            if ($trashed === 'with') {
+                $query->withTrashed();
+            } elseif ($trashed === 'only') {
+                $query->onlyTrashed();
+            }
+        }
+
+        $perPage = !empty($state['export']) ? 5000 : (int) ($state['per_page'] ?? 10);
+        $page = !empty($state['export']) ? 1 : (int) ($state['page'] ?? 1);
+
+        $pagination = $query
+            ->orderBy((string) ($state['sort'] ?? self::DEFAULT_SORT), (string) ($state['direction'] ?? 'asc'))
+            ->paginate($perPage, $page);
+
+        $rows = array_map(
+            static fn ({{Entity}} $record): array => $record->toArray(),
+            $pagination->items->all()
+        );
+
+        return [
+            'rows' => $rows,
+            'total' => $pagination->total,
+        ];
+    }
+
+    /**
+     * @param array<string, mixed>|null $record
+     */
+    private function renderForm(string $title, ?array $record): Response
+    {
+        $action = $record === null
+            ? self::BASE_URL
+            : self::BASE_URL . '/' . (int) ($record['id'] ?? 0);
+
+        $form = FormBuilder::make()
+            ->action($action)
+            ->method('POST')
+            ->model($record)
+            ->sections({{FormSections}})
+            ->autosave()
+            ->fields({{FormFields}})
+            ->actions([
+                [
+                    'type' => 'submit',
+                    'label' => $record === null ? 'Create record' : 'Save changes',
+                    'class' => 'btn btn-primary',
+                ],
+                [
+                    'type' => 'link',
+                    'label' => 'Cancel',
+                    'href' => self::BASE_URL,
+                    'class' => 'btn btn-outline-secondary',
+                ],
+            ])
+            ->toArray();
+
+        return $this->view('{{ViewNamespace}}.form', [
+            'title' => $title,
+            'pageTitle' => $title,
+            'form' => $form,
+        ], 200, 'admin');
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    private function rowActions(): array
+    {
+        $actions = [
+            [
+                'label' => 'Edit',
+                'class' => 'btn btn-outline-primary btn-sm',
+                'href' => self::BASE_URL . '/{id}/edit',
+            ],
+        ];
+
+        if (self::SOFT_DELETES) {
+            $actions[] = [
+                'label' => 'Restore',
+                'class' => 'btn btn-outline-success btn-sm',
+                'method' => 'POST',
+                'href' => self::BASE_URL . '/{id}/restore',
+                'visible' => static fn (array $row): bool => !empty($row['deleted_at']),
+            ];
+            $actions[] = [
+                'label' => 'Delete',
+                'class' => 'btn btn-outline-danger btn-sm',
+                'method' => 'POST',
+                'href' => self::BASE_URL . '/{id}/delete',
+                'confirm' => static fn (array $row): string => empty($row['deleted_at'])
+                    ? 'Move this record to deleted items?'
+                    : 'Permanently delete this record?',
+            ];
+
+            return $actions;
+        }
+
+        $actions[] = [
+            'label' => 'Delete',
+            'class' => 'btn btn-outline-danger btn-sm',
+            'method' => 'POST',
+            'href' => self::BASE_URL . '/{id}/delete',
+            'confirm' => 'Delete this record?',
+        ];
+
+        return $actions;
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    private function bulkActions(): array
+    {
+        $actions = [[
+            'label' => self::SOFT_DELETES ? 'Delete / purge selected' : 'Delete selected',
+            'class' => 'btn btn-outline-danger btn-sm',
+            'method' => 'POST',
+            'href' => self::BASE_URL . '/bulk-delete',
+            'icon' => 'fa-solid fa-trash',
+            'confirm' => self::SOFT_DELETES
+                ? 'Delete the selected records? Already deleted rows will be permanently removed.'
+                : 'Delete the selected records?',
+        ]];
+
+        if (self::SOFT_DELETES) {
+            $actions[] = [
+                'label' => 'Restore selected',
+                'class' => 'btn btn-outline-success btn-sm',
+                'method' => 'POST',
+                'href' => self::BASE_URL . '/bulk-restore',
+                'icon' => 'fa-solid fa-rotate-left',
+                'confirm' => 'Restore the selected records?',
+            ];
+        }
+
+        return $actions;
+    }
+
+    private function findRecord(int $id): ?{{Entity}}
+    {
+        return self::SOFT_DELETES
+            ? {{Entity}}::query()->withTrashed()->find($id)
+            : {{Entity}}::find($id);
+    }
+
+    /**
+     * @return array<int, {{Entity}}>
+     */
+    private function selectedRecords(Request $request): array
+    {
+        $ids = array_values(array_filter(
+            array_map('intval', (array) ($request->input('selected') ?? [])),
+            static fn (int $id): bool => $id > 0
+        ));
+
+        if ($ids === []) {
+            return [];
+        }
+
+        $records = [];
+
+        foreach ($ids as $id) {
+            $record = $this->findRecord($id);
+            if ($record !== null) {
+                $records[] = $record;
+            }
+        }
+
+        return $records;
+    }
+
+    /**
+     * @param array<string, mixed> $payload
+     */
+    private function normalizePayload(array $payload, ?{{Entity}} $record = null): array
+    {
+        foreach (self::UPLOAD_FIELDS as $field) {
+            $value = $payload[$field] ?? null;
+
+            if ($value instanceof UploadedFile) {
+                $payload[$field] = $value->store('{{RouteUri}}');
+                continue;
+            }
+
+            if ($record !== null && ($value === null || $value === '')) {
+                $payload[$field] = $record->toArray()[$field] ?? null;
+                continue;
+            }
+
+            if ($value === null || $value === '') {
+                unset($payload[$field]);
+            }
+        }
+
+        return $payload;
+    }
+}

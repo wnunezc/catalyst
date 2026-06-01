@@ -1,0 +1,1 @@
+console.debug('Catalyst module "{{moduleSlug}}" loaded');

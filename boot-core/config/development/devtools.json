@@ -1,0 +1,7 @@
+{
+    "devtools": {
+        "deprecated": true,
+        "app_debug": true,
+        "display_logs": true
+    }
+}

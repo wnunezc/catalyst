@@ -1,0 +1,221 @@
+{
+  "title": "UML / Architecture",
+  "page_title": "UML / Architecture",
+  "eyebrow": "Runtime architecture",
+  "description": "Technical reference for bootstrap, lifecycle, configuration, middleware and layer boundaries in the live framework.",
+  "configured_yes": "Configured",
+  "configured_no": "Setup pending",
+  "chips": {
+    "environment": "Environment: %s",
+    "configured": "Status: %s",
+    "loaded_sections": "Loaded sections: %s"
+  },
+  "shell": {
+    "title": "Architecture Reference",
+    "description": "Browse the canonical runtime model without leaving the current admin shell.",
+    "kicker": "UML",
+    "aria_label": "UML architecture sections"
+  },
+  "tabs": {
+    "bootstrap": "Bootstrap",
+    "lifecycle": "Lifecycle",
+    "constants": "Constants",
+    "config": "Config",
+    "middleware": "Middleware",
+    "layers": "Layers"
+  },
+  "rail": {
+    "scope_title": "Coverage",
+    "scope_description": "Primary areas documented in this diagnostic surface.",
+    "scope_items": {
+      "bootstrap": "Bootstrap chain",
+      "lifecycle": "Request lifecycle",
+      "config": "Configuration flow",
+      "middleware": "Middleware stack",
+      "layers": "Layer map"
+    },
+    "notes_title": "Notes",
+    "notes_description": "Intent and reading rules for this page.",
+    "notes_items": {
+      "runtime_truth": "These diagrams describe the real runtime, not an aspirational architecture.",
+      "web_stack": "Focus stays on the traditional PHP web stack used by Catalyst.",
+      "mermaid": "Mermaid is used as a readable reference, backed by the current implementation."
+    },
+    "loaded_sections_title": "Loaded Config Sections",
+    "loaded_sections_description": "JSON sections resolved for the current request.",
+    "loaded_sections_empty": "No JSON config sections loaded yet."
+  },
+  "loaded_sections": {
+    "path_description": "Sections currently loaded from boot-core/config/%s/*.json."
+  },
+  "bootstrap": {
+    "title": "Bootstrap Chain - Server to Kernel",
+    "description": "Every web request passes through this chain before application code runs. The server auto-prepends error-catcher.php, which loads bootstrap constants, resolves .env, mirrors ConfigManager into global state and installs PHP error handlers before index.php executes.",
+    "diagram": "flowchart TD\n    subgraph SRV [\"Server Layer\"]\n        APACHE([\"Apache / PHP-FPM\"])\n        HT[\".htaccess\\nphp_value auto_prepend_file\\n-> boot-core/requirement-loader/error-catcher.php\\n\\nAlso: HTTPS redirect · mod_rewrite\\nSecurity headers · index.php fallback\"]\n        UI[\".user.ini\\nauto_prepend_file - non-Apache fallback\\n(commented by default - enable manually)\"]\n        APACHE --> HT\n        HT -. \"non-Apache hosts\" .-> UI\n    end\n\n    HT --> EC\n\n    subgraph BOOT [\"Boot Chain - error-catcher.php\"]\n        EC[\"error-catcher.php\\nGuard: INITIALIZED_BUG_CATCHER\\nPrevents double initialization\"]\n        EC --> SC[\"sys-constant.php\\nPHP 8.4 version check\\nDS · PD · IS_CLI · IS_REQUEST\\nTW · NL · LOG_DIR\\nGuard: LOADED_SYS_CONSTANT\"]\n        SC --> SPL[\"spl-autoload.php\\nPSR-4 class map registration\\n(pre-Composer bootstrap only)\"]\n        SPL --> EVC[\"env-constant.php\\nReads: boot-core/config/env/.env\\nThrows EnvironmentException if missing\\nCopies .env.example -> .env if found\\nENV · IS_DEVELOPMENT/STAGING/TESTING/PRODUCTION\\nGET_ENV_VAR · DB_* · ROUTE_CACHE\\nIS_CONFIGURED · DISPLAY_LOGS\\nGuard: LOADED_ENV_CONSTANT\"]\n        EVC --> CFG[\"ConfigManager bootstrap\\nConfigManager::getInstance()\\n$GLOBALS['APP_CONFIGURATION']\"]\n        CFG --> ECL[\"ErrorCatcher.php\\nset_error_handler()\\nset_exception_handler()\\nregister_shutdown_function()\\nCaptures fatal errors · dev dump · prod log\"]\n    end\n\n    ECL --> IDX\n\n    subgraph ENTRY [\"Entry Point - public/index.php\"]\n        IDX[\"index.php\\nChecks IS_CLI -> exit(1) if CLI\\nrequire_once vendor/autoload.php\\n-> Composer PSR-4 autoloader\\n-> dump-function.php (global helpers: e(), ms(), mi()...)\"]\n        IDX --> KRN[\"Kernel::getInstance()\\n  ->bootstrap()\\n  ->run()\"]\n    end\n\n    KRN --> KBS\n\n    subgraph KBS [\"Kernel::bootstrap()\"]\n        B1[\"applyRuntimeConfiguration()\\napp.json -> debug/timezone\\nlogging.json -> Logger config\"]\n        B1 --> B2[\"SessionManager::init()\\nsession.json > .env fallback\\nStrict mode · configurable domain\\ngc_maxlifetime alignment\"]\n        B2 --> B3[\"Translator::init(app.project.project_lang, boot-core/lang/)\\nLazy JSON load · in-memory cache\"]\n        B3 --> B4[\"loadRoutes()\\nCache policy -> cache.json only\\nRuntime route cache allowed only in production\"]\n        B4 --> RC{\"cache_enabled &&\\nroute_cache &&\\nIS_PRODUCTION?\"}\n        RC -- \"Yes\" --> CR[\"loadCachedRoutes()\\nPD/boot-core/cache/routes.cache.php\\nRoute::__set_state() + RouteCollection::__set_state()\"]\n        RC -- \"No / miss\" --> MR[\"CliRouteLoader::routeFiles()\\nboot-core/routes/global-routes.php\\nboot-core/routes/api.php\\nRepository/Framework/*/routes.php\\nRepository/App/Surface/*/routes.php\"]\n        MR --> RB[\"Best effort route cache rebuild\\nwhen route_cache is enabled\"]\n    end\n\n    style SRV fill:#1a2035,stroke:#6366f1\n    style BOOT fill:#1a2510,stroke:#22c55e\n    style ENTRY fill:#2d1a00,stroke:#f59e0b\n    style KBS fill:#1e2a3a,stroke:#38bdf8\n    style APACHE fill:#312e6e,stroke:#6366f1,color:#e2e8f0\n    style ECL fill:#1c3a1c,stroke:#22c55e,color:#e2e8f0\n    style CR fill:#14532d,stroke:#22c55e,color:#e2e8f0\n    style MR fill:#14532d,stroke:#22c55e,color:#e2e8f0"
+  },
+  "lifecycle": {
+    "title": "Request Lifecycle - Kernel::run to Response",
+    "description": "After bootstrap completes, Kernel::run() wraps dispatch in SecurityHeadersMiddleware and hands off to the global middleware pipeline. Global middleware now runs before route matching, so early handlers such as CORS preflight can terminate the request before a 405 check.",
+    "diagram": "flowchart TD\n    KRN([\"Kernel::run()\"])\n\n    subgraph GMID [\"Global Middleware Pipeline\"]\n        GM0[\"SecurityHeadersMiddleware\\nKernel level wrapper · CSP nonce · HSTS · X-Frame-Options\\nX-Content-Type-Options · Referrer-Policy\"]\n        GM1[\"CorsMiddleware\\neffective CORS config · FeatureFlagInterface\\nOPTIONS preflight -> 204\\nOrigin allowlist + fnmatch()\"]\n        GM2[\"WebSocketBootMiddleware\\neffective websocket config · feature flag\\nAuto boots WS process when enabled\"]\n        GM3[\"SetupMiddleware\\nIS_CONFIGURED check\\nRedirects to /setup on first boot\"]\n        GM4[\"CsrfMiddleware\\nPOST/PUT/DELETE/PATCH only\\nToken validation via CsrfProtection\"]\n        GM0 --> GM1 --> GM2 --> GM3 --> GM4\n    end\n\n    KRN --> GM0\n    GM4 --> RD\n\n    subgraph DISPATCH [\"Router::dispatch()\"]\n        RD[\"Router resolves URI + Method\\nagainst RouteCollection\"]\n        RD --> RM{Route match?}\n        RM -- \"No match\" --> E404[\"RouteNotFoundException\\nbuildNotFoundResponse 404\\nError template or JSON\"]\n        RM -- \"Method mismatch\" --> E405[\"MethodNotAllowedException\\nbuildMethodNotAllowedResponse 405\"]\n        RM -- \"Matched\" --> RMID[\"Route middleware chain\\n(per route, in registration order)\"]\n    end\n\n    subgraph RMIDS [\"Route Middleware (optional, per route)\"]\n        R1[\"AuthMiddleware\\nsession check -> redirect /login\"]\n        R2[\"GuestMiddleware\\nauthenticated -> redirect /\"]\n        R3[\"RoleMiddleware\\nGate::allows() -> 403 if denied\"]\n        R4[\"SetupGuardMiddleware\\nblocks /setup if already configured\"]\n        R5[\"LoginThrottleMiddleware\\n5 attempts / 10 min / IP\\nfile based SHA-256 tracking\"]\n        R6[\"RequestThrottlingMiddleware\\nmutating requests only\\nactor + method + path buckets\\n429 outside development\"]\n    end\n\n    RMID --> R1\n    RMID --> R2\n    RMID --> R3\n    RMID --> R4\n    RMID --> R5\n    RMID --> R6\n\n    R1 & R2 & R3 & R4 & R5 & R6 --> CTRL\n\n    subgraph CTRLS [\"Controller Layer\"]\n        CTRL[\"Controller::method(Request)\\nOrchestrates validate · DB · Session\\nFlash · Notify · Redirect\"]\n        CTRL --> RT{Response type}\n        RT -- \"HTML\" --> VW[\"View::render(template, data, layout)\\nfindLayout() -> boot-core/template/layouts/\\nfindTemplate() -> all registered view paths\\nPartials, components, e() escaping\"]\n        RT -- \"JSON\" --> JS[\"JsonResponse\\n{success, message, data/errors}\\nwithNotification() · withRedirect()\"]\n        RT -- \"Redirect\" --> RR[\"302 Response\\nwithSuccess() / withError() flash\"]\n        RT -- \"HtmlResponse\" --> HR[\"HtmlResponse\\nRaw HTML string\"]\n    end\n\n    VW --> RS\n    JS --> RS\n    RR --> RS\n    HR --> RS\n    E404 --> RS\n    E405 --> RS\n    RS([\"Response::send()\\nHTTP status · headers · body\"])\n\n    style KRN fill:#312e6e,stroke:#6366f1,color:#e2e8f0\n    style RS fill:#14532d,stroke:#22c55e,color:#e2e8f0\n    style E404 fill:#3b1414,stroke:#ef4444,color:#e2e8f0\n    style E405 fill:#3b1414,stroke:#ef4444,color:#e2e8f0\n    style GMID fill:#1e2a3a,stroke:#38bdf8\n    style DISPATCH fill:#1a1a2e,stroke:#a78bfa\n    style RMIDS fill:#1a2035,stroke:#6366f1\n    style CTRLS fill:#1a2510,stroke:#22c55e"
+  },
+  "constants": {
+    "title": "Bootstrap Constants Reference",
+    "description": "All PHP constants are defined before index.php runs through error-catcher.php -> sys-constant.php -> env-constant.php. They are available globally across the framework without import.",
+    "columns": {
+      "constant": "Constant",
+      "type": "Type",
+      "description": "Value / Description"
+    },
+    "sys": {
+      "badge": "System",
+      "rows": {
+        "ds": "DIRECTORY_SEPARATOR - platform safe path delimiter (/ on Linux, \\\\ on Windows).",
+        "pd": "Project root absolute path resolved from boot-core/constant/ up to the repository root.",
+        "is_cli": "true in CLI execution; guards command-only code paths.",
+        "is_request": "Inverse of IS_CLI; used by request-aware helpers such as debug output.",
+        "tw": "Terminal width in CLI only; defaults to 80 when detection fails.",
+        "nl": "PHP_EOL in CLI, <br /> in web output.",
+        "log_dir": "Absolute path to boot-core/storage/logs/ where Logger writes files.",
+        "loaded_sys_constant": "Guard flag that prevents double loading of sys-constant.php."
+      }
+    },
+    "env": {
+      "badge": "Environment",
+      "description": "Reads boot-core/config/env/.env. Throws EnvironmentException if the file is missing or empty. If available, .env.example is copied first. Values are also exposed in GET_ENV_VAR[key].",
+      "key_description": ".env key / Description",
+      "rows": {
+        "env": "APP_ENV raw environment name: development, staging, testing or production.",
+        "is_development": "ENV === development.",
+        "is_staging": "ENV === staging.",
+        "is_testing": "ENV === testing.",
+        "is_production": "ENV === production.",
+        "get_env_var": "Full associative array of parsed .env key=value pairs. CSV values become sub-arrays.",
+        "is_configured": "Derived from app.json -> project_config; true after Setup completes.",
+        "display_logs": "APP_DISPLAY_LOGS fallback from .env until effective logging config is applied.",
+        "route_cache": "Deprecated compatibility constant. Runtime activation now lives only in cache.json.",
+        "db_host": "DB_HOST from .env; database server hostname.",
+        "db_port": "DB_PORT from .env; database server port.",
+        "db_database": "DB_DATABASE from .env; database or schema name.",
+        "db_username": "DB_USERNAME from .env; database user.",
+        "db_password": "DB_PASSWORD from .env; database password and never logged.",
+        "loaded_env_constant": "Guard flag that prevents double loading of env-constant.php."
+      }
+    }
+  },
+  "config": {
+    "title": "Config Flow - JSON Priority Chain",
+    "description": "ConfigManager::getInstance() loads once per request. Defaults are compiled from .env for bootstrap compatibility, while runtime cache activation belongs to cache.json. Per-environment JSON files override defaults section by section and the effective configuration is mirrored into global runtime state.",
+    "diagram": "flowchart TD\n    ENV_FILE[\"boot-core/config/env/.env\\nRaw key=value pairs\\nenv-constant.php reads once at boot\"]\n    ENV_FILE --> CONST[\"PHP Constants\\nENV, IS_DEVELOPMENT, DB_HOST, ...\\nAvailable globally without import\"]\n    CONST --> CM\n    CM --> GLOB[\"$GLOBALS['APP_CONFIGURATION']\\nEarly bootstrap mirror\"]\n\n    subgraph CM [\"ConfigManager::getInstance() - singleton\"]\n        DEF[\"readDefaults()\\nCompiles baseline from GET_ENV_VAR\\nSections: app, db, mail, ftp,\\nsession, logging,\\nsecurity, websocket, cors, devtools\\nCache defaults stay setup owned and disabled\"]\n        DEF --> LOAD[\"load()\\nOptional compiled config cache first\\nThen glob boot-core/config/{env}/*.json\\nJSON decoded -> section array\\nThrows on malformed JSON\"]\n        LOAD --> MERGE[\"entry()\\nJSON named entry overrides\\n.env derived defaults\"]\n    end\n\n    MERGE --> READY[\"config[ section ][ key ]\\nFinal resolved configuration\"]\n\n    subgraph CONSUMERS [\"Consumers (read only)\"]\n        C1[\"MailManager\\nconfig['mail']\"]\n        C2[\"SessionManager\\nconfig['session']\"]\n        C3[\"CorsMiddleware\\nconfig['cors']\"]\n        C4[\"WebSocketBootMiddleware\\nconfig['websocket']\"]\n        C5[\"Kernel / Router / CacheManager\\nconfig['cache']\\nproduction only runtime activation\"]\n        C6[\"Controllers / Services\\nconfig['app'], config['security']...\"]\n    end\n\n    READY --> C1 & C2 & C3 & C4 & C5 & C6\n\n    style ENV_FILE fill:#312e06,stroke:#f59e0b,color:#e2e8f0\n    style CONST fill:#1a2035,stroke:#6366f1,color:#e2e8f0\n    style CM fill:#1a2510,stroke:#22c55e\n    style DEF fill:#1e3a1e,stroke:#22c55e,color:#e2e8f0\n    style LOAD fill:#1e3a1e,stroke:#22c55e,color:#e2e8f0\n    style MERGE fill:#1e3a1e,stroke:#22c55e,color:#e2e8f0\n    style READY fill:#14532d,stroke:#22c55e,color:#e2e8f0\n    style CONSUMERS fill:#1e2a3a,stroke:#38bdf8",
+    "quick_reference_title": "Config Sections Quick Reference",
+    "columns": {
+      "section_key": "Section key",
+      "json_file": "JSON file (boot-core/config/{env}/)",
+      "primary_consumers": "Primary consumers"
+    },
+    "rows": {
+      "app": "Kernel, SecurityHeadersMiddleware, OAuth/Auth email links, WebSocketToken.",
+      "db": "DatabaseManager and ORM.",
+      "mail": "MailManager and MailTestController.",
+      "ftp": "Setup FTP/SFTP credentials and upload pretest surface; downstream deployment consumer still pending.",
+      "session": "SessionManager.",
+      "cache": "CacheSettings, Kernel, Router, CacheManager and bootstrap cache artifacts; setup-owned activation only.",
+      "logging": "Kernel -> Logger.",
+      "security": "AuthManager such as bcrypt rounds and MFA flag.",
+      "websocket": "WebSocketBootMiddleware, WebSocketPublisher and websocket server bootstrap.",
+      "cors": "CorsMiddleware.",
+      "devtools": "Legacy compatibility mirror only; runtime now derives from app/logging while cache activation lives in cache.json."
+    },
+    "priority_note": "Priority: JSON file value > .env default > hard-coded fallback. JSON files exist only after Setup completes. On first boot, only .env defaults are available and cache stays off until setup persists cache.json."
+  },
+  "middleware": {
+    "title": "Middleware Stack - Execution Order",
+    "description": "Middleware runs in two layers: global for every request and route level for selected routes. Both layers use the MiddlewareInterface::handle(Request, callable): Response contract.",
+    "diagram": "flowchart TD\n    REQ([\"Incoming Request\"])\n    REQ --> SH\n\n    subgraph GLOBAL [\"Global Middleware - every request\"]\n        SH[\"SecurityHeadersMiddleware\\nCSP nonce generation\\nHSTS, X-Frame-Options, Referrer-Policy\\nX-Content-Type-Options\"]\n        SH --> CO[\"CorsMiddleware\\nOrigin check via effective CORS config\\nOPTIONS preflight -> 204 early return\\nCredentials + max_age headers\"]\n        CO --> WS[\"WebSocketBootMiddleware\\nFeature gated by effective websocket config\\nAuto boots only when enabled\"]\n        WS --> SM[\"SetupMiddleware\\nChecks IS_CONFIGURED\\nRedirects to /setup if not configured\\nSkipped when already on /setup\"]\n        SM --> CS[\"CsrfMiddleware\\nPOST/PUT/DELETE/PATCH only\\nToken from header or POST body\\nRejects mismatches -> 403 JSON / redirect\"]\n    end\n\n    CS --> RL\n\n    subgraph RL [\"Route Level Middleware (per route, optional)\"]\n        AM[\"AuthMiddleware\\nSession check: auth user present?\\nNo -> redirect /login with ?redirect=\\nYes -> continues\"]\n        GM[\"GuestMiddleware\\nInverse of Auth: authenticated?\\nYes -> redirect to /\\nNo -> continues\"]\n        RM[\"RoleMiddleware\\nGate::allows(role) check\\nDenied -> 403 Forbidden response\"]\n        LT[\"LoginThrottleMiddleware\\n5 attempts / 10 min / IP\\nFile based SHA-256 bucket tracking\\nExceeded -> 429 with retry-after\"]\n        RT[\"RequestThrottlingMiddleware\\nMutating requests only\\nActor + method + path buckets\\n429 outside development\"]\n        SG[\"SetupGuardMiddleware\\nBlocks /setup if IS_CONFIGURED\\nPrevents rerunning Setup wizard\"]\n    end\n\n    RL --> CTRL([\"Controller::method(Request)\"])\n\n    style REQ fill:#312e6e,stroke:#6366f1,color:#e2e8f0\n    style CTRL fill:#14532d,stroke:#22c55e,color:#e2e8f0\n    style GLOBAL fill:#1e2a3a,stroke:#38bdf8\n    style RL fill:#1a2035,stroke:#6366f1\n    style AM fill:#2d1a00,stroke:#f59e0b,color:#e2e8f0\n    style GM fill:#2d1a00,stroke:#f59e0b,color:#e2e8f0\n    style RM fill:#3b1414,stroke:#ef4444,color:#e2e8f0\n    style LT fill:#3b1414,stroke:#ef4444,color:#e2e8f0\n    style RT fill:#3b1414,stroke:#ef4444,color:#e2e8f0\n    style SG fill:#2d1a00,stroke:#f59e0b,color:#e2e8f0",
+    "reference_title": "Middleware Reference",
+    "columns": {
+      "class": "Class",
+      "layer": "Layer",
+      "behaviour": "Behaviour"
+    },
+    "rows": {
+      "security_headers": {
+        "layer": "Global #1",
+        "behaviour": "Emits CSP, HSTS, X-Frame-Options, Referrer-Policy and X-Content-Type-Options. Generates the CSP nonce in $_SERVER['CSP_NONCE']."
+      },
+      "cors": {
+        "layer": "Global #2",
+        "behaviour": "Reads effective CORS config, returns 204 for OPTIONS preflight before route matching and validates Origin against the allowlist using fnmatch()."
+      },
+      "websocket_boot": {
+        "layer": "Global #3",
+        "behaviour": "Feature-gated by effective websocket config and auto-starts the websocket process only when enabled."
+      },
+      "setup": {
+        "layer": "Global #4",
+        "behaviour": "Redirects to /setup when IS_CONFIGURED is false and is a no-op otherwise."
+      },
+      "csrf": {
+        "layer": "Global #5",
+        "behaviour": "Validates CSRF tokens for mutating verbs using X-CSRF-TOKEN or csrf_token."
+      },
+      "auth": {
+        "layer": "Route",
+        "behaviour": "Requires an authenticated session and preserves the intended URL in ?redirect=."
+      },
+      "guest": {
+        "layer": "Route",
+        "behaviour": "Requires an unauthenticated session and redirects authenticated users to /."
+      },
+      "role": {
+        "layer": "Route",
+        "behaviour": "Calls Gate::allows() with the configured role and returns 403 on denial."
+      },
+      "login_throttle": {
+        "layer": "Route",
+        "behaviour": "Allows 5 login attempts per 10-minute window per IP using file-based SHA-256 buckets."
+      },
+      "request_throttle": {
+        "layer": "Route",
+        "behaviour": "Generic mutating-request limiter keyed by actor, method and path; persists counters on disk and returns 429 outside development."
+      },
+      "setup_guard": {
+        "layer": "Route",
+        "behaviour": "Blocks /setup when the app is already configured."
+      }
+    }
+  },
+  "layers": {
+    "title": "Component Layer Map",
+    "description": "Catalyst uses a strict layering convention. Each layer may depend only on lower layers. Cross-cutting helpers such as Logger, Translator and ConfigManager remain shared services. The diagram stays high level and the current runtime inventory is listed below it.",
+    "diagram": "flowchart TD\n    IDX[\"Entry Point\\npublic/index.php\"]\n    BOOT[\"Boot Layer\\nboot-core constants, env, layouts,\\nconfig, routes, route cache\"]\n    CORE[\"Core Runtime\\napp/Kernel.php + app/Framework/\\nHttp, Route, Middleware, Auth,\\nAuthorization, Controllers, View,\\nSession, Database, Mail, Notification,\\nWebSocket, Cli\"]\n    MODULES[\"Feature Modules\\nRepository/Framework/\\nAuth, Settings, DevTools,\\nNotification, Roles\"]\n    HELPERS[\"Cross-Cutting Helpers\\napp/Helpers/\\nConfig, I18n, Log, Security,\\nValidation, Error, IO, Debug, ToolBox\"]\n    RULE[\"Dependency Rule\\nUpper layers depend only on lower layers\"]\n\n    IDX --> BOOT --> CORE --> MODULES\n    HELPERS -. shared services .-> CORE\n    HELPERS -. shared services .-> MODULES\n    RULE -. governs .-> BOOT\n    RULE -. governs .-> CORE\n    RULE -. governs .-> MODULES\n\n    style IDX fill:#312e6e,stroke:#6366f1,color:#e2e8f0\n    style BOOT fill:#312e06,stroke:#f59e0b,color:#e2e8f0\n    style CORE fill:#1a2510,stroke:#22c55e,color:#e2e8f0\n    style HELPERS fill:#1e2a3a,stroke:#38bdf8,color:#e2e8f0\n    style MODULES fill:#1a1a2e,stroke:#a78bfa,color:#e2e8f0\n    style RULE fill:#3b1414,stroke:#ef4444,color:#e2e8f0",
+    "inventory_title": "Current Layer Inventory",
+    "loaded_sections_heading": "Loaded Config Sections (current request)",
+    "loaded_sections_empty": "No JSON config sections loaded yet. Setup is still pending.",
+    "cards": {
+      "boot": {
+        "title": "Boot Layer",
+        "description": "Bootstrap assets that execute before normal request dispatch begins."
+      },
+      "core": {
+        "title": "Core Runtime",
+        "description": "Live engine code under app/ executed by the request pipeline."
+      },
+      "helpers": {
+        "title": "Cross-Cutting Helpers",
+        "description": "Shared services and utilities accessed from multiple runtime layers."
+      },
+      "modules": {
+        "title": "Repository Modules",
+        "description": "Installable framework surfaces currently present under Repository/Framework/.",
+        "badges": {
+          "auth": "Auth: Login, Logout, Register, MFA, Password Reset, Social Auth, Email Verification",
+          "settings": "Settings: Config, Save, CORS Save, DKIM, Setup Completion",
+          "devtools": "DevTools: TestFeatures, UML, DB Test/Reset, ORM, Upload, RBAC, I18n, Mail, Infra, Forms, Flash, Modal, Toaster",
+          "notification": "Notification: NotificationController and REST endpoints",
+          "roles": "Roles: Roles, Permissions, User Roles",
+          "common": "Common module files: routes.php, Views/, lang/{locale}/*.json"
+        }
+      }
+    }
+  }
+}

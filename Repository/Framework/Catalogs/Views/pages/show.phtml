@@ -1,0 +1,202 @@
+<div class="admin-surface admin-surface-shell catalogs-admin-page">
+    {{> "components._admin-page-header" }}
+
+    {{> "components._record-claim-banner" }}
+
+    <section class="card border-0 shadow-sm mb-3">
+        <div class="card-header">
+            <h2 class="h5 mb-1">{{ t:catalogs.show.workflow.title }}</h2>
+            <p class="text-muted mb-0">{{ t:catalogs.show.workflow.description }}</p>
+        </div>
+        <div class="card-body d-flex flex-column gap-3">
+            <form data-catalyst="form" method="POST" action="{{ catalog.transition_url }}" class="row g-3 align-items-end">
+                {{{ csrfField }}}
+                {{#if claim_token}}<input type="hidden" name="claim_token" value="{{ claim_token }}">{{/if}}
+                <div class="col-lg-4">
+                    <label for="transition" class="form-label small fw-semibold">{{ t:catalogs.show.workflow.transition }}</label>
+                    <select id="transition" name="transition" class="form-select">
+                        <option value="">{{ t:catalogs.show.workflow.select_transition }}</option>
+                        {{#each available_transitions}}
+                            <option value="{{ key }}">{{ label }}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="col-lg-6">
+                    <label for="transition-notes" class="form-label small fw-semibold">{{ t:catalogs.show.workflow.notes }}</label>
+                    <input id="transition-notes" type="text" name="notes" class="form-control" placeholder="{{ t:catalogs.show.workflow.notes_placeholder }}">
+                </div>
+                <div class="col-lg-2 d-grid">
+                    <button type="submit" class="btn btn-primary">{{ t:catalogs.show.workflow.apply }}</button>
+                </div>
+            </form>
+
+            <div class="table-responsive">
+                <table class="table table-sm align-middle mb-0">
+                    <thead>
+                    <tr>
+                        <th>{{ t:catalogs.show.workflow.columns.occurred }}</th>
+                        <th>{{ t:catalogs.show.workflow.columns.transition }}</th>
+                        <th>{{ t:catalogs.show.workflow.columns.from }}</th>
+                        <th>{{ t:catalogs.show.workflow.columns.to }}</th>
+                        <th>{{ t:catalogs.show.workflow.columns.actor }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each transitions_rows}}
+                        <tr>
+                            <td>{{ occurred_at }}</td>
+                            <td>{{ transition_key }}</td>
+                            <td>{{ from_state }}</td>
+                            <td>{{ to_state }}</td>
+                            <td>{{ actor_label }}</td>
+                        </tr>
+                    {{else}}
+                        <tr><td colspan="5" class="text-muted">{{ t:catalogs.show.workflow.empty }}</td></tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="card border-0 shadow-sm mb-3">
+        <div class="card-header d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-center">
+            <div>
+                <h2 class="h5 mb-1">{{ t:catalogs.show.items.title }}</h2>
+                <p class="text-muted mb-0">{{ t:catalogs.show.items.description }}</p>
+            </div>
+            <div>
+                <button type="button" class="btn btn-sm btn-primary" data-catalyst-href="{{ catalog.create_item_url }}">
+                    <i class="fa-solid fa-plus me-1"></i> {{ t:catalogs.show.items.add_item }}
+                </button>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-sm align-middle mb-0">
+                    <thead>
+                    <tr>
+                        <th>{{ t:catalogs.show.items.columns.item }}</th>
+                        <th>{{ t:catalogs.show.items.columns.state }}</th>
+                        <th>{{ t:catalogs.show.items.columns.validity }}</th>
+                        <th>{{ t:catalogs.show.items.columns.metadata }}</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each items_rows}}
+                        <tr>
+                            <td>
+                                <div class="fw-semibold">{{ label }}</div>
+                                <div class="small text-muted"><code>{{ item_key }}</code></div>
+                            </td>
+                            <td>
+                                <span class="badge {{ temporal_badge_class }}">{{ temporal_state }}</span>
+                                {{#if is_disabled}}
+                                    <span class="badge text-bg-dark">{{ t:catalogs.show.common.disabled }}</span>
+                                {{/if}}
+                            </td>
+                            <td>
+                                <div class="small">{{ valid_from_label }}</div>
+                                <div class="small text-muted">{{ valid_to_label }}</div>
+                            </td>
+                            <td>
+                                <code>{{ metadata_json }}</code>
+                            </td>
+                            <td class="text-end">
+                                <div class="d-flex gap-2 justify-content-end">
+                                    <button type="button" class="btn btn-sm btn-outline-primary" data-catalyst-href="{{ edit_url }}">{{ t:catalogs.common.edit }}</button>
+                                    <form data-catalyst="form" method="POST" action="{{ delete_url }}" class="d-inline" data-confirm="{{ @root.item_delete_confirm }}">
+                                        {{{ @root.csrfField }}}
+                                        {{#if @root.claim_token}}<input type="hidden" name="claim_token" value="{{ @root.claim_token }}">{{/if}}
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">{{ t:catalogs.common.delete }}</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {{else}}
+                        <tr><td colspan="5" class="text-muted">{{ t:catalogs.show.items.empty }}</td></tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <div class="row g-3">
+        <div class="col-xl-6">
+            <section class="card border-0 shadow-sm h-100">
+                <div class="card-header">
+                    <h2 class="h5 mb-1">{{ t:catalogs.show.timeline.title }}</h2>
+                    <p class="text-muted mb-0">{{ t:catalogs.show.timeline.description }}</p>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-sm align-middle mb-0">
+                            <thead>
+                            <tr>
+                                <th>{{ t:catalogs.show.timeline.columns.occurred }}</th>
+                                <th>{{ t:catalogs.show.timeline.columns.type }}</th>
+                                <th>{{ t:catalogs.show.timeline.columns.event }}</th>
+                                <th>{{ t:catalogs.show.timeline.columns.label }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{#each timeline_events}}
+                                <tr>
+                                    <td>{{ occurred_at }}</td>
+                                    <td>{{ event_type }}</td>
+                                    <td><code>{{ event_key }}</code></td>
+                                    <td>{{ label }}</td>
+                                </tr>
+                            {{else}}
+                                <tr><td colspan="4" class="text-muted">{{ t:catalogs.show.timeline.empty }}</td></tr>
+                            {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-xl-6">
+            <section class="card border-0 shadow-sm h-100">
+                <div class="card-header">
+                    <h2 class="h5 mb-1">{{ t:catalogs.show.versions.title }}</h2>
+                    <p class="text-muted mb-0">{{ t:catalogs.show.versions.description }}</p>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-sm align-middle mb-0">
+                            <thead>
+                            <tr>
+                                <th>{{ t:catalogs.show.versions.columns.version }}</th>
+                                <th>{{ t:catalogs.show.versions.columns.summary }}</th>
+                                <th>{{ t:catalogs.show.versions.columns.created }}</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{#each versions_rows}}
+                                <tr>
+                                    <td>#{{ version_number }}</td>
+                                    <td>{{ summary }}</td>
+                                    <td>{{ created_at }}</td>
+                                    <td class="text-end">
+                                        <form data-catalyst="form" method="POST" action="{{ restore_url }}" class="d-inline">
+                                            {{{ @root.csrfField }}}
+                                            {{#if @root.claim_token}}<input type="hidden" name="claim_token" value="{{ @root.claim_token }}">{{/if}}
+                                            <button type="submit" class="btn btn-sm btn-outline-secondary">{{ t:catalogs.show.versions.restore }}</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {{else}}
+                                <tr><td colspan="4" class="text-muted">{{ t:catalogs.show.versions.empty }}</td></tr>
+                            {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

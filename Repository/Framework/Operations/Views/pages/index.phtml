@@ -1,0 +1,141 @@
+<div class="admin-surface admin-surface-shell operations-page">
+    {{> "components._admin-page-header" }}
+
+    <section class="card border-0">
+        <div class="card-header">
+            <h2 class="h5 mb-1">{{ t:operations.index.boundaries.title }}</h2>
+            <p class="text-muted mb-0">{{ t:operations.index.boundaries.description }}</p>
+        </div>
+        <div class="card-body">
+            <div class="operations-cards operations-cards--wide">
+                <article class="operations-card operations-card--accent">
+                    <div class="operations-card__eyebrow">{{ t:operations.index.cards.setup.eyebrow }}</div>
+                    <h3 class="h6 mb-2">{{ t:operations.index.cards.setup.title }}</h3>
+                    <p class="text-muted small mb-3">
+                        {{ t:operations.index.cards.setup.description }}
+                    </p>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" data-catalyst-href="/configuration/environment-setup">{{ t:operations.index.cards.setup.action }}</button>
+                </article>
+                <article class="operations-card operations-card--accent">
+                    <div class="operations-card__eyebrow">{{ t:operations.index.cards.operations.eyebrow }}</div>
+                    <h3 class="h6 mb-2">{{ t:operations.index.cards.operations.title }}</h3>
+                    <p class="text-muted small mb-3">
+                        {{ t:operations.index.cards.operations.description }}
+                    </p>
+                    <button type="button" class="btn btn-sm btn-primary" data-catalyst-href="/configuration/feature-flags">{{ t:operations.index.cards.operations.action }}</button>
+                </article>
+                <article class="operations-card operations-card--accent">
+                    <div class="operations-card__eyebrow">{{ t:operations.index.cards.devtools.eyebrow }}</div>
+                    <h3 class="h6 mb-2">{{ t:operations.index.cards.devtools.title }}</h3>
+                    <p class="text-muted small mb-3">
+                        {{ t:operations.index.cards.devtools.description }}
+                    </p>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" data-catalyst-href="/test-features">{{ t:operations.index.cards.devtools.action }}</button>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <div class="operations-cards operations-cards--wide">
+        <section class="operations-card">
+            <div class="operations-card__eyebrow">{{ t:operations.index.cards.admin.eyebrow }}</div>
+            <h2 class="h5 mb-2">{{ t:operations.index.cards.localization.title }}</h2>
+            <dl class="operations-definition-list">
+                <div><dt>{{ t:operations.index.cards.localization.default_locale }}</dt><dd><code>{{ localizationSummary.default_locale }}</code></dd></div>
+                <div><dt>{{ t:operations.index.cards.localization.available_locales }}</dt><dd>{{ localizationSummary.available_locale_count }}</dd></div>
+            </dl>
+            <button type="button" class="btn btn-sm btn-outline-primary mt-3" data-catalyst-href="/workspaces/locale-tools">{{ t:operations.index.cards.localization.action }}</button>
+        </section>
+
+        <section class="operations-card">
+            <div class="operations-card__eyebrow">{{ t:operations.index.cards.admin.eyebrow }}</div>
+            <h2 class="h5 mb-2">{{ t:operations.index.cards.appearance.title }}</h2>
+            <dl class="operations-definition-list">
+                <div><dt>{{ t:operations.index.cards.appearance.theme }}</dt><dd>{{ appearanceSummary.theme_label }}</dd></div>
+                <div><dt>{{ t:operations.index.cards.appearance.variant }}</dt><dd><code>{{ appearanceSummary.default_variant }}</code></dd></div>
+                <div><dt>{{ t:operations.index.cards.appearance.watermark }}</dt><dd>{{ appearanceSummary.watermark_status_label }}</dd></div>
+            </dl>
+            <button type="button" class="btn btn-sm btn-outline-primary mt-3" data-catalyst-href="/configuration/platform-appearance">{{ t:operations.index.cards.appearance.action }}</button>
+        </section>
+
+        <section class="operations-card">
+            <div class="operations-card__eyebrow">{{ t:operations.index.cards.feature_flags.eyebrow }}</div>
+            <h2 class="h5 mb-2">{{ t:operations.index.cards.feature_flags.title }}</h2>
+            <dl class="operations-definition-list">
+                <div><dt>{{ t:operations.index.cards.feature_flags.total }}</dt><dd>{{ featureSummary.count }}</dd></div>
+                <div><dt>{{ t:operations.index.cards.feature_flags.enabled }}</dt><dd>{{ featureSummary.enabled }}</dd></div>
+                <div><dt>{{ t:operations.index.cards.feature_flags.read_only }}</dt><dd>{{ featureSummary.read_only }}</dd></div>
+            </dl>
+            <button type="button" class="btn btn-sm btn-outline-primary mt-3" data-catalyst-href="/configuration/feature-flags">{{ t:operations.index.cards.feature_flags.action }}</button>
+        </section>
+
+        <section class="operations-card">
+            <div class="operations-card__eyebrow">{{ t:operations.index.cards.plugins.eyebrow }}</div>
+            <h2 class="h5 mb-2">{{ t:operations.index.cards.plugins.title }}</h2>
+            <dl class="operations-definition-list">
+                <div><dt>{{ t:operations.index.cards.plugins.total }}</dt><dd>{{ pluginSummary.count }}</dd></div>
+                <div><dt>{{ t:operations.index.cards.plugins.enabled }}</dt><dd>{{ pluginSummary.enabled }}</dd></div>
+                <div><dt>{{ t:operations.index.cards.plugins.required }}</dt><dd>{{ pluginSummary.required }}</dd></div>
+            </dl>
+            <button type="button" class="btn btn-sm btn-outline-primary mt-3" data-catalyst-href="/configuration/plugins">{{ t:operations.index.cards.plugins.action }}</button>
+        </section>
+
+        <section class="operations-card">
+            <div class="operations-card__eyebrow">{{ t:operations.index.cards.deployments.eyebrow }}</div>
+            <h2 class="h5 mb-2">{{ t:operations.index.cards.deployments.title }}</h2>
+            <dl class="operations-definition-list">
+                <div><dt>{{ t:operations.index.cards.deployments.profiles }}</dt><dd>{{ deploymentSummary.profile_count }}</dd></div>
+                <div><dt>{{ t:operations.index.cards.deployments.runs }}</dt><dd>{{ deploymentSummary.run_count }}</dd></div>
+                <div><dt>{{ t:operations.index.cards.deployments.release_root }}</dt><dd><code>{{ deploymentSummary.release_root }}</code></dd></div>
+            </dl>
+            <button type="button" class="btn btn-sm btn-outline-primary mt-3" data-catalyst-href="/operations/deployments">{{ t:operations.index.cards.deployments.action }}</button>
+        </section>
+
+        <section class="operations-card">
+            <div class="operations-card__eyebrow">{{ t:operations.index.cards.tenancy.eyebrow }}</div>
+            <h2 class="h5 mb-2">{{ t:operations.index.cards.tenancy.title }}</h2>
+            <dl class="operations-definition-list">
+                <div><dt>{{ t:operations.index.cards.tenancy.runtime_strategy }}</dt><dd><code>{{ tenancySummary.strategy }}</code></dd></div>
+                <div><dt>{{ t:operations.index.cards.tenancy.target_strategy }}</dt><dd><code>{{ tenancySummary.target_strategy }}</code></dd></div>
+                <div><dt>{{ t:operations.index.cards.tenancy.isolation_active }}</dt><dd>{{ tenancySummary.isolation_active_label }}</dd></div>
+            </dl>
+            <button type="button" class="btn btn-sm btn-outline-primary mt-3" data-catalyst-href="/operations/tenancy">{{ t:operations.index.cards.tenancy.action }}</button>
+        </section>
+    </div>
+
+    <section class="card border-0">
+        <div class="card-header">
+            <h2 class="h5 mb-1">{{ t:operations.index.recent_runs.title }}</h2>
+            <p class="text-muted mb-0">{{ t:operations.index.recent_runs.description }}</p>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table align-middle mb-0 operations-table">
+                    <thead>
+                    <tr>
+                        <th>{{ t:operations.index.recent_runs.columns.release }}</th>
+                        <th>{{ t:operations.index.recent_runs.columns.profile }}</th>
+                        <th>{{ t:operations.index.recent_runs.columns.status }}</th>
+                        <th>{{ t:operations.index.recent_runs.columns.started }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#unless recentRuns}}
+                        <tr>
+                            <td colspan="4" class="text-muted text-center py-4">{{ t:operations.index.recent_runs.empty }}</td>
+                        </tr>
+                    {{/unless}}
+                    {{#each recentRuns}}
+                        <tr>
+                            <td><code>{{ release_id }}</code></td>
+                            <td>{{ profile_key }}</td>
+                            <td>{{ status_label }}</td>
+                            <td>{{ started_at_label }}</td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,183 @@
+{
+  "module": {
+    "description": "Reusable document templates with workflow, preview, exports and persisted version history.",
+    "permission_label": "Manage Document Templates",
+    "permission_description": "Create, review, export, version and restore reusable document templates.",
+    "navigation_label": "Document Templates",
+    "navigation_hint": "Versioned document templates with preview and workflow.",
+    "breadcrumb_create": "Create Template",
+    "breadcrumb_edit": "Edit Template",
+    "breadcrumb_show": "Template Detail"
+  },
+  "common": {
+    "edit": "Edit",
+    "back": "Back",
+    "system": "system"
+  },
+  "formats": {
+    "plain_text": "Plain text"
+  },
+  "index": {
+    "title": "Document Templates",
+    "hero_eyebrow": "Documents",
+    "hero_lede": "Reusable templates with real workflow, JSON payload preview, persisted storage export and restore by versions.",
+    "description": "Versioned templates with real preview, reusable workflow and persisted export over storage.",
+    "empty": {
+      "title": "No document templates yet",
+      "description": "Create the first reusable template to start previewing, approving and exporting business documents.",
+      "action": "Create template"
+    },
+    "columns": {
+      "template": "Template",
+      "format": "Format",
+      "workflow": "Workflow",
+      "versions": "Versions",
+      "artifacts": "Artifacts",
+      "updated": "Updated"
+    },
+    "filters": {
+      "format": "Format",
+      "workflow_state": "Workflow state"
+    },
+    "formats": {
+      "text": "Text"
+    },
+    "states": {
+      "draft": "Draft",
+      "in_review": "In review",
+      "approved": "Approved",
+      "archived": "Archived"
+    },
+    "actions": {
+      "view": "View",
+      "edit": "Edit",
+      "export": "Export",
+      "delete": "Delete",
+      "confirm_delete": "Delete template \"%s\"?"
+    },
+    "search_placeholder": "Search by name, slug or description"
+  },
+  "form_page": {
+    "eyebrow": "Documents",
+    "create_title": "Create Document Template",
+    "edit_title": "Edit Document Template",
+    "hero_lede_create": "Define real variables, sample payload, and the reusable document body.",
+    "hero_lede_edit": "Update the template while keeping workflow, version history, and previous artifacts.",
+    "labels": {
+      "template_name": "Template name",
+      "template_slug": "Template slug",
+      "description": "Description",
+      "variables_schema_json": "Variables schema JSON",
+      "sample_payload_json": "Sample payload JSON",
+      "body_template": "Document body"
+    },
+    "placeholders": {
+      "template_name": "Approval certificate",
+      "template_slug": "approval-certificate",
+      "description": "What this template is used for."
+    },
+    "help": {
+      "variables_schema_json": "Example: {\"customer.name\":\"string\",\"invoice.total\":\"number\"}",
+      "sample_payload_json": "Payload reused by preview, nominal exports and automations.",
+      "body_template": "HTML, plain text or PDF-ready body. Use placeholders and conditional blocks; PDF is normalized to renderable text."
+    },
+    "sections": {
+      "identity": {
+        "title": "Identity & format",
+        "description": "Name, stable slug and operational output format."
+      },
+      "variables": {
+        "title": "Variables & payload",
+        "description": "JSON variable schema and reusable sample payload for preview, API and automations."
+      },
+      "body": {
+        "title": "Body template",
+        "description": "Use placeholders `{{ customer.name }}` and blocks `{{#if total}}...{{/if}}`."
+      }
+    },
+    "actions": {
+      "create": "Create template",
+      "save": "Save template",
+      "back": "Back to templates",
+      "back_list": "Back to templates",
+      "view_detail": "View detail"
+    }
+  },
+  "validation": {
+    "template_slug_unique": "The template slug must be unique.",
+    "valid_json": "Provide valid JSON."
+  },
+  "messages": {
+    "template_not_found": "Document template not found.",
+    "template_created": "Document template created.",
+    "template_updated": "Document template updated.",
+    "template_deleted": "Document template deleted.",
+    "preview_generated": "Preview generated.",
+    "exported": "Document exported to storage.",
+    "select_transition": "Select a valid workflow transition.",
+    "workflow_transitioned": "Workflow transitioned successfully.",
+    "template_restored_summary": "Template restored from version",
+    "version_restored": "Version restored.",
+    "templates_retrieved": "Document templates retrieved.",
+    "template_retrieved": "Document template retrieved.",
+    "artifact_exported": "Document artifact exported.",
+    "invalid_payload_json": "Provide valid JSON for the payload."
+  },
+  "show": {
+    "eyebrow": "Documents",
+    "template_fallback": "Document template",
+    "lede_fallback": "Reusable document template with real workflow and storage exports.",
+    "stats": {
+      "workflow": "Workflow",
+      "format": "Format",
+      "slug": "Slug"
+    },
+    "workflow": {
+      "title": "Workflow actions",
+      "description": "Real inspection and operation of the reusable workflow adopted by this template.",
+      "transition": "Transition",
+      "select_transition": "Select transition",
+      "notes": "Notes",
+      "notes_placeholder": "Optional transition note",
+      "apply": "Apply",
+      "columns": {
+        "occurred": "Occurred",
+        "transition": "Transition",
+        "from": "From",
+        "to": "To",
+        "actor": "Actor"
+      },
+      "empty": "No transitions recorded yet."
+    },
+    "preview": {
+      "title": "Preview & export",
+      "description": "Real preview with JSON payload and persisted export to the framework local storage.",
+      "payload_json": "Payload JSON",
+      "preview_document": "Preview document",
+      "export_artifact": "Export artifact",
+      "rendered_preview": "Rendered preview"
+    },
+    "versions": {
+      "title": "Version history",
+      "description": "Real restore over persisted snapshots of the resource.",
+      "columns": {
+        "version": "Version",
+        "summary": "Summary",
+        "created": "Created"
+      },
+      "restore": "Restore",
+      "empty": "No versions captured yet."
+    },
+    "artifacts": {
+      "title": "Export artifacts",
+      "description": "Persisted result of the rendered document on real storage.",
+      "columns": {
+        "name": "Name",
+        "format": "Format",
+        "created": "Created"
+      },
+      "open": "Open",
+      "empty": "No artifacts exported yet."
+    }
+  }
+}

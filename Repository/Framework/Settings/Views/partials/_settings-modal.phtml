@@ -1,0 +1,41 @@
+<div class="modal fade" id="{{ id }}" tabindex="-1" data-section="{{ section }}">
+    <div class="modal-dialog modal-dialog-scrollable{{ size_class }}">
+        <form class="modal-content"
+              method="POST"
+              action="{{ action }}"
+              novalidate
+              data-catalyst="form"
+              data-settings-modal-form
+              data-section="{{ section }}"
+              data-settings-pretest-success="{{ pretest_success_message }}"
+              data-settings-yes-label="{{ yes_label }}"
+              data-settings-no-label="{{ no_label }}"
+              data-settings-empty-label="{{ empty_label }}">
+            {{{ csrfField }}}
+            <div class="modal-header">
+                <h6 class="modal-title"><i class="{{ icon }} me-2"></i>{{ title }}</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                {{#each fields}}
+                    {{> ./_settings-modal-field }}
+                {{/each}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">{{ cancel_label }}</button>
+                {{#if pretestAction}}
+                    <button type="submit"
+                            class="btn btn-outline-primary btn-sm"
+                            data-settings-submit="pretest"
+                            formaction="{{ pretestAction }}"
+                            formmethod="post">
+                        <i class="fa-solid fa-vial-circle-check me-1"></i>{{ pretest_label }}
+                    </button>
+                {{/if}}
+                <button type="submit" class="btn btn-primary btn-sm" data-settings-submit="save"{{ save_disabled_attr }}>
+                    <i class="fa-solid fa-floppy-disk me-1"></i>{{ save_label }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,75 @@
+{
+  "common": {
+    "id": "ID",
+    "name": "Name",
+    "slug": "Slug",
+    "description": "Description",
+    "description_optional": "Description",
+    "optional": "(optional)",
+    "actions": "Actions",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "back_to_roles": "Back to Roles",
+    "back_to_permissions": "Back to Permissions",
+    "slug_hint_role": "Lowercase, hyphens only. Used in code: RoleMiddleware(roles:'admin')",
+    "slug_hint_permission": "Lowercase, hyphens only. Used in code: RoleMiddleware(permissions:'manage-users')"
+  },
+  "roles": {
+    "title": "Roles",
+    "new": "New Role",
+    "permissions_link": "Permissions",
+    "empty": "No roles defined yet.",
+    "permissions_title": "Permissions",
+    "confirm_delete": "Delete role '%s'?"
+  },
+  "form": {
+    "name_placeholder": "Administrator",
+    "slug_placeholder": "admin",
+    "submit_create": "Create Role",
+    "submit_update": "Update Role"
+  },
+  "permissions": {
+    "title": "Permissions",
+    "new": "New Permission",
+    "empty": "No permissions defined yet.",
+    "none_defined": "No permissions defined.",
+    "save": "Save Permissions",
+    "create_first": "Create permissions first.",
+    "role_label": "Role:",
+    "confirm_delete": "Delete permission '%s'?"
+  },
+  "permission_form": {
+    "name_placeholder": "Manage Users",
+    "slug_placeholder": "manage-users",
+    "submit": "Create Permission"
+  },
+  "user_roles": {
+    "title": "User Roles",
+    "role": "Role",
+    "status": "Status",
+    "action": "Action",
+    "assigned": "Assigned",
+    "not_assigned": "Not assigned",
+    "assign": "Assign",
+    "remove": "Remove",
+    "empty": "No roles defined."
+  },
+  "users": {
+    "enroll": {
+      "toolbar_label": "Enrollment policy",
+      "identity_badge": "Identity",
+      "security_badge": "Credential policy",
+      "access_badge": "Initial access",
+      "audit_note": "Administrative enrollment is validated, logged and redirected through the users catalog.",
+      "sections": {
+        "identity_title": "Identity profile",
+        "identity_description": "Register the minimum account identity required by the framework.",
+        "security_title": "Credential policy",
+        "security_description": "Assign a temporary secure password for the first login cycle.",
+        "access_title": "Initial access",
+        "access_description": "Assign the starting role and verification state for this user."
+      }
+    }
+  }
+}

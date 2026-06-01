@@ -1,0 +1,260 @@
+<div class="admin-surface admin-surface-shell operations-page operations-admin-page operations-appearance-page">
+    {{> "components._admin-page-header" }}
+
+    <form method="POST" action="/configuration/platform-appearance" enctype="multipart/form-data" data-catalyst="form" data-platform-appearance-form>
+        {{{ csrfField }}}
+        <input type="hidden" name="theme_family" value="{{ settings.theme_family }}">
+        <input type="hidden" name="default_variant" value="light">
+        <input type="hidden" name="allow_user_variant_override" value="0">
+
+        <section class="card border-0 shadow-sm">
+            <div class="card-header pb-0">
+                <ul class="nav nav-tabs card-header-tabs operations-appearance-tabs" id="appearance-tabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="appearance-customizer-tab" type="button" role="tab" data-bs-toggle="tab" data-bs-target="#appearance-customizer" aria-controls="appearance-customizer" aria-selected="true">
+                            <i class="ti ti-adjustments me-1"></i>
+                            Admin Customizer
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="appearance-branding-tab" type="button" role="tab" data-bs-toggle="tab" data-bs-target="#appearance-branding" aria-controls="appearance-branding" aria-selected="false">
+                            <i class="ti ti-file-type-pdf me-1"></i>
+                            Neutral branding runtime
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card-body tab-content">
+                <div class="tab-pane fade show active" id="appearance-customizer" role="tabpanel" aria-labelledby="appearance-customizer-tab" tabindex="0">
+                    <div class="row g-4">
+                        <div class="col-xl-4">
+                            <div class="operations-policy-card h-100">
+                                <span class="operations-card__eyebrow">Runtime policy</span>
+                                <h2 class="h4 mb-2">Admin Customizer access</h2>
+                                <p class="text-muted mb-3">
+                                    Decide whether users may control their own Inspinia shell preferences or receive one locked platform theme.
+                                </p>
+
+                                <input type="hidden" name="admin_customizer_enabled" value="0">
+                                <label class="form-check form-switch operations-policy-switch">
+                                    <input class="form-check-input" type="checkbox" name="admin_customizer_enabled" value="1" data-platform-customizer-enabled {{#if admin_customizer_enabled_checked}}checked{{/if}}>
+                                    <span class="form-check-label fw-semibold">Allow users to open Admin Customizer</span>
+                                </label>
+
+                                <div class="operations-policy-state mt-3" data-platform-policy-summary>
+                                    {{ platform_policy_summary }}
+                                </div>
+
+                                <div class="alert alert-light border mt-3 mb-0">
+                                    <strong>When disabled:</strong> the status-bar theme toggle and Admin Customizer button are hidden, and Catalyst applies the selected platform configuration to every user.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-8">
+                            <div class="operations-locked-customizer {{ platform_locked_panel_class }}" data-platform-locked-customizer>
+                                <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-3">
+                                    <div>
+                                        <span class="operations-card__eyebrow">Global fallback / locked theme</span>
+                                        <h2 class="h4 mb-1">Platform theme configuration</h2>
+                                        <p class="text-muted mb-0">
+                                            This is the same shell configuration model used by the status-bar Admin Customizer. Closed themes keep their required contrast-safe combinations.
+                                        </p>
+                                    </div>
+                                    <span class="badge text-bg-light border">Saved in appearance.json</span>
+                                </div>
+
+                                <div class="operations-customizer-section">
+                                    <h3 class="h6 fw-bold mb-3">Select Theme</h3>
+                                    <div class="row g-3 operations-customizer-grid">
+                                        {{#each skinOptions}}
+                                        <div class="col-6 col-lg-4 col-xxl-3">
+                                            <div class="form-check card-radio operations-customizer-option">
+                                                <input class="form-check-input" type="radio" name="platform_skin" id="platform-skin-{{ value }}" value="{{ value }}" data-platform-skin {{#if is_selected}}checked{{/if}}>
+                                                <label class="form-check-label p-0 w-100" for="platform-skin-{{ value }}">
+                                                    {{#if has_image}}
+                                                    <img src="{{ image_url }}" alt="{{ label }} theme" class="img-fluid">
+                                                    {{/if}}
+                                                    {{#if is_red_cross_preview}}
+                                                    <span class="catalyst-red-cross-skin-preview" aria-label="Red Cross theme preview">
+                                                        <span class="catalyst-red-cross-skin-preview__top"></span>
+                                                        <span class="catalyst-red-cross-skin-preview__body">
+                                                            <span class="catalyst-red-cross-skin-preview__side"></span>
+                                                            <span class="catalyst-red-cross-skin-preview__content"><span></span><span></span><span></span></span>
+                                                        </span>
+                                                    </span>
+                                                    {{/if}}
+                                                    {{#if is_response_preview}}
+                                                    <span class="{{ preview_class }}" aria-label="{{ label }} theme preview">
+                                                        <span class="catalyst-response-skin-preview__top"></span>
+                                                        <span class="catalyst-response-skin-preview__body">
+                                                            <span class="catalyst-response-skin-preview__side"></span>
+                                                            <span class="catalyst-response-skin-preview__content"><span></span><span></span><span></span></span>
+                                                        </span>
+                                                    </span>
+                                                    {{/if}}
+                                                </label>
+                                            </div>
+                                            <div class="operations-option-title">
+                                                <span>{{ label }}</span>
+                                                {{#if is_closed}}<small>Fixed</small>{{/if}}
+                                            </div>
+                                        </div>
+                                        {{/each}}
+                                    </div>
+                                </div>
+
+                                <div class="row g-4 mt-1">
+                                    <div class="col-lg-4 operations-customizer-section">
+                                        <h3 class="h6 fw-bold mb-3">Color Scheme</h3>
+                                        <div class="row g-3">
+                                            {{#each schemeOptions}}
+                                            <div class="col-4">
+                                                <div class="form-check card-radio operations-customizer-option">
+                                                    <input class="form-check-input" type="radio" name="platform_theme" id="platform-scheme-{{ value }}" value="{{ value }}" data-platform-theme {{#if is_selected}}checked{{/if}}>
+                                                    <label class="form-check-label p-0 w-100" for="platform-scheme-{{ value }}">
+                                                        <img src="{{ image_url }}" alt="{{ label }} scheme" class="img-fluid">
+                                                    </label>
+                                                </div>
+                                                <h5 class="fs-sm text-center text-muted mt-2 mb-0">{{ label }}</h5>
+                                            </div>
+                                            {{/each}}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 operations-customizer-section">
+                                        <h3 class="h6 fw-bold mb-3">Topbar Color</h3>
+                                        <div class="row g-3">
+                                            {{#each topbarOptions}}
+                                            <div class="col-4">
+                                                <div class="form-check card-radio operations-customizer-option">
+                                                    <input class="form-check-input" type="radio" name="platform_topbar_color" id="platform-topbar-{{ value }}" value="{{ value }}" data-platform-topbar {{#if is_selected}}checked{{/if}}>
+                                                    <label class="form-check-label p-0 w-100" for="platform-topbar-{{ value }}">
+                                                        <img src="{{ image_url }}" alt="{{ label }} topbar" class="img-fluid">
+                                                    </label>
+                                                </div>
+                                                <h5 class="fs-sm text-center text-muted mt-2 mb-0">{{ label }}</h5>
+                                            </div>
+                                            {{/each}}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 operations-customizer-section">
+                                        <h3 class="h6 fw-bold mb-3">Sidenav Color</h3>
+                                        <div class="row g-3">
+                                            {{#each sidenavOptions}}
+                                            <div class="col-4">
+                                                <div class="form-check card-radio operations-customizer-option">
+                                                    <input class="form-check-input" type="radio" name="platform_sidenav_color" id="platform-sidenav-{{ value }}" value="{{ value }}" data-platform-sidenav {{#if is_selected}}checked{{/if}}>
+                                                    <label class="form-check-label p-0 w-100" for="platform-sidenav-{{ value }}">
+                                                        <img src="{{ image_url }}" alt="{{ label }} sidenav" class="img-fluid">
+                                                    </label>
+                                                </div>
+                                                <h5 class="fs-sm text-center text-muted mt-2 mb-0">{{ label }}</h5>
+                                            </div>
+                                            {{/each}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="appearance-branding" role="tabpanel" aria-labelledby="appearance-branding-tab" tabindex="0">
+                    <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-4">
+                        <div>
+                            <h2 class="h5 mb-1">{{ t:operations.appearance.runtime_title }}</h2>
+                            <p class="text-muted mb-0">{{ t:operations.appearance.runtime_description }}</p>
+                        </div>
+                        <div class="operations-brand-preview operations-brand-preview--compact">
+                            <div class="operations-brand-preview__header">{{ t:operations.appearance.preview.title }}</div>
+                            <div class="operations-brand-preview__logos">
+                                <img src="{{ branding.logo_light_url }}" alt="{{ t:operations.appearance.preview.primary_logo_alt }}" class="operations-brand-preview__logo operations-brand-preview__logo--light">
+                                <img src="{{ branding.logo_dark_url }}" alt="{{ t:operations.appearance.preview.dark_logo_alt }}" class="operations-brand-preview__logo operations-brand-preview__logo--dark">
+                            </div>
+                            <div class="small text-muted">{{ t:operations.appearance.preview.favicon }}: <code>{{ branding.favicon_url }}</code></div>
+                        </div>
+                    </div>
+
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <label for="brand_name" class="form-label">{{ t:operations.appearance.fields.brand_name }}</label>
+                            <input id="brand_name" type="text" class="form-control" name="brand_name" maxlength="120" value="{{ settings.brand_name }}">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="brand_short_name" class="form-label">{{ t:operations.appearance.fields.brand_short_name }}</label>
+                            <input id="brand_short_name" type="text" class="form-control" name="brand_short_name" maxlength="12" value="{{ settings.brand_short_name }}">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="brand_tagline" class="form-label">{{ t:operations.appearance.fields.brand_tagline }}</label>
+                            <input id="brand_tagline" type="text" class="form-control" name="brand_tagline" maxlength="120" value="{{ settings.brand_tagline }}">
+                        </div>
+
+                        <div class="col-lg-4">
+                            <label for="logo_primary_path" class="form-label">{{ t:operations.appearance.fields.logo_primary_path }}</label>
+                            <input id="logo_primary_path" type="text" class="form-control" name="logo_primary_path" value="{{ settings.logo_primary_path }}" placeholder="{{ t:operations.appearance.fields.asset_path_placeholder }}">
+                            <div class="form-text">{{ t:operations.appearance.fields.logo_primary_help }}</div>
+                            <input type="file" class="form-control mt-2" name="logo_primary_file" accept=".png,.jpg,.jpeg,.svg,.webp">
+                            <label class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" name="reset_logo_primary" value="1">
+                                <span class="form-check-label">{{ t:operations.appearance.fields.reset_logo_primary }}</span>
+                            </label>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <label for="logo_dark_path" class="form-label">{{ t:operations.appearance.fields.logo_dark_path }}</label>
+                            <input id="logo_dark_path" type="text" class="form-control" name="logo_dark_path" value="{{ settings.logo_dark_path }}" placeholder="{{ t:operations.appearance.fields.asset_path_placeholder }}">
+                            <div class="form-text">{{ t:operations.appearance.fields.logo_dark_help }}</div>
+                            <input type="file" class="form-control mt-2" name="logo_dark_file" accept=".png,.jpg,.jpeg,.svg,.webp">
+                            <label class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" name="reset_logo_dark" value="1">
+                                <span class="form-check-label">{{ t:operations.appearance.fields.reset_logo_dark }}</span>
+                            </label>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <label for="favicon_path" class="form-label">{{ t:operations.appearance.fields.favicon_path }}</label>
+                            <input id="favicon_path" type="text" class="form-control" name="favicon_path" value="{{ settings.favicon_path }}" placeholder="{{ t:operations.appearance.fields.asset_path_placeholder }}">
+                            <div class="form-text">{{ t:operations.appearance.fields.favicon_help }}</div>
+                            <input type="file" class="form-control mt-2" name="favicon_file" accept=".png,.jpg,.jpeg,.svg,.webp">
+                            <label class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" name="reset_favicon" value="1">
+                                <span class="form-check-label">{{ t:operations.appearance.fields.reset_favicon }}</span>
+                            </label>
+                        </div>
+
+                        <div class="col-12"><hr class="my-0"></div>
+
+                        <div class="col-md-3">
+                            <label class="form-label fw-semibold small d-block">{{ t:operations.appearance.fields.pdf_watermark }}</label>
+                            <label class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" name="pdf_watermark_enabled" value="1" {{#if settings.pdf_watermark_enabled_checked}}checked{{/if}}>
+                                <span class="form-check-label">{{ t:operations.appearance.fields.pdf_watermark_enabled }}</span>
+                            </label>
+                        </div>
+                        <div class="col-md-5">
+                            <label for="pdf_watermark_text" class="form-label">{{ t:operations.appearance.fields.pdf_watermark_text }}</label>
+                            <input id="pdf_watermark_text" type="text" class="form-control" name="pdf_watermark_text" maxlength="80" value="{{ settings.pdf_watermark_text }}">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="pdf_watermark_font_size" class="form-label">{{ t:ui.labels.font_size }}</label>
+                            <input id="pdf_watermark_font_size" type="number" min="24" max="96" class="form-control" name="pdf_watermark_font_size" value="{{ settings.pdf_watermark_font_size }}">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="pdf_watermark_color" class="form-label">{{ t:ui.labels.color }}</label>
+                            <input id="pdf_watermark_color" type="text" class="form-control" name="pdf_watermark_color" value="{{ settings.pdf_watermark_color }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 d-flex gap-2 flex-wrap mt-4">
+                    <button type="submit" class="btn btn-primary">{{ t:operations.appearance.actions.save }}</button>
+                    <button type="button" class="btn btn-outline-secondary" data-catalyst-href="/">{{ t:operations.appearance.actions.open_runtime }}</button>
+                    <button type="button" class="btn btn-outline-secondary" data-catalyst-href="/workspaces/document-templates">{{ t:operations.appearance.actions.open_documents }}</button>
+                </div>
+            </div>
+        </section>
+    </form>
+</div>

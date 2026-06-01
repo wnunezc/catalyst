@@ -1,0 +1,72 @@
+<main class="dashboard-surface catalyst-demo-surface" data-public-route="dashboard">
+    <section class="dashboard-surface__hero">
+        <div class="dashboard-surface__copy catalyst-demo-hero__copy">
+            <div class="dashboard-surface__tags">
+                <span class="catalyst-demo-eyebrow">{{ page.eyebrow }}</span>
+                <span class="catalyst-demo-badge">{{ page.badge }}</span>
+            </div>
+            <h1>{{ page.headline }}</h1>
+            <p class="catalyst-demo-lead">{{ page.lead }}</p>
+        </div>
+        <aside class="dashboard-surface__period catalyst-demo-card">
+            <span>{{ page.periodLabel }}</span>
+            <strong>Q2 · 2026</strong>
+            <div class="dashboard-surface__sparkline" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+        </aside>
+    </section>
+
+    <section class="dashboard-surface__metrics" aria-label="{{ page.modulesTitle }}">
+        {{#each page.metrics}}
+        <article class="dashboard-surface__metric catalyst-demo-card">
+            <span>{{ label }}</span>
+            <strong>{{ value }}</strong>
+            <small>{{ delta }}</small>
+        </article>
+        {{/each}}
+    </section>
+
+    <section class="dashboard-surface__workspace">
+        <article class="dashboard-surface__panel dashboard-surface__panel--wide catalyst-demo-card">
+            <div class="dashboard-surface__panel-header">
+                <h2>{{ page.pipelineTitle }}</h2>
+                <span>{{ page.pipelineBadge }}</span>
+            </div>
+            <div class="dashboard-surface__pipeline">
+                {{#each page.pipeline}}
+                <div class="dashboard-surface__pipeline-row">
+                    <div>
+                        <span>{{ label }}</span>
+                        <strong>{{ value }}</strong>
+                    </div>
+                    <span class="dashboard-surface__bar"><span class="{{ barClass }}"></span></span>
+                </div>
+                {{/each}}
+            </div>
+        </article>
+
+        <article class="dashboard-surface__panel catalyst-demo-card">
+            <div class="dashboard-surface__panel-header">
+                <h2>{{ page.activityTitle }}</h2>
+                <span>{{ page.activityBadge }}</span>
+            </div>
+            <div class="dashboard-surface__activity">
+                {{#each page.activity}}
+                <div>
+                    <span>{{ time }}</span>
+                    <p>{{ event }}</p>
+                </div>
+                {{/each}}
+            </div>
+        </article>
+    </section>
+
+    <section class="dashboard-surface__modules" aria-label="{{ page.modulesTitle }}">
+        {{#each page.modules}}
+        <article class="catalyst-demo-card">
+            <span>{{ status }}</span>
+            <h2>{{ title }}</h2>
+            <p>{{ body }}</p>
+        </article>
+        {{/each}}
+    </section>
+</main>

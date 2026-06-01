@@ -1,0 +1,94 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Catalyst\Framework\Cli\Commands;
+
+use Catalyst\Framework\Argument\ArgumentBag;
+use Catalyst\Framework\Argument\Option;
+use Catalyst\Framework\Argument\Parameter;
+use Catalyst\Framework\Cli\AbstractCommand;
+use Catalyst\Framework\Module\ModuleScaffoldService;
+use InvalidArgumentException;
+use RuntimeException;
+
+class MakeModuleCommand extends AbstractCommand
+{
+    public function getName(): string
+    {
+        return 'make:module';
+    }
+
+    public function getDescription(): string
+    {
+        return 'Scaffold a full module structure plus module manifest in Repository/{App|Framework}/';
+    }
+
+    /** @return Option[] */
+    public function getOptions(): array
+    {
+        return [
+            new Option(
+                's',
+                'space',
+                'App',
+                false,
+                'Target repository space: App or Framework',
+                true
+            ),
+            new Option(null, 'description', '', false, 'Registry-facing module description', true),
+            new Option(null, 'surface', null, false, 'Surface type: none, public, workspace, administration, devtools', true),
+            new Option(null, 'permission', '', false, 'Optional permission slug to declare in the manifest', true),
+            new Option(null, 'settings', '', false, 'Comma-separated settings sections for the manifest', true),
+            new Option(null, 'feature-flags', '', false, 'Comma-separated feature flags for the manifest', true),
+        ];
+    }
+
+    /** @return Parameter[] */
+    public function getParameters(): array
+    {
+        return [
+            new Parameter(
+                0,
+                null,
+                true,
+                null,
+                'Name',
+                'Module name (e.g. Catalog)'
+            ),
+        ];
+    }
+
+    public function execute(ArgumentBag $args): int
+    {
+        $service = new ModuleScaffoldService();
+
+        try {
+            $result = $service->create([
+                'module' => (string) ($args->getParameterValue(0) ?? ''),
+                'space' => (string) ($args->getOptionValue('space') ?? $args->getOptionValue('s') ?? 'App'),
+                'description' => (string) ($args->getOptionValue('description') ?? ''),
+                'surface' => (string) ($args->getOptionValue('surface') ?? ''),
+                'permission_slug' => (string) ($args->getOptionValue('permission') ?? ''),
+                'settings' => (string) ($args->getOptionValue('settings') ?? ''),
+                'feature_flags' => (string) ($args->getOptionValue('feature-flags') ?? ''),
+            ]);
+        } catch (InvalidArgumentException|RuntimeException $e) {
+            $this->error($e->getMessage());
+            $this->line('Usage: php cli.php make:module <Name> [--space=App] [--surface=public]');
+
+            return 1;
+        }
+
+        $this->success('Module created → ' . $result['base_dir']);
+        $this->line('  Space      : ' . $result['space']);
+        $this->line('  Surface    : ' . $result['surface']);
+        $this->line('  Namespace  : ' . $result['namespace_root']);
+        $this->line('  Route      : /' . $result['route_uri']);
+        $this->line('  View key   : ' . $result['view_namespace']);
+        $this->line('  Manifest   : ' . $result['base_dir'] . DS . 'module.php');
+        $this->line('');
+
+        return 0;
+    }
+}

@@ -1,0 +1,56 @@
+<div class="col-12">
+    <div class="section-card">
+        <div class="card-header"><i class="fa-solid fa-file-arrow-up me-2"></i>{{ t:devtools.file_upload.title }}</div>
+        <div class="card-body">
+            <div class="row g-4">
+                <div class="col-12 col-lg-6">
+                    <p class="text-muted small mb-3">
+                        {{ t:devtools.file_upload.description }}
+                        <code>public/uploads/devtools/</code>.
+                    </p>
+                    <form id="u17-form" class="row g-3" method="POST" action="/test-features/upload" enctype="multipart/form-data" data-catalyst="form">
+                        {{{ upload_csrf_field }}}
+                        <div class="col-12">
+                            <label class="form-label form-label-sm">{{ t:devtools.file_upload.attachment }}</label>
+                            <input
+                                type="file"
+                                class="form-control form-control-sm"
+                                id="u17-file"
+                                name="attachment"
+                                accept=".jpg,.jpeg,.png,.pdf"
+                            >
+                            <div class="form-text small">{{ t:devtools.file_upload.allowed }}</div>
+                        </div>
+                        <div class="col-12 d-flex gap-2">
+                            <button type="submit" class="btn btn-sm btn-primary" id="u17-btn-upload">
+                                <i class="fa-solid fa-upload me-1"></i>{{ t:devtools.file_upload.actions.upload }}
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" id="u17-btn-clear">
+                                {{ t:devtools.file_upload.actions.clear }}
+                            </button>
+                        </div>
+                    </form>
+                    <div id="u17-result" class="d-none mt-3">
+                        <hr class="my-2">
+                        <div id="u17-errors" class="d-none"></div>
+                        <pre id="u17-result-pre" class="code-pre d-none mb-0"></pre>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                    <p class="text-muted small fw-semibold mb-2">{{ t:devtools.file_upload.validation_rules }}</p>
+                    <pre class="small bg-body-tertiary border p-2 rounded mb-3">attachment => 'file|mimes:jpg,jpeg,png,pdf|max_size:2048'</pre>
+                    <p class="text-muted small fw-semibold mb-2">{{ t:devtools.file_upload.endpoint }}</p>
+                    <code class="small">POST /test-features/upload</code>
+                    <p class="text-muted small mt-3 mb-1">{{ t:devtools.file_upload.success_payload }}</p>
+                    <pre class="small bg-body-tertiary border p-2 rounded mb-0">{
+  "stored_path": "uploads/devtools/{uuid}.{ext}",
+  "url": "/uploads/devtools/{uuid}.{ext}",
+  "mime": "detected/mime",
+  "size_bytes": 12345
+}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

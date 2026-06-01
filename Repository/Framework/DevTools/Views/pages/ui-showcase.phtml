@@ -1,0 +1,358 @@
+<div class="ui-showcase">
+    <section class="ui-catalog-head card border-0 shadow-sm mb-3">
+        <div class="card-body">
+            <div class="ui-catalog-head__row">
+                <div class="ui-catalog-head__copy">
+                    <div class="ui-catalog-head__eyebrow">{{ t:devtools.ui_showcase.eyebrow }}</div>
+                    <h1 class="ui-catalog-head__title">{{ title }}</h1>
+                    <p class="ui-catalog-head__lede mb-0">
+                        {{ t:devtools.ui_showcase.description }}
+                    </p>
+                </div>
+
+                <div class="ui-catalog-head__actions">
+                    <button type="button" class="btn btn-sm btn-primary" data-catalyst-href="/users/roles">
+                        <i class="ti ti-shield-lock me-1"></i>{{ t:devtools.ui_showcase.actions.roles }}
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" data-catalyst-href="/users/permissions">
+                        <i class="ti ti-key me-1"></i>{{ t:devtools.ui_showcase.actions.permissions }}
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" data-catalyst-href="/test-features">
+                        <i class="ti ti-flask me-1"></i>{{ t:devtools.ui_showcase.actions.devtools }}
+                    </button>
+                </div>
+            </div>
+
+            <div class="ui-catalog-head__chips">
+                <span class="ui-chip">{{ t:devtools.ui_showcase.chips.crud_density }}</span>
+                <span class="ui-chip">{{ t:devtools.ui_showcase.chips.filters_first }}</span>
+                <span class="ui-chip">{{ t:devtools.ui_showcase.chips.honest_placeholders }}</span>
+                <span class="ui-chip">{{ t:devtools.ui_showcase.chips.responsive_shell }}</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="row g-3">
+        <div class="col-12 col-xl-8">
+            <div class="vstack gap-3">
+                <section id="catalog-toolbar" class="card ui-surface-card">
+                    <div class="card-header">
+                        <div class="ui-section-head">
+                            <div>
+                                <h2 class="ui-section-title mb-1">{{ t:devtools.ui_showcase.toolbar.title }}</h2>
+                                <p class="ui-section-subtitle mb-0">{{ t:devtools.ui_showcase.toolbar.description }}</p>
+                            </div>
+                            <div class="ui-section-kicker">{{ t:devtools.ui_showcase.toolbar.kicker }}</div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="ui-toolbar">
+                            <div class="ui-toolbar__search">
+                                <label class="visually-hidden" for="showcase-search">{{ t:devtools.ui_showcase.toolbar.search_label }}</label>
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text"><i class="ti ti-search"></i></span>
+                                    <input id="showcase-search" type="search" class="form-control" placeholder="{{ t:devtools.ui_showcase.toolbar.search_placeholder }}">
+                                </div>
+                            </div>
+
+                            <div class="ui-toolbar__filters">
+                                <select class="form-select form-select-sm" aria-label="{{ t:devtools.ui_showcase.toolbar.module_context }}">
+                                    <option selected>{{ t:devtools.ui_showcase.options.framework }}</option>
+                                    <option>{{ t:devtools.ui_showcase.options.repository_app }}</option>
+                                    <option>{{ t:devtools.ui_showcase.options.devtools }}</option>
+                                </select>
+                                <select class="form-select form-select-sm" aria-label="{{ t:devtools.ui_showcase.toolbar.runtime_state }}">
+                                    <option selected>{{ t:devtools.ui_showcase.options.active }}</option>
+                                    <option>{{ t:devtools.ui_showcase.options.pending }}</option>
+                                    <option>{{ t:devtools.ui_showcase.options.disabled }}</option>
+                                </select>
+                                <button type="button" class="btn btn-sm btn-outline-secondary">
+                                    <i class="ti ti-adjustments-horizontal me-1"></i>{{ t:devtools.ui_showcase.toolbar.advanced }}
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="ui-filter-chips">
+                            <span class="ui-filter-chip">{{ t:devtools.ui_showcase.toolbar.scope_chip }}</span>
+                            <span class="ui-filter-chip">{{ t:devtools.ui_showcase.toolbar.density_chip }}</span>
+                            <span class="ui-filter-chip">{{ t:devtools.ui_showcase.toolbar.active_chip }}</span>
+                            <button type="button" class="btn btn-outline-secondary btn-sm">{{ t:devtools.ui_showcase.toolbar.clear_filters }}</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="catalog-table" class="card ui-surface-card">
+                    <div class="card-header">
+                        <div class="ui-section-head">
+                            <div>
+                                <h2 class="ui-section-title mb-1">{{ t:devtools.ui_showcase.listing.title }}</h2>
+                                <p class="ui-section-subtitle mb-0">{{ t:devtools.ui_showcase.listing.description }}</p>
+                            </div>
+                            <div class="d-flex gap-2 flex-wrap">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">
+                                    <i class="ti ti-download me-1"></i>{{ t:devtools.ui_showcase.listing.export }}
+                                </button>
+                                <button type="button" class="btn btn-sm btn-primary">
+                                    <i class="ti ti-plus me-1"></i>{{ t:devtools.ui_showcase.listing.new_record }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="ui-bulkbar">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="showcase-select-all">
+                                <label class="form-check-label" for="showcase-select-all">{{ t:devtools.ui_showcase.listing.select_all }}</label>
+                            </div>
+                            <div class="ui-bulkbar__actions">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">{{ t:devtools.ui_showcase.listing.enable }}</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary">{{ t:devtools.ui_showcase.listing.disable }}</button>
+                                <button type="button" class="btn btn-sm btn-outline-danger">{{ t:devtools.ui_showcase.listing.archive }}</button>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table align-middle mb-0 ui-admin-table">
+                                <thead>
+                                    <tr>
+                                        <th class="ui-admin-table__check"></th>
+                                        <th>{{ t:devtools.ui_showcase.listing.columns.resource }}</th>
+                                        <th>{{ t:devtools.ui_showcase.listing.columns.scope }}</th>
+                                        <th>{{ t:devtools.ui_showcase.listing.columns.status }}</th>
+                                        <th>{{ t:devtools.ui_showcase.listing.columns.owner }}</th>
+                                        <th>{{ t:devtools.ui_showcase.listing.columns.updated }}</th>
+                                        <th class="text-end">{{ t:devtools.ui_showcase.listing.columns.actions }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input class="form-check-input" type="checkbox" aria-label="{{ t:devtools.ui_showcase.listing.select_roles }}"></td>
+                                        <td>
+                                            <div class="fw-semibold">{{ t:devtools.ui_showcase.records.roles.title }}</div>
+                                            <div class="small text-muted">{{ t:devtools.ui_showcase.records.roles.description }}</div>
+                                        </td>
+                                        <td><span class="badge text-bg-light border">{{ t:devtools.ui_showcase.options.framework }}</span></td>
+                                        <td><span class="badge text-bg-success">{{ t:devtools.ui_showcase.options.active }}</span></td>
+                                        <td class="small text-muted">{{ t:devtools.ui_showcase.records.roles.owner }}</td>
+                                        <td class="small text-muted">{{ t:devtools.ui_showcase.records.roles.updated }}</td>
+                                        <td class="text-end">
+                                            <div class="btn-group btn-group-sm">
+                                                <button type="button" class="btn btn-outline-secondary" data-catalyst-href="/users/roles">{{ t:devtools.ui_showcase.records.roles.open }}</button>
+                                                <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <span class="visually-hidden">{{ t:devtools.ui_showcase.records.roles.toggle_actions }}</span>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item" href="/users/roles">{{ t:devtools.ui_showcase.records.roles.view }}</a></li>
+                                                    <li><a class="dropdown-item" href="/users/permissions">{{ t:devtools.ui_showcase.records.roles.permissions }}</a></li>
+                                                    <li><span class="dropdown-item disabled">{{ t:devtools.ui_showcase.records.roles.account_pending }}</span></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input class="form-check-input" type="checkbox" aria-label="{{ t:devtools.ui_showcase.listing.select_permissions }}"></td>
+                                        <td>
+                                            <div class="fw-semibold">{{ t:devtools.ui_showcase.records.permissions.title }}</div>
+                                            <div class="small text-muted">{{ t:devtools.ui_showcase.records.permissions.description }}</div>
+                                        </td>
+                                        <td><span class="badge text-bg-light border">{{ t:devtools.ui_showcase.options.framework }}</span></td>
+                                        <td><span class="badge text-bg-success">{{ t:devtools.ui_showcase.options.active }}</span></td>
+                                        <td class="small text-muted">{{ t:devtools.ui_showcase.records.permissions.owner }}</td>
+                                        <td class="small text-muted">{{ t:devtools.ui_showcase.records.permissions.updated }}</td>
+                                        <td class="text-end">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary" data-catalyst-href="/users/permissions">{{ t:devtools.ui_showcase.records.permissions.open }}</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input class="form-check-input" type="checkbox" aria-label="{{ t:devtools.ui_showcase.listing.select_ui_showcase }}"></td>
+                                        <td>
+                                            <div class="fw-semibold">{{ t:devtools.ui_showcase.records.showcase.title }}</div>
+                                            <div class="small text-muted">{{ t:devtools.ui_showcase.records.showcase.description }}</div>
+                                        </td>
+                                        <td><span class="badge text-bg-light border">{{ t:devtools.ui_showcase.options.devtools }}</span></td>
+                                        <td><span class="badge text-bg-warning text-dark">{{ t:devtools.ui_showcase.records.showcase.status }}</span></td>
+                                        <td class="small text-muted">{{ t:devtools.ui_showcase.records.showcase.owner }}</td>
+                                        <td class="small text-muted">{{ t:devtools.ui_showcase.records.showcase.updated }}</td>
+                                        <td class="text-end">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary" data-catalyst-href="/test-features/ui-showcase">{{ t:devtools.ui_showcase.records.showcase.refresh }}</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="row g-3">
+                    <div class="col-12 col-lg-7">
+                        <section id="catalog-form" class="card ui-surface-card h-100">
+                            <div class="card-header">
+                                <div class="ui-section-head">
+                                    <div>
+                                        <h2 class="ui-section-title mb-1">{{ t:devtools.ui_showcase.form.title }}</h2>
+                                        <p class="ui-section-subtitle mb-0">{{ t:devtools.ui_showcase.form.description }}</p>
+                                    </div>
+                                    <div class="ui-section-kicker">{{ t:devtools.ui_showcase.form.kicker }}</div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form class="row g-3">
+                                    <div class="col-12">
+                                        <label class="form-label small text-muted" for="showcase-display-name">{{ t:devtools.ui_showcase.form.labels.display_name }}</label>
+                                        <input id="showcase-display-name" type="text" class="form-control form-control-sm" value="{{ t:devtools.ui_showcase.form.values.display_name }}">
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <label class="form-label small text-muted" for="showcase-context">{{ t:devtools.ui_showcase.form.labels.context }}</label>
+                                        <select id="showcase-context" class="form-select form-select-sm">
+                                            <option selected>{{ t:devtools.ui_showcase.options.framework }}</option>
+                                            <option>{{ t:devtools.ui_showcase.options.repository_app }}</option>
+                                            <option>{{ t:devtools.ui_showcase.options.devtools }}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <label class="form-label small text-muted" for="showcase-density">{{ t:devtools.ui_showcase.form.labels.density }}</label>
+                                        <select id="showcase-density" class="form-select form-select-sm">
+                                            <option>{{ t:devtools.ui_showcase.form.options.relaxed }}</option>
+                                            <option selected>{{ t:devtools.ui_showcase.form.options.compact }}</option>
+                                            <option>{{ t:devtools.ui_showcase.form.options.ultra_compact }}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label small text-muted" for="showcase-notes">{{ t:devtools.ui_showcase.form.labels.notes }}</label>
+                                        <textarea id="showcase-notes" class="form-control form-control-sm" rows="4">{{ t:devtools.ui_showcase.form.values.notes }}</textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <fieldset class="ui-inline-fieldset">
+                                            <legend class="small text-muted mb-2">{{ t:devtools.ui_showcase.form.labels.release_posture }}</legend>
+                                            <div class="d-flex flex-wrap gap-3">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="showcase-scope" id="showcase-scope-dev" checked>
+                                                    <label class="form-check-label" for="showcase-scope-dev">{{ t:devtools.ui_showcase.form.options.dev_only }}</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="showcase-scope" id="showcase-scope-stage">
+                                                    <label class="form-check-label" for="showcase-scope-stage">{{ t:devtools.ui_showcase.form.options.stage_candidate }}</label>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-12 d-flex gap-2 flex-wrap">
+                                        <button type="button" class="btn btn-sm btn-primary">
+                                            <i class="ti ti-device-floppy me-1"></i>{{ t:devtools.ui_showcase.form.actions.save }}
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">
+                                            <i class="ti ti-rotate-2 me-1"></i>{{ t:devtools.ui_showcase.form.actions.reset }}
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-outline-dark">
+                                            <i class="ti ti-eye me-1"></i>{{ t:devtools.ui_showcase.form.actions.preview }}
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-12 col-lg-5">
+                        <section id="catalog-states" class="card ui-surface-card h-100">
+                            <div class="card-header">
+                                <div class="ui-section-head">
+                                    <div>
+                                        <h2 class="ui-section-title mb-1">{{ t:devtools.ui_showcase.states.title }}</h2>
+                                        <p class="ui-section-subtitle mb-0">{{ t:devtools.ui_showcase.states.description }}</p>
+                                    </div>
+                                    <div class="ui-section-kicker">{{ t:devtools.ui_showcase.states.kicker }}</div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex flex-wrap gap-2 mb-3">
+                                    <span class="badge text-bg-success">{{ t:devtools.ui_showcase.states.badges.published }}</span>
+                                    <span class="badge text-bg-warning text-dark">{{ t:devtools.ui_showcase.states.badges.pending }}</span>
+                                    <span class="badge text-bg-danger">{{ t:devtools.ui_showcase.states.badges.blocked }}</span>
+                                    <span class="badge text-bg-info text-dark">{{ t:devtools.ui_showcase.states.badges.experimental }}</span>
+                                    <span class="badge text-bg-light border text-dark">{{ t:devtools.ui_showcase.states.badges.dev_only }}</span>
+                                </div>
+
+                                <div class="vstack gap-2 ui-alert-stack mb-3">
+                                    <div class="alert alert-success py-2 px-3 mb-0" role="alert">{{ t:devtools.ui_showcase.states.alerts.saved }}</div>
+                                    <div class="alert alert-warning py-2 px-3 mb-0" role="alert">{{ t:devtools.ui_showcase.states.alerts.pending_backend }}</div>
+                                    <div class="alert alert-secondary py-2 px-3 mb-0" role="alert">{{ t:devtools.ui_showcase.states.alerts.no_fake_routes }}</div>
+                                </div>
+
+                                <div class="ui-empty-state">
+                                    <span class="ui-empty-state__icon">
+                                        <i class="ti ti-layout-grid-add"></i>
+                                    </span>
+                                    <h3 class="h6 mb-1">{{ t:devtools.ui_showcase.states.empty.title }}</h3>
+                                    <p class="text-muted mb-3">
+                                        {{ t:devtools.ui_showcase.states.empty.description }}
+                                    </p>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" data-catalyst-href="/test-features">{{ t:devtools.ui_showcase.states.empty.back }}</button>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-xl-4">
+            <div class="vstack gap-3">
+                <section class="card ui-rail-card">
+                    <div class="card-header">
+                        <h2 class="ui-section-title mb-0">{{ t:devtools.ui_showcase.rail.index_title }}</h2>
+                    </div>
+                    <div class="card-body">
+                        <nav aria-label="{{ t:devtools.ui_showcase.rail.showcase_sections }}">
+                            <ul class="ui-rail-list mb-0">
+                                <li><a href="#catalog-toolbar">{{ t:devtools.ui_showcase.toolbar.title }}</a></li>
+                                <li><a href="#catalog-table">{{ t:devtools.ui_showcase.listing.title }}</a></li>
+                                <li><a href="#catalog-form">{{ t:devtools.ui_showcase.form.title }}</a></li>
+                                <li><a href="#catalog-states">{{ t:devtools.ui_showcase.states.title }}</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </section>
+
+                <section class="card ui-rail-card">
+                    <div class="card-header">
+                        <h2 class="ui-section-title mb-0">{{ t:devtools.ui_showcase.rail.density_rules_title }}</h2>
+                    </div>
+                    <div class="card-body">
+                        <ul class="ui-rail-bullets mb-0">
+                            <li>{{ t:devtools.ui_showcase.rail.rules.small_controls }}</li>
+                            <li>{{ t:devtools.ui_showcase.rail.rules.filters_above }}</li>
+                            <li>{{ t:devtools.ui_showcase.rail.rules.badges }}</li>
+                            <li>{{ t:devtools.ui_showcase.rail.rules.honest_placeholders }}</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="card ui-rail-card">
+                    <div class="card-header">
+                        <h2 class="ui-section-title mb-0">{{ t:devtools.ui_showcase.rail.migration_checklist_title }}</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="ui-checklist">
+                            <div class="ui-checklist__item">
+                                <i class="ti ti-check text-success"></i>
+                                <span>{{ t:devtools.ui_showcase.rail.checklist.backoffice_ready }}</span>
+                            </div>
+                            <div class="ui-checklist__item">
+                                <i class="ti ti-check text-success"></i>
+                                <span>{{ t:devtools.ui_showcase.rail.checklist.auth_real }}</span>
+                            </div>
+                            <div class="ui-checklist__item">
+                                <i class="ti ti-loader-2 text-warning"></i>
+                                <span>{{ t:devtools.ui_showcase.rail.checklist.account_placeholder }}</span>
+                            </div>
+                            <div class="ui-checklist__item">
+                                <i class="ti ti-arrow-right text-primary"></i>
+                                <span>{{ t:devtools.ui_showcase.rail.checklist.next_target }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>

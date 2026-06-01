@@ -1,0 +1,41 @@
+<div class="ui-showcase uml-showcase">
+    {{> "../partials/uml/_header" }}
+
+    <div class="row g-3">
+        <div class="col-12 col-xl-9">
+            <section class="card ui-surface-card uml-shell">
+                <div class="card-header">
+                    <div class="ui-section-head">
+                        <div>
+                            <h2 class="ui-section-title mb-1">{{ t:uml.shell.title }}</h2>
+                            <p class="ui-section-subtitle mb-0">
+                                {{ t:uml.shell.description }}
+                            </p>
+                        </div>
+                        <div class="ui-section-kicker">{{ t:uml.shell.kicker }}</div>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <nav class="uml-nav-tabbar" role="tablist" aria-label="{{ t:uml.shell.aria_label }}">
+                        {{#each uml_tabs}}
+                        <button
+                            id="{{ this.button_id }}"
+                            class="uml-nav-tab{{#if this.active}} active{{/if}}"
+                            data-tab="{{ this.slug }}"
+                            role="tab"
+                            aria-selected="{{ this.aria_selected }}"
+                            aria-controls="{{ this.panel_id }}"
+                            tabindex="{{ this.tabindex }}"
+                        >{{ this.label }}</button>
+                        {{/each}}
+                    </nav>
+                    {{> "../partials/uml/_tab-panels" }}
+                </div>
+            </section>
+        </div>
+
+        <div class="col-12 col-xl-3">
+            {{> "../partials/uml/_rail" }}
+        </div>
+    </div>
+</div>

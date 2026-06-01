@@ -1,0 +1,50 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\{{Module}}\Requests;
+
+use Catalyst\Framework\Authorization\AbilitySubject;
+use Catalyst\Framework\Authorization\Gate;
+use Catalyst\Framework\Http\FormRequest;
+
+final class {{RequestClass}} extends FormRequest
+{
+    public function authorize(): bool
+    {
+        $ability = (int) ($this->route('id') ?? 0) > 0 ? 'update' : 'create';
+
+        return Gate::getInstance()->allows($ability, AbilitySubject::make('{{ResourceKey}}'));
+    }
+
+    /**
+     * @return string[]
+     */
+    public function only(): array
+    {
+        return {{OnlyFields}};
+    }
+
+    /**
+     * @return array<string, string|array<int, string>>
+     */
+    public function rules(): array
+    {
+        $rules = {{Rules}};
+        $recordId = (int) ($this->route('id') ?? 0);
+
+        if ($recordId > 0 && isset($rules['slug']) && is_string($rules['slug']) && str_contains($rules['slug'], '|unique:')) {
+            $rules['slug'] .= ',' . $recordId . ',id';
+        }
+
+        return $rules;
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function labels(): array
+    {
+        return {{Labels}};
+    }
+}

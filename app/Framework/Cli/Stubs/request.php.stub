@@ -1,0 +1,26 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{namespace}};
+
+use Catalyst\Framework\Http\FormRequest;
+
+class {{ClassName}} extends FormRequest
+{
+    /**
+     * @return array<string, string|array<int, string>>
+     */
+    public function rules(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function labels(): array
+    {
+        return [];
+    }
+}

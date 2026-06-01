@@ -1,0 +1,223 @@
+{
+  "module": {
+    "description": "Reusable internal automation rules with workflow lifecycle, queue/schedule execution, logs and version history.",
+    "permission_label": "Manage Automation Rules",
+    "permission_description": "Create, activate, execute, version and restore internal automation rules.",
+    "navigation_label": "Automation Rules",
+    "navigation_hint": "Internal rules for event bus, scheduler, queue and workflow.",
+    "breadcrumb_create": "Create Rule",
+    "breadcrumb_edit": "Edit Rule",
+    "breadcrumb_show": "Rule Detail"
+  },
+  "index": {
+    "title": "Automation Rules",
+    "description": "Internal rules over events, scheduler and the framework reusable workflow.",
+    "hero_lede": "Internal rules over event bus, scheduler and reusable workflow, with real execution, persisted logs and version restore.",
+    "empty": {
+      "title": "No automation rules yet",
+      "description": "Create the first internal rule to react to framework events, schedules or workflow transitions.",
+      "action": "Create rule"
+    },
+    "columns": {
+      "rule": "Rule",
+      "trigger": "Trigger",
+      "action": "Action",
+      "workflow": "Workflow",
+      "validity": "Validity",
+      "last_run": "Last run",
+      "updated": "Updated"
+    },
+    "filters": {
+      "trigger": "Trigger",
+      "workflow_state": "Workflow state",
+      "validity": "Validity"
+    },
+    "triggers": {
+      "event": "Event",
+      "schedule": "Schedule"
+    },
+    "states": {
+      "draft": "Draft",
+      "active": "Active",
+      "paused": "Paused",
+      "archived": "Archived"
+    },
+    "validity": {
+      "active": "Active",
+      "scheduled": "Scheduled",
+      "expired": "Expired"
+    },
+    "actions": {
+      "view": "View",
+      "edit": "Edit",
+      "run": "Run",
+      "delete": "Delete",
+      "confirm_delete": "Delete automation rule \"%s\"?"
+    },
+    "search_placeholder": "Search by name, slug, event or description"
+  },
+  "form_page": {
+    "eyebrow": "Automation",
+    "create_title": "Create Automation Rule",
+    "edit_title": "Edit Automation Rule",
+    "hero_lede_create": "Connect existing events or schedules with real framework actions.",
+    "hero_lede_edit": "Adjust trigger, conditions, and action payload while keeping workflow, logs, and versioning.",
+    "labels": {
+      "rule_name": "Rule name",
+      "rule_slug": "Rule slug",
+      "description": "Description",
+      "trigger_type": "Trigger type",
+      "event_name": "Event name",
+      "cron_expression": "Cron expression",
+      "condition_json": "Condition JSON",
+      "action_type": "Action type",
+      "action_payload_json": "Action payload JSON",
+      "valid_from": "Valid from",
+      "valid_to": "Valid to"
+    },
+    "placeholders": {
+      "rule_name": "Notify approver on submission",
+      "rule_slug": "notify-approver-on-submission",
+      "event_name": "framework.workflow.transition-completed",
+      "cron_expression": "*/10 * * * *",
+      "valid_from": "2026-05-20 08:00:00",
+      "valid_to": "2026-06-20 18:00:00"
+    },
+    "help": {
+      "event_name": "Required for event triggers. The wildcard listener consumes the framework event bus.",
+      "cron_expression": "Required for schedule triggers. Uses the existing scheduler cadence.",
+      "condition_json": "Map dotted paths to expected values. Example: {\"payload.to_state\":[\"approved\",\"archived\"]}",
+      "action_payload_json": "Notification: {\"title\":\"...\",\"body\":\"...\",\"target_path\":\"payload.actor_id\"}. Workflow: {\"resource_key\":\"document-templates\",\"record_id_path\":\"payload.record_id\",\"transition\":\"approve\"}. Render: {\"template_id\":1,\"payload_path\":\"payload\"}",
+      "valid_from": "Optional UTC window start. Leave blank to activate immediately once workflow is active.",
+      "valid_to": "Optional UTC window end. When reached, the rule becomes expired without changing workflow state."
+    },
+    "action_types": {
+      "notification": "Notification",
+      "workflow_transition": "Workflow transition",
+      "render_document": "Render document"
+    },
+    "defaults": {
+      "action_title": "Workflow update",
+      "action_body": "The rule {{ event_name }} was triggered."
+    },
+    "sections": {
+      "identity": {
+        "title": "Identity & trigger",
+        "description": "Define the operational name, real trigger and input signal of the rule."
+      },
+      "conditions": {
+        "title": "Conditions",
+        "description": "JSON conditions evaluated against the event context or manual execution."
+      },
+      "action": {
+        "title": "Action",
+        "description": "Reusable payload for notifications, workflow transitions or document rendering."
+      }
+    },
+    "actions": {
+      "create": "Create rule",
+      "save": "Save rule",
+      "back": "Back to rules",
+      "back_list": "Back to rules",
+      "view_detail": "View detail"
+    }
+  },
+  "validation": {
+    "rule_slug_unique": "The rule slug must be unique.",
+    "valid_json": "Provide valid JSON.",
+    "event_name_required": "Event name is required for event-based rules.",
+    "cron_expression_invalid": "Provide a valid 5-part cron expression.",
+    "valid_from_invalid": "Provide a valid start datetime or leave it blank.",
+    "valid_to_invalid": "Provide a valid end datetime or leave it blank.",
+    "valid_to_after_start": "End datetime must be later than start datetime.",
+    "workflow_transition_requirements": "Workflow transition actions require resource_key, record_id_path and transition.",
+    "render_document_requires_template": "Render document actions require a valid template_id.",
+    "notification_requires_title": "Notification actions require a title."
+  },
+  "messages": {
+    "not_found": "Automation rule not found.",
+    "created": "Automation rule created.",
+    "updated": "Automation rule updated.",
+    "deleted": "Automation rule deleted.",
+    "execution_failed": "Automation execution failed.",
+    "execution_reused": "Existing automation execution reused.",
+    "executed": "Automation rule executed.",
+    "select_transition": "Select a valid workflow transition.",
+    "transitioned": "Workflow transitioned successfully.",
+    "restored_summary": "Rule restored from version",
+    "version_restored": "Version restored.",
+    "retrieved": "Automation rules retrieved.",
+    "rule_retrieved": "Automation rule retrieved.",
+    "invalid_context_json": "Provide valid JSON for the execution context.",
+    "idempotency_required": "Provide an Idempotency-Key header or idempotency_key field for this execution."
+  },
+  "show": {
+    "title": "Automation Rule Detail",
+    "eyebrow": "Automation",
+    "rule_fallback": "Automation rule",
+    "lede_fallback": "Internal automation rule wired to the existing runtime buses.",
+    "actions": {
+      "edit": "Edit",
+      "back": "Back"
+    },
+    "stats": {
+      "workflow": "Workflow",
+      "trigger": "Trigger",
+      "action": "Action",
+      "last_run": "Last run",
+      "validity": "Validity"
+    },
+    "workflow": {
+      "title": "Workflow actions",
+      "description": "Real operation of the reusable lifecycle adopted by this rule.",
+      "transition": "Transition",
+      "select_transition": "Select transition",
+      "notes": "Notes",
+      "notes_placeholder": "Optional transition note",
+      "apply": "Apply",
+      "columns": {
+        "occurred": "Occurred",
+        "transition": "Transition",
+        "from": "From",
+        "to": "To",
+        "actor": "Actor"
+      },
+      "empty": "No transitions recorded yet."
+    },
+    "execute": {
+      "title": "Execute rule",
+      "description": "Trigger the rule manually with JSON context, reusing the same real engine.",
+      "context_json": "Execution context JSON",
+      "run_now": "Run rule now",
+      "last_result": "Last manual result"
+    },
+    "versions": {
+      "title": "Version history",
+      "description": "Persisted snapshots of reusable configuration with real restore.",
+      "columns": {
+        "version": "Version",
+        "summary": "Summary",
+        "created": "Created"
+      },
+      "restore": "Restore",
+      "empty": "No versions captured yet."
+    },
+    "logs": {
+      "title": "Execution log",
+      "description": "Real execution history by event, schedule or manual trigger.",
+      "columns": {
+        "when": "When",
+        "source": "Source",
+        "status": "Status",
+        "message": "Message"
+      },
+      "empty": "No execution log entries yet."
+    },
+    "common": {
+      "never": "Never",
+      "now": "now",
+      "open": "open",
+      "system": "system"
+    }
+  }
+}

@@ -1,0 +1,827 @@
+
+/* Canonical admin page header: used by every framework administration surface. */
+.admin-page-header {
+    --admin-page-header-gap: .75rem;
+    background: var(--catalyst-admin-card-bg, var(--bs-body-bg));
+    border: 1px solid var(--catalyst-admin-border, var(--bs-border-color)) !important;
+    border-radius: var(--catalyst-admin-radius, .85rem);
+    box-shadow: var(--catalyst-admin-shadow, 0 .25rem .875rem rgba(15, 23, 42, .04));
+    overflow: hidden;
+}
+
+.admin-page-header > .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--admin-page-header-gap);
+    padding: .72rem .9rem;
+}
+
+.admin-page-header__main {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.admin-page-header__copy {
+    min-width: 0;
+}
+
+.admin-page-header__eyebrow {
+    color: var(--bs-primary);
+    display: block;
+    font-size: .66rem;
+    font-weight: 800;
+    letter-spacing: .08em;
+    line-height: 1.1;
+    margin-bottom: .18rem;
+    text-transform: uppercase;
+}
+
+.admin-page-header__title {
+    color: var(--catalyst-admin-title, var(--bs-heading-color));
+    font-size: 1.08rem;
+    font-weight: 750;
+    line-height: 1.2;
+    margin: 0;
+}
+
+.admin-page-header__description {
+    color: var(--catalyst-admin-muted, var(--bs-secondary-color));
+    font-size: .78rem;
+    line-height: 1.35;
+    margin: .18rem 0 0;
+    max-width: 74rem;
+}
+
+.admin-page-header__actions {
+    align-items: center;
+    display: flex;
+    flex: 0 0 auto;
+    flex-wrap: wrap;
+    gap: .45rem;
+    justify-content: flex-end;
+}
+
+.admin-page-header__metrics {
+    display: grid;
+    gap: .5rem;
+    grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+}
+
+.admin-page-header__metric {
+    background: var(--catalyst-admin-soft-bg, var(--bs-tertiary-bg));
+    border: 1px solid var(--catalyst-admin-border, var(--bs-border-color));
+    border-radius: .72rem;
+    min-height: 3.05rem;
+    padding: .42rem .55rem;
+}
+
+.admin-page-header__metric-label {
+    color: var(--catalyst-admin-muted, var(--bs-secondary-color));
+    display: block;
+    font-size: .63rem;
+    font-weight: 800;
+    letter-spacing: .06em;
+    line-height: 1.1;
+    text-transform: uppercase;
+}
+
+.admin-page-header__metric-value {
+    color: var(--catalyst-admin-title, var(--bs-heading-color));
+    display: inline-block;
+    font-size: .95rem;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-top: .22rem;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+}
+
+.admin-page-header__tabs {
+    border-top: 1px solid var(--catalyst-admin-border, var(--bs-border-color));
+    display: flex;
+    flex-wrap: wrap;
+    gap: .35rem;
+    margin-top: .1rem;
+    padding-top: .6rem;
+}
+
+.admin-page-header__tab {
+    align-items: center;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: .6rem;
+    color: var(--catalyst-admin-muted, var(--bs-secondary-color));
+    display: inline-flex;
+    font-size: .76rem;
+    font-weight: 700;
+    gap: .25rem;
+    line-height: 1;
+    min-height: 2rem;
+    padding: .42rem .6rem;
+    transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+
+.admin-page-header__tab:hover,
+.admin-page-header__tab:focus-visible {
+    background: rgba(var(--bs-primary-rgb), .08);
+    border-color: rgba(var(--bs-primary-rgb), .16);
+    color: var(--bs-primary);
+}
+
+.admin-page-header__tab.is-active {
+    background: rgba(var(--bs-primary-rgb), .11);
+    border-color: rgba(var(--bs-primary-rgb), .24);
+    color: var(--bs-primary);
+}
+
+@media (max-width: 991.98px) {
+    .admin-page-header__main {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .admin-page-header__actions {
+        justify-content: flex-start;
+        width: 100%;
+    }
+}
+
+
+/*
+ * Catalyst Admin Surfaces
+ * Compact executive UI contract for framework/ERP administration surfaces.
+ * Global by design: page shells, section cards, DataGrid, action bars and
+ * common table/form density live here so module slugs only keep local behavior.
+ */
+
+.admin-surface,
+.operations-page,
+.rbac-page,
+.automation-admin-page,
+.audit-page,
+.audit-show-page,
+.apiplatform-page,
+.apiplatform-admin-page,
+.catalogs-page,
+.catalogs-admin-page,
+.documents-page,
+.documents-admin-page,
+.media-page,
+.media-admin-page,
+.media-fields-page {
+    --catalyst-admin-border: var(--bs-border-color);
+    --catalyst-admin-muted: var(--bs-secondary-color);
+    --catalyst-admin-card-bg: var(--bs-body-bg);
+    --catalyst-admin-soft-bg: var(--bs-tertiary-bg);
+    --catalyst-admin-title: var(--bs-heading-color);
+    --catalyst-admin-shadow: 0 .25rem .875rem rgba(15, 23, 42, .04);
+    --catalyst-admin-radius: .85rem;
+    --catalyst-admin-compact-padding: .75rem;
+    color: var(--bs-body-color);
+}
+
+.admin-surface-shell,
+.admin-content-shell,
+.operations-page,
+.rbac-page,
+.automation-admin-page,
+.audit-page,
+.audit-show-page,
+.apiplatform-page,
+.apiplatform-admin-page,
+.catalogs-admin-page,
+.documents-admin-page,
+.media-admin-page {
+    max-width: 100%;
+}
+
+.admin-page-title,
+.page-title-head {
+    align-items: center;
+    border: 1px solid var(--catalyst-admin-border, var(--bs-border-color));
+    border-radius: var(--catalyst-admin-radius, .85rem);
+    box-shadow: var(--catalyst-admin-shadow, 0 .25rem .875rem rgba(15, 23, 42, .04));
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    margin-bottom: .75rem;
+    min-height: 3.35rem;
+    padding: .65rem .85rem;
+    background: var(--catalyst-admin-card-bg, var(--bs-body-bg));
+}
+
+.admin-page-title__eyebrow,
+.operations-eyebrow,
+.rbac-eyebrow,
+.automation-eyebrow,
+.audit-eyebrow,
+.apiplatform-eyebrow {
+    color: var(--bs-primary);
+    display: block;
+    font-size: .67rem;
+    font-weight: 800;
+    letter-spacing: .08em;
+    line-height: 1.1;
+    margin-bottom: .18rem;
+    text-transform: uppercase;
+}
+
+.admin-page-title h1,
+.admin-page-title h2,
+.admin-page-title h3,
+.admin-page-title h4,
+.operations-title,
+.rbac-hero__title,
+.automation-title,
+.page-main-title {
+    color: var(--catalyst-admin-title, var(--bs-heading-color));
+    font-size: 1.08rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+}
+
+.admin-page-title p,
+.operations-lede,
+.rbac-hero__lede,
+.automation-lede,
+.rbac-section__subtitle,
+.admin-section-card__subtitle {
+    color: var(--catalyst-admin-muted, var(--bs-secondary-color));
+    font-size: .78rem;
+    line-height: 1.35;
+    margin: 0;
+}
+
+.admin-page-title__actions,
+.rbac-hero__actions,
+.operations-hero__actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .45rem;
+    justify-content: flex-end;
+}
+
+.admin-surface .breadcrumb,
+.operations-page .breadcrumb,
+.rbac-page .breadcrumb,
+.automation-admin-page .breadcrumb,
+.audit-page .breadcrumb,
+.apiplatform-page .breadcrumb,
+.apiplatform-admin-page .breadcrumb,
+.catalogs-admin-page .breadcrumb,
+.documents-admin-page .breadcrumb,
+.media-admin-page .breadcrumb {
+    --bs-breadcrumb-margin-bottom: 0;
+    --bs-breadcrumb-font-size: .72rem;
+}
+
+.admin-surface .breadcrumb a,
+.operations-page .breadcrumb a,
+.rbac-page .breadcrumb a,
+.automation-admin-page .breadcrumb a,
+.audit-page .breadcrumb a,
+.apiplatform-page .breadcrumb a,
+.apiplatform-admin-page .breadcrumb a,
+.catalogs-admin-page .breadcrumb a,
+.documents-admin-page .breadcrumb a,
+.media-admin-page .breadcrumb a {
+    color: var(--catalyst-admin-muted, var(--bs-secondary-color));
+    text-decoration: none;
+}
+
+.admin-executive-hero,
+.operations-hero,
+.rbac-hero,
+.automation-hero,
+.audit-hero,
+.apiplatform-hero,
+.catalogs-hero,
+.documents-hero,
+.media-hero {
+    border: 1px solid var(--catalyst-admin-border, var(--bs-border-color)) !important;
+    border-radius: var(--catalyst-admin-radius, .85rem);
+    box-shadow: var(--catalyst-admin-shadow, 0 .25rem .875rem rgba(15, 23, 42, .04));
+    margin-bottom: .75rem !important;
+    overflow: hidden;
+}
+
+.admin-executive-hero > .card-body,
+.operations-hero > .card-body,
+.rbac-hero > .card-body,
+.automation-hero > .card-body,
+.audit-hero > .card-body,
+.apiplatform-hero > .card-body,
+.catalogs-hero > .card-body,
+.documents-hero > .card-body,
+.media-hero > .card-body {
+    padding: .75rem .9rem;
+}
+
+.operations-hero__row,
+.rbac-hero__row,
+.admin-executive-hero__row {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.operations-metrics,
+.admin-metric-strip {
+    display: grid;
+    gap: .5rem;
+    grid-template-columns: repeat(auto-fit, minmax(6.25rem, 1fr));
+    min-width: min(100%, 20rem);
+}
+
+.operations-metric,
+.admin-metric-card,
+.admin-executive-stat {
+    background: var(--catalyst-admin-soft-bg, var(--bs-tertiary-bg));
+    border: 1px solid var(--catalyst-admin-border, var(--bs-border-color));
+    border-radius: .75rem;
+    min-height: 3.1rem;
+    padding: .45rem .6rem;
+}
+
+.operations-metric__label,
+.admin-metric-card__label,
+.admin-executive-stat__label {
+    color: var(--catalyst-admin-muted, var(--bs-secondary-color));
+    display: block;
+    font-size: .65rem;
+    font-weight: 800;
+    letter-spacing: .06em;
+    line-height: 1.1;
+    text-transform: uppercase;
+}
+
+.operations-metric__value,
+.admin-metric-card__value,
+.admin-executive-stat__value {
+    color: var(--catalyst-admin-title, var(--bs-heading-color));
+    display: block;
+    font-size: .98rem;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-top: .2rem;
+}
+
+.admin-section-card,
+.rbac-section,
+.rbac-form-shell,
+.audit-section,
+.apiplatform-section,
+.operations-page > .card,
+.admin-surface > .card,
+.admin-content-shell > .card {
+    border: 1px solid var(--catalyst-admin-border, var(--bs-border-color)) !important;
+    border-radius: var(--catalyst-admin-radius, .85rem);
+    box-shadow: var(--catalyst-admin-shadow, 0 .25rem .875rem rgba(15, 23, 42, .04));
+    overflow: hidden;
+}
+
+.admin-section-card > .card-header,
+.rbac-section > .card-header,
+.rbac-form-shell > .card-header,
+.audit-section > .card-header,
+.apiplatform-section > .card-header,
+.operations-page > .card > .card-header,
+.admin-surface > .card > .card-header,
+.admin-content-shell > .card > .card-header {
+    align-items: center;
+    background: var(--catalyst-admin-soft-bg, var(--bs-tertiary-bg));
+    border-bottom: 1px solid var(--catalyst-admin-border, var(--bs-border-color));
+    display: flex;
+    gap: .75rem;
+    justify-content: space-between;
+    min-height: 2.75rem;
+    padding: .55rem .75rem;
+}
+
+.admin-section-card > .card-header h1,
+.admin-section-card > .card-header h2,
+.admin-section-card > .card-header h3,
+.admin-section-card > .card-header h4,
+.admin-section-card > .card-header h5,
+.rbac-section__title,
+.card-title {
+    color: var(--catalyst-admin-title, var(--bs-heading-color));
+    font-size: .92rem;
+    font-weight: 700;
+    line-height: 1.25;
+    margin: 0;
+}
+
+.admin-section-card > .card-body,
+.rbac-section > .card-body,
+.rbac-form-shell > .card-body,
+.audit-section > .card-body,
+.apiplatform-section > .card-body {
+    padding: .75rem;
+}
+
+.admin-action-bar {
+    align-items: center;
+    background: var(--catalyst-admin-soft-bg, var(--bs-tertiary-bg));
+    border: 1px solid var(--catalyst-admin-border, var(--bs-border-color));
+    border-radius: .75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    justify-content: space-between;
+    margin-bottom: .75rem;
+    padding: .5rem .625rem;
+}
+
+.admin-action-bar__group {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+}
+
+.admin-surface .btn-link,
+.operations-page .btn-link,
+.rbac-page .btn-link,
+.automation-admin-page .btn-link,
+.audit-page .btn-link,
+.apiplatform-page .btn-link,
+.apiplatform-admin-page .btn-link,
+.catalogs-admin-page .btn-link,
+.documents-admin-page .btn-link,
+.media-admin-page .btn-link {
+    --bs-btn-color: var(--bs-primary);
+    --bs-btn-hover-color: var(--bs-primary);
+    border: 1px solid rgba(var(--bs-primary-rgb), .35);
+    border-radius: .45rem;
+    padding: .25rem .55rem;
+    text-decoration: none;
+}
+
+.admin-surface .btn-sm,
+.operations-page .btn-sm,
+.rbac-page .btn-sm,
+.automation-admin-page .btn-sm,
+.audit-page .btn-sm,
+.apiplatform-page .btn-sm,
+.apiplatform-admin-page .btn-sm,
+.catalogs-admin-page .btn-sm,
+.documents-admin-page .btn-sm,
+.media-admin-page .btn-sm {
+    --bs-btn-font-size: .74rem;
+    --bs-btn-padding-y: .26rem;
+    --bs-btn-padding-x: .55rem;
+}
+
+.admin-datagrid-card {
+    border: 1px solid var(--catalyst-admin-border, var(--bs-border-color));
+    border-radius: var(--catalyst-admin-radius, .85rem);
+    box-shadow: var(--catalyst-admin-shadow, 0 .25rem .875rem rgba(15, 23, 42, .04));
+    overflow: hidden;
+}
+
+.admin-datagrid-card .card-header {
+    align-items: center;
+    background: var(--catalyst-admin-soft-bg, var(--bs-tertiary-bg));
+    border-bottom: 1px solid var(--catalyst-admin-border, var(--bs-border-color));
+    display: flex;
+    justify-content: space-between;
+    gap: .75rem;
+    padding: .55rem .75rem;
+}
+
+.admin-datagrid-card .card-title,
+.admin-datagrid-title {
+    color: var(--catalyst-admin-title, var(--bs-heading-color));
+    font-size: .95rem;
+    font-weight: 700;
+    line-height: 1.25;
+    margin: 0;
+}
+
+.admin-datagrid-subtitle {
+    color: var(--catalyst-admin-muted, var(--bs-secondary-color));
+    font-size: .74rem;
+    line-height: 1.35;
+    margin: .1rem 0 0;
+}
+
+.admin-grid-filterbar {
+    background: rgba(var(--bs-tertiary-bg-rgb, 248, 249, 250), .65);
+}
+
+.admin-grid-filterbar .form-label {
+    color: var(--catalyst-admin-muted, var(--bs-secondary-color));
+    font-size: .68rem;
+    font-weight: 800;
+    letter-spacing: .045em;
+    margin-bottom: .25rem;
+    text-transform: uppercase;
+}
+
+.admin-grid-toolbar {
+    font-size: .75rem;
+}
+
+.admin-grid__per-page {
+    min-width: 4.25rem;
+}
+
+.admin-grid-table,
+.admin-surface .table,
+.operations-page .table,
+.rbac-page .table,
+.automation-admin-page .table,
+.audit-page .table,
+.apiplatform-page .table,
+.apiplatform-admin-page .table,
+.catalogs-admin-page .table,
+.documents-admin-page .table,
+.media-admin-page .table {
+    --bs-table-bg: transparent;
+    font-size: .76rem;
+}
+
+.admin-grid-table thead,
+.admin-surface .table thead,
+.operations-page .table thead,
+.rbac-page .table thead,
+.automation-admin-page .table thead,
+.audit-page .table thead,
+.apiplatform-page .table thead,
+.apiplatform-admin-page .table thead,
+.catalogs-admin-page .table thead,
+.documents-admin-page .table thead,
+.media-admin-page .table thead {
+    background: var(--catalyst-admin-soft-bg, var(--bs-tertiary-bg));
+    border-bottom: 1px solid var(--catalyst-admin-border, var(--bs-border-color));
+    color: var(--catalyst-admin-muted, var(--bs-secondary-color));
+    font-size: .66rem;
+    font-weight: 800;
+    letter-spacing: .055em;
+    text-transform: uppercase;
+}
+
+.admin-grid-table > :not(caption) > * > *,
+.admin-surface .table > :not(caption) > * > *,
+.operations-page .table > :not(caption) > * > *,
+.rbac-page .table > :not(caption) > * > *,
+.automation-admin-page .table > :not(caption) > * > *,
+.audit-page .table > :not(caption) > * > *,
+.apiplatform-page .table > :not(caption) > * > *,
+.apiplatform-admin-page .table > :not(caption) > * > *,
+.catalogs-admin-page .table > :not(caption) > * > *,
+.documents-admin-page .table > :not(caption) > * > *,
+.media-admin-page .table > :not(caption) > * > * {
+    padding: .48rem .65rem;
+    vertical-align: middle;
+}
+
+.admin-grid-table tbody tr:hover,
+.admin-surface .table tbody tr:hover,
+.operations-page .table tbody tr:hover,
+.rbac-page .table tbody tr:hover,
+.automation-admin-page .table tbody tr:hover,
+.audit-page .table tbody tr:hover,
+.apiplatform-page .table tbody tr:hover,
+.apiplatform-admin-page .table tbody tr:hover,
+.catalogs-admin-page .table tbody tr:hover,
+.documents-admin-page .table tbody tr:hover,
+.media-admin-page .table tbody tr:hover {
+    background-color: rgba(var(--bs-primary-rgb), .035);
+}
+
+.admin-grid-table .btn-group,
+.admin-grid-table .btn-group-sm {
+    gap: .25rem;
+}
+
+.admin-grid-table .btn-group > .btn,
+.admin-grid-table .btn-group-sm > .btn,
+.admin-grid-table .btn-group > form > .btn,
+.admin-grid-table .btn-group-sm > form > .btn {
+    border-radius: .45rem !important;
+}
+
+.admin-grid-sort-link {
+    color: var(--catalyst-admin-title, var(--bs-heading-color));
+    text-decoration: none;
+}
+
+.admin-grid-sort-link:hover,
+.admin-grid-sort-link:focus-visible {
+    color: var(--bs-primary);
+}
+
+.admin-empty-state,
+.rbac-empty-state {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 11rem;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.admin-empty-state__icon,
+.rbac-empty-state__icon {
+    align-items: center;
+    background: rgba(var(--bs-primary-rgb), .08);
+    border-radius: 999px;
+    color: var(--bs-primary);
+    display: inline-flex;
+    height: 2.75rem;
+    justify-content: center;
+    margin-bottom: .75rem;
+    width: 2.75rem;
+}
+
+.admin-kv-grid {
+    display: grid;
+    gap: .45rem;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+}
+
+.admin-kv-row {
+    align-items: center;
+    border: 1px solid var(--catalyst-admin-border, var(--bs-border-color));
+    border-radius: .65rem;
+    display: grid;
+    gap: .55rem;
+    grid-template-columns: minmax(6rem, .9fr) minmax(0, 1.3fr);
+    min-height: 2.2rem;
+    padding: .38rem .55rem;
+}
+
+.admin-kv-label {
+    color: var(--catalyst-admin-muted, var(--bs-secondary-color));
+    font-size: .7rem;
+    font-weight: 800;
+    letter-spacing: .035em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.admin-kv-value {
+    color: var(--bs-body-color);
+    font-size: .76rem;
+    font-weight: 650;
+    min-width: 0;
+    overflow: hidden;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-panel-grid {
+    display: grid;
+    gap: .75rem;
+    grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+}
+
+.admin-panel-tile {
+    border: 1px solid var(--catalyst-admin-border, var(--bs-border-color));
+    border-radius: .85rem;
+    padding: .7rem;
+}
+
+.admin-panel-tile__eyebrow {
+    color: var(--bs-primary);
+    display: block;
+    font-size: .67rem;
+    font-weight: 800;
+    letter-spacing: .06em;
+    margin-bottom: .2rem;
+    text-transform: uppercase;
+}
+
+.admin-panel-tile h5,
+.admin-panel-tile h6 {
+    font-size: .88rem;
+    font-weight: 700;
+    margin-bottom: .35rem;
+}
+
+.admin-panel-tile p {
+    color: var(--catalyst-admin-muted, var(--bs-secondary-color));
+    font-size: .74rem;
+    line-height: 1.35;
+    margin-bottom: .6rem;
+}
+
+.dt-container {
+    font-size: .76rem;
+}
+
+.dt-container .dt-layout-row {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    justify-content: space-between;
+    padding: .5rem .75rem;
+}
+
+.dt-container .dt-layout-table {
+    padding: 0;
+}
+
+.dt-container .dt-input,
+.dt-container .form-select,
+.dt-container .form-control {
+    font-size: .75rem;
+    min-height: 1.95rem;
+}
+
+.dt-container .dt-info {
+    color: var(--catalyst-admin-muted, var(--bs-secondary-color));
+    font-size: .72rem;
+}
+
+.dt-container .dt-paging-button,
+.dt-container .page-link {
+    font-size: .72rem;
+    line-height: 1.2;
+    padding: .25rem .45rem;
+}
+
+.admin-datagrid-card .dataTable {
+    margin: 0 !important;
+}
+
+@media (max-width: 1199.98px) {
+    .operations-hero__row,
+    .rbac-hero__row,
+    .admin-executive-hero__row {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .operations-metrics,
+    .admin-metric-strip {
+        width: 100%;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .admin-page-title,
+    .page-title-head {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .admin-kv-row {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-kv-value {
+        text-align: start;
+    }
+}
+
+/* Progressive homogeneity layer for existing module views. */
+.admin-surface:not(.settings-console) .card.border-0,
+.admin-surface:not(.settings-console) section.card,
+.admin-surface:not(.settings-console) .card.shadow-sm {
+    border: 1px solid var(--catalyst-admin-border, var(--bs-border-color)) !important;
+    border-radius: var(--catalyst-admin-radius, .85rem);
+    box-shadow: var(--catalyst-admin-shadow, 0 .25rem .875rem rgba(15, 23, 42, .04)) !important;
+    overflow: hidden;
+}
+
+.admin-surface:not(.settings-console) .card-header {
+    background: var(--catalyst-admin-soft-bg, var(--bs-tertiary-bg));
+    border-bottom-color: var(--catalyst-admin-border, var(--bs-border-color));
+    min-height: 2.65rem;
+    padding: .55rem .75rem;
+}
+
+.admin-surface:not(.settings-console) .card-body {
+    padding: .75rem;
+}
+
+.admin-surface:not(.settings-console) .card-body.p-0 {
+    padding: 0 !important;
+}
+
+.admin-surface:not(.settings-console) code {
+    color: var(--bs-primary);
+    font-size: .72rem;
+}
+
+.admin-surface:not(.settings-console) .badge {
+    font-weight: 700;
+    letter-spacing: .012em;
+}
+
+.admin-surface:not(.settings-console) .list-group-item {
+    padding: .45rem .65rem;
+}

@@ -1,0 +1,100 @@
+.catalyst-error-shell-body {
+    min-height: 100vh;
+    margin: 0;
+    color: var(--theme-body-color, #323a46);
+    background:
+        radial-gradient(circle at top left, rgba(var(--theme-primary-rgb, 200, 16, 46), .16), transparent 30rem),
+        linear-gradient(135deg, var(--theme-body-bg, #f6f7fb), var(--theme-secondary-bg, #fff));
+}
+
+.catalyst-error-shell {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: clamp(1.25rem, 3vw, 3rem);
+}
+
+.catalyst-error-card {
+    width: min(100%, 720px);
+    border: 1px solid var(--theme-border-color, rgba(148, 163, 184, .28));
+    border-radius: 1.5rem;
+    background: color-mix(in srgb, var(--theme-secondary-bg, #fff) 94%, transparent);
+    box-shadow: 0 1.5rem 3rem rgba(15, 23, 42, .12);
+    padding: clamp(1.5rem, 3.5vw, 3rem);
+}
+
+.catalyst-error-card__brand {
+    display: flex;
+    align-items: center;
+    gap: .85rem;
+    margin-bottom: 1.25rem;
+}
+
+.catalyst-error-card__mark {
+    display: inline-grid;
+    place-items: center;
+    min-width: 4rem;
+    height: 2.45rem;
+    padding-inline: .75rem;
+    border-radius: 999px;
+    font-weight: 800;
+    color: var(--theme-primary, #d71920);
+    background: color-mix(in srgb, var(--theme-primary, #d71920) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--theme-primary, #d71920) 22%, transparent);
+}
+
+.catalyst-error-card__eyebrow {
+    text-transform: uppercase;
+    letter-spacing: .16em;
+    font-weight: 800;
+    font-size: .72rem;
+    color: var(--theme-secondary-color, #6c757d);
+}
+
+.catalyst-error-card__title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1;
+    letter-spacing: -.04em;
+    color: var(--theme-heading-color, #111827);
+    margin: 0 0 .85rem;
+}
+
+.catalyst-error-card__message {
+    color: var(--theme-secondary-color, #6c757d);
+    font-size: 1.05rem;
+    margin-bottom: 1.5rem;
+}
+
+.catalyst-error-card__meta {
+    display: grid;
+    gap: .75rem;
+    margin-bottom: 1.5rem;
+}
+
+.catalyst-error-card__meta div {
+    display: grid;
+    gap: .15rem;
+    padding: .85rem 1rem;
+    border-radius: 1rem;
+    background: var(--theme-tertiary-bg, rgba(148, 163, 184, .1));
+}
+
+.catalyst-error-card__meta dt {
+    font-size: .72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    color: var(--theme-secondary-color, #6c757d);
+}
+
+.catalyst-error-card__meta dd {
+    margin: 0;
+    color: var(--theme-heading-color, #111827);
+}
+
+.catalyst-error-card__actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .75rem;
+}

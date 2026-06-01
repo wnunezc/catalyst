@@ -1,0 +1,332 @@
+<section class="admin-datagrid-card card"
+         data-admin-grid="1"
+         {{#if grid_has_bulk}}data-grid-selection-name="{{ grid_bulk_name }}"
+         data-grid-selection-empty="{{ grid_selection_empty_label }}"
+         data-grid-selection-template="{{ grid_selection_template_label }}"{{/if}}>
+    <div class="card-header">
+        <div>
+            <h2 class="admin-datagrid-title">{{ grid_title }}</h2>
+            {{#if grid_subtitle}}
+                <p class="admin-datagrid-subtitle">{{ grid_subtitle }}</p>
+            {{/if}}
+        </div>
+        <span class="badge badge-soft-primary badge-label">{{ grid_records_label }}</span>
+    </div>
+
+    {{#if grid_is_empty}}
+        <div class="card-body">
+            <div class="admin-empty-state">
+                <span class="admin-empty-state__icon"><i class="ti ti-table"></i></span>
+                <h2 class="h5 mb-2">{{ grid_empty_title }}</h2>
+                <p class="text-muted mb-3">{{ grid_empty_message }}</p>
+                {{#if grid_empty_action}}
+                    <button type="button"
+                            class="{{ grid_empty_action.class }}"
+                            data-catalyst-href="{{ grid_empty_action.href }}">
+                        {{#if grid_empty_action.has_icon}}<i class="{{ grid_empty_action.icon }} me-1"></i>{{/if}}
+                        {{ grid_empty_action.label }}
+                    </button>
+                {{/if}}
+            </div>
+        </div>
+    {{else}}
+        <div class="card-body border-bottom py-2 admin-grid-filterbar">
+            <form method="GET" action="{{ grid_base_url }}" class="row g-2 align-items-end">
+                <div class="col-xl-4 col-lg-5 col-md-6">
+                    <label for="grid-search" class="form-label">{{ t:ui.datagrid.search }}</label>
+                    <input type="search"
+                           id="grid-search"
+                           name="{{ grid_search_name }}"
+                           value="{{ grid_search_value }}"
+                           class="form-control form-control-sm"
+                           placeholder="{{ grid_search_placeholder }}">
+                </div>
+
+                {{#each grid_filters}}
+                    <div class="col-xl-3 col-lg-4 col-md-6">
+                        <label for="filter-{{ name }}" class="form-label">{{ label }}</label>
+                        {{#if is_select}}
+                            <select id="filter-{{ name }}" name="{{ name }}" class="form-select form-select-sm">
+                                <option value="">{{ t:ui.datagrid.all }}</option>
+                                {{#each options}}
+                                    <option value="{{ value }}"{{#if selected}} selected{{/if}}>{{ label }}</option>
+                                {{/each}}
+                            </select>
+                        {{else}}
+                            <input type="text"
+                                   id="filter-{{ name }}"
+                                   name="{{ name }}"
+                                   value="{{ value }}"
+                                   class="form-control form-control-sm"
+                                   placeholder="{{ placeholder }}">
+                        {{/if}}
+                    </div>
+                {{/each}}
+
+                <input type="hidden" name="sort" value="{{ grid_query_sort }}">
+                <input type="hidden" name="direction" value="{{ grid_query_direction }}">
+                <input type="hidden" name="per_page" value="{{ grid_current_per_page }}">
+
+                <div class="col-xl-12 d-flex gap-2 flex-wrap admin-grid-filterbar__actions">
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <i class="ti ti-filter me-1"></i> {{ t:ui.datagrid.apply }}
+                    </button>
+                    <button type="button"
+                            class="btn btn-outline-secondary btn-sm"
+                            data-catalyst-href="{{ grid_base_url }}">
+                        <i class="ti ti-rotate-clockwise-2 me-1"></i> {{ t:ui.datagrid.reset }}
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="card-body border-bottom py-2">
+            <div class="admin-grid-toolbar d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-2">
+                <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-2">
+                    {{#if grid_has_tools}}
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary btn-sm dropdown-toggle"
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                <i class="ti ti-tool me-1"></i>
+                                {{ t:ui.datagrid.tools }}
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-start">
+                                {{#each grid_exports}}
+                                    <li>
+                                        {{#if is_print}}
+                                            <button type="button" class="dropdown-item" data-grid-print>
+                                                {{#if has_icon}}<i class="{{ icon }} me-2"></i>{{/if}}
+                                                {{ label }}
+                                            </button>
+                                        {{else}}
+                                            <a href="{{ href }}" class="dropdown-item">
+                                                {{#if has_icon}}<i class="{{ icon }} me-2"></i>{{/if}}
+                                                {{ label }}
+                                            </a>
+                                        {{/if}}
+                                    </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    {{/if}}
+
+                    <form method="GET" action="{{ grid_base_url }}" class="d-flex align-items-center gap-2 mb-0">
+                        <input type="hidden" name="sort" value="{{ grid_query_sort }}">
+                        <input type="hidden" name="direction" value="{{ grid_query_direction }}">
+                        <input type="hidden" name="{{ grid_search_name }}" value="{{ grid_search_value }}">
+
+                        {{#each grid_filters}}
+                            <input type="hidden" name="{{ name }}" value="{{ value }}">
+                        {{/each}}
+
+                        <label for="grid-per-page-top" class="small text-muted mb-0">
+                            {{ t:ui.datagrid.per_page }}
+                        </label>
+
+                        <select id="grid-per-page-top"
+                                name="per_page"
+                                class="form-select form-select-sm admin-grid__per-page"
+                                data-grid-per-page>
+                            {{#each grid_per_page_options}}
+                                <option value="{{ value }}"{{#if selected}} selected{{/if}}>{{ value }}</option>
+                            {{/each}}
+                        </select>
+                    </form>
+
+                    <span class="small text-muted">{{ grid_pagination_summary }}</span>
+                </div>
+
+                <nav aria-label="{{ t:ui.datagrid.pagination }}">
+                    <ul class="pagination pagination-sm mb-0">
+                        <li class="page-item{{#if grid_first_disabled}} disabled{{/if}}">
+                            <a class="page-link" href="{{ grid_first_url }}" aria-label="{{ t:ui.datagrid.first }}">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="d-none d-sm-inline">{{ t:ui.datagrid.first }}</span>
+                            </a>
+                        </li>
+
+                        <li class="page-item{{#if grid_prev_disabled}} disabled{{/if}}">
+                            <a class="page-link" href="{{ grid_prev_url }}" aria-label="{{ t:ui.datagrid.previous }}">
+                                <span aria-hidden="true">&lsaquo;</span>
+                                <span class="d-none d-sm-inline">{{ t:ui.datagrid.previous }}</span>
+                            </a>
+                        </li>
+
+                        {{#each grid_pages}}
+                            <li class="page-item{{#if active}} active{{/if}}">
+                                <a class="page-link" href="{{ url }}">{{ page }}</a>
+                            </li>
+                        {{/each}}
+
+                        <li class="page-item{{#if grid_next_disabled}} disabled{{/if}}">
+                            <a class="page-link" href="{{ grid_next_url }}" aria-label="{{ t:ui.datagrid.next }}">
+                                <span class="d-none d-sm-inline">{{ t:ui.datagrid.next }}</span>
+                                <span aria-hidden="true">&rsaquo;</span>
+                            </a>
+                        </li>
+
+                        <li class="page-item{{#if grid_last_disabled}} disabled{{/if}}">
+                            <a class="page-link" href="{{ grid_last_url }}" aria-label="{{ t:ui.datagrid.last }}">
+                                <span class="d-none d-sm-inline">{{ t:ui.datagrid.last }}</span>
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        {{#if grid_has_bulk}}
+            <form method="POST"
+                  action="{{ grid_base_url }}"
+                  id="{{ grid_bulk_form_id }}"
+                  data-catalyst="form">
+                {{{ grid_bulk_csrf_field }}}
+            </form>
+
+            <div class="card-body border-bottom py-2 d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-2">
+                <div class="small text-muted" data-grid-selection-summary>{{ grid_selection_empty_label }}</div>
+                <div class="d-flex gap-2 flex-wrap">
+                    {{#each grid_bulk_actions}}
+                        <button type="submit"
+                                form="{{ form_id }}"
+                                formaction="{{ href }}"
+                                formmethod="{{ method }}"
+                                class="{{ class }}"{{#if has_confirm}}
+                                data-confirm="{{ confirm }}"{{/if}}
+                                data-grid-bulk-action
+                                disabled>
+                            {{#if has_icon}}<i class="{{ icon }} me-1"></i>{{/if}}
+                            {{ label }}
+                        </button>
+                    {{/each}}
+                </div>
+            </div>
+        {{/if}}
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table data-catalyst-datatable="progressive"
+                       data-empty-label="{{ grid_empty_title }}"
+                       class="table table-striped dt-responsive align-middle mb-0 admin-grid-table table-nowrap">
+                    <thead class="thead-sm text-uppercase fs-xxs">
+                    <tr>
+                        {{#if grid_has_bulk}}
+                            <th class="text-center" data-dt-order="disable">
+                                <input type="checkbox" class="form-check-input" data-grid-select-all>
+                            </th>
+                        {{/if}}
+
+                        {{#each grid_columns}}
+                            <th class="{{ header_class }}">
+                                {{#if sortable}}
+                                    <a href="{{ sort_url }}" class="admin-grid-sort-link d-inline-flex align-items-center gap-1">
+                                        <span>{{ label }}</span>
+                                        {{#if sort_active}}
+                                            <i class="ti {{ sort_icon_class }}"></i>
+                                        {{else}}
+                                            <i class="ti ti-arrows-sort text-muted"></i>
+                                        {{/if}}
+                                    </a>
+                                {{else}}
+                                    {{ label }}
+                                {{/if}}
+                            </th>
+                        {{/each}}
+
+                        {{#if grid_has_row_actions}}
+                            <th class="text-end" data-dt-order="disable">{{ t:ui.datagrid.actions }}</th>
+                        {{/if}}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each grid_rows}}
+                        <tr>
+                            {{#if row_has_bulk}}
+                                <td class="text-center">
+                                    {{#if has_checkbox}}
+                                        <input type="checkbox"
+                                               class="form-check-input"
+                                               form="{{ row_bulk_form_id }}"
+                                               name="{{ row_bulk_name }}[]"
+                                               value="{{ key }}"
+                                               data-grid-row-checkbox>
+                                    {{/if}}
+                                </td>
+                            {{/if}}
+
+                            {{#each cells}}
+                                <td class="{{ class }}">{{> "./_admin-datagrid-cell" }}</td>
+                            {{/each}}
+
+                            {{#if row_has_action_slot}}
+                                <td class="text-end">
+                                    {{#if has_actions}}
+                                        <div class="btn-group btn-group-sm flex-wrap justify-content-end"
+                                             role="group"
+                                             aria-label="{{ t:ui.datagrid.grid_actions }}">
+                                            {{#each actions}}
+                                                {{#if is_post}}
+                                                    <form method="POST"
+                                                          action="{{ href }}"
+                                                          class="d-inline"
+                                                          data-catalyst="form"{{#if has_confirm}}
+                                                          data-confirm="{{ confirm }}"{{/if}}>
+                                                        {{{ csrf_field }}}
+                                                        <button type="submit" class="{{ class }}">
+                                                            {{#if has_icon}}<i class="{{ icon }} me-1"></i>{{/if}}
+                                                            {{ label }}
+                                                        </button>
+                                                    </form>
+                                                {{else}}
+                                                    <button type="button"
+                                                            class="{{ class }}"
+                                                            data-catalyst-href="{{ href }}">
+                                                        {{#if has_icon}}<i class="{{ icon }} me-1"></i>{{/if}}
+                                                        {{ label }}
+                                                    </button>
+                                                {{/if}}
+                                            {{/each}}
+                                        </div>
+                                    {{else}}
+                                        <span class="text-muted">—</span>
+                                    {{/if}}
+                                </td>
+                            {{/if}}
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card-footer py-2">
+            <div class="admin-grid-toolbar d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-2">
+                <span class="small text-muted">{{ grid_pagination_summary }}</span>
+                <nav aria-label="{{ t:ui.datagrid.pagination }}">
+                    <ul class="pagination pagination-sm mb-0">
+                        <li class="page-item{{#if grid_first_disabled}} disabled{{/if}}">
+                            <a class="page-link" href="{{ grid_first_url }}" aria-label="{{ t:ui.datagrid.first }}">&laquo;</a>
+                        </li>
+                        <li class="page-item{{#if grid_prev_disabled}} disabled{{/if}}">
+                            <a class="page-link" href="{{ grid_prev_url }}" aria-label="{{ t:ui.datagrid.previous }}">&lsaquo;</a>
+                        </li>
+                        {{#each grid_pages}}
+                            <li class="page-item{{#if active}} active{{/if}}">
+                                <a class="page-link" href="{{ url }}">{{ page }}</a>
+                            </li>
+                        {{/each}}
+                        <li class="page-item{{#if grid_next_disabled}} disabled{{/if}}">
+                            <a class="page-link" href="{{ grid_next_url }}" aria-label="{{ t:ui.datagrid.next }}">&rsaquo;</a>
+                        </li>
+                        <li class="page-item{{#if grid_last_disabled}} disabled{{/if}}">
+                            <a class="page-link" href="{{ grid_last_url }}" aria-label="{{ t:ui.datagrid.last }}">&raquo;</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    {{/if}}
+</section>

@@ -1,0 +1,154 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Catalyst\Framework\Cli\Commands;
+
+use Catalyst\Framework\Argument\ArgumentBag;
+use Catalyst\Framework\Argument\Option;
+use Catalyst\Framework\Cli\AbstractCommand;
+use Catalyst\Framework\Database\DatabaseManager;
+use Catalyst\Framework\Temporal\EffectiveWindow;
+use Throwable;
+
+final class TemporalSmokeCommand extends AbstractCommand
+{
+    /** @return Option[] */
+    public function getOptions(): array
+    {
+        return [
+            new Option(null, 'json', false, false, 'Render as JSON', false),
+        ];
+    }
+
+    public function getName(): string
+    {
+        return 'temporal:smoke';
+    }
+
+    public function getDescription(): string
+    {
+        return 'Exercise canonical PA-04 temporal states and reusable validity SQL filters';
+    }
+
+    public function execute(ArgumentBag $args): int
+    {
+        $json = (bool) ($args->getOptionValue('json') ?? false);
+        $window = EffectiveWindow::getInstance();
+        $result = [
+            'success' => false,
+            'steps' => [],
+        ];
+
+        try {
+            $result['steps'][] = [
+                'step' => 'state-active',
+                'status' => $window->state(gmdate('Y-m-d H:i:s', time() - 3600), gmdate('Y-m-d H:i:s', time() + 3600)) === EffectiveWindow::STATE_ACTIVE
+                    ? 'ok'
+                    : 'failed',
+            ];
+            $result['steps'][] = [
+                'step' => 'state-scheduled',
+                'status' => $window->state(gmdate('Y-m-d H:i:s', time() + 3600), null) === EffectiveWindow::STATE_SCHEDULED
+                    ? 'ok'
+                    : 'failed',
+            ];
+            $result['steps'][] = [
+                'step' => 'state-expired',
+                'status' => $window->state(null, gmdate('Y-m-d H:i:s', time() - 3600)) === EffectiveWindow::STATE_EXPIRED
+                    ? 'ok'
+                    : 'failed',
+            ];
+
+            $connection = DatabaseManager::getInstance()->connection();
+            $result['steps'][] = [
+                'step' => 'sql-active-alias',
+                'status' => $this->probeSqlState(
+                    $connection,
+                    $window->sqlForState(EffectiveWindow::STATE_ACTIVE, 'probe.valid_from', 'probe.valid_to'),
+                    'DATE_SUB(UTC_TIMESTAMP(), INTERVAL 1 HOUR)',
+                    'DATE_ADD(UTC_TIMESTAMP(), INTERVAL 1 HOUR)'
+                ) ? 'ok' : 'failed',
+            ];
+            $result['steps'][] = [
+                'step' => 'sql-scheduled-alias',
+                'status' => $this->probeSqlState(
+                    $connection,
+                    $window->sqlForState(EffectiveWindow::STATE_SCHEDULED, 'probe.valid_from', 'probe.valid_to'),
+                    'DATE_ADD(UTC_TIMESTAMP(), INTERVAL 1 HOUR)',
+                    'NULL'
+                ) ? 'ok' : 'failed',
+            ];
+            $result['steps'][] = [
+                'step' => 'sql-expired-alias',
+                'status' => $this->probeSqlState(
+                    $connection,
+                    $window->sqlForState(EffectiveWindow::STATE_EXPIRED, 'probe.valid_from', 'probe.valid_to'),
+                    'NULL',
+                    'DATE_SUB(UTC_TIMESTAMP(), INTERVAL 1 HOUR)'
+                ) ? 'ok' : 'failed',
+            ];
+
+            $decorated = $window->decorate([
+                'valid_from' => gmdate('Y-m-d H:i:s', time() + 1800),
+                'valid_to' => null,
+            ]);
+
+            $result['steps'][] = [
+                'step' => 'decorate-row',
+                'status' => ($decorated['temporal_state'] ?? null) === EffectiveWindow::STATE_SCHEDULED ? 'ok' : 'failed',
+            ];
+
+            $result['success'] = !in_array('failed', array_column($result['steps'], 'status'), true);
+        } catch (Throwable $e) {
+            $result['error'] = $e->getMessage();
+        }
+
+        if ($json) {
+            $this->line((string) json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+
+            return !empty($result['success']) ? 0 : 1;
+        }
+
+        $this->line('');
+        $this->info('Temporal Smoke');
+        $this->line('');
+
+        foreach ((array) ($result['steps'] ?? []) as $step) {
+            $this->line(sprintf(
+                '  %-24s %-8s',
+                (string) ($step['step'] ?? 'step'),
+                strtoupper((string) ($step['status'] ?? 'unknown'))
+            ));
+        }
+
+        $this->line('');
+
+        if (!empty($result['success'])) {
+            $this->success('Temporal smoke passed.');
+
+            return 0;
+        }
+
+        $this->error((string) ($result['error'] ?? 'Temporal smoke failed.'));
+
+        return 1;
+    }
+
+    private function probeSqlState(
+        \Catalyst\Framework\Database\Connection $connection,
+        string $whereSql,
+        string $validFromExpression,
+        string $validToExpression
+    ): bool {
+        $row = $connection->selectOne(
+            'SELECT COUNT(*) AS aggregate
+             FROM (
+                SELECT ' . $validFromExpression . ' AS valid_from, ' . $validToExpression . ' AS valid_to
+             ) probe
+             WHERE ' . $whereSql
+        );
+
+        return (int) ($row['aggregate'] ?? 0) === 1;
+    }
+}

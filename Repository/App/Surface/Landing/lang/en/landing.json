@@ -1,0 +1,35 @@
+{
+  "surface": {
+    "title": "Landing",
+    "eyebrow": "Launch page",
+    "badge": "Campaign ready",
+    "headline": "Turn a visit into a clear next action.",
+    "lead": "A landing-page demo for presenting one product promise, one audience and one conversion path while staying inside the selected Catalyst theme.",
+    "actions": {
+      "primary": "See offer",
+      "secondary": "Back to home"
+    },
+    "proof_title": "Launch signals",
+    "proof": {
+      "launch": { "value": "3x", "label": "Clearer calls to action" },
+      "teams": { "value": "24/7", "label": "Operational message" },
+      "stack": { "value": "MVC", "label": "Ready to customize" }
+    },
+    "benefits_title": "Why this surface exists",
+    "benefits": {
+      "identity": { "title": "Brand narrative", "body": "Use this page to explain the implementation value without sending visitors into administration." },
+      "modules": { "title": "Focused sections", "body": "The layout separates hero, proof, benefits and steps so developers can replace content safely." },
+      "security": { "title": "Clean boundary", "body": "No setup data, admin menus or internal module links are exposed inside the public landing experience." }
+    },
+    "steps_title": "Conversion path",
+    "steps": {
+      "capture": { "title": "Capture attention", "body": "Open with a strong promise and visible theme-consistent call to action." },
+      "configure": { "title": "Explain value", "body": "Use compact cards to describe the service, product or institutional offer." },
+      "deliver": { "title": "Guide the user", "body": "Send the visitor to the store, registration or another public next step." }
+    },
+    "closing": {
+      "title": "Landing concept",
+      "body": "This is intentionally promotional: it is not a framework dashboard and it does not reveal admin context."
+    }
+  }
+}

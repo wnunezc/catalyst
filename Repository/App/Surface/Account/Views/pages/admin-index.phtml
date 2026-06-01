@@ -1,0 +1,45 @@
+<div class="container-fluid py-3" data-account-admin="recovery-index">
+    <div class="d-flex align-items-start justify-content-between gap-3 mb-3">
+        <div>
+            <span class="text-uppercase text-muted fw-semibold small">{{ t:account.admin.index.eyebrow }}</span>
+            <h1 class="h3 mb-1">{{ t:account.admin.index.title }}</h1>
+            <p class="text-muted mb-0">{{ t:account.admin.index.description }}</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                    <tr>
+                        <th>{{ t:account.admin.index.columns.id }}</th>
+                        <th>{{ t:account.admin.index.columns.type }}</th>
+                        <th>{{ t:account.admin.index.columns.status }}</th>
+                        <th>{{ t:account.admin.index.columns.email }}</th>
+                        <th>{{ t:account.admin.index.columns.created }}</th>
+                        <th class="text-end">{{ t:account.admin.index.columns.action }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each recovery_requests}}
+                    <tr>
+                        <td>#{{ id }}</td>
+                        <td>{{ request_type_label }}</td>
+                        <td><span class="badge bg-secondary-subtle text-secondary-emphasis">{{ status_label }}</span></td>
+                        <td>
+                            <span class="d-block">{{ known_email }}</span>
+                            <small class="text-muted">{{ alternate_email }}</small>
+                        </td>
+                        <td>{{ created_at }}</td>
+                        <td class="text-end">
+                            <a href="/admin/account-recovery/{{ id }}" class="btn btn-outline-primary btn-sm">{{ t:account.admin.index.view }}</a>
+                        </td>
+                    </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

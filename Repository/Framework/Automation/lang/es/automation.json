@@ -1,0 +1,223 @@
+{
+  "module": {
+    "description": "Reglas internas reutilizables de automatización con ciclo de vida por flujo, ejecución por cola y scheduler, logs e historial de versiones.",
+    "permission_label": "Administrar Reglas de Automatización",
+    "permission_description": "Crear, activar, ejecutar, versionar y restaurar reglas internas de automatización.",
+    "navigation_label": "Reglas de Automatización",
+    "navigation_hint": "Reglas internas para bus de eventos, scheduler, cola y flujo.",
+    "breadcrumb_create": "Crear Regla",
+    "breadcrumb_edit": "Editar Regla",
+    "breadcrumb_show": "Detalle de la Regla"
+  },
+  "index": {
+    "title": "Reglas de Automatización",
+    "description": "Reglas internas sobre eventos, scheduler y flujo reutilizable del framework.",
+    "hero_lede": "Reglas internas sobre bus de eventos, scheduler y flujo reutilizable, con ejecución real, logs persistidos y restauración por versiones.",
+    "empty": {
+      "title": "Todavía no hay reglas de automatización",
+      "description": "Crea la primera regla interna para reaccionar a eventos del framework, programaciones o transiciones de flujo.",
+      "action": "Crear regla"
+    },
+    "columns": {
+      "rule": "Regla",
+      "trigger": "Trigger",
+      "action": "Acción",
+      "workflow": "Flujo",
+      "validity": "Vigencia",
+      "last_run": "Última ejecución",
+      "updated": "Actualizado"
+    },
+    "filters": {
+      "trigger": "Trigger",
+      "workflow_state": "Estado del flujo",
+      "validity": "Vigencia"
+    },
+    "triggers": {
+      "event": "Evento",
+      "schedule": "Programación"
+    },
+    "states": {
+      "draft": "Borrador",
+      "active": "Activa",
+      "paused": "Pausada",
+      "archived": "Archivada"
+    },
+    "validity": {
+      "active": "Activa",
+      "scheduled": "Programada",
+      "expired": "Expirada"
+    },
+    "actions": {
+      "view": "Ver",
+      "edit": "Editar",
+      "run": "Ejecutar",
+      "delete": "Eliminar",
+      "confirm_delete": "¿Eliminar la regla de automatización \"%s\"?"
+    },
+    "search_placeholder": "Buscar por nombre, slug, evento o descripción"
+  },
+  "form_page": {
+    "eyebrow": "Automatización",
+    "create_title": "Crear Regla de Automatización",
+    "edit_title": "Editar Regla de Automatización",
+    "hero_lede_create": "Conecta eventos o programaciones existentes con acciones reales del framework.",
+    "hero_lede_edit": "Ajusta el disparador, las condiciones y los datos de acción manteniendo flujo, logs y versionado.",
+    "labels": {
+      "rule_name": "Nombre de la regla",
+      "rule_slug": "Slug de la regla",
+      "description": "Descripción",
+      "trigger_type": "Tipo de disparador",
+      "event_name": "Nombre del evento",
+      "cron_expression": "Expresión cron",
+      "condition_json": "JSON de condición",
+      "action_type": "Tipo de acción",
+      "action_payload_json": "JSON de datos de acción",
+      "valid_from": "Válido desde",
+      "valid_to": "Válido hasta"
+    },
+    "placeholders": {
+      "rule_name": "Notificar aprobador al enviar",
+      "rule_slug": "notificar-aprobador-al-enviar",
+      "event_name": "framework.workflow.transition-completed",
+      "cron_expression": "*/10 * * * *",
+      "valid_from": "2026-05-20 08:00:00",
+      "valid_to": "2026-06-20 18:00:00"
+    },
+    "help": {
+      "event_name": "Obligatorio para disparadores por evento. El listener comodín consume el bus de eventos del framework.",
+      "cron_expression": "Obligatorio para disparadores por programación. Usa la cadencia existente del scheduler.",
+      "condition_json": "Mapea rutas con puntos a valores esperados. Ejemplo: {\"payload.to_state\":[\"approved\",\"archived\"]}",
+      "action_payload_json": "Notificación: {\"title\":\"...\",\"body\":\"...\",\"target_path\":\"payload.actor_id\"}. Flujo: {\"resource_key\":\"document-templates\",\"record_id_path\":\"payload.record_id\",\"transition\":\"approve\"}. Render: {\"template_id\":1,\"payload_path\":\"payload\"}",
+      "valid_from": "Inicio opcional de ventana UTC. Déjalo vacío para activar de inmediato cuando el flujo esté activo.",
+      "valid_to": "Fin opcional de ventana UTC. Al alcanzarse, la regla pasa a expirada sin cambiar el estado del flujo."
+    },
+    "action_types": {
+      "notification": "Notificación",
+      "workflow_transition": "Transición de flujo",
+      "render_document": "Renderizar documento"
+    },
+    "defaults": {
+      "action_title": "Actualización de flujo",
+      "action_body": "La regla {{ event_name }} fue disparada."
+    },
+    "sections": {
+      "identity": {
+        "title": "Identidad y trigger",
+        "description": "Define el nombre operativo, trigger real y señal de entrada de la regla."
+      },
+      "conditions": {
+        "title": "Condiciones",
+        "description": "Condiciones JSON evaluadas contra el contexto del evento o la ejecución manual."
+      },
+      "action": {
+        "title": "Acción",
+        "description": "Datos reutilizables para notificaciones, transiciones de flujo o render de documentos."
+      }
+    },
+    "actions": {
+      "create": "Crear regla",
+      "save": "Guardar regla",
+      "back": "Volver a reglas",
+      "back_list": "Volver a reglas",
+      "view_detail": "Ver detalle"
+    }
+  },
+  "validation": {
+    "rule_slug_unique": "El slug de la regla debe ser único.",
+    "valid_json": "Proporciona JSON válido.",
+    "event_name_required": "El nombre del evento es obligatorio para reglas basadas en eventos.",
+    "cron_expression_invalid": "Proporciona una expresión cron válida de 5 partes.",
+    "valid_from_invalid": "Proporciona una fecha/hora inicial válida o déjala en blanco.",
+    "valid_to_invalid": "Proporciona una fecha/hora final válida o déjala en blanco.",
+    "valid_to_after_start": "La fecha/hora final debe ser posterior a la inicial.",
+    "workflow_transition_requirements": "Las acciones de transición de flujo requieren resource_key, record_id_path y transition.",
+    "render_document_requires_template": "Las acciones de render de documento requieren un template_id válido.",
+    "notification_requires_title": "Las acciones de notificación requieren un título."
+  },
+  "messages": {
+    "not_found": "Regla de automatización no encontrada.",
+    "created": "Regla de automatización creada.",
+    "updated": "Regla de automatización actualizada.",
+    "deleted": "Regla de automatización eliminada.",
+    "execution_failed": "La ejecución de automatización falló.",
+    "execution_reused": "Se reutilizó una ejecución de automatización existente.",
+    "executed": "Regla de automatización ejecutada.",
+    "select_transition": "Selecciona una transición de flujo válida.",
+    "transitioned": "El flujo cambió de estado correctamente.",
+    "restored_summary": "Regla restaurada desde la versión",
+    "version_restored": "Versión restaurada.",
+    "retrieved": "Reglas de automatización recuperadas.",
+    "rule_retrieved": "Regla de automatización recuperada.",
+    "invalid_context_json": "Proporciona JSON válido para el contexto de ejecución.",
+    "idempotency_required": "Proporciona un header Idempotency-Key o un campo idempotency_key para esta ejecución."
+  },
+  "show": {
+    "title": "Detalle de la Regla de Automatización",
+    "eyebrow": "Automatización",
+    "rule_fallback": "Regla de automatización",
+    "lede_fallback": "Regla interna de automatización conectada a los buses de ejecución existentes.",
+    "actions": {
+      "edit": "Editar",
+      "back": "Volver"
+    },
+    "stats": {
+      "workflow": "Flujo",
+      "trigger": "Trigger",
+      "action": "Acción",
+      "last_run": "Última ejecución",
+      "validity": "Vigencia"
+    },
+    "workflow": {
+      "title": "Acciones de flujo",
+      "description": "Operación real del ciclo de vida reutilizable adoptado por esta regla.",
+      "transition": "Transición",
+      "select_transition": "Selecciona transición",
+      "notes": "Notas",
+      "notes_placeholder": "Nota opcional de transición",
+      "apply": "Aplicar",
+      "columns": {
+        "occurred": "Ocurrió",
+        "transition": "Transición",
+        "from": "Desde",
+        "to": "Hacia",
+        "actor": "Actor"
+      },
+      "empty": "Todavía no hay transiciones registradas."
+    },
+    "execute": {
+      "title": "Ejecutar regla",
+      "description": "Dispara la regla manualmente con contexto JSON reutilizando el mismo motor real.",
+      "context_json": "JSON del contexto de ejecución",
+      "run_now": "Ejecutar regla ahora",
+      "last_result": "Último resultado manual"
+    },
+    "versions": {
+      "title": "Historial de versiones",
+      "description": "Instantáneas persistidas de configuración reutilizable y restauración real.",
+      "columns": {
+        "version": "Versión",
+        "summary": "Resumen",
+        "created": "Creado"
+      },
+      "restore": "Restaurar",
+      "empty": "Todavía no hay versiones capturadas."
+    },
+    "logs": {
+      "title": "Log de ejecución",
+      "description": "Historial real de ejecuciones por evento, schedule o disparo manual.",
+      "columns": {
+        "when": "Cuándo",
+        "source": "Origen",
+        "status": "Estado",
+        "message": "Mensaje"
+      },
+      "empty": "Todavía no hay entradas en el log de ejecución."
+    },
+    "common": {
+      "never": "Nunca",
+      "now": "ahora",
+      "open": "abierto",
+      "system": "sistema"
+    }
+  }
+}

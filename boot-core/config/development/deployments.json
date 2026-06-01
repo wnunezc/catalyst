@@ -1,0 +1,22 @@
+{
+    "profiles": {
+        "local-preview": {
+            "description": "Construye una exportación local y limpia en staging sin publicación remota.",
+            "create_zip": false,
+            "publish_remote": false,
+            "exclude": [
+                "boot-core/storage/releases"
+            ]
+        },
+        "remote-package": {
+            "description": "Construye un ZIP de release en staging y publícalo mediante el disco FTP/SFTP configurado.",
+            "create_zip": true,
+            "publish_remote": false,
+            "disk": "ftp",
+            "remote_directory": "releases",
+            "exclude": [
+                "boot-core/storage/releases"
+            ]
+        }
+    }
+}

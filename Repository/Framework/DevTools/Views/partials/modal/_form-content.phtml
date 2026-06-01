@@ -1,0 +1,19 @@
+<form id="modal-form" class="p-3" method="POST" action="/test-features/modal/form-submit" data-catalyst="form" data-modal-demo-form>
+    {{{ csrf_field }}}
+    <div class="mb-3">
+        <label for="name" class="form-label">{{ t:ui.labels.name }}</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">{{ t:ui.labels.email }}</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+    </div>
+    <div class="mb-3">
+        <label for="message" class="form-label">{{ t:ui.labels.message }}</label>
+        <textarea class="form-control" id="message" name="message" rows="3"></textarea>
+    </div>
+    <div class="d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ t:ui.actions.cancel }}</button>
+        <button type="submit" class="btn btn-primary">{{ t:ui.actions.submit }}</button>
+    </div>
+</form>

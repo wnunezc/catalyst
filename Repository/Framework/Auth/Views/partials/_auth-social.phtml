@@ -1,0 +1,18 @@
+<div class="auth-social-divider d-flex align-items-center gap-2">
+    <hr class="flex-grow-1 m-0">
+    <span>{{ or_label }}</span>
+    <hr class="flex-grow-1 m-0">
+</div>
+
+<div class="d-grid gap-2">
+    {{#if google_enabled}}
+    <button type="button" class="btn btn-outline-secondary d-flex align-items-center justify-content-center gap-2" data-catalyst-href="/auth/social/google">
+        <i class="fab fa-google"></i>Google
+    </button>
+    {{/if}}
+    {{#if github_enabled}}
+    <button type="button" class="btn btn-outline-secondary d-flex align-items-center justify-content-center gap-2" data-catalyst-href="/auth/social/github">
+        <i class="fab fa-github"></i>GitHub
+    </button>
+    {{/if}}
+</div>

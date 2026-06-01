@@ -1,0 +1,16 @@
+{{#if render_without_wrapper}}
+    {{> "./_field-control" }}
+{{else}}
+    <div class="{{ wrapper_class }}"{{{ wrapper_attributes_html }}}>
+        {{#if show_label}}
+            <label for="{{ id }}" class="form-label small fw-semibold">
+                {{ label }}
+                {{#if required}}<span class="text-danger">*</span>{{/if}}
+            </label>
+        {{/if}}
+        {{> "./_field-control" }}
+        {{#if show_help_after}}
+            <div class="form-text">{{ help }}</div>
+        {{/if}}
+    </div>
+{{/if}}

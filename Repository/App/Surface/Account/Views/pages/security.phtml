@@ -1,0 +1,24 @@
+<div class="account-page" data-account-page="security">
+    <div class="account-page-header">
+        <div>
+            <span class="account-eyebrow">{{ t:account.security.eyebrow }}</span>
+            <h1>{{ t:account.security.title }}</h1>
+            <p>{{ t:account.security.lead }}</p>
+        </div>
+    </div>
+
+    <section class="row g-3">
+        {{#each account_security.cards}}
+        <div class="col-12 col-lg-4">
+            <article class="card account-card account-card--action h-100">
+                <div class="card-body">
+                    <div class="account-card__icon"><i class="{{ icon }}"></i></div>
+                    <h2>{{ title }}</h2>
+                    <p>{{ body }}</p>
+                    <a href="{{ href }}" class="btn btn-outline-primary btn-sm">{{ action }}</a>
+                </div>
+            </article>
+        </div>
+        {{/each}}
+    </section>
+</div>

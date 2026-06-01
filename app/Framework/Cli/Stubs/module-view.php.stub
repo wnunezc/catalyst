@@ -1,0 +1,4 @@
+<div class="container py-4">
+    <h1>{{ t:{{langKey}}.title }}</h1>
+    <p>{{ t:{{langKey}}.description }}</p>
+</div>

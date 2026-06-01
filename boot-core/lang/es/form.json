@@ -1,0 +1,28 @@
+{
+  "gender_options": {
+    "male": "Masculino",
+    "female": "Femenino",
+    "other": "Otro",
+    "prefer_not_to_say": "Prefiero no decirlo"
+  },
+  "gender_default": "male",
+  "status_options": {
+    "active": "Activo",
+    "inactive": "Inactivo",
+    "pending": "Pendiente",
+    "suspended": "Suspendido"
+  },
+  "status_default": "active",
+  "yes_no_options": {
+    "1": "Sí",
+    "0": "No"
+  },
+  "yes_no_default": "1",
+  "priority_options": {
+    "low": "Baja",
+    "medium": "Media",
+    "high": "Alta",
+    "critical": "Crítica"
+  },
+  "priority_default": "medium"
+}

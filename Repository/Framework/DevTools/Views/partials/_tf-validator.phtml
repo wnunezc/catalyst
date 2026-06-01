@@ -1,0 +1,78 @@
+<div class="col-12">
+    <div class="section-card">
+                <div class="card-header"><i class="fa-solid fa-shield-check me-2"></i>{{ t:devtools.validator_demo.title }}</div>
+        <div class="card-body">
+            <div class="row g-4">
+
+                <!-- Demo form -->
+                <div class="col-12 col-lg-6">
+                    <p class="text-muted small mb-3">
+                        {{ t:devtools.validator_demo.validates }} <code>required|min:3|max:50</code> · <code>email</code> ·
+                        <code>integer|min_value:18|max_value:99</code> · <code>min:8</code> · <code>confirmed</code>
+                    </p>
+                    <form id="v3-form" method="POST" action="/test-features/api/validator-test" data-catalyst="form">
+                        <div class="mb-2">
+                            <label class="form-label form-label-sm">{{ t:ui.labels.name }}</label>
+                            <input type="text" class="form-control form-control-sm" id="v3-name" name="name" placeholder="{{ t:devtools.validator_demo.placeholders.name }}">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label form-label-sm">{{ t:devtools.validator_demo.labels.email }}</label>
+                            <input type="text" class="form-control form-control-sm" id="v3-email" name="email" placeholder="{{ t:devtools.validator_demo.placeholders.email }}">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label form-label-sm">{{ t:devtools.validator_demo.labels.age }}</label>
+                            <input type="text" class="form-control form-control-sm" id="v3-age" name="age" placeholder="{{ t:devtools.validator_demo.placeholders.age }}">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label form-label-sm">{{ t:devtools.validator_demo.labels.password }}</label>
+                            <input type="text" class="form-control form-control-sm" id="v3-password" name="password" placeholder="{{ t:devtools.validator_demo.placeholders.password }}">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-sm">{{ t:devtools.validator_demo.labels.password_confirmation }}</label>
+                            <input type="text" class="form-control form-control-sm" id="v3-password-confirmation" name="password_confirmation" placeholder="{{ t:devtools.validator_demo.placeholders.password_confirmation }}">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="d-flex gap-2 mb-3">
+                            <button class="btn btn-sm btn-outline-danger" type="submit" name="mode" value="invalid">{{ t:devtools.validator_demo.actions.send_invalid }}</button>
+                            <button class="btn btn-sm btn-success" type="submit">{{ t:devtools.validator_demo.actions.send_valid }}</button>
+                            <button class="btn btn-sm btn-outline-secondary" type="button" id="v3-btn-clear">{{ t:devtools.validator_demo.actions.clear }}</button>
+                        </div>
+                        <div id="v3-result" class="d-none">
+                            <hr class="my-2">
+                            <div id="v3-errors" class="d-none"></div>
+                            <div id="v3-success" class="d-none alert alert-success py-2 mb-0 small"></div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Unique rule demo -->
+                <div class="col-12 col-lg-6">
+                    <p class="text-muted small mb-1 fw-semibold">{{ t:devtools.validator_demo.rule }} <code>unique:validator_demo_emails,email</code></p>
+                    <p class="text-muted small mb-3">
+                        {{ t:devtools.validator_demo.preseeded }} <code>taken@example.com</code> · <code>used@catalyst.dev</code>
+                    </p>
+                    <form id="v3-unique-form" method="POST" action="/test-features/api/validator-unique" data-catalyst="form">
+                        <div class="mb-2">
+                            <label class="form-label form-label-sm">{{ t:devtools.validator_demo.labels.email_to_check }}</label>
+                            <input type="text" class="form-control form-control-sm" id="v3-unique-email" name="email" placeholder="{{ t:devtools.validator_demo.placeholders.email_to_check }}">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="d-flex gap-2 mb-3">
+                            <button class="btn btn-sm btn-outline-primary" type="submit">{{ t:devtools.validator_demo.actions.check_unique }}</button>
+                        </div>
+                        <div id="v3-unique-result" class="d-none">
+                            <hr class="my-2">
+                            <div id="v3-unique-errors" class="d-none"></div>
+                            <div id="v3-unique-success" class="d-none alert alert-success py-2 mb-0 small"></div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

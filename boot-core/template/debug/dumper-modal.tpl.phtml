@@ -1,0 +1,20 @@
+<div id="{{ modalId }}" class="{{ dumpId }}-modal">
+    <div class="{{ dumpId }}-modal-content">
+        <div class="{{ dumpId }}-modal-header">
+            <span class="{{ dumpId }}-close" data-dumper-toggle="{{ modalId }}"></span>
+            {{#if caller}}
+                <span class="{{ dumpId }}-modal-label">{{ callerText }}</span>
+            {{else}}
+                <span class="{{ dumpId }}-modal-label">Debug Information</span>
+            {{/if}}
+        </div>
+        <div class="{{ dumpId }}-modal-body">
+            <pre class="{{ dumpId }}-modal-pre">
+{{#each data_entries}}
+{{{ content }}}
+<hr class="{{ @root.dumpId }}-modal-divider">
+{{/each}}
+            </pre>
+        </div>
+    </div>
+</div>

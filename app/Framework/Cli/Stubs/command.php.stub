@@ -1,0 +1,27 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{namespace}};
+
+use Catalyst\Framework\Argument\ArgumentBag;
+use Catalyst\Framework\Cli\AbstractCommand;
+
+class {{ClassName}} extends AbstractCommand
+{
+    public function getName(): string
+    {
+        return '{{commandName}}';
+    }
+
+    public function getDescription(): string
+    {
+        return 'Describe the purpose of this command.';
+    }
+
+    public function execute(ArgumentBag $args): int
+    {
+        $this->info('{{commandName}} executed.');
+        return 0;
+    }
+}

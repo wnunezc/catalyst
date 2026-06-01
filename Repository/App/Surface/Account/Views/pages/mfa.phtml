@@ -1,0 +1,49 @@
+<div class="account-page" data-account-page="mfa">
+    <div class="account-page-header">
+        <div>
+            <span class="account-eyebrow">{{ t:account.mfa.eyebrow }}</span>
+            <h1>{{ t:account.mfa.title }}</h1>
+            <p>{{ t:account.mfa.lead }}</p>
+        </div>
+    </div>
+
+    <section class="row g-3">
+        <div class="col-12 col-xl-7">
+            <article class="card account-card h-100">
+                <div class="card-body">
+                    <div class="account-section-title">
+                        <div>
+                            <h2>{{ t:account.mfa.status_title }}</h2>
+                            <p>{{ t:account.mfa.status_hint }}</p>
+                        </div>
+                    </div>
+                    {{#if account_security.mfa_enabled}}
+                    <div class="account-state account-state--success">
+                        <i class="ti ti-shield-check"></i>
+                        <strong>{{ t:account.mfa.enabled }}</strong>
+                        <span>{{ t:account.mfa.enabled_hint }}</span>
+                    </div>
+                    <a href="/mfa/setup" class="btn btn-outline-primary mt-3">{{ t:account.mfa.manage_existing }}</a>
+                    {{else}}
+                    <div class="account-state account-state--warning">
+                        <i class="ti ti-shield-exclamation"></i>
+                        <strong>{{ t:account.mfa.disabled }}</strong>
+                        <span>{{ t:account.mfa.disabled_hint }}</span>
+                    </div>
+                    <a href="/mfa/setup" class="btn btn-primary mt-3">{{ t:account.mfa.setup }}</a>
+                    {{/if}}
+                </div>
+            </article>
+        </div>
+        <div class="col-12 col-xl-5">
+            <article class="card account-card h-100">
+                <div class="card-body">
+                    <div class="account-note-card">
+                        <i class="ti ti-2fa"></i>
+                        <p>{{ t:account.mfa.scope_note }}</p>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+</div>

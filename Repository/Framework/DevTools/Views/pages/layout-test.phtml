@@ -1,0 +1,116 @@
+<div class="ui-showcase">
+    <section class="ui-catalog-head card border-0 shadow-sm mb-3">
+        <div class="card-body">
+            <div class="ui-catalog-head__row">
+                <div class="ui-catalog-head__copy">
+                    <div class="ui-catalog-head__eyebrow">{{ t:devtools.layout_smoke.eyebrow }}</div>
+                    <h1 class="ui-catalog-head__title">{{ title }}</h1>
+                    <p class="ui-catalog-head__lede mb-0">
+                        {{ t:devtools.layout_smoke.description }}
+                    </p>
+                </div>
+
+                <div class="ui-catalog-head__actions">
+                    <button type="button" class="btn btn-sm btn-primary" data-catalyst-href="/test-features">
+                        <i class="ti ti-flask me-1"></i>{{ t:devtools.module.devtools_label }}
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" data-catalyst-href="/uml">
+                        <i class="ti ti-map-2 me-1"></i>{{ t:devtools.module.architecture_breadcrumb }}
+                    </button>
+                </div>
+            </div>
+
+            <div class="ui-catalog-head__chips">
+                <span class="ui-chip">{{ t:devtools.layout_smoke.chips.layout_wrapping }}</span>
+                <span class="ui-chip">{{ t:devtools.layout_smoke.chips.escape_helper }}</span>
+                <span class="ui-chip">{{ t:devtools.layout_smoke.chips.admin_shell }}</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="row g-3">
+        <div class="col-12 col-xl-8">
+            <section class="card ui-surface-card">
+                <div class="card-header">
+                    <div class="ui-section-head">
+                        <div>
+                            <h2 class="ui-section-title mb-1">{{ t:devtools.layout_smoke.contract.title }}</h2>
+                            <p class="ui-section-subtitle mb-0">
+                                {{ t:devtools.layout_smoke.contract.description }}
+                            </p>
+                        </div>
+                        <div class="ui-section-kicker">{{ t:devtools.layout_smoke.contract.kicker }}</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="mb-3">
+                        {{ t:devtools.layout_smoke.contract.body }}
+                    </p>
+
+                    <div class="table-responsive">
+                        <table class="table align-middle mb-0 ui-admin-table">
+                            <thead>
+                                <tr>
+                                    <th>{{ t:devtools.layout_smoke.table.input }}</th>
+                                    <th>{{ t:devtools.layout_smoke.table.output }}</th>
+                                    <th>{{ t:devtools.layout_smoke.table.expected }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>&lt;script&gt;alert('xss')&lt;/script&gt;</code></td>
+                                    <td>{{ tokenEscapeExample }}</td>
+                                    <td class="small text-muted">{{ t:devtools.layout_smoke.expected.escaped }}</td>
+                                </tr>
+                                <tr>
+                                    <td><code>"double" &amp; 'single'</code></td>
+                                    <td>{{ tokenEntityExample }}</td>
+                                    <td class="small text-muted">{{ t:devtools.layout_smoke.expected.entities }}</td>
+                                </tr>
+                                <tr>
+                                    <td>@{{ title }}</td>
+                                    <td>{{ title }}</td>
+                                    <td class="small text-muted">{{ t:devtools.layout_smoke.expected.controller_title }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="alert alert-info mt-3 mb-0">
+                        <strong>{{ t:devtools.layout_smoke.manual_check.title }}:</strong>
+                        {{ t:devtools.layout_smoke.manual_check.description }}
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="col-12 col-xl-4">
+            <section class="card ui-rail-card h-100">
+                <div class="card-header">
+                    <div class="ui-section-head">
+                        <div>
+                            <h2 class="ui-section-title mb-1">{{ t:devtools.layout_smoke.checks.title }}</h2>
+                            <p class="ui-section-subtitle mb-0">{{ t:devtools.layout_smoke.checks.description }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="ui-checklist">
+                        <div class="ui-checklist__item">
+                            <i class="ti ti-check text-primary"></i>
+                            <span>{{ t:devtools.layout_smoke.checks.items.chrome }}</span>
+                        </div>
+                        <div class="ui-checklist__item">
+                            <i class="ti ti-check text-primary"></i>
+                            <span>{{ t:devtools.layout_smoke.checks.items.escape }}</span>
+                        </div>
+                        <div class="ui-checklist__item">
+                            <i class="ti ti-check text-primary"></i>
+                            <span>{{ t:devtools.layout_smoke.checks.items.no_inline }}</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

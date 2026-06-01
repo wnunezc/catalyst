@@ -1,0 +1,238 @@
+<div class="admin-surface admin-surface-shell operations-page module-designer-page">
+    {{> "components._admin-page-header" }}
+
+    <div class="row g-3">
+        <div class="col-12 col-xl-7">
+            <section class="card border-0 shadow-sm">
+                <div class="card-header">
+                    <h2 class="h5 mb-1">{{ t:devtools.module_designer.blueprint.title }}</h2>
+                    <p class="text-muted mb-0">{{ t:devtools.module_designer.blueprint.description }}</p>
+                </div>
+                <div class="card-body">
+                    {{#if designer_error}}
+                        <div class="alert alert-danger py-2 px-3 mb-3" role="alert">
+                            {{ designer_error }}
+                        </div>
+                    {{/if}}
+
+                    <form data-catalyst="form" method="POST" action="/workspaces/module-designer/preview" class="row g-3">
+                        {{{ csrfField }}}
+
+                        <div class="col-12 col-md-4">
+                            <label class="form-label small text-muted" for="module-space">{{ t:devtools.module_designer.form.labels.space }}</label>
+                            <select id="module-space" name="space" class="form-select form-select-sm">
+                                {{#each space_options}}
+                                    <option value="{{ value }}"{{#if selected}} selected{{/if}}>{{ label }}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+
+                        <div class="col-12 col-md-8">
+                            <label class="form-label small text-muted" for="module-name">{{ t:devtools.module_designer.form.labels.module }}</label>
+                            <input id="module-name"
+                                   name="module"
+                                   type="text"
+                                   class="form-control form-control-sm"
+                                   value="{{ designer_form.module }}"
+                                   placeholder="{{ t:devtools.module_designer.form.placeholders.module }}">
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label small text-muted" for="module-description">{{ t:devtools.module_designer.form.labels.description }}</label>
+                            <textarea id="module-description"
+                                      name="description"
+                                      class="form-control form-control-sm"
+                                      rows="3"
+                                      placeholder="{{ t:devtools.module_designer.form.placeholders.description }}">{{ designer_form.description }}</textarea>
+                        </div>
+
+                        <div class="col-12 col-md-4">
+                            <label class="form-label small text-muted" for="module-surface">{{ t:devtools.module_designer.form.labels.surface }}</label>
+                            <select id="module-surface" name="surface" class="form-select form-select-sm">
+                                {{#each surface_options}}
+                                    <option value="{{ value }}"{{#if selected}} selected{{/if}}>{{ label }}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+
+                        <div class="col-12 col-md-4">
+                            <label class="form-label small text-muted" for="module-permission">{{ t:devtools.module_designer.form.labels.permission_slug }}</label>
+                            <input id="module-permission"
+                                   name="permission_slug"
+                                   type="text"
+                                   class="form-control form-control-sm"
+                                   value="{{ designer_form.permission_slug }}"
+                                   placeholder="{{ t:devtools.module_designer.form.placeholders.permission_slug }}">
+                        </div>
+
+                        <div class="col-12 col-md-4">
+                            <label class="form-label small text-muted" for="module-feature-flags">{{ t:devtools.module_designer.form.labels.feature_flags }}</label>
+                            <input id="module-feature-flags"
+                                   name="feature_flags"
+                                   type="text"
+                                   class="form-control form-control-sm"
+                                   value="{{ designer_form.feature_flags }}"
+                                   placeholder="{{ t:devtools.module_designer.form.placeholders.feature_flags }}">
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label small text-muted" for="module-settings">{{ t:devtools.module_designer.form.labels.settings }}</label>
+                            <input id="module-settings"
+                                   name="settings"
+                                   type="text"
+                                   class="form-control form-control-sm"
+                                   value="{{ designer_form.settings }}"
+                                   placeholder="{{ t:devtools.module_designer.form.placeholders.settings }}">
+                            <div class="form-text">{{ t:devtools.module_designer.form.help.settings }}</div>
+                        </div>
+
+                        <div class="col-12 d-flex gap-2 flex-wrap">
+                            <button type="submit" class="btn btn-sm btn-primary">
+                                {{ t:devtools.module_designer.form.actions.preview }}
+                            </button>
+                            <button type="submit"
+                                    class="btn btn-sm btn-outline-secondary"
+                                    formaction="/workspaces/module-designer/generate">
+                                {{ t:devtools.module_designer.form.actions.generate }}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            {{#if has_preview}}
+                <section class="card border-0 shadow-sm mt-3">
+                    <div class="card-header">
+                        <h2 class="h5 mb-1">{{ t:devtools.module_designer.preview.title }}</h2>
+                        <p class="text-muted mb-0">{{ t:devtools.module_designer.preview.description }}</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-12 col-lg-6">
+                                <div class="module-designer-metric">
+                                    <span class="module-designer-metric__label">{{ t:devtools.module_designer.preview.metrics.namespace }}</span>
+                                    <code>{{ preview.namespace_root }}</code>
+                                </div>
+                                <div class="module-designer-metric">
+                                    <span class="module-designer-metric__label">{{ t:devtools.module_designer.preview.metrics.route }}</span>
+                                    <code>{{ preview.route_uri_display }}</code>
+                                </div>
+                                <div class="module-designer-metric">
+                                    <span class="module-designer-metric__label">{{ t:devtools.module_designer.preview.metrics.layout }}</span>
+                                    <code>{{ preview.layout }}</code>
+                                </div>
+                                <div class="module-designer-metric">
+                                    <span class="module-designer-metric__label">{{ t:devtools.module_designer.preview.metrics.target }}</span>
+                                    <code>{{ preview.base_dir }}</code>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-lg-6">
+                                <div class="module-designer-chip-grid">
+                                    <span class="ui-filter-chip">{{ t:devtools.module_designer.preview.surface }}: {{ preview.surface }}</span>
+                                    {{#each preview.settings}}
+                                        <span class="ui-filter-chip">{{ @root.preview_setting_label }}: {{ this }}</span>
+                                    {{/each}}
+                                    {{#each preview.feature_flags}}
+                                        <span class="ui-filter-chip">{{ @root.preview_flag_label }}: {{ this }}</span>
+                                    {{/each}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mt-1">
+                            <div class="col-12 col-lg-6">
+                                <h3 class="h6 mb-2">{{ t:devtools.module_designer.preview.generated_files }}</h3>
+                                <ul class="module-designer-file-list">
+                                    {{#each preview.files}}
+                                        <li><code>{{ path }}</code></li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <h3 class="h6 mb-2">{{ t:devtools.module_designer.preview.manifest }}</h3>
+                                <pre class="code-pre module-designer-pre">{{ preview.manifest_contents }}</pre>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            {{/if}}
+        </div>
+
+        <div class="col-12 col-xl-5">
+            <div class="vstack gap-3">
+                <section class="card border-0 shadow-sm">
+                    <div class="card-header">
+                        <h2 class="h5 mb-0">{{ t:devtools.module_designer.lint.title }}</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+                            <span class="badge {{ lint_status_badge_class }}">
+                                {{ lint_status_label }}
+                            </span>
+                            <span class="badge text-bg-light border">{{ lint_issue_count }} {{ t:devtools.module_designer.lint.issue_count_suffix }}</span>
+                        </div>
+
+                        <div class="vstack gap-2">
+                            {{#each lint_checks}}
+                                <div class="module-designer-check">
+                                    <strong>{{ label }}</strong>
+                                    <span class="small text-muted">
+                                        {{ status_label }} · {{ checked }} {{ @root.lint_checked_label }}
+                                    </span>
+                                </div>
+                            {{/each}}
+                        </div>
+
+                        {{#if lint_issues}}
+                            <hr>
+                            <div class="vstack gap-2">
+                                {{#each lint_issues}}
+                                    <div class="module-designer-issue">
+                                        <div class="small fw-semibold">{{ type }}</div>
+                                        <div class="small text-muted">{{ message }}</div>
+                                    </div>
+                                {{/each}}
+                            </div>
+                        {{/if}}
+                    </div>
+                </section>
+
+                <section class="card border-0 shadow-sm">
+                    <div class="card-header">
+                        <h2 class="h5 mb-0">{{ t:devtools.module_designer.registered_modules.title }}</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table align-middle mb-0 module-designer-table">
+                                <thead>
+                                <tr>
+                                    <th>{{ t:devtools.module_designer.registered_modules.columns.module }}</th>
+                                    <th>{{ t:devtools.module_designer.registered_modules.columns.scope }}</th>
+                                    <th>{{ t:devtools.module_designer.registered_modules.columns.routes }}</th>
+                                    <th>{{ t:devtools.module_designer.registered_modules.columns.manifest }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#each registered_modules}}
+                                    <tr>
+                                        <td>
+                                            <div class="fw-semibold">{{ name }}</div>
+                                            <div class="small text-muted">{{ slug }}</div>
+                                        </td>
+                                        <td><span class="badge text-bg-light border">{{ scope }}</span></td>
+                                        <td>{{ owned_routes_count }}</td>
+                                        <td>
+                                            <span class="badge {{ manifest_badge_class }}">{{ manifest_label }}</span>
+                                        </td>
+                                    </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>

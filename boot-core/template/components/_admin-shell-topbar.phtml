@@ -1,0 +1,75 @@
+<header class="app-topbar">
+    <div class="container-fluid topbar-menu">
+        <div class="d-flex align-items-center gap-2">
+            <div class="logo-topbar">
+                <a href="/dashboard" class="logo-light">
+                    <span class="logo-lg"><img src="/assets/vendor/inspinia/images/logo.png" alt="logo"></span>
+                    <span class="logo-sm"><img src="/assets/vendor/inspinia/images/logo-sm.png" alt="small logo"></span>
+                </a>
+                <a href="/dashboard" class="logo-dark">
+                    <span class="logo-lg"><img src="/assets/vendor/inspinia/images/logo-black.png" alt="dark logo"></span>
+                    <span class="logo-sm"><img src="/assets/vendor/inspinia/images/logo-sm.png" alt="small logo"></span>
+                </a>
+            </div>
+
+            <div id="search-box" class="app-search d-none d-xl-flex">
+                <input type="search" class="form-control topbar-search" name="search" placeholder="Search for something...">
+                <i class="ti ti-search app-search-icon text-muted"></i>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+            <div class="topbar-item">
+                <button class="topbar-link" type="button"><i class="ti ti-building-community topbar-link-icon"></i></button>
+            </div>
+            <div id="simple-user-dropdown" class="topbar-item nav-user migration-ui-user-dropdown">
+                <div class="dropdown">
+                    <a class="topbar-link dropdown-toggle drop-arrow-none px-2" data-bs-toggle="dropdown" role="button" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-label="{{ auth_menu_label }}" title="{{ auth_menu_label }}">
+                        <img src="{{ auth_avatar_src }}" width="32" class="rounded-circle me-lg-2 d-flex" alt="user-image">
+                        <div class="d-lg-flex align-items-center gap-1 d-none">
+                            <h5 class="my-0 migration-ui-account-label">{{ auth_menu_label }}</h5>
+                            <i class="ti ti-chevron-down align-middle"></i>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <div class="dropdown-header migration-ui-account-summary">
+                            <span class="migration-ui-account-summary__name">{{ auth_name }}</span>
+                            {{#if has_auth_email}}
+                            <span class="migration-ui-account-summary__email">{{ auth_email }}</span>
+                            {{/if}}
+                        </div>
+
+                        <div class="dropdown-divider"></div>
+
+                        <a href="#!" class="dropdown-item">
+                            <i class="ti ti-user-circle me-1 fs-lg align-middle"></i>
+                            <span class="align-middle">{{ t:ui.product_nav.profile }}</span>
+                        </a>
+
+                        <a href="#!" class="dropdown-item">
+                            <i class="ti ti-settings-2 me-1 fs-lg align-middle"></i>
+                            <span class="align-middle">{{ t:ui.product_nav.account_settings }}</span>
+                        </a>
+
+                        <div class="dropdown-divider"></div>
+
+                        <a href="#!" class="dropdown-item">
+                            <i class="ti ti-headset me-1 fs-lg align-middle"></i>
+                            <span class="align-middle">{{ t:ui.product_nav.support }}</span>
+                        </a>
+
+                        <div class="dropdown-divider"></div>
+
+                        <form method="POST" action="/logout" class="m-0" data-catalyst="form">
+                            {{{ logout_csrf_field }}}
+                            <button type="submit" class="dropdown-item text-danger fw-semibold">
+                                <i class="ti ti-logout me-1 fs-lg align-middle"></i>
+                                <span class="align-middle">{{ t:ui.status_bar.log_out }}</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

@@ -1,0 +1,31 @@
+<div class="admin-surface admin-surface-shell media-admin-page">
+    {{> "components._admin-page-header" }}
+
+    {{#if media}}
+    <section class="card border-0 shadow-sm mb-3">
+        <div class="card-body media-current-asset">
+            <div>
+                <div class="small text-uppercase text-muted fw-semibold mb-1">{{ t:media.library.form.current_asset }}</div>
+                <div class="h5 mb-1">{{ media.name }}</div>
+                <div class="small text-muted text-break">{{ media.path }}</div>
+            </div>
+            <div class="media-current-asset__meta">
+                <span class="badge text-bg-light">{{ media.mime_type }}</span>
+                <span class="badge text-bg-light">{{ media.disk }}</span>
+                {{#if media.public_url}}
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-catalyst-href="{{ media.public_url }}">
+                    <i class="fa-solid fa-arrow-up-right-from-square me-1"></i> {{ t:media.library.index.actions.open }}
+                </button>
+                {{/if}}
+            </div>
+        </div>
+    </section>
+    {{/if}}
+
+    <section class="card border-0 shadow-sm">
+        <div class="card-body">
+            {{> "components._record-claim-banner" }}
+            {{> "components._admin-form-builder" }}
+        </div>
+    </section>
+</div>

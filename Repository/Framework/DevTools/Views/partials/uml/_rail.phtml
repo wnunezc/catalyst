@@ -1,0 +1,68 @@
+<div class="vstack gap-3">
+    <section class="card ui-rail-card">
+        <div class="card-header">
+            <div class="ui-section-head">
+                <div>
+                    <h2 class="ui-section-title mb-1">{{ t:uml.rail.scope_title }}</h2>
+                    <p class="ui-section-subtitle mb-0">{{ t:uml.rail.scope_description }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <ol class="ui-rail-list">
+                {{#each rail_scope_items}}
+                <li><a href="{{ this.href }}">{{ this.label }}</a></li>
+                {{/each}}
+            </ol>
+        </div>
+    </section>
+
+    <section class="card ui-rail-card">
+        <div class="card-header">
+            <div class="ui-section-head">
+                <div>
+                    <h2 class="ui-section-title mb-1">{{ t:uml.rail.notes_title }}</h2>
+                    <p class="ui-section-subtitle mb-0">{{ t:uml.rail.notes_description }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="ui-checklist">
+                <div class="ui-checklist__item">
+                    <i class="ti ti-check text-primary"></i>
+                    <span>{{ t:uml.rail.notes_items.runtime_truth }}</span>
+                </div>
+                <div class="ui-checklist__item">
+                    <i class="ti ti-check text-primary"></i>
+                    <span>{{ t:uml.rail.notes_items.web_stack }}</span>
+                </div>
+                <div class="ui-checklist__item">
+                    <i class="ti ti-check text-primary"></i>
+                    <span>{{ t:uml.rail.notes_items.mermaid }}</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="card ui-rail-card">
+        <div class="card-header">
+            <div class="ui-section-head">
+                <div>
+                    <h2 class="ui-section-title mb-1">{{ t:uml.rail.loaded_sections_title }}</h2>
+                    <p class="ui-section-subtitle mb-0">{{ t:uml.rail.loaded_sections_description }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            {{#if json_sections}}
+            <div class="d-flex flex-wrap gap-2">
+                {{#each json_sections}}
+                <span class="badge badge-json">{{ this }}</span>
+                {{/each}}
+            </div>
+            {{else}}
+            <p class="small mb-0">{{ rail_loaded_sections_empty }}</p>
+            {{/if}}
+        </div>
+    </section>
+</div>

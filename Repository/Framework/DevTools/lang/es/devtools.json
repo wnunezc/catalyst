@@ -1,0 +1,815 @@
+{
+    "module": {
+        "description": "Herramientas de desarrollo, UML y superficies de smoke de la aplicación.",
+        "permission_label": "Acceder a DevTools",
+        "permission_description": "Acceder a herramientas de ejecución disponibles solo en desarrollo.",
+        "devtools_label": "DevTools",
+        "test_features_label": "Pruebas",
+        "test_features_hint": "Banco principal de pruebas de ejecución",
+        "ui_showcase_label": "Galería UI",
+        "ui_showcase_hint": "Catálogo visual y componentes",
+        "uml_label": "UML / Arquitectura",
+        "uml_hint": "Modelo técnico y diagramas",
+        "layout_smoke_label": "Smoke de layout",
+        "layout_smoke_hint": "Prueba mínima del shell",
+        "architecture_breadcrumb": "Arquitectura"
+    },
+    "test_section": {
+        "title": "DevTools — Prueba i18n",
+        "description": "Probando el sistema i18n desde el archivo lang/ del módulo DevTools."
+    },
+    "module_string": "Este string fue cargado desde el directorio lang/ del módulo DevTools.",
+    "locale_switch": {
+        "label": "Idioma activo",
+        "change_to": "Cambiar a"
+    },
+    "rbac_test": {
+        "title": "RBAC - Etapa 6 · Sistema de autorización",
+        "current_status": "Estado RBAC del usuario actual",
+        "inspect_status": "Inspeccionar estado RBAC",
+        "raw_json": "JSON crudo",
+        "admin_links": "Enlaces de módulos admin (requieren rol admin):",
+        "promote_warning": "Solo dev - promover usuario actual:",
+        "make_admin": "Hacerme admin",
+        "architecture_overview": "Vista de arquitectura",
+        "table": {
+            "component": "Componente",
+            "class": "Clase",
+            "rows": {
+                "role_guard": "Guard de rol",
+                "db_repository": "Repositorio DB",
+                "gate": "Gate (closures)",
+                "policy": "Policy (clases)",
+                "controller_api": "API del controlador",
+                "exception": "Excepción 403"
+            }
+        }
+    },
+    "harness": {
+        "title": "Catalyst — DevTools",
+        "page_title": "DevTools",
+        "eyebrow": "Banco de pruebas de ejecución",
+        "description": "Superficie técnica para validar flashes, toasts, modales, formularios, endpoints y diagnóstico operativo sin salir del lenguaje visual admin.",
+        "boundary_title": "Límite canónico",
+        "boundary_prefix": "El gobierno de ejecución de banderas de funcionalidad, plugins, despliegues y segmentación por tenant vive en",
+        "boundary_suffix": "DevTools conserva sondas, endpoints de smoke y diagnóstico del banco de pruebas.",
+        "actions": {
+            "ui_showcase": "Galería UI",
+            "module_designer": "Diseñador de Módulos",
+            "operations": "Operaciones",
+            "roles": "Roles",
+            "permissions": "Permisos",
+            "clear_flash": "Limpiar Flash"
+        },
+        "chips": {
+            "dev_only": "Solo dev",
+            "runtime_probes": "Sondas de ejecución",
+            "no_product_content": "Sin contenido de producto",
+            "operational_diagnostics": "Diagnóstico operativo"
+        }
+    },
+    "route_test": {
+        "title": "Catalyst Framework",
+        "version_line": "Versión %s — PHP %s",
+        "router_ok": "El router está funcionando correctamente.",
+        "footer": "Página de bienvenida del framework — se muestra cuando no hay un redirect activo de project_entry."
+    },
+    "layout_smoke": {
+        "title": "Catalyst — Layout Smoke",
+        "eyebrow": "Layout smoke",
+        "description": "Superficie corta para validar que el layout, el helper e() y el wrapping de vistas siguen funcionando dentro del chrome admin actual.",
+        "chips": {
+            "layout_wrapping": "Layout wrapping",
+            "escape_helper": "Escape helper",
+            "admin_shell": "Admin shell"
+        },
+        "contract": {
+            "title": "Contrato de Layout",
+            "description": "Verifica que la vista siga siendo fragmento y que el layout admin aporte el chrome compartido.",
+            "kicker": "Smoke",
+            "body": "Este contenido fue renderizado como fragmento y luego envuelto por un layout del framework via View::render(...). Las etiquetas <html>, <head> y los recursos provienen del layout, no de esta vista."
+        },
+        "table": {
+            "input": "Entrada",
+            "output": "Salida con e()",
+            "expected": "Resultado esperado"
+        },
+        "expected": {
+            "escaped": "Debe verse escapado, no ejecutarse.",
+            "entities": "Debe preservar entidades HTML seguras.",
+            "controller_title_input": "Title del controlador",
+            "controller_title": "Debe reflejar la variable enviada por el controlador."
+        },
+        "manual_check": {
+            "title": "Verificación manual",
+            "description": "Inspector → Elements → revisa la celda de salida y confirma que el payload se renderiza como texto escapado."
+        },
+        "checks": {
+            "title": "Verificaciones",
+            "description": "Qué valida realmente esta pantalla.",
+            "items": {
+                "chrome": "El chrome admin carga sin romper una vista mínima.",
+                "escape": "e() sigue escapando payload HTML en render real.",
+                "no_inline": "La vista no depende de markup completo ni de recursos inline."
+            }
+        }
+    },
+    "module_designer": {
+        "title": "Diseñador de Módulos",
+        "page_title": "Diseñador de Módulos",
+        "eyebrow": "Diagnostic surface",
+        "description": "Declaración técnica de módulos sobre el framework real: previsualización del scaffold, manifiesto consumido por el registro de módulos y guard base coherente con la superficie elegida.",
+        "messages": {
+            "preview_generated": "Previsualización del scaffold generada.",
+            "module_created": "Módulo %s/%s creado con manifest de registry y scaffold de guard coherente."
+        },
+        "actions": {
+            "roles": "Roles"
+        },
+        "chips": {
+            "registry_aware": "Consciente del registro",
+            "no_parallel_cli": "Sin CLI paralela",
+            "guard_coherent": "Guard coherente",
+            "manifest_optional": "Manifest opcional por módulo"
+        },
+        "blueprint": {
+            "title": "Plano del Módulo",
+            "description": "Previsualización y generación real usando el mismo motor que make:module.",
+            "kicker": "Diagnostics"
+        },
+        "form": {
+            "labels": {
+                "space": "Espacio de repositorio",
+                "module": "Nombre del módulo",
+                "description": "Descripción",
+                "surface": "Superficie",
+                "permission_slug": "Slug de permiso",
+                "feature_flags": "Banderas de funcionalidad",
+                "settings": "Secciones de configuración"
+            },
+            "placeholders": {
+                "module": "Catalogo",
+                "description": "Descripción corta orientada al registro",
+                "permission_slug": "manage-catalog",
+                "feature_flags": "catalog_enabled, catalog_api",
+                "settings": "catalog, catalog-sync"
+            },
+            "help": {
+                "settings": "Usa coma o salto de línea. El manifiesto se genera como fuente de metadata del módulo."
+            },
+            "options": {
+                "repository_app": "App",
+                "repository_framework": "Framework",
+                "surface_none": "Ninguna",
+                "surface_public": "Pública",
+                "surface_workspace": "Espacio de trabajo",
+                "surface_administration": "Administración",
+                "surface_devtools": "DevTools"
+            },
+            "actions": {
+                "preview": "Previsualizar scaffold",
+                "generate": "Generar módulo"
+            }
+        },
+        "preview": {
+            "title": "Resumen de la Previsualización",
+            "description": "Ruta, guard, layout y archivos que se crearán si confirmas.",
+            "kicker": "Simulación",
+            "metrics": {
+                "namespace": "Namespace",
+                "route": "Ruta",
+                "layout": "Layout",
+                "target": "Destino"
+            },
+            "surface": "Superficie",
+            "setting": "Configuración",
+            "flag": "Flag",
+            "generated_files": "Archivos generados",
+            "manifest": "Previsualización del manifiesto"
+        },
+        "lint": {
+            "title": "Lint Estructural",
+            "coherent": "Coherente",
+            "issues_detected": "Issues detectados",
+            "issue_count_suffix": "incidencia(s)",
+            "ok": "OK",
+            "issues": "ISSUES",
+            "checked": "revisado",
+            "issue": "incidencia",
+            "check_names": {
+                "module_registration": "Registro de módulos",
+                "plugin_manifests": "Manifiestos de plugins",
+                "registry_route_drift": "Desfase de rutas del registro"
+            },
+            "issue_messages": {
+                "module_owns_route_not_covered": "El módulo \":module\" es propietario de la ruta \":route\", pero no está cubierta por rutas exactas declaradas ni por prefijos declarados."
+            }
+        },
+        "registered_modules": {
+            "title": "Módulos Registrados",
+            "columns": {
+                "module": "Módulo",
+                "scope": "Alcance",
+                "routes": "Rutas",
+                "manifest": "Manifiesto"
+            },
+            "valid": "válido",
+            "invalid": "inválido",
+            "none": "ninguno"
+        },
+        "cli": {
+            "title": "Superficie CLI"
+        }
+    },
+    "form_events": {
+        "title": "Eventos de Formulario — HandlesFormEvents + FormHandler",
+        "description": "Los formularios marcados con data-catalyst=\"form\" son interceptados automáticamente por FormHandler. Cada botón submit mapea su valor data-event a un método on{Event}() del controlador PHP mediante el trait HandlesFormEvents. El CSRF se inyecta automáticamente por el interceptor de fetch.",
+        "labels": {
+            "email": "Correo"
+        },
+        "placeholders": {
+            "name": "Ingresa nombre",
+            "email": "Ingresa correo"
+        },
+        "actions": {
+            "force_errors": "Forzar errores"
+        },
+        "mapping": {
+            "title": "Mapa evento → método PHP:",
+            "php_method": "Método PHP",
+            "behavior": "Comportamiento",
+            "rows": {
+                "save": "Valida campos; toast de éxito o errores por campo",
+                "validate": "Siempre devuelve errores por campo (demo)",
+                "refresh": "Éxito + withRefresh(1000) — la página se recarga",
+                "redirect": "Éxito + withRedirect('/test-features')"
+            }
+        },
+        "messages": {
+            "saved_toast": "Guardado: %s <%s>",
+            "email_already_registered": "Este correo ya está registrado.",
+            "forced_validation_errors": "Demo de validación — errores forzados.",
+            "refreshing": "Operación correcta; refrescando página.",
+            "page_refreshing": "La página se refrescará en 1 segundo.",
+            "redirecting_soon": "Redirección disparada; navegando en 1 s."
+        }
+    },
+    "i18n_demo": {
+        "title": "i18n — Etapa 2 · Sistema de Traducción",
+        "active_locale": "Idioma activo",
+        "default_locale": "Por defecto",
+        "raw_json": "JSON crudo",
+        "date_formatting": "Formateo de fechas",
+        "select_options": "Opciones de select",
+        "gender_options": "Opciones de género (por defecto: :default)",
+        "status_options": "Opciones de estado (por defecto: :default)",
+        "columns": {
+            "example": "Ejemplo",
+            "result": "Resultado",
+            "format": "Formato",
+            "output": "Salida"
+        },
+        "examples": {
+            "required": "Validación requerida",
+            "min_length": "Validación de longitud mínima",
+            "save_success": "Mensaje de guardado exitoso",
+            "module_catalog": "Catálogo propio del módulo"
+        }
+    },
+    "js_enhancements": {
+        "title": "Mejoras JS — Etapa 18",
+        "description": "Wait modal, estado de carga del botón e inyección parcial de DOM desde JSON.",
+        "wait_message": "Refrescando el bloque parcial de la etapa 18...",
+        "run_partial_refresh": "Ejecutar refresco parcial",
+        "initial_block": "Bloque parcial inicial",
+        "pending_verification": "Etapa 18 pendiente de verificación."
+    },
+    "database": {
+        "title": "Base de Datos — Etapa 1",
+        "config_source": "Origen de configuración",
+        "first_boot_note": "JSON ausente = primer arranque",
+        "reset_title": "Reinicio de BD",
+        "reset_description": "elimina todas las tablas y vuelve a sembrar datos demo.",
+        "reset_warning": "Destructivo. Solo entorno de desarrollo.",
+        "reset_button": "Eliminar y resembrar BD"
+    },
+    "auth_demo": {
+        "title": "Etapa 5 — Auth",
+        "session_state": "Estado de la sesión",
+        "authenticated": "Autenticado",
+        "not_authenticated": "No autenticado",
+        "routes": "Rutas de autenticación",
+        "demo_credentials": "Credenciales demo:",
+        "actions": {
+            "logout": "Cerrar sesión",
+            "login": "Iniciar sesión",
+            "register": "Registrarse"
+        },
+        "columns": {
+            "email": "Correo",
+            "role": "Rol"
+        }
+    },
+    "endpoints_catalog": {
+        "title": "Todos los endpoints de prueba",
+        "expand": "Clic para expandir",
+        "description": "Listado completo de todas las rutas de prueba registradas. Abre en una pestaña nueva o inspecciona inline.",
+        "flash_types": "tipos: success|error|warning|info",
+        "same_types": "mismos tipos",
+        "clear": "limpiar",
+        "form_field": "campo del formulario",
+        "form_fields": "campos del formulario",
+        "multipart_payload": "multipart/form-data",
+        "body_payload": "body",
+        "columns": {
+            "method": "Método",
+            "route": "Ruta",
+            "endpoint": "Endpoint"
+        },
+        "sections": {
+            "stage_02": "Etapa 0.2",
+            "json_inspection": "Inspección de respuesta JSON",
+            "infrastructure": "Infraestructura / Auditoría",
+            "flash_triggers": "Disparadores de flash (GET, regresan atrás)",
+            "stage_1_database": "Etapa 1 — Base de datos",
+            "stage_2_i18n": "Etapa 2 — i18n",
+            "stage_3_validator": "Etapa 3 — Validator",
+            "stage_17_upload": "Etapa 17 — Subida de archivos",
+            "stage_4_mail": "Etapa 4 — Correo",
+            "stage_6_rbac": "Etapa 6 — RBAC",
+            "stage_9_14_orm": "Etapa 9 + 14 — ORM",
+            "toaster_api": "API de toasters"
+        }
+    },
+    "json_inspection": {
+        "title": "Inspección de respuestas JSON",
+        "description": "Abre en una pestaña nueva para inspeccionar la estructura del envelope.",
+        "columns": {
+            "method": "Método",
+            "endpoint": "Endpoint"
+        }
+    },
+    "infrastructure_runtime": {
+        "title": "Infraestructura / Auditoría",
+        "description": "Endpoints de auditoría de infraestructura. Abrir en pestaña o inspeccionar inline.",
+        "columns": {
+            "test": "Prueba",
+            "endpoint": "Endpoint"
+        },
+        "items": {
+            "route_cache": "Caché de rutas",
+            "logger_email": "Correo del logger"
+        }
+    },
+    "file_upload": {
+        "title": "Subida de Archivos — Etapa 17",
+        "description": "Demo de subida AJAX con Request::file(), archivo subido tipado, detección real de MIME vía finfo_file(), y almacenamiento UUID en",
+        "attachment": "Adjunto",
+        "allowed": "Permitidos: JPG, JPEG, PNG, PDF · Máximo 2 MB.",
+        "validation_rules": "Reglas de validación",
+        "endpoint": "Endpoint",
+        "success_payload": "Payload de éxito",
+        "actions": {
+            "upload": "Subir archivo",
+            "clear": "Limpiar"
+        }
+    },
+    "flash_demo": {
+        "title": "Mensajes Flash",
+        "regular": "Regular — se muestra una vez en la siguiente carga de página y luego se elimina.",
+        "persistent": "Persistente — permanece hasta cerrarse con ×.",
+        "actions": {
+            "success": "Éxito",
+            "error": "Error",
+            "warning": "Advertencia",
+            "info": "Info",
+            "persistent_success": "Éxito persistente",
+            "persistent_error": "Error persistente",
+            "persistent_warning": "Advertencia persistente",
+            "persistent_info": "Info persistente"
+        }
+    },
+    "flash_runtime": {
+        "triggered": "Flash [%s] — disparado a las %s",
+        "persistent": "Persistente [%s] — clic en × para descartar — %s"
+    },
+    "mail_demo": {
+        "title": "Etapa 4 — Sistema de Correo",
+        "description": "Envía un correo de prueba mediante MailManager. Requiere",
+        "description_suffix": "configurados en boot-core/config/env/.env.",
+        "endpoint": "Endpoint",
+        "payload": "Body (campos del formulario):",
+        "labels": {
+            "to": "Para",
+            "subject": "Asunto",
+            "body": "Cuerpo"
+        },
+        "placeholders": {
+            "to": "destinatario@example.com"
+        },
+        "defaults": {
+            "subject": "Prueba de correo de Catalyst",
+            "body_html": "<p>Hola desde <strong>Catalyst Framework</strong>.</p>"
+        },
+        "actions": {
+            "send": "Enviar correo"
+        }
+    },
+    "mail_runtime": {
+        "invalid_data": "Datos de correo inválidos.",
+        "send_returned_false": "El envío de correo devolvió false; revisa la configuración SMTP.",
+        "sent_successfully": "Correo enviado correctamente.",
+        "sent_to": "Correo enviado a %s",
+        "error_prefix": "Error de correo: "
+    },
+    "modal_demo": {
+        "title": "Modales",
+        "dialog_utilities": "Utilidades de diálogo.",
+        "dynamic_loading": "Carga dinámica de contenido.",
+        "json_trigger": "Modal disparado desde respuesta JSON.",
+        "titles": {
+            "sample_content": "Contenido de muestra",
+            "sample_form": "Formulario de muestra"
+        },
+        "actions": {
+            "confirm_dialog": "Diálogo de confirmación",
+            "alert_dialog": "Diálogo de alerta",
+            "load_sample": "Cargar muestra",
+            "load_form": "Cargar formulario",
+            "api_modal_trigger": "Disparar modal API"
+        }
+    },
+    "modal_runtime": {
+        "sample": {
+            "title": "Bienvenido a los modales de Catalyst",
+            "description": "Este contenido fue cargado vía AJAX dentro del cuerpo del modal.",
+            "features_title": "Características del modal:"
+        },
+        "features": {
+            "dynamic_loading": "Los modales soportan carga dinámica de contenido",
+            "html_content": "Puedes cargar formularios, datos o cualquier HTML",
+            "events": "Se disparan eventos de apertura, cierre y carga"
+        },
+        "details": {
+            "sizes": "Tamaños: small, medium, large, xl, fullscreen",
+            "backdrop": "Backdrop: true, false o 'static'",
+            "keyboard": "Teclado: cerrar con la tecla ESC",
+            "scrollable": "Contenido desplazable",
+            "centered": "Centrado verticalmente"
+        },
+        "errors": {
+            "required_fields": "Nombre y correo son obligatorios.",
+            "fill_required": "Completa todos los campos requeridos."
+        },
+        "success": {
+            "submitted": "Formulario enviado correctamente.",
+            "title": "Formulario enviado",
+            "contact_toast": "Gracias, %s. Te contactaremos en %s."
+        }
+    },
+    "system_info": {
+        "title": "Información del sistema",
+        "constants": "Constante",
+        "value": "Valor",
+        "flash_state": "Estado de flash",
+        "pending_messages": "Mensajes pendientes",
+        "has_success": "Tiene éxito",
+        "has_error": "Tiene error",
+        "has_warning": "Tiene advertencia",
+        "has_info": "Tiene info",
+        "has_persistent": "Tiene persistente"
+    },
+    "toaster_demo": {
+        "title": "Toasters",
+        "ajax_description": "AJAX — vía interceptor de fetch. Cada llamada devuelve JSON con payload de notificación.",
+        "direct_js": "Llamadas directas de JS (sin servidor).",
+        "messages": {
+            "success": "Mensaje directo de éxito",
+            "error": "Mensaje directo de error",
+            "warning": "Mensaje directo de advertencia",
+            "info": "Mensaje directo de información"
+        },
+        "actions": {
+            "success": "Éxito",
+            "error": "Error",
+            "warning": "Advertencia",
+            "info": "Info",
+            "multiple": "Múltiples (3)",
+            "js_success": "Éxito JS",
+            "js_error": "Error JS",
+            "js_warning": "Advertencia JS",
+            "js_info": "Info JS"
+        }
+    },
+    "toaster_runtime": {
+        "success": {
+            "title": "Éxito",
+            "message": "Usuario creado correctamente."
+        },
+        "error": {
+            "title": "Error",
+            "response": "Ocurrió un error al procesar tu solicitud.",
+            "message": "No se pudo procesar la solicitud. Inténtalo de nuevo."
+        },
+        "warning": {
+            "title": "Advertencia",
+            "response": "Completado con advertencias.",
+            "message": "Algunos elementos no pudieron procesarse."
+        },
+        "info": {
+            "title": "Información",
+            "response": "Información recuperada.",
+            "message": "Tu sesión expirará en 5 minutos."
+        },
+        "multiple": {
+            "response": "Archivos subidos.",
+            "uploaded": "Archivo subido correctamente.",
+            "upload_title": "Carga completada",
+            "processing": "El procesamiento inició en segundo plano.",
+            "processing_title": "Procesando",
+            "large_file": "Los archivos grandes pueden tardar más en procesarse.",
+            "note_title": "Nota"
+        },
+        "modal_triggered": "Modal disparado.",
+        "modal_title": "Modal de muestra"
+    },
+    "validator_demo": {
+        "title": "Validador — Etapa 3 · Sistema de Validación",
+        "validates": "Valida:",
+        "rule": "Regla:",
+        "preseeded": "Valores ocupados precargados:",
+        "labels": {
+            "email": "Correo",
+            "age": "Edad",
+            "password": "Contraseña",
+            "password_confirmation": "Confirmación de contraseña",
+            "email_to_check": "Correo a validar"
+        },
+        "placeholders": {
+            "name": "ej. Alicia",
+            "email": "ej. alicia@example.com",
+            "age": "18 – 99",
+            "password": "mínimo 8 caracteres",
+            "password_confirmation": "debe coincidir con la contraseña",
+            "email_to_check": "ej. taken@example.com"
+        },
+        "actions": {
+            "send_invalid": "Enviar datos inválidos",
+            "send_valid": "Enviar datos válidos",
+            "clear": "Limpiar",
+            "check_unique": "Validar unicidad"
+        }
+    },
+    "validator_runtime": {
+        "validation_passed": "Todos los campos pasaron la validación.",
+        "unique_email": "El correo es único; no existe en validator_demo_emails."
+    },
+    "upload_runtime": {
+        "store_failed": "No se pudo almacenar el archivo subido.",
+        "uploaded": "Archivo subido correctamente."
+    },
+    "database_runtime": {
+        "reset_dev_only": "El reinicio de BD solo está disponible en modo desarrollo.",
+        "reset_success": "La base de datos se reinició correctamente. Todas las tablas fueron recreadas y sembradas.",
+        "reset_failed_prefix": "Falló el reinicio de BD: ",
+        "connection_ok": "Conexión a base de datos OK",
+        "connection_failed": "Conexión a base de datos fallida",
+        "connection_error_prefix": "Error de conexión a base de datos: "
+    },
+    "infra_runtime": {
+        "escape_ok": "El helper e() funciona: todas las entradas fueron codificadas como HTML.",
+        "data_retrieved": "Datos recuperados correctamente.",
+        "email_logged": "Evento de correo registrado; revisa el archivo indicado arriba.",
+        "cors_missing": "cors.json no existe; se usarán los defaults del middleware.",
+        "cors_loaded": "Configuración CORS cargada desde cors.json.",
+        "route_cache_failed": "cacheRoutes() devolvió false; los handlers con Closure no pueden cachearse.",
+        "route_cache_ok": "Caché de rutas OK",
+        "route_cache_invalid": "Caché de rutas inválida"
+    },
+    "i18n_runtime": {
+        "locale_summary": "i18n — idioma: %s",
+        "invalid_locale": "Idioma inválido. Soportados: %s",
+        "switched": "Idioma cambiado a %s",
+        "language_toast": "Idioma: %s",
+        "locale_changed_title": "Idioma cambiado"
+    },
+    "js_runtime": {
+        "partial_refreshed": "Contenido parcial refrescado",
+        "server_time": "Hora del servidor:",
+        "source": "Origen: JsonResponse::withHtml()",
+        "partial_section_refreshed": "Sección parcial refrescada.",
+        "partial_updated_toast": "Bloque parcial actualizado vía respuesta HTTP centralizada.",
+        "stage_title": "Etapa 18"
+    },
+    "rbac_runtime": {
+        "not_authenticated": "No autenticado; estado RBAC no disponible.",
+        "status_ok": "Estado RBAC OK",
+        "dev_only": "Este endpoint solo está disponible en modo desarrollo.",
+        "login_required": "Debes iniciar sesión para usar este endpoint.",
+        "promoted": "Usuario promovido a admin. Refresca la página o vuelve a iniciar sesión para aplicar el cambio.",
+        "promoted_toast": "Promovido a admin; vuelve a iniciar sesión para aplicar el cambio.",
+        "admin_role_missing": "No se encontró el rol admin en el tenant actual."
+    },
+    "orm_runtime": {
+        "status_ok": "Estado ORM OK",
+        "error_prefix": "Error ORM: ",
+        "record_created": "Registro creado.",
+        "create_first": "No se encontró ningún registro orm-test-*; ejecuta Crear primero.",
+        "record_updated": "Registro actualizado.",
+        "no_record_to_delete": "No se encontró ningún registro orm-* para eliminar.",
+        "record_deleted": "Registro eliminado.",
+        "expected_exception_missing": "Se esperaba ModelNotFoundException, pero no se lanzó.",
+        "exception_caught": "ModelNotFoundException fue lanzada y capturada correctamente.",
+        "unexpected_error_prefix": "Error inesperado: ",
+        "no_users_found": "No se encontraron usuarios; siembra la BD primero.",
+        "user_demo_ok": "Demo ORM de usuarios OK"
+    },
+    "orm_demo": {
+        "title": "ORM — Etapa 9 · Entidades + Etapa 14 · Relaciones",
+        "stage_9": {
+            "title": "Etapa 9 — Operaciones del modelo (DemoEmail)",
+            "exercises": "Ejercita:",
+            "dirty_tracking": "seguimiento de cambios"
+        },
+        "stage_14": {
+            "title": "Etapa 14 — Arquitectura de relaciones",
+            "description_prefix": "Cuatro tipos de relación implementados en",
+            "description_suffix": "Carga diferida vía",
+            "eager_load": "carga anticipada vía"
+        },
+        "actions": {
+            "status_paginate": "Estado / Paginar",
+            "create": "Crear",
+            "update_latest": "Actualizar último",
+            "delete_latest": "Eliminar último",
+            "find_or_fail": "findOrFail (404)",
+            "user_demo": "Demo de usuario ($hidden / $casts)"
+        },
+        "columns": {
+            "class": "Clase",
+            "return_type": "Tipo de retorno",
+            "fk_location": "Ubicación FK"
+        },
+        "rows": {
+            "related_table": "tabla relacionada",
+            "parent_table": "tabla padre",
+            "pivot_table": "tabla pivote"
+        },
+        "usage": "Uso:"
+    },
+    "ui_showcase": {
+        "title": "UI Showcase",
+        "eyebrow": "Catálogo admin compacto",
+        "description": "Superficie de referencia para módulos administrativos de Catalyst: shell compacta, listados densos, formularios utilitarios y estados honestos para backoffice real.",
+        "actions": {
+            "roles": "Roles",
+            "permissions": "Permisos",
+            "devtools": "DevTools"
+        },
+        "chips": {
+            "crud_density": "Densidad CRUD",
+            "filters_first": "Filtros primero",
+            "honest_placeholders": "Placeholders honestos",
+            "responsive_shell": "Shell responsive"
+        },
+        "options": {
+            "framework": "Framework",
+            "repository_app": "Repository/App",
+            "devtools": "DevTools",
+            "active": "Activo",
+            "pending": "Pendiente",
+            "disabled": "Deshabilitado"
+        },
+        "toolbar": {
+            "title": "Toolbar y Filtros",
+            "description": "Cabecera densa para listados con búsqueda, filtros y acciones masivas.",
+            "kicker": "Patrón A",
+            "search_label": "Buscar módulos",
+            "search_placeholder": "Buscar módulos, roles, permisos...",
+            "module_context": "Contexto del módulo",
+            "runtime_state": "Estado de ejecución",
+            "advanced": "Avanzado",
+            "scope_chip": "Alcance: Framework",
+            "density_chip": "Densidad: Compacto",
+            "active_chip": "Solo activos",
+            "clear_filters": "Limpiar filtros"
+        },
+        "listing": {
+            "title": "Listado Compacto",
+            "description": "Ejemplo base para CRUD administrativo con acciones claras y lectura rápida.",
+            "export": "Exportar",
+            "new_record": "Nuevo registro",
+            "select_all": "Seleccionar todo",
+            "enable": "Habilitar",
+            "disable": "Deshabilitar",
+            "archive": "Archivar",
+            "select_roles": "Seleccionar Roles",
+            "select_permissions": "Seleccionar Permisos",
+            "select_ui_showcase": "Seleccionar UI Showcase",
+            "columns": {
+                "resource": "Recurso",
+                "scope": "Alcance",
+                "status": "Estado",
+                "owner": "Responsable",
+                "updated": "Actualizado",
+                "actions": "Acciones"
+            }
+        },
+        "records": {
+            "roles": {
+                "title": "Roles",
+                "description": "Superficie de gestión RBAC",
+                "owner": "Equipo core",
+                "updated": "Hoy",
+                "open": "Abrir",
+                "toggle_actions": "Alternar acciones de fila",
+                "view": "Ver",
+                "permissions": "Permisos",
+                "account_pending": "Enlace de cuenta pendiente"
+            },
+            "permissions": {
+                "title": "Permisos",
+                "description": "Catálogo de capacidades y asignación",
+                "owner": "Seguridad",
+                "updated": "Hoy",
+                "open": "Abrir"
+            },
+            "showcase": {
+                "title": "UI Showcase",
+                "description": "Referencia visual para módulos admin",
+                "status": "Interno",
+                "owner": "Infra UX",
+                "updated": "Ahora",
+                "refresh": "Refrescar"
+            }
+        },
+        "form": {
+            "title": "Formulario Denso",
+            "description": "Edición administrativa con bajo roce y alta legibilidad.",
+            "kicker": "Patrón B",
+            "labels": {
+                "display_name": "Nombre visible",
+                "context": "Contexto",
+                "density": "Densidad",
+                "notes": "Notas",
+                "release_posture": "Postura de release"
+            },
+            "values": {
+                "display_name": "Catalyst Admin Shell",
+                "notes": "Base visual compacta para Catalyst: shell útil, filtros primero, listados densos y placeholders honestos."
+            },
+            "options": {
+                "relaxed": "Relajado",
+                "compact": "Compacto",
+                "ultra_compact": "Ultra compacto",
+                "dev_only": "Solo dev",
+                "stage_candidate": "Candidato a stage"
+            },
+            "actions": {
+                "save": "Guardar patrón",
+                "reset": "Resetear",
+                "preview": "Previsualizar"
+            }
+        },
+        "states": {
+            "title": "Estados y Mensajería",
+            "description": "Badges, alerts y vacíos listos para módulos reales.",
+            "kicker": "Patrón C",
+            "badges": {
+                "published": "Publicado",
+                "pending": "Pendiente",
+                "blocked": "Bloqueado",
+                "experimental": "Experimental",
+                "dev_only": "Solo dev"
+            },
+            "alerts": {
+                "saved": "Cambios guardados correctamente.",
+                "pending_backend": "La superficie de cuenta sigue pendiente de backend.",
+                "no_fake_routes": "Sin rutas falsas: los placeholders siguen siendo explícitos."
+            },
+            "empty": {
+                "title": "Área de cuenta todavía no implementada",
+                "description": "El shell ya contempla el acceso futuro sin inventar backend inexistente ni romper navegación real.",
+                "back": "Volver a DevTools"
+            }
+        },
+        "rail": {
+            "index_title": "Índice del Catálogo",
+            "showcase_sections": "Secciones del showcase",
+            "density_rules_title": "Reglas de Densidad",
+            "migration_checklist_title": "Checklist de Migración",
+            "rules": {
+                "small_controls": "Favorece btn-sm, form-control-sm y etiquetas cortas.",
+                "filters_above": "Mueve los filtros arriba de la tabla, no dentro de tarjetas aleatorias.",
+                "badges": "Usa badges para scope/estado, no prosa larga dentro de las filas.",
+                "honest_placeholders": "Mantén placeholders honestos cuando el backend esté pendiente."
+            },
+            "checklist": {
+                "backoffice_ready": "Shell compacta lista para backoffice.",
+                "auth_real": "Auth y logout permanecen en flujo real.",
+                "account_placeholder": "La cuenta de usuario sigue como placeholder honesto.",
+                "next_target": "Siguiente objetivo: migrar roles y permissions sobre estos patrones."
+            }
+        }
+    }
+}

@@ -1,0 +1,46 @@
+<div class="card auth-card auth-card--sm">
+    <div class="card-body">
+        <div class="auth-card__header auth-card__header--center">
+            <span class="auth-card__eyebrow">{{ t:auth.verify.eyebrow }}</span>
+            <h1 class="auth-card__title">{{ title }}</h1>
+            <p class="auth-card__subtitle">{{ t:auth.verify.subtitle }}</p>
+        </div>
+
+        <form data-catalyst="form" method="POST" action="/verify-email" novalidate>
+            {{{ csrf_token_field }}}
+
+            <div class="mb-4">
+                <label for="token" class="form-label">
+                    {{ t:auth.verify.token_label }}
+                </label>
+                <input
+                    type="text"
+                    id="token"
+                    name="token"
+                    class="form-control{{ token_invalid_class }}"
+                    value="{{ token_value }}"
+                    required
+                    minlength="64"
+                    maxlength="64"
+                    pattern="[A-Fa-f0-9]{64}"
+                    autocomplete="one-time-code"
+                    spellcheck="false"
+                    placeholder="{{ t:auth.verify.token_placeholder }}"
+                    autofocus
+                >
+                <div class="form-text">{{ t:auth.verify.token_hint }}</div>
+                <div class="invalid-feedback">{{ token_error }}</div>
+            </div>
+
+            <button type="submit" data-event="verify-email" class="btn btn-primary w-100">
+                {{ t:auth.verify.submit }}
+            </button>
+        </form>
+
+        <p class="auth-link-row mb-0">
+            <a href="/login" class="text-decoration-none">
+                &larr; {{ t:auth.verify.back_to_login }}
+            </a>
+        </p>
+    </div>
+</div>

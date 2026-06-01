@@ -1,0 +1,54 @@
+{
+  "module": {
+    "description": "Operational audit log for administrative mutations and framework runtime events.",
+    "permission_label": "Manage Audit Log",
+    "permission_description": "Inspect operational audit entries and exports.",
+    "navigation_label": "Audit Log",
+    "navigation_hint": "Operational traceability and framework events.",
+    "breadcrumb_show": "Entry Detail"
+  },
+  "index": {
+    "title": "Audit Log",
+    "description": "Operational timeline of administrative mutations and internal framework events.",
+    "hero_lede": "Centralized view of administrative mutations, ORM hooks and internal framework events.",
+    "empty": {
+      "title": "No audit entries yet",
+      "description": "The audit log will populate after administrative changes or framework events are recorded."
+    },
+    "columns": {
+      "occurred": "Occurred",
+      "tenant": "Tenant",
+      "resource": "Resource",
+      "action": "Action",
+      "channel": "Channel",
+      "actor": "Actor",
+      "request": "Request"
+    },
+    "actions": {
+      "view": "View",
+      "export_csv": "Export CSV"
+    },
+    "search_placeholder": "Search by resource, request URI or event name"
+  },
+  "show": {
+    "title_prefix": "Audit Entry",
+    "back": "Back to audit log",
+    "columns": {
+      "occurred": "Occurred",
+      "actor": "Actor",
+      "request": "Request",
+      "tenant": "Tenant",
+      "before": "Before",
+      "after": "After",
+      "metadata": "Metadata"
+    },
+    "common": {
+      "system": "system",
+      "not_available": "n/a",
+      "default_tenant": "default"
+    }
+  },
+  "messages": {
+    "not_found": "Audit entry not found."
+  }
+}

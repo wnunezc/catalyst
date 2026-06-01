@@ -1,0 +1,215 @@
+{
+  "module": {
+    "description": "Biblioteca reutilizable de medios más definiciones dinámicas de campos de metadatos para entidades de negocio.",
+    "library_permission_label": "Administrar Biblioteca de Medios",
+    "library_permission_description": "Subir, editar, exportar y eliminar archivos multimedia reutilizables.",
+    "metadata_permission_label": "Administrar Metadata de Medios",
+    "metadata_permission_description": "Definir campos de metadatos dinámicos para recursos de medios.",
+    "library_navigation_label": "Biblioteca de Medios",
+    "library_navigation_hint": "Biblioteca reutilizable de archivos multimedia.",
+    "fields_navigation_label": "Campos de Medios",
+    "fields_navigation_hint": "Definiciones dinámicas declarativas de metadatos.",
+    "breadcrumb_upload": "Subir archivo multimedia",
+    "breadcrumb_edit_asset": "Editar archivo multimedia",
+    "breadcrumb_create_field": "Crear Campo",
+    "breadcrumb_edit_field": "Editar Campo"
+  },
+  "fields": {
+    "index": {
+      "title": "Campos de Metadata de Medios",
+      "hero_eyebrow": "Metadatos dinámicos",
+      "hero_open_library": "Abrir biblioteca",
+      "description": "Definiciones declarativas de campos dinámicos reutilizables por recurso.",
+      "empty": {
+        "title": "Todavía no hay campos de metadatos",
+        "description": "Crea el primer campo de metadatos para extender la biblioteca de medios sin tocar formularios codificados a mano.",
+        "action": "Crear campo"
+      },
+      "columns": {
+        "resource": "Recurso",
+        "field": "Campo",
+        "type": "Tipo",
+        "section": "Sección",
+        "extended_metadata": "Metadatos extendidos",
+        "flags": "Flags"
+      },
+      "flags": {
+        "required": "requerido",
+        "listed": "listado",
+        "filterable": "filtrable"
+      },
+      "actions": {
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "confirm_delete": "¿Eliminar el campo \"%s\"? Los valores de metadata existentes para ese campo también se eliminarán.",
+        "export_csv": "Exportar CSV"
+      },
+      "search_placeholder": "Buscar por etiqueta, clave o texto de ayuda"
+    },
+    "form": {
+      "eyebrow": "Metadatos dinámicos",
+      "create_title": "Crear Campo de Metadatos",
+      "edit_title": "Editar Campo de Metadatos",
+      "hero_lede": "Define el contrato reutilizable de campos dinámicos que luego consumen FormBuilder, DataGrid, validación y persistencia compartida.",
+      "labels": {
+        "resource": "Recurso",
+        "field_label": "Etiqueta del campo",
+        "field_key": "Clave del campo",
+        "type": "Tipo",
+        "catalog": "Catálogo",
+        "section_key": "Clave de sección",
+        "help_text": "Texto de ayuda",
+        "placeholder": "Placeholder",
+        "required": "Requerido",
+        "listed": "Listado en DataGrid",
+        "filterable": "Filtrable",
+        "sort_order": "Orden",
+        "default_value": "Valor por defecto",
+        "max_length": "Longitud máxima",
+        "min_value": "Valor mínimo",
+        "max_value": "Valor máximo",
+        "extra_rules": "Reglas extra",
+        "select_options": "Opciones del select"
+      },
+      "placeholders": {
+        "field_label": "Línea de crédito",
+        "field_key": "linea-credito",
+        "section_key": "publicacion",
+        "help_text": "Se muestra debajo del campo en el formulario administrativo.",
+        "placeholder": "Pista visible para inputs que lo soporten.",
+        "default_value": "Valor por defecto opcional para el formulario anfitrión.",
+        "extra_rules": "max:255|regex:/.../",
+        "select_options": "draft | Borrador\npublished | Publicado"
+      },
+      "help": {
+        "field_key": "Clave única por recurso. Se usa para bind, validación y persistencia reusable.",
+        "catalog": "Catálogo gobernado para opciones reutilizables con lifecycle y vigencia.",
+        "section_key": "Opcional. Agrupa campos dinámicos en secciones del formulario.",
+        "required": "Requiere un valor cuando se envía el formulario anfitrión.",
+        "listed": "Expone este campo como columna extra en listados del recurso.",
+        "filterable": "Expone este campo como filtro reusable de DataGrid cuando sea soportado.",
+        "extra_rules": "Reglas adicionales sobre el validador actual. Se concatenan al contrato base del tipo.",
+        "select_options": "Una opción por línea. Usa \"valor | etiqueta\" o solo \"valor\"."
+      },
+      "sections": {
+        "identity": {
+          "title": "Identidad del campo",
+          "description": "Recurso objetivo, clave declarativa y tipo base del campo dinámico."
+        },
+        "behavior": {
+          "title": "Comportamiento",
+          "description": "Reglas de UI, filtros, listados y validación adicional."
+        },
+        "type_configuration": {
+          "title": "Configuración del tipo",
+          "description": "Opciones y límites que cambian según el tipo del campo."
+        }
+      },
+      "actions": {
+        "create": "Crear campo",
+        "save": "Guardar campo",
+        "back": "Volver a campos"
+      }
+    },
+      "messages": {
+      "created": "Campo de metadatos creado correctamente.",
+      "updated": "Campo de metadatos actualizado correctamente.",
+      "deleted": "Campo de metadatos eliminado.",
+      "not_found": "Campo de metadatos no encontrado."
+    }
+  },
+  "library": {
+    "common": {
+      "local": "Local",
+      "remote_storage": "FTP / SFTP",
+      "asset_fallback": "archivo"
+    },
+    "index": {
+      "title": "Biblioteca de Medios",
+      "description": "Biblioteca reutilizable de archivos sobre el almacenamiento real del framework y metadatos dinámicos por entidad.",
+      "eyebrow": "Archivos multimedia",
+      "hero_lede": "Biblioteca reutilizable de archivos con metadatos nativos, almacenamiento real y extensión declarativa por campos dinámicos.",
+      "hero_manage_fields": "Administrar campos",
+      "hero_upload_asset": "Subir archivo multimedia",
+      "empty": {
+        "title": "Todavía no hay archivos multimedia",
+        "description": "Sube el primer archivo reutilizable para comenzar a componer metadata dinámica y referencias compartidas.",
+        "action": "Subir archivo multimedia"
+      },
+      "columns": {
+        "asset": "Archivo multimedia",
+        "mime": "Mime",
+        "size": "Tamaño",
+        "storage": "Almacenamiento",
+        "uploaded": "Subido"
+      },
+      "filters": {
+        "disk": "Disco",
+        "mime_group": "Grupo MIME"
+      },
+      "actions": {
+        "open": "Abrir",
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "confirm_delete": "¿Eliminar \"%s\" de la biblioteca multimedia?",
+        "export_csv": "Exportar CSV"
+      },
+      "bulk": {
+        "delete_selected": "Eliminar seleccionados",
+        "confirm_delete": "¿Eliminar los archivos multimedia seleccionados?",
+        "select_one": "Selecciona al menos un archivo multimedia.",
+        "deleted_suffix": "%d archivo(s) multimedia eliminados."
+      },
+      "search_placeholder": "Buscar por etiqueta, nombre original, ruta o tipo MIME"
+    },
+    "form": {
+      "create_title": "Subir archivo multimedia",
+      "edit_title": "Editar archivo multimedia",
+      "hero_lede_create": "Registro reutilizable de archivos sobre el stack actual de cargas y almacenamiento.",
+      "hero_lede_edit": "Actualiza el archivo real y sus metadatos dinámicos sin salir del flujo administrativo.",
+      "hero_manage_fields": "Campos de metadata",
+      "current_asset": "Archivo actual",
+      "labels": {
+        "name": "Nombre del archivo",
+        "disk": "Disco de almacenamiento",
+        "asset_file_create": "Subir archivo",
+        "asset_file_edit": "Reemplazar archivo"
+      },
+      "placeholders": {
+        "name": "Imagen hero del homepage"
+      },
+      "help": {
+        "disk": "La carga usa la abstracción de almacenamiento activa. FTP/SFTP solo aparece cuando la configuración remota está lista.",
+        "asset_file_create": "Sube el archivo real que quedará registrado en la biblioteca multimedia.",
+        "asset_file_edit": "Déjalo vacío para conservar el archivo actual."
+      },
+      "sections": {
+        "asset_file": {
+          "title": "Origen del archivo",
+          "description": "Archivo real, disco de almacenamiento y metadatos nativos del recurso."
+        },
+        "asset_context": {
+          "title": "Contexto operativo",
+          "description": "Nombre visible del archivo y extensión reutilizable dentro del framework."
+        }
+      },
+      "actions": {
+        "create": "Subir archivo multimedia",
+        "save": "Guardar cambios",
+        "back": "Volver a la biblioteca"
+      }
+    },
+    "messages": {
+      "created": "Archivo multimedia subido correctamente.",
+      "updated": "Archivo multimedia actualizado correctamente.",
+      "deleted": "Archivo multimedia eliminado.",
+      "not_found": "Archivo multimedia no encontrado.",
+      "claim_updated": "archivo multimedia actualizado",
+      "claim_deleted": "archivo multimedia eliminado",
+      "claim_bulk_deleted": "archivo multimedia eliminado masivamente"
+    },
+    "validation": {
+      "remote_storage_not_ready": "El almacenamiento remoto FTP/SFTP todavía no está configurado."
+    }
+  }
+}

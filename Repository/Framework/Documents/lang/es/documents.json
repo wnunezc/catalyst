@@ -1,0 +1,183 @@
+{
+  "module": {
+    "description": "Plantillas reutilizables de documentos con flujo, previsualización, exportaciones e historial persistido de versiones.",
+    "permission_label": "Administrar Plantillas de Documento",
+    "permission_description": "Crear, revisar, exportar, versionar y restaurar plantillas reutilizables de documentos.",
+    "navigation_label": "Plantillas de Documento",
+    "navigation_hint": "Plantillas versionadas con previsualización y flujo.",
+    "breadcrumb_create": "Crear Plantilla",
+    "breadcrumb_edit": "Editar Plantilla",
+    "breadcrumb_show": "Detalle de la Plantilla"
+  },
+  "common": {
+    "edit": "Editar",
+    "back": "Volver",
+    "system": "sistema"
+  },
+  "formats": {
+    "plain_text": "Texto plano"
+  },
+  "index": {
+    "title": "Plantillas de Documento",
+    "hero_eyebrow": "Documentos",
+    "hero_lede": "Plantillas reutilizables con flujo real, previsualización con datos JSON, exportación persistida a almacenamiento y restauración por versiones.",
+    "description": "Plantillas versionadas con previsualización real, flujo reutilizable y exportación persistida sobre almacenamiento.",
+    "empty": {
+      "title": "Todavía no hay plantillas de documento",
+      "description": "Crea la primera plantilla reutilizable para empezar a previsualizar, aprobar y exportar documentos de negocio.",
+      "action": "Crear plantilla"
+    },
+    "columns": {
+      "template": "Plantilla",
+      "format": "Formato",
+      "workflow": "Flujo",
+      "versions": "Versiones",
+      "artifacts": "Artefactos",
+      "updated": "Actualizado"
+    },
+    "filters": {
+      "format": "Formato",
+      "workflow_state": "Estado del flujo"
+    },
+    "formats": {
+      "text": "Texto"
+    },
+    "states": {
+      "draft": "Borrador",
+      "in_review": "En revisión",
+      "approved": "Aprobado",
+      "archived": "Archivado"
+    },
+    "actions": {
+      "view": "Ver",
+      "edit": "Editar",
+      "export": "Exportar",
+      "delete": "Eliminar",
+      "confirm_delete": "¿Eliminar la plantilla \"%s\"?"
+    },
+    "search_placeholder": "Buscar por nombre, slug o descripción"
+  },
+  "form_page": {
+    "eyebrow": "Documentos",
+    "create_title": "Crear Plantilla de Documento",
+    "edit_title": "Editar Plantilla de Documento",
+    "hero_lede_create": "Define variables reales, datos de muestra y el cuerpo reutilizable del documento.",
+    "hero_lede_edit": "Actualiza la plantilla manteniendo flujo, historial de versiones y artefactos previos.",
+    "labels": {
+      "template_name": "Nombre de la plantilla",
+      "template_slug": "Slug de la plantilla",
+      "description": "Descripción",
+      "variables_schema_json": "Esquema JSON de variables",
+      "sample_payload_json": "Datos JSON de muestra",
+      "body_template": "Cuerpo del documento"
+    },
+    "placeholders": {
+      "template_name": "Certificado de aprobación",
+      "template_slug": "certificado-aprobacion",
+      "description": "Para qué se usa esta plantilla."
+    },
+    "help": {
+      "variables_schema_json": "Ejemplo: {\"customer.name\":\"string\",\"invoice.total\":\"number\"}",
+      "sample_payload_json": "Datos reutilizados por la previsualización, exportaciones nominales y automatizaciones.",
+      "body_template": "HTML, texto plano o cuerpo apto para PDF. Usa marcadores y bloques condicionales; PDF se normaliza a texto renderizable."
+    },
+    "sections": {
+      "identity": {
+        "title": "Identidad y formato",
+        "description": "Nombre, slug estable y formato operativo de salida."
+      },
+      "variables": {
+        "title": "Variables y datos",
+        "description": "Esquema JSON de variables y datos de muestra reutilizables para previsualización, API y automatizaciones."
+      },
+      "body": {
+        "title": "Plantilla del cuerpo",
+        "description": "Usa placeholders `{{ customer.name }}` y bloques `{{#if total}}...{{/if}}`."
+      }
+    },
+    "actions": {
+      "create": "Crear plantilla",
+      "save": "Guardar plantilla",
+      "back": "Volver a plantillas",
+      "back_list": "Volver a plantillas",
+      "view_detail": "Ver detalle"
+    }
+  },
+  "validation": {
+    "template_slug_unique": "El slug de la plantilla debe ser único.",
+    "valid_json": "Proporciona JSON válido."
+  },
+  "messages": {
+    "template_not_found": "Plantilla de documento no encontrada.",
+    "template_created": "Plantilla de documento creada.",
+    "template_updated": "Plantilla de documento actualizada.",
+    "template_deleted": "Plantilla de documento eliminada.",
+    "preview_generated": "Previsualización generada.",
+    "exported": "Documento exportado a almacenamiento.",
+    "select_transition": "Selecciona una transición de flujo válida.",
+    "workflow_transitioned": "El flujo cambió de estado correctamente.",
+    "template_restored_summary": "Plantilla restaurada desde la versión",
+    "version_restored": "Versión restaurada.",
+    "templates_retrieved": "Plantillas de documento recuperadas.",
+    "template_retrieved": "Plantilla de documento recuperada.",
+    "artifact_exported": "Artefacto de documento exportado.",
+    "invalid_payload_json": "Proporciona JSON válido para los datos."
+  },
+  "show": {
+    "eyebrow": "Documentos",
+    "template_fallback": "Plantilla de documento",
+    "lede_fallback": "Plantilla reutilizable de documento con flujo real y exportaciones sobre almacenamiento.",
+    "stats": {
+      "workflow": "Flujo",
+      "format": "Formato",
+      "slug": "Slug"
+    },
+    "workflow": {
+      "title": "Acciones de flujo",
+      "description": "Inspección y operación real del flujo reutilizable adoptado por esta plantilla.",
+      "transition": "Transición",
+      "select_transition": "Selecciona transición",
+      "notes": "Notas",
+      "notes_placeholder": "Nota opcional de transición",
+      "apply": "Aplicar",
+      "columns": {
+        "occurred": "Ocurrió",
+        "transition": "Transición",
+        "from": "Desde",
+        "to": "Hacia",
+        "actor": "Actor"
+      },
+      "empty": "Todavía no hay transiciones registradas."
+    },
+    "preview": {
+      "title": "Previsualización y exportación",
+      "description": "Previsualización real con datos JSON y exportación persistida al almacenamiento local del framework.",
+      "payload_json": "Datos JSON",
+      "preview_document": "Previsualizar documento",
+      "export_artifact": "Exportar artefacto",
+      "rendered_preview": "Previsualización renderizada"
+    },
+    "versions": {
+      "title": "Historial de versiones",
+      "description": "Restauración real sobre instantáneas persistidas del recurso.",
+      "columns": {
+        "version": "Versión",
+        "summary": "Resumen",
+        "created": "Creado"
+      },
+      "restore": "Restaurar",
+      "empty": "Todavía no hay versiones capturadas."
+    },
+    "artifacts": {
+      "title": "Artefactos exportados",
+      "description": "Resultado persistido del documento renderizado sobre almacenamiento real.",
+      "columns": {
+        "name": "Nombre",
+        "format": "Formato",
+        "created": "Creado"
+      },
+      "open": "Abrir",
+      "empty": "Todavía no hay artefactos exportados."
+    }
+  }
+}

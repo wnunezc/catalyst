@@ -1,0 +1,35 @@
+{
+  "surface": {
+    "title": "Landing",
+    "eyebrow": "Página de lanzamiento",
+    "badge": "Lista para campaña",
+    "headline": "Convierte una visita en una acción clara.",
+    "lead": "Demo de landing page para presentar una promesa de producto, una audiencia y una ruta de conversión manteniendo el tema Catalyst seleccionado.",
+    "actions": {
+      "primary": "Ver oferta",
+      "secondary": "Volver al home"
+    },
+    "proof_title": "Señales de lanzamiento",
+    "proof": {
+      "launch": { "value": "3x", "label": "CTAs más claros" },
+      "teams": { "value": "24/7", "label": "Mensaje operativo" },
+      "stack": { "value": "MVC", "label": "Lista para personalizar" }
+    },
+    "benefits_title": "Por qué existe esta superficie",
+    "benefits": {
+      "identity": { "title": "Narrativa de marca", "body": "Usa esta página para explicar el valor de la implementación sin enviar visitantes a administración." },
+      "modules": { "title": "Secciones enfocadas", "body": "El layout separa hero, evidencia, beneficios y pasos para que el desarrollador reemplace contenido con seguridad." },
+      "security": { "title": "Límite limpio", "body": "No se exponen datos de setup, menús administrativos ni enlaces internos de módulos en la experiencia pública." }
+    },
+    "steps_title": "Ruta de conversión",
+    "steps": {
+      "capture": { "title": "Captar atención", "body": "Abre con una promesa fuerte y una llamada a la acción visible y coherente con el tema." },
+      "configure": { "title": "Explicar valor", "body": "Usa tarjetas compactas para describir el servicio, producto u oferta institucional." },
+      "deliver": { "title": "Guiar al usuario", "body": "Envía al visitante a tienda, registro u otro siguiente paso público." }
+    },
+    "closing": {
+      "title": "Concepto landing",
+      "body": "Esto es intencionalmente promocional: no es un dashboard del framework ni revela contexto administrativo."
+    }
+  }
+}

@@ -1,0 +1,22 @@
+<div class="col-12 col-lg-6">
+    <div class="section-card">
+        <div class="card-header"><i class="fa-solid fa-bolt me-2"></i>{{ t:devtools.flash_demo.title }}</div>
+        <div class="card-body">
+            <p class="text-muted small mb-2">{{ t:devtools.flash_demo.regular }}</p>
+            <div class="btn-group-wrap mb-3">
+                <button type="button" class="btn btn-success btn-sm" data-catalyst-href="/test-features/flash/success">{{ t:devtools.flash_demo.actions.success }}</button>
+                <button type="button" class="btn btn-danger btn-sm" data-catalyst-href="/test-features/flash/error">{{ t:devtools.flash_demo.actions.error }}</button>
+                <button type="button" class="btn btn-warning btn-sm text-dark" data-catalyst-href="/test-features/flash/warning">{{ t:devtools.flash_demo.actions.warning }}</button>
+                <button type="button" class="btn btn-info btn-sm text-dark" data-catalyst-href="/test-features/flash/info">{{ t:devtools.flash_demo.actions.info }}</button>
+            </div>
+            <p class="text-muted small mb-2">{{ t:devtools.flash_demo.persistent }}</p>
+            <div class="btn-group-wrap mb-3">
+                <button type="button" class="btn btn-outline-success btn-sm" data-catalyst-href="/test-features/flash/success/persistent">{{ t:devtools.flash_demo.actions.persistent_success }}</button>
+                <button type="button" class="btn btn-outline-danger btn-sm" data-catalyst-href="/test-features/flash/error/persistent">{{ t:devtools.flash_demo.actions.persistent_error }}</button>
+                <button type="button" class="btn btn-outline-warning btn-sm" data-catalyst-href="/test-features/flash/warning/persistent">{{ t:devtools.flash_demo.actions.persistent_warning }}</button>
+                <button type="button" class="btn btn-outline-info btn-sm" data-catalyst-href="/test-features/flash/info/persistent">{{ t:devtools.flash_demo.actions.persistent_info }}</button>
+            </div>
+            <div id="catalyst-flash-banners" class="catalyst-flash-container flash-zone"></div>
+        </div>
+    </div>
+</div>

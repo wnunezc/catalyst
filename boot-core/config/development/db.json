@@ -1,0 +1,8 @@
+{
+    "db1": {
+        "db_host": "WSDD-MySql-Server",
+        "db_port": 3306,
+        "db_database": "catalyst",
+        "db_username": "root"
+    }
+}

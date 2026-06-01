@@ -1,0 +1,51 @@
+<div class="card auth-card auth-card--sm">
+    <div class="card-body">
+        <div class="auth-card__header auth-card__header--center">
+            <span class="auth-card__icon" aria-hidden="true">
+                <i class="fa-solid fa-shield-halved"></i>
+            </span>
+            <span class="auth-card__eyebrow">Second factor</span>
+            <h1 class="auth-card__title">{{ title }}</h1>
+            <p class="auth-card__subtitle">{{ t:auth.mfa.challenge_subtitle }}</p>
+        </div>
+
+        <form data-catalyst="form" method="POST" action="/mfa/verify" novalidate>
+            {{{ csrf_token_field }}}
+
+            <div class="mb-4">
+                <label for="code" class="form-label">
+                    {{ t:auth.mfa.enter_code }}
+                </label>
+                <input
+                    type="text"
+                    id="code"
+                    name="code"
+                    class="form-control form-control-lg text-center font-monospace{{ code_invalid_class }}"
+                    inputmode="text"
+                    pattern="[0-9A-Za-z -]{6,9}"
+                    maxlength="9"
+                    placeholder="000000 or 000-000"
+                    required
+                    autocomplete="one-time-code"
+                    autofocus
+                >
+                <div class="invalid-feedback">{{ code_error }}</div>
+                <div class="form-text">{{ t:auth.mfa.challenge_hint }}</div>
+            </div>
+
+            <button type="submit" data-event="verify-mfa" class="btn btn-primary w-100">
+                <i class="fa-solid fa-arrow-right-to-bracket me-1"></i>
+                {{ t:auth.mfa.verify_button }}
+            </button>
+        </form>
+
+        <div class="auth-link-row auth-link-row--stack">
+            <a href="/login" class="text-decoration-none">
+                &larr; {{ t:auth.mfa.back_login }}
+            </a>
+            <a href="/account-recovery/mfa" class="text-decoration-none">
+                {{ t:auth.mfa.lost_access_link }}
+            </a>
+        </div>
+    </div>
+</div>

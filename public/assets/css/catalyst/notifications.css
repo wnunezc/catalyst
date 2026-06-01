@@ -1,0 +1,530 @@
+/**
+ * Catalyst Notification System Styles
+ *
+ * Styles for toasters, modals, and flash messages.
+ * Works with Bootstrap 5.3.8 and FontAwesome 6.x
+ *
+ * @package Catalyst
+ * @author Walter Nuñez (arcanisgk)
+ */
+
+/* ==========================================================================
+   Toast Container Positions
+   ========================================================================== */
+
+.catalyst-toaster-container {
+    position: fixed;
+    z-index: 1090;
+    pointer-events: none;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 100vh;
+    overflow: hidden;
+}
+
+/* Top positions */
+.catalyst-toaster-container[data-position="top-right"] {
+    top: 0;
+    right: 0;
+}
+
+.catalyst-toaster-container[data-position="top-left"] {
+    top: 0;
+    left: 0;
+}
+
+.catalyst-toaster-container[data-position="top-center"] {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Bottom positions */
+.catalyst-toaster-container[data-position="bottom-right"] {
+    bottom: 0;
+    right: 0;
+    flex-direction: column-reverse;
+}
+
+.catalyst-toaster-container[data-position="bottom-left"] {
+    bottom: 0;
+    left: 0;
+    flex-direction: column-reverse;
+}
+
+.catalyst-toaster-container[data-position="bottom-center"] {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: column-reverse;
+}
+
+/* ==========================================================================
+   Toast Styling
+   ========================================================================== */
+
+.catalyst-toast {
+    pointer-events: auto;
+    min-width: 300px;
+    max-width: 400px;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    animation: toastSlideIn 0.3s ease-out;
+}
+
+.catalyst-toast.hiding {
+    animation: toastSlideOut 0.3s ease-in forwards;
+}
+
+@keyframes toastSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes toastSlideOut {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+/* Left-side animations */
+.catalyst-toaster-container[data-position="top-left"] .catalyst-toast,
+.catalyst-toaster-container[data-position="bottom-left"] .catalyst-toast {
+    animation-name: toastSlideInLeft;
+}
+
+.catalyst-toaster-container[data-position="top-left"] .catalyst-toast.hiding,
+.catalyst-toaster-container[data-position="bottom-left"] .catalyst-toast.hiding {
+    animation-name: toastSlideOutLeft;
+}
+
+@keyframes toastSlideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes toastSlideOutLeft {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+}
+
+/* Center animations */
+.catalyst-toaster-container[data-position="top-center"] .catalyst-toast,
+.catalyst-toaster-container[data-position="bottom-center"] .catalyst-toast {
+    animation-name: toastSlideInCenter;
+}
+
+.catalyst-toaster-container[data-position="top-center"] .catalyst-toast.hiding,
+.catalyst-toaster-container[data-position="bottom-center"] .catalyst-toast.hiding {
+    animation-name: toastSlideOutCenter;
+}
+
+@keyframes toastSlideInCenter {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes toastSlideOutCenter {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+/* Toast Header */
+.catalyst-toast .toast-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 12px 15px;
+}
+
+.catalyst-toast .toast-header .toast-icon {
+    margin-right: 10px;
+    font-size: 1.1rem;
+}
+
+.catalyst-toast .toast-header strong {
+    margin-right: auto;
+}
+
+.catalyst-toast .toast-header .btn-close {
+    filter: invert(1);
+    opacity: 0.7;
+}
+
+.catalyst-toast .toast-header .btn-close:hover {
+    opacity: 1;
+}
+
+/* Toast Body */
+.catalyst-toast .toast-body {
+    padding: 15px;
+    font-size: 0.95rem;
+}
+
+/* Toast with actions */
+.catalyst-toast .toast-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.catalyst-toast .toast-actions .btn {
+    flex: 1;
+    font-size: 0.85rem;
+    padding: 6px 12px;
+}
+
+/* Type-specific styling */
+.catalyst-toast.toast-success {
+    background: linear-gradient(135deg, #198754 0%, #157347 100%);
+    color: #fff;
+}
+
+.catalyst-toast.toast-error,
+.catalyst-toast.toast-danger {
+    background: linear-gradient(135deg, #dc3545 0%, #bb2d3b 100%);
+    color: #fff;
+}
+
+.catalyst-toast.toast-warning {
+    background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+    color: #000;
+}
+
+.catalyst-toast.toast-warning .toast-header .btn-close {
+    filter: none;
+}
+
+.catalyst-toast.toast-info {
+    background: linear-gradient(135deg, #0dcaf0 0%, #0aa2c0 100%);
+    color: #000;
+}
+
+.catalyst-toast.toast-info .toast-header .btn-close {
+    filter: none;
+}
+
+.catalyst-toast.toast-primary {
+    background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+    color: #fff;
+}
+
+.catalyst-toast.toast-secondary {
+    background: linear-gradient(135deg, #6c757d 0%, #5c636a 100%);
+    color: #fff;
+}
+
+/* Progress bar for auto-dismiss */
+.catalyst-toast .toast-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.5);
+    width: 100%;
+    transform-origin: left;
+}
+
+.catalyst-toast .toast-progress.running {
+    animation: toastProgress linear forwards;
+}
+
+@keyframes toastProgress {
+    from {
+        transform: scaleX(1);
+    }
+    to {
+        transform: scaleX(0);
+    }
+}
+
+/* ==========================================================================
+   Modal Enhancements
+   ========================================================================== */
+
+.catalyst-modal .modal-content {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.catalyst-modal .modal-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 20px 25px;
+}
+
+.catalyst-modal .modal-title {
+    font-weight: 600;
+}
+
+.catalyst-modal .modal-body {
+    padding: 25px;
+}
+
+.catalyst-modal .modal-footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 15px 25px;
+}
+
+/* Loading state */
+.catalyst-modal .modal-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+}
+
+.catalyst-modal .modal-loading .spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
+/* Confirm modal styling */
+.catalyst-modal.modal-confirm .modal-body {
+    text-align: center;
+    padding: 30px;
+}
+
+.catalyst-modal.modal-confirm .modal-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.catalyst-modal.modal-confirm .modal-icon.text-success {
+    color: #198754;
+}
+
+.catalyst-modal.modal-confirm .modal-icon.text-danger {
+    color: #dc3545;
+}
+
+.catalyst-modal.modal-confirm .modal-icon.text-warning {
+    color: #ffc107;
+}
+
+.catalyst-modal.modal-confirm .modal-icon.text-info {
+    color: #0dcaf0;
+}
+
+.catalyst-modal.modal-confirm .modal-message {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+}
+
+.catalyst-modal.modal-confirm .modal-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.catalyst-modal.modal-confirm .modal-buttons .btn {
+    min-width: 120px;
+}
+
+/* ==========================================================================
+   Flash Messages (Inline Alerts)
+   ========================================================================== */
+
+.catalyst-flash-container {
+    margin-bottom: 20px;
+}
+
+.catalyst-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    animation: alertSlideIn 0.3s ease-out;
+}
+
+.catalyst-alert.dismissing {
+    animation: alertSlideOut 0.3s ease-in forwards;
+}
+
+@keyframes alertSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes alertSlideOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+}
+
+.catalyst-alert .alert-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.catalyst-alert .alert-content {
+    flex: 1;
+}
+
+.catalyst-alert .alert-title {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.catalyst-alert .alert-message {
+    margin: 0;
+}
+
+.catalyst-alert .alert-dismiss {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+    flex-shrink: 0;
+}
+
+.catalyst-alert .alert-dismiss:hover {
+    opacity: 1;
+}
+
+/* Alert type colors */
+.catalyst-alert.alert-success {
+    background: rgba(25, 135, 84, 0.15);
+    border: 1px solid rgba(25, 135, 84, 0.3);
+    color: #146c43;
+}
+
+.catalyst-alert.alert-success .alert-icon {
+    color: #198754;
+}
+
+.catalyst-alert.alert-error,
+.catalyst-alert.alert-danger {
+    background: rgba(220, 53, 69, 0.15);
+    border: 1px solid rgba(220, 53, 69, 0.3);
+    color: #b02a37;
+}
+
+.catalyst-alert.alert-error .alert-icon,
+.catalyst-alert.alert-danger .alert-icon {
+    color: #dc3545;
+}
+
+.catalyst-alert.alert-warning {
+    background: rgba(255, 193, 7, 0.15);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    color: #997404;
+}
+
+.catalyst-alert.alert-warning .alert-icon {
+    color: #ffc107;
+}
+
+.catalyst-alert.alert-info {
+    background: rgba(13, 202, 240, 0.15);
+    border: 1px solid rgba(13, 202, 240, 0.3);
+    color: #087990;
+}
+
+.catalyst-alert.alert-info .alert-icon {
+    color: #0dcaf0;
+}
+
+/* Dark mode support — Bootstrap data-bs-theme="dark" (no OS media query) */
+[data-bs-theme="dark"] .catalyst-alert.alert-success {
+    background: rgba(25, 135, 84, 0.2);
+    color: #75b798;
+}
+
+[data-bs-theme="dark"] .catalyst-alert.alert-error,
+[data-bs-theme="dark"] .catalyst-alert.alert-danger {
+    background: rgba(220, 53, 69, 0.2);
+    color: #ea868f;
+}
+
+[data-bs-theme="dark"] .catalyst-alert.alert-warning {
+    background: rgba(255, 193, 7, 0.2);
+    color: #ffda6a;
+}
+
+[data-bs-theme="dark"] .catalyst-alert.alert-info {
+    background: rgba(13, 202, 240, 0.2);
+    color: #6edff6;
+}
+
+/* ==========================================================================
+   Responsive Adjustments
+   ========================================================================== */
+
+@media (max-width: 576px) {
+    .catalyst-toaster-container {
+        padding: 10px;
+    }
+
+    .catalyst-toast {
+        min-width: calc(100vw - 20px);
+        max-width: calc(100vw - 20px);
+    }
+
+    .catalyst-toaster-container[data-position="top-center"],
+    .catalyst-toaster-container[data-position="bottom-center"] {
+        left: 0;
+        right: 0;
+        transform: none;
+    }
+
+    .catalyst-modal .modal-body {
+        padding: 20px;
+    }
+}

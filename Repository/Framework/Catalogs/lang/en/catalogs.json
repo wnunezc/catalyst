@@ -1,0 +1,219 @@
+{
+  "module": {
+    "description": "Reusable governed catalogs with workflow lifecycle, validity windows, version history and metadata consumption.",
+    "permission_label": "Manage Catalogs",
+    "permission_description": "Create, activate, version and maintain governed catalogs and catalog items.",
+    "navigation_label": "Catalogs",
+    "navigation_hint": "Reusable governed dictionaries for metadata and forms.",
+    "breadcrumb_create": "Create Catalog",
+    "breadcrumb_edit": "Edit Catalog",
+    "breadcrumb_create_item": "Create Item",
+    "breadcrumb_edit_item": "Edit Item",
+    "breadcrumb_show": "Catalog Detail"
+  },
+  "common": {
+    "description": "Description",
+    "edit": "Edit",
+    "back": "Back",
+    "delete": "Delete"
+  },
+  "form": {
+    "catalog_key": "Catalog key",
+    "catalog_label": "Catalog label",
+    "item_key": "Item key",
+    "item_label": "Item label",
+    "enabled": "Enabled flag",
+    "valid_from": "Valid from",
+    "valid_to": "Valid to",
+    "sort_order": "Sort order",
+    "metadata_json": "Metadata JSON"
+  },
+  "validation": {
+    "catalog_key_unique": "The catalog key must be unique.",
+    "parent_catalog_missing": "The parent catalog is not available.",
+    "item_key_unique": "The item key must be unique inside the catalog.",
+    "valid_from_invalid": "Provide a valid start datetime or leave it blank.",
+    "valid_to_invalid": "Provide a valid end datetime or leave it blank.",
+    "valid_to_before_start": "End datetime must be later than start datetime.",
+    "metadata_json_invalid": "Provide valid JSON or leave the field blank."
+  },
+  "index": {
+    "title": "Catalogs",
+    "hero_eyebrow": "Governed catalogs",
+    "hero_lede": "Reusable dictionaries with lifecycle, versioning and validity to avoid hard-coded options in forms and dynamic metadata.",
+    "description": "Reusable governed dictionaries backed by dynamic metadata, workflow and temporal validity.",
+    "empty": {
+      "title": "No catalogs yet",
+      "description": "Create the first reusable catalog to centralize governed select options across modules.",
+      "action": "Create catalog"
+    },
+    "columns": {
+      "catalog": "Catalog",
+      "workflow": "Workflow",
+      "items": "Items",
+      "updated": "Updated"
+    },
+    "filters": {
+      "workflow_state": "Workflow state"
+    },
+    "states": {
+      "draft": "Draft",
+      "active": "Active",
+      "archived": "Archived"
+    },
+    "actions": {
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete",
+      "confirm_delete": "Delete catalog \"%s\"?"
+    },
+    "search_placeholder": "Search by label, key or description"
+  },
+  "form_page": {
+    "eyebrow": "Governed catalogs",
+    "create_title": "Create Catalog",
+    "edit_title": "Edit Catalog",
+    "hero_lede": "Define reusable catalogs consumed later by dynamic metadata, forms, filters and business rules.",
+    "placeholders": {
+      "catalog_key": "document-status",
+      "catalog_label": "Document status",
+      "description": "What this catalog governs."
+    },
+    "help": {
+      "catalog_key": "Stable key consumed by metadata and other modules."
+    },
+    "sections": {
+      "identity": {
+        "title": "Identity",
+        "description": "Reusable key, operational label and description of the governed catalog."
+      }
+    },
+    "actions": {
+      "create": "Create catalog",
+      "save": "Save catalog",
+      "back": "Back to catalogs"
+    }
+  },
+  "item_form_page": {
+    "eyebrow": "Catalog items",
+    "create_title": "Create Catalog Item",
+    "edit_title": "Edit Catalog Item",
+    "hero_lede": "Edit governed options for catalog :catalog with temporal validity and auxiliary metadata.",
+    "labels": {
+      "enabled": "Enabled"
+    },
+    "placeholders": {
+      "item_key": "approved",
+      "item_label": "Approved",
+      "valid_from": "2026-05-20 08:00:00",
+      "valid_to": "2026-06-20 18:00:00"
+    },
+    "help": {
+      "enabled": "Disable the option without deleting its history or versions.",
+      "metadata_json": "Additional payload per option. Useful for color, weight or hints consumed by UI."
+    },
+    "sections": {
+      "identity": {
+        "title": "Identity",
+        "description": "Internal key and visible label of the governed item."
+      },
+      "behavior": {
+        "title": "Behavior & validity",
+        "description": "Operational enablement, ordering and temporal validity window."
+      },
+      "metadata": {
+        "title": "Metadata",
+        "description": "Auxiliary data for later UI or integration consumption."
+      }
+    },
+    "actions": {
+      "create": "Create item",
+      "save": "Save item",
+      "back": "Back to catalog"
+    }
+  },
+  "messages": {
+    "catalog_not_found": "Catalog not found.",
+    "catalog_created": "Catalog created.",
+    "catalog_updated": "Catalog updated.",
+    "catalog_deleted": "Catalog deleted.",
+    "catalog_transitioned": "Catalog transitioned successfully.",
+    "catalog_version_restored": "Catalog version restored.",
+    "catalog_restored_summary": "Catalog restored from version",
+    "select_transition": "Select a valid workflow transition.",
+    "item_not_found": "Catalog item not found.",
+    "item_created": "Catalog item created.",
+    "item_updated": "Catalog item updated.",
+    "item_deleted": "Catalog item deleted."
+  },
+  "show": {
+    "eyebrow": "Governed catalogs",
+    "catalog_fallback": "Catalog",
+    "lede_fallback": "Reusable catalog consumed by metadata-driven forms and filters.",
+    "create_item": "Create item",
+    "stats": {
+      "key": "Key",
+      "workflow": "Workflow",
+      "items": "Items",
+      "timeline": "Timeline"
+    },
+    "workflow": {
+      "title": "Workflow actions",
+      "description": "Reusable catalog lifecycle and timeline milestones.",
+      "transition": "Transition",
+      "select_transition": "Select transition",
+      "notes": "Notes",
+      "notes_placeholder": "Optional transition note",
+      "apply": "Apply",
+      "columns": {
+        "occurred": "Occurred",
+        "transition": "Transition",
+        "from": "From",
+        "to": "To",
+        "actor": "Actor"
+      },
+      "empty": "No transitions recorded yet."
+    },
+    "items": {
+      "title": "Catalog items",
+      "description": "Governed options with temporal validity, availability and auxiliary metadata.",
+      "add_item": "Add item",
+      "columns": {
+        "item": "Item",
+        "state": "State",
+        "validity": "Validity",
+        "metadata": "Metadata"
+      },
+      "confirm_delete": "Delete this catalog item?",
+      "empty": "No catalog items yet."
+    },
+    "timeline": {
+      "title": "Timeline",
+      "description": "SLA and milestone events captured over the reusable primitive.",
+      "columns": {
+        "occurred": "Occurred",
+        "type": "Type",
+        "event": "Event",
+        "label": "Label"
+      },
+      "empty": "No timeline events recorded yet."
+    },
+    "versions": {
+      "title": "Version history",
+      "description": "Persisted full catalog snapshots with real restore.",
+      "columns": {
+        "version": "Version",
+        "summary": "Summary",
+        "created": "Created"
+      },
+      "restore": "Restore",
+      "empty": "No versions captured yet."
+    },
+    "common": {
+      "disabled": "disabled",
+      "now": "now",
+      "open": "open",
+      "system": "system"
+    }
+  }
+}

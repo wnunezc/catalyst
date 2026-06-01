@@ -1,0 +1,499 @@
+{
+  "title": "Operaciones",
+  "description": "Plano de control operativo para banderas de funcionalidad, plugins, despliegue y segmentación multi-tenant.",
+  "module": {
+    "description": "Consola de operaciones de la plataforma para banderas de funcionalidad, plugins, despliegue, localización, apariencia y segmentación multi-tenant.",
+    "permission_label": "Gestionar Operaciones",
+    "permission_description": "Gestionar la superficie del módulo Operaciones.",
+    "navigation_hint": "Consola de operaciones de plataforma para banderas de funcionalidad, plugins, despliegue, localización, apariencia y segmentación multi-tenant."
+  },
+  "nav": {
+    "aria_label": "Secciones de Operaciones",
+    "overview": "Resumen"
+  },
+  "appearance": {
+    "page_title": "Apariencia de la Plataforma",
+    "hero_eyebrow": "Administración",
+    "hero_lede": "Gobierna cómo Catalyst aplica el Admin Customizer de Inspinia, temas globales fijos, recursos de branding neutral e identidad documental PDF.",
+    "runtime_title": "Branding neutral activo",
+    "runtime_description": "Los logos, favicon, identidad documental y marca de agua PDF quedan aislados aquí de la política interactiva del Admin Customizer.",
+    "preview": {
+      "title": "Recursos visuales resueltos actualmente",
+      "primary_logo_alt": "Logo principal de marca",
+      "dark_logo_alt": "Logo de marca para oscuro",
+      "favicon": "Favicon"
+    },
+    "fields": {
+      "default_variant": "Variante por defecto",
+      "user_variant_preference": "Selector visual",
+      "allow_user_variant_override": "Campo heredado desactivado por el runtime Inspinia",
+      "allow_user_variant_override_help": "El modo claro/oscuro y las variantes visuales se administran con el customizer de Inspinia y __THEME_CONFIG__.",
+      "brand_name": "Nombre de marca",
+      "brand_short_name": "Nombre corto de marca",
+      "brand_tagline": "Lema de marca",
+      "asset_path_placeholder": "/uploads/branding/... o https://...",
+      "logo_primary_path": "Ruta del logo principal",
+      "logo_primary_help": "Vacío = usar el logo neutral de Catalyst/Inspinia.",
+      "reset_logo_primary": "Restablecer al logo principal preset",
+      "logo_dark_path": "Ruta alterna de logo para modo oscuro",
+      "logo_dark_help": "Se usa cuando la variante resuelta es oscura.",
+      "reset_logo_dark": "Restablecer al logo oscuro preset",
+      "favicon_path": "Ruta del favicon",
+      "favicon_help": "Se renderiza en los recursos compartidos del head para toda la plataforma.",
+      "reset_favicon": "Restablecer al favicon preset",
+      "pdf_watermark": "Marca de agua PDF",
+      "pdf_watermark_enabled": "Habilitar marca de agua en exportaciones PDF",
+      "pdf_watermark_text": "Texto de la marca de agua"
+    },
+    "actions": {
+      "save": "Guardar apariencia",
+      "open_runtime": "Abrir plataforma",
+      "open_documents": "Abrir documentos"
+    },
+    "messages": {
+      "invalid_theme": "Selecciona el preset canónico de branding Catalyst/Inspinia.",
+      "invalid_watermark_color": "El color de la marca de agua PDF debe ser un valor hex como #CBD5E1."
+    },
+    "tabs": {
+      "customizer": "Admin Customizer",
+      "branding": "Branding neutral activo"
+    }
+  },
+  "localization": {
+    "page_title": "Localización",
+    "hero_eyebrow": "Administración",
+    "hero_lede": "Herramienta canónica del framework para catálogos base en inglés, cobertura por idioma, alta de idiomas y sincronización de faltantes.",
+    "cards": {
+      "missing_summary": "%d claves faltantes · %d catálogos faltantes"
+    },
+    "runtime_policy": {
+      "title": "Política de idioma en ejecución",
+      "description": "El idioma por defecto sigue conectado a app.project.project_lang, pero la superficie administrativa real vive aquí.",
+      "default_locale": "Idioma por defecto",
+      "locale_labels_json": "JSON de etiquetas de idiomas",
+      "save": "Guardar configuración de localización"
+    },
+    "create_locale": {
+      "title": "Agregar idioma desde la base en inglés",
+      "description": "Clona la estructura EN para iniciar traducción humana o asistida sin tocar múltiples carpetas manualmente.",
+      "locale_code": "Código de idioma",
+      "locale_code_placeholder": "fr",
+      "locale_label_placeholder": "Francés",
+      "preview_only": "Solo simulación, no escribir archivos",
+      "initialize": "Inicializar idioma"
+    },
+    "sync_locale": {
+      "title": "Sincronizar claves faltantes",
+      "description": "Rellena solo faltantes desde EN y preserva lo que ya fue traducido en el idioma destino.",
+      "target_locale": "Idioma destino",
+      "preview_only": "Solo simulación de sincronización, no escribir archivos",
+      "sync": "Sincronizar desde inglés"
+    },
+    "coverage_report": {
+      "title": "Reporte de cobertura para %s",
+      "base_locale": "Idioma base",
+      "missing_keys_badge": "%d claves faltantes",
+      "missing_catalogs_badge": "%d catálogos faltantes",
+      "missing_keys_column": "Claves faltantes",
+      "present": "Presente",
+      "missing_in_target": "Falta en el idioma destino",
+      "empty": "No se descubrieron catálogos base en inglés."
+    },
+    "messages": {
+      "invalid_labels_json": "Las etiquetas de idiomas deben ser JSON válido.",
+      "invalid_default_locale": "Selecciona un idioma por defecto que ya exista en el catálogo.",
+      "runtime_updated": "Configuración de localización actualizada.",
+      "preview_prepared": "Simulación del idioma preparada para %s con %s acciones de catálogo.",
+      "locale_initialized": "Idioma %s inicializado desde los catálogos base en inglés.",
+      "sync_preview": "La simulación de sincronización encontró %s claves faltantes para %s.",
+      "locale_synchronized": "Idioma %s sincronizado desde los catálogos base en inglés."
+    }
+  },
+  "module_designer": {
+    "page_title": "Diseñador de Módulos"
+  },
+  "index": {
+    "hero_eyebrow": "Gobierno operativo",
+    "hero_lede": "Superficie canónica de gobierno operativo del framework: banderas de funcionalidad, plugins, despliegue y decisiones de segmentación multi-tenant.",
+    "metrics": {
+      "flags": "Banderas",
+      "plugins": "Plugins",
+      "runs": "Ejecuciones",
+      "locales": "Idiomas"
+    },
+    "boundaries": {
+      "title": "Límites canónicos",
+      "description": "El framework separa bootstrap, gobierno operativo y diagnósticos de desarrollo para evitar superficies ambiguas o duplicadas."
+    },
+    "cards": {
+      "admin": {
+        "eyebrow": "Administración"
+      },
+      "setup": {
+        "eyebrow": "Configuración inicial",
+        "title": "/configuration/environment-setup sigue siendo bootstrap y configuración",
+        "description": "Aquí viven app, BD, correo, sesión, caché, logging, seguridad y puntos de entrada del proyecto. No gobierna banderas activas, plugins ni despliegues.",
+        "action": "Abrir configuración"
+      },
+      "operations": {
+        "eyebrow": "Operaciones",
+        "title": "/operations es el plano de control operativo",
+        "description": "Este es el hogar canónico para la administración operativa: i18n, apariencia institucional, banderas de funcionalidad, plugins, despliegue y segmentación multi-tenant.",
+        "action": "Abrir controles"
+      },
+      "devtools": {
+        "eyebrow": "DevTools",
+        "title": "/test-features sigue siendo diagnóstico",
+        "description": "Conserva probes y el harness técnico. Ya no es la superficie canónica para activar capacidades productivas de la plataforma.",
+        "action": "Abrir herramientas técnicas"
+      },
+      "localization": {
+        "title": "Control de localización",
+        "default_locale": "Idioma por defecto",
+        "available_locales": "Idiomas disponibles",
+        "action": "Administrar localización"
+      },
+      "appearance": {
+        "title": "Apariencia de la plataforma",
+        "theme": "Tema institucional",
+        "variant": "Variante por defecto",
+        "watermark": "Marca de agua PDF",
+        "action": "Administrar apariencia"
+      },
+      "feature_flags": {
+        "eyebrow": "Feature governance",
+        "title": "Banderas reales",
+        "total": "Catálogo total",
+        "enabled": "Habilitadas",
+        "read_only": "Solo lectura",
+        "action": "Administrar banderas"
+      },
+      "plugins": {
+        "eyebrow": "Extensions",
+        "title": "Sistema de plugins y módulos",
+        "total": "Plugins totales",
+        "enabled": "Habilitados",
+        "required": "Requeridos",
+        "action": "Administrar plugins"
+      },
+      "deployments": {
+        "eyebrow": "Delivery pipeline",
+        "title": "Pipeline de despliegue",
+        "profiles": "Perfiles",
+        "runs": "Ejecuciones registradas",
+        "release_root": "Raíz de releases",
+        "action": "Ejecutar despliegues"
+      },
+      "tenancy": {
+        "eyebrow": "Tenant governance",
+        "title": "Línea base multi-tenant",
+        "runtime_strategy": "Estrategia de ejecución",
+        "target_strategy": "Estrategia objetivo",
+        "isolation_active": "Aislamiento activo",
+        "action": "Revisar decisión de segmentación"
+      }
+    },
+    "recent_runs": {
+      "title": "Ejecuciones recientes de despliegue",
+      "description": "Historial rápido del pipeline formal sin salir del plano de control.",
+      "columns": {
+        "release": "Release",
+        "profile": "Perfil",
+        "status": "Estado",
+        "started": "Inició"
+      },
+      "empty": "Todavía no hay ejecuciones de despliegue registradas."
+    },
+    "common": {
+      "enabled": "habilitado",
+      "disabled": "deshabilitado",
+      "yes": "sí",
+      "no": "no",
+      "unknown": "desconocido"
+    }
+  },
+  "feature_flags": {
+    "title": "Banderas de funcionalidad",
+    "hero_lede": "Valores por defecto por entorno y módulo, sobrescrituras por rol o usuario y lectura coherente en ejecución.",
+    "common": {
+      "enabled": "Habilitado",
+      "disabled": "Deshabilitado"
+    },
+    "catalog": {
+      "title": "Catálogo por defecto",
+      "description": "Superficie canónica de valores por defecto persistidos en features.json y banderas de solo lectura heredadas de la ejecución actual.",
+      "plugin_activation_description": "Estado de activación del paquete de plugin.",
+      "columns": {
+        "flag": "Flag",
+        "owner": "Responsable"
+      },
+      "scopes": {
+        "runtime": "ejecución",
+        "capability": "capacidad",
+        "module": "módulo",
+        "plugin": "plugin"
+      },
+      "read_only": "Solo lectura",
+      "actions": {
+        "enable": "Habilitar",
+        "disable": "Deshabilitar"
+      },
+      "items": {
+        "project_config": {
+          "label": "Proyecto configurado",
+          "description": "Estado de configuración de solo lectura gobernado por app.json."
+        },
+        "cache_enabled": {
+          "label": "Caché habilitado",
+          "description": "Estado de activación de caché de solo lectura gobernado por cache.json."
+        },
+        "route_cache": {
+          "label": "Caché de rutas",
+          "description": "Flag de caché de rutas de solo lectura gobernada por cache.json."
+        },
+        "websocket_enabled": {
+          "label": "WebSocket en ejecución",
+          "description": "Flag de arranque WebSocket de solo lectura gobernada por websocket.json."
+        },
+        "mfa": {
+          "label": "MFA",
+          "description": "Habilita las superficies de setup y challenge MFA para autenticación de sesión."
+        },
+        "notifications": {
+          "label": "Notificaciones",
+          "description": "Habilita endpoints autenticados de notificaciones y contadores de no leídas."
+        },
+        "social_auth": {
+          "label": "Autenticación social",
+          "description": "Habilita rutas de entrada y callback OAuth cuando los proveedores están configurados."
+        },
+        "module_framework_apiplatform": {
+          "label": "Módulo API Platform",
+          "description": "Carga la administración de API versionada y las superficies de ejecución de tokens bearer."
+        },
+        "module_framework_audit": {
+          "label": "Módulo Audit",
+          "description": "Carga trazas de auditoría y superficies de evidencia operativa."
+        },
+        "module_framework_automation": {
+          "label": "Módulo Automation",
+          "description": "Carga reglas internas de automatización, logs y disparadores de flujo."
+        },
+        "module_framework_devtools": {
+          "label": "Módulo DevTools",
+          "description": "Carga superficies técnicas de smoke y el diseñador de módulos."
+        },
+        "module_framework_documents": {
+          "label": "Módulo Documents",
+          "description": "Carga superficies de plantillas de documento, previsualización y exportación."
+        },
+        "module_framework_media": {
+          "label": "Módulo Media",
+          "description": "Carga superficies reutilizables de biblioteca de medios y campos de metadatos."
+        },
+        "module_framework_notification": {
+          "label": "Módulo Notification",
+          "description": "Carga APIs autenticadas de notificaciones y emisión de token WebSocket."
+        },
+        "module_framework_operations": {
+          "label": "Módulo Operations",
+          "description": "Carga superficies de operaciones de plataforma para banderas, plugins, despliegue y segmentación multi-tenant."
+        }
+      }
+    },
+    "overrides": {
+      "title": "Sobrescrituras dirigidas",
+      "description": "Persistencia real por rol o usuario, auditada y evaluada en ejecución.",
+      "empty": {
+        "title": "Todavía no hay sobrescrituras",
+        "description": "Las flags están corriendo solo con sus defaults de entorno y módulo."
+      },
+      "columns": {
+        "flag": "Flag",
+        "subject": "Sujeto",
+        "state": "Estado",
+        "note": "Nota",
+        "updated": "Actualizado"
+      },
+      "filters": {
+        "subject_type": "Tipo de sujeto"
+      },
+      "subject_types": {
+        "user": "Usuario",
+        "role": "Rol"
+      },
+      "actions": {
+        "delete": "Eliminar",
+        "confirm_delete": "¿Eliminar sobrescritura para"
+      },
+      "search_placeholder": "Buscar por flag, sujeto o nota"
+    },
+    "form": {
+      "title": "Crear sobrescritura",
+      "description": "Aplica una excepción real por rol o usuario sobre una bandera de funcionalidad mutable.",
+      "fields": {
+        "flag": "Flag",
+        "select_flag": "Selecciona una flag mutable",
+        "subject_type": "Tipo de sujeto",
+        "subject_key": "Clave del sujeto",
+        "subject_key_placeholder": "ID de usuario o slug del rol",
+        "enabled": "Habilitado",
+        "enabled_help": "Marcado = forzar habilitado para este sujeto. Sin marcar = forzar deshabilitado.",
+        "note": "Nota",
+        "note_placeholder": "Razón o nota operativa"
+      },
+      "subject_types": {
+        "user": "ID de usuario",
+        "role": "Slug del rol"
+      },
+      "actions": {
+        "save": "Guardar sobrescritura"
+      }
+    },
+    "messages": {
+      "not_found": "Feature flag no encontrada.",
+      "read_only_default": "Esta bandera pertenece a otra configuración de ejecución y aquí es solo lectura.",
+      "read_only_override": "Las flags de solo lectura no pueden recibir overrides por actor.",
+      "default_updated": "Default de la feature flag actualizado.",
+      "override_created": "Sobrescritura de feature flag creada.",
+      "override_updated": "Sobrescritura de feature flag actualizada.",
+      "override_not_found": "Sobrescritura de feature flag no encontrada.",
+      "override_deleted": "Sobrescritura de feature flag eliminada."
+    }
+  },
+  "plugins": {
+    "title": "Plugins",
+    "hero_lede": "Manifiestos formales de plugin, carga controlada en ejecución y adopción real en registros, inspector y harness.",
+    "boundary_title": "Límite oficial",
+    "boundary_body": "La ejecución carga módulos solo si su plugin está habilitado y si su bandera module.* sigue activa. El contrato técnico queda centralizado en boot-core/plugins/*.php, PluginRegistry, PluginManager y ModuleRegistry.",
+    "common": {
+      "enabled": "Habilitado",
+      "disabled": "Deshabilitado",
+      "required": "Requerido",
+      "valid": "Válido",
+      "invalid": "Inválido"
+    },
+    "grid": {
+      "title": "Catálogo de plugins",
+      "description": "Manifiestos formales, carga controlada y adopción real por módulo.",
+      "empty": {
+        "title": "No hay plugins registrados",
+        "description": "No se descubrieron manifiestos de plugin bajo boot-core/plugins."
+      },
+      "columns": {
+        "plugin": "Plugin",
+        "version": "Versión",
+        "modules": "Módulos",
+        "state": "Estado",
+        "manifest": "Manifiesto"
+      },
+      "filters": {
+        "state": "Estado"
+      },
+      "actions": {
+        "disable": "Deshabilitar",
+        "enable": "Habilitar",
+        "confirm_disable": "¿Deshabilitar plugin",
+        "confirm_enable": "¿Habilitar plugin"
+      },
+      "search_placeholder": "Buscar por clave, etiqueta o módulo"
+    },
+    "messages": {
+      "not_found": "Plugin no encontrado.",
+      "updated": "Estado del plugin actualizado."
+    }
+  },
+  "deployments": {
+    "title": "Despliegues",
+    "profiles": {
+      "title": "Perfiles registrados",
+      "description": "Cada perfil define el corte reutilizable del pipeline sin acoplar infraestructura externa al framework.",
+      "create_zip": "ZIP",
+      "publish_remote": "Publicación remota"
+    },
+    "states": {
+      "completed": "Completado",
+      "failed": "Fallido",
+      "dry_run": "Simulación",
+      "running": "En ejecución"
+    },
+    "form": {
+      "title": "Ejecutar pipeline de despliegue",
+      "description": "Ejecuta el pipeline formal con verificación previa, staging y publicación opcional.",
+      "fields": {
+        "profile": "Perfil",
+        "select_profile": "Selecciona un perfil de despliegue",
+        "dry_run": "Simulación",
+        "dry_run_help": "Marcado = ejecutar solo la verificación previa y registrar la intención, sin staging ni publicación."
+      },
+      "actions": {
+        "run": "Ejecutar pipeline"
+      }
+    },
+    "grid": {
+      "title": "Ejecuciones de despliegue",
+      "description": "Historial operativo del pipeline formal de despliegue.",
+      "empty": {
+        "title": "No hay ejecuciones registradas",
+        "description": "Todavía no se han ejecutado perfiles de despliegue."
+      },
+      "columns": {
+        "release": "Release",
+        "profile": "Perfil",
+        "status": "Estado",
+        "environment": "Entorno",
+        "started": "Inició",
+        "artifact": "Artefacto"
+      },
+      "filters": {
+        "status": "Estado"
+      },
+      "search_placeholder": "Buscar por release, perfil o ruta de artefacto"
+    },
+    "messages": {
+      "profile_not_found": "Perfil de despliegue no encontrado.",
+      "finished": "Pipeline de despliegue finalizado para"
+    }
+  },
+  "tenancy": {
+    "title": "Segmentación por tenant",
+    "hero_lede": "Límite canónico shared-db por tenant_id, visible en ejecución, repositorios, auditoría y CLI.",
+    "runtime": {
+      "title": "Estado actual de ejecución",
+      "description": "Estado real del límite PA-02 sobre las superficies canónicas, sin filtros manuales por módulo."
+    },
+    "resolution": {
+      "title": "Resolución actual",
+      "description": "Tenant activo hoy y fuente de resolución aplicada por la ejecución."
+    },
+    "fields": {
+      "runtime_strategy": "Estrategia de ejecución",
+      "target_strategy": "Estrategia objetivo",
+      "resolution_mode": "Modo de resolución",
+      "isolation_active": "Aislamiento activo",
+      "fallback_tenant": "Tenant de respaldo",
+      "configured_tenants": "Tenants configurados",
+      "resolved_tenant": "Tenant resuelto",
+      "tenant_id": "ID del tenant",
+      "tenant_label": "Etiqueta del tenant",
+      "resolved_from": "Resuelto desde",
+      "baseline_status": "Estado base"
+    },
+    "catalog": {
+      "title": "Catálogo de tenants",
+      "description": "Catálogo inspeccionable usado por resolución por host y por las sondas canónicas de segmentación por tenant.",
+      "columns": {
+        "tenant": "Tenant",
+        "id": "ID",
+        "hosts": "Hosts"
+      }
+    },
+    "decision_note": {
+      "title": "Nota de decisión",
+      "description": "Resumen canónico de la decisión operativa vigente para segmentación por tenant."
+    },
+    "defaults": {
+      "default_tenant": "Tenant por defecto"
+    }
+  }
+}

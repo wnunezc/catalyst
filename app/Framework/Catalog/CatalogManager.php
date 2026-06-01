@@ -1,0 +1,301 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Catalyst\Framework\Catalog;
+
+use Catalyst\Entities\CatalogDefinition;
+use Catalyst\Entities\CatalogItem;
+use Catalyst\Entities\WorkflowInstance;
+use Catalyst\Framework\Database\DatabaseManager;
+use Catalyst\Framework\Temporal\EffectiveWindow;
+use Catalyst\Framework\Traits\SingletonTrait;
+use Catalyst\Framework\Versioning\VersionManager;
+use Catalyst\Framework\Workflow\WorkflowManager;
+use Catalyst\Framework\Workflow\WorkflowRepository;
+use RuntimeException;
+
+final class CatalogManager
+{
+    use SingletonTrait;
+
+    public const RESOURCE_KEY = 'catalogs';
+    public const WORKFLOW_KEY = 'catalogs.lifecycle';
+
+    private CatalogRepository $repository;
+    private WorkflowManager $workflows;
+    private WorkflowRepository $workflowRepository;
+    private VersionManager $versions;
+    private DatabaseManager $db;
+    private EffectiveWindow $window;
+
+    protected function __construct()
+    {
+        $this->repository = CatalogRepository::getInstance();
+        $this->workflows = WorkflowManager::getInstance();
+        $this->workflowRepository = WorkflowRepository::getInstance();
+        $this->versions = VersionManager::getInstance();
+        $this->db = DatabaseManager::getInstance();
+        $this->window = EffectiveWindow::getInstance();
+    }
+
+    /**
+     * @param array<string, mixed> $payload
+     */
+    public function createCatalog(array $payload): CatalogDefinition
+    {
+        $catalog = CatalogDefinition::create([
+            'catalog_key' => trim(strtolower((string) ($payload['catalog_key'] ?? ''))),
+            'label' => trim((string) ($payload['label'] ?? '')),
+            'description' => trim((string) ($payload['description'] ?? '')),
+        ]);
+
+        $this->workflows->ensureInstance(self::WORKFLOW_KEY, self::RESOURCE_KEY, (int) $catalog->getKey());
+        $this->captureCatalogVersion((int) $catalog->getKey(), 'Catalog created');
+
+        return $catalog;
+    }
+
+    /**
+     * @param array<string, mixed> $payload
+     */
+    public function updateCatalog(CatalogDefinition $catalog, array $payload): CatalogDefinition
+    {
+        $catalog->fill([
+            'catalog_key' => trim(strtolower((string) ($payload['catalog_key'] ?? ''))),
+            'label' => trim((string) ($payload['label'] ?? '')),
+            'description' => trim((string) ($payload['description'] ?? '')),
+        ]);
+        $catalog->save();
+
+        $this->captureCatalogVersion((int) $catalog->getKey(), 'Catalog updated');
+
+        return $catalog;
+    }
+
+    public function deleteCatalog(CatalogDefinition $catalog): void
+    {
+        $this->repository->deleteDefinition($catalog);
+    }
+
+    public function transitionCatalog(CatalogDefinition $catalog, string $transitionKey, ?string $notes = null): array
+    {
+        $result = $this->workflows->transition(
+            self::WORKFLOW_KEY,
+            self::RESOURCE_KEY,
+            (int) $catalog->getKey(),
+            $transitionKey,
+            record: $catalog,
+            notes: $notes
+        );
+
+        $this->captureCatalogVersion((int) $catalog->getKey(), 'Catalog workflow transitioned: ' . $transitionKey);
+
+        return $result;
+    }
+
+    /**
+     * @param array<string, mixed> $payload
+     */
+    public function createItem(int $catalogId, array $payload): CatalogItem
+    {
+        $catalog = $this->requireCatalog($catalogId);
+
+        $item = CatalogItem::create([
+            'catalog_definition_id' => (int) $catalog->getKey(),
+            'item_key' => trim(strtolower((string) ($payload['item_key'] ?? ''))),
+            'label' => trim((string) ($payload['label'] ?? '')),
+            'description' => trim((string) ($payload['description'] ?? '')),
+            'is_enabled' => filter_var($payload['is_enabled'] ?? false, FILTER_VALIDATE_BOOLEAN),
+            'valid_from' => $this->window->normalize(isset($payload['valid_from']) ? (string) $payload['valid_from'] : null),
+            'valid_to' => $this->window->normalize(isset($payload['valid_to']) ? (string) $payload['valid_to'] : null),
+            'sort_order' => max(0, (int) ($payload['sort_order'] ?? 100)),
+            'metadata_json' => $this->decodeJsonField($payload['metadata_json'] ?? []),
+        ]);
+
+        $this->captureCatalogVersion((int) $catalog->getKey(), 'Catalog item created: ' . (string) ($payload['item_key'] ?? 'item'));
+
+        return $item;
+    }
+
+    /**
+     * @param array<string, mixed> $payload
+     */
+    public function updateItem(CatalogItem $item, array $payload): CatalogItem
+    {
+        $catalogId = (int) ($item->toArray()['catalog_definition_id'] ?? 0);
+        $item->fill([
+            'item_key' => trim(strtolower((string) ($payload['item_key'] ?? ''))),
+            'label' => trim((string) ($payload['label'] ?? '')),
+            'description' => trim((string) ($payload['description'] ?? '')),
+            'is_enabled' => filter_var($payload['is_enabled'] ?? false, FILTER_VALIDATE_BOOLEAN),
+            'valid_from' => $this->window->normalize(isset($payload['valid_from']) ? (string) $payload['valid_from'] : null),
+            'valid_to' => $this->window->normalize(isset($payload['valid_to']) ? (string) $payload['valid_to'] : null),
+            'sort_order' => max(0, (int) ($payload['sort_order'] ?? 100)),
+            'metadata_json' => $this->decodeJsonField($payload['metadata_json'] ?? []),
+        ]);
+        $item->save();
+
+        $this->captureCatalogVersion($catalogId, 'Catalog item updated: ' . (string) ($payload['item_key'] ?? 'item'));
+
+        return $item;
+    }
+
+    public function deleteItem(CatalogItem $item): void
+    {
+        $catalogId = (int) ($item->toArray()['catalog_definition_id'] ?? 0);
+        $itemKey = (string) ($item->toArray()['item_key'] ?? 'item');
+        $this->repository->deleteItem($item);
+        $this->captureCatalogVersion($catalogId, 'Catalog item deleted: ' . $itemKey);
+    }
+
+    /**
+     * @param string[] $selectedKeys
+     * @return array<string, string>
+     */
+    public function options(string $catalogKey, array $selectedKeys = []): array
+    {
+        return $this->repository->optionMap($catalogKey, $selectedKeys);
+    }
+
+    public function hasOption(string $catalogKey, string $itemKey): bool
+    {
+        return array_key_exists(trim(strtolower($itemKey)), $this->options($catalogKey));
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function snapshotCatalog(int $catalogId): array
+    {
+        $snapshot = $this->repository->snapshotDefinition($catalogId);
+        if ($snapshot === []) {
+            throw new RuntimeException('Catalog snapshot could not be resolved.');
+        }
+
+        return $snapshot;
+    }
+
+    /**
+     * @param array<string, mixed> $snapshot
+     * @return array<string, mixed>
+     */
+    public function restoreCatalogSnapshot(int $catalogId, array $snapshot): array
+    {
+        $catalog = $this->requireCatalog($catalogId);
+        $catalogPayload = is_array($snapshot['catalog'] ?? null) ? (array) $snapshot['catalog'] : [];
+        $itemPayloads = is_array($snapshot['items'] ?? null) ? (array) $snapshot['items'] : [];
+
+        $this->db->connection()->transaction(function () use ($catalog, $catalogPayload, $itemPayloads): void {
+            $definitionData = $this->sanitizeCatalogSnapshot($catalogPayload);
+            $catalog->fill($definitionData);
+            $catalog->save();
+
+            foreach ($this->repository->itemsForCatalog((int) $catalog->getKey(), true) as $row) {
+                $model = $this->repository->findItemModel((int) ($row['id'] ?? 0));
+                if ($model instanceof CatalogItem) {
+                    $model->delete();
+                }
+            }
+
+            foreach ($itemPayloads as $row) {
+                if (!is_array($row)) {
+                    continue;
+                }
+
+                CatalogItem::create(array_merge(
+                    ['catalog_definition_id' => (int) $catalog->getKey()],
+                    $this->sanitizeItemSnapshot($row)
+                ));
+            }
+
+            $instanceData = $this->workflows->ensureInstance(self::WORKFLOW_KEY, self::RESOURCE_KEY, (int) $catalog->getKey());
+            $instance = $this->workflowRepository->findModel((int) ($instanceData['id'] ?? 0));
+            if ($instance instanceof WorkflowInstance) {
+                $state = trim((string) ($catalogPayload['current_state'] ?? 'draft'));
+                $this->workflowRepository->updateState($instance, $state === '' ? 'draft' : $state, [
+                    'restored_from_version' => true,
+                ]);
+            }
+        });
+
+        $restored = $this->repository->findDefinition((int) $catalog->getKey());
+        if ($restored === null) {
+            throw new RuntimeException('Restored catalog could not be reloaded.');
+        }
+
+        return $restored;
+    }
+
+    private function captureCatalogVersion(int $catalogId, string $summary): void
+    {
+        if ($catalogId <= 0) {
+            return;
+        }
+
+        $this->versions->capture(
+            self::RESOURCE_KEY,
+            $catalogId,
+            $this->snapshotCatalog($catalogId),
+            $summary
+        );
+    }
+
+    private function requireCatalog(int $catalogId): CatalogDefinition
+    {
+        $catalog = CatalogDefinition::find($catalogId);
+        if (!$catalog instanceof CatalogDefinition) {
+            throw new RuntimeException('Catalog not found.');
+        }
+
+        return $catalog;
+    }
+
+    /**
+     * @param mixed $value
+     * @return array<string, mixed>|array<int, mixed>
+     */
+    private function decodeJsonField(mixed $value): array
+    {
+        if (is_array($value)) {
+            return $value;
+        }
+
+        $decoded = json_decode((string) $value, true);
+
+        return is_array($decoded) ? $decoded : [];
+    }
+
+    /**
+     * @param array<string, mixed> $payload
+     * @return array<string, mixed>
+     */
+    private function sanitizeCatalogSnapshot(array $payload): array
+    {
+        return [
+            'catalog_key' => trim(strtolower((string) ($payload['catalog_key'] ?? ''))),
+            'label' => trim((string) ($payload['label'] ?? '')),
+            'description' => trim((string) ($payload['description'] ?? '')),
+            'lock_version' => max(1, (int) ($payload['lock_version'] ?? 1)),
+        ];
+    }
+
+    /**
+     * @param array<string, mixed> $payload
+     * @return array<string, mixed>
+     */
+    private function sanitizeItemSnapshot(array $payload): array
+    {
+        return [
+            'item_key' => trim(strtolower((string) ($payload['item_key'] ?? ''))),
+            'label' => trim((string) ($payload['label'] ?? '')),
+            'description' => trim((string) ($payload['description'] ?? '')),
+            'is_enabled' => !empty($payload['is_enabled']),
+            'valid_from' => $this->window->normalize(isset($payload['valid_from']) ? (string) $payload['valid_from'] : null),
+            'valid_to' => $this->window->normalize(isset($payload['valid_to']) ? (string) $payload['valid_to'] : null),
+            'sort_order' => max(0, (int) ($payload['sort_order'] ?? 100)),
+            'metadata_json' => is_array($payload['metadata_json'] ?? null) ? (array) $payload['metadata_json'] : [],
+            'lock_version' => max(1, (int) ($payload['lock_version'] ?? 1)),
+        ];
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "test_section": {
+        "title": "DevTools — i18n Test",
+        "description": "Testing the i18n system from within the DevTools module lang file."
+    },
+    "module_string": "This string was loaded from the DevTools module lang/ directory.",
+    "locale_switch": {
+        "label": "Active locale",
+        "change_to": "Switch to"
+    },
+    "rbac_runtime": {
+        "admin_role_missing": "Le rôle admin est introuvable dans le tenant actuel."
+    }
+}

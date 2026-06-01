@@ -1,0 +1,97 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * Catalyst PHP Framework
+ * PHP Version 8.4 (Required)
+ *
+ * @package   Catalyst
+ * @subpackage Helpers\Validation\Rules
+ * @author    Walter Nuñez (arcanisgk) <icarosnet@gmail.com>
+ * @copyright 2024 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license   Proprietary - https://catalyst.lh-2.net
+ */
+
+namespace Catalyst\Helpers\Validation\Rules;
+
+/**
+ * ComparisonRules — validation rules comparing fields or value sets.
+ *
+ * Rules: same, different, confirmed, in, notIn
+ *
+ * @package Catalyst\Helpers\Validation\Rules
+ */
+class ComparisonRules
+{
+    /**
+     * The field must match another field in the data set.
+     * Usage: same:other_field
+     *
+     * @param mixed                 $value  Current field value
+     * @param string[]              $params [otherField]
+     * @param array<string, mixed>  $data   Full data set
+     * @return bool
+     */
+    public static function same(mixed $value, array $params, array $data): bool
+    {
+        $otherField = $params[0] ?? '';
+        $otherValue = $data[$otherField] ?? null;
+        return $value === $otherValue;
+    }
+
+    /**
+     * The field must differ from another field in the data set.
+     * Usage: different:other_field
+     *
+     * @param mixed                 $value  Current field value
+     * @param string[]              $params [otherField]
+     * @param array<string, mixed>  $data   Full data set
+     * @return bool
+     */
+    public static function different(mixed $value, array $params, array $data): bool
+    {
+        $otherField = $params[0] ?? '';
+        $otherValue = $data[$otherField] ?? null;
+        return $value !== $otherValue;
+    }
+
+    /**
+     * The field must match its confirmation counterpart ({field}_confirmation).
+     * Usage: confirmed  (on field 'password' → checks 'password_confirmation')
+     *
+     * @param mixed $value        Current field value
+     * @param mixed $confirmValue Value of the confirmation field
+     * @return bool
+     */
+    public static function confirmed(mixed $value, mixed $confirmValue): bool
+    {
+        return $value === $confirmValue;
+    }
+
+    /**
+     * The field must be one of the listed values.
+     * Usage: in:admin,user,moderator
+     *
+     * @param mixed    $value
+     * @param string[] $params Allowed values
+     * @return bool
+     */
+    public static function in(mixed $value, array $params): bool
+    {
+        return in_array((string) $value, $params, strict: true);
+    }
+
+    /**
+     * The field must NOT be one of the listed values.
+     * Usage: not_in:banned,suspended
+     *
+     * @param mixed    $value
+     * @param string[] $params Disallowed values
+     * @return bool
+     */
+    public static function notIn(mixed $value, array $params): bool
+    {
+        return !in_array((string) $value, $params, strict: true);
+    }
+}

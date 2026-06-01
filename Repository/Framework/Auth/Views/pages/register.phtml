@@ -1,0 +1,118 @@
+<div class="card auth-card auth-card--md">
+    <div class="card-body">
+        <div class="auth-card__header auth-card__header--center">
+            <span class="auth-card__eyebrow">Account provisioning</span>
+            <h1 class="auth-card__title">{{ title }}</h1>
+            <p class="auth-card__subtitle">{{ t:auth.register.subtitle }}</p>
+        </div>
+
+        <form data-catalyst="form" method="POST" action="/register" novalidate data-password-policy="{{ password_policy_json }}">
+            {{{ csrf_token_field }}}
+
+            <div class="mb-3">
+                <label for="name" class="form-label">
+                    {{ t:auth.register.name }}
+                </label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    class="form-control{{ name_invalid_class }}"
+                    value="{{ name_value }}"
+                    required
+                    autocomplete="name"
+                    autofocus
+                >
+                <div class="invalid-feedback">{{ name_error }}</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">
+                    {{ t:auth.register.email }}
+                </label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    class="form-control{{ email_invalid_class }}"
+                    value="{{ email_value }}"
+                    required
+                    autocomplete="email"
+                >
+                <div class="invalid-feedback">{{ email_error }}</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">
+                    {{ t:auth.register.password }}
+                </label>
+                <div class="input-group has-validation">
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        class="form-control{{ password_invalid_class }}"
+                        required
+                        autocomplete="new-password"
+                        minlength="{{ password_policy.minLength }}"
+                        data-strength
+                        data-password-policy="{{ password_policy_json }}"
+                    >
+                    <button type="button" class="btn btn-outline-secondary" data-password-toggle tabindex="-1" aria-label="{{ t:auth.common.show_password }}">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                    <div class="invalid-feedback">{{ password_error }}</div>
+                </div>
+                <div class="password-strength d-none mt-1">
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar"></div>
+                    </div>
+                    <small class="password-strength-label text-muted"></small>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="password_confirm" class="form-label">
+                    {{ t:auth.register.password_confirm }}
+                </label>
+                <div class="input-group has-validation">
+                    <input
+                        type="password"
+                        id="password_confirm"
+                        name="password_confirm"
+                        class="form-control{{ password_confirm_invalid_class }}"
+                        required
+                        autocomplete="new-password"
+                    >
+                    <button type="button" class="btn btn-outline-secondary" data-password-toggle tabindex="-1" aria-label="{{ t:auth.common.show_password }}">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                    <div class="invalid-feedback">{{ password_confirm_error }}</div>
+                </div>
+            </div>
+
+            <button type="submit" data-event="register" class="btn btn-primary w-100">
+                {{ t:auth.register.submit }}
+            </button>
+        </form>
+
+        {{#if has_social_login}}
+        {{> "../partials/_auth-social" }}
+        {{/if}}
+
+        <div class="auth-link-row auth-link-row--stack mb-0">
+            <p class="mb-0">
+                {{ t:auth.register.has_account }}
+                <a href="/login" class="text-decoration-none">
+                    {{ t:auth.register.sign_in }}
+                </a>
+            </p>
+            <p class="mb-0">
+                {{ t:auth.register.recovery_help }}
+                <a href="/account-recovery/start" class="text-decoration-none">
+                    {{ t:auth.register.recovery_help_link }}
+                </a>
+            </p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+<div class="admin-surface admin-surface-shell rbac-page">
+    {{> "components._admin-page-header" }}
+
+    {{> "components._record-claim-banner" }}
+
+    <section class="rbac-section card">
+        <div class="card-header">
+            <div class="rbac-section__head">
+                <div>
+                    <h2 class="rbac-section__title mb-1">{{ t:roles.permissions.assignment_title }}</h2>
+                    <p class="rbac-section__subtitle mb-0">{{ t:roles.permissions.assignment_description }}</p>
+                </div>
+                <span class="rbac-chip">{{ availablePermissionCountLabel }}</span>
+            </div>
+        </div>
+        <div class="card-body">
+            {{#unless permissionRows}}
+                <div class="rbac-empty-state">
+                    <span class="rbac-empty-state__icon"><i class="fa-solid fa-key"></i></span>
+                    <h2 class="h5 mb-2">{{ t:roles.permissions.none_defined }}</h2>
+                    <p class="text-muted mb-3">{{ t:roles.permissions.create_first }}</p>
+                    <button type="button" class="btn btn-sm btn-primary" data-catalyst-href="/users/permissions/create">
+                        <i class="fa-solid fa-plus me-1"></i> {{ t:roles.permissions.new }}
+                    </button>
+                </div>
+            {{/unless}}
+            {{#if permissionRows}}
+                <form data-catalyst="form" method="POST" action="{{ permissionsAction }}">
+                    {{{ csrfField }}}
+                    {{#if claimToken}}
+                        <input type="hidden" name="claim_token" value="{{ claimToken }}">
+                    {{/if}}
+
+                    <div class="rbac-permission-grid mb-4">
+                        {{#each permissionRows}}
+                            <label class="rbac-permission-card" for="{{ input_id }}">
+                                <span class="form-check">
+                                    <input type="checkbox"
+                                           class="form-check-input"
+                                           id="{{ input_id }}"
+                                           name="permissions[]"
+                                           value="{{ value }}"
+                                           {{#if checked}}checked{{/if}}>
+                                </span>
+                                <span class="rbac-permission-card__body">
+                                    <span class="rbac-permission-card__name">{{ display_name }}</span>
+                                    <code class="rbac-permission-card__slug">{{ slug }}</code>
+                                </span>
+                            </label>
+                        {{/each}}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">{{ t:roles.permissions.save }}</button>
+                </form>
+            {{/if}}
+        </div>
+    </section>
+</div>

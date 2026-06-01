@@ -1,0 +1,77 @@
+<div class="col-12">
+    <div class="section-card">
+        <div class="card-header"><i class="fa-solid fa-layer-group me-2"></i>{{ t:devtools.orm_demo.title }}</div>
+        <div class="card-body">
+            <div class="row g-4">
+
+                <div class="col-12 col-lg-6">
+                    <p class="text-muted small fw-semibold mb-2">{{ t:devtools.orm_demo.stage_9.title }}</p>
+                    <p class="text-muted small mb-3">
+                        {{ t:devtools.orm_demo.stage_9.exercises }} <span class="code-badge">Model</span> ·
+                        <span class="code-badge">Collection</span> ·
+                        <span class="code-badge">Pagination</span> ·
+                        {{ t:devtools.orm_demo.stage_9.dirty_tracking }} · <span class="code-badge">$casts</span> ·
+                        <span class="code-badge">$hidden</span> ·
+                        <span class="code-badge">ModelNotFoundException</span>
+                    </p>
+                    <div class="btn-group-wrap mb-3">
+                        <button class="btn btn-primary btn-sm" data-action="orm-status">
+                            <i class="fa-solid fa-circle-info me-1"></i>{{ t:devtools.orm_demo.actions.status_paginate }}
+                        </button>
+                    </div>
+                    <form id="orm-mutation-form" method="POST" action="/test-features/orm/create" data-catalyst="form" class="btn-group-wrap mb-3">
+                        <button class="btn btn-success btn-sm" type="submit">
+                            <i class="fa-solid fa-plus me-1"></i>{{ t:devtools.orm_demo.actions.create }}
+                        </button>
+                        <button class="btn btn-warning btn-sm text-dark" type="submit" formaction="/test-features/orm/update" formmethod="post">
+                            <i class="fa-solid fa-pen me-1"></i>{{ t:devtools.orm_demo.actions.update_latest }}
+                        </button>
+                        <button class="btn btn-danger btn-sm" type="submit" formaction="/test-features/orm/delete-latest" formmethod="post">
+                            <i class="fa-solid fa-trash-can me-1"></i>{{ t:devtools.orm_demo.actions.delete_latest }}
+                        </button>
+                    </form>
+                    <div class="btn-group-wrap mb-3">
+                        <button class="btn btn-outline-danger btn-sm" data-action="orm-find-or-fail">
+                            <i class="fa-solid fa-magnifying-glass me-1"></i>{{ t:devtools.orm_demo.actions.find_or_fail }}
+                        </button>
+                        <button class="btn btn-outline-info btn-sm" data-action="orm-user-demo">
+                            <i class="fa-solid fa-users me-1"></i>{{ t:devtools.orm_demo.actions.user_demo }}
+                        </button>
+                    </div>
+
+                    <div id="orm-result" class="tf-result">
+                        <hr class="my-2">
+                        <pre id="orm-result-pre" class="code-pre"></pre>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                    <p class="text-muted small fw-semibold mb-2">{{ t:devtools.orm_demo.stage_14.title }}</p>
+                    <p class="text-muted small mb-2">
+                        {{ t:devtools.orm_demo.stage_14.description_prefix }} <span class="code-badge">app/Framework/Database/Relations/</span>.
+                        {{ t:devtools.orm_demo.stage_14.description_suffix }} <span class="code-badge">__get()</span> · {{ t:devtools.orm_demo.stage_14.eager_load }} <span class="code-badge">with()</span>.
+                    </p>
+                    <table class="table table-sm sys-table mb-3">
+                        <thead><tr><th>{{ t:devtools.orm_demo.columns.class }}</th><th>{{ t:devtools.orm_demo.columns.return_type }}</th><th>{{ t:devtools.orm_demo.columns.fk_location }}</th></tr></thead>
+                        <tbody>
+                            <tr><td><span class="code-badge">HasOne</span></td><td><span class="code-badge">?Model</span></td><td>{{ t:devtools.orm_demo.rows.related_table }}</td></tr>
+                            <tr><td><span class="code-badge">HasMany</span></td><td><span class="code-badge">Collection&lt;Model&gt;</span></td><td>{{ t:devtools.orm_demo.rows.related_table }}</td></tr>
+                            <tr><td><span class="code-badge">BelongsTo</span></td><td><span class="code-badge">?Model</span></td><td>{{ t:devtools.orm_demo.rows.parent_table }}</td></tr>
+                            <tr><td><span class="code-badge">BelongsToMany</span></td><td><span class="code-badge">Collection&lt;Model&gt;</span></td><td>{{ t:devtools.orm_demo.rows.pivot_table }}</td></tr>
+                        </tbody>
+                    </table>
+                    <p class="text-muted small mb-1 fw-semibold">{{ t:devtools.orm_demo.usage }}</p>
+                    <pre class="code-pre mb-0">// Lazy load (N+1 — use only when loading one parent)
+$user->posts          // Collection&lt;Post&gt;
+$post->author         // ?User
+
+// Eager load (batch — prevents N+1)
+User::query()
+    ->with('posts', 'roles')
+    ->paginate(20);</pre>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

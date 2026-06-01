@@ -1,0 +1,38 @@
+<div class="card settings-config-card settings-config-card--dkim h-100">
+    <div class="card-header settings-config-card__header">
+        <div class="settings-config-card__title">
+            <span class="settings-config-card__icon"><i class="fa-solid fa-key"></i></span>
+            <h6 class="mb-0 fw-semibold">{{ t:settings.dkim.card_title }}</h6>
+        </div>
+    </div>
+    <div class="card-body settings-dkim-card__body">
+        <p class="text-muted small mb-2">{{ t:settings.dkim.card_description }} <code>boot-core/dkim/</code>.</p>
+        <form id="dkim-form" method="POST" action="/configuration/environment-setup/dkim/generate" novalidate data-catalyst="form">
+            {{{ csrfField }}}
+            <div class="row g-2">
+                <div class="col-md-6 col-lg-12">
+                    <label class="form-label small fw-semibold mb-1">{{ t:settings.dkim.labels.domain }}</label>
+                    <input type="text" name="dkim_domain" class="form-control form-control-sm" placeholder="{{ t:settings.dkim.placeholders.domain }}">
+                    <div id="a-dkim-domain" class="invalid-feedback"></div>
+                </div>
+                <div class="col-md-3 col-lg-6">
+                    <label class="form-label small fw-semibold mb-1">{{ t:settings.dkim.labels.selector }}</label>
+                    <input type="text" name="dkim_selector" class="form-control form-control-sm" value="{{ t:settings.dkim.placeholders.selector }}">
+                    <div id="a-dkim-selector" class="invalid-feedback"></div>
+                </div>
+                <div class="col-md-3 col-lg-6">
+                    <label class="form-label small fw-semibold mb-1">{{ t:settings.dkim.labels.connection }}</label>
+                    <input type="text" name="dkim_connection" class="form-control form-control-sm" value="{{ t:settings.dkim.placeholders.connection }}">
+                </div>
+            </div>
+            <div id="dkim-result" class="mt-2 d-none">
+                <label class="form-label small fw-semibold mb-1">{{ t:settings.dkim.labels.dns_record }}</label>
+                <textarea id="dkim-dns-record" class="form-control form-control-sm font-monospace" rows="3" readonly></textarea>
+                <div class="form-text">{{ t:settings.dkim.record_help }}</div>
+            </div>
+            <button type="submit" data-event="generate" class="btn btn-primary btn-sm mt-2">
+                <i class="fa-solid fa-key me-1"></i>{{ t:settings.dkim.actions.generate }}
+            </button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,106 @@
+{
+    "settings": {
+        "title": "Framework Settings",
+        "not_configured": "Framework is not fully configured. Fill in and save the required sections below."
+    },
+    "messages": {
+        "saved": "Settings saved successfully.",
+        "dkim_generated": "DKIM keys generated. Copy the DNS record below.",
+        "save_error": "Could not save settings. Please check the form.",
+        "ftp_pretest_success": "Remote upload pretest completed successfully.",
+        "ftp_pretest_success_cleanup_warning": "Remote upload succeeded, but the cleanup step needs manual review."
+    },
+    "dkim": {
+        "description": "Generate an RSA 2048-bit key pair for DKIM email authentication. After generation, add the DNS record to your domain."
+    },
+    "sections": {
+        "app": "Application",
+        "db": "Database",
+        "mail": "Mail / SMTP",
+        "ftp": "FTP",
+        "session": "Sessions",
+        "cache": "Cache & Routes",
+        "logging": "Logging",
+        "security": "Security",
+        "websocket": "WebSocket",
+        "devtools": "Developer Tools",
+        "dkim": "DKIM Generator"
+    },
+    "completion": {
+        "title": "Finalize Configuration",
+        "description": "When all sections above are correctly saved and the database is reachable, mark the framework as configured. This step is only allowed after an active administrator account already exists.",
+        "admin_setup_title": "Create Administrator Account",
+        "admin_setup_description": "Before finalizing the setup, create the initial active administrator account. This step provisions the account only; it does not mark the framework as configured.",
+        "admin_name": "Administrator Name",
+        "admin_email": "Administrator Email",
+        "admin_password": "Password (min 8 characters)",
+        "admin_password_confirm": "Confirm Password",
+        "admin_hint": "Choose your own credentials. They are stored hashed (bcrypt) and never printed in logs.",
+        "admin_create_button": "Create Administrator",
+        "admin_create_success": "Administrator account created. You can finalize the setup now.",
+        "admin_exists_description": "An active administrator account already exists. You can finalize the setup now.",
+        "admin_exists_success": "Administrator account already exists. You can finalize the setup now.",
+        "finalize_requires_admin": "Create an active administrator account before finalizing the framework configuration.",
+        "finalize_button": "Finalize Configuration",
+        "success": "Setup completed. Redirecting to login...",
+        "reset_title": "Reset Configuration Wizard",
+        "reset_description": "Re-opens the finalization wizard. Existing config values are preserved — only the 'configured' flag is cleared. Use this if you need to re-run setup or create a new administrator account.",
+        "reset_button": "Reset Configuration",
+        "reset_success": "Configuration reset. Redirecting to setup...",
+        "errors": {
+            "already_configured": "Framework is already configured.",
+            "not_yet_configured": "Framework is not configured yet.",
+            "app_json_missing": "app.json is missing — save the Application section first.",
+            "db_json_missing": "db.json is missing — save the Database section first.",
+            "db_incomplete": "Database configuration is incomplete. Fill at least host, database, username.",
+            "db_unreachable": "Cannot connect to the database with the saved credentials.",
+            "users_table_missing": "The 'users' table does not exist in the configured database. Run the migration scripts first.",
+            "auth_tables_missing": "The setup-required authentication tables are missing in the configured database.",
+            "password_mismatch": "Passwords do not match.",
+            "admin_create_failed": "Could not create the administrator account.",
+            "admin_required": "Finalize is blocked until an active administrator account exists.",
+            "admin_email_exists": "A user with this email address already exists."
+        }
+    },
+    "overview": {
+        "eyebrow": "Console de configuration",
+        "description": "Surface compacte pour le bootstrap du framework, les services runtime et la préparation opérationnelle.",
+        "environment": "Environnement",
+        "configured": "Configuré",
+        "admin": "Admin",
+        "entry": "Entrée",
+        "debug": "Debug",
+        "cache": "Cache",
+        "ready": "Prêt",
+        "pending": "En attente",
+        "locked": "Verrouillé",
+        "enabled": "Actif",
+        "disabled": "Inactif"
+    },
+    "groups": {
+        "foundation": {
+            "eyebrow": "Cœur",
+            "title": "Fondation",
+            "description": "Identité applicative, base de données et courrier sortant."
+        },
+        "runtime": {
+            "eyebrow": "Runtime",
+            "title": "Session, cache et realtime",
+            "description": "Persistance des requêtes, activation du cache et valeurs WebSocket."
+        },
+        "security": {
+            "eyebrow": "Contrôle",
+            "title": "Sécurité et limites d’accès",
+            "description": "Renforcement de l’authentification, CORS et génération DKIM."
+        },
+        "operations": {
+            "eyebrow": "Ops",
+            "title": "Opérations et diagnostic",
+            "description": "Identifiants de déploiement, journaux et miroirs de développement."
+        }
+    },
+    "hints": {
+        "log_max_file_size_mb": "Lorsqu’un fichier de journal dépasse cette taille, il est automatiquement pivoté. Garde-fou plateforme : 1-50 Mo.",
+        "log_max_rotated_files": "Nombre maximal de fichiers historiques conservés par journal. Garde-fou plateforme : 1-10 fichiers."
+    }
+}

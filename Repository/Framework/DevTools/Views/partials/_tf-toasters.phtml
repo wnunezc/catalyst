@@ -1,0 +1,22 @@
+<div class="col-12 col-lg-6">
+    <div class="section-card">
+        <div class="card-header"><i class="fa-solid fa-bell me-2"></i>{{ t:devtools.toaster_demo.title }}</div>
+        <div class="card-body">
+            <p class="text-muted small mb-2">{{ t:devtools.toaster_demo.ajax_description }}</p>
+            <div class="btn-group-wrap mb-3">
+                <button class="btn btn-success btn-sm" data-action="api-call" data-url="/test-features/api/toaster-success">{{ t:devtools.toaster_demo.actions.success }}</button>
+                <button class="btn btn-danger btn-sm" data-action="api-call" data-url="/test-features/api/toaster-error">{{ t:devtools.toaster_demo.actions.error }}</button>
+                <button class="btn btn-warning btn-sm text-dark" data-action="api-call" data-url="/test-features/api/toaster-warning">{{ t:devtools.toaster_demo.actions.warning }}</button>
+                <button class="btn btn-info btn-sm text-dark" data-action="api-call" data-url="/test-features/api/toaster-info">{{ t:devtools.toaster_demo.actions.info }}</button>
+                <button class="btn btn-secondary btn-sm" data-action="api-call" data-url="/test-features/api/multiple-toasters">{{ t:devtools.toaster_demo.actions.multiple }}</button>
+            </div>
+            <p class="text-muted small mb-2">{{ t:devtools.toaster_demo.direct_js }}</p>
+            <div class="btn-group-wrap">
+                <button class="btn btn-outline-success btn-sm" data-action="toast" data-type="success" data-message="{{ t:devtools.toaster_demo.messages.success }}">{{ t:devtools.toaster_demo.actions.js_success }}</button>
+                <button class="btn btn-outline-danger btn-sm" data-action="toast" data-type="error" data-message="{{ t:devtools.toaster_demo.messages.error }}">{{ t:devtools.toaster_demo.actions.js_error }}</button>
+                <button class="btn btn-outline-warning btn-sm" data-action="toast" data-type="warning" data-message="{{ t:devtools.toaster_demo.messages.warning }}">{{ t:devtools.toaster_demo.actions.js_warning }}</button>
+                <button class="btn btn-outline-info btn-sm" data-action="toast" data-type="info" data-message="{{ t:devtools.toaster_demo.messages.info }}">{{ t:devtools.toaster_demo.actions.js_info }}</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,815 @@
+{
+    "module": {
+        "description": "Developer tooling, UML and runtime smoke surfaces.",
+        "permission_label": "Access DevTools",
+        "permission_description": "Access development-only runtime tooling.",
+        "devtools_label": "DevTools",
+        "test_features_label": "Test Features",
+        "test_features_hint": "Primary runtime harness",
+        "ui_showcase_label": "UI Showcase",
+        "ui_showcase_hint": "Visual catalog and components",
+        "uml_label": "UML / Architecture",
+        "uml_hint": "Technical model and diagrams",
+        "layout_smoke_label": "Layout Smoke",
+        "layout_smoke_hint": "Minimal shell smoke test",
+        "architecture_breadcrumb": "Architecture"
+    },
+    "test_section": {
+        "title": "DevTools — i18n Test",
+        "description": "Testing the i18n system from within the DevTools module lang file."
+    },
+    "module_string": "This string was loaded from the DevTools module lang/ directory.",
+    "locale_switch": {
+        "label": "Active locale",
+        "change_to": "Switch to"
+    },
+    "rbac_test": {
+        "title": "RBAC - Stage 6 · Authorization System",
+        "current_status": "Current User RBAC Status",
+        "inspect_status": "Inspect RBAC Status",
+        "raw_json": "Raw JSON",
+        "admin_links": "Admin module links (require admin role):",
+        "promote_warning": "Dev only - promote current user:",
+        "make_admin": "Make Me Admin",
+        "architecture_overview": "Architecture Overview",
+        "table": {
+            "component": "Component",
+            "class": "Class",
+            "rows": {
+                "role_guard": "Role guard",
+                "db_repository": "DB repository",
+                "gate": "Gate (closures)",
+                "policy": "Policy (classes)",
+                "controller_api": "Controller API",
+                "exception": "403 exception"
+            }
+        }
+    },
+    "harness": {
+        "title": "Catalyst — DevTools",
+        "page_title": "DevTools",
+        "eyebrow": "Runtime harness",
+        "description": "Technical surface to validate flashes, toasts, modals, forms, endpoints and operational diagnostics without leaving the admin visual language.",
+        "boundary_title": "Canonical boundary",
+        "boundary_prefix": "The runtime governance of feature flags, plugins, deployment and tenancy lives in",
+        "boundary_suffix": "DevTools keeps probes, smoke endpoints and harness diagnostics.",
+        "actions": {
+            "ui_showcase": "UI Showcase",
+            "module_designer": "Module Designer",
+            "operations": "Operations",
+            "roles": "Roles",
+            "permissions": "Permissions",
+            "clear_flash": "Clear Flash"
+        },
+        "chips": {
+            "dev_only": "Dev only",
+            "runtime_probes": "Runtime probes",
+            "no_product_content": "No product content",
+            "operational_diagnostics": "Operational diagnostics"
+        }
+    },
+    "route_test": {
+        "title": "Catalyst Framework",
+        "version_line": "Version %s — PHP %s",
+        "router_ok": "Router is working correctly!",
+        "footer": "Framework welcome page — shown when no project_entry redirect is active."
+    },
+    "layout_smoke": {
+        "title": "Catalyst — Layout Smoke",
+        "eyebrow": "Layout smoke",
+        "description": "Short surface to validate that the layout, the e() helper and view wrapping still work inside the current admin chrome.",
+        "chips": {
+            "layout_wrapping": "Layout wrapping",
+            "escape_helper": "Escape helper",
+            "admin_shell": "Admin shell"
+        },
+        "contract": {
+            "title": "Layout Contract",
+            "description": "Verify that the view remains a fragment and the admin layout provides the shared chrome.",
+            "kicker": "Smoke",
+            "body": "This content was rendered as a fragment and then wrapped by a framework layout via View::render(...). The <html>, <head> and asset tags come from the layout, not from this view."
+        },
+        "table": {
+            "input": "Input",
+            "output": "Output with e()",
+            "expected": "Expected result"
+        },
+        "expected": {
+            "escaped": "It must appear escaped, not execute.",
+            "entities": "It must preserve safe HTML entities.",
+            "controller_title_input": "Controller title",
+            "controller_title": "It must reflect the variable sent by the controller."
+        },
+        "manual_check": {
+            "title": "Manual verification",
+            "description": "Inspector → Elements → review the output cell and confirm the payload renders as escaped text."
+        },
+        "checks": {
+            "title": "Checks",
+            "description": "What this screen actually validates.",
+            "items": {
+                "chrome": "The admin chrome loads without breaking a minimal view.",
+                "escape": "e() still escapes HTML payload in real rendering.",
+                "no_inline": "The view does not depend on full markup or inline assets."
+            }
+        }
+    },
+    "module_designer": {
+        "title": "Module Designer",
+        "page_title": "Module Designer",
+        "eyebrow": "Diagnostic surface",
+        "description": "Technical module declaration over the real framework: scaffold preview, manifest consumed by ModuleRegistry and base guard coherent with the selected surface.",
+        "messages": {
+            "preview_generated": "Scaffold preview generated.",
+            "module_created": "Module %s/%s created with registry manifest and coherent guard scaffold."
+        },
+        "actions": {
+            "roles": "Roles"
+        },
+        "chips": {
+            "registry_aware": "Registry aware",
+            "no_parallel_cli": "No parallel CLI",
+            "guard_coherent": "Guard coherent",
+            "manifest_optional": "Manifest optional per module"
+        },
+        "blueprint": {
+            "title": "Module Blueprint",
+            "description": "Preview and real generation using the same engine as make:module.",
+            "kicker": "Diagnostics"
+        },
+        "form": {
+            "labels": {
+                "space": "Repository space",
+                "module": "Module name",
+                "description": "Description",
+                "surface": "Surface",
+                "permission_slug": "Permission slug",
+                "feature_flags": "Feature flags",
+                "settings": "Settings sections"
+            },
+            "placeholders": {
+                "module": "Catalog",
+                "description": "Short registry-facing description",
+                "permission_slug": "manage-catalog",
+                "feature_flags": "catalog_enabled, catalog_api",
+                "settings": "catalog, catalog-sync"
+            },
+            "help": {
+                "settings": "Use comma or newline. The manifest is generated as the module metadata source."
+            },
+            "options": {
+                "repository_app": "App",
+                "repository_framework": "Framework",
+                "surface_none": "None",
+                "surface_public": "Public",
+                "surface_workspace": "Workspace",
+                "surface_administration": "Administration",
+                "surface_devtools": "DevTools"
+            },
+            "actions": {
+                "preview": "Preview scaffold",
+                "generate": "Generate module"
+            }
+        },
+        "preview": {
+            "title": "Preview Summary",
+            "description": "Route, guard, layout and files that will be created if you confirm.",
+            "kicker": "Dry run",
+            "metrics": {
+                "namespace": "Namespace",
+                "route": "Route",
+                "layout": "Layout",
+                "target": "Target"
+            },
+            "surface": "Surface",
+            "setting": "Setting",
+            "flag": "Flag",
+            "generated_files": "Generated files",
+            "manifest": "Manifest preview"
+        },
+        "lint": {
+            "title": "Structural Lint",
+            "coherent": "Coherent",
+            "issues_detected": "Issues detected",
+            "issue_count_suffix": "issue(s)",
+            "ok": "OK",
+            "issues": "ISSUES",
+            "checked": "checked",
+            "issue": "issue",
+            "check_names": {
+                "module_registration": "Module registration",
+                "plugin_manifests": "Plugin manifests",
+                "registry_route_drift": "Registry route drift"
+            },
+            "issue_messages": {
+                "module_owns_route_not_covered": "Module \":module\" owns route \":route\" but it is not covered by declared exact routes or prefixes."
+            }
+        },
+        "registered_modules": {
+            "title": "Registered Modules",
+            "columns": {
+                "module": "Module",
+                "scope": "Scope",
+                "routes": "Routes",
+                "manifest": "Manifest"
+            },
+            "valid": "valid",
+            "invalid": "invalid",
+            "none": "none"
+        },
+        "cli": {
+            "title": "CLI Surface"
+        }
+    },
+    "form_events": {
+        "title": "Form Events — HandlesFormEvents + FormHandler",
+        "description": "Forms marked with data-catalyst=\"form\" are intercepted automatically by FormHandler. Each submit button maps its data-event value to an on{Event}() method on the PHP controller through the HandlesFormEvents trait. CSRF is injected automatically by the fetch interceptor.",
+        "labels": {
+            "email": "Email"
+        },
+        "placeholders": {
+            "name": "Enter name",
+            "email": "Enter email"
+        },
+        "actions": {
+            "force_errors": "Force Errors"
+        },
+        "mapping": {
+            "title": "Event → PHP method mapping:",
+            "php_method": "PHP method",
+            "behavior": "Behavior",
+            "rows": {
+                "save": "Validates fields; success toast or field errors",
+                "validate": "Always returns field-level errors (demo)",
+                "refresh": "Success + withRefresh(1000) — page reloads",
+                "redirect": "Success + withRedirect('/test-features')"
+            }
+        },
+        "messages": {
+            "saved_toast": "Saved: %s <%s>",
+            "email_already_registered": "This email is already registered.",
+            "forced_validation_errors": "Validation demo — forced errors.",
+            "refreshing": "Operation successful — refreshing page.",
+            "page_refreshing": "Page will refresh in 1 second.",
+            "redirecting_soon": "Redirect triggered — navigating in 1 s."
+        }
+    },
+    "i18n_demo": {
+        "title": "i18n — Stage 2 · Translation System",
+        "active_locale": "Active locale",
+        "default_locale": "Default",
+        "raw_json": "Raw JSON",
+        "date_formatting": "Date formatting",
+        "select_options": "Select options",
+        "gender_options": "Gender options (default: :default)",
+        "status_options": "Status options (default: :default)",
+        "columns": {
+            "example": "Example",
+            "result": "Result",
+            "format": "Format",
+            "output": "Output"
+        },
+        "examples": {
+            "required": "Required validation",
+            "min_length": "Minimum length validation",
+            "save_success": "Save success message",
+            "module_catalog": "Module-owned catalog"
+        }
+    },
+    "js_enhancements": {
+        "title": "JS Enhancements — Stage 18",
+        "description": "Wait modal, button loading state and partial DOM injection from JSON.",
+        "wait_message": "Refreshing the Stage 18 partial block...",
+        "run_partial_refresh": "Run partial refresh",
+        "initial_block": "Initial partial block",
+        "pending_verification": "Stage 18 pending verification."
+    },
+    "database": {
+        "title": "Database — Stage 1",
+        "config_source": "Config source",
+        "first_boot_note": "missing JSON = first boot",
+        "reset_title": "DB reset",
+        "reset_description": "drop all tables and reseed demo data.",
+        "reset_warning": "Destructive. Development environment only.",
+        "reset_button": "Drop & reseed DB"
+    },
+    "auth_demo": {
+        "title": "Stage 5 — Auth",
+        "session_state": "Session state",
+        "authenticated": "Authenticated",
+        "not_authenticated": "Not authenticated",
+        "routes": "Auth routes",
+        "demo_credentials": "Demo credentials:",
+        "actions": {
+            "logout": "Log out",
+            "login": "Log in",
+            "register": "Register"
+        },
+        "columns": {
+            "email": "Email",
+            "role": "Role"
+        }
+    },
+    "endpoints_catalog": {
+        "title": "All Test Endpoints",
+        "expand": "Click to expand",
+        "description": "Complete list of all registered test routes. Open in new tab or inspect inline.",
+        "flash_types": "types: success|error|warning|info",
+        "same_types": "same types",
+        "clear": "clear",
+        "form_field": "form field",
+        "form_fields": "form fields",
+        "multipart_payload": "multipart/form-data",
+        "body_payload": "body",
+        "columns": {
+            "method": "Method",
+            "route": "Route",
+            "endpoint": "Endpoint"
+        },
+        "sections": {
+            "stage_02": "Stage 0.2",
+            "json_inspection": "JSON Response Inspection",
+            "infrastructure": "Infrastructure / Audit",
+            "flash_triggers": "Flash Triggers (GET, redirects back)",
+            "stage_1_database": "Stage 1 — Database",
+            "stage_2_i18n": "Stage 2 — i18n",
+            "stage_3_validator": "Stage 3 — Validator",
+            "stage_17_upload": "Stage 17 — File Upload",
+            "stage_4_mail": "Stage 4 — Mail",
+            "stage_6_rbac": "Stage 6 — RBAC",
+            "stage_9_14_orm": "Stage 9 + 14 — ORM",
+            "toaster_api": "Toaster API"
+        }
+    },
+    "json_inspection": {
+        "title": "JSON Response Inspection",
+        "description": "Open in a new tab to inspect the envelope structure.",
+        "columns": {
+            "method": "Method",
+            "endpoint": "Endpoint"
+        }
+    },
+    "infrastructure_runtime": {
+        "title": "Infrastructure / Audit",
+        "description": "Infrastructure audit endpoints. Open in a new tab or inspect inline.",
+        "columns": {
+            "test": "Test",
+            "endpoint": "Endpoint"
+        },
+        "items": {
+            "route_cache": "Route cache",
+            "logger_email": "Logger email"
+        }
+    },
+    "file_upload": {
+        "title": "File Upload — Stage 17",
+        "description": "AJAX upload demo with Request::file(), UploadedFile, real MIME detection via finfo_file(), and UUID storage under",
+        "attachment": "Attachment",
+        "allowed": "Allowed: JPG, JPEG, PNG, PDF · Max 2 MB.",
+        "validation_rules": "Validation rules",
+        "endpoint": "Endpoint",
+        "success_payload": "Success payload",
+        "actions": {
+            "upload": "Upload file",
+            "clear": "Clear"
+        }
+    },
+    "flash_demo": {
+        "title": "Flash Messages",
+        "regular": "Regular — shown once on next page load, then removed.",
+        "persistent": "Persistent — stays until dismissed with ×.",
+        "actions": {
+            "success": "Success",
+            "error": "Error",
+            "warning": "Warning",
+            "info": "Info",
+            "persistent_success": "Persistent Success",
+            "persistent_error": "Persistent Error",
+            "persistent_warning": "Persistent Warning",
+            "persistent_info": "Persistent Info"
+        }
+    },
+    "flash_runtime": {
+        "triggered": "Flash [%s] — triggered at %s",
+        "persistent": "Persistent [%s] — click × to dismiss — %s"
+    },
+    "mail_demo": {
+        "title": "Stage 4 — Mail System",
+        "description": "Send a test email via MailManager. Requires",
+        "description_suffix": "configured in boot-core/config/env/.env.",
+        "endpoint": "Endpoint",
+        "payload": "Body (form fields):",
+        "labels": {
+            "to": "To",
+            "subject": "Subject",
+            "body": "Body"
+        },
+        "placeholders": {
+            "to": "recipient@example.com"
+        },
+        "defaults": {
+            "subject": "Catalyst Mail Test",
+            "body_html": "<p>Hello from <strong>Catalyst Framework</strong>!</p>"
+        },
+        "actions": {
+            "send": "Send email"
+        }
+    },
+    "mail_runtime": {
+        "invalid_data": "Invalid mail data",
+        "send_returned_false": "Mail send returned false — check SMTP config.",
+        "sent_successfully": "Email sent successfully",
+        "sent_to": "Email sent to %s",
+        "error_prefix": "Mail error: "
+    },
+    "modal_demo": {
+        "title": "Modals",
+        "dialog_utilities": "Dialog utilities.",
+        "dynamic_loading": "Dynamic content loading.",
+        "json_trigger": "Modal triggered from JSON response.",
+        "titles": {
+            "sample_content": "Sample Content",
+            "sample_form": "Sample Form"
+        },
+        "actions": {
+            "confirm_dialog": "Confirm Dialog",
+            "alert_dialog": "Alert Dialog",
+            "load_sample": "Load Sample",
+            "load_form": "Load Form",
+            "api_modal_trigger": "API Modal Trigger"
+        }
+    },
+    "modal_runtime": {
+        "sample": {
+            "title": "Welcome to Catalyst Modals",
+            "description": "This content was loaded via AJAX into the modal body.",
+            "features_title": "Modal Features:"
+        },
+        "features": {
+            "dynamic_loading": "Modals support dynamic content loading",
+            "html_content": "You can load forms, data, or any HTML",
+            "events": "Events are dispatched for open, close and loaded"
+        },
+        "details": {
+            "sizes": "Sizes: small, medium, large, xl, fullscreen",
+            "backdrop": "Backdrop: true, false, or 'static'",
+            "keyboard": "Keyboard: close with ESC key",
+            "scrollable": "Scrollable content",
+            "centered": "Centered vertically"
+        },
+        "errors": {
+            "required_fields": "Name and email are required.",
+            "fill_required": "Please fill in all required fields."
+        },
+        "success": {
+            "submitted": "Form submitted successfully.",
+            "title": "Form Submitted",
+            "contact_toast": "Thank you, %s. We'll contact you at %s."
+        }
+    },
+    "system_info": {
+        "title": "System Info",
+        "constants": "Constant",
+        "value": "Value",
+        "flash_state": "Flash state",
+        "pending_messages": "Pending messages",
+        "has_success": "Has success",
+        "has_error": "Has error",
+        "has_warning": "Has warning",
+        "has_info": "Has info",
+        "has_persistent": "Has persistent"
+    },
+    "toaster_demo": {
+        "title": "Toasters",
+        "ajax_description": "AJAX — via fetch interceptor. Each call returns JSON with notification payload.",
+        "direct_js": "Direct JS calls (no server).",
+        "messages": {
+            "success": "Direct success message",
+            "error": "Direct error message",
+            "warning": "Direct warning message",
+            "info": "Direct info message"
+        },
+        "actions": {
+            "success": "Success",
+            "error": "Error",
+            "warning": "Warning",
+            "info": "Info",
+            "multiple": "Multiple (3)",
+            "js_success": "JS Success",
+            "js_error": "JS Error",
+            "js_warning": "JS Warning",
+            "js_info": "JS Info"
+        }
+    },
+    "toaster_runtime": {
+        "success": {
+            "title": "Success",
+            "message": "User created successfully."
+        },
+        "error": {
+            "title": "Error",
+            "response": "An error occurred while processing your request.",
+            "message": "Failed to process request. Please try again."
+        },
+        "warning": {
+            "title": "Warning",
+            "response": "Completed with warnings.",
+            "message": "Some items could not be processed."
+        },
+        "info": {
+            "title": "Information",
+            "response": "Information retrieved.",
+            "message": "Your session will expire in 5 minutes."
+        },
+        "multiple": {
+            "response": "Files uploaded.",
+            "uploaded": "File uploaded successfully.",
+            "upload_title": "Upload Complete",
+            "processing": "Processing started in background.",
+            "processing_title": "Processing",
+            "large_file": "Large file may take longer to process.",
+            "note_title": "Note"
+        },
+        "modal_triggered": "Modal triggered.",
+        "modal_title": "Sample Modal"
+    },
+    "validator_demo": {
+        "title": "Validator — Stage 3 · Validation System",
+        "validates": "Validates:",
+        "rule": "Rule:",
+        "preseeded": "Pre-seeded taken values:",
+        "labels": {
+            "email": "Email",
+            "age": "Age",
+            "password": "Password",
+            "password_confirmation": "Password confirmation",
+            "email_to_check": "Email to check"
+        },
+        "placeholders": {
+            "name": "e.g. Alice",
+            "email": "e.g. alice@example.com",
+            "age": "18 – 99",
+            "password": "min 8 chars",
+            "password_confirmation": "must match password",
+            "email_to_check": "e.g. taken@example.com"
+        },
+        "actions": {
+            "send_invalid": "Send invalid data",
+            "send_valid": "Send valid data",
+            "clear": "Clear",
+            "check_unique": "Check unique"
+        }
+    },
+    "validator_runtime": {
+        "validation_passed": "All fields passed validation.",
+        "unique_email": "Email is unique — not found in validator_demo_emails."
+    },
+    "upload_runtime": {
+        "store_failed": "Failed to store uploaded file.",
+        "uploaded": "File uploaded successfully."
+    },
+    "database_runtime": {
+        "reset_dev_only": "DB reset is only available in development mode.",
+        "reset_success": "Database reset successfully. All tables were recreated and seeded.",
+        "reset_failed_prefix": "DB reset failed: ",
+        "connection_ok": "Database connection OK",
+        "connection_failed": "Database connection failed",
+        "connection_error_prefix": "Database connection error: "
+    },
+    "infra_runtime": {
+        "escape_ok": "e() helper working — all inputs are HTML-encoded.",
+        "data_retrieved": "Data retrieved successfully.",
+        "email_logged": "Email event logged — check the file above.",
+        "cors_missing": "cors.json not found — using middleware defaults.",
+        "cors_loaded": "CORS config loaded from cors.json.",
+        "route_cache_failed": "cacheRoutes() returned false — Closure handlers cannot be cached.",
+        "route_cache_ok": "Route cache OK",
+        "route_cache_invalid": "Route cache invalid"
+    },
+    "i18n_runtime": {
+        "locale_summary": "i18n — locale: %s",
+        "invalid_locale": "Invalid locale. Supported: %s",
+        "switched": "Language switched to %s",
+        "language_toast": "Language: %s",
+        "locale_changed_title": "Locale changed"
+    },
+    "js_runtime": {
+        "partial_refreshed": "Partial content refreshed",
+        "server_time": "Server time:",
+        "source": "Source: JsonResponse::withHtml()",
+        "partial_section_refreshed": "Partial section refreshed.",
+        "partial_updated_toast": "Partial block updated via centralized HTTP response.",
+        "stage_title": "Stage 18"
+    },
+    "rbac_runtime": {
+        "not_authenticated": "Not authenticated — RBAC status unavailable.",
+        "status_ok": "RBAC status OK",
+        "dev_only": "This endpoint is only available in development mode.",
+        "login_required": "You must be logged in to use this endpoint.",
+        "promoted": "User promoted to admin. Refresh the page or re-login to apply.",
+        "promoted_toast": "Promoted to admin — re-login to apply session change.",
+        "admin_role_missing": "Admin role was not found in the current tenant."
+    },
+    "orm_runtime": {
+        "status_ok": "ORM status OK",
+        "error_prefix": "ORM error: ",
+        "record_created": "Record created.",
+        "create_first": "No orm-test-* record found. Run Create first.",
+        "record_updated": "Record updated.",
+        "no_record_to_delete": "No orm-* record found to delete.",
+        "record_deleted": "Record deleted.",
+        "expected_exception_missing": "Expected ModelNotFoundException but none was thrown.",
+        "exception_caught": "ModelNotFoundException correctly thrown and caught.",
+        "unexpected_error_prefix": "Unexpected error: ",
+        "no_users_found": "No users found — seed the DB first.",
+        "user_demo_ok": "User ORM demo OK"
+    },
+    "orm_demo": {
+        "title": "ORM — Stage 9 · Entities + Stage 14 · Relationships",
+        "stage_9": {
+            "title": "Stage 9 — Model operations (DemoEmail)",
+            "exercises": "Exercises:",
+            "dirty_tracking": "dirty tracking"
+        },
+        "stage_14": {
+            "title": "Stage 14 — Relationship architecture",
+            "description_prefix": "Four relation types implemented in",
+            "description_suffix": "Lazy-load via",
+            "eager_load": "Eager-load via"
+        },
+        "actions": {
+            "status_paginate": "Status / Paginate",
+            "create": "Create",
+            "update_latest": "Update Latest",
+            "delete_latest": "Delete Latest",
+            "find_or_fail": "findOrFail (404)",
+            "user_demo": "User Demo ($hidden / $casts)"
+        },
+        "columns": {
+            "class": "Class",
+            "return_type": "Return type",
+            "fk_location": "FK location"
+        },
+        "rows": {
+            "related_table": "related table",
+            "parent_table": "parent table",
+            "pivot_table": "pivot table"
+        },
+        "usage": "Usage:"
+    },
+    "ui_showcase": {
+        "title": "UI Showcase",
+        "eyebrow": "Compact admin catalog",
+        "description": "Reference surface for Catalyst administrative modules: compact shell, dense listings, utilitarian forms and honest states for real backoffice work.",
+        "actions": {
+            "roles": "Roles",
+            "permissions": "Permissions",
+            "devtools": "DevTools"
+        },
+        "chips": {
+            "crud_density": "CRUD density",
+            "filters_first": "Filters first",
+            "honest_placeholders": "Honest placeholders",
+            "responsive_shell": "Responsive shell"
+        },
+        "options": {
+            "framework": "Framework",
+            "repository_app": "Repository/App",
+            "devtools": "DevTools",
+            "active": "Active",
+            "pending": "Pending",
+            "disabled": "Disabled"
+        },
+        "toolbar": {
+            "title": "Toolbar & Filters",
+            "description": "Dense header for listings with search, filters and bulk actions.",
+            "kicker": "Pattern A",
+            "search_label": "Search modules",
+            "search_placeholder": "Search modules, roles, permissions...",
+            "module_context": "Module context",
+            "runtime_state": "Runtime state",
+            "advanced": "Advanced",
+            "scope_chip": "Scope: Framework",
+            "density_chip": "Density: Compact",
+            "active_chip": "Only active",
+            "clear_filters": "Clear filters"
+        },
+        "listing": {
+            "title": "Compact Listing",
+            "description": "Base example for administrative CRUD with clear actions and fast reading.",
+            "export": "Export",
+            "new_record": "New record",
+            "select_all": "Select all",
+            "enable": "Enable",
+            "disable": "Disable",
+            "archive": "Archive",
+            "select_roles": "Select Roles",
+            "select_permissions": "Select Permissions",
+            "select_ui_showcase": "Select UI Showcase",
+            "columns": {
+                "resource": "Resource",
+                "scope": "Scope",
+                "status": "Status",
+                "owner": "Owner",
+                "updated": "Updated",
+                "actions": "Actions"
+            }
+        },
+        "records": {
+            "roles": {
+                "title": "Roles",
+                "description": "RBAC management surface",
+                "owner": "Core team",
+                "updated": "Today",
+                "open": "Open",
+                "toggle_actions": "Toggle row actions",
+                "view": "View",
+                "permissions": "Permissions",
+                "account_pending": "Account link pending"
+            },
+            "permissions": {
+                "title": "Permissions",
+                "description": "Capability catalog and assignment",
+                "owner": "Security",
+                "updated": "Today",
+                "open": "Open"
+            },
+            "showcase": {
+                "title": "UI Showcase",
+                "description": "Visual reference for admin modules",
+                "status": "Internal",
+                "owner": "UX infra",
+                "updated": "Now",
+                "refresh": "Refresh"
+            }
+        },
+        "form": {
+            "title": "Dense Form",
+            "description": "Administrative editing with low friction and high readability.",
+            "kicker": "Pattern B",
+            "labels": {
+                "display_name": "Display name",
+                "context": "Context",
+                "density": "Density",
+                "notes": "Notes",
+                "release_posture": "Release posture"
+            },
+            "values": {
+                "display_name": "Catalyst Admin Shell",
+                "notes": "Compact visual baseline for Catalyst: useful shell, filters first, dense listings and honest placeholders."
+            },
+            "options": {
+                "relaxed": "Relaxed",
+                "compact": "Compact",
+                "ultra_compact": "Ultra compact",
+                "dev_only": "Dev only",
+                "stage_candidate": "Stage candidate"
+            },
+            "actions": {
+                "save": "Save pattern",
+                "reset": "Reset",
+                "preview": "Preview"
+            }
+        },
+        "states": {
+            "title": "States & Messaging",
+            "description": "Badges, alerts and empty states ready for real modules.",
+            "kicker": "Pattern C",
+            "badges": {
+                "published": "Published",
+                "pending": "Pending",
+                "blocked": "Blocked",
+                "experimental": "Experimental",
+                "dev_only": "Dev only"
+            },
+            "alerts": {
+                "saved": "Changes saved successfully.",
+                "pending_backend": "Account surface still pending backend.",
+                "no_fake_routes": "No fake routes: placeholders stay explicit."
+            },
+            "empty": {
+                "title": "Account area not implemented yet",
+                "description": "The shell already contemplates future access without inventing non-existent backend or breaking real navigation.",
+                "back": "Back to DevTools"
+            }
+        },
+        "rail": {
+            "index_title": "Catalog Index",
+            "showcase_sections": "Showcase sections",
+            "density_rules_title": "Density Rules",
+            "migration_checklist_title": "Migration Checklist",
+            "rules": {
+                "small_controls": "Favor btn-sm, form-control-sm and short labels.",
+                "filters_above": "Move filters above the table, not inside random cards.",
+                "badges": "Use badges for scope/state, not long prose in rows.",
+                "honest_placeholders": "Keep honest placeholders when backend is pending."
+            },
+            "checklist": {
+                "backoffice_ready": "Compact shell ready for backoffice.",
+                "auth_real": "Auth and logout remain in the real flow.",
+                "account_placeholder": "User account stays as an honest placeholder.",
+                "next_target": "Next target: migrate roles and permissions over these patterns."
+            }
+        }
+    }
+}

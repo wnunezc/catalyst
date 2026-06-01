@@ -1,0 +1,16 @@
+<div class="p-3">
+    <h5>{{ t:devtools.modal_runtime.sample.title }}</h5>
+    <p class="text-muted">{{ t:devtools.modal_runtime.sample.description }}</p>
+    <ul>
+        {{#each features}}
+        <li>{{ this }}</li>
+        {{/each}}
+    </ul>
+    <hr>
+    <p><strong>{{ t:devtools.modal_runtime.sample.features_title }}</strong></p>
+    <ul class="list-unstyled">
+        {{#each detail_items}}
+        <li><i class="fa-solid fa-check text-success me-2"></i>{{ this }}</li>
+        {{/each}}
+    </ul>
+</div>

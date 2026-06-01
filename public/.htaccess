@@ -1,0 +1,304 @@
+ #-------------------------------------------------------------------------------------------------
+ #
+ # Catalyst PHP Framework - Optimized Apache Configuration
+ #
+ # This configuration maintains all existing features
+ # with improvements in: security, performance, maintainability, and
+ # preparation for future features
+ #
+ #-------------------------------------------------------------------------------------------------
+ # 1. BASIC CONFIGURATION
+ #-------------------------------------------------------------------------------------------------
+
+ # Defines default page and prevents directory listing
+ DirectoryIndex index.php
+ Options -Indexes
+ IndexIgnore *
+
+ #-------------------------------------------------------------------------------------------------
+ # 2. SECURITY
+ #-------------------------------------------------------------------------------------------------
+
+ # Basic protection against common attacks
+ <IfModule mod_headers.c>
+     # XSS Protection
+     Header set X-XSS-Protection "1; mode=block"
+
+     # Avoid MIME-sniffing
+     Header set X-Content-Type-Options "nosniff"
+
+     # Protect against clickjacking
+     Header set X-Frame-Options "SAMEORIGIN"
+
+     # Allowed features
+     Header set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+ </IfModule>
+
+ # Protect sensitive files and directories
+ <FilesMatch "^(\.htaccess|\.env|\.git|composer\.json|composer\.lock)$">
+     Require all denied
+ </FilesMatch>
+
+ # Protect specific directories
+ <If "%{REQUEST_URI} =~ m#^/(vendor|tests|config|app)/#">
+     Require all denied
+ </If>
+
+
+ #-------------------------------------------------------------------------------------------------
+ # 3. MIME TYPES Y CODIFICACIÓN
+ #-------------------------------------------------------------------------------------------------
+
+ <IfModule mod_mime.c>
+     AddDefaultCharset utf-8
+
+     # Data interchange
+     AddType application/atom+xml                        atom
+     AddType application/json                            json map topojson
+     AddType application/ld+json                         jsonld
+     AddType application/rss+xml                         rss
+     AddType application/geo+json                        geojson
+     AddType application/rdf+xml                         rdf
+     AddType application/xml                             xml
+
+     # JavaScript
+     AddType text/javascript                             js mjs
+
+     # Manifest files
+     AddType application/manifest+json                   webmanifest
+     AddType application/x-web-app-manifest+json         webapp
+     AddType text/cache-manifest                         appcache
+
+     # Media files
+     AddType audio/mp4                                   f4a f4b m4a
+     AddType audio/ogg                                   oga ogg opus
+     AddType image/bmp                                   bmp
+     AddType image/svg+xml                               svg svgz
+     AddType image/webp                                  webp
+     AddType video/mp4                                   f4v f4p m4v mp4
+     AddType video/ogg                                   ogv
+     AddType video/webm                                  webm
+     AddType image/x-icon                                cur ico
+
+     # Modern image formats
+     AddType image/heic                                  heic
+     AddType image/heif                                  heif
+     AddType image/heics                                 heics
+     AddType image/heifs                                 heifs
+     AddType image/avif                                  avif
+     AddType image/avis                                  avis
+
+     # WebAssembly
+     AddType application/wasm                            wasm
+
+     # Web fonts
+     AddType font/woff                                   woff
+     AddType font/woff2                                  woff2
+     AddType application/vnd.ms-fontobject               eot
+     AddType font/ttf                                    ttf
+     AddType font/collection                             ttc
+     AddType font/otf                                    otf
+
+     # Other
+     AddType application/octet-stream                    safariextz
+     AddType application/x-bb-appworld                   bbaw
+     AddType application/x-chrome-extension              crx
+     AddType application/x-opera-extension               oex
+     AddType application/x-xpinstall                     xpi
+     AddType text/calendar                               ics
+     AddType text/markdown                               markdown md
+     AddType text/vcard                                  vcard vcf
+     AddType text/vnd.rim.location.xloc                  xloc
+     AddType text/vtt                                    vtt
+     AddType text/x-component                            htc
+ </IfModule>
+
+ #-------------------------------------------------------------------------------------------------
+ # 4. CACHE AND PERFORMANCE
+ #-------------------------------------------------------------------------------------------------
+
+ <IfModule mod_expires.c>
+     ExpiresActive on
+
+     # Set default expiration
+     ExpiresDefault                                     "access plus 1 month"
+
+     # Specific expiration times by document type
+
+     # HTML y XML
+     ExpiresByType text/html                            "access plus 1 hour"
+     ExpiresByType application/xml                      "access plus 1 day"
+     ExpiresByType text/xml                             "access plus 1 day"
+
+     # Data and API
+     ExpiresByType application/json                     "access plus 0 seconds"
+     ExpiresByType application/ld+json                  "access plus 0 seconds"
+
+     # Feed
+     ExpiresByType application/atom+xml                 "access plus 1 hour"
+     ExpiresByType application/rss+xml                  "access plus 1 hour"
+
+     # Favicon
+     ExpiresByType image/x-icon                         "access plus 1 week"
+
+     # Images, video, audio
+     ExpiresByType image/gif                            "access plus 1 month"
+     ExpiresByType image/png                            "access plus 1 month"
+     ExpiresByType image/jpeg                           "access plus 1 month"
+     ExpiresByType image/webp                           "access plus 1 month"
+     ExpiresByType image/svg+xml                        "access plus 1 month"
+     ExpiresByType image/avif                           "access plus 1 month"
+     ExpiresByType video/mp4                            "access plus 1 month"
+     ExpiresByType video/ogg                            "access plus 1 month"
+     ExpiresByType audio/ogg                            "access plus 1 month"
+     ExpiresByType audio/mp4                            "access plus 1 month"
+
+     # CSS, JavaScript
+     ExpiresByType text/css                             "access plus 1 month"
+     ExpiresByType text/javascript                      "access plus 1 month"
+     ExpiresByType application/javascript               "access plus 1 month"
+
+     # Sources
+     ExpiresByType font/ttf                             "access plus 1 month"
+     ExpiresByType font/otf                             "access plus 1 month"
+     ExpiresByType font/woff                            "access plus 1 month"
+     ExpiresByType font/woff2                           "access plus 1 month"
+     ExpiresByType application/vnd.ms-fontobject        "access plus 1 month"
+
+     # Manifest files (require revalidation)
+     ExpiresByType application/manifest+json            "access plus 1 week"
+     ExpiresByType text/cache-manifest                  "access plus 0 seconds"
+ </IfModule>
+
+ # Additional headers to control caching
+ <IfModule mod_headers.c>
+     # Use strong ETags
+     Header unset ETag
+     FileETag MTime Size
+
+     # Cache-Control headers for static resources
+     <FilesMatch "\.(ico|gif|jpg|jpeg|png|webp|avif|woff|woff2|ttf|otf|css|js)$">
+         Header append Cache-Control "public"
+     </FilesMatch>
+
+     # Files that should not be cached
+     <FilesMatch "\.(php|html|htm|xml|json|txt)$">
+         Header append Cache-Control "private, must-revalidate"
+     </FilesMatch>
+
+     # Compression
+     <IfModule mod_deflate.c>
+         AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml image/svg+xml
+     </IfModule>
+ </IfModule>
+
+ #-------------------------------------------------------------------------------------------------
+ # 5. ACCESS TO STATIC RESOURCES
+ #-------------------------------------------------------------------------------------------------
+
+ # Allow access to static resources in public directories
+ <If "%{REQUEST_URI} =~ m#^/public/#">
+     <FilesMatch "\.(css|js|png|jpg|jpeg|gif|svg|webp|ico|woff|woff2|ttf|eot|pdf|mp3|wav|ogg|mp4|webm)$">
+         Require all granted
+     </FilesMatch>
+ </If>
+
+ # Additional directories for static resources
+ <If "%{REQUEST_URI} =~ m#^/(assets|dist|static)/#">
+     <FilesMatch "\.(css|js|png|jpg|jpeg|gif|svg|webp|ico|woff|woff2|ttf|eot)$">
+         Require all granted
+     </FilesMatch>
+ </If>
+
+ #-------------------------------------------------------------------------------------------------
+ # 6. SPECIFIC SETTINGS
+ #-------------------------------------------------------------------------------------------------
+
+ # MTA-STS
+ <IfModule mod_headers.c>
+     <FilesMatch "^mta-sts\.txt$">
+         Header set Content-Type "text/plain"
+         Header set Cache-Control "max-age=86400, must-revalidate"
+     </FilesMatch>
+ </IfModule>
+
+ # Robots.txt and favicon.ico in the root
+ <FilesMatch "^(robots\.txt|favicon\.ico)$">
+     Require all granted
+ </FilesMatch>
+
+ # Domain verification files (common for services like Google, etc.)
+ <FilesMatch "^(google[0-9a-f]+\.html|BingSiteAuth\.xml|yandex_[0-9a-f]+\.html)$">
+     Require all granted
+ </FilesMatch>
+
+ #-------------------------------------------------------------------------------------------------
+ # 7. REWRITE AND ROUTING
+ #-------------------------------------------------------------------------------------------------
+
+ <IfModule mod_rewrite.c>
+     RewriteEngine On
+     RewriteBase /
+
+     # Redirect to HTTPS
+     RewriteCond %{HTTPS} off
+     RewriteCond %{HTTP:X-Forwarded-Proto} !https
+     RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE]
+
+     # Prevent direct access to framework files
+     RewriteRule ^app/.* index.php [L]
+     RewriteRule ^system/.* index.php [L]
+
+     # Allow direct access to existing files
+     RewriteCond %{REQUEST_FILENAME} -f
+     RewriteRule .* - [L]
+
+     # Quick 404 for common static assets that don't exist
+     RewriteCond %{REQUEST_FILENAME} !-f
+     RewriteCond %{REQUEST_URI} \.(css|js|jpg|jpeg|png|gif|ico|woff|woff2|ttf|svg|webp|eot)$
+     RewriteRule .* - [R=404,L]
+
+     # Handling 404 errors for missing assets
+     RewriteCond %{REQUEST_FILENAME} !-f
+     RewriteCond %{REQUEST_FILENAME} !-d
+     RewriteRule ^assets/.*$ /404.php [L]
+
+     # Managing assets in subdirectories - centralizing assets
+     RewriteCond %{REQUEST_URI} ^/[^/]+/assets/
+     RewriteRule ^([^/]+)/assets/(.*)$ /assets/$2 [L]
+
+     # Support for RESTful APIs and friendly routes
+     RewriteCond %{REQUEST_METHOD} ^(GET|POST|PUT|DELETE|PATCH|OPTIONS)$
+     RewriteCond %{REQUEST_URI} ^/api/
+     RewriteRule ^api/(.*)$ index.php?api_endpoint=$1 [QSA,L]
+
+     # Support for localized paths (/es/about, /en/about, etc.)
+     RewriteRule ^(en|es|fr|de|it|pt|ru|zh|ja|ar)/(.*)$ index.php?lang=$1&route=$2 [QSA,L]
+
+     # Redirect all other requests to index.php
+     RewriteCond %{REQUEST_FILENAME} !-f
+     RewriteCond %{REQUEST_FILENAME} !-d
+     RewriteRule ^([^/]+)/?(.*)$ index.php?route=$1&params=$2 [QSA,L]
+ </IfModule>
+
+
+ #--------------------------------------------------------------
+ # 8. ERROR HANDLING & OTHERS
+ #--------------------------------------------------------------
+
+ # Time and size limits for long requests
+ <IfModule mod_php.c>
+     php_value max_execution_time 120
+     php_value max_input_time 120
+     php_value memory_limit 128M
+     php_value post_max_size 20M
+     php_value upload_max_filesize 10M
+ </IfModule>
+
+ php_value display_errors On
+
+ <IfModule php_module>
+     # Primary loading mechanism for bug catcher to catch early fatal errors
+     # This is intentionally loaded before Composer to catch autoloader errors
+     php_value auto_prepend_file "./../boot-core/requirement-loader/error-catcher.php"
+ </IfModule>

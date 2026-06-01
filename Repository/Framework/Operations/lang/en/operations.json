@@ -1,0 +1,499 @@
+{
+  "title": "Operations",
+  "description": "Operational control plane for feature flags, plugins, deployment and tenancy.",
+  "module": {
+    "description": "Platform operations console for feature flags, plugins, deployment, localization, appearance and tenancy.",
+    "permission_label": "Manage Operations",
+    "permission_description": "Manage the Operations module surface.",
+    "navigation_hint": "Platform operations console for feature flags, plugins, deployment, localization, appearance and tenancy."
+  },
+  "nav": {
+    "aria_label": "Operations sections",
+    "overview": "Overview"
+  },
+  "appearance": {
+    "page_title": "Platform Appearance",
+    "hero_eyebrow": "Administration",
+    "hero_lede": "Govern how Catalyst applies the Inspinia Admin Customizer, global locked themes, neutral branding assets and PDF document identity.",
+    "runtime_title": "Neutral branding runtime",
+    "runtime_description": "Logos, favicon, document identity and PDF watermark settings are isolated here from the interactive Admin Customizer policy.",
+    "preview": {
+      "title": "Current resolved assets",
+      "primary_logo_alt": "Primary brand logo",
+      "dark_logo_alt": "Dark brand logo",
+      "favicon": "Favicon"
+    },
+    "fields": {
+      "default_variant": "Default variant",
+      "user_variant_preference": "Visual selector",
+      "allow_user_variant_override": "Legacy field disabled by the Inspinia runtime",
+      "allow_user_variant_override_help": "Light/dark mode and visual variants are managed by the Inspinia customizer and __THEME_CONFIG__.",
+      "brand_name": "Brand name",
+      "brand_short_name": "Short brand name",
+      "brand_tagline": "Tagline",
+      "asset_path_placeholder": "/uploads/branding/... or https://...",
+      "logo_primary_path": "Primary logo path",
+      "logo_primary_help": "Empty = use the neutral Catalyst/Inspinia logo.",
+      "reset_logo_primary": "Reset to preset primary logo",
+      "logo_dark_path": "Dark-mode alternate logo path",
+      "logo_dark_help": "Used whenever the resolved variant is dark.",
+      "reset_logo_dark": "Reset to preset dark logo",
+      "favicon_path": "Favicon path",
+      "favicon_help": "Rendered in the shared head assets for the full platform.",
+      "reset_favicon": "Reset to preset favicon",
+      "pdf_watermark": "PDF watermark",
+      "pdf_watermark_enabled": "Enable watermark on PDF exports",
+      "pdf_watermark_text": "Watermark text"
+    },
+    "actions": {
+      "save": "Save appearance",
+      "open_runtime": "Open runtime",
+      "open_documents": "Open documents"
+    },
+    "messages": {
+      "invalid_theme": "Select the canonical Catalyst/Inspinia branding preset.",
+      "invalid_watermark_color": "PDF watermark color must be a hex value like #CBD5E1."
+    },
+    "tabs": {
+      "customizer": "Admin Customizer",
+      "branding": "Neutral branding runtime"
+    }
+  },
+  "localization": {
+    "page_title": "Localization",
+    "hero_eyebrow": "Administration",
+    "hero_lede": "Canonical framework tooling for English-base catalogs, per-language coverage, locale bootstrap and missing-key synchronization.",
+    "cards": {
+      "missing_summary": "%d missing keys · %d missing catalogs"
+    },
+    "runtime_policy": {
+      "title": "Runtime locale policy",
+      "description": "The default locale still stays connected to app.project.project_lang, but the real administration surface lives here.",
+      "default_locale": "Default locale",
+      "locale_labels_json": "Locale labels JSON",
+      "save": "Save localization runtime"
+    },
+    "create_locale": {
+      "title": "Add locale from English base",
+      "description": "Clone the EN structure to start assisted or human translation without touching multiple folders manually.",
+      "locale_code": "Locale code",
+      "locale_code_placeholder": "fr",
+      "locale_label_placeholder": "French",
+      "preview_only": "Preview only, do not write files",
+      "initialize": "Initialize locale"
+    },
+    "sync_locale": {
+      "title": "Synchronize missing keys",
+      "description": "Fill only missing keys from EN and preserve what has already been translated in the target locale.",
+      "target_locale": "Target locale",
+      "preview_only": "Preview sync only, do not write files",
+      "sync": "Sync from English"
+    },
+    "coverage_report": {
+      "title": "Coverage report for %s",
+      "base_locale": "Base locale",
+      "missing_keys_badge": "%d missing keys",
+      "missing_catalogs_badge": "%d missing catalogs",
+      "missing_keys_column": "Missing keys",
+      "present": "Present",
+      "missing_in_target": "Missing in target locale",
+      "empty": "No English base catalogs were discovered."
+    },
+    "messages": {
+      "invalid_labels_json": "Locale labels must be valid JSON.",
+      "invalid_default_locale": "Select a default locale that already exists in the catalog.",
+      "runtime_updated": "Localization runtime updated.",
+      "preview_prepared": "Locale preview prepared for %s with %s catalog actions.",
+      "locale_initialized": "Locale %s initialized from English catalogs.",
+      "sync_preview": "Locale sync preview found %s missing keys for %s.",
+      "locale_synchronized": "Locale %s synchronized from English base catalogs."
+    }
+  },
+  "module_designer": {
+    "page_title": "Module Designer"
+  },
+  "index": {
+    "hero_eyebrow": "Runtime governance",
+    "hero_lede": "Canonical framework runtime governance surface: feature flags, plugins, deployment and tenancy decision-making.",
+    "metrics": {
+      "flags": "Flags",
+      "plugins": "Plugins",
+      "runs": "Runs",
+      "locales": "Locales"
+    },
+    "boundaries": {
+      "title": "Canonical boundaries",
+      "description": "The framework separates bootstrap, runtime governance and development diagnostics to avoid ambiguous or duplicated surfaces."
+    },
+    "cards": {
+      "admin": {
+        "eyebrow": "Administration"
+      },
+      "setup": {
+        "eyebrow": "Setup",
+        "title": "/configuration/environment-setup remains bootstrap and configuration",
+        "description": "App, DB, mail, session, cache, logging, security and project entry points live here. It does not govern active flags, plugins or deployments.",
+        "action": "Open setup"
+      },
+      "operations": {
+        "eyebrow": "Operations",
+        "title": "/operations is the runtime control plane",
+        "description": "This is the canonical home for operational administration: i18n, institutional appearance, feature flags, plugins, deployment and tenancy.",
+        "action": "Open controls"
+      },
+      "devtools": {
+        "eyebrow": "DevTools",
+        "title": "/test-features stays diagnostic",
+        "description": "It keeps probes and the technical harness. It is no longer the canonical surface for activating productive platform capabilities.",
+        "action": "Open DevTools"
+      },
+      "localization": {
+        "title": "Localization control",
+        "default_locale": "Default locale",
+        "available_locales": "Available locales",
+        "action": "Manage localization"
+      },
+      "appearance": {
+        "title": "Platform appearance",
+        "theme": "Institutional theme",
+        "variant": "Default variant",
+        "watermark": "PDF watermark",
+        "action": "Manage appearance"
+      },
+      "feature_flags": {
+        "eyebrow": "Feature governance",
+        "title": "Real feature flags",
+        "total": "Total catalog",
+        "enabled": "Enabled",
+        "read_only": "Read-only",
+        "action": "Manage feature flags"
+      },
+      "plugins": {
+        "eyebrow": "Extensions",
+        "title": "Plugin and module system",
+        "total": "Total plugins",
+        "enabled": "Enabled",
+        "required": "Required",
+        "action": "Manage plugins"
+      },
+      "deployments": {
+        "eyebrow": "Delivery pipeline",
+        "title": "Deployment pipeline",
+        "profiles": "Profiles",
+        "runs": "Recorded runs",
+        "release_root": "Release root",
+        "action": "Run deployments"
+      },
+      "tenancy": {
+        "eyebrow": "Tenant governance",
+        "title": "Tenancy baseline",
+        "runtime_strategy": "Runtime strategy",
+        "target_strategy": "Target strategy",
+        "isolation_active": "Isolation active",
+        "action": "Review tenancy decision"
+      }
+    },
+    "recent_runs": {
+      "title": "Recent deployment runs",
+      "description": "Quick history of the formal pipeline without leaving the control plane.",
+      "columns": {
+        "release": "Release",
+        "profile": "Profile",
+        "status": "Status",
+        "started": "Started"
+      },
+      "empty": "No deployment runs recorded yet."
+    },
+    "common": {
+      "enabled": "enabled",
+      "disabled": "disabled",
+      "yes": "yes",
+      "no": "no",
+      "unknown": "unknown"
+    }
+  },
+  "feature_flags": {
+    "title": "Feature Flags",
+    "hero_lede": "Environment and module defaults, role or user overrides, and coherent runtime evaluation.",
+    "common": {
+      "enabled": "Enabled",
+      "disabled": "Disabled"
+    },
+    "catalog": {
+      "title": "Default catalog",
+      "description": "Canonical surface for defaults persisted in features.json and read-only flags inherited from the current runtime.",
+      "plugin_activation_description": "Plugin package activation state.",
+      "columns": {
+        "flag": "Flag",
+        "owner": "Owner"
+      },
+      "scopes": {
+        "runtime": "runtime",
+        "capability": "capability",
+        "module": "module",
+        "plugin": "plugin"
+      },
+      "read_only": "Read-only",
+      "actions": {
+        "enable": "Enable",
+        "disable": "Disable"
+      },
+      "items": {
+        "project_config": {
+          "label": "Project configured",
+          "description": "Read-only setup completion state owned by app.json."
+        },
+        "cache_enabled": {
+          "label": "Cache enabled",
+          "description": "Read-only cache activation owned by cache.json."
+        },
+        "route_cache": {
+          "label": "Route cache",
+          "description": "Read-only route cache flag owned by cache.json."
+        },
+        "websocket_enabled": {
+          "label": "WebSocket runtime",
+          "description": "Read-only WebSocket boot flag owned by websocket.json."
+        },
+        "mfa": {
+          "label": "MFA",
+          "description": "Enable MFA setup and challenge surfaces for session authentication."
+        },
+        "notifications": {
+          "label": "Notifications",
+          "description": "Enable authenticated notification endpoints and unread counters."
+        },
+        "social_auth": {
+          "label": "Social auth",
+          "description": "Enable OAuth entry and callback routes when providers are configured."
+        },
+        "module_framework_apiplatform": {
+          "label": "API Platform module",
+          "description": "Load the versioned API admin and bearer-token runtime surfaces."
+        },
+        "module_framework_audit": {
+          "label": "Audit module",
+          "description": "Load audit trails and operational evidence surfaces."
+        },
+        "module_framework_automation": {
+          "label": "Automation module",
+          "description": "Load internal automation rules, logs and workflow triggers."
+        },
+        "module_framework_devtools": {
+          "label": "DevTools module",
+          "description": "Load technical smoke and module designer surfaces."
+        },
+        "module_framework_documents": {
+          "label": "Documents module",
+          "description": "Load document templates, preview and export surfaces."
+        },
+        "module_framework_media": {
+          "label": "Media module",
+          "description": "Load reusable media library and metadata field surfaces."
+        },
+        "module_framework_notification": {
+          "label": "Notification module",
+          "description": "Load authenticated notification APIs and websocket token issuance."
+        },
+        "module_framework_operations": {
+          "label": "Operations module",
+          "description": "Load platform operations surfaces for flags, plugins, deployment and tenancy."
+        }
+      }
+    },
+    "overrides": {
+      "title": "Targeted overrides",
+      "description": "Real persistence by role or user, audited and evaluated at runtime.",
+      "empty": {
+        "title": "No overrides yet",
+        "description": "Flags are currently running only with their environment and module defaults."
+      },
+      "columns": {
+        "flag": "Flag",
+        "subject": "Subject",
+        "state": "State",
+        "note": "Note",
+        "updated": "Updated"
+      },
+      "filters": {
+        "subject_type": "Subject type"
+      },
+      "subject_types": {
+        "user": "User",
+        "role": "Role"
+      },
+      "actions": {
+        "delete": "Delete",
+        "confirm_delete": "Delete override for"
+      },
+      "search_placeholder": "Search by flag, subject or note"
+    },
+    "form": {
+      "title": "Create override",
+      "description": "Apply a real exception by role or user over a mutable feature flag.",
+      "fields": {
+        "flag": "Flag",
+        "select_flag": "Select a mutable flag",
+        "subject_type": "Subject type",
+        "subject_key": "Subject key",
+        "subject_key_placeholder": "User ID or role slug",
+        "enabled": "Enabled",
+        "enabled_help": "Checked = force enabled for this subject. Unchecked = force disabled.",
+        "note": "Note",
+        "note_placeholder": "Reason or operational note"
+      },
+      "subject_types": {
+        "user": "User ID",
+        "role": "Role slug"
+      },
+      "actions": {
+        "save": "Save override"
+      }
+    },
+    "messages": {
+      "not_found": "Feature flag not found.",
+      "read_only_default": "This feature flag is owned by another runtime config and is read-only here.",
+      "read_only_override": "Read-only flags cannot receive actor overrides.",
+      "default_updated": "Feature flag default updated.",
+      "override_created": "Feature flag override created.",
+      "override_updated": "Feature flag override updated.",
+      "override_not_found": "Feature flag override not found.",
+      "override_deleted": "Feature flag override deleted."
+    }
+  },
+  "plugins": {
+    "title": "Plugins",
+    "hero_lede": "Formal plugin manifests, controlled runtime loading and real adoption in registries, inspectors and harness.",
+    "boundary_title": "Official boundary",
+    "boundary_body": "The runtime only loads modules when their plugin is enabled and their module.* flag remains active. The technical contract is centralized in boot-core/plugins/*.php, PluginRegistry, PluginManager and ModuleRegistry.",
+    "common": {
+      "enabled": "Enabled",
+      "disabled": "Disabled",
+      "required": "Required",
+      "valid": "Valid",
+      "invalid": "Invalid"
+    },
+    "grid": {
+      "title": "Plugin catalog",
+      "description": "Formal manifests, controlled loading and real adoption by module.",
+      "empty": {
+        "title": "No plugins registered",
+        "description": "No plugin manifests were discovered under boot-core/plugins."
+      },
+      "columns": {
+        "plugin": "Plugin",
+        "version": "Version",
+        "modules": "Modules",
+        "state": "State",
+        "manifest": "Manifest"
+      },
+      "filters": {
+        "state": "State"
+      },
+      "actions": {
+        "disable": "Disable",
+        "enable": "Enable",
+        "confirm_disable": "Disable plugin",
+        "confirm_enable": "Enable plugin"
+      },
+      "search_placeholder": "Search by key, label or module"
+    },
+    "messages": {
+      "not_found": "Plugin not found.",
+      "updated": "Plugin state updated."
+    }
+  },
+  "deployments": {
+    "title": "Deployments",
+    "profiles": {
+      "title": "Registered profiles",
+      "description": "Each profile defines the reusable pipeline slice without coupling external infrastructure to the framework.",
+      "create_zip": "ZIP",
+      "publish_remote": "Remote publish"
+    },
+    "states": {
+      "completed": "Completed",
+      "failed": "Failed",
+      "dry_run": "Dry run",
+      "running": "Running"
+    },
+    "form": {
+      "title": "Run deployment pipeline",
+      "description": "Run the formal pipeline with preflight, staging and optional publish.",
+      "fields": {
+        "profile": "Profile",
+        "select_profile": "Select deployment profile",
+        "dry_run": "Dry run",
+        "dry_run_help": "Checked = run only preflight and record the intent, without staging or publish."
+      },
+      "actions": {
+        "run": "Run pipeline"
+      }
+    },
+    "grid": {
+      "title": "Deployment runs",
+      "description": "Operational history of the formal deployment pipeline.",
+      "empty": {
+        "title": "No runs recorded",
+        "description": "No deployment profiles have been executed yet."
+      },
+      "columns": {
+        "release": "Release",
+        "profile": "Profile",
+        "status": "Status",
+        "environment": "Env",
+        "started": "Started",
+        "artifact": "Artifact"
+      },
+      "filters": {
+        "status": "Status"
+      },
+      "search_placeholder": "Search by release, profile or artifact path"
+    },
+    "messages": {
+      "profile_not_found": "Deployment profile not found.",
+      "finished": "Deployment pipeline finished for"
+    }
+  },
+  "tenancy": {
+    "title": "Tenancy",
+    "hero_lede": "Canonical shared-db boundary by tenant_id, visible in runtime, repositories, audit and CLI.",
+    "runtime": {
+      "title": "Current runtime",
+      "description": "Real status of the PA-02 boundary over canonical surfaces, without manual per-module filters."
+    },
+    "resolution": {
+      "title": "Current resolution",
+      "description": "Tenant active right now and the resolution source applied by the runtime."
+    },
+    "fields": {
+      "runtime_strategy": "Runtime strategy",
+      "target_strategy": "Target strategy",
+      "resolution_mode": "Resolution mode",
+      "isolation_active": "Isolation active",
+      "fallback_tenant": "Fallback tenant",
+      "configured_tenants": "Configured tenants",
+      "resolved_tenant": "Resolved tenant",
+      "tenant_id": "Tenant id",
+      "tenant_label": "Tenant label",
+      "resolved_from": "Resolved from",
+      "baseline_status": "Baseline status"
+    },
+    "catalog": {
+      "title": "Tenant Catalog",
+      "description": "Inspectable catalog used by host resolution and by the canonical tenancy probes.",
+      "columns": {
+        "tenant": "Tenant",
+        "id": "ID",
+        "hosts": "Hosts"
+      }
+    },
+    "decision_note": {
+      "title": "Decision note",
+      "description": "Canonical summary of the current operational tenancy decision."
+    },
+    "defaults": {
+      "default_tenant": "Default tenant"
+    }
+  }
+}

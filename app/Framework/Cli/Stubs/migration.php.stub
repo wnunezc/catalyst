@@ -1,0 +1,23 @@
+<?php
+
+declare(strict_types=1);
+
+use Catalyst\Framework\Database\Migration;
+
+return new class extends Migration
+{
+    public function getVersion(): string
+    {
+        return '{{version}}';
+    }
+
+    public function up(): void
+    {
+        // Write forward migration SQL here.
+    }
+
+    public function down(): void
+    {
+        // Write rollback SQL here.
+    }
+};

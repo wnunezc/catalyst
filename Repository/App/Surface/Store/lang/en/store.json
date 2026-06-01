@@ -1,0 +1,58 @@
+{
+  "surface": {
+    "title": "Store",
+    "eyebrow": "Storefront demo",
+    "badge": "Catalog surface",
+    "headline": "A product catalog that actually looks like a store.",
+    "lead": "This storefront demo gives implementers a clear pattern for categories, product cards, pricing and a checkout summary without exposing administration.",
+    "actions": {
+      "primary": "Browse catalog",
+      "secondary": "View landing"
+    },
+    "categories": {
+      "training": "Training",
+      "operations": "Operations",
+      "support": "Support"
+    },
+    "products_title": "Featured products",
+    "products": {
+      "academy": {
+        "name": "Academy Pack",
+        "type": "Course bundle",
+        "body": "Templates for onboarding, lessons, evaluations and certification flows.",
+        "badge": "Popular"
+      },
+      "dispatch": {
+        "name": "Dispatch Console",
+        "type": "Operations module",
+        "body": "A demo product for assignments, activity logs and field coordination screens.",
+        "badge": "Ops"
+      },
+      "inventory": {
+        "name": "Inventory Kit",
+        "type": "Asset module",
+        "body": "Cards, status markers and handover concepts for stock and equipment tracking.",
+        "badge": "Assets"
+      },
+      "compliance": {
+        "name": "Compliance Board",
+        "type": "Governance module",
+        "body": "Visual structure for policies, reviews, approvals and evidence follow-up.",
+        "badge": "Governance"
+      }
+    },
+    "cart": {
+      "title": "Demo cart",
+      "checkout": "Checkout preview",
+      "lines": {
+        "academy": "Academy Pack",
+        "dispatch": "Dispatch Console",
+        "inventory": "Inventory Kit"
+      },
+      "subtotal": "Subtotal"
+    },
+    "note": "Prices and products are placeholders intended to demonstrate a public commerce surface.",
+    "search": "Search catalog",
+    "add": "Add"
+  }
+}

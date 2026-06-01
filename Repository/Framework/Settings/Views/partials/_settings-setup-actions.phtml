@@ -1,0 +1,97 @@
+{{#unless configured}}
+<div class="card mt-4 border-primary">
+    <div class="card-header d-flex align-items-center gap-2 py-2 px-3 bg-primary-subtle">
+        <i class="fa-solid fa-user-shield text-primary"></i>
+        <h6 class="mb-0 fw-semibold">{{ t:settings.completion.admin_setup_title }}</h6>
+    </div>
+    <div class="card-body">
+        {{#unless adminReady}}
+        <p class="text-muted small mb-3">{{ t:settings.completion.admin_setup_description }}</p>
+        <form id="admin-create-form" method="POST" action="/configuration/environment-setup/admin" novalidate data-catalyst="form">
+            {{{ csrfField }}}
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label small fw-semibold">{{ t:settings.completion.admin_name }}</label>
+                    <input type="text" name="admin_name" class="form-control form-control-sm" autocomplete="name">
+                    <div id="a-admin-create-admin_name" class="invalid-feedback"></div>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label small fw-semibold">{{ t:settings.completion.admin_email }}</label>
+                    <input type="email" name="admin_email" class="form-control form-control-sm" autocomplete="email">
+                    <div id="a-admin-create-admin_email" class="invalid-feedback"></div>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label small fw-semibold">{{ t:settings.completion.admin_password }}</label>
+                    <div class="input-group input-group-sm">
+                        <input type="password" name="admin_password" class="form-control" autocomplete="new-password">
+                        <button type="button" class="btn btn-outline-secondary" data-password-toggle tabindex="-1">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                    <div id="a-admin-create-admin_password" class="invalid-feedback"></div>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label small fw-semibold">{{ t:settings.completion.admin_password_confirm }}</label>
+                    <div class="input-group input-group-sm">
+                        <input type="password" name="admin_password_confirm" class="form-control" autocomplete="new-password">
+                        <button type="button" class="btn btn-outline-secondary" data-password-toggle tabindex="-1">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                    <div id="a-admin-create-admin_password_confirm" class="invalid-feedback"></div>
+                </div>
+            </div>
+            <div class="form-text mt-2">{{ t:settings.completion.admin_hint }}</div>
+            <button type="submit" data-event="create-admin" class="btn btn-primary mt-3">
+                <i class="fa-solid fa-user-plus me-1"></i>{{ t:settings.completion.admin_create_button }}
+            </button>
+        </form>
+        {{else}}
+        <div class="alert alert-success d-flex align-items-center gap-2 mb-0">
+            <i class="fa-solid fa-circle-check"></i>
+            <span>{{ t:settings.completion.admin_exists_description }}</span>
+        </div>
+        {{/unless}}
+    </div>
+</div>
+
+<div class="card mt-4 border-success">
+    <div class="card-header d-flex align-items-center gap-2 py-2 px-3 bg-success-subtle">
+        <i class="fa-solid fa-flag-checkered text-success"></i>
+        <h6 class="mb-0 fw-semibold">{{ t:settings.completion.title }}</h6>
+    </div>
+    <div class="card-body">
+        <p class="text-muted small mb-3">{{ t:settings.completion.description }}</p>
+        {{#unless adminReady}}
+        <div class="alert alert-warning d-flex align-items-center gap-2 mb-3">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span>{{ t:settings.completion.finalize_requires_admin }}</span>
+        </div>
+        {{/unless}}
+        <form id="finalize-form" method="POST" action="/configuration/environment-setup/complete" novalidate data-catalyst="form">
+            {{{ csrfField }}}
+            <button type="submit" data-event="finalize" class="btn btn-success"{{#unless adminReady}} disabled{{/unless}}>
+                <i class="fa-solid fa-flag-checkered me-1"></i>{{ t:settings.completion.finalize_button }}
+            </button>
+        </form>
+    </div>
+</div>
+{{/unless}}
+
+{{#if configured}}
+<div class="card mt-4 border-warning">
+    <div class="card-header d-flex align-items-center gap-2 py-2 px-3 bg-warning-subtle">
+        <i class="fa-solid fa-rotate-left text-warning"></i>
+        <h6 class="mb-0 fw-semibold">{{ t:settings.completion.reset_title }}</h6>
+    </div>
+    <div class="card-body">
+        <p class="text-muted small mb-3">{{ t:settings.completion.reset_description }}</p>
+        <form id="reset-form" method="POST" action="/configuration/environment-setup/reset" novalidate data-catalyst="form">
+            {{{ csrfField }}}
+            <button type="submit" data-event="reset" class="btn btn-warning btn-sm">
+                <i class="fa-solid fa-rotate-left me-1"></i>{{ t:settings.completion.reset_button }}
+            </button>
+        </form>
+    </div>
+</div>
+{{/if}}

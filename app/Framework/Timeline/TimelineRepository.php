@@ -1,0 +1,83 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Catalyst\Framework\Timeline;
+
+use Catalyst\Entities\TimelineEvent;
+use Catalyst\Framework\Database\DatabaseManager;
+use Catalyst\Framework\Tenancy\TenancyManager;
+use Catalyst\Framework\Traits\SingletonTrait;
+use Catalyst\Helpers\Log\Logger;
+use Exception;
+
+final class TimelineRepository
+{
+    use SingletonTrait;
+
+    private DatabaseManager $db;
+    private Logger $logger;
+
+    protected function __construct()
+    {
+        $this->db = DatabaseManager::getInstance();
+        $this->logger = Logger::getInstance();
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    public function listFor(string $resourceKey, int $recordId): array
+    {
+        try {
+            $rows = $this->db->connection()->select(
+                'SELECT id, resource_key, record_id, event_key, event_type, label, metadata_json, occurred_at
+                 FROM timeline_events
+                 WHERE resource_key = ?
+                   AND record_id = ?
+                   AND tenant_id = ?
+                 ORDER BY occurred_at ASC, id ASC',
+                [trim(strtolower($resourceKey)), $recordId, $this->currentTenantId()]
+            ) ?: [];
+        } catch (Exception $e) {
+            $this->logger->warning('TimelineRepository::listFor failed', ['resource_key' => $resourceKey, 'record_id' => $recordId, 'error' => $e->getMessage()]);
+
+            return [];
+        }
+
+        return array_map([$this, 'normalizeRow'], $rows);
+    }
+
+    public function create(string $resourceKey, int $recordId, string $eventKey, string $eventType, string $label, array $metadata, string $occurredAt): TimelineEvent
+    {
+        return TimelineEvent::create([
+            'resource_key' => trim(strtolower($resourceKey)),
+            'record_id' => $recordId,
+            'event_key' => trim(strtolower($eventKey)),
+            'event_type' => trim(strtolower($eventType)),
+            'label' => trim($label),
+            'metadata_json' => $metadata,
+            'occurred_at' => $occurredAt,
+        ]);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function normalizeRow(array $row): array
+    {
+        $row['record_id'] = (int) ($row['record_id'] ?? 0);
+        $row['event_key'] = trim(strtolower((string) ($row['event_key'] ?? '')));
+        $row['event_type'] = trim(strtolower((string) ($row['event_type'] ?? '')));
+        $row['metadata_json'] = is_array($row['metadata_json'] ?? null)
+            ? $row['metadata_json']
+            : (json_decode((string) ($row['metadata_json'] ?? '[]'), true) ?: []);
+
+        return $row;
+    }
+
+    private function currentTenantId(): int
+    {
+        return TenancyManager::getInstance()->requireCurrentTenantId();
+    }
+}

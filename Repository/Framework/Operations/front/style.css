@@ -1,0 +1,488 @@
+.operations-page,
+.operations-admin-page {
+    --ops-card-border: rgba(var(--catalyst-brand-primary-rgb), 0.1);
+    --ops-card-bg: color-mix(in srgb, var(--bs-body-bg) 94%, white 6%);
+    --ops-card-shadow: 0 1rem 2.3rem rgba(15, 23, 42, 0.06);
+    --ops-ink: var(--catalyst-brand-text-strong);
+    --ops-muted: var(--catalyst-brand-text-muted);
+    display: grid;
+    gap: 1rem;
+}
+
+.operations-hero {
+    border: 1px solid var(--ops-card-border);
+    box-shadow: var(--ops-card-shadow);
+}
+
+.operations-hero__row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.operations-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--catalyst-brand-primary);
+}
+
+.operations-title {
+    font-size: clamp(1.8rem, 2vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--ops-ink);
+}
+
+.operations-lede {
+    max-width: 60rem;
+    color: var(--ops-muted);
+    line-height: 1.6;
+}
+
+.operations-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(110px, 1fr));
+    gap: 0.75rem;
+}
+
+.operations-metric {
+    padding: 0.9rem 1rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--ops-card-border);
+    text-align: center;
+}
+
+.operations-metric__value {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+.operations-metric__label {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ops-muted);
+}
+
+.operations-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.operations-tabs__item {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.62rem 0.92rem;
+    border-radius: 999px;
+    border: 1px solid var(--ops-card-border);
+    background: rgba(255, 255, 255, 0.72);
+    color: var(--ops-ink);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.operations-table code,
+.operations-definition-list code {
+    padding: 0.16rem 0.38rem;
+    border-radius: 0.45rem;
+    background: rgba(var(--catalyst-brand-primary-rgb), 0.08);
+}
+
+.operations-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 0.75rem;
+}
+
+.operations-card,
+.operations-theme-card,
+.operations-locale-card,
+.operations-brand-preview {
+    border-radius: 1rem;
+    border: 1px solid var(--ops-card-border);
+    background: var(--ops-card-bg);
+    box-shadow: var(--ops-card-shadow);
+}
+
+.operations-card {
+    padding: 1rem;
+}
+
+.operations-card--accent {
+    background:
+        linear-gradient(180deg, rgba(var(--catalyst-brand-primary-rgb), 0.05), rgba(255, 255, 255, 0.96)),
+        var(--ops-card-bg);
+}
+
+.operations-card__eyebrow {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ops-muted);
+    margin-bottom: 0.5rem;
+}
+
+.operations-cards--wide {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.operations-definition-list {
+    display: grid;
+    gap: 0.8rem;
+    margin: 0;
+}
+
+.operations-definition-list div {
+    display: grid;
+    gap: 0.25rem;
+}
+
+.operations-definition-list dt {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ops-muted);
+}
+
+.operations-definition-list dd {
+    margin: 0;
+    font-weight: 700;
+    color: var(--ops-ink);
+}
+
+.operations-hint {
+    background: rgba(246, 189, 96, 0.14);
+    border-left: 4px solid var(--catalyst-brand-accent);
+}
+
+.operations-theme-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.9rem;
+}
+
+.operations-theme-card,
+.operations-locale-card {
+    position: relative;
+    display: grid;
+    gap: 0.45rem;
+    padding: 1rem;
+    color: inherit;
+    text-decoration: none;
+}
+
+.operations-theme-card input[type="radio"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.operations-theme-card.is-selected,
+.operations-theme-card:has(input:checked),
+.operations-locale-card.is-active {
+    border-color: rgba(var(--catalyst-brand-primary-rgb), 0.34);
+    box-shadow: 0 1rem 2.2rem rgba(var(--catalyst-brand-primary-rgb), 0.12);
+}
+
+.operations-theme-card__swatch {
+    display: block;
+    min-height: 4.5rem;
+    border-radius: 0.9rem;
+    background: linear-gradient(135deg, var(--ops-primary, #1f2937), var(--ops-secondary, #475569));
+    position: relative;
+    overflow: hidden;
+}
+
+.operations-theme-card__swatch::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0 auto;
+    width: 42%;
+    height: 100%;
+    background: radial-gradient(circle at center, var(--ops-accent), transparent 72%);
+    opacity: 0.65;
+}
+
+.operations-theme-card__swatch--inspinia,
+.operations-theme-card__swatch--catalyst {
+    --ops-primary: var(--theme-primary, #727cf5);
+    --ops-secondary: var(--bs-secondary-color, #6c757d);
+    --ops-accent: var(--theme-info, #39afd1);
+}
+
+
+
+.operations-theme-card__title {
+    font-weight: 800;
+}
+
+.operations-theme-card__description,
+.operations-brand-preview__header {
+    font-size: 0.85rem;
+    color: var(--bs-secondary-color);
+}
+
+.operations-radio-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.operations-brand-preview {
+    padding: 1rem;
+}
+
+.operations-brand-preview__header {
+    margin-bottom: 0.75rem;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.operations-brand-preview__logos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.operations-brand-preview__logo {
+    max-width: 100%;
+    min-height: 4rem;
+    object-fit: contain;
+    padding: 0.85rem;
+    border-radius: 0.85rem;
+    border: 1px solid var(--ops-card-border);
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.operations-brand-preview__logo--dark {
+    background: rgba(15, 23, 42, 0.86);
+}
+
+.operations-locale-summary {
+    display: inline-flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.operations-locale-card strong {
+    font-size: 1rem;
+}
+
+.module-designer-page .module-designer-metric,
+.module-designer-page .module-designer-check,
+.module-designer-page .module-designer-issue {
+    display: grid;
+    gap: 0.25rem;
+    padding: 0.8rem 0.9rem;
+    border: 1px solid var(--ops-card-border);
+    border-radius: 0.85rem;
+    background: var(--ops-card-bg);
+}
+
+.module-designer-page .module-designer-metric + .module-designer-metric {
+    margin-top: 0.75rem;
+}
+
+.module-designer-page .module-designer-metric__label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ops-muted);
+}
+
+.module-designer-page .module-designer-file-list {
+    margin: 0;
+    padding-left: 1rem;
+}
+
+.module-designer-page .module-designer-file-list li + li {
+    margin-top: 0.35rem;
+}
+
+.module-designer-page .module-designer-pre {
+    max-height: 24rem;
+    overflow: auto;
+}
+
+.module-designer-page .module-designer-chip-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.module-designer-page .module-designer-table td,
+.module-designer-page .module-designer-table th {
+    vertical-align: middle;
+}
+
+@media (max-width: 768px) {
+    .operations-metrics {
+        width: 100%;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Compact UI pass aligned with INSPINIA admin density. */
+.operations-page,
+.operations-admin-page {
+    --ops-card-shadow: 0 1px 4px rgba(130, 143, 163, 0.15);
+    gap: 0.75rem;
+}
+
+.operations-title {
+    font-size: clamp(1.42rem, 1.75vw, 1.95rem);
+}
+
+.operations-lede {
+    line-height: 1.42;
+}
+
+.operations-eyebrow {
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+}
+
+.operations-metrics {
+    gap: 0.5rem;
+}
+
+.operations-metric {
+    padding: 0.58rem 0.65rem;
+    border-radius: 0.42rem;
+}
+
+.operations-metric__value {
+    font-size: 1.12rem;
+}
+
+.operations-metric__label {
+    font-size: 0.64rem;
+}
+
+.operations-tabs {
+    gap: 0.35rem;
+    margin-top: 0.7rem;
+}
+
+.operations-tabs__item {
+    padding: 0.36rem 0.62rem;
+    border-radius: 0.32rem;
+    font-size: 0.78rem;
+}
+
+.operations-cards,
+.operations-theme-grid {
+    gap: 0.58rem;
+}
+
+.operations-card,
+.operations-theme-card,
+.operations-locale-card,
+.operations-brand-preview {
+    border-radius: 0.42rem;
+    box-shadow: var(--ops-card-shadow);
+}
+
+.operations-card,
+.operations-theme-card,
+.operations-locale-card {
+    padding: 0.72rem;
+}
+
+.operations-card__eyebrow,
+.operations-definition-list dt {
+    font-size: 0.64rem;
+}
+
+.operations-definition-list {
+    gap: 0.48rem;
+}
+
+.operations-theme-card__swatch {
+    min-height: 3.2rem;
+    border-radius: 0.36rem;
+}
+
+
+/* Density correction v2: keep original readable text scale, compact spacing only. */
+.operations-page,
+.operations-admin-page {
+    font-size: 0.875rem;
+}
+
+.operations-title {
+    font-size: clamp(1.8rem, 2vw, 2.5rem);
+}
+
+.operations-eyebrow {
+    font-size: 0.75rem;
+}
+
+.operations-metric__value {
+    font-size: 1.4rem;
+}
+
+.operations-metric__label,
+.operations-card__eyebrow,
+.operations-definition-list dt,
+.module-designer-page .module-designer-metric__label {
+    font-size: 0.75rem;
+}
+
+.operations-tabs__item,
+.operations-theme-card__description,
+.operations-brand-preview__header {
+    font-size: 0.875rem;
+}
+
+.operations-brand-preview__logos {
+    grid-template-columns: repeat(2, minmax(4rem, 1fr));
+}
+
+.operations-brand-preview__logo {
+    min-height: 3.8rem;
+    max-height: 4.75rem;
+    object-fit: contain;
+}
+
+/* Catalyst admin normalization: Operations nav/cards are button-driven controls,
+   not anchors styled as buttons. Keep their visual contract identical. */
+.operations-tabs__item,
+.operations-locale-card {
+    appearance: none;
+    -webkit-appearance: none;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.operations-tabs__item:focus-visible,
+.operations-locale-card:focus-visible {
+    outline: 2px solid rgba(var(--bs-primary-rgb), .35);
+    outline-offset: 2px;
+}
+
+.operations-tabs__item:disabled,
+.operations-locale-card:disabled {
+    cursor: not-allowed;
+    opacity: .65;
+}

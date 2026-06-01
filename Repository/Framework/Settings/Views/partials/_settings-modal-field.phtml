@@ -1,0 +1,38 @@
+{{#if is_alert}}
+    <div class="alert alert-warning py-2 small">
+        {{ message }}
+    </div>
+{{else}}
+    {{#if is_checkbox}}
+        <div class="form-check form-switch mb-2">
+            <input class="form-check-input" type="checkbox" role="switch" name="{{ name }}" value="1"{{ checked_attr }}{{ disabled_attr }}>
+            <label class="form-check-label small">{{ label }}</label>
+        </div>
+    {{else}}
+        <div class="mb-3">
+            <label class="form-label small fw-semibold">{{ label }}</label>
+            {{#if is_password}}
+                <div class="input-group input-group-sm">
+                    <input type="password" name="{{ name }}" class="form-control" placeholder="{{ placeholder }}" autocomplete="new-password">
+                    <button type="button" class="btn btn-outline-secondary" data-password-toggle tabindex="-1">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
+            {{else}}
+                {{#if is_select}}
+                    <select name="{{ name }}" class="form-select form-select-sm"{{ disabled_attr }}>
+                        {{#each options}}
+                            <option value="{{ value }}"{{ selected_attr }}>{{ label }}</option>
+                        {{/each}}
+                    </select>
+                {{else}}
+                    <input type="{{ input_type }}" name="{{ name }}" class="form-control form-control-sm" value="{{ value }}"{{ disabled_attr }}>
+                {{/if}}
+            {{/if}}
+            <div class="invalid-feedback"></div>
+            {{#if hint}}
+                <div class="form-text">{{ hint }}</div>
+            {{/if}}
+        </div>
+    {{/if}}
+{{/if}}

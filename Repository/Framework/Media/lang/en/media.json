@@ -1,0 +1,215 @@
+{
+  "module": {
+    "description": "Reusable media library plus dynamic metadata field definitions for business entities.",
+    "library_permission_label": "Manage Media Library",
+    "library_permission_description": "Upload, edit, export and delete reusable media assets.",
+    "metadata_permission_label": "Manage Media Metadata",
+    "metadata_permission_description": "Define dynamic metadata fields for media resources.",
+    "library_navigation_label": "Media Library",
+    "library_navigation_hint": "Reusable file and asset library.",
+    "fields_navigation_label": "Media Fields",
+    "fields_navigation_hint": "Declarative dynamic metadata definitions.",
+    "breadcrumb_upload": "Upload Asset",
+    "breadcrumb_edit_asset": "Edit Asset",
+    "breadcrumb_create_field": "Create Field",
+    "breadcrumb_edit_field": "Edit Field"
+  },
+  "fields": {
+    "index": {
+      "title": "Media Metadata Fields",
+      "hero_eyebrow": "Dynamic metadata",
+      "hero_open_library": "Open library",
+      "description": "Declarative definitions of reusable dynamic fields by resource.",
+      "empty": {
+        "title": "No metadata fields yet",
+        "description": "Create the first metadata field to extend the media library without touching hard-coded forms.",
+        "action": "Create field"
+      },
+      "columns": {
+        "resource": "Resource",
+        "field": "Field",
+        "type": "Type",
+        "section": "Section",
+        "extended_metadata": "Extended metadata",
+        "flags": "Flags"
+      },
+      "flags": {
+        "required": "required",
+        "listed": "listed",
+        "filterable": "filterable"
+      },
+      "actions": {
+        "edit": "Edit",
+        "delete": "Delete",
+        "confirm_delete": "Delete field \"%s\"? Existing metadata values for that field will also be removed.",
+        "export_csv": "Export CSV"
+      },
+      "search_placeholder": "Search by label, key or help text"
+    },
+    "form": {
+      "eyebrow": "Dynamic metadata",
+      "create_title": "Create Metadata Field",
+      "edit_title": "Edit Metadata Field",
+      "hero_lede": "Define the reusable contract for dynamic fields consumed later by FormBuilder, DataGrid, validation, and shared persistence.",
+      "labels": {
+        "resource": "Resource",
+        "field_label": "Field label",
+        "field_key": "Field key",
+        "type": "Type",
+        "catalog": "Catalog",
+        "section_key": "Section key",
+        "help_text": "Help text",
+        "placeholder": "Placeholder",
+        "required": "Required",
+        "listed": "Listed in DataGrid",
+        "filterable": "Filterable",
+        "sort_order": "Sort order",
+        "default_value": "Default value",
+        "max_length": "Max length",
+        "min_value": "Min value",
+        "max_value": "Max value",
+        "extra_rules": "Extra rules",
+        "select_options": "Select options"
+      },
+      "placeholders": {
+        "field_label": "Credit line",
+        "field_key": "credit-line",
+        "section_key": "publishing",
+        "help_text": "Shown below the field in the admin form.",
+        "placeholder": "Visible hint for inputs that support it.",
+        "default_value": "Optional default for the host form.",
+        "extra_rules": "max:255|regex:/.../",
+        "select_options": "draft | Draft\npublished | Published"
+      },
+      "help": {
+        "field_key": "Unique key per resource. It is used for binding, validation and reusable persistence.",
+        "catalog": "Governed catalog for reusable options with lifecycle and validity.",
+        "section_key": "Optional. Groups dynamic fields in form sections.",
+        "required": "Require a value when the host form is submitted.",
+        "listed": "Expose this field as an extra column in resource listings.",
+        "filterable": "Expose this field as a reusable DataGrid filter when supported.",
+        "extra_rules": "Additional rules over the current validator. They are appended to the base type contract.",
+        "select_options": "One option per line. Use \"value | label\" or just \"value\"."
+      },
+      "sections": {
+        "identity": {
+          "title": "Field identity",
+          "description": "Target resource, declarative key and base type of the dynamic field."
+        },
+        "behavior": {
+          "title": "Behavior",
+          "description": "UI rules, filters, listings and additional validation."
+        },
+        "type_configuration": {
+          "title": "Type configuration",
+          "description": "Options and limits that change according to the field type."
+        }
+      },
+      "actions": {
+        "create": "Create field",
+        "save": "Save field",
+        "back": "Back to fields"
+      }
+    },
+    "messages": {
+      "created": "Metadata field created successfully.",
+      "updated": "Metadata field updated successfully.",
+      "deleted": "Metadata field deleted.",
+      "not_found": "Metadata field not found."
+    }
+  },
+  "library": {
+    "common": {
+      "local": "Local",
+      "remote_storage": "FTP / SFTP",
+      "asset_fallback": "asset"
+    },
+    "index": {
+      "title": "Media Library",
+      "description": "Reusable asset library over the framework's real storage and dynamic metadata per entity.",
+      "eyebrow": "Assets",
+      "hero_lede": "Reusable file library with native metadata, real storage and declarative extension through dynamic fields.",
+      "hero_manage_fields": "Manage fields",
+      "hero_upload_asset": "Upload asset",
+      "empty": {
+        "title": "No media assets yet",
+        "description": "Upload the first reusable asset to start composing dynamic metadata and shared references.",
+        "action": "Upload asset"
+      },
+      "columns": {
+        "asset": "Asset",
+        "mime": "Mime",
+        "size": "Size",
+        "storage": "Storage",
+        "uploaded": "Uploaded"
+      },
+      "filters": {
+        "disk": "Disk",
+        "mime_group": "Mime group"
+      },
+      "actions": {
+        "open": "Open",
+        "edit": "Edit",
+        "delete": "Delete",
+        "confirm_delete": "Delete \"%s\" from the media library?",
+        "export_csv": "Export CSV"
+      },
+      "bulk": {
+        "delete_selected": "Delete selected",
+        "confirm_delete": "Delete the selected media assets?",
+        "select_one": "Select at least one media asset.",
+        "deleted_suffix": "%d media asset(s) deleted."
+      },
+      "search_placeholder": "Search by label, original name, path or mime type"
+    },
+    "form": {
+      "create_title": "Upload Asset",
+      "edit_title": "Edit Asset",
+      "hero_lede_create": "Reusable registration of files and media over the current upload and storage stack.",
+      "hero_lede_edit": "Update the real asset and its dynamic metadata without leaving the administrative flow.",
+      "hero_manage_fields": "Metadata fields",
+      "current_asset": "Current asset",
+      "labels": {
+        "name": "Asset name",
+        "disk": "Storage disk",
+        "asset_file_create": "Upload file",
+        "asset_file_edit": "Replace file"
+      },
+      "placeholders": {
+        "name": "Homepage hero image"
+      },
+      "help": {
+        "disk": "The upload uses the active storage abstraction. FTP/SFTP only appears when remote configuration is ready.",
+        "asset_file_create": "Upload the real file that will be registered in the media library.",
+        "asset_file_edit": "Leave empty to keep the current file."
+      },
+      "sections": {
+        "asset_file": {
+          "title": "Asset source",
+          "description": "Real file, storage disk and native metadata of the asset."
+        },
+        "asset_context": {
+          "title": "Operational context",
+          "description": "Visible asset name and reusable extension inside the framework."
+        }
+      },
+      "actions": {
+        "create": "Upload asset",
+        "save": "Save changes",
+        "back": "Back to library"
+      }
+    },
+    "messages": {
+      "created": "Media asset uploaded successfully.",
+      "updated": "Media asset updated successfully.",
+      "deleted": "Media asset deleted.",
+      "not_found": "Media asset not found.",
+      "claim_updated": "media asset updated",
+      "claim_deleted": "media asset deleted",
+      "claim_bulk_deleted": "media asset bulk deleted"
+    },
+    "validation": {
+      "remote_storage_not_ready": "Remote FTP/SFTP storage is not configured yet."
+    }
+  }
+}

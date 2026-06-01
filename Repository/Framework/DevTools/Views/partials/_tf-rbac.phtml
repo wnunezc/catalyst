@@ -1,0 +1,56 @@
+<div class="col-12">
+    <div class="section-card">
+        <div class="card-header"><i class="fa-solid fa-shield-halved me-2"></i>{{ t:devtools.rbac_test.title }}</div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-12 col-lg-6">
+                    <p class="text-muted small fw-semibold mb-2">{{ t:devtools.rbac_test.current_status }}</p>
+                    <div class="btn-group-wrap mb-3">
+                        <button class="btn btn-primary btn-sm"
+                                data-action="inspect-json"
+                                data-url="/test-features/rbac-status"
+                                data-result-id="rbac-result"
+                                data-pre-id="rbac-result-pre">
+                            <i class="fa-solid fa-user-shield me-1"></i>{{ t:devtools.rbac_test.inspect_status }}
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" data-catalyst-href="/test-features/rbac-status" data-catalyst-target="_blank">
+                            <i class="fa-solid fa-arrow-up-right-from-square me-1"></i>{{ t:devtools.rbac_test.raw_json }}
+                        </button>
+                    </div>
+                    <p class="text-muted small mb-2">{{ t:devtools.rbac_test.admin_links }}</p>
+                    <div class="btn-group-wrap mb-3">
+                        <button type="button" class="btn btn-outline-info btn-sm" data-catalyst-href="/users/roles"><i class="fa-solid fa-layer-group me-1"></i>Roles</button>
+                        <button type="button" class="btn btn-outline-info btn-sm" data-catalyst-href="/users/permissions"><i class="fa-solid fa-key me-1"></i>{{ t:roles.permissions.title }}</button>
+                    </div>
+                    <p class="text-muted small mb-1 text-warning fw-semibold">
+                        <i class="fa-solid fa-triangle-exclamation me-1"></i>{{ t:devtools.rbac_test.promote_warning }}
+                    </p>
+                    <form data-catalyst="form" method="POST" action="/test-features/make-admin" class="d-inline">
+                        {{{ make_admin_csrf_field }}}
+                        <button type="submit" class="btn btn-warning btn-sm text-dark">
+                            <i class="fa-solid fa-user-shield me-1"></i>{{ t:devtools.rbac_test.make_admin }}
+                        </button>
+                    </form>
+                    <div id="rbac-result" class="mt-2 tf-result">
+                        <pre id="rbac-result-pre" class="code-pre"></pre>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                    <p class="text-muted small fw-semibold mb-2">{{ t:devtools.rbac_test.architecture_overview }}</p>
+                    <table class="table table-sm sys-table">
+                        <thead><tr><th>{{ t:devtools.rbac_test.table.component }}</th><th>{{ t:devtools.rbac_test.table.class }}</th></tr></thead>
+                        <tbody>
+                            <tr><td>{{ t:devtools.rbac_test.table.rows.role_guard }}</td><td><span class="code-badge">RoleMiddleware</span></td></tr>
+                            <tr><td>{{ t:devtools.rbac_test.table.rows.db_repository }}</td><td><span class="code-badge">RoleRepository</span></td></tr>
+                            <tr><td>{{ t:devtools.rbac_test.table.rows.gate }}</td><td><span class="code-badge">Gate::define()</span></td></tr>
+                            <tr><td>{{ t:devtools.rbac_test.table.rows.policy }}</td><td><span class="code-badge">Gate::policy()</span></td></tr>
+                            <tr><td>{{ t:devtools.rbac_test.table.rows.controller_api }}</td><td><span class="code-badge">authorize() / can()</span></td></tr>
+                            <tr><td>{{ t:devtools.rbac_test.table.rows.exception }}</td><td><span class="code-badge">ForbiddenException</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

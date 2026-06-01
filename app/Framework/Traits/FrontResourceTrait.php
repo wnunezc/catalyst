@@ -1,0 +1,137 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * Catalyst PHP Framework
+ * PHP Version 8.4 (Required)
+ *
+ * @package   Catalyst
+ * @subpackage Framework\Traits
+ * @author    Walter Nuñez (arcanisgk) <icarosnet@gmail.com>
+ * @copyright 2023 - 2025
+ * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @link      https://catalyst.dock Local development URL
+ */
+
+namespace Catalyst\Framework\Traits;
+
+use Catalyst\Framework\View\View;
+use ReflectionClass;
+
+/**
+ * FrontResourceTrait — on-demand front asset deployment
+ *
+ * Provides controllers with the ability to publish module-scoped front-end
+ * assets (script.js, style.css) from their co-located front/ directory to
+ * the public web tree on every request, using a filesize comparison to avoid
+ * unnecessary copies.
+ *
+ * SRP: this trait has one responsibility — deploy and expose front assets.
+ * It does not handle routing, views, or business logic.
+ *
+ * Usage (normally automatic via Controller::view()):
+ *
+ *   class MyController extends Controller
+ *   {
+ *       use FrontResourceTrait;
+ *
+ *       public function index(): Response
+ *       {
+ *           return $this->view('my-view', [...]);
+ *       }
+ *   }
+ *
+ * Directory conventions (PSR-4 namespace → slug):
+ *   Catalyst\Repository\DevTools\Controllers\...  →  slug = "devtools"
+ *   App\Invoices\Controllers\...                  →  slug = "invoices"
+ *
+ * Asset paths:
+ *   Source : {module}/front/script.js  |  front/style.css
+ *   Public : public/assets/js/work/{slug}/script.js
+ *            public/assets/css/work/{slug}/style.css
+ *
+ * @package Catalyst\Framework\Traits
+ */
+trait FrontResourceTrait
+{
+    /**
+     * Derive a lowercase slug from the module segment of the class namespace.
+     *
+     * Namespace convention: …\{Module}\Controllers\{ClassName}
+     * The segment immediately before "Controllers" is used as the slug.
+     *
+     * Examples:
+     *   Catalyst\Repository\DevTools\Controllers\Foo  →  "devtools"
+     *   App\Invoices\Controllers\Bar                  →  "invoices"
+     *
+     * Falls back to the lowercased class basename when the convention is not met.
+     *
+     * @return string Lowercase module slug
+     */
+    protected function resolveSlug(): string
+    {
+        $parts = explode('\\', static::class);
+        $controllersIndex = array_search('Controllers', $parts, true);
+
+        if ($controllersIndex !== false && $controllersIndex > 0) {
+            return strtolower($parts[$controllersIndex - 1]);
+        }
+
+        return strtolower(end($parts));
+    }
+
+    /**
+     * Copy front/script.js and front/style.css to their public destinations
+     * if the source filesize differs from the currently published file.
+     *
+     * Also shares the resolved slug as $moduleSlug with the View layer so that
+     * _catalyst-init.phtml can conditionally load the published assets.
+     *
+     * @return void
+     */
+    protected function deployFrontAssets(): void
+    {
+        $slug = $this->resolveSlug();
+
+        // Always reset the shared slug first so controllers without front/
+        // cannot accidentally inherit a previous module's published assets.
+        $view = View::getInstance()->share('moduleSlug', null);
+
+        // Locate the module's front/ directory relative to the controller file
+        $controllerDir = dirname((new ReflectionClass(static::class))->getFileName());
+        $frontDir      = dirname($controllerDir) . DS . 'front';
+
+        if (!is_dir($frontDir)) {
+            return;
+        }
+
+        // Expose slug to view layer (_catalyst-init.phtml reads $moduleSlug)
+        $view->share('moduleSlug', $slug);
+
+        $assets = [
+            'script.js' => implode(DS, [PD, 'public', 'assets', 'js',  'work', $slug, 'script.js']),
+            'style.css' => implode(DS, [PD, 'public', 'assets', 'css', 'work', $slug, 'style.css']),
+        ];
+
+        foreach ($assets as $filename => $destination) {
+            $source = $frontDir . DS . $filename;
+
+            if (!file_exists($source)) {
+                continue;
+            }
+
+            $destDir = dirname($destination);
+            if (!is_dir($destDir)) {
+                mkdir($destDir, 0755, true);
+            }
+
+            $needsPublish = !file_exists($destination)
+                || sha1_file($source) !== sha1_file($destination);
+
+            if ($needsPublish) {
+                copy($source, $destination);
+            }
+        }
+    }
+}

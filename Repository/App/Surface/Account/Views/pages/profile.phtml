@@ -1,0 +1,58 @@
+<div class="account-page" data-account-page="profile">
+    <div class="account-page-header">
+        <div>
+            <span class="account-eyebrow">{{ t:account.profile.eyebrow }}</span>
+            <h1>{{ t:account.profile.title }}</h1>
+            <p>{{ t:account.profile.lead }}</p>
+        </div>
+    </div>
+
+    <section class="row g-3">
+        <div class="col-12 col-xl-7">
+            <article class="card account-card h-100">
+                <div class="card-body">
+                    <div class="account-section-title">
+                        <div>
+                            <h2>{{ t:account.profile.identity_title }}</h2>
+                            <p>{{ t:account.profile.identity_hint }}</p>
+                        </div>
+                    </div>
+                    <dl class="account-definition-list">
+                        <div>
+                            <dt>{{ t:account.profile.name }}</dt>
+                            <dd>{{ account_user.name }}</dd>
+                        </div>
+                        <div>
+                            <dt>{{ t:account.profile.email }}</dt>
+                            <dd>{{ account_user.email }}</dd>
+                        </div>
+                        <div>
+                            <dt>{{ t:account.profile.role }}</dt>
+                            <dd>{{ account_user.role }}</dd>
+                        </div>
+                        <div>
+                            <dt>{{ t:account.profile.tenant }}</dt>
+                            <dd>{{ account_user.tenant_label }}</dd>
+                        </div>
+                    </dl>
+                </div>
+            </article>
+        </div>
+        <div class="col-12 col-xl-5">
+            <article class="card account-card h-100">
+                <div class="card-body">
+                    <div class="account-section-title">
+                        <div>
+                            <h2>{{ t:account.profile.scope_title }}</h2>
+                            <p>{{ t:account.profile.scope_hint }}</p>
+                        </div>
+                    </div>
+                    <div class="account-note-card">
+                        <i class="ti ti-info-circle"></i>
+                        <p>{{ t:account.profile.editing_note }}</p>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+</div>

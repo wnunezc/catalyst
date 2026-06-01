@@ -1,0 +1,28 @@
+{
+  "gender_options": {
+    "male": "Male",
+    "female": "Female",
+    "other": "Other",
+    "prefer_not_to_say": "Prefer not to say"
+  },
+  "gender_default": "male",
+  "status_options": {
+    "active": "Active",
+    "inactive": "Inactive",
+    "pending": "Pending",
+    "suspended": "Suspended"
+  },
+  "status_default": "active",
+  "yes_no_options": {
+    "1": "Yes",
+    "0": "No"
+  },
+  "yes_no_default": "1",
+  "priority_options": {
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High",
+    "critical": "Critical"
+  },
+  "priority_default": "medium"
+}

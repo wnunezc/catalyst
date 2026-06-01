@@ -1,0 +1,6 @@
+{
+  "messages": {
+    "invalid_notification_id": "ID de notificación inválido.",
+    "invalid_presence_target": "Destino de presencia inválido."
+  }
+}

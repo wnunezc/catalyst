@@ -1,0 +1,81 @@
+<div class="sidenav-menu">
+    <a href="/dashboard" class="logo">
+        <span class="logo logo-light">
+            <span class="logo-lg"><img src="/assets/vendor/inspinia/images/logo.png" alt="logo"></span>
+            <span class="logo-sm"><img src="/assets/vendor/inspinia/images/logo-sm.png" alt="small logo"></span>
+        </span>
+        <span class="logo logo-dark">
+            <span class="logo-lg"><img src="/assets/vendor/inspinia/images/logo-black.png" alt="dark logo"></span>
+            <span class="logo-sm"><img src="/assets/vendor/inspinia/images/logo-sm.png" alt="small logo"></span>
+        </span>
+    </a>
+
+    <div class="scrollbar" data-simplebar="" data-simplebar-auto-hide="false">
+        <div id="sidenav-menu">
+            <ul class="side-nav">
+                {{#each migration_nav_groups}}
+                {{#if is_title}}
+                <li class="side-nav-title mt-2">{{ label }}</li>
+                {{else}}
+                {{#if is_link}}
+                <li class="side-nav-item {{#if is_active}}active{{/if}}">
+                    <a href="{{ href }}" class="side-nav-link {{#if is_active}}active{{/if}}">
+                        <span class="menu-icon"><i class="{{ icon }}"></i></span>
+                        <span class="menu-text">{{ label }}</span>
+                    </a>
+                </li>
+                {{else}}
+                <li class="side-nav-item {{#if is_active}}active{{/if}}">
+                    <a data-shell-collapse="true"
+                       href="#{{ collapse_id }}"
+                       aria-expanded="{{ expanded }}"
+                       aria-controls="{{ collapse_id }}"
+                       class="side-nav-link {{#if is_active}}active{{/if}}">
+                        <span class="menu-icon"><i class="{{ icon }}"></i></span>
+                        <span class="menu-text">{{ label }}</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse {{#if show}}show{{/if}}" id="{{ collapse_id }}">
+                        <ul class="sub-menu">
+                            {{#each items}}
+                            <li class="side-nav-item {{#if is_active}}active{{/if}}">
+                                {{#if is_nested_collapse}}
+                                <a data-shell-collapse="true"
+                                   href="#{{ collapse_id }}"
+                                   aria-expanded="{{ expanded }}"
+                                   aria-controls="{{ collapse_id }}"
+                                   class="{{ link_class }}">
+                                    <span class="menu-text">{{ label }}</span>
+                                    {{#if badge_label}}
+                                    <span class="{{ badge_class }}">{{ badge_label }}</span>
+                                    {{/if}}
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse {{#if show}}show{{/if}}" id="{{ collapse_id }}">
+                                    <ul class="sub-menu">
+                                        {{#each children}}
+                                        <li class="side-nav-item {{#if is_active}}active{{/if}}">
+                                            <a href="{{ href }}" class="{{ link_class }}">
+                                                <span class="menu-text">{{ label }}</span>
+                                            </a>
+                                        </li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                                {{else}}
+                                <a href="{{ href }}" class="side-nav-link {{#if is_active}}active{{/if}}">
+                                    <span class="menu-text">{{ label }}</span>
+                                </a>
+                                {{/if}}
+                            </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                </li>
+                {{/if}}
+                {{/if}}
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+</div>

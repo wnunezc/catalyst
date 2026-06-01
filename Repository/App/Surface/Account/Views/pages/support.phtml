@@ -1,0 +1,62 @@
+<div class="account-page" data-account-page="support-recovery">
+    <div class="account-page-header">
+        <div>
+            <span class="account-eyebrow">{{ t:account.support.eyebrow }}</span>
+            <h1>{{ pageTitle }}</h1>
+            <p>{{ t:account.support.lead }}</p>
+        </div>
+    </div>
+
+    <section class="row g-3">
+        <div class="col-12 col-xl-8">
+            <article class="card account-card h-100">
+                <div class="card-body">
+                    <form method="POST" action="{{ support_form_action }}" class="account-form account-form--grid" data-catalyst="form">
+                        {{{ csrf_field }}}
+                        {{#if is_compromised_flow}}
+                        <input type="hidden" name="request_type" value="compromised_account">
+                        {{else}}
+                        <div class="mb-3">
+                            <label for="request_type" class="form-label">{{ t:account.forms.request_type }}</label>
+                            <select class="form-select" id="request_type" name="request_type" required>
+                                <option value="lost_email_password">{{ t:account.request_types.lost_email_password }}</option>
+                                <option value="lost_email_mfa">{{ t:account.request_types.lost_email_mfa }}</option>
+                                <option value="compromised_account">{{ t:account.request_types.compromised_account }}</option>
+                            </select>
+                        </div>
+                        {{/if}}
+                        <div class="mb-3">
+                            <label for="known_email" class="form-label">{{ t:account.forms.known_email }}</label>
+                            <input type="email" class="form-control" id="known_email" name="known_email" value="{{ account_user.email }}" autocomplete="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="alternate_email" class="form-label">{{ t:account.forms.alternate_email }}</label>
+                            <input type="email" class="form-control" id="alternate_email" name="alternate_email" autocomplete="email" required>
+                        </div>
+                        <div class="mb-3 account-form__full">
+                            <label for="message" class="form-label">{{ t:account.forms.message }}</label>
+                            <textarea class="form-control" id="message" name="message" rows="5" minlength="20" maxlength="1200" required></textarea>
+                        </div>
+                        <div class="account-form__full">
+                            <button type="submit" class="btn btn-primary">{{ t:account.support.submit }}</button>
+                        </div>
+                    </form>
+                </div>
+            </article>
+        </div>
+        <div class="col-12 col-xl-4">
+            <article class="card account-card h-100">
+                <div class="card-body">
+                    <div class="account-note-card">
+                        <i class="ti ti-headset"></i>
+                        <p>{{ t:account.support.note }}</p>
+                    </div>
+                    <div class="account-note-card account-note-card--warning">
+                        <i class="ti ti-shield-exclamation"></i>
+                        <p>{{ t:account.support.security_note }}</p>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+</div>

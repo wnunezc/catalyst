@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}"
+      dir="ltr"
+      data-bs-theme="light"
+      data-skin="default"
+      data-layout-width="fluid"
+      data-layout-position="fixed"
+      data-menu-color="dark"
+      data-sidenav-size="default"
+      data-topbar-color="gray">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ document_title }}</title>
+
+    {{#each meta_tags}}
+    <meta name="{{ name }}" content="{{ content }}">
+    {{/each}}
+
+    <link rel="shortcut icon" href="/assets/vendor/inspinia/images/favicon.ico">
+    <script nonce="{{ csp_nonce }}">
+    (function () {
+        var html = document.documentElement;
+        var storageKey = '__THEME_CONFIG__';
+        var appearance = {{{ platform_appearance_json }}} || {};
+        window.__CATALYST_APPEARANCE__ = appearance;
+
+        var defaults = {
+            skin: 'default',
+            theme: 'light',
+            'topbar-color': 'gray',
+            'sidenav-color': 'dark',
+            'sidenav-size': 'default',
+            position: 'fixed',
+            width: 'fluid',
+            dir: 'ltr'
+        };
+        var allowed = {
+            skin: ['default', 'minimal', 'modern', 'material', 'pixel', 'luxe', 'flat', 'red-cross', 'civil-protection', 'firefighters', 'grempa'],
+            theme: ['light', 'dark', 'system'],
+            'topbar-color': ['gray', 'light', 'dark'],
+            'sidenav-color': ['dark', 'light', 'gray']
+        };
+        var closedSkins = {
+            'red-cross': { theme: 'light', 'topbar-color': 'light', 'sidenav-color': 'light' },
+            'civil-protection': { theme: 'light', 'topbar-color': 'dark', 'sidenav-color': 'light' },
+            firefighters: { theme: 'light', 'topbar-color': 'dark', 'sidenav-color': 'dark' },
+            grempa: { theme: 'dark', 'topbar-color': 'dark', 'sidenav-color': 'dark' }
+        };
+
+        function clone(value) { return JSON.parse(JSON.stringify(value)); }
+        function isLocked() {
+            return appearance.adminCustomizerEnabled === false || appearance.admin_customizer_enabled === false;
+        }
+        function storage() {
+            try {
+                var probe = storageKey + '__probe__';
+                window.localStorage.setItem(probe, '1');
+                window.localStorage.removeItem(probe);
+                return window.localStorage;
+            } catch (_) {
+                return window.sessionStorage;
+            }
+        }
+        function readStoredConfig() {
+            try {
+                var raw = storage().getItem(storageKey);
+                return raw ? JSON.parse(raw) : null;
+            } catch (_) {
+                return null;
+            }
+        }
+        function writeStoredConfig(config) {
+            if (isLocked()) {
+                return;
+            }
+            try {
+                storage().setItem(storageKey, JSON.stringify(config));
+            } catch (_) {}
+        }
+        function pick(value, fallback, choices) {
+            return choices.indexOf(value) >= 0 ? value : fallback;
+        }
+        function getClosedSkinConfig(skin) {
+            return Object.prototype.hasOwnProperty.call(closedSkins, skin) ? closedSkins[skin] : null;
+        }
+        function enforceClosedSkinConfig(config) {
+            var preset = getClosedSkinConfig(config.skin);
+            if (preset !== null) {
+                config.theme = preset.theme;
+                config['topbar-color'] = preset['topbar-color'];
+                config['sidenav-color'] = preset['sidenav-color'];
+            }
+            return config;
+        }
+        function sanitize(raw) {
+            var source = raw && typeof raw === 'object' ? raw : {};
+            return enforceClosedSkinConfig({
+                skin: pick(source.skin, defaults.skin, allowed.skin),
+                theme: pick(source.theme, defaults.theme, allowed.theme),
+                'topbar-color': pick(source['topbar-color'], defaults['topbar-color'], allowed['topbar-color']),
+                'sidenav-color': pick(source['sidenav-color'], defaults['sidenav-color'], allowed['sidenav-color']),
+                'sidenav-size': defaults['sidenav-size'],
+                position: defaults.position,
+                width: defaults.width,
+                dir: defaults.dir
+            });
+        }
+        function systemTheme() {
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        function currentMarkupConfig() {
+            return {
+                skin: html.getAttribute('data-skin') || defaults.skin,
+                theme: html.getAttribute('data-bs-theme') || defaults.theme,
+                'topbar-color': html.getAttribute('data-topbar-color') || defaults['topbar-color'],
+                'sidenav-color': html.getAttribute('data-menu-color') || defaults['sidenav-color']
+            };
+        }
+        function lockedConfig() {
+            var candidate = appearance.lockedConfig || appearance.locked_config || null;
+            return sanitize(Object.assign({}, defaults, candidate && typeof candidate === 'object' ? candidate : {}));
+        }
+
+        var config = isLocked()
+            ? lockedConfig()
+            : sanitize(Object.assign({}, currentMarkupConfig(), readStoredConfig() || {}));
+        var appliedTheme = config.theme === 'system' ? systemTheme() : config.theme;
+        var closedSkin = getClosedSkinConfig(config.skin) !== null ? config.skin : 'none';
+
+        window.defaultConfig = clone(defaults);
+        window.config = clone(config);
+        window.__CATALYST_APPEARANCE__.effectiveConfig = clone(config);
+
+        writeStoredConfig(config);
+        html.setAttribute('data-skin', config.skin);
+        html.setAttribute('data-bs-theme', appliedTheme);
+        html.setAttribute('data-topbar-color', config['topbar-color']);
+        html.setAttribute('data-menu-color', config['sidenav-color']);
+        html.setAttribute('data-sidenav-size', defaults['sidenav-size']);
+        html.setAttribute('data-layout-position', defaults.position);
+        html.setAttribute('data-layout-width', defaults.width);
+        html.setAttribute('dir', defaults.dir);
+        html.setAttribute('data-migrationui-theme-mode', config.theme);
+        html.setAttribute('data-catalyst-closed-skin', closedSkin);
+        html.setAttribute('data-catalyst-customizer-policy', isLocked() ? 'locked' : 'user');
+        html.setAttribute('data-catalyst-red-cross-mode', config.skin === 'red-cross' ? 'enabled' : 'disabled');
+    })();
+</script>
+    <link href="/assets/vendor/inspinia/css/vendors.min.css" rel="stylesheet" type="text/css">
+    <link href="/assets/vendor/inspinia/plugins/datatables/responsive.bootstrap5.min.css" rel="stylesheet" type="text/css">
+    <link id="app-style" href="/assets/vendor/inspinia/css/app.min.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/catalyst/red-cross-theme.css?v=20260601-sidenav-title-1" rel="stylesheet" type="text/css">
+    <link href="/assets/css/catalyst/response-skins.css?v=20260601-sidenav-title-1" rel="stylesheet" type="text/css">
+<link href="/assets/css/catalyst/inspinia-runtime-compat.css?v=20260601-statusbar-demo-1" rel="stylesheet" type="text/css">
+    <link href="/assets/css/catalyst/admin-surfaces.css?v=20260530-admin-surfaces-1" rel="stylesheet" type="text/css">
+
+    {{#each style_links}}
+    <link href="{{ href }}" rel="{{ rel }}"{{#if has_media}} media="{{ media }}"{{/if}}>
+    {{/each}}
+</head>
+<body class="migration-ui-shell-body"
+      data-admin-context="{{ active_admin_context }}"
+      data-migrationui-page="{{ migration_ui_page_slug }}"
+      data-migrationui-doc="{{ selected_doc_file }}">
+<div class="wrapper">
+    <header class="app-topbar">
+        <div class="container-fluid topbar-menu">
+            <div class="d-flex align-items-center gap-2">
+                <div class="logo-topbar">
+                    <a href="/dashboard" class="logo-light">
+                        <span class="logo-lg"><img src="/assets/vendor/inspinia/images/logo.png" alt="logo"></span>
+                        <span class="logo-sm"><img src="/assets/vendor/inspinia/images/logo-sm.png" alt="small logo"></span>
+                    </a>
+                    <a href="/dashboard" class="logo-dark">
+                        <span class="logo-lg"><img src="/assets/vendor/inspinia/images/logo-black.png" alt="dark logo"></span>
+                        <span class="logo-sm"><img src="/assets/vendor/inspinia/images/logo-sm.png" alt="small logo"></span>
+                    </a>
+                </div>
+
+
+                <div id="search-box" class="app-search d-none d-xl-flex">
+                    <input type="search" class="form-control topbar-search" name="search" placeholder="Search for something...">
+                    <i class="ti ti-search app-search-icon text-muted"></i>
+                </div>
+
+            </div>
+
+            <div class="d-flex align-items-center gap-2">
+                <div class="topbar-item">
+                    <button class="topbar-link" type="button"><i class="ti ti-building-community topbar-link-icon"></i></button>
+                </div>
+                <div id="simple-user-dropdown" class="topbar-item nav-user migration-ui-user-dropdown">
+                    <div class="dropdown">
+                        <a class="topbar-link dropdown-toggle drop-arrow-none px-2" data-bs-toggle="dropdown" role="button" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-label="{{ auth_menu_label }}" title="{{ auth_menu_label }}">
+                            <img src="{{ auth_avatar_src }}" width="32" class="rounded-circle me-lg-2 d-flex" alt="user-image">
+                            <div class="d-lg-flex align-items-center gap-1 d-none">
+                                <h5 class="my-0 migration-ui-account-label">{{ auth_menu_label }}</h5>
+                                <i class="ti ti-chevron-down align-middle"></i>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <div class="dropdown-header migration-ui-account-summary">
+                                <span class="migration-ui-account-summary__name">{{ auth_name }}</span>
+                                {{#if has_auth_email}}
+                                <span class="migration-ui-account-summary__email">{{ auth_email }}</span>
+                                {{/if}}
+                            </div>
+
+                            <div class="dropdown-divider"></div>
+
+                            <a href="#!" class="dropdown-item">
+                                <i class="ti ti-user-circle me-1 fs-lg align-middle"></i>
+                                <span class="align-middle">{{ t:ui.product_nav.profile }}</span>
+                            </a>
+
+                            <a href="#!" class="dropdown-item">
+                                <i class="ti ti-settings-2 me-1 fs-lg align-middle"></i>
+                                <span class="align-middle">{{ t:ui.product_nav.account_settings }}</span>
+                            </a>
+
+                            <div class="dropdown-divider"></div>
+
+                            <a href="#!" class="dropdown-item">
+                                <i class="ti ti-headset me-1 fs-lg align-middle"></i>
+                                <span class="align-middle">{{ t:ui.product_nav.support }}</span>
+                            </a>
+
+                            <div class="dropdown-divider"></div>
+
+                            <form method="POST" action="/logout" class="m-0" data-catalyst="form">
+                                {{{ logout_csrf_field }}}
+                                <button type="submit" class="dropdown-item text-danger fw-semibold">
+                                    <i class="ti ti-logout me-1 fs-lg align-middle"></i>
+                                    <span class="align-middle">{{ t:ui.status_bar.log_out }}</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="sidenav-menu">
+        <a href="/dashboard" class="logo">
+                <span class="logo logo-light">
+                    <span class="logo-lg"><img src="/assets/vendor/inspinia/images/logo.png" alt="logo"></span>
+                    <span class="logo-sm"><img src="/assets/vendor/inspinia/images/logo-sm.png" alt="small logo"></span>
+                </span>
+                <span class="logo logo-dark">
+                    <span class="logo-lg"><img src="/assets/vendor/inspinia/images/logo-black.png" alt="dark logo"></span>
+                    <span class="logo-sm"><img src="/assets/vendor/inspinia/images/logo-sm.png" alt="small logo"></span>
+                </span>
+        </a>
+
+        <div class="scrollbar" data-simplebar="" data-simplebar-auto-hide="false">
+            <div id="sidenav-menu">
+                <ul class="side-nav">
+                    {{#each migration_nav_groups}}
+                    {{#if is_title}}
+                    <li class="side-nav-title mt-2">{{ label }}</li>
+                    {{else}}
+                    {{#if is_link}}
+                    <li class="side-nav-item {{#if is_active}}active{{/if}}">
+                        <a href="{{ href }}" class="side-nav-link {{#if is_active}}active{{/if}}">
+                            <span class="menu-icon"><i class="{{ icon }}"></i></span>
+                            <span class="menu-text">{{ label }}</span>
+                        </a>
+                    </li>
+                    {{else}}
+                    <li class="side-nav-item {{#if is_active}}active{{/if}}">
+                        <a data-shell-collapse="true"
+                           href="#{{ collapse_id }}"
+                           aria-expanded="{{ expanded }}"
+                           aria-controls="{{ collapse_id }}"
+                           class="side-nav-link {{#if is_active}}active{{/if}}">
+                            <span class="menu-icon"><i class="{{ icon }}"></i></span>
+                            <span class="menu-text">{{ label }}</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse {{#if show}}show{{/if}}" id="{{ collapse_id }}">
+                            <ul class="sub-menu">
+                                {{#each items}}
+                                <li class="side-nav-item {{#if is_active}}active{{/if}}">
+                                    {{#if is_nested_collapse}}
+                                    <a data-shell-collapse="true"
+                                       href="#{{ collapse_id }}"
+                                       aria-expanded="{{ expanded }}"
+                                       aria-controls="{{ collapse_id }}"
+                                       class="{{ link_class }}">
+                                        <span class="menu-text">{{ label }}</span>
+                                        {{#if badge_label}}
+                                        <span class="{{ badge_class }}">{{ badge_label }}</span>
+                                        {{/if}}
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <div class="collapse {{#if show}}show{{/if}}" id="{{ collapse_id }}">
+                                        <ul class="sub-menu">
+                                            {{#each children}}
+                                            <li class="side-nav-item {{#if is_active}}active{{/if}}">
+                                                <a href="{{ href }}" class="{{ link_class }}">
+                                                    <span class="menu-text">{{ label }}</span>
+                                                </a>
+                                            </li>
+                                            {{/each}}
+                                        </ul>
+                                    </div>
+                                    {{else}}
+                                    <a href="{{ href }}" class="side-nav-link {{#if is_active}}active{{/if}}">
+                                        <span class="menu-text">{{ label }}</span>
+                                    </a>
+                                    {{/if}}
+                                </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    </li>
+                    {{/if}}
+                    {{/if}}
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-page" data-simplebar="" data-simplebar-auto-hide="false">
+        <div class="container-fluid">
+            {{{ content }}}
+        </div>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-end overflow-hidden migration-ui-theme-panel" tabindex="-1" id="theme-settings-offcanvas" aria-hidden="true">
+    <div class="d-flex justify-content-between gap-2 p-3 migration-ui-theme-panel__header">
+        <div>
+            <h5 class="mb-1 fw-bold text-white text-uppercase">Admin Customizer</h5>
+            <p class="text-white text-opacity-75 fst-italic fw-medium mb-0">Theme, scheme, and color controls for the migration shell.</p>
+        </div>
+
+        <div class="flex-grow-0">
+            <button type="button" class="d-block btn btn-sm bg-white bg-opacity-25 text-white rounded-circle btn-icon" data-theme-customizer-close aria-label="Close customizer">
+                <i class="ti ti-x fs-lg"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="offcanvas-body theme-customizer-bar p-0 h-100">
+        <div id="skin" class="p-3 border-bottom border-dashed">
+            <h5 class="mb-3 fw-bold">Select Theme</h5>
+            <div class="row g-3">
+                <div class="col-6">
+                    <div class="form-check card-radio">
+                        <input class="form-check-input" type="radio" name="data-skin" id="demo-skin-default" value="default">
+                        <label class="form-check-label p-0 w-100" for="demo-skin-default">
+                            <img src="/assets/vendor/inspinia/images/layouts/skin-default.png" alt="Default theme" class="img-fluid">
+                        </label>
+                    </div>
+                    <h5 class="text-center text-muted mt-2 mb-0">Default</h5>
+                </div>
+                <div class="col-6">
+                    <div class="form-check card-radio">
+                        <input class="form-check-input" type="radio" name="data-skin" id="demo-skin-minimal" value="minimal">
+                        <label class="form-check-label p-0 w-100" for="demo-skin-minimal">
+                            <img src="/assets/vendor/inspinia/images/layouts/skin-minimal.png" alt="Minimal theme" class="img-fluid">
+                        </label>
+                    </div>
+                    <h5 class="text-center text-muted mt-2 mb-0">Minimal</h5>
+                </div>
+                <div class="col-6">
+                    <div class="form-check card-radio">
+                        <input class="form-check-input" type="radio" name="data-skin" id="demo-skin-modern" value="modern">
+                        <label class="form-check-label p-0 w-100" for="demo-skin-modern">
+                            <img src="/assets/vendor/inspinia/images/layouts/skin-modern.png" alt="Modern theme" class="img-fluid">
+                        </label>
+                    </div>
+                    <h5 class="text-center text-muted mt-2 mb-0">Modern</h5>
+                </div>
+                <div class="col-6">
+                    <div class="form-check card-radio">
+                        <input class="form-check-input" type="radio" name="data-skin" id="demo-skin-material" value="material">
+                        <label class="form-check-label p-0 w-100" for="demo-skin-material">
+                            <img src="/assets/vendor/inspinia/images/layouts/skin-material.png" alt="Material theme" class="img-fluid">
+                        </label>
+                    </div>
+                    <h5 class="text-center text-muted mt-2 mb-0">Material</h5>
+                </div>
+                <div class="col-6">
+                    <div class="form-check card-radio">
+                        <input class="form-check-input" type="radio" name="data-skin" id="demo-skin-pixel" value="pixel">
+                        <label class="form-check-label p-0 w-100" for="demo-skin-pixel">
+                            <img src="/assets/vendor/inspinia/images/layouts/skin-pixel.png" alt="Pixel theme" class="img-fluid">
+                        </label>
+                    </div>
+                    <h5 class="text-center text-muted mt-2 mb-0">Pixel</h5>
+                </div>
+                <div class="col-6">
+                    <div class="form-check card-radio">
+                        <input class="form-check-input" type="radio" name="data-skin" id="demo-skin-luxe" value="luxe">
+                        <label class="form-check-label p-0 w-100" for="demo-skin-luxe">
+                            <img src="/assets/vendor/inspinia/images/layouts/skin-luxe.png" alt="Luxe theme" class="img-fluid">
+                        </label>
+                    </div>
+                    <h5 class="text-center text-muted mt-2 mb-0">Luxe</h5>
+                </div>
+                <div class="col-6">
+                    <div class="form-check card-radio">
+                        <input class="form-check-input" type="radio" name="data-skin" id="demo-skin-flat" value="flat">
+                        <label class="form-check-label p-0 w-100" for="demo-skin-flat">
+                            <img src="/assets/vendor/inspinia/images/layouts/skin-flat.png" alt="Flat theme" class="img-fluid">
+                        </label>
+                    </div>
+                    <h5 class="text-center text-muted mt-2 mb-0">Flat</h5>
+                </div>
+                <div class="col-6">
+                    <div class="form-check card-radio">
+                        <input class="form-check-input" type="radio" name="data-skin" id="demo-skin-red-cross" value="red-cross">
+                        <label class="form-check-label p-0 w-100 catalyst-red-cross-skin-preview" for="demo-skin-red-cross" aria-label="Red Cross theme preview">
+                            <span class="catalyst-red-cross-skin-preview__top"></span>
+                            <span class="catalyst-red-cross-skin-preview__body">
+                                <span class="catalyst-red-cross-skin-preview__side"></span>
+                                <span class="catalyst-red-cross-skin-preview__content">
+                                    <span></span><span></span><span></span>
+                                </span>
+                            </span>
+                        </label>
+                    </div>
+                    <h5 class="text-center text-muted mt-2 mb-0">Red Cross</h5>
+                </div>
+                <div class="col-6">
+                    <div class="form-check card-radio">
+                        <input class="form-check-input" type="radio" name="data-skin" id="demo-skin-civil-protection" value="civil-protection">
+                        <label class="form-check-label p-0 w-100 catalyst-response-skin-preview catalyst-response-skin-preview--civil-protection" for="demo-skin-civil-protection" aria-label="Civil Protection theme preview">
+                            <span class="catalyst-response-skin-preview__top"></span>
+                            <span class="catalyst-response-skin-preview__body">
+                                <span class="catalyst-response-skin-preview__side"></span>
+                                <span class="catalyst-response-skin-preview__content">
+                                    <span></span><span></span><span></span>
+                                </span>
+                            </span>
+                        </label>
+                    </div>
+                    <h5 class="text-center text-muted mt-2 mb-0">Civil Protection</h5>
+                </div>
+                <div class="col-6">
+                    <div class="form-check card-radio">
+                        <input class="form-check-input" type="radio" name="data-skin" id="demo-skin-firefighters" value="firefighters">
+                        <label class="form-check-label p-0 w-100 catalyst-response-skin-preview catalyst-response-skin-preview--firefighters" for="demo-skin-firefighters" aria-label="Firefighters theme preview">
+                            <span class="catalyst-response-skin-preview__top"></span>
+                            <span class="catalyst-response-skin-preview__body">
+                                <span class="catalyst-response-skin-preview__side"></span>
+                                <span class="catalyst-response-skin-preview__content">
+                                    <span></span><span></span><span></span>
+                                </span>
+                            </span>
+                        </label>
+                    </div>
+                    <h5 class="text-center text-muted mt-2 mb-0">Firefighters</h5>
+                </div>
+                <div class="col-6">
+                    <div class="form-check card-radio">
+                        <input class="form-check-input" type="radio" name="data-skin" id="demo-skin-grempa" value="grempa">
+                        <label class="form-check-label p-0 w-100 catalyst-response-skin-preview catalyst-response-skin-preview--grempa" for="demo-skin-grempa" aria-label="GREMPA theme preview">
+                            <span class="catalyst-response-skin-preview__top"></span>
+                            <span class="catalyst-response-skin-preview__body">
+                                <span class="catalyst-response-skin-preview__side"></span>
+                                <span class="catalyst-response-skin-preview__content">
+                                    <span></span><span></span><span></span>
+                                </span>
+                            </span>
+                        </label>
+                    </div>
+                    <h5 class="text-center text-muted mt-2 mb-0">GREMPA</h5>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="theme" class="p-3 border-bottom border-dashed">
+            <h5 class="mb-3 fw-bold">Color Scheme</h5>
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-check card-radio">
+                        <input class="form-check-input" type="radio" name="data-bs-theme" id="layout-color-light" value="light">
+                        <label class="form-check-label p-0 w-100" for="layout-color-light">
+                            <img src="/assets/vendor/inspinia/images/layouts/theme-light.png" alt="Light scheme" class="img-fluid">
+                        </label>
+                    </div>
+                    <h5 class="text-center text-muted mt-2 mb-0">Light</h5>
+                </div>
+                <div class="col-4">
+                    <div class="form-check card-radio">
+                        <input class="form-check-input" type="radio" name="data-bs-theme" id="layout-color-dark" value="dark">
+                        <label class="form-check-label p-0 w-100" for="layout-color-dark">
+                            <img src="/assets/vendor/inspinia/images/layouts/theme-dark.png" alt="Dark scheme" class="img-fluid">
+                        </label>
+                    </div>
+                    <h5 class="text-center text-muted mt-2 mb-0">Dark</h5>
+                </div>
+                <div class="col-4">
+                    <div class="form-check card-radio">
+                        <input class="form-check-input" type="radio" name="data-bs-theme" id="layout-color-system" value="system">
+                        <label class="form-check-label p-0 w-100" for="layout-color-system">
+                            <img src="/assets/vendor/inspinia/images/layouts/theme-system.png" alt="System scheme" class="img-fluid">
+                        </label>
+                    </div>
+                    <h5 class="text-center text-muted mt-2 mb-0">System</h5>
+                </div>
+            </div>
+        </div>
+
+        <div id="topbar-color" class="p-3 border-bottom border-dashed">
+            <h5 class="mb-3 fw-bold">Topbar Color</h5>
+            <div class="row g-3">
+                <div class="col-4">
+                    <div class="form-check card-radio">
+                        <input class="form-check-input" type="radio" name="data-topbar-color" id="layout-topbar-color-light" value="light">
+                        <label class="form-check-label p-0 w-100" for="layout-topbar-color-light">
+                            <img src="/assets/vendor/inspinia/images/layouts/topbar-color-light.png" alt="Light topbar" class="img-fluid">
+                        </label>
+                    </div>
+                    <h5 class="fs-sm text-center text-muted mt-2 mb-0">Light</h5>
+                </div>
+                <div class="col-4">
+                    <div class="form-check card-radio">
+                        <input class="form-check-input" type="radio" name="data-topbar-color" id="layout-topbar-color-dark" value="dark">
+                        <label class="form-check-label p-0 w-100" for="layout-topbar-color-dark">
+                            <img src="/assets/vendor/inspinia/images/layouts/topbar-color-dark.png" alt="Dark topbar" class="img-fluid">
+                        </label>
+                    </div>
+                    <h5 class="fs-sm text-center text-muted mt-2 mb-0">Dark</h5>
+                </div>
+                <div class="col-4">
+                    <div class="form-check card-radio">
+                        <input class="form-check-input" type="radio" name="data-topbar-color" id="layout-topbar-color-gray" value="gray">
+                        <label class="form-check-label p-0 w-100" for="layout-topbar-color-gray">
+                            <img src="/assets/vendor/inspinia/images/layouts/topbar-color-gray.png" alt="Gray topbar" class="img-fluid">
+                        </label>
+                    </div>
+                    <h5 class="fs-sm text-center text-muted mt-2 mb-0">Gray</h5>
+                </div>
+            </div>
+        </div>
+
+        <div id="sidenav-color" class="p-3">
+            <h5 class="mb-3 fw-bold">Sidenav Color</h5>
+            <div class="row g-3">
+                <div class="col-4">
+                    <div class="form-check sidebar-setting card-radio">
+                        <input class="form-check-input" type="radio" name="data-menu-color" id="layout-sidenav-color-light" value="light">
+                        <label class="form-check-label p-0 w-100" for="layout-sidenav-color-light">
+                            <img src="/assets/vendor/inspinia/images/layouts/sidenav-color-light.png" alt="Light sidenav" class="img-fluid">
+                        </label>
+                    </div>
+                    <h5 class="fs-sm text-center text-muted mt-2 mb-0">Light</h5>
+                </div>
+                <div class="col-4">
+                    <div class="form-check sidebar-setting card-radio">
+                        <input class="form-check-input" type="radio" name="data-menu-color" id="layout-sidenav-color-dark" value="dark">
+                        <label class="form-check-label p-0 w-100" for="layout-sidenav-color-dark">
+                            <img src="/assets/vendor/inspinia/images/layouts/sidenav-color-dark.png" alt="Dark sidenav" class="img-fluid">
+                        </label>
+                    </div>
+                    <h5 class="fs-sm text-center text-muted mt-2 mb-0">Dark</h5>
+                </div>
+                <div class="col-4">
+                    <div class="form-check sidebar-setting card-radio">
+                        <input class="form-check-input" type="radio" name="data-menu-color" id="layout-sidenav-color-gray" value="gray">
+                        <label class="form-check-label p-0 w-100" for="layout-sidenav-color-gray">
+                            <img src="/assets/vendor/inspinia/images/layouts/sidenav-color-gray.png" alt="Gray sidenav" class="img-fluid">
+                        </label>
+                    </div>
+                    <h5 class="fs-sm text-center text-muted mt-2 mb-0">Gray</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{> "../components/_flash-messages" }}
+{{> "../components/_toaster-container" }}
+{{> "../components/_modal-container" }}
+{{> "../components/_status-bar" }}
+{{> "../components/_body-scripts" }}
+{{> "../components/_catalyst-init" }}
+
+{{#each script_links}}
+<script src="{{ src }}"{{#if has_type}} type="{{ type }}"{{/if}}{{#if defer}} defer{{/if}}{{#if async}} async{{/if}}{{#if has_nonce}} nonce="{{ nonce }}"{{/if}}></script>
+{{/each}}
+</body>
+</html>

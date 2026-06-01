@@ -1,0 +1,42 @@
+{
+  "guest": {
+    "eyebrow": "Personal area",
+    "title": "Account Dashboard",
+    "lead": "This section loads the user shell only when a session is authenticated. To continue, sign in or create an account.",
+    "login": "Go to login",
+    "register": "Create account",
+    "hint": "No personal content or navigation is displayed while the session is not authenticated."
+  },
+  "index": {
+    "eyebrow": "Personal summary",
+    "title": "Dashboard",
+    "lead": "Authenticated user home: account status, security indicators and recent events. Navigation stays in the left menu.",
+    "security_summary": "Security summary",
+    "recommended_actions": "Recommended actions",
+    "recommended_actions_hint": "Small tasks to keep the account healthy.",
+    "recent_activity": "Recent activity",
+    "recent_activity_hint": "Recent recovery and security events.",
+    "purpose_title": "What this dashboard shows",
+    "purpose_hint": "This page is a summary surface, not a navigation hub.",
+    "purpose_account_title": "Account context",
+    "purpose_account_body": "Shows whether the authenticated account loaded correctly and which identity data is available.",
+    "purpose_security_title": "Security indicators",
+    "purpose_security_body": "Summarizes email, MFA and open recovery request signals without replacing dedicated pages.",
+    "purpose_activity_title": "Recent activity",
+    "purpose_activity_body": "Highlights the latest recovery or account-security events when they exist."
+  },
+  "metrics": {
+    "profile": "Profile",
+    "profile_value": "Available",
+    "profile_hint": "Account identity loaded",
+    "email": "Email",
+    "email_verified": "Verified",
+    "mfa": "MFA",
+    "mfa_enabled": "Active",
+    "mfa_disabled": "Inactive",
+    "mfa_enabled_hint": "Second factor configured",
+    "mfa_disabled_hint": "Setup recommended",
+    "recovery": "Requests",
+    "recovery_hint": "Open recovery cases"
+  }
+}

@@ -1,0 +1,35 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{namespace}};
+
+use Catalyst\Framework\Authorization\Policy;
+
+final class {{ClassName}} extends Policy
+{
+    public function before(array $user, string $ability): ?bool
+    {
+        return ($user['role'] ?? null) === 'admin' ? true : null;
+    }
+
+    public function canView(array $user, mixed $record): bool
+    {
+        return false;
+    }
+
+    public function canCreate(array $user): bool
+    {
+        return false;
+    }
+
+    public function canUpdate(array $user, mixed $record): bool
+    {
+        return false;
+    }
+
+    public function canDelete(array $user, mixed $record): bool
+    {
+        return false;
+    }
+}

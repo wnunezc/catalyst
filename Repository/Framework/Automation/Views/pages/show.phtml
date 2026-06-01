@@ -1,0 +1,166 @@
+<div class="admin-surface admin-surface-shell automation-admin-page">
+    {{> "components._admin-page-header" }}
+
+    {{> "components._record-claim-banner" }}
+
+    <section class="card border-0 shadow-sm mb-3">
+        <div class="card-header">
+            <h2 class="h5 mb-1">{{ t:automation.show.workflow.title }}</h2>
+            <p class="text-muted mb-0">{{ t:automation.show.workflow.description }}</p>
+        </div>
+        <div class="card-body d-flex flex-column gap-3">
+            <form data-catalyst="form" method="POST" action="{{ rule.transition_url }}" class="row g-3 align-items-end">
+                {{{ csrfField }}}
+                {{#if claim_token}}<input type="hidden" name="claim_token" value="{{ claim_token }}">{{/if}}
+                <div class="col-lg-4">
+                    <label for="transition" class="form-label small fw-semibold">{{ t:automation.show.workflow.transition }}</label>
+                    <select id="transition" name="transition" class="form-select">
+                        <option value="">{{ t:automation.show.workflow.select_transition }}</option>
+                        {{#each available_transitions}}
+                            <option value="{{ key }}">{{ label }}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="col-lg-6">
+                    <label for="transition-notes" class="form-label small fw-semibold">{{ t:automation.show.workflow.notes }}</label>
+                    <input id="transition-notes" type="text" name="notes" class="form-control" placeholder="{{ t:automation.show.workflow.notes_placeholder }}">
+                </div>
+                <div class="col-lg-2 d-grid">
+                    <button type="submit" class="btn btn-primary">{{ t:automation.show.workflow.apply }}</button>
+                </div>
+            </form>
+
+            <div class="table-responsive">
+                <table class="table table-sm align-middle mb-0">
+                    <thead>
+                    <tr>
+                        <th>{{ t:automation.show.workflow.columns.occurred }}</th>
+                        <th>{{ t:automation.show.workflow.columns.transition }}</th>
+                        <th>{{ t:automation.show.workflow.columns.from }}</th>
+                        <th>{{ t:automation.show.workflow.columns.to }}</th>
+                        <th>{{ t:automation.show.workflow.columns.actor }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each transitions_rows}}
+                        <tr>
+                            <td>{{ occurred_at }}</td>
+                            <td>{{ transition_key }}</td>
+                            <td>{{ from_state }}</td>
+                            <td>{{ to_state }}</td>
+                            <td>{{ actor_label }}</td>
+                        </tr>
+                    {{else}}
+                        <tr><td colspan="5" class="text-muted">{{ t:automation.show.workflow.empty }}</td></tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="card border-0 shadow-sm mb-3">
+        <div class="card-header">
+            <h2 class="h5 mb-1">{{ t:automation.show.execute.title }}</h2>
+            <p class="text-muted mb-0">{{ t:automation.show.execute.description }}</p>
+        </div>
+        <div class="card-body">
+            <form data-catalyst="form" method="POST" action="{{ rule.run_url }}" class="row g-3">
+                {{{ csrfField }}}
+                {{#if claim_token}}<input type="hidden" name="claim_token" value="{{ claim_token }}">{{/if}}
+                <input type="hidden" name="idempotency_key" value="{{ run_idempotency_key }}">
+                <div class="col-12">
+                    <label for="context-json" class="form-label small fw-semibold">{{ t:automation.show.execute.context_json }}</label>
+                    <textarea id="context-json" name="context_json" rows="9" class="form-control" spellcheck="false">{{ run_context_json }}</textarea>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">{{ t:automation.show.execute.run_now }}</button>
+                </div>
+            </form>
+
+            {{#if has_last_run_result}}
+                <div class="automation-result mt-4">
+                    <div class="small text-uppercase text-muted fw-semibold mb-2">{{ t:automation.show.execute.last_result }}</div>
+                    <pre class="mb-0 bg-body-tertiary border rounded-3 p-3">{{ last_run_result_json }}</pre>
+                </div>
+            {{/if}}
+        </div>
+    </section>
+
+    <div class="row g-3">
+        <div class="col-xl-6">
+            <section class="card border-0 shadow-sm h-100">
+                <div class="card-header">
+                    <h2 class="h5 mb-1">{{ t:automation.show.versions.title }}</h2>
+                    <p class="text-muted mb-0">{{ t:automation.show.versions.description }}</p>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-sm align-middle mb-0">
+                            <thead>
+                            <tr>
+                                <th>{{ t:automation.show.versions.columns.version }}</th>
+                                <th>{{ t:automation.show.versions.columns.summary }}</th>
+                                <th>{{ t:automation.show.versions.columns.created }}</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{#each versions_rows}}
+                                <tr>
+                                    <td>#{{ version_number }}</td>
+                                    <td>{{ summary }}</td>
+                                    <td>{{ created_at }}</td>
+                                    <td class="text-end">
+                                        <form data-catalyst="form" method="POST" action="{{ restore_url }}" class="d-inline">
+                                            {{{ @root.csrfField }}}
+                                            {{#if @root.claim_token}}<input type="hidden" name="claim_token" value="{{ @root.claim_token }}">{{/if}}
+                                            <button type="submit" class="btn btn-sm btn-outline-secondary">{{ t:automation.show.versions.restore }}</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {{else}}
+                                <tr><td colspan="4" class="text-muted">{{ t:automation.show.versions.empty }}</td></tr>
+                            {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-xl-6">
+            <section class="card border-0 shadow-sm h-100">
+                <div class="card-header">
+                    <h2 class="h5 mb-1">{{ t:automation.show.logs.title }}</h2>
+                    <p class="text-muted mb-0">{{ t:automation.show.logs.description }}</p>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-sm align-middle mb-0">
+                            <thead>
+                            <tr>
+                                <th>{{ t:automation.show.logs.columns.when }}</th>
+                                <th>{{ t:automation.show.logs.columns.source }}</th>
+                                <th>{{ t:automation.show.logs.columns.status }}</th>
+                                <th>{{ t:automation.show.logs.columns.message }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{#each logs_rows}}
+                                <tr>
+                                    <td>{{ created_at }}</td>
+                                    <td>{{ source_label }}</td>
+                                    <td>{{ status }}</td>
+                                    <td>{{ message }}</td>
+                                </tr>
+                            {{else}}
+                                <tr><td colspan="4" class="text-muted">{{ t:automation.show.logs.empty }}</td></tr>
+                            {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

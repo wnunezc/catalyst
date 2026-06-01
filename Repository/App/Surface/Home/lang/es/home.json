@@ -1,0 +1,31 @@
+{
+  "surface": {
+    "title": "Inicio",
+    "eyebrow": "Home público",
+    "badge": "Entrada de aplicación",
+    "headline": "Un punto de inicio limpio para tu producto.",
+    "lead": "Esta demo muestra cómo una implementación del framework puede presentar la aplicación sin exponer pantallas administrativas, datos internos del runtime ni información de configuración.",
+    "actions": {
+      "primary": "Ver landing",
+      "secondary": "Explorar tienda"
+    },
+    "hero_cards": {
+      "deploy": { "value": "01", "label": "Entrada con marca" },
+      "modules": { "value": "04", "label": "Superficies demo" },
+      "identity": { "value": "UI", "label": "Respeta el tema" }
+    },
+    "sections_title": "Mapa de superficies públicas",
+    "sections": {
+      "home": { "title": "Home", "body": "Entrada institucional compacta que explica el propósito de la aplicación y guía hacia demos públicas.", "label": "Permanecer aquí" },
+      "landing": { "title": "Landing", "body": "Patrón de página promocional para campañas, lanzamientos, conversión y narrativa de producto.", "label": "Abrir landing" },
+      "store": { "title": "Store", "body": "Patrón de tienda con catálogo, categorías y resumen de compra listo para adaptar.", "label": "Abrir tienda" }
+    },
+    "workflow_title": "Flujo de implementación",
+    "workflow": {
+      "discover": { "title": "Descubrir", "body": "Comienza con páginas públicas que ayudan a entender el producto antes de autenticarse." },
+      "adapt": { "title": "Adaptar", "body": "Reemplaza el contenido demo con la marca, servicios y audiencia de la implementación." },
+      "launch": { "title": "Publicar", "body": "Mantén las páginas públicas aisladas de la administración, conservando el tema Catalyst configurado." }
+    },
+    "note": "Esta página no contiene enlaces administrativos, diagnósticos de módulos ni resumen de configuración."
+  }
+}

@@ -1,0 +1,33 @@
+<div class="admin-surface admin-surface-shell operations-page">
+    {{> "components._admin-page-header" }}
+
+    <div class="row g-3 mb-3">
+        <div class="col-xl-4">
+            {{> "components._admin-form-builder" }}
+        </div>
+        <div class="col-xl-8">
+            <section class="card border-0 h-100">
+                <div class="card-header">
+                    <h2 class="h5 mb-1">{{ t:operations.deployments.profiles.title }}</h2>
+                    <p class="text-muted mb-0">{{ t:operations.deployments.profiles.description }}</p>
+                </div>
+                <div class="card-body">
+                    <div class="operations-cards">
+                        {{#each deployment_profiles}}
+                            <article class="operations-card">
+                                <h3 class="h6 mb-2"><code>{{ key }}</code></h3>
+                                <p class="text-muted small mb-2">{{ description }}</p>
+                                <div class="small text-muted">
+                                    {{ @root.create_zip_label }}: {{ create_zip_value }} |
+                                    {{ @root.publish_remote_label }}: {{ publish_remote_value }}
+                                </div>
+                            </article>
+                        {{/each}}
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    {{> "components._admin-datagrid" }}
+</div>

@@ -1,0 +1,39 @@
+/*
+ * Deprecated institutional theme bridge.
+ * ---------------------------------------------------------------------------
+ * Kept as a neutral compatibility layer for old cached templates or legacy
+ * surfaces that still reference --catalyst-brand-* tokens. The active UI theme
+ * is now controlled by the Inspinia shell (__THEME_CONFIG__).
+ */
+:root {
+    --catalyst-brand-primary: var(--theme-primary, #1ab394);
+    --catalyst-brand-primary-rgb: var(--theme-primary-rgb, 26, 179, 148);
+    --catalyst-brand-secondary: var(--theme-secondary-color, #8a969c);
+    --catalyst-brand-accent: #23c6c8;
+    --catalyst-brand-shell: linear-gradient(135deg, rgba(var(--catalyst-brand-primary-rgb), 0.14), rgba(35, 198, 200, 0.1));
+    --catalyst-brand-shell-strong: linear-gradient(135deg, rgba(24, 33, 45, 0.98), rgba(30, 42, 56, 0.98));
+    --catalyst-brand-surface: var(--theme-secondary-bg, #fff);
+    --catalyst-brand-surface-dark: #1f2937;
+    --catalyst-brand-border: rgba(var(--catalyst-brand-primary-rgb), 0.16);
+    --catalyst-brand-text-strong: var(--theme-body-color, #4c4c5c);
+    --catalyst-brand-text-muted: var(--theme-secondary-color, #8a969c);
+    --catalyst-shell-shadow: var(--theme-box-shadow, 0 1px 4px rgba(130, 143, 163, 0.15));
+}
+
+.catalyst-brand-logo-stack {
+    display: inline-grid;
+    place-items: center;
+}
+
+.catalyst-brand-logo-stack > img {
+    grid-area: 1 / 1;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+html[data-bs-theme="light"] .catalyst-brand-logo--dark,
+html[data-bs-theme="dark"] .catalyst-brand-logo--light {
+    opacity: 0;
+    visibility: hidden;
+}

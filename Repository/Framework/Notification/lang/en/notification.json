@@ -1,0 +1,6 @@
+{
+  "messages": {
+    "invalid_notification_id": "Invalid notification ID.",
+    "invalid_presence_target": "Invalid presence target."
+  }
+}

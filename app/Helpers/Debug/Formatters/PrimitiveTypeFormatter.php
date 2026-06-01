@@ -1,0 +1,145 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ *
+ * Catalyst PHP Framework
+ * PHP Version 8.4 (Required).
+ *
+ * @package   Catalyst
+ *
+ * @see       https://catalyst.lh-2.net
+ *
+ * @author    Walter Nuñez (arcanisgk/original founder) <wnunez@lh-2.net>
+ * @copyright 2024 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license   Proprietary - https://catalyst.lh-2.net
+ *
+ * @note      This program is provided "as is" without a warranty of any kind, too express
+ *            or implied, including but not limited to the warranties of merchantability,
+ *            fitness for a particular purpose, and non-infringement.
+ *
+ * @category  Framework
+ * @filesource
+ *
+ * @link      https://catalyst.lh-2.net Project homepage
+ *
+ */
+
+namespace Catalyst\Helpers\Debug\Formatters;
+
+use Catalyst\Helpers\Debug\DumperConfig;
+use Catalyst\Helpers\Debug\DumperColorizer;
+
+/**
+ * PrimitiveTypeFormatter class for formatting primitive variable types
+ *
+ * This class is responsible for formatting primitive types of variables
+ * for display in the debug output. It handles strings, numbers, booleans,
+ * and null values.
+ *
+ * @package Catalyst\Helpers\Debug\Formatters;
+ */
+class PrimitiveTypeFormatter
+{
+    /**
+     * DumperConfig instance
+     */
+    private DumperConfig $config;
+
+    /**
+     * DumperColorizer instance
+     */
+    private DumperColorizer $colorizer;
+
+    /**
+     * Constructor
+     *
+     * @param DumperConfig $config Configuration instance
+     * @param DumperColorizer $colorizer Colorizer instance
+     */
+    public function __construct(
+        DumperConfig $config,
+        DumperColorizer $colorizer
+    ) {
+        $this->config = $config;
+        $this->colorizer = $colorizer;
+    }
+
+    /**
+     * Format string for output
+     *
+     * @param string $var
+     * @param bool $isHtml
+     * @return string
+     */
+    public function formatString(string $var, bool $isHtml): string
+    {
+        $length = strlen($var);
+
+        // Handle multiline strings
+        if (str_contains($var, "\n")) {
+            $lines = explode("\n", $var);
+            $firstLine = $isHtml ? htmlspecialchars($lines[0], ENT_QUOTES | ENT_HTML5) : $lines[0];
+            $result = $this->colorizer->colorize('"' . $firstLine, 'string', $isHtml);
+
+            // Indent and append remaining lines
+            for ($i = 1; $i < count($lines); $i++) {
+                $line = $isHtml ? htmlspecialchars($lines[$i], ENT_QUOTES | ENT_HTML5) : $lines[$i];
+                $result .= "\n" . str_repeat(' ', 8) . $this->colorizer->colorize($line, 'string', $isHtml);
+            }
+
+            $result .= $this->colorizer->colorize('"', 'string', $isHtml) .
+                $this->colorizer->colorize(" (length=" . $length . ", multiline)", 'meta', $isHtml);
+
+            return $result;
+        }
+
+        // Handle regular strings
+        if ($isHtml) {
+            $var = htmlspecialchars($var, ENT_QUOTES | ENT_HTML5);
+        }
+
+        if ($length > $this->config->getMaxStrLength()) {
+            $var = substr($var, 0, $this->config->getMaxStrLength()) . '...';
+        }
+
+        return $this->colorizer->colorize('"' . $var . '"', 'string', $isHtml) .
+            $this->colorizer->colorize(" (length=" . $length . ")", 'meta', $isHtml);
+    }
+
+    /**
+     * Format numeric value for output
+     *
+     * @param int|float $var
+     * @param bool $isHtml
+     * @return string
+     */
+    public function formatNumber(int|float $var, bool $isHtml): string
+    {
+        return $this->colorizer->colorize((string)$var, 'number', $isHtml);
+    }
+
+    /**
+     * Format boolean for output
+     *
+     * @param bool $var
+     * @param bool $isHtml
+     * @return string
+     */
+    public function formatBoolean(bool $var, bool $isHtml): string
+    {
+        return $this->colorizer->colorize($var ? 'true' : 'false', 'boolean', $isHtml);
+    }
+
+    /**
+     * Format null for output
+     *
+     * @param bool $isHtml
+     * @return string
+     */
+    public function formatNull(bool $isHtml): string
+    {
+        return $this->colorizer->colorize('null', 'null', $isHtml);
+    }
+}

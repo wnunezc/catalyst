@@ -1,0 +1,31 @@
+<main class="catalyst-error-shell">
+    <section class="catalyst-error-card" aria-labelledby="error-title">
+        <div class="catalyst-error-card__brand">
+            <span class="catalyst-error-card__mark" aria-hidden="true">{{ error_status }}</span>
+            <span class="catalyst-error-card__eyebrow">Catalyst Framework</span>
+        </div>
+
+        <h1 id="error-title" class="catalyst-error-card__title">{{ error_title }}</h1>
+        <p class="catalyst-error-card__message">{{ error_message }}</p>
+
+        <dl class="catalyst-error-card__meta">
+            <div>
+                <dt>{{ t:ui.errors.request_path }}</dt>
+                <dd><code>{{ request_path }}</code></dd>
+            </div>
+            {{#if has_error_ticket}}
+            <div>
+                <dt>{{ t:ui.errors.error_ticket }}</dt>
+                <dd><code>{{ error_ticket }}</code></dd>
+            </div>
+            {{/if}}
+        </dl>
+
+        <div class="catalyst-error-card__actions">
+            <a href="/" class="btn btn-primary">{{ t:ui.errors.go_home }}</a>
+            {{#if show_login_action}}
+            <a href="/login" class="btn btn-outline-secondary">{{ t:ui.errors.sign_in }}</a>
+            {{/if}}
+        </div>
+    </section>
+</main>

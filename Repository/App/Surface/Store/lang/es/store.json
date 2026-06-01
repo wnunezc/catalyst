@@ -1,0 +1,58 @@
+{
+  "surface": {
+    "title": "Tienda",
+    "eyebrow": "Demo de tienda",
+    "badge": "Superficie de catálogo",
+    "headline": "Un catálogo de productos que sí parece una tienda.",
+    "lead": "Esta demo de tienda ofrece al implementador un patrón claro para categorías, tarjetas de producto, precios y resumen de compra sin exponer administración.",
+    "actions": {
+      "primary": "Ver catálogo",
+      "secondary": "Ver landing"
+    },
+    "categories": {
+      "training": "Formación",
+      "operations": "Operaciones",
+      "support": "Soporte"
+    },
+    "products_title": "Productos destacados",
+    "products": {
+      "academy": {
+        "name": "Academy Pack",
+        "type": "Paquete de cursos",
+        "body": "Plantillas para inducción, lecciones, evaluaciones y flujos de certificación.",
+        "badge": "Popular"
+      },
+      "dispatch": {
+        "name": "Dispatch Console",
+        "type": "Módulo operativo",
+        "body": "Producto demo para asignaciones, bitácoras de actividad y coordinación de campo.",
+        "badge": "Ops"
+      },
+      "inventory": {
+        "name": "Inventory Kit",
+        "type": "Módulo de activos",
+        "body": "Tarjetas, estados y conceptos de entrega para control de inventario y equipos.",
+        "badge": "Activos"
+      },
+      "compliance": {
+        "name": "Compliance Board",
+        "type": "Módulo de gobernanza",
+        "body": "Estructura visual para políticas, revisiones, aprobaciones y seguimiento de evidencias.",
+        "badge": "Gobernanza"
+      }
+    },
+    "cart": {
+      "title": "Carrito demo",
+      "checkout": "Vista de pago",
+      "lines": {
+        "academy": "Academy Pack",
+        "dispatch": "Dispatch Console",
+        "inventory": "Inventory Kit"
+      },
+      "subtotal": "Subtotal"
+    },
+    "note": "Los precios y productos son ejemplos para demostrar una superficie pública de comercio.",
+    "search": "Buscar catálogo",
+    "add": "Agregar"
+  }
+}

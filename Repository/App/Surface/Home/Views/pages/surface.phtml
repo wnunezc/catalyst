@@ -1,0 +1,58 @@
+<main class="home-surface catalyst-demo-surface" data-public-route="home">
+    <section class="home-surface__hero">
+        <div class="home-surface__copy catalyst-demo-hero__copy">
+            <div class="home-surface__tags">
+                <span class="catalyst-demo-eyebrow">{{ page.eyebrow }}</span>
+                <span class="catalyst-demo-badge">{{ page.badge }}</span>
+            </div>
+            <h1>{{ page.headline }}</h1>
+            <p class="catalyst-demo-lead">{{ page.lead }}</p>
+            <div class="catalyst-demo-actions">
+                <a class="btn btn-primary btn-lg" href="{{ page.primaryCta.href }}">{{ page.primaryCta.label }}</a>
+                <a class="btn btn-outline-primary btn-lg" href="{{ page.secondaryCta.href }}">{{ page.secondaryCta.label }}</a>
+            </div>
+        </div>
+
+        <aside class="home-surface__map catalyst-demo-card" aria-label="{{ page.sectionsTitle }}">
+            <div class="home-surface__device" aria-hidden="true">
+                <span></span><span></span><span></span>
+            </div>
+            <h2>{{ page.sectionsTitle }}</h2>
+            <div class="home-surface__hero-cards">
+                {{#each page.heroCards}}
+                <article>
+                    <strong>{{ value }}</strong>
+                    <span>{{ label }}</span>
+                </article>
+                {{/each}}
+            </div>
+        </aside>
+    </section>
+
+    <section class="home-surface__sections" aria-label="{{ page.sectionsTitle }}">
+        {{#each page.sections}}
+        <article class="home-surface__section-card catalyst-demo-card">
+            <span class="home-surface__section-icon" aria-hidden="true"></span>
+            <h2>{{ title }}</h2>
+            <p>{{ body }}</p>
+            <a href="{{ href }}" class="home-surface__section-link">{{ label }}</a>
+        </article>
+        {{/each}}
+    </section>
+
+    <section class="home-surface__workflow catalyst-demo-card">
+        <div class="home-surface__workflow-intro">
+            <span class="catalyst-demo-eyebrow">{{ page.workflowTitle }}</span>
+            <p>{{ page.note }}</p>
+        </div>
+        <div class="home-surface__workflow-list">
+            {{#each page.workflow}}
+            <article>
+                <span>{{ step }}</span>
+                <h3>{{ title }}</h3>
+                <p>{{ body }}</p>
+            </article>
+            {{/each}}
+        </div>
+    </section>
+</main>

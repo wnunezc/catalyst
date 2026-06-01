@@ -1,0 +1,61 @@
+<main class="landing-surface catalyst-demo-surface" data-public-route="landing">
+    <section class="landing-surface__hero">
+        <div class="landing-surface__copy catalyst-demo-hero__copy">
+            <div class="landing-surface__tags">
+                <span class="catalyst-demo-eyebrow">{{ page.eyebrow }}</span>
+                <span class="catalyst-demo-badge">{{ page.badge }}</span>
+            </div>
+            <h1>{{ page.headline }}</h1>
+            <p class="catalyst-demo-lead">{{ page.lead }}</p>
+            <div class="catalyst-demo-actions">
+                <a class="btn btn-primary btn-lg" href="{{ page.primaryCta.href }}">{{ page.primaryCta.label }}</a>
+                <a class="btn btn-outline-primary btn-lg" href="{{ page.secondaryCta.href }}">{{ page.secondaryCta.label }}</a>
+            </div>
+        </div>
+
+        <aside class="landing-surface__offer catalyst-demo-card">
+            <span class="catalyst-demo-eyebrow">{{ page.proofTitle }}</span>
+            <div class="landing-surface__offer-screen" aria-hidden="true">
+                <span></span><span></span><span></span>
+            </div>
+            {{#each page.proof}}
+            <article>
+                <strong>{{ value }}</strong>
+                <span>{{ label }}</span>
+            </article>
+            {{/each}}
+        </aside>
+    </section>
+
+    <section class="landing-surface__benefits" aria-label="{{ page.benefitsTitle }}">
+        <div class="landing-surface__section-title">
+            <span class="catalyst-demo-eyebrow">{{ page.benefitsTitle }}</span>
+            <h2>{{ page.closingTitle }}</h2>
+            <p>{{ page.closingBody }}</p>
+        </div>
+        <div class="landing-surface__benefit-grid">
+            {{#each page.benefits}}
+            <article class="catalyst-demo-card">
+                <span class="landing-surface__benefit-mark" aria-hidden="true"></span>
+                <h3>{{ title }}</h3>
+                <p>{{ body }}</p>
+            </article>
+            {{/each}}
+        </div>
+    </section>
+
+    <section class="landing-surface__steps catalyst-demo-card" aria-label="{{ page.stepsTitle }}">
+        <div class="landing-surface__steps-title">
+            <span class="catalyst-demo-eyebrow">{{ page.stepsTitle }}</span>
+        </div>
+        <div class="landing-surface__step-list">
+            {{#each page.steps}}
+            <article>
+                <span>{{ step }}</span>
+                <h3>{{ title }}</h3>
+                <p>{{ body }}</p>
+            </article>
+            {{/each}}
+        </div>
+    </section>
+</main>

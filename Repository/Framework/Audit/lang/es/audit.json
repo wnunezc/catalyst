@@ -1,0 +1,54 @@
+{
+  "module": {
+    "description": "Bitácora de auditoría operativa para mutaciones administrativas y eventos de runtime del framework.",
+    "permission_label": "Gestionar bitácora de auditoría",
+    "permission_description": "Inspeccionar entradas operativas de auditoría y sus exportaciones.",
+    "navigation_label": "Bitácora de auditoría",
+    "navigation_hint": "Trazabilidad operativa y eventos framework.",
+    "breadcrumb_show": "Detalle de entrada"
+  },
+  "index": {
+    "title": "Bitácora de auditoría",
+    "description": "Timeline operativo de mutaciones administrativas y eventos internos del framework.",
+    "hero_lede": "Consulta centralizada de mutaciones administrativas, hooks ORM y eventos internos del framework.",
+    "empty": {
+      "title": "Todavía no hay entradas de auditoría",
+      "description": "La bitácora se poblará después de registrar cambios administrativos o eventos del framework."
+    },
+    "columns": {
+      "occurred": "Ocurrió",
+      "tenant": "Tenant",
+      "resource": "Recurso",
+      "action": "Acción",
+      "channel": "Canal",
+      "actor": "Actor",
+      "request": "Request"
+    },
+    "actions": {
+      "view": "Ver",
+      "export_csv": "Exportar CSV"
+    },
+    "search_placeholder": "Buscar por recurso, request URI o nombre del evento"
+  },
+  "show": {
+    "title_prefix": "Entrada de auditoría",
+    "back": "Volver a la bitácora",
+    "columns": {
+      "occurred": "Ocurrió",
+      "actor": "Actor",
+      "request": "Request",
+      "tenant": "Tenant",
+      "before": "Antes",
+      "after": "Después",
+      "metadata": "Metadata"
+    },
+    "common": {
+      "system": "sistema",
+      "not_available": "n/a",
+      "default_tenant": "default"
+    }
+  },
+  "messages": {
+    "not_found": "Entrada de auditoría no encontrada."
+  }
+}

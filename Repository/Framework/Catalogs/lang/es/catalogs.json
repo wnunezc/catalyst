@@ -1,0 +1,219 @@
+{
+  "module": {
+    "description": "Catálogos gobernados reutilizables con ciclo de vida por flujo, ventanas de vigencia, historial de versiones y consumo por metadatos.",
+    "permission_label": "Administrar Catálogos",
+    "permission_description": "Crear, activar, versionar y mantener catálogos gobernados y sus items.",
+    "navigation_label": "Catálogos",
+    "navigation_hint": "Diccionarios gobernados reutilizables para metadatos y formularios.",
+    "breadcrumb_create": "Crear Catálogo",
+    "breadcrumb_edit": "Editar Catálogo",
+    "breadcrumb_create_item": "Crear Item",
+    "breadcrumb_edit_item": "Editar Item",
+    "breadcrumb_show": "Detalle del Catálogo"
+  },
+  "common": {
+    "description": "Descripción",
+    "edit": "Editar",
+    "back": "Volver",
+    "delete": "Eliminar"
+  },
+  "form": {
+    "catalog_key": "Clave del catálogo",
+    "catalog_label": "Etiqueta del catálogo",
+    "item_key": "Clave del item",
+    "item_label": "Etiqueta del item",
+    "enabled": "Flag habilitado",
+    "valid_from": "Válido desde",
+    "valid_to": "Válido hasta",
+    "sort_order": "Orden",
+    "metadata_json": "Metadatos JSON"
+  },
+  "validation": {
+    "catalog_key_unique": "La clave del catálogo debe ser única.",
+    "parent_catalog_missing": "El catálogo padre no está disponible.",
+    "item_key_unique": "La clave del item debe ser única dentro del catálogo.",
+    "valid_from_invalid": "Proporciona una fecha/hora inicial válida o déjala en blanco.",
+    "valid_to_invalid": "Proporciona una fecha/hora final válida o déjala en blanco.",
+    "valid_to_before_start": "La fecha/hora final debe ser posterior al inicio.",
+    "metadata_json_invalid": "Proporciona JSON válido o deja el campo vacío."
+  },
+  "index": {
+    "title": "Catálogos",
+    "hero_eyebrow": "Catálogos gobernados",
+    "hero_lede": "Diccionarios reutilizables con ciclo de vida, versionado y vigencia para evitar opciones codificadas a mano en formularios y metadatos dinámicos.",
+    "description": "Diccionarios gobernados reutilizables respaldados por metadatos dinámicos, flujo y vigencia temporal.",
+    "empty": {
+      "title": "Todavía no hay catálogos",
+      "description": "Crea el primer catálogo reutilizable para centralizar opciones gobernadas entre módulos.",
+      "action": "Crear catálogo"
+    },
+    "columns": {
+      "catalog": "Catálogo",
+      "workflow": "Flujo",
+      "items": "Items",
+      "updated": "Actualizado"
+    },
+    "filters": {
+      "workflow_state": "Estado del flujo"
+    },
+    "states": {
+      "draft": "Borrador",
+      "active": "Activo",
+      "archived": "Archivado"
+    },
+    "actions": {
+      "view": "Ver",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "confirm_delete": "¿Eliminar el catálogo \"%s\"?"
+    },
+    "search_placeholder": "Buscar por etiqueta, clave o descripción"
+  },
+  "form_page": {
+    "eyebrow": "Catálogos gobernados",
+    "create_title": "Crear Catálogo",
+    "edit_title": "Editar Catálogo",
+    "hero_lede": "Define catálogos reutilizables que luego consumen metadatos dinámicos, formularios, filtros y reglas de negocio.",
+    "placeholders": {
+      "catalog_key": "estado-documento",
+      "catalog_label": "Estado del documento",
+      "description": "Qué gobierna este catálogo."
+    },
+    "help": {
+      "catalog_key": "Clave estable consumida por metadatos y otros módulos."
+    },
+    "sections": {
+      "identity": {
+        "title": "Identidad",
+        "description": "Clave reutilizable, etiqueta operativa y descripción del catálogo gobernado."
+      }
+    },
+    "actions": {
+      "create": "Crear catálogo",
+      "save": "Guardar catálogo",
+      "back": "Volver a catálogos"
+    }
+  },
+  "item_form_page": {
+    "eyebrow": "Items del catálogo",
+    "create_title": "Crear Item de Catálogo",
+    "edit_title": "Editar Item de Catálogo",
+    "hero_lede": "Edita opciones gobernadas del catálogo :catalog con vigencia temporal y metadatos auxiliares.",
+    "labels": {
+      "enabled": "Habilitado"
+    },
+    "placeholders": {
+      "item_key": "aprobado",
+      "item_label": "Aprobado",
+      "valid_from": "2026-05-20 08:00:00",
+      "valid_to": "2026-06-20 18:00:00"
+    },
+    "help": {
+      "enabled": "Desactiva la opción sin borrar su historial ni sus versiones.",
+      "metadata_json": "Datos adicionales por opción. Útiles para color, peso o ayudas consumidas por la UI."
+    },
+    "sections": {
+      "identity": {
+        "title": "Identidad",
+        "description": "Clave interna y etiqueta visible del item gobernado."
+      },
+      "behavior": {
+        "title": "Comportamiento y vigencia",
+        "description": "Habilitación operativa, orden y ventana de vigencia temporal."
+      },
+      "metadata": {
+        "title": "Metadatos",
+        "description": "Datos auxiliares para consumo posterior por UI o integraciones."
+      }
+    },
+    "actions": {
+      "create": "Crear item",
+      "save": "Guardar item",
+      "back": "Volver al catálogo"
+    }
+  },
+  "messages": {
+    "catalog_not_found": "Catálogo no encontrado.",
+    "catalog_created": "Catálogo creado.",
+    "catalog_updated": "Catálogo actualizado.",
+    "catalog_deleted": "Catálogo eliminado.",
+    "catalog_transitioned": "El catálogo cambió de estado correctamente.",
+    "catalog_version_restored": "Versión del catálogo restaurada.",
+    "catalog_restored_summary": "Catálogo restaurado desde la versión",
+    "select_transition": "Selecciona una transición de flujo válida.",
+    "item_not_found": "Item del catálogo no encontrado.",
+    "item_created": "Item del catálogo creado.",
+    "item_updated": "Item del catálogo actualizado.",
+    "item_deleted": "Item del catálogo eliminado."
+  },
+  "show": {
+    "eyebrow": "Catálogos gobernados",
+    "catalog_fallback": "Catálogo",
+    "lede_fallback": "Catálogo reutilizable consumido por formularios y filtros guiados por metadatos.",
+    "create_item": "Crear item",
+    "stats": {
+      "key": "Clave",
+      "workflow": "Flujo",
+      "items": "Items",
+      "timeline": "Línea de tiempo"
+    },
+    "workflow": {
+      "title": "Acciones de flujo",
+      "description": "Ciclo de vida reutilizable del catálogo y sus hitos de línea de tiempo.",
+      "transition": "Transición",
+      "select_transition": "Selecciona transición",
+      "notes": "Notas",
+      "notes_placeholder": "Nota opcional de transición",
+      "apply": "Aplicar",
+      "columns": {
+        "occurred": "Ocurrió",
+        "transition": "Transición",
+        "from": "Desde",
+        "to": "Hacia",
+        "actor": "Actor"
+      },
+      "empty": "Todavía no hay transiciones registradas."
+    },
+    "items": {
+      "title": "Items del catálogo",
+      "description": "Opciones gobernadas con vigencia temporal, disponibilidad y metadatos auxiliares.",
+      "add_item": "Agregar item",
+      "columns": {
+        "item": "Item",
+        "state": "Estado",
+        "validity": "Vigencia",
+        "metadata": "Metadatos"
+      },
+      "confirm_delete": "¿Eliminar este item del catálogo?",
+      "empty": "Todavía no hay items en el catálogo."
+    },
+    "timeline": {
+      "title": "Línea de tiempo",
+      "description": "Eventos de SLA e hitos capturados sobre el recurso reutilizable.",
+      "columns": {
+        "occurred": "Ocurrió",
+        "type": "Tipo",
+        "event": "Evento",
+        "label": "Etiqueta"
+      },
+      "empty": "Todavía no hay eventos en el timeline."
+    },
+    "versions": {
+      "title": "Historial de versiones",
+      "description": "Instantáneas completas persistidas del catálogo con restauración real.",
+      "columns": {
+        "version": "Versión",
+        "summary": "Resumen",
+        "created": "Creado"
+      },
+      "restore": "Restaurar",
+      "empty": "Todavía no hay versiones capturadas."
+    },
+    "common": {
+      "disabled": "deshabilitado",
+      "now": "ahora",
+      "open": "abierto",
+      "system": "sistema"
+    }
+  }
+}

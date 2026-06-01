@@ -1,0 +1,18 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{namespace}};
+
+use Catalyst\Framework\Http\Request;
+use Catalyst\Framework\Http\Response;
+use Catalyst\Framework\Middleware\MiddlewareInterface;
+use Closure;
+
+class {{ClassName}} implements MiddlewareInterface
+{
+    public function process(Request $request, Closure $next): Response
+    {
+        return $next($request);
+    }
+}

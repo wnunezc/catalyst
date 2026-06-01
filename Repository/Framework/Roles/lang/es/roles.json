@@ -1,0 +1,250 @@
+{
+  "module": {
+    "description": "Administración RBAC, usuarios, roles y permisos.",
+    "manage_users_label": "Administrar Usuarios",
+    "manage_users_description": "Crear, editar y registrar usuarios.",
+    "manage_roles_label": "Administrar Roles",
+    "manage_roles_description": "Administrar roles, permisos y asignaciones.",
+    "users_label": "Usuarios",
+    "users_hint": "Inventario y administración de usuarios",
+    "user_register_label": "Registro de Usuario",
+    "user_register_hint": "Onboarding administrativo controlado",
+    "roles_hint": "Capas de autorización",
+    "permissions_hint": "Permisos granulares activos",
+    "user_roles_breadcrumb": "Roles del Usuario",
+    "create_role_breadcrumb": "Crear Rol",
+    "edit_role_breadcrumb": "Editar Rol",
+    "create_permission_breadcrumb": "Crear Permiso"
+  },
+  "common": {
+    "id": "ID",
+    "name": "Nombre",
+    "slug": "Slug",
+    "description": "Descripción",
+    "description_optional": "Descripción",
+    "optional": "(opcional)",
+    "actions": "Acciones",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "back_to_roles": "Volver a Roles",
+    "back_to_permissions": "Volver a Permisos",
+    "slug_hint_role": "Solo minúsculas y guiones. Uso en código: RoleMiddleware(roles:'admin')",
+    "slug_hint_permission": "Solo minúsculas y guiones. Uso en código: RoleMiddleware(permissions:'manage-users')",
+    "no_description": "Sin descripción",
+    "export_csv": "Exportar CSV",
+    "permission_labels": {
+      "view_dashboard": "Ver panel",
+      "access_devtools": "Acceder a DevTools"
+    },
+    "permission_descriptions": {
+      "manage_users": "Crear, editar y desactivar usuarios.",
+      "manage_roles": "Crear, editar y eliminar roles y permisos.",
+      "view_dashboard": "Acceder al panel administrativo.",
+      "access_devtools": "Acceder al tooling de desarrollo disponible solo en entornos de desarrollo."
+    },
+    "role_labels": {
+      "administrator": "Administrador",
+      "user": "Usuario",
+      "guest": "Invitado"
+    }
+  },
+  "roles": {
+    "title": "Roles",
+    "hero_eyebrow": "Control de acceso",
+    "hero_lede": "Catálogo de roles del sistema para control de acceso, permisos asociados y mantenimiento administrativo.",
+    "new": "Nuevo Rol",
+    "permissions_link": "Permisos",
+    "empty": "Todavía no hay roles definidos.",
+    "empty_description": "Crea el primer rol antes de asignar permisos o usuarios.",
+    "permissions_title": "Permisos",
+    "permissions_page_title": "Permisos del Rol",
+    "permissions_for": "Permisos",
+    "confirm_delete": "¿Eliminar el rol '%s'?",
+    "listing_title": "Listado de Roles",
+    "listing_description": "Vista compacta para edición, permisos y mantenimiento administrativo.",
+    "search_placeholder": "Buscar por nombre, slug o descripción",
+    "create_title": "Crear Rol",
+    "edit_title": "Editar Rol",
+    "created": "Rol creado correctamente.",
+    "updated": "Rol actualizado correctamente.",
+    "deleted": "Rol eliminado.",
+    "not_found": "Rol no encontrado.",
+    "filters": {
+      "with_description": "Con descripción",
+      "without_description": "Sin descripción"
+    },
+    "bulk": {
+      "delete_selected": "Eliminar seleccionados",
+      "confirm_delete": "¿Eliminar los roles seleccionados?",
+      "select_one": "Selecciona al menos un rol.",
+      "deleted_suffix": "rol(es) eliminados."
+    }
+  },
+  "form": {
+    "hero_lede": "Define el nombre, slug y descripción operativa del rol.",
+    "name_placeholder": "Administrador",
+    "slug_placeholder": "admin",
+    "submit_create": "Crear Rol",
+    "submit_update": "Actualizar Rol",
+    "sections": {
+      "identity": {
+        "title": "Identidad del rol",
+        "description": "Nombre, slug y datos base del rol administrativo."
+      },
+      "details": {
+        "title": "Contexto operativo",
+        "description": "Notas opcionales para mantenimiento interno."
+      }
+    }
+  },
+  "permissions": {
+    "title": "Permisos",
+    "catalog_eyebrow": "Catálogo de permisos",
+    "map_eyebrow": "Mapa de permisos del rol",
+    "assignment_title": "Asignación de permisos",
+    "assignment_description": "Sincroniza permisos disponibles contra el rol seleccionado.",
+    "available_count": "%d disponibles",
+    "new": "Nuevo Permiso",
+    "empty": "Todavía no hay permisos definidos.",
+    "empty_description": "No hay permisos cargados todavía en el catálogo actual.",
+    "none_defined": "No hay permisos definidos.",
+    "save": "Guardar Permisos",
+    "create_first": "Crea permisos primero.",
+    "role_label": "Rol:",
+    "confirm_delete": "¿Eliminar el permiso '%s'?",
+    "listing_title": "Listado de Permisos",
+    "listing_description": "Listado compacto para mantenimiento, edición y limpieza del catálogo.",
+    "search_placeholder": "Buscar por nombre, slug o descripción",
+    "create_title": "Crear Permiso",
+    "edit_title": "Editar Permiso",
+    "created": "Permiso creado correctamente.",
+    "updated": "Permiso actualizado correctamente.",
+    "deleted": "Permiso eliminado.",
+    "updated_assignments": "Permisos actualizados.",
+    "not_found": "Permiso no encontrado.",
+    "filters": {
+      "prefix": "Prefijo"
+    },
+    "bulk": {
+      "delete_selected": "Eliminar seleccionados",
+      "confirm_delete": "¿Eliminar los permisos seleccionados?",
+      "select_one": "Selecciona al menos un permiso.",
+      "deleted_suffix": "permiso(s) eliminados."
+    }
+  },
+  "permission_form": {
+    "hero_lede": "Crea o ajusta permisos atómicos para asignación posterior a roles.",
+    "name_placeholder": "Gestionar Usuarios",
+    "slug_placeholder": "manage-users",
+    "submit": "Crear Permiso",
+    "sections": {
+      "identity": {
+        "title": "Identidad del permiso",
+        "description": "Define el permiso atómico y su slug canónico."
+      },
+      "details": {
+        "title": "Contexto operativo",
+        "description": "Descripción opcional para administración y soporte."
+      }
+    }
+  },
+  "user_roles": {
+    "title": "Roles del Usuario",
+    "title_for": "Roles — :name",
+    "role": "Rol",
+    "status": "Estado",
+    "action": "Acción",
+    "assigned": "Asignado",
+    "not_assigned": "No asignado",
+    "assign": "Asignar",
+    "remove": "Quitar",
+    "empty": "No hay roles definidos.",
+    "messages": {
+      "assigned": "Rol asignado.",
+      "removed": "Rol removido."
+    }
+  },
+  "users": {
+    "title": "Usuarios",
+    "eyebrow": "Administración",
+    "hero_lede": "Gestión básica de usuarios registrados en el sistema.",
+    "register_title": "Registro de Usuario",
+    "register_description": "Crea usuarios desde el área administrativa y asígnales un rol inicial.",
+    "back_to_users": "Volver a usuarios",
+    "listing_title": "Usuarios registrados",
+    "listing_description": "Desde aquí puedes revisar usuarios y administrar sus roles.",
+    "record_count": "%d registros",
+    "empty": "No hay usuarios registrados",
+    "empty_description": "Crea el primer usuario desde el formulario administrativo.",
+    "no_role": "Sin rol",
+    "columns": {
+      "user": "Usuario",
+      "email": "Correo",
+      "roles": "Roles",
+      "status": "Estado",
+      "verification": "Verificación",
+      "created": "Creado"
+    },
+    "status": {
+      "active": "Activo",
+      "inactive": "Inactivo"
+    },
+    "verification": {
+      "verified": "Verificado",
+      "pending": "Pendiente"
+    },
+    "form": {
+      "labels": {
+        "name": "Nombre completo",
+        "email": "Correo electrónico",
+        "password": "Contraseña",
+        "password_confirm": "Confirmar contraseña",
+        "role": "Rol inicial",
+        "email_verified": "Verificación de correo"
+      },
+      "placeholders": {
+        "name": "Ejemplo: Juan Pérez",
+        "email": "usuario@dominio.com",
+        "password": "Mínimo 8 caracteres",
+        "password_confirm": "Repite la contraseña"
+      },
+      "default_role_label": "Usuario",
+      "options": {
+        "email_verified_yes": "Marcar como verificado",
+        "email_verified_no": "Dejar pendiente de verificación"
+      },
+      "help": {
+        "password": "Usa una contraseña temporal segura. El usuario podrá cambiarla después.",
+        "role": "Este rol se guardará en la tabla pivote user_roles.",
+        "email_verified": "Para usuarios creados por administración, lo más práctico es marcarlos como verificados."
+      },
+      "actions": {
+        "submit": "Registrar usuario"
+      }
+    },
+    "messages": {
+      "load_error": "No se pudo cargar la lista de usuarios:",
+      "validation_failed": "La validación falló",
+      "email_exists": "Ya existe un usuario registrado con ese correo.",
+      "create_error": "No se pudo crear el usuario:",
+      "created": "Usuario registrado correctamente.",
+      "user_not_found": "Usuario no encontrado."
+    },
+    "enroll": {
+      "toolbar_label": "Política de enrolamiento",
+      "identity_badge": "Identidad",
+      "security_badge": "Credencial inicial",
+      "access_badge": "Acceso inicial",
+      "audit_note": "El enrolamiento administrativo se valida, registra y retorna al catálogo de usuarios.",
+      "sections": {
+        "identity_title": "Perfil de identidad",
+        "identity_description": "Registra la identidad mínima de la cuenta requerida por el framework.",
+        "security_title": "Credencial inicial",
+        "security_description": "Asigna una contraseña temporal segura para el primer ciclo de acceso.",
+        "access_title": "Acceso inicial",
+        "access_description": "Asigna el rol inicial y el estado de verificación de este usuario."
+      }
+    }
+  }
+}

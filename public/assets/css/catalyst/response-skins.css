@@ -1,0 +1,999 @@
+/*
+ * Catalyst / Inspinia response skins
+ * -----------------------------------------------------------------------------
+ * Closed Select Theme presets. These skins only replace color tokens and shell
+ * accent colors; they do not redefine layout geometry, spacing, markup, or the
+ * Inspinia component structure adapted for Catalyst CSP.
+ */
+
+html[data-skin="civil-protection"] {
+    color-scheme: light;
+    --catalyst-response-primary: #f05a00;
+    --catalyst-response-primary-rgb: 240, 90, 0;
+    --catalyst-response-primary-hover: #cf4d00;
+    --catalyst-response-primary-active: #a83f00;
+    --catalyst-response-primary-soft: #fff3e8;
+    --catalyst-response-primary-border: #ffc99f;
+    --catalyst-response-accent: #243746;
+    --catalyst-response-accent-rgb: 36, 55, 70;
+    --catalyst-response-accent-soft: #edf3f8;
+    --catalyst-response-ink: #17212b;
+    --catalyst-response-body: #26313e;
+    --catalyst-response-muted: #687586;
+    --catalyst-response-subtle: #8a95a4;
+    --catalyst-response-bg: #f6f8fa;
+    --catalyst-response-surface: #ffffff;
+    --catalyst-response-surface-alt: #fafbfc;
+    --catalyst-response-border: #e4e8ee;
+    --catalyst-response-border-soft: #edf0f4;
+    --catalyst-response-topbar-bg: #243746;
+    --catalyst-response-topbar-color: #eaf0f5;
+    --catalyst-response-topbar-hover: #ff8a24;
+    --catalyst-response-topbar-search-bg: rgba(255, 255, 255, 0.08);
+    --catalyst-response-topbar-search-border: rgba(255, 255, 255, 0.22);
+    --catalyst-response-sidenav-bg: #ffffff;
+    --catalyst-response-sidenav-color: #596575;
+    --catalyst-response-sidenav-title: #8b96a5;
+    --catalyst-response-sidenav-active-color: #d94f00;
+    --catalyst-response-sidenav-active-bg: #fff3e8;
+    --catalyst-response-card-bg: #ffffff;
+    --catalyst-response-card-color: #26313e;
+    --catalyst-response-card-title: #17212b;
+    --catalyst-response-card-border: #e4e8ee;
+    --catalyst-response-shadow: 0 1px 3px rgba(23, 33, 43, 0.06);
+}
+
+html[data-skin="firefighters"] {
+    color-scheme: light;
+    --catalyst-response-primary: #d80d0d;
+    --catalyst-response-primary-rgb: 216, 13, 13;
+    --catalyst-response-primary-hover: #b90a0a;
+    --catalyst-response-primary-active: #920707;
+    --catalyst-response-primary-soft: #fff0ee;
+    --catalyst-response-primary-border: #ffb8b2;
+    --catalyst-response-accent: #18006c;
+    --catalyst-response-accent-rgb: 24, 0, 108;
+    --catalyst-response-accent-soft: #f2f0ff;
+    --catalyst-response-warning: #f6c500;
+    --catalyst-response-ink: #171424;
+    --catalyst-response-body: #29263a;
+    --catalyst-response-muted: #6b6878;
+    --catalyst-response-subtle: #9290a0;
+    --catalyst-response-bg: #f7f7fb;
+    --catalyst-response-surface: #ffffff;
+    --catalyst-response-surface-alt: #fafafe;
+    --catalyst-response-border: #e4e2ee;
+    --catalyst-response-border-soft: #eeedf5;
+    --catalyst-response-topbar-bg: #18006c;
+    --catalyst-response-topbar-color: #f5f2ff;
+    --catalyst-response-topbar-hover: #f6c500;
+    --catalyst-response-topbar-search-bg: rgba(255, 255, 255, 0.08);
+    --catalyst-response-topbar-search-border: rgba(255, 255, 255, 0.24);
+    --catalyst-response-sidenav-bg: #18006c;
+    --catalyst-response-sidenav-color: rgba(255, 255, 255, 0.76);
+    --catalyst-response-sidenav-title: rgba(255, 255, 255, 0.54);
+    --catalyst-response-sidenav-active-color: #ffffff;
+    --catalyst-response-sidenav-active-bg: rgba(216, 13, 13, 0.22);
+    --catalyst-response-card-bg: #ffffff;
+    --catalyst-response-card-color: #29263a;
+    --catalyst-response-card-title: #171424;
+    --catalyst-response-card-border: #e4e2ee;
+    --catalyst-response-shadow: 0 1px 4px rgba(24, 0, 108, 0.08);
+}
+
+html[data-skin="grempa"] {
+    color-scheme: dark;
+    --catalyst-response-primary: #f04b37;
+    --catalyst-response-primary-rgb: 240, 75, 55;
+    --catalyst-response-primary-hover: #ff6250;
+    --catalyst-response-primary-active: #c93424;
+    --catalyst-response-primary-soft: rgba(240, 75, 55, 0.16);
+    --catalyst-response-primary-border: rgba(240, 75, 55, 0.42);
+    --catalyst-response-accent: #0a84ff;
+    --catalyst-response-accent-rgb: 10, 132, 255;
+    --catalyst-response-accent-soft: rgba(10, 132, 255, 0.16);
+    --catalyst-response-warning: #f4c400;
+    --catalyst-response-ink: #f7fafc;
+    --catalyst-response-body: #d8e2ef;
+    --catalyst-response-muted: #9caec4;
+    --catalyst-response-subtle: #75879d;
+    --catalyst-response-bg: #0b1120;
+    --catalyst-response-surface: #111827;
+    --catalyst-response-surface-alt: #0f172a;
+    --catalyst-response-border: rgba(148, 163, 184, 0.20);
+    --catalyst-response-border-soft: rgba(148, 163, 184, 0.14);
+    --catalyst-response-topbar-bg: #0b1120;
+    --catalyst-response-topbar-color: #d8e2ef;
+    --catalyst-response-topbar-hover: #f4c400;
+    --catalyst-response-topbar-search-bg: rgba(255, 255, 255, 0.07);
+    --catalyst-response-topbar-search-border: rgba(148, 163, 184, 0.26);
+    --catalyst-response-sidenav-bg: #0b1120;
+    --catalyst-response-sidenav-color: #9caec4;
+    --catalyst-response-sidenav-title: #63748b;
+    --catalyst-response-sidenav-active-color: #ffffff;
+    --catalyst-response-sidenav-active-bg: rgba(240, 75, 55, 0.18);
+    --catalyst-response-card-bg: #111827;
+    --catalyst-response-card-color: #d8e2ef;
+    --catalyst-response-card-title: #f7fafc;
+    --catalyst-response-card-border: rgba(148, 163, 184, 0.20);
+    --catalyst-response-shadow: 0 1px 5px rgba(0, 0, 0, 0.28);
+}
+
+html[data-skin="civil-protection"],
+html[data-skin="firefighters"],
+html[data-skin="grempa"] {
+    --catalyst-brand-primary: var(--catalyst-response-primary);
+    --catalyst-brand-primary-rgb: var(--catalyst-response-primary-rgb);
+    --catalyst-brand-text-strong: var(--catalyst-response-ink);
+    --catalyst-brand-text-muted: var(--catalyst-response-muted);
+    --catalyst-brand-surface: var(--catalyst-response-surface);
+    --catalyst-brand-shell: linear-gradient(135deg, rgba(var(--catalyst-response-primary-rgb), 0.08), var(--catalyst-response-surface));
+    --catalyst-brand-border: rgba(var(--catalyst-response-primary-rgb), 0.18);
+
+    --theme-primary: var(--catalyst-response-primary);
+    --theme-primary-rgb: var(--catalyst-response-primary-rgb);
+    --theme-primary-text-emphasis: var(--catalyst-response-primary-active);
+    --theme-primary-bg-subtle: var(--catalyst-response-primary-soft);
+    --theme-primary-border-subtle: var(--catalyst-response-primary-border);
+
+    --theme-danger: var(--catalyst-response-primary);
+    --theme-danger-rgb: var(--catalyst-response-primary-rgb);
+    --theme-danger-text-emphasis: var(--catalyst-response-primary-active);
+    --theme-danger-bg-subtle: var(--catalyst-response-primary-soft);
+    --theme-danger-border-subtle: var(--catalyst-response-primary-border);
+
+    --theme-info: var(--catalyst-response-accent);
+    --theme-info-rgb: var(--catalyst-response-accent-rgb);
+    --theme-warning: var(--catalyst-response-warning, #f2a93b);
+    --theme-warning-rgb: 246, 197, 0;
+    --theme-success: #18865a;
+    --theme-success-rgb: 24, 134, 90;
+    --theme-secondary: var(--catalyst-response-muted);
+    --theme-secondary-rgb: 104, 117, 134;
+    --theme-light: var(--catalyst-response-bg);
+    --theme-dark: var(--catalyst-response-ink);
+
+    --theme-body-bg: var(--catalyst-response-bg);
+    --theme-body-bg-rgb: 246, 248, 250;
+    --theme-body-color: var(--catalyst-response-body);
+    --theme-emphasis-color: var(--catalyst-response-ink);
+    --theme-secondary-color: var(--catalyst-response-muted);
+    --theme-tertiary-color: var(--catalyst-response-subtle);
+    --theme-secondary-bg: var(--catalyst-response-surface);
+    --theme-tertiary-bg: var(--catalyst-response-surface-alt);
+    --theme-heading-color: var(--catalyst-response-ink);
+    --theme-border-color: var(--catalyst-response-border);
+    --theme-border-color-translucent: var(--catalyst-response-border-soft);
+    --theme-link-color: var(--catalyst-response-primary);
+    --theme-link-color-rgb: var(--catalyst-response-primary-rgb);
+    --theme-link-hover-color: var(--catalyst-response-primary-active);
+    --theme-focus-ring-color: rgba(var(--catalyst-response-primary-rgb), 0.22);
+
+    --theme-card-bg: var(--catalyst-response-card-bg);
+    --theme-card-color: var(--catalyst-response-card-color);
+    --theme-card-title-color: var(--catalyst-response-card-title);
+    --theme-card-subtitle-color: var(--catalyst-response-muted);
+    --theme-card-cap-bg: var(--catalyst-response-card-bg);
+    --theme-card-cap-color: var(--catalyst-response-card-title);
+    --theme-theme-card-border-color: var(--catalyst-response-card-border);
+    --theme-theme-card-box-shadow: var(--catalyst-response-shadow);
+
+    --theme-dropdown-bg: var(--catalyst-response-surface);
+    --theme-dropdown-color: var(--catalyst-response-body);
+    --theme-dropdown-link-color: var(--catalyst-response-body);
+    --theme-dropdown-link-hover-color: var(--catalyst-response-primary-active);
+    --theme-dropdown-link-hover-bg: var(--catalyst-response-primary-soft);
+    --theme-dropdown-link-active-color: #ffffff;
+    --theme-dropdown-link-active-bg: var(--catalyst-response-primary);
+    --theme-dropdown-border-color: var(--catalyst-response-border);
+
+    --theme-modal-bg: var(--catalyst-response-surface);
+    --theme-modal-color: var(--catalyst-response-body);
+    --theme-modal-border-color: var(--catalyst-response-border);
+    --theme-list-group-bg: var(--catalyst-response-surface);
+    --theme-list-group-color: var(--catalyst-response-body);
+    --theme-list-group-border-color: var(--catalyst-response-border);
+
+    --theme-topbar-bg: var(--catalyst-response-topbar-bg);
+    --theme-topbar-item-color: var(--catalyst-response-topbar-color);
+    --theme-topbar-item-hover-color: var(--catalyst-response-topbar-hover);
+    --theme-topbar-search-bg: var(--catalyst-response-topbar-search-bg);
+    --theme-topbar-search-border: var(--catalyst-response-topbar-search-border);
+
+    --theme-sidenav-bg: var(--catalyst-response-sidenav-bg);
+    --theme-sidenav-border-color: var(--catalyst-response-border);
+    --theme-sidenav-title-color: var(--catalyst-response-sidenav-title);
+    --theme-sidenav-item-color: var(--catalyst-response-sidenav-color);
+    --theme-sidenav-item-hover-color: var(--catalyst-response-sidenav-active-color);
+    --theme-sidenav-item-hover-bg: var(--catalyst-response-sidenav-active-bg);
+    --theme-sidenav-item-active-color: var(--catalyst-response-sidenav-active-color);
+    --theme-sidenav-item-active-bg: var(--catalyst-response-sidenav-active-bg);
+
+    --theme-chart-primary: var(--catalyst-response-primary);
+    --theme-chart-primary-rgb: var(--catalyst-response-primary-rgb);
+    --theme-chart-secondary: var(--catalyst-response-accent);
+    --theme-chart-secondary-rgb: var(--catalyst-response-accent-rgb);
+    --theme-chart-alpha: #18865a;
+    --theme-chart-alpha-rgb: 24, 134, 90;
+    --theme-chart-beta: var(--catalyst-response-primary);
+    --theme-chart-beta-rgb: var(--catalyst-response-primary-rgb);
+    --theme-chart-gamma: var(--catalyst-response-warning, #f2a93b);
+    --theme-chart-gamma-rgb: 246, 197, 0;
+    --theme-chart-delta: var(--catalyst-response-accent);
+    --theme-chart-delta-rgb: var(--catalyst-response-accent-rgb);
+    --theme-chart-gray: var(--catalyst-response-border-soft);
+    --theme-chart-title-color: var(--catalyst-response-muted);
+    --theme-chart-border-color: var(--catalyst-response-border);
+
+    --bs-primary: var(--catalyst-response-primary);
+    --bs-primary-rgb: var(--catalyst-response-primary-rgb);
+    --bs-danger: var(--catalyst-response-primary);
+    --bs-danger-rgb: var(--catalyst-response-primary-rgb);
+    --bs-body-bg: var(--catalyst-response-bg);
+    --bs-body-color: var(--catalyst-response-body);
+    --bs-emphasis-color: var(--catalyst-response-ink);
+    --bs-heading-color: var(--catalyst-response-ink);
+    --bs-secondary-color: var(--catalyst-response-muted);
+    --bs-tertiary-color: var(--catalyst-response-subtle);
+    --bs-secondary-bg: var(--catalyst-response-surface);
+    --bs-tertiary-bg: var(--catalyst-response-surface-alt);
+    --bs-border-color: var(--catalyst-response-border);
+    --bs-border-color-translucent: var(--catalyst-response-border-soft);
+    --bs-link-color: var(--catalyst-response-primary);
+    --bs-link-color-rgb: var(--catalyst-response-primary-rgb);
+    --bs-link-hover-color: var(--catalyst-response-primary-active);
+}
+
+html[data-skin="civil-protection"],
+html[data-skin="civil-protection"] body,
+html[data-skin="firefighters"],
+html[data-skin="firefighters"] body,
+html[data-skin="grempa"],
+html[data-skin="grempa"] body {
+    background-color: var(--theme-body-bg);
+    color: var(--theme-body-color);
+}
+
+html[data-skin="civil-protection"] .text-body,
+html[data-skin="civil-protection"] .card,
+html[data-skin="civil-protection"] .card-body,
+html[data-skin="civil-protection"] .card-header,
+html[data-skin="civil-protection"] .card-footer,
+html[data-skin="civil-protection"] .dropdown-menu,
+html[data-skin="civil-protection"] .modal-content,
+html[data-skin="civil-protection"] .offcanvas,
+html[data-skin="civil-protection"] .list-group-item,
+html[data-skin="civil-protection"] .table,
+html[data-skin="firefighters"] .text-body,
+html[data-skin="firefighters"] .card,
+html[data-skin="firefighters"] .card-body,
+html[data-skin="firefighters"] .card-header,
+html[data-skin="firefighters"] .card-footer,
+html[data-skin="firefighters"] .dropdown-menu,
+html[data-skin="firefighters"] .modal-content,
+html[data-skin="firefighters"] .offcanvas,
+html[data-skin="firefighters"] .list-group-item,
+html[data-skin="firefighters"] .table,
+html[data-skin="grempa"] .text-body,
+html[data-skin="grempa"] .card,
+html[data-skin="grempa"] .card-body,
+html[data-skin="grempa"] .card-header,
+html[data-skin="grempa"] .card-footer,
+html[data-skin="grempa"] .dropdown-menu,
+html[data-skin="grempa"] .modal-content,
+html[data-skin="grempa"] .offcanvas,
+html[data-skin="grempa"] .list-group-item,
+html[data-skin="grempa"] .table {
+    color: var(--theme-body-color);
+}
+
+html[data-skin="civil-protection"] .text-muted,
+html[data-skin="civil-protection"] .text-secondary,
+html[data-skin="civil-protection"] .small.text-muted,
+html[data-skin="civil-protection"] .card-subtitle,
+html[data-skin="firefighters"] .text-muted,
+html[data-skin="firefighters"] .text-secondary,
+html[data-skin="firefighters"] .small.text-muted,
+html[data-skin="firefighters"] .card-subtitle,
+html[data-skin="grempa"] .text-muted,
+html[data-skin="grempa"] .text-secondary,
+html[data-skin="grempa"] .small.text-muted,
+html[data-skin="grempa"] .card-subtitle {
+    color: var(--theme-secondary-color) !important;
+}
+
+html[data-skin="civil-protection"] h1,
+html[data-skin="civil-protection"] h2,
+html[data-skin="civil-protection"] h3,
+html[data-skin="civil-protection"] h4,
+html[data-skin="civil-protection"] h5,
+html[data-skin="civil-protection"] h6,
+html[data-skin="firefighters"] h1,
+html[data-skin="firefighters"] h2,
+html[data-skin="firefighters"] h3,
+html[data-skin="firefighters"] h4,
+html[data-skin="firefighters"] h5,
+html[data-skin="firefighters"] h6,
+html[data-skin="grempa"] h1,
+html[data-skin="grempa"] h2,
+html[data-skin="grempa"] h3,
+html[data-skin="grempa"] h4,
+html[data-skin="grempa"] h5,
+html[data-skin="grempa"] h6 {
+    color: var(--theme-heading-color);
+}
+
+html[data-skin="civil-protection"] .sidenav-menu,
+html[data-skin="firefighters"] .sidenav-menu,
+html[data-skin="grempa"] .sidenav-menu {
+    background: var(--theme-sidenav-bg);
+    border-right-color: var(--theme-sidenav-border-color);
+}
+
+html[data-skin="civil-protection"] .side-nav-title,
+html[data-skin="firefighters"] .side-nav-title,
+html[data-skin="grempa"] .side-nav-title {
+    color: var(--theme-sidenav-title-color);
+}
+
+html[data-skin="civil-protection"] .side-nav .side-nav-link,
+html[data-skin="civil-protection"] .side-nav .side-nav-second-level a,
+html[data-skin="civil-protection"] .side-nav .side-nav-third-level a,
+html[data-skin="firefighters"] .side-nav .side-nav-link,
+html[data-skin="firefighters"] .side-nav .side-nav-second-level a,
+html[data-skin="firefighters"] .side-nav .side-nav-third-level a,
+html[data-skin="grempa"] .side-nav .side-nav-link,
+html[data-skin="grempa"] .side-nav .side-nav-second-level a,
+html[data-skin="grempa"] .side-nav .side-nav-third-level a {
+    color: var(--theme-sidenav-item-color);
+}
+
+html[data-skin="civil-protection"] .side-nav .side-nav-link.active,
+html[data-skin="civil-protection"] .side-nav .side-nav-item.active > .side-nav-link,
+html[data-skin="civil-protection"] .side-nav .side-nav-second-level a.active,
+html[data-skin="civil-protection"] .side-nav .side-nav-third-level a.active,
+html[data-skin="firefighters"] .side-nav .side-nav-link.active,
+html[data-skin="firefighters"] .side-nav .side-nav-item.active > .side-nav-link,
+html[data-skin="firefighters"] .side-nav .side-nav-second-level a.active,
+html[data-skin="firefighters"] .side-nav .side-nav-third-level a.active,
+html[data-skin="grempa"] .side-nav .side-nav-link.active,
+html[data-skin="grempa"] .side-nav .side-nav-item.active > .side-nav-link,
+html[data-skin="grempa"] .side-nav .side-nav-second-level a.active,
+html[data-skin="grempa"] .side-nav .side-nav-third-level a.active {
+    color: var(--theme-sidenav-item-active-color);
+    background-color: var(--theme-sidenav-item-active-bg);
+}
+
+html[data-skin="civil-protection"] .side-nav .side-nav-link:hover,
+html[data-skin="civil-protection"] .side-nav .side-nav-link:focus,
+html[data-skin="civil-protection"] .side-nav .side-nav-second-level a:hover,
+html[data-skin="civil-protection"] .side-nav .side-nav-third-level a:hover,
+html[data-skin="firefighters"] .side-nav .side-nav-link:hover,
+html[data-skin="firefighters"] .side-nav .side-nav-link:focus,
+html[data-skin="firefighters"] .side-nav .side-nav-second-level a:hover,
+html[data-skin="firefighters"] .side-nav .side-nav-third-level a:hover,
+html[data-skin="grempa"] .side-nav .side-nav-link:hover,
+html[data-skin="grempa"] .side-nav .side-nav-link:focus,
+html[data-skin="grempa"] .side-nav .side-nav-second-level a:hover,
+html[data-skin="grempa"] .side-nav .side-nav-third-level a:hover {
+    color: var(--theme-sidenav-item-hover-color);
+    background-color: var(--theme-sidenav-item-hover-bg);
+}
+
+html[data-skin="civil-protection"] .app-topbar,
+html[data-skin="firefighters"] .app-topbar,
+html[data-skin="grempa"] .app-topbar {
+    background: var(--theme-topbar-bg);
+    color: var(--theme-topbar-item-color);
+}
+
+html[data-skin="civil-protection"] .app-topbar .topbar-link,
+html[data-skin="civil-protection"] .app-topbar .nav-link,
+html[data-skin="civil-protection"] .app-topbar button,
+html[data-skin="civil-protection"] .app-topbar .dropdown-toggle,
+html[data-skin="firefighters"] .app-topbar .topbar-link,
+html[data-skin="firefighters"] .app-topbar .nav-link,
+html[data-skin="firefighters"] .app-topbar button,
+html[data-skin="firefighters"] .app-topbar .dropdown-toggle,
+html[data-skin="grempa"] .app-topbar .topbar-link,
+html[data-skin="grempa"] .app-topbar .nav-link,
+html[data-skin="grempa"] .app-topbar button,
+html[data-skin="grempa"] .app-topbar .dropdown-toggle {
+    color: var(--theme-topbar-item-color);
+}
+
+html[data-skin="civil-protection"] .app-topbar .topbar-link:hover,
+html[data-skin="civil-protection"] .app-topbar .nav-link:hover,
+html[data-skin="civil-protection"] .app-topbar button:hover,
+html[data-skin="civil-protection"] .app-topbar .dropdown-toggle:hover,
+html[data-skin="firefighters"] .app-topbar .topbar-link:hover,
+html[data-skin="firefighters"] .app-topbar .nav-link:hover,
+html[data-skin="firefighters"] .app-topbar button:hover,
+html[data-skin="firefighters"] .app-topbar .dropdown-toggle:hover,
+html[data-skin="grempa"] .app-topbar .topbar-link:hover,
+html[data-skin="grempa"] .app-topbar .nav-link:hover,
+html[data-skin="grempa"] .app-topbar button:hover,
+html[data-skin="grempa"] .app-topbar .dropdown-toggle:hover {
+    color: var(--theme-topbar-item-hover-color);
+}
+
+html[data-skin="civil-protection"] .app-topbar .app-search input,
+html[data-skin="civil-protection"] .app-topbar input[type="search"],
+html[data-skin="firefighters"] .app-topbar .app-search input,
+html[data-skin="firefighters"] .app-topbar input[type="search"],
+html[data-skin="grempa"] .app-topbar .app-search input,
+html[data-skin="grempa"] .app-topbar input[type="search"] {
+    background-color: var(--theme-topbar-search-bg);
+    border-color: var(--theme-topbar-search-border);
+    color: var(--theme-topbar-item-color);
+}
+
+html[data-skin="civil-protection"] .app-topbar .app-search input::placeholder,
+html[data-skin="firefighters"] .app-topbar .app-search input::placeholder,
+html[data-skin="grempa"] .app-topbar .app-search input::placeholder {
+    color: color-mix(in srgb, var(--theme-topbar-item-color) 68%, transparent);
+}
+
+html[data-skin="civil-protection"] .btn-primary,
+html[data-skin="firefighters"] .btn-primary,
+html[data-skin="grempa"] .btn-primary {
+    --theme-btn-color: #ffffff;
+    --theme-btn-bg: var(--catalyst-response-primary);
+    --theme-btn-border-color: var(--catalyst-response-primary);
+    --theme-btn-hover-color: #ffffff;
+    --theme-btn-hover-bg: var(--catalyst-response-primary-hover);
+    --theme-btn-hover-border-color: var(--catalyst-response-primary-hover);
+    --theme-btn-active-color: #ffffff;
+    --theme-btn-active-bg: var(--catalyst-response-primary-active);
+    --theme-btn-active-border-color: var(--catalyst-response-primary-active);
+    --bs-btn-color: #ffffff;
+    --bs-btn-bg: var(--catalyst-response-primary);
+    --bs-btn-border-color: var(--catalyst-response-primary);
+    --bs-btn-hover-color: #ffffff;
+    --bs-btn-hover-bg: var(--catalyst-response-primary-hover);
+    --bs-btn-hover-border-color: var(--catalyst-response-primary-hover);
+    --bs-btn-active-bg: var(--catalyst-response-primary-active);
+    --bs-btn-active-border-color: var(--catalyst-response-primary-active);
+}
+
+html[data-skin="civil-protection"] .btn-outline-primary,
+html[data-skin="firefighters"] .btn-outline-primary,
+html[data-skin="grempa"] .btn-outline-primary {
+    --theme-btn-color: var(--catalyst-response-primary);
+    --theme-btn-border-color: var(--catalyst-response-primary);
+    --theme-btn-hover-color: #ffffff;
+    --theme-btn-hover-bg: var(--catalyst-response-primary);
+    --theme-btn-hover-border-color: var(--catalyst-response-primary);
+    --bs-btn-color: var(--catalyst-response-primary);
+    --bs-btn-border-color: var(--catalyst-response-primary);
+    --bs-btn-hover-color: #ffffff;
+    --bs-btn-hover-bg: var(--catalyst-response-primary);
+    --bs-btn-hover-border-color: var(--catalyst-response-primary);
+}
+
+html[data-skin="civil-protection"] .badge.text-bg-primary,
+html[data-skin="civil-protection"] .bg-primary,
+html[data-skin="civil-protection"] .text-bg-primary,
+html[data-skin="firefighters"] .badge.text-bg-primary,
+html[data-skin="firefighters"] .bg-primary,
+html[data-skin="firefighters"] .text-bg-primary,
+html[data-skin="grempa"] .badge.text-bg-primary,
+html[data-skin="grempa"] .bg-primary,
+html[data-skin="grempa"] .text-bg-primary {
+    background-color: var(--catalyst-response-primary) !important;
+    color: #ffffff !important;
+}
+
+html[data-skin="civil-protection"] .text-primary,
+html[data-skin="civil-protection"] a,
+html[data-skin="firefighters"] .text-primary,
+html[data-skin="firefighters"] a,
+html[data-skin="grempa"] .text-primary,
+html[data-skin="grempa"] a {
+    color: var(--catalyst-response-primary);
+}
+
+html[data-skin="civil-protection"] a:hover,
+html[data-skin="firefighters"] a:hover,
+html[data-skin="grempa"] a:hover {
+    color: var(--catalyst-response-primary-hover);
+}
+
+html[data-skin="civil-protection"] .form-control,
+html[data-skin="civil-protection"] .form-select,
+html[data-skin="civil-protection"] .input-group-text,
+html[data-skin="firefighters"] .form-control,
+html[data-skin="firefighters"] .form-select,
+html[data-skin="firefighters"] .input-group-text,
+html[data-skin="grempa"] .form-control,
+html[data-skin="grempa"] .form-select,
+html[data-skin="grempa"] .input-group-text {
+    background-color: var(--catalyst-response-surface);
+    border-color: var(--catalyst-response-border);
+    color: var(--catalyst-response-body);
+}
+
+html[data-skin="civil-protection"] .form-control::placeholder,
+html[data-skin="civil-protection"] .form-select::placeholder,
+html[data-skin="firefighters"] .form-control::placeholder,
+html[data-skin="firefighters"] .form-select::placeholder,
+html[data-skin="grempa"] .form-control::placeholder,
+html[data-skin="grempa"] .form-select::placeholder {
+    color: var(--catalyst-response-subtle);
+}
+
+html[data-skin="civil-protection"] .form-control:focus,
+html[data-skin="civil-protection"] .form-select:focus,
+html[data-skin="firefighters"] .form-control:focus,
+html[data-skin="firefighters"] .form-select:focus,
+html[data-skin="grempa"] .form-control:focus,
+html[data-skin="grempa"] .form-select:focus {
+    border-color: var(--catalyst-response-primary);
+    box-shadow: 0 0 0 0.2rem rgba(var(--catalyst-response-primary-rgb), 0.13);
+}
+
+html[data-skin="civil-protection"] .card,
+html[data-skin="firefighters"] .card,
+html[data-skin="grempa"] .card {
+    background-color: var(--theme-card-bg);
+    border-color: var(--theme-theme-card-border-color, var(--theme-border-color));
+}
+
+html[data-skin="civil-protection"] .migration-ui-theme-panel__header,
+html[data-skin="firefighters"] .migration-ui-theme-panel__header,
+html[data-skin="grempa"] .migration-ui-theme-panel__header {
+    background: linear-gradient(135deg, var(--catalyst-response-primary) 0%, var(--catalyst-response-accent) 100%);
+}
+
+html[data-skin="civil-protection"] .catalyst-status-bar,
+html[data-skin="firefighters"] .catalyst-status-bar,
+html[data-skin="grempa"] .catalyst-status-bar {
+    background: var(--catalyst-response-surface-alt);
+    border-top-color: var(--catalyst-response-border);
+    color: var(--catalyst-response-muted);
+}
+
+html[data-skin="civil-protection"] .catalyst-status-bar a,
+html[data-skin="civil-protection"] .catalyst-status-bar button:hover,
+html[data-skin="firefighters"] .catalyst-status-bar a,
+html[data-skin="firefighters"] .catalyst-status-bar button:hover,
+html[data-skin="grempa"] .catalyst-status-bar a,
+html[data-skin="grempa"] .catalyst-status-bar button:hover {
+    color: var(--catalyst-response-primary);
+}
+
+html[data-skin="civil-protection"] .dashboard-surface > .card,
+html[data-skin="firefighters"] .dashboard-surface > .card {
+    background:
+        radial-gradient(circle at top left, rgba(var(--catalyst-response-primary-rgb), 0.10), transparent 18rem),
+        linear-gradient(135deg, #ffffff, #ffffff) !important;
+    color: var(--catalyst-response-card-color) !important;
+    border: 1px solid var(--catalyst-response-card-border) !important;
+    border-top: 3px solid var(--catalyst-response-primary) !important;
+}
+
+html[data-skin="grempa"] .dashboard-surface > .card {
+    background:
+        radial-gradient(circle at top left, rgba(var(--catalyst-response-primary-rgb), 0.14), transparent 18rem),
+        linear-gradient(135deg, #111827, #0f172a) !important;
+    color: var(--catalyst-response-card-color) !important;
+    border: 1px solid var(--catalyst-response-card-border) !important;
+    border-top: 3px solid var(--catalyst-response-primary) !important;
+}
+
+html[data-skin="civil-protection"] .dashboard-surface > .card .dashboard-surface__eyebrow,
+html[data-skin="firefighters"] .dashboard-surface > .card .dashboard-surface__eyebrow,
+html[data-skin="grempa"] .dashboard-surface > .card .dashboard-surface__eyebrow {
+    border-color: rgba(var(--catalyst-response-primary-rgb), 0.24);
+    background: var(--catalyst-response-primary-soft);
+    color: var(--catalyst-response-primary-active);
+}
+
+html[data-skin="civil-protection"] .dashboard-surface > .card p.text-muted,
+html[data-skin="civil-protection"] .dashboard-surface > .card .text-muted,
+html[data-skin="firefighters"] .dashboard-surface > .card p.text-muted,
+html[data-skin="firefighters"] .dashboard-surface > .card .text-muted,
+html[data-skin="grempa"] .dashboard-surface > .card p.text-muted,
+html[data-skin="grempa"] .dashboard-surface > .card .text-muted {
+    color: var(--catalyst-response-muted) !important;
+}
+
+html[data-skin="civil-protection"] .dashboard-surface__metric,
+html[data-skin="firefighters"] .dashboard-surface__metric,
+html[data-skin="grempa"] .dashboard-surface__metric,
+html[data-skin="civil-protection"] .dashboard-surface__area,
+html[data-skin="firefighters"] .dashboard-surface__area,
+html[data-skin="grempa"] .dashboard-surface__area {
+    background: var(--catalyst-response-card-bg) !important;
+    color: var(--catalyst-response-card-color) !important;
+    border-color: var(--catalyst-response-card-border) !important;
+}
+
+html[data-skin="civil-protection"] .dashboard-surface__metric strong,
+html[data-skin="civil-protection"] .dashboard-surface__area h3,
+html[data-skin="civil-protection"] .dashboard-surface__area .h6,
+html[data-skin="firefighters"] .dashboard-surface__metric strong,
+html[data-skin="firefighters"] .dashboard-surface__area h3,
+html[data-skin="firefighters"] .dashboard-surface__area .h6,
+html[data-skin="grempa"] .dashboard-surface__metric strong,
+html[data-skin="grempa"] .dashboard-surface__area h3,
+html[data-skin="grempa"] .dashboard-surface__area .h6 {
+    color: var(--catalyst-response-card-title) !important;
+}
+
+html[data-skin="civil-protection"] .dashboard-surface__metric span,
+html[data-skin="firefighters"] .dashboard-surface__metric span,
+html[data-skin="grempa"] .dashboard-surface__metric span {
+    color: var(--catalyst-response-muted) !important;
+}
+
+html[data-skin="civil-protection"] .landing-surface,
+html[data-skin="civil-protection"] .home-surface,
+html[data-skin="civil-protection"] .store-surface,
+html[data-skin="firefighters"] .landing-surface,
+html[data-skin="firefighters"] .home-surface,
+html[data-skin="firefighters"] .store-surface,
+html[data-skin="grempa"] .landing-surface,
+html[data-skin="grempa"] .home-surface,
+html[data-skin="grempa"] .store-surface {
+    --surface-accent: var(--catalyst-response-primary);
+    --surface-highlight: var(--catalyst-response-accent);
+    --surface-ink: var(--catalyst-response-ink);
+    --surface-muted: var(--catalyst-response-muted);
+    --surface-panel: color-mix(in srgb, var(--catalyst-response-surface) 92%, transparent);
+    --surface-border: rgba(var(--catalyst-response-primary-rgb), 0.18);
+}
+
+/* Generic preview cards for extra closed skins. */
+.catalyst-response-skin-preview {
+    display: block;
+    height: 88px;
+    overflow: hidden;
+    border: 1px solid var(--theme-border-color, #e5e7eb);
+    border-radius: 0.4rem;
+    background: var(--preview-bg, #ffffff);
+    box-shadow: 0 1px 3px rgba(21, 26, 35, 0.08);
+}
+
+.catalyst-response-skin-preview__top {
+    display: block;
+    height: 14px;
+    border-top: 4px solid var(--preview-primary, #f05a00);
+    border-bottom: 1px solid var(--preview-border, #eef0f4);
+    background: var(--preview-topbar, #243746);
+}
+
+.catalyst-response-skin-preview__body {
+    display: grid;
+    grid-template-columns: 30% 1fr;
+    height: 74px;
+    background: var(--preview-page, #f6f8fa);
+}
+
+.catalyst-response-skin-preview__side {
+    display: block;
+    border-right: 1px solid var(--preview-border, #e5e7eb);
+    border-top: 3px solid var(--preview-primary, #f05a00);
+    background: var(--preview-side, #ffffff);
+}
+
+.catalyst-response-skin-preview__content {
+    display: grid;
+    gap: 6px;
+    padding: 10px;
+}
+
+.catalyst-response-skin-preview__content span {
+    display: block;
+    border-radius: 999px;
+    background: var(--preview-muted, #eceff3);
+}
+
+.catalyst-response-skin-preview__content span:first-child {
+    width: 70%;
+    background: var(--preview-primary, #f05a00);
+}
+
+.catalyst-response-skin-preview__content span:nth-child(2) {
+    width: 92%;
+}
+
+.catalyst-response-skin-preview__content span:nth-child(3) {
+    width: 55%;
+    background: var(--preview-accent, var(--preview-muted, #eceff3));
+}
+
+.catalyst-response-skin-preview--civil-protection {
+    --preview-primary: #f05a00;
+    --preview-accent: #243746;
+    --preview-topbar: #243746;
+    --preview-side: #ffffff;
+    --preview-page: #f6f8fa;
+    --preview-muted: #e4e8ee;
+    --preview-border: #dfe4ea;
+}
+
+.catalyst-response-skin-preview--firefighters {
+    --preview-primary: #d80d0d;
+    --preview-accent: #f6c500;
+    --preview-topbar: #18006c;
+    --preview-side: #18006c;
+    --preview-page: #f7f7fb;
+    --preview-muted: #e4e2ee;
+    --preview-border: #d8d3ef;
+}
+
+.catalyst-response-skin-preview--grempa {
+    --preview-primary: #f04b37;
+    --preview-accent: #f4c400;
+    --preview-topbar: #0b1120;
+    --preview-side: #0b1120;
+    --preview-page: #111827;
+    --preview-bg: #0f172a;
+    --preview-muted: #26364f;
+    --preview-border: #243244;
+}
+
+/* Catalyst response skin semantic fixes - 2026-05-30
+ * -----------------------------------------------------------------------------
+ * Keeps the custom Select Theme skins compatible with Inspinia utility classes.
+ * These rules intentionally correct semantic colors, utility opacity handling and
+ * link-button contrast without changing shell geometry or component layout.
+ */
+html[data-skin="red-cross"] {
+    --catalyst-response-danger: #8f1d2c;
+    --catalyst-response-danger-rgb: 143, 29, 44;
+    --catalyst-response-danger-hover: #741725;
+    --catalyst-response-danger-active: #5c111d;
+    --catalyst-response-danger-soft: #fbe8ec;
+    --catalyst-response-danger-border: #efadb9;
+    --theme-danger: var(--catalyst-response-danger);
+    --theme-danger-rgb: var(--catalyst-response-danger-rgb);
+    --theme-danger-text-emphasis: var(--catalyst-response-danger-active);
+    --theme-danger-bg-subtle: var(--catalyst-response-danger-soft);
+    --theme-danger-border-subtle: var(--catalyst-response-danger-border);
+    --theme-link-color: #b8122a;
+    --theme-link-color-rgb: 184, 18, 42;
+    --theme-link-hover-color: #8f1d2c;
+    --theme-link-hover-color-rgb: 143, 29, 44;
+    --bs-danger: var(--catalyst-response-danger);
+    --bs-danger-rgb: var(--catalyst-response-danger-rgb);
+    --bs-link-color: var(--theme-link-color);
+    --bs-link-color-rgb: var(--theme-link-color-rgb);
+    --bs-link-hover-color: var(--theme-link-hover-color);
+    --bs-link-hover-color-rgb: var(--theme-link-hover-color-rgb);
+}
+
+html[data-skin="civil-protection"] {
+    --catalyst-response-danger: #9f1d2d;
+    --catalyst-response-danger-rgb: 159, 29, 45;
+    --catalyst-response-danger-hover: #821826;
+    --catalyst-response-danger-active: #67131e;
+    --catalyst-response-danger-soft: #fbe9ec;
+    --catalyst-response-danger-border: #ecadb7;
+    --theme-danger: var(--catalyst-response-danger);
+    --theme-danger-rgb: var(--catalyst-response-danger-rgb);
+    --theme-danger-text-emphasis: var(--catalyst-response-danger-active);
+    --theme-danger-bg-subtle: var(--catalyst-response-danger-soft);
+    --theme-danger-border-subtle: var(--catalyst-response-danger-border);
+    --theme-link-color: #bf4700;
+    --theme-link-color-rgb: 191, 71, 0;
+    --theme-link-hover-color: #8f3500;
+    --theme-link-hover-color-rgb: 143, 53, 0;
+    --bs-danger: var(--catalyst-response-danger);
+    --bs-danger-rgb: var(--catalyst-response-danger-rgb);
+    --bs-link-color: var(--theme-link-color);
+    --bs-link-color-rgb: var(--theme-link-color-rgb);
+    --bs-link-hover-color: var(--theme-link-hover-color);
+    --bs-link-hover-color-rgb: var(--theme-link-hover-color-rgb);
+}
+
+html[data-skin="firefighters"] {
+    --catalyst-response-danger: #861b26;
+    --catalyst-response-danger-rgb: 134, 27, 38;
+    --catalyst-response-danger-hover: #6f151f;
+    --catalyst-response-danger-active: #571019;
+    --catalyst-response-danger-soft: #f9e8eb;
+    --catalyst-response-danger-border: #eba9b1;
+    --theme-danger: var(--catalyst-response-danger);
+    --theme-danger-rgb: var(--catalyst-response-danger-rgb);
+    --theme-danger-text-emphasis: var(--catalyst-response-danger-active);
+    --theme-danger-bg-subtle: var(--catalyst-response-danger-soft);
+    --theme-danger-border-subtle: var(--catalyst-response-danger-border);
+    --theme-link-color: #b90a0a;
+    --theme-link-color-rgb: 185, 10, 10;
+    --theme-link-hover-color: #861b26;
+    --theme-link-hover-color-rgb: 134, 27, 38;
+    --bs-danger: var(--catalyst-response-danger);
+    --bs-danger-rgb: var(--catalyst-response-danger-rgb);
+    --bs-link-color: var(--theme-link-color);
+    --bs-link-color-rgb: var(--theme-link-color-rgb);
+    --bs-link-hover-color: var(--theme-link-hover-color);
+    --bs-link-hover-color-rgb: var(--theme-link-hover-color-rgb);
+}
+
+html[data-skin="grempa"] {
+    --catalyst-response-danger: #b42318;
+    --catalyst-response-danger-rgb: 180, 35, 24;
+    --catalyst-response-danger-hover: #d13a2e;
+    --catalyst-response-danger-active: #8d1b13;
+    --catalyst-response-danger-soft: rgba(180, 35, 24, 0.18);
+    --catalyst-response-danger-border: rgba(180, 35, 24, 0.45);
+    --theme-danger: var(--catalyst-response-danger);
+    --theme-danger-rgb: var(--catalyst-response-danger-rgb);
+    --theme-danger-text-emphasis: #ff9d92;
+    --theme-danger-bg-subtle: var(--catalyst-response-danger-soft);
+    --theme-danger-border-subtle: var(--catalyst-response-danger-border);
+    --theme-link-color: #ff7b6d;
+    --theme-link-color-rgb: 255, 123, 109;
+    --theme-link-hover-color: #f4c400;
+    --theme-link-hover-color-rgb: 244, 196, 0;
+    --bs-danger: var(--catalyst-response-danger);
+    --bs-danger-rgb: var(--catalyst-response-danger-rgb);
+    --bs-link-color: var(--theme-link-color);
+    --bs-link-color-rgb: var(--theme-link-color-rgb);
+    --bs-link-hover-color: var(--theme-link-hover-color);
+    --bs-link-hover-color-rgb: var(--theme-link-hover-color-rgb);
+}
+
+html[data-skin="red-cross"] .text-primary,
+html[data-skin="civil-protection"] .text-primary,
+html[data-skin="firefighters"] .text-primary,
+html[data-skin="grempa"] .text-primary {
+    color: rgba(var(--theme-primary-rgb), var(--theme-text-opacity, 1)) !important;
+}
+
+html[data-skin="red-cross"] .text-danger,
+html[data-skin="civil-protection"] .text-danger,
+html[data-skin="firefighters"] .text-danger,
+html[data-skin="grempa"] .text-danger {
+    color: rgba(var(--theme-danger-rgb), var(--theme-text-opacity, 1)) !important;
+}
+
+html[data-skin="red-cross"] .btn-link,
+html[data-skin="civil-protection"] .btn-link,
+html[data-skin="firefighters"] .btn-link,
+html[data-skin="grempa"] .btn-link {
+    --theme-btn-color: var(--theme-link-color);
+    --theme-btn-hover-color: var(--theme-link-hover-color);
+    --theme-btn-active-color: var(--theme-link-hover-color);
+    --theme-btn-disabled-color: var(--theme-secondary-color);
+    --bs-btn-color: var(--theme-link-color);
+    --bs-btn-hover-color: var(--theme-link-hover-color);
+    --bs-btn-active-color: var(--theme-link-hover-color);
+    color: var(--theme-link-color) !important;
+    background-color: transparent !important;
+    border-color: transparent !important;
+}
+
+html[data-skin="red-cross"] .btn-link:hover,
+html[data-skin="red-cross"] .btn-link:focus-visible,
+html[data-skin="civil-protection"] .btn-link:hover,
+html[data-skin="civil-protection"] .btn-link:focus-visible,
+html[data-skin="firefighters"] .btn-link:hover,
+html[data-skin="firefighters"] .btn-link:focus-visible,
+html[data-skin="grempa"] .btn-link:hover,
+html[data-skin="grempa"] .btn-link:focus-visible {
+    color: var(--theme-link-hover-color) !important;
+}
+
+html[data-skin="red-cross"] .btn-danger,
+html[data-skin="civil-protection"] .btn-danger,
+html[data-skin="firefighters"] .btn-danger,
+html[data-skin="grempa"] .btn-danger {
+    --theme-btn-color: #ffffff;
+    --theme-btn-bg: var(--theme-danger);
+    --theme-btn-border-color: var(--theme-danger);
+    --theme-btn-hover-color: #ffffff;
+    --theme-btn-hover-bg: var(--catalyst-response-danger-hover);
+    --theme-btn-hover-border-color: var(--catalyst-response-danger-hover);
+    --theme-btn-active-color: #ffffff;
+    --theme-btn-active-bg: var(--catalyst-response-danger-active);
+    --theme-btn-active-border-color: var(--catalyst-response-danger-active);
+    --bs-btn-color: #ffffff;
+    --bs-btn-bg: var(--theme-danger);
+    --bs-btn-border-color: var(--theme-danger);
+    --bs-btn-hover-color: #ffffff;
+    --bs-btn-hover-bg: var(--catalyst-response-danger-hover);
+    --bs-btn-hover-border-color: var(--catalyst-response-danger-hover);
+    --bs-btn-active-bg: var(--catalyst-response-danger-active);
+    --bs-btn-active-border-color: var(--catalyst-response-danger-active);
+}
+
+html[data-skin="red-cross"] .btn-outline-danger,
+html[data-skin="civil-protection"] .btn-outline-danger,
+html[data-skin="firefighters"] .btn-outline-danger,
+html[data-skin="grempa"] .btn-outline-danger {
+    --theme-btn-color: var(--theme-danger);
+    --theme-btn-border-color: var(--theme-danger);
+    --theme-btn-hover-color: #ffffff;
+    --theme-btn-hover-bg: var(--theme-danger);
+    --theme-btn-hover-border-color: var(--theme-danger);
+    --bs-btn-color: var(--theme-danger);
+    --bs-btn-border-color: var(--theme-danger);
+    --bs-btn-hover-color: #ffffff;
+    --bs-btn-hover-bg: var(--theme-danger);
+    --bs-btn-hover-border-color: var(--theme-danger);
+}
+
+html[data-skin="red-cross"] .bg-primary,
+html[data-skin="civil-protection"] .bg-primary,
+html[data-skin="firefighters"] .bg-primary,
+html[data-skin="grempa"] .bg-primary {
+    background-color: rgba(var(--theme-primary-rgb), var(--theme-bg-opacity, 1)) !important;
+}
+
+html[data-skin="red-cross"] .bg-danger,
+html[data-skin="civil-protection"] .bg-danger,
+html[data-skin="firefighters"] .bg-danger,
+html[data-skin="grempa"] .bg-danger {
+    background-color: rgba(var(--theme-danger-rgb), var(--theme-bg-opacity, 1)) !important;
+}
+
+html[data-skin="red-cross"] .text-bg-primary,
+html[data-skin="red-cross"] .badge.text-bg-primary,
+html[data-skin="civil-protection"] .text-bg-primary,
+html[data-skin="civil-protection"] .badge.text-bg-primary,
+html[data-skin="firefighters"] .text-bg-primary,
+html[data-skin="firefighters"] .badge.text-bg-primary,
+html[data-skin="grempa"] .text-bg-primary,
+html[data-skin="grempa"] .badge.text-bg-primary {
+    background-color: rgba(var(--theme-primary-rgb), var(--theme-bg-opacity, 1)) !important;
+    color: #ffffff !important;
+}
+
+html[data-skin="red-cross"] .text-bg-danger,
+html[data-skin="red-cross"] .badge.text-bg-danger,
+html[data-skin="civil-protection"] .text-bg-danger,
+html[data-skin="civil-protection"] .badge.text-bg-danger,
+html[data-skin="firefighters"] .text-bg-danger,
+html[data-skin="firefighters"] .badge.text-bg-danger,
+html[data-skin="grempa"] .text-bg-danger,
+html[data-skin="grempa"] .badge.text-bg-danger {
+    background-color: rgba(var(--theme-danger-rgb), var(--theme-bg-opacity, 1)) !important;
+    color: #ffffff !important;
+}
+
+html[data-skin="red-cross"] .bg-primary.text-dark,
+html[data-skin="red-cross"] .bg-danger.text-dark,
+html[data-skin="civil-protection"] .bg-primary.text-dark,
+html[data-skin="civil-protection"] .bg-danger.text-dark,
+html[data-skin="firefighters"] .bg-primary.text-dark,
+html[data-skin="firefighters"] .bg-danger.text-dark,
+html[data-skin="grempa"] .bg-primary.text-dark,
+html[data-skin="grempa"] .bg-danger.text-dark {
+    color: var(--theme-dark) !important;
+}
+
+html[data-skin="red-cross"] .bg-primary.text-white,
+html[data-skin="red-cross"] .bg-danger.text-white,
+html[data-skin="civil-protection"] .bg-primary.text-white,
+html[data-skin="civil-protection"] .bg-danger.text-white,
+html[data-skin="firefighters"] .bg-primary.text-white,
+html[data-skin="firefighters"] .bg-danger.text-white,
+html[data-skin="grempa"] .bg-primary.text-white,
+html[data-skin="grempa"] .bg-danger.text-white {
+    color: #ffffff !important;
+}
+
+html[data-skin="red-cross"] .border-danger,
+html[data-skin="civil-protection"] .border-danger,
+html[data-skin="firefighters"] .border-danger,
+html[data-skin="grempa"] .border-danger {
+    border-color: var(--theme-danger) !important;
+}
+
+html[data-skin="red-cross"] a:not(.btn):not(.dropdown-item):not(.nav-link):not(.side-nav-link),
+html[data-skin="civil-protection"] a:not(.btn):not(.dropdown-item):not(.nav-link):not(.side-nav-link),
+html[data-skin="firefighters"] a:not(.btn):not(.dropdown-item):not(.nav-link):not(.side-nav-link),
+html[data-skin="grempa"] a:not(.btn):not(.dropdown-item):not(.nav-link):not(.side-nav-link) {
+    color: var(--theme-link-color);
+}
+
+html[data-skin="red-cross"] a:not(.btn):not(.dropdown-item):not(.nav-link):not(.side-nav-link):hover,
+html[data-skin="civil-protection"] a:not(.btn):not(.dropdown-item):not(.nav-link):not(.side-nav-link):hover,
+html[data-skin="firefighters"] a:not(.btn):not(.dropdown-item):not(.nav-link):not(.side-nav-link):hover,
+html[data-skin="grempa"] a:not(.btn):not(.dropdown-item):not(.nav-link):not(.side-nav-link):hover {
+    color: var(--theme-link-hover-color);
+}
+

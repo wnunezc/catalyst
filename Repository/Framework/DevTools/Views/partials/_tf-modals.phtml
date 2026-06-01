@@ -1,0 +1,21 @@
+<div class="col-12 col-lg-6">
+    <div class="section-card">
+        <div class="card-header"><i class="fa-solid fa-window-restore me-2"></i>{{ t:devtools.modal_demo.title }}</div>
+        <div class="card-body">
+            <p class="text-muted small mb-2">{{ t:devtools.modal_demo.dialog_utilities }}</p>
+            <div class="btn-group-wrap mb-3">
+                <button class="btn btn-primary btn-sm" data-action="confirm-demo">{{ t:devtools.modal_demo.actions.confirm_dialog }}</button>
+                <button class="btn btn-secondary btn-sm" data-action="alert-demo">{{ t:devtools.modal_demo.actions.alert_dialog }}</button>
+            </div>
+            <p class="text-muted small mb-2">{{ t:devtools.modal_demo.dynamic_loading }}</p>
+            <div class="btn-group-wrap mb-3">
+                <button class="btn btn-outline-primary btn-sm" data-action="load-modal" data-url="/test-features/modal/sample-content" data-title="{{ t:devtools.modal_demo.titles.sample_content }}">{{ t:devtools.modal_demo.actions.load_sample }}</button>
+                <button class="btn btn-outline-primary btn-sm" data-action="load-modal" data-url="/test-features/modal/form-content" data-title="{{ t:devtools.modal_demo.titles.sample_form }}">{{ t:devtools.modal_demo.actions.load_form }}</button>
+            </div>
+            <p class="text-muted small mb-2">{{ t:devtools.modal_demo.json_trigger }}</p>
+            <div class="btn-group-wrap">
+                <button class="btn btn-outline-secondary btn-sm" data-action="api-call" data-url="/test-features/api/modal-trigger">{{ t:devtools.modal_demo.actions.api_modal_trigger }}</button>
+            </div>
+        </div>
+    </div>
+</div>

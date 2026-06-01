@@ -1,0 +1,125 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Catalyst\Framework\Middleware;
+
+use Catalyst\Framework\Auth\AuthManager;
+use Catalyst\Framework\Authorization\PermissionRegistry;
+use Catalyst\Framework\Http\ErrorResponseFactory;
+use Catalyst\Framework\Http\JsonResponse;
+use Catalyst\Framework\Http\RedirectResponse;
+use Catalyst\Framework\Http\Request;
+use Catalyst\Framework\Http\RedirectTarget;
+use Catalyst\Framework\Http\Response;
+use Closure;
+
+/**
+ * DevToolsGuardMiddleware
+ *
+ * Hard gate for developer tooling routes.
+ *
+ * Rules:
+ * - Outside development: always 403
+ * - Development without login: standard auth behavior (401 JSON or redirect)
+ * - Development with authenticated non-admin/non-authorized user: 403
+ * - Development with admin or explicit permission: pass through
+ */
+class DevToolsGuardMiddleware extends CoreMiddleware
+{
+    private const EXPLICIT_PERMISSION = 'access-devtools';
+
+    /**
+     * @var string[]
+     */
+    private array $permissions;
+
+    public function __construct(string|array|null $permissions = null)
+    {
+        $this->permissions = $permissions === null ? [] : array_values(array_filter(
+            array_map(
+                static fn (mixed $permission): string => trim((string) $permission),
+                (array) $permissions
+            ),
+            static fn (string $permission): bool => $permission !== ''
+        ));
+    }
+
+    public function process(Request $request, Closure $next): Response
+    {
+        if (!defined('IS_DEVELOPMENT') || !IS_DEVELOPMENT) {
+            $this->log('DevToolsGuard: blocked outside development', ['uri' => $request->getUri()]);
+            return $this->forbiddenResponse($request, 'DevTools disabled outside development.');
+        }
+
+        $auth = AuthManager::getInstance();
+
+        if (!$auth->check() && !$auth->loginFromRemember()) {
+            $this->log('DevToolsGuard: unauthenticated request blocked', ['uri' => $request->getUri()]);
+
+            if ($this->expectsJson($request)) {
+                return JsonResponse::error('Login required.', status: 401);
+            }
+
+            return new RedirectResponse(RedirectTarget::loginUrl($request->getUri()));
+        }
+
+        $userId = $auth->id();
+
+        if ($userId === null) {
+            $this->log('DevToolsGuard: authenticated session without user id', ['uri' => $request->getUri()]);
+            return $this->forbiddenResponse($request, 'Unable to resolve authenticated user.');
+        }
+
+        $permissions = PermissionRegistry::getInstance();
+        $user = $auth->user();
+        $requiredPermissions = $this->getRequiredPermissions();
+
+        $hasRequiredPermission = false;
+        foreach ($requiredPermissions as $permission) {
+            if ($permissions->userHasPermission($user, $permission)) {
+                $hasRequiredPermission = true;
+                break;
+            }
+        }
+
+        if (
+            !$permissions->userHasRole($user, 'admin')
+            && !$hasRequiredPermission
+        ) {
+            $this->log('DevToolsGuard: access denied', [
+                'uri' => $request->getUri(),
+                'user_id' => $userId,
+                'required_role' => 'admin',
+                'required_permissions' => $requiredPermissions,
+            ]);
+
+            return $this->forbiddenResponse(
+                $request,
+                'DevTools access requires the admin role or a declared DevTools permission.'
+            );
+        }
+
+        return $this->passToNext($request, $next);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getRequiredPermissions(): array
+    {
+        return array_values(array_unique(array_merge(
+            [self::EXPLICIT_PERMISSION],
+            $this->permissions
+        )));
+    }
+
+    private function forbiddenResponse(Request $request, string $message): Response
+    {
+        if ($this->expectsJson($request)) {
+            return JsonResponse::error($message, status: 403);
+        }
+
+        return ErrorResponseFactory::forbidden($message);
+    }
+}

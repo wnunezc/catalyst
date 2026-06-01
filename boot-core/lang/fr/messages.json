@@ -1,0 +1,16 @@
+{
+  "save_success": "Record saved successfully.",
+  "update_success": "Record updated successfully.",
+  "delete_success": "Record deleted successfully.",
+  "not_found": "The requested record was not found.",
+  "unauthorized": "You are not authorized to perform this action.",
+  "forbidden": "Access denied.",
+  "server_error": "An unexpected error occurred. Please try again.",
+  "maintenance": "The application is currently under maintenance.",
+  "session_expired": "Your session has expired. Please log in again.",
+  "invalid_request": "The request is invalid or malformed.",
+  "too_many_requests": "Too many requests. Please wait a moment before trying again.",
+  "operation_failed": "The operation could not be completed.",
+  "no_changes": "No changes were made.",
+  "confirm_delete": "Are you sure you want to delete this record? This action cannot be undone."
+}

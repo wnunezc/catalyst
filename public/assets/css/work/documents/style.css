@@ -1,0 +1,72 @@
+/*
+ * Published via FrontResourceTrait to /assets/css/work/documents/style.css
+ */
+
+.documents-admin-page .documents-hero {
+    background:
+        radial-gradient(circle at top left, rgba(14, 116, 144, 0.16), transparent 42%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(241, 245, 249, 0.94));
+}
+
+.documents-eyebrow {
+    display: inline-flex;
+    margin-bottom: 0.6rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #0f766e;
+}
+
+.documents-title {
+    font-size: clamp(1.8rem, 2vw, 2.35rem);
+    line-height: 1.1;
+}
+
+.documents-lede {
+    max-width: 60rem;
+    color: #475569;
+}
+
+.documents-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: 0.9rem;
+}
+
+.documents-preview__body {
+    max-height: 34rem;
+    overflow: auto;
+}
+
+/* Compact UI pass. */
+.documents-eyebrow {
+    margin-bottom: 0.35rem;
+    font-size: 0.62rem;
+}
+
+.documents-title {
+    font-size: clamp(1.42rem, 1.75vw, 1.95rem);
+}
+
+.documents-lede {
+    line-height: 1.42;
+}
+
+.documents-summary-grid {
+    gap: 0.58rem;
+}
+
+
+/* Density correction v2: readable text scale with compact spacing. */
+.documents-admin-page {
+    font-size: 0.875rem;
+}
+
+.documents-eyebrow {
+    font-size: 0.72rem;
+}
+
+.documents-title {
+    font-size: clamp(1.8rem, 2vw, 2.35rem);
+}

@@ -1,0 +1,31 @@
+<?php
+
+declare(strict_types=1);
+
+use Catalyst\Framework\Database\Migration;
+
+return new class extends Migration
+{
+    public function getVersion(): string
+    {
+        return '{{version}}';
+    }
+
+    public function up(): void
+    {
+        $this->statement(<<<'SQL'
+CREATE TABLE IF NOT EXISTS `{{Table}}` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+{{Columns}}
+{{OptimisticLockColumn}}    `created_at` DATETIME NULL DEFAULT NULL,
+    `updated_at` DATETIME NULL DEFAULT NULL,
+{{SoftDeleteColumn}}{{AuditColumns}}    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+SQL);
+    }
+
+    public function down(): void
+    {
+        $this->statement('DROP TABLE IF EXISTS `{{Table}}`');
+    }
+};

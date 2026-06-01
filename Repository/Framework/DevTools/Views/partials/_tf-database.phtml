@@ -1,0 +1,41 @@
+<div class="col-12 col-lg-6">
+    <div class="section-card">
+        <div class="card-header"><i class="fa-solid fa-database me-2"></i>{{ t:devtools.database.title }}</div>
+        <div class="card-body">
+            <p class="text-muted small mb-2">
+                <strong>DatabaseManager</strong> + <strong>ConfigManager</strong>.<br>
+                {{ t:devtools.database.config_source }}: <code class="code-badge">env-fallback</code> ({{ t:devtools.database.first_boot_note }}).
+            </p>
+            <div class="btn-group-wrap mb-3">
+                <button class="btn btn-primary btn-sm"
+                        data-action="inspect-json"
+                        data-url="/test-features/db-connection"
+                        data-result-id="db-result"
+                        data-pre-id="db-result-pre">
+                    <i class="fa-solid fa-plug me-1"></i>Test Connection
+                </button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" data-catalyst-href="/test-features/db-connection" data-catalyst-target="_blank">
+                    <i class="fa-solid fa-arrow-up-right-from-square me-1"></i>{{ t:devtools.i18n_demo.raw_json }}
+                </button>
+            </div>
+
+            <hr class="my-2">
+
+            <p class="text-muted small mb-2">
+                <strong>{{ t:devtools.database.reset_title }}</strong> - {{ t:devtools.database.reset_description }}<br>
+                <span class="text-danger fw-semibold">{{ t:devtools.database.reset_warning }}</span>
+            </p>
+            <form data-catalyst="form" method="POST" action="/test-features/db-reset"
+                  data-confirm="{{ db_reset_confirm }}">
+                {{{ db_reset_csrf_field }}}
+                <button type="submit" class="btn btn-danger btn-sm">
+                    <i class="fa-solid fa-trash-can me-1"></i>{{ t:devtools.database.reset_button }}
+                </button>
+            </form>
+
+            <div id="db-result" class="mt-2 tf-result">
+                <pre id="db-result-pre" class="code-pre"></pre>
+            </div>
+        </div>
+    </div>
+</div>

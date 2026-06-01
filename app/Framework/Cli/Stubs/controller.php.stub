@@ -1,0 +1,17 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{namespace}};
+
+use Catalyst\Framework\Controllers\Controller;
+use Catalyst\Framework\Http\Request;
+use Catalyst\Framework\Http\Response;
+
+class {{ClassName}} extends Controller
+{
+    public function index(Request $request): Response
+    {
+        return $this->view('{{view}}');
+    }
+}

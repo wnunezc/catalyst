@@ -1,0 +1,31 @@
+{
+  "surface": {
+    "title": "Home",
+    "eyebrow": "Public home",
+    "badge": "Application entry",
+    "headline": "A clean starting point for your product.",
+    "lead": "This demo shows how a framework implementer can introduce the application without exposing administrative screens, runtime internals or configuration data.",
+    "actions": {
+      "primary": "View landing",
+      "secondary": "Explore store"
+    },
+    "hero_cards": {
+      "deploy": { "value": "01", "label": "Brand-first entry" },
+      "modules": { "value": "04", "label": "Demo surfaces" },
+      "identity": { "value": "UI", "label": "Theme aware" }
+    },
+    "sections_title": "Public surface map",
+    "sections": {
+      "home": { "title": "Home", "body": "A compact institutional entry that explains the purpose of the application and guides visitors toward public demos.", "label": "Stay here" },
+      "landing": { "title": "Landing", "body": "A promotional page pattern for campaigns, launches, conversion flows and product storytelling.", "label": "Open landing" },
+      "store": { "title": "Store", "body": "A storefront pattern with catalog cards, categories and a checkout summary ready to be adapted.", "label": "Open store" }
+    },
+    "workflow_title": "Implementation flow",
+    "workflow": {
+      "discover": { "title": "Discover", "body": "Start with public pages that help a visitor understand the product before authentication." },
+      "adapt": { "title": "Adapt", "body": "Replace the demo content with the implementer brand, services and audience-specific copy." },
+      "launch": { "title": "Launch", "body": "Keep public pages isolated from administration while preserving the configured Catalyst theme." }
+    },
+    "note": "This page intentionally contains no administrative links, no module diagnostics and no configuration summary."
+  }
+}

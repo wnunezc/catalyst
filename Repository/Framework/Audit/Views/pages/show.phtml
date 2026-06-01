@@ -1,0 +1,45 @@
+<div class="admin-surface admin-surface-shell audit-show-page">
+    {{> "components._admin-page-header" }}
+
+    <section class="admin-section-card card">
+        <div class="card-body">
+            <div class="row g-3 mb-3">
+                <div class="col-md-4">
+                    <div class="small text-muted">{{ t:audit.show.columns.occurred }}</div>
+                    <div class="fw-semibold">{{ entry.occurred_at }}</div>
+                </div>
+                <div class="col-md-4">
+                    <div class="small text-muted">{{ t:audit.show.columns.actor }}</div>
+                    <div class="fw-semibold">{{ entry.actor_type_label }}</div>
+                    <div class="small text-muted">{{ entry.actor_id_label }}</div>
+                </div>
+                <div class="col-md-4">
+                    <div class="small text-muted">{{ t:audit.show.columns.request }}</div>
+                    <div class="fw-semibold">{{ entry.request_method }}</div>
+                    <div class="small text-muted text-break">{{ entry.request_uri_label }}</div>
+                </div>
+                <div class="col-md-4">
+                    <div class="small text-muted">{{ t:audit.show.columns.tenant }}</div>
+                    <div class="fw-semibold">{{ entry.tenant_key_label }}</div>
+                    <div class="small text-muted">#{{ entry.tenant_id_label }}</div>
+                </div>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-lg-6">
+                    <label class="form-label small fw-semibold">{{ t:audit.show.columns.before }}</label>
+                    <pre class="form-control audit-log-pre">{{ before_payload_json }}</pre>
+                </div>
+                <div class="col-lg-6">
+                    <label class="form-label small fw-semibold">{{ t:audit.show.columns.after }}</label>
+                    <pre class="form-control audit-log-pre">{{ after_payload_json }}</pre>
+                </div>
+                <div class="col-12">
+                    <label class="form-label small fw-semibold">{{ t:audit.show.columns.metadata }}</label>
+                    <pre class="form-control audit-log-pre">{{ metadata_json }}</pre>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>

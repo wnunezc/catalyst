@@ -1,0 +1,73 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Catalyst\Framework\Cli\Commands;
+
+use Catalyst\Framework\Argument\ArgumentBag;
+use Catalyst\Framework\Argument\Option;
+use Catalyst\Framework\Cli\AbstractCommand;
+use Catalyst\Framework\Cli\Support\RouteContractInspector;
+
+class RouteLintCommand extends AbstractCommand
+{
+    public function getName(): string
+    {
+        return 'route:lint';
+    }
+
+    public function getDescription(): string
+    {
+        return 'Validate route casing, approved aliases and work/{slug} asset publication';
+    }
+
+    /** @return Option[] */
+    public function getOptions(): array
+    {
+        return [
+            new Option(null, 'json', false, false, 'Render lint results as JSON', false),
+        ];
+    }
+
+    public function execute(ArgumentBag $args): int
+    {
+        $report = (new RouteContractInspector())->inspect();
+        $asJson = (bool) ($args->getOptionValue('json') ?? false);
+
+        if ($asJson) {
+            $this->line((string) json_encode($report, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+            return $report['ok'] ? 0 : 1;
+        }
+
+        $this->line('');
+        $this->info('Route Contract Lint');
+        $this->line(str_repeat('-', 70));
+
+        foreach ($report['checks'] as $name => $summary) {
+            $label = str_replace('_', ' ', $name);
+            $this->line(sprintf(
+                '  %-24s %s (%d checked)',
+                ucwords($label),
+                $summary['ok'] ? 'OK' : 'ISSUES',
+                (int) ($summary['checked'] ?? 0)
+            ));
+        }
+
+        $this->line(str_repeat('-', 70));
+
+        if ($report['ok']) {
+            $this->success('Route contract is coherent.');
+            $this->line('');
+            return 0;
+        }
+
+        $this->error('Route contract issues detected: ' . $report['issue_count']);
+        foreach ($report['issues'] as $issue) {
+            $this->line(sprintf('  [%s] %s', $issue['type'], $issue['message']));
+        }
+
+        $this->line('');
+
+        return 1;
+    }
+}

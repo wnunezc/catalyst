@@ -1,0 +1,50 @@
+<div class="col-12">
+    <div class="section-card">
+                <div class="card-header">
+            <i class="fa-solid fa-envelope me-2"></i>{{ t:devtools.mail_demo.title }}
+        </div>
+        <div class="card-body">
+            <p class="text-muted small mb-3">
+                {{ t:devtools.mail_demo.description }}
+                <code>MAIL_HOST</code>, <code>MAIL_USERNAME</code>, <code>MAIL_PASSWORD</code>
+                {{ t:devtools.mail_demo.description_suffix }}
+            </p>
+            <div class="row g-3">
+                <div class="col-12 col-lg-6">
+                    <form id="m4-form" method="POST" action="/test-features/mail-test" data-catalyst="form">
+                        <div class="mb-2">
+                            <label class="form-label form-label-sm">{{ t:devtools.mail_demo.labels.to }}</label>
+                            <input type="email" class="form-control form-control-sm" id="m4-to" name="to" placeholder="{{ t:devtools.mail_demo.placeholders.to }}">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label form-label-sm">{{ t:devtools.mail_demo.labels.subject }}</label>
+                            <input type="text" class="form-control form-control-sm" id="m4-subject" name="subject" value="{{ t:devtools.mail_demo.defaults.subject }}">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label form-label-sm">{{ t:devtools.mail_demo.labels.body }}</label>
+                            <textarea class="form-control form-control-sm" id="m4-body" name="body" rows="3">{{ t:devtools.mail_demo.defaults.body_html }}</textarea>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <button class="btn btn-sm btn-primary" type="submit">
+                            <i class="fa-solid fa-paper-plane me-1"></i>{{ t:devtools.mail_demo.actions.send }}
+                        </button>
+                        <div id="m4-result" class="d-none mt-3">
+                            <hr class="my-2">
+                            <div id="m4-output" class="small text-muted"></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <p class="text-muted small fw-semibold mb-2">{{ t:devtools.mail_demo.endpoint }}</p>
+                    <code class="small">POST /test-features/mail-test</code>
+                    <p class="text-muted small mt-3 mb-1">{{ t:devtools.mail_demo.payload }}</p>
+                    <pre class="small bg-body-tertiary border p-2 rounded mb-0">to=...
+subject=...
+body=...</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

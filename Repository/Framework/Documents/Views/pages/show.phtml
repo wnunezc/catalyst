@@ -1,0 +1,179 @@
+<div class="admin-surface admin-surface-shell documents-admin-page">
+    {{> "components._admin-page-header" }}
+
+    {{> "components._record-claim-banner" }}
+
+    <section class="card border-0 shadow-sm mb-3">
+        <div class="card-header">
+            <h2 class="h5 mb-1">{{ t:documents.show.workflow.title }}</h2>
+            <p class="text-muted mb-0">{{ t:documents.show.workflow.description }}</p>
+        </div>
+        <div class="card-body d-flex flex-column gap-3">
+            <form data-catalyst="form" method="POST" action="{{ template.transition_url }}" class="row g-3 align-items-end">
+                {{{ csrfField }}}
+                {{#if claim_token}}<input type="hidden" name="claim_token" value="{{ claim_token }}">{{/if}}
+                <div class="col-lg-4">
+                    <label for="transition" class="form-label small fw-semibold">{{ t:documents.show.workflow.transition }}</label>
+                    <select id="transition" name="transition" class="form-select">
+                        <option value="">{{ t:documents.show.workflow.select_transition }}</option>
+                        {{#each available_transitions}}
+                            <option value="{{ key }}">{{ label }}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="col-lg-6">
+                    <label for="transition-notes" class="form-label small fw-semibold">{{ t:documents.show.workflow.notes }}</label>
+                    <input id="transition-notes" type="text" name="notes" class="form-control" placeholder="{{ t:documents.show.workflow.notes_placeholder }}">
+                </div>
+                <div class="col-lg-2 d-grid">
+                    <button type="submit" class="btn btn-primary">{{ t:documents.show.workflow.apply }}</button>
+                </div>
+            </form>
+
+            <div class="table-responsive">
+                <table class="table table-sm align-middle mb-0">
+                    <thead>
+                    <tr>
+                        <th>{{ t:documents.show.workflow.columns.occurred }}</th>
+                        <th>{{ t:documents.show.workflow.columns.transition }}</th>
+                        <th>{{ t:documents.show.workflow.columns.from }}</th>
+                        <th>{{ t:documents.show.workflow.columns.to }}</th>
+                        <th>{{ t:documents.show.workflow.columns.actor }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each transitions_rows}}
+                        <tr>
+                            <td>{{ occurred_at }}</td>
+                            <td>{{ transition_key }}</td>
+                            <td>{{ from_state }}</td>
+                            <td>{{ to_state }}</td>
+                            <td>{{ actor_label }}</td>
+                        </tr>
+                    {{else}}
+                        <tr><td colspan="5" class="text-muted">{{ t:documents.show.workflow.empty }}</td></tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="card border-0 shadow-sm mb-3">
+        <div class="card-header">
+            <h2 class="h5 mb-1">{{ t:documents.show.preview.title }}</h2>
+            <p class="text-muted mb-0">{{ t:documents.show.preview.description }}</p>
+        </div>
+        <div class="card-body">
+            <form data-catalyst="form" method="POST" action="{{ template.preview_url }}" class="row g-3">
+                {{{ csrfField }}}
+                {{#if claim_token}}<input type="hidden" name="claim_token" value="{{ claim_token }}">{{/if}}
+                <div class="col-12">
+                    <label for="payload-json" class="form-label small fw-semibold">{{ t:documents.show.preview.payload_json }}</label>
+                    <textarea id="payload-json" name="payload_json" rows="10" class="form-control" spellcheck="false">{{ preview_payload_json }}</textarea>
+                </div>
+                <div class="col-12 d-flex gap-2 flex-wrap">
+                    <button type="submit" class="btn btn-primary">{{ t:documents.show.preview.preview_document }}</button>
+                    <button type="submit" formaction="{{ template.export_url }}" formmethod="post" class="btn btn-outline-success">
+                        {{ t:documents.show.preview.export_artifact }}
+                    </button>
+                </div>
+            </form>
+
+            {{#if has_preview}}
+                <div class="documents-preview mt-4">
+                    <div class="small text-uppercase text-muted fw-semibold mb-2">{{ t:documents.show.preview.rendered_preview }}</div>
+                    <div class="documents-preview__meta small text-muted mb-2">
+                        SHA-256: <code>{{ preview.checksum_sha256 }}</code>
+                    </div>
+                    <div class="documents-preview__body border rounded-3 p-3 bg-body-tertiary">
+                        {{#if preview.format_is_html}}
+                            {{{ preview.content_html }}}
+                        {{else}}
+                            <pre class="mb-0">{{ preview.display_content }}</pre>
+                        {{/if}}
+                    </div>
+                </div>
+            {{/if}}
+        </div>
+    </section>
+
+    <div class="row g-3">
+        <div class="col-xl-6">
+            <section class="card border-0 shadow-sm h-100">
+                <div class="card-header">
+                    <h2 class="h5 mb-1">{{ t:documents.show.versions.title }}</h2>
+                    <p class="text-muted mb-0">{{ t:documents.show.versions.description }}</p>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-sm align-middle mb-0">
+                            <thead>
+                            <tr>
+                                <th>{{ t:documents.show.versions.columns.version }}</th>
+                                <th>{{ t:documents.show.versions.columns.summary }}</th>
+                                <th>{{ t:documents.show.versions.columns.created }}</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{#each versions_rows}}
+                                <tr>
+                                    <td>#{{ version_number }}</td>
+                                    <td>{{ summary }}</td>
+                                    <td>{{ created_at }}</td>
+                                    <td class="text-end">
+                                        <form data-catalyst="form" method="POST" action="{{ restore_url }}" class="d-inline">
+                                            {{{ @root.csrfField }}}
+                                            {{#if @root.claim_token}}<input type="hidden" name="claim_token" value="{{ @root.claim_token }}">{{/if}}
+                                            <button type="submit" class="btn btn-sm btn-outline-secondary">{{ t:documents.show.versions.restore }}</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {{else}}
+                                <tr><td colspan="4" class="text-muted">{{ t:documents.show.versions.empty }}</td></tr>
+                            {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-xl-6">
+            <section class="card border-0 shadow-sm h-100">
+                <div class="card-header">
+                    <h2 class="h5 mb-1">{{ t:documents.show.artifacts.title }}</h2>
+                    <p class="text-muted mb-0">{{ t:documents.show.artifacts.description }}</p>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-sm align-middle mb-0">
+                            <thead>
+                            <tr>
+                                <th>{{ t:documents.show.artifacts.columns.name }}</th>
+                                <th>{{ t:documents.show.artifacts.columns.format }}</th>
+                                <th>{{ t:documents.show.artifacts.columns.created }}</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{#each artifacts_rows}}
+                                <tr>
+                                    <td>{{ name }}</td>
+                                    <td>{{ format }}</td>
+                                    <td>{{ created_at }}</td>
+                                    <td class="text-end">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" data-catalyst-href="{{ public_url }}">{{ t:documents.show.artifacts.open }}</button>
+                                    </td>
+                                </tr>
+                            {{else}}
+                                <tr><td colspan="4" class="text-muted">{{ t:documents.show.artifacts.empty }}</td></tr>
+                            {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

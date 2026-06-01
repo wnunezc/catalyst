@@ -1,0 +1,718 @@
+import { getHttpClient, summarizeResponseError } from '../../catalyst/modules/http.js';
+import { setButtonLoading, clearButtonLoading } from '../../catalyst/modules/loading.js';
+
+const http = getHttpClient();
+const MERMAID_SCRIPT_SRC = 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js';
+
+let devToolsModuleBooted = false;
+let umlTheme = null;
+let umlInitialized = false;
+
+bootstrapDevToolsModule();
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootstrapDevToolsModule, { once: true });
+}
+
+document.addEventListener('catalyst:ready', bootstrapDevToolsModule, { once: true });
+
+function bootstrapDevToolsModule() {
+    if (devToolsModuleBooted) {
+        return;
+    }
+
+    devToolsModuleBooted = true;
+
+    bindDevToolsDocumentActions();
+    bindDevToolsFormResponses();
+    bindUploadHandler();
+    void initUmlShowcase();
+}
+
+function bindDevToolsDocumentActions() {
+    document.addEventListener('click', event => {
+        const element = event.target.closest('[data-action]');
+        if (!element) {
+            return;
+        }
+
+        const action = element.getAttribute('data-action');
+        if (!action) {
+            return;
+        }
+
+        switch (action) {
+            case 'api-call':
+                event.preventDefault();
+                void apiCall(element, element.dataset.url);
+                break;
+            case 'toast':
+                event.preventDefault();
+                catalystToast(element.dataset.type, element.dataset.message);
+                break;
+            case 'confirm-demo':
+                event.preventDefault();
+                void runConfirm();
+                break;
+            case 'alert-demo':
+                event.preventDefault();
+                void runAlert();
+                break;
+            case 'load-modal':
+                event.preventDefault();
+                window.Catalyst?.loadModal?.(element.dataset.url, { title: element.dataset.title });
+                break;
+            case 'inspect-json':
+                event.preventDefault();
+                void inspectJson(element.dataset.url, element.dataset.resultId, element.dataset.preId, element);
+                break;
+            case 'partial-refresh':
+                event.preventDefault();
+                void runPartialRefresh(element);
+                break;
+            case 'orm-status':
+                event.preventDefault();
+                void ormGet('/test-features/orm/status');
+                break;
+            case 'orm-find-or-fail':
+                event.preventDefault();
+                void ormGet('/test-features/orm/find-or-fail');
+                break;
+            case 'orm-user-demo':
+                event.preventDefault();
+                void ormGet('/test-features/orm/user-demo');
+                break;
+        }
+    });
+
+    document.addEventListener('submit', event => {
+        const form = event.target;
+        if (!(form instanceof HTMLFormElement)) {
+            return;
+        }
+
+        const confirmMessage = form.getAttribute('data-confirm');
+        if (confirmMessage && !window.confirm(confirmMessage)) {
+            event.preventDefault();
+            return;
+        }
+    });
+}
+
+function bindDevToolsFormResponses() {
+    document.getElementById('v3-btn-clear')?.addEventListener('click', () => {
+        const form = document.getElementById('v3-form');
+        const uniqueForm = document.getElementById('v3-unique-form');
+
+        if (form instanceof HTMLFormElement) {
+            form.reset();
+        }
+
+        if (uniqueForm instanceof HTMLFormElement) {
+            uniqueForm.reset();
+        }
+
+        clearValidatorResultPanels();
+    });
+
+    document.addEventListener('submit', event => {
+        const form = event.target;
+        if (!(form instanceof HTMLFormElement) || event.defaultPrevented) {
+            return;
+        }
+
+        switch (form.id) {
+            case 'v3-form':
+                clearValidatorResultPanels();
+                break;
+            case 'v3-unique-form':
+                clearUniqueValidatorResultPanel();
+                break;
+            case 'm4-form':
+                clearMailResult();
+                break;
+            case 'orm-mutation-form':
+                clearOrmResult();
+                break;
+        }
+    });
+
+    document.addEventListener('catalyst:form:response', event => {
+        const detail = event.detail || {};
+        const form = detail.form;
+        const data = detail.data || {};
+
+        if (!(form instanceof HTMLFormElement)) {
+            return;
+        }
+
+        if (form.hasAttribute('data-modal-demo-form') && data.success) {
+            window.Catalyst?.closeModal?.();
+            return;
+        }
+
+        switch (form.id) {
+            case 'v3-form':
+                handleValidatorResponse(data);
+                break;
+            case 'v3-unique-form':
+                handleUniqueValidatorResponse(data);
+                break;
+            case 'u17-form':
+                handleUploadResponse(form, data);
+                break;
+            case 'm4-form':
+                handleMailResponse(data);
+                break;
+            case 'orm-mutation-form':
+                ormShowResult(data);
+                break;
+        }
+    });
+}
+
+async function apiCall(trigger, url) {
+    try {
+        if (trigger) {
+            setButtonLoading(trigger);
+        }
+
+        await http.request(url);
+    } catch (error) {
+        console.error('[devtools] apiCall error:', url, error);
+    } finally {
+        if (trigger) {
+            clearButtonLoading(trigger);
+        }
+    }
+}
+
+function catalystToast(type, message) {
+    if (window.Catalyst && typeof window.Catalyst[type] === 'function') {
+        window.Catalyst[type](message);
+    }
+}
+
+async function runConfirm() {
+    const confirmed = await window.Catalyst.confirm('Are you sure you want to proceed?', {
+        title: 'Confirm Action',
+        confirmText: 'Yes, proceed',
+        cancelText: 'Cancel',
+        type: 'warning',
+    });
+
+    window.Catalyst.info(confirmed ? 'You confirmed the action.' : 'You cancelled the action.');
+}
+
+async function runAlert() {
+    await window.Catalyst.alert('This is an alert dialog from Catalyst.', {
+        title: 'Alert',
+        buttonText: 'Got it',
+        type: 'info',
+    });
+
+    window.Catalyst.success('Alert was dismissed.');
+}
+
+async function inspectJson(url, resultId, preId, trigger = null) {
+    try {
+        if (trigger) {
+            setButtonLoading(trigger);
+        }
+
+        const { data } = await http.json(url);
+        const result = document.getElementById(resultId);
+        const pre = document.getElementById(preId);
+
+        if (result && pre) {
+            pre.textContent = JSON.stringify(data, null, 2);
+            result.style.display = '';
+        }
+    } catch (error) {
+        console.error('[devtools] inspectJson error:', url, error);
+    } finally {
+        if (trigger) {
+            clearButtonLoading(trigger);
+        }
+    }
+}
+
+async function runPartialRefresh(trigger) {
+    const waitMessage = trigger?.dataset.waitMessage || 'Refreshing content...';
+
+    try {
+        if (trigger) {
+            setButtonLoading(trigger);
+        }
+
+        window.Catalyst?.showWaitModal?.(waitMessage);
+
+        const { data } = await http.json(trigger.dataset.url);
+        if (data.success === false) {
+            window.Catalyst?.error(data.message ?? 'Partial refresh failed.');
+        }
+    } catch (error) {
+        console.error('[devtools] partial refresh error:', error);
+        window.Catalyst?.error(summarizeResponseError(error));
+    } finally {
+        window.Catalyst?.closeWaitModal?.();
+
+        if (trigger) {
+            clearButtonLoading(trigger);
+        }
+    }
+}
+
+function v3RenderErrors(errors, containerEl, errorsEl, successEl) {
+    containerEl.classList.remove('d-none');
+    errorsEl.innerHTML = '';
+    successEl.classList.add('d-none');
+    errorsEl.classList.remove('d-none');
+
+    const fields = Object.keys(errors);
+    if (fields.length === 0) {
+        errorsEl.classList.add('d-none');
+        return;
+    }
+
+    const ul = document.createElement('ul');
+    ul.className = 'list-unstyled mb-0';
+
+    fields.forEach(field => {
+        (errors[field] || []).forEach(message => {
+            const li = document.createElement('li');
+            li.className = 'text-danger small';
+            li.textContent = '• ' + message;
+            ul.appendChild(li);
+        });
+    });
+
+    errorsEl.appendChild(ul);
+}
+
+function v3RenderSuccess(message, containerEl, errorsEl, successEl) {
+    containerEl.classList.remove('d-none');
+    errorsEl.innerHTML = '';
+    errorsEl.classList.add('d-none');
+    successEl.classList.remove('d-none');
+    successEl.textContent = '✓ ' + message;
+}
+
+function clearValidatorResultPanels() {
+    const result = document.getElementById('v3-result');
+    const errors = document.getElementById('v3-errors');
+    const success = document.getElementById('v3-success');
+
+    result?.classList.add('d-none');
+    if (errors) {
+        errors.classList.add('d-none');
+        errors.innerHTML = '';
+    }
+
+    if (success) {
+        success.classList.add('d-none');
+        success.textContent = '';
+    }
+}
+
+function clearUniqueValidatorResultPanel() {
+    const result = document.getElementById('v3-unique-result');
+    const errors = document.getElementById('v3-unique-errors');
+    const success = document.getElementById('v3-unique-success');
+
+    result?.classList.add('d-none');
+    if (errors) {
+        errors.classList.add('d-none');
+        errors.innerHTML = '';
+    }
+
+    if (success) {
+        success.classList.add('d-none');
+        success.textContent = '';
+    }
+}
+
+function handleValidatorResponse(data) {
+    const result = document.getElementById('v3-result');
+    const errors = document.getElementById('v3-errors');
+    const success = document.getElementById('v3-success');
+
+    if (!result || !errors || !success) {
+        return;
+    }
+
+    if (data.errors) {
+        v3RenderErrors(data.errors, result, errors, success);
+        return;
+    }
+
+    if (data.success) {
+        v3RenderSuccess(data.message ?? 'Validation passed!', result, errors, success);
+        return;
+    }
+
+    v3RenderErrors({ form: [data.message ?? 'Validation failed.'] }, result, errors, success);
+}
+
+function handleUniqueValidatorResponse(data) {
+    const result = document.getElementById('v3-unique-result');
+    const errors = document.getElementById('v3-unique-errors');
+    const success = document.getElementById('v3-unique-success');
+
+    if (!result || !errors || !success) {
+        return;
+    }
+
+    if (data.errors) {
+        v3RenderErrors(data.errors, result, errors, success);
+        return;
+    }
+
+    if (data.success) {
+        v3RenderSuccess(data.message ?? 'Email is unique!', result, errors, success);
+        return;
+    }
+
+    v3RenderErrors({ form: [data.message ?? 'Unique validation failed.'] }, result, errors, success);
+}
+
+function u17RenderErrors(errors, containerEl, errorsEl, preEl) {
+    containerEl.classList.remove('d-none');
+    errorsEl.innerHTML = '';
+    errorsEl.classList.remove('d-none');
+    preEl.classList.add('d-none');
+    preEl.textContent = '';
+
+    const ul = document.createElement('ul');
+    ul.className = 'list-unstyled mb-0';
+
+    Object.keys(errors || {}).forEach(field => {
+        (errors[field] || []).forEach(message => {
+            const li = document.createElement('li');
+            li.className = 'text-danger small';
+            li.textContent = '• ' + message;
+            ul.appendChild(li);
+        });
+    });
+
+    errorsEl.appendChild(ul);
+}
+
+function u17RenderSuccess(payload, containerEl, errorsEl, preEl) {
+    containerEl.classList.remove('d-none');
+    errorsEl.innerHTML = '';
+    errorsEl.classList.add('d-none');
+    preEl.classList.remove('d-none');
+    preEl.textContent = JSON.stringify(payload, null, 2);
+}
+
+function bindUploadHandler() {
+    const form = document.getElementById('u17-form');
+    const clearBtn = document.getElementById('u17-btn-clear');
+    const result = document.getElementById('u17-result');
+    const errors = document.getElementById('u17-errors');
+    const pre = document.getElementById('u17-result-pre');
+
+    if (!(form instanceof HTMLFormElement) || !result || !errors || !pre) {
+        return;
+    }
+
+    clearBtn?.addEventListener('click', () => {
+        form.reset();
+        result.classList.add('d-none');
+        errors.innerHTML = '';
+        errors.classList.add('d-none');
+        pre.textContent = '';
+        pre.classList.add('d-none');
+    });
+}
+
+function handleUploadResponse(form, data) {
+    const result = document.getElementById('u17-result');
+    const errors = document.getElementById('u17-errors');
+    const pre = document.getElementById('u17-result-pre');
+
+    if (!result || !errors || !pre) {
+        return;
+    }
+
+    if (data.success) {
+        u17RenderSuccess(data, result, errors, pre);
+        form.reset();
+        return;
+    }
+
+    if (data.errors) {
+        u17RenderErrors(data.errors, result, errors, pre);
+        return;
+    }
+
+    u17RenderSuccess(data, result, errors, pre);
+}
+
+function clearMailResult() {
+    const result = document.getElementById('m4-result');
+    const output = document.getElementById('m4-output');
+
+    if (result && output) {
+        result.classList.add('d-none');
+        output.textContent = '';
+    }
+}
+
+function handleMailResponse(data) {
+    const result = document.getElementById('m4-result');
+    const output = document.getElementById('m4-output');
+
+    if (!result || !output) {
+        return;
+    }
+
+    output.textContent = data.message ?? JSON.stringify(data);
+    result.classList.remove('d-none');
+}
+
+function clearOrmResult() {
+    const container = document.getElementById('orm-result');
+    const pre = document.getElementById('orm-result-pre');
+
+    if (container && pre) {
+        container.style.display = '';
+        pre.textContent = '';
+    }
+}
+
+function ormShowResult(data) {
+    const container = document.getElementById('orm-result');
+    const pre = document.getElementById('orm-result-pre');
+
+    if (container && pre) {
+        pre.textContent = JSON.stringify(data, null, 2);
+        container.style.display = '';
+    }
+
+    if (data.success !== false) {
+        window.Catalyst?.success('ORM response received.');
+        return;
+    }
+
+    window.Catalyst?.error(data.message ?? 'ORM error.');
+}
+
+async function ormGet(url) {
+    try {
+        const { data } = await http.json(url);
+        ormShowResult(data);
+    } catch (error) {
+        console.error('[devtools] ormGet error:', url, error);
+    }
+}
+
+async function initUmlShowcase() {
+    const showcase = document.querySelector('.uml-showcase');
+    if (!showcase || umlInitialized) {
+        return;
+    }
+
+    umlInitialized = true;
+    await ensureExternalScript(MERMAID_SCRIPT_SRC, 'catalyst-devtools-mermaid');
+
+    if (!window.mermaid) {
+        console.error('[devtools] Mermaid runtime unavailable after script load.');
+        return;
+    }
+
+    const buttons = Array.from(document.querySelectorAll('.uml-nav-tab[data-tab]'));
+    const root = document.documentElement;
+
+    cacheMermaidSources();
+    ensureMermaidTheme(true);
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            showUmlTab(button.getAttribute('data-tab'), button);
+        });
+    });
+
+    bindUmlKeyboardNavigation(buttons);
+
+    const active = document.querySelector('.uml-tab-content.active');
+    if (active) {
+        void renderUmlTab(active);
+    }
+
+    if (typeof MutationObserver === 'function') {
+        new MutationObserver(mutations => {
+            const themeChanged = mutations.some(mutation =>
+                mutation.type === 'attributes' && mutation.attributeName === 'data-bs-theme'
+            );
+
+            if (!themeChanged) {
+                return;
+            }
+
+            ensureMermaidTheme(false);
+
+            const current = document.querySelector('.uml-tab-content.active');
+            if (current) {
+                void renderUmlTab(current);
+            }
+        }).observe(root, { attributes: true });
+    }
+}
+
+function getMermaidTheme() {
+    return document.documentElement.getAttribute('data-bs-theme') === 'dark'
+        ? 'dark'
+        : 'default';
+}
+
+function ensureMermaidTheme(force) {
+    const nextTheme = getMermaidTheme();
+    if (!force && nextTheme === umlTheme) {
+        return;
+    }
+
+    umlTheme = nextTheme;
+    window.mermaid.initialize({
+        startOnLoad: false,
+        theme: nextTheme,
+        flowchart: { curve: 'basis', padding: 20 },
+    });
+
+    document.querySelectorAll('.mermaid').forEach(node => {
+        node.innerHTML = '';
+        node.removeAttribute('data-processed');
+    });
+}
+
+function cacheMermaidSources() {
+    document.querySelectorAll('.mermaid').forEach(node => {
+        if (!node.dataset.mermaidSource) {
+            node.dataset.mermaidSource = (node.textContent || '').trim();
+        }
+    });
+}
+
+async function renderMermaidNode(node, index) {
+    if (!node || node.querySelector('svg')) {
+        return;
+    }
+
+    const source = node.dataset.mermaidSource || (node.textContent || '').trim();
+    if (source === '') {
+        return;
+    }
+
+    try {
+        const renderId = `catalyst-uml-${Date.now()}-${index}`;
+        const renderResult = await window.mermaid.render(renderId, source);
+        node.innerHTML = renderResult.svg;
+        node.setAttribute('data-processed', 'true');
+
+        if (typeof renderResult.bindFunctions === 'function') {
+            renderResult.bindFunctions(node);
+        }
+    } catch (error) {
+        console.error('[devtools] Mermaid render failed:', error);
+        node.innerHTML = '<div class="alert alert-danger py-2 small mb-0">Diagram failed to render.</div>';
+    }
+}
+
+async function renderUmlTab(tabEl) {
+    const nodes = Array.from(tabEl.querySelectorAll('.mermaid'));
+    for (let index = 0; index < nodes.length; index += 1) {
+        await renderMermaidNode(nodes[index], index);
+    }
+}
+
+function showUmlTab(id, button) {
+    document.querySelectorAll('.uml-tab-content').forEach(element => {
+        element.classList.remove('active');
+        element.hidden = true;
+    });
+
+    document.querySelectorAll('.uml-nav-tab').forEach(element => {
+        element.classList.remove('active');
+        element.setAttribute('aria-selected', 'false');
+        element.setAttribute('tabindex', '-1');
+    });
+
+    const tab = document.getElementById(`uml-tab-${id}`);
+    if (!tab || !button) {
+        return;
+    }
+
+    tab.classList.add('active');
+    tab.hidden = false;
+    button.classList.add('active');
+    button.setAttribute('aria-selected', 'true');
+    button.setAttribute('tabindex', '0');
+    button.focus();
+    void renderUmlTab(tab);
+}
+
+function bindUmlKeyboardNavigation(buttons) {
+    buttons.forEach((button, index) => {
+        button.addEventListener('keydown', event => {
+            let targetIndex = null;
+
+            if (event.key === 'ArrowRight') {
+                targetIndex = (index + 1) % buttons.length;
+            } else if (event.key === 'ArrowLeft') {
+                targetIndex = (index - 1 + buttons.length) % buttons.length;
+            } else if (event.key === 'Home') {
+                targetIndex = 0;
+            } else if (event.key === 'End') {
+                targetIndex = buttons.length - 1;
+            }
+
+            if (targetIndex === null) {
+                return;
+            }
+
+            event.preventDefault();
+            const target = buttons[targetIndex];
+            showUmlTab(target.getAttribute('data-tab'), target);
+        });
+    });
+}
+
+function ensureExternalScript(src, datasetKey) {
+    const existing = document.querySelector(`script[data-external-script="${datasetKey}"]`);
+
+    if (existing) {
+        return existing.dataset.loaded === 'true'
+            ? Promise.resolve()
+            : waitForExternalScript(existing);
+    }
+
+    const script = document.createElement('script');
+    script.src = src;
+    script.async = true;
+    script.defer = true;
+    script.dataset.externalScript = datasetKey;
+    script.dataset.loaded = 'false';
+
+    document.head.appendChild(script);
+
+    return waitForExternalScript(script);
+}
+
+function waitForExternalScript(script) {
+    return new Promise((resolve, reject) => {
+        if (script.dataset.loaded === 'true') {
+            resolve();
+            return;
+        }
+
+        script.addEventListener('load', () => {
+            script.dataset.loaded = 'true';
+            resolve();
+        }, { once: true });
+
+        script.addEventListener('error', () => {
+            reject(new Error(`Failed to load external script: ${script.src}`));
+        }, { once: true });
+    });
+}

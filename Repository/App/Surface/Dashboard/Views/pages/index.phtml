@@ -1,0 +1,74 @@
+<div class="account-page" data-account-page="dashboard">
+    <div class="account-page-header">
+        <div>
+            <span class="account-eyebrow">{{ t:dashboard.index.eyebrow }}</span>
+            <h1>{{ t:dashboard.index.title }}</h1>
+            <p>{{ t:dashboard.index.lead }}</p>
+        </div>
+    </div>
+
+    <section class="row g-3 account-metric-grid" aria-label="{{ t:dashboard.index.security_summary }}">
+        {{#each account_page.metrics}}
+        <div class="col-12 col-md-6 col-xl-3">
+            <article class="card account-card h-100">
+                <div class="card-body">
+                    <div class="account-card__icon"><i class="{{ icon }}"></i></div>
+                    <span class="account-card__label">{{ label }}</span>
+                    <strong>{{ value }}</strong>
+                    <small>{{ hint }}</small>
+                </div>
+            </article>
+        </div>
+        {{/each}}
+    </section>
+
+    <section class="row g-3 mt-1">
+        <div class="col-12 col-xl-8">
+            <article class="card account-card h-100">
+                <div class="card-body">
+                    <div class="account-section-title">
+                        <div>
+                            <h2>{{ t:dashboard.index.purpose_title }}</h2>
+                            <p>{{ t:dashboard.index.purpose_hint }}</p>
+                        </div>
+                    </div>
+                    <div class="account-definition-list account-definition-list--stacked">
+                        <div>
+                            <dt>{{ t:dashboard.index.purpose_account_title }}</dt>
+                            <dd>{{ t:dashboard.index.purpose_account_body }}</dd>
+                        </div>
+                        <div>
+                            <dt>{{ t:dashboard.index.purpose_security_title }}</dt>
+                            <dd>{{ t:dashboard.index.purpose_security_body }}</dd>
+                        </div>
+                        <div>
+                            <dt>{{ t:dashboard.index.purpose_activity_title }}</dt>
+                            <dd>{{ t:dashboard.index.purpose_activity_body }}</dd>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+        <div class="col-12 col-xl-4">
+            <article class="card account-card h-100">
+                <div class="card-body">
+                    <div class="account-section-title">
+                        <div>
+                            <h2>{{ t:dashboard.index.recent_activity }}</h2>
+                            <p>{{ t:dashboard.index.recent_activity_hint }}</p>
+                        </div>
+                    </div>
+                    <div class="account-timeline">
+                        {{#each account_page.activity}}
+                        <div class="account-timeline__item">
+                            <span>{{ created_at }}</span>
+                            <strong>{{ title }}</strong>
+                            <small>{{ body }}</small>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+</div>

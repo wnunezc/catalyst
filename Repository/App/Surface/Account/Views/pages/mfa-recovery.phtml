@@ -1,0 +1,46 @@
+<div class="account-page" data-account-page="mfa-recovery">
+    <div class="account-page-header">
+        <div>
+            <span class="account-eyebrow">{{ t:account.mfa_recovery.eyebrow }}</span>
+            <h1>{{ t:account.mfa_recovery.title }}</h1>
+            <p>{{ t:account.mfa_recovery.lead }}</p>
+        </div>
+    </div>
+
+    <section class="row g-3">
+        <div class="col-12 col-xl-7">
+            <article class="card account-card h-100">
+                <div class="card-body">
+                    <div class="account-section-title">
+                        <div>
+                            <h2>{{ t:account.mfa_recovery.form_title }}</h2>
+                            <p>{{ t:account.mfa_recovery.form_hint }}</p>
+                        </div>
+                    </div>
+                    <form method="POST" action="/account/recovery/mfa" class="account-form" data-catalyst="form">
+                        {{{ csrf_field }}}
+                        <div class="mb-3">
+                            <label for="email" class="form-label">{{ t:account.forms.email }}</label>
+                            <input type="email" class="form-control" id="email" name="email" value="{{ account_user.email }}" autocomplete="email" readonly required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">{{ t:account.mfa_recovery.submit }}</button>
+                    </form>
+                </div>
+            </article>
+        </div>
+        <div class="col-12 col-xl-5">
+            <article class="card account-card h-100">
+                <div class="card-body">
+                    <div class="account-note-card">
+                        <i class="ti ti-info-circle"></i>
+                        <p>{{ t:account.mfa_recovery.note }}</p>
+                    </div>
+                    <div class="account-note-card account-note-card--warning">
+                        <i class="ti ti-alert-triangle"></i>
+                        <p>{{ t:account.mfa_recovery.warning }}</p>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+</div>

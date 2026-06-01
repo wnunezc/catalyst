@@ -1,0 +1,16 @@
+<main class="account-guest-gateway account-recovery-public" data-account-recovery="mfa">
+    <section class="account-guest-gateway__card">
+        <span class="account-eyebrow">{{ t:account.recovery_public.eyebrow }}</span>
+        <h1>{{ t:account.recovery_public.mfa_title }}</h1>
+        <p>{{ t:account.recovery_public.mfa_lead }}</p>
+        <form method="POST" action="/account-recovery/mfa" class="account-form" data-catalyst="form">
+            {{{ csrf_field }}}
+            <div class="mb-3">
+                <label for="email" class="form-label">{{ t:account.forms.email }}</label>
+                <input type="email" class="form-control" id="email" name="email" autocomplete="email" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">{{ t:account.recovery_public.mfa_submit }}</button>
+        </form>
+        <p class="account-guest-gateway__hint">{{ t:account.recovery_public.generic_response_hint }}</p>
+    </section>
+</main>

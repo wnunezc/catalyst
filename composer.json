@@ -1,0 +1,80 @@
+{
+    "name": "catalyst/framework",
+    "description": "Catalyst PHP Framework - Lightweight MVC framework with dual-space architecture",
+    "type": "project",
+    "keywords": [
+        "catalyst",
+        "framework",
+        "mvc",
+        "php",
+        "php8.4",
+        "lightweight",
+        "dual-space",
+        "middleware"
+    ],
+    "homepage": "https://catalyst.lh-2.net",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Walter Nuñez",
+            "email": "wnunez@lh-2.net",
+            "role": "Lead Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://catalyst.lh-2.net/help-desk",
+        "forum": "https://catalyst.lh-2.net/forum",
+        "docs": "https://catalyst.lh-2.net/docs"
+    },
+    "require": {
+        "php": ">=8.4",
+        "ext-ctype": "*",
+        "ext-fileinfo": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-openssl": "*",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*",
+        "cboden/ratchet": "^0.4",
+        "league/oauth2-client": "^2.9",
+        "phpmailer/phpmailer": "^6.9",
+        "react/http": "^1.9"
+    },
+    "autoload": {
+        "files": [
+            "boot-core/global-function/dump-function.php"
+        ],
+        "psr-4": {
+            "Catalyst\\": "app/",
+            "Catalyst\\Framework\\": "app/Framework/",
+            "Catalyst\\Helpers\\": "app/Helpers/",
+            "Catalyst\\Repository\\": "Repository/Framework/",
+            "App\\": "Repository/App/"
+        }
+    },
+    "autoload-dev": {
+    },
+    "scripts": {
+        "security:check": "@php public/cli.php security:check",
+        "post-update-cmd": [
+            "@composer dump-autoload"
+        ]
+    },
+    "scripts-descriptions": {
+        "security:check": "Run Catalyst security and CSP hotspot checks",
+        "post-update-cmd": "Regenerate autoloader after updates"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "platform": {
+            "php": "8.4"
+        },
+        "platform-check": true,
+        "process-timeout": 0,
+        "allow-plugins": {}
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

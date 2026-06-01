@@ -1,0 +1,70 @@
+<script type="module" nonce="{{ csp_nonce }}">
+import Catalyst from '/assets/js/catalyst/catalyst.js?v={{ catalyst_asset_version }}';
+
+window.__catalystModuleVersion = '{{ catalyst_asset_version }}';
+
+// Initialize Catalyst notification system
+Catalyst.init({{{ catalyst_init_config_json }}});
+
+const flushPendingToasts = () => {
+    if (window.__catalystPendingToastsFlushed || !window.Catalyst?.initialized) {
+        return;
+    }
+
+    window.__catalystPendingToastsFlushed = true;
+    {{#each pending_toasts}}
+    window.Catalyst.{{ type }}({{{ message_json }}});
+    {{/each}}
+};
+
+flushPendingToasts();
+document.addEventListener('catalyst:ready', flushPendingToasts, { once: true });
+
+const shellRoot = document.querySelector('.migration-ui-shell-body');
+const publicRoot = document.querySelector('.catalyst-public-shell-body');
+
+if (shellRoot instanceof HTMLElement && window.Catalyst?.ui?.initShellRuntime) {
+    await window.Catalyst.ui.initShellRuntime({
+        root: shellRoot,
+        defaultDoc: 'ui-alerts.html',
+        mobileMaxWidth: 767,
+        noScrollClass: 'migration-ui-no-scroll',
+        backdropClass: 'migration-ui-backdrop',
+        topbarSelector: '.app-topbar',
+        scrollContainerSelector: '.content-page',
+        topbarActiveClass: 'topbar-active',
+        themeStorageKey: '__THEME_CONFIG__',
+        quickToggleSelector: '.catalyst-status-bar [data-migrationui-theme-toggle]',
+    });
+
+    const { initDropdowns } = await import(`/assets/js/catalyst/modules/shell-dropdowns.js?v={{ catalyst_asset_version }}`);
+    shellRoot.removeAttribute('data-catalyst-dropdowns-initialized');
+    initDropdowns({ root: shellRoot });
+}
+
+if (publicRoot instanceof HTMLElement && window.Catalyst?.ui?.initShellRuntime) {
+    await window.Catalyst.ui.initShellRuntime({
+        root: publicRoot,
+        defaultDoc: 'ui-alerts.html',
+        mobileMaxWidth: 767,
+        noScrollClass: 'migration-ui-no-scroll',
+        backdropClass: 'migration-ui-backdrop',
+        topbarSelector: '.catalyst-public-nav',
+        scrollContainerSelector: '.catalyst-public-shell__main',
+        topbarActiveClass: 'topbar-active',
+        themeStorageKey: '__THEME_CONFIG__',
+        quickToggleSelector: '.catalyst-status-bar [data-migrationui-theme-toggle]',
+    });
+
+    const { initDropdowns } = await import(`/assets/js/catalyst/modules/shell-dropdowns.js?v={{ catalyst_asset_version }}`);
+    publicRoot.removeAttribute('data-catalyst-dropdowns-initialized');
+    initDropdowns({ root: publicRoot });
+}
+</script>
+
+{{#if has_work_js}}
+{{#unless suppress_work_assets}}
+<script type="module" src="/assets/js/work/{{ work_asset_slug }}/script.js?v={{ work_js_asset_version }}"></script>
+{{/unless}}
+{{/if}}
+{{! Work CSS is injected by layout/style_links to keep CSS in <head> and preserve CSP/order. }}

@@ -1,0 +1,29 @@
+<!-- Bootstrap JS Bundle (local; includes Popper). Avoids CDN failures in local/SSL development. -->
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js?v={{ bootstrap_bundle_asset_version }}"></script>
+
+<!-- Catalyst UI Actions (data-confirm, data-history-back, data-password-toggle) -->
+<script src="/assets/js/catalyst/modules/ui-actions.js?v={{ ui_actions_asset_version }}"></script>
+
+<!-- Catalyst Theme Toggle (runtime light/dark — button lives in status bar) -->
+<script src="/assets/js/catalyst/modules/theme-toggle.js?v={{ theme_toggle_asset_version }}"></script>
+
+{{#unless is_public_shell}}
+<!-- Catalyst Admin Form Builder dependencies -->
+<script src="/assets/js/catalyst/modules/admin-form-dependencies.js?v={{ admin_form_dependencies_asset_version }}"></script>
+
+<!-- Inspinia DataTables runtime used as progressive enhancement for Catalyst DataGrid. -->
+<script src="/assets/vendor/inspinia/plugins/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/inspinia/plugins/datatables/dataTables.min.js"></script>
+<script src="/assets/vendor/inspinia/plugins/datatables/dataTables.bootstrap5.min.js"></script>
+<script src="/assets/vendor/inspinia/plugins/datatables/dataTables.responsive.min.js"></script>
+<script src="/assets/vendor/inspinia/plugins/datatables/responsive.bootstrap5.min.js"></script>
+
+<!-- Catalyst Admin DataGrid bulk-selection runtime + DataTables bridge -->
+<script src="/assets/js/catalyst/modules/admin-grid.js?v={{ admin_grid_asset_version }}"></script>
+
+<!-- Catalyst record presence runtime over canonical claim banners -->
+<script type="module" src="/assets/js/catalyst/modules/record-presence.js?v={{ record_presence_asset_version }}"></script>
+{{/unless}}
+
+<!-- Catalyst Flash Client (reads JSON bridge, delivers toasts + dismissable alerts) -->
+<script type="module" src="/assets/js/catalyst/modules/flash-client.js?v={{ flash_client_asset_version }}"></script>

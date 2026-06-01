@@ -1,0 +1,42 @@
+{
+  "guest": {
+    "eyebrow": "Área personal",
+    "title": "Dashboard de cuenta",
+    "lead": "Esta sección carga el shell de usuario solo cuando hay una sesión autenticada. Para continuar, inicia sesión o crea una cuenta.",
+    "login": "Ir a login",
+    "register": "Crear cuenta",
+    "hint": "No se muestra contenido ni navegación personal mientras la sesión no esté autenticada."
+  },
+  "index": {
+    "eyebrow": "Resumen personal",
+    "title": "Dashboard",
+    "lead": "Inicio del usuario autenticado: estado de cuenta, indicadores de seguridad y eventos recientes. La navegación queda en el menú izquierdo.",
+    "security_summary": "Resumen de seguridad",
+    "recommended_actions": "Acciones recomendadas",
+    "recommended_actions_hint": "Tareas breves para mantener la cuenta saludable.",
+    "recent_activity": "Actividad reciente",
+    "recent_activity_hint": "Eventos recientes de recuperación y seguridad.",
+    "purpose_title": "Qué muestra este dashboard",
+    "purpose_hint": "Esta página es una superficie de resumen, no un centro de navegación.",
+    "purpose_account_title": "Contexto de cuenta",
+    "purpose_account_body": "Muestra si la cuenta autenticada cargó correctamente y qué datos de identidad están disponibles.",
+    "purpose_security_title": "Indicadores de seguridad",
+    "purpose_security_body": "Resume señales de correo, MFA y solicitudes abiertas sin reemplazar las páginas dedicadas.",
+    "purpose_activity_title": "Actividad reciente",
+    "purpose_activity_body": "Destaca los últimos eventos de recuperación o seguridad de cuenta cuando existan."
+  },
+  "metrics": {
+    "profile": "Perfil",
+    "profile_value": "Disponible",
+    "profile_hint": "Identidad de cuenta cargada",
+    "email": "Correo",
+    "email_verified": "Verificado",
+    "mfa": "MFA",
+    "mfa_enabled": "Activo",
+    "mfa_disabled": "Inactivo",
+    "mfa_enabled_hint": "Segundo factor configurado",
+    "mfa_disabled_hint": "Recomendado configurar",
+    "recovery": "Solicitudes",
+    "recovery_hint": "Casos abiertos de recuperación"
+  }
+}

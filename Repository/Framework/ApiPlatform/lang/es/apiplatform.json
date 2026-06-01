@@ -1,0 +1,103 @@
+{
+  "module": {
+    "description": "Plataforma API versionada con gestión de tokens, catálogo de rutas, operaciones de flujo y endpoints de restauración de versiones.",
+    "permission_label": "Gestionar plataforma API",
+    "permission_description": "Inspeccionar el catálogo API versionado y administrar tokens bearer.",
+    "navigation_label": "Plataforma API",
+    "navigation_hint": "Catálogo API v1, tokens y endpoints operativos del framework."
+  },
+  "index": {
+    "title": "Plataforma API",
+    "eyebrow": "API",
+    "description": "API versionada v1 integrada con autenticación real, permisos de ejecución, catálogo formal, flujos y restauración operativa por versiones.",
+    "chips": {
+      "bearer": "Autenticación Bearer",
+      "runtime": "Colas / Flujos / Versionado"
+    }
+  },
+  "created_token": {
+    "title": "Nuevo token",
+    "description": "Cópialo ahora. El hash persistido reemplaza el valor plano y no se volverá a mostrar."
+  },
+  "form": {
+    "card_title": "Emitir token bearer",
+    "card_description": "Token real sobre usuarios activos del sistema actual.",
+    "defaults": {
+      "token_name": "Token API",
+      "user": "Usuario"
+    },
+    "sections": {
+      "identity": {
+        "title": "Identidad del token",
+        "description": "Crea un token bearer real vinculado a un usuario activo de la aplicación."
+      }
+    },
+    "labels": {
+      "name": "Nombre del token",
+      "user": "Usuario",
+      "abilities": "Capacidades (CSV)",
+      "expires_at": "Expira en"
+    },
+    "placeholders": {
+      "name": "Integración de automatización",
+      "user": "Selecciona un usuario activo",
+      "abilities": "catalog,documents,automation",
+      "expires_at": "2026-05-31 23:59:59"
+    },
+    "help": {
+      "abilities": "Alcances informativos persistidos con el token. Usa * para metadatos de alcance irrestricto.",
+      "expires_at": "Fecha/hora UTC o local opcional aceptada por strtotime(). Déjalo vacío para tokens sin expiración."
+    },
+    "actions": {
+      "create": "Crear token"
+    }
+  },
+  "catalog": {
+    "title": "Catálogo de rutas v1",
+    "description": "Todos los endpoints versionados usan `Authorization: Bearer <token>`.",
+    "auth_type": "Token Bearer",
+    "columns": {
+      "method": "Método",
+      "path": "Ruta",
+      "permission": "Permiso",
+      "description": "Descripción"
+    }
+  },
+  "tokens": {
+    "title": "Tokens activos",
+    "description": "Inventario actual con revocación explícita y trazabilidad por último uso.",
+    "never": "Nunca",
+    "empty": "Todavía no hay tokens API activos.",
+    "columns": {
+      "name": "Nombre",
+      "prefix": "Prefijo",
+      "user": "Usuario",
+      "abilities": "Capacidades",
+      "expires": "Expira",
+      "last_used": "Último uso"
+    },
+    "actions": {
+      "revoke": "Revocar"
+    }
+  },
+  "messages": {
+    "created": "Token API creado. Cópialo ahora; no se volverá a mostrar.",
+    "revoked": "Token API revocado.",
+    "not_found": "Token API no encontrado.",
+    "catalog_retrieved": "Catálogo API recuperado.",
+    "workflow_instances_retrieved": "Instancias de flujo recuperadas.",
+    "workflow_instance_not_found": "Instancia de flujo no encontrada.",
+    "workflow_forbidden_resource": "Recurso de flujo no autorizado.",
+    "workflow_transition_required": "La transición es obligatoria.",
+    "workflow_transitioned": "Flujo actualizado correctamente.",
+    "versioned_resource_not_found": "Recurso versionado no encontrado.",
+    "version_history_retrieved": "Historial de versiones recuperado.",
+    "version_not_found": "Versión no encontrada.",
+    "version_restored": "Versión restaurada."
+  },
+  "validation": {
+    "valid_active_user": "Selecciona un usuario activo válido.",
+    "abilities_required": "Proporciona al menos una capacidad o usa *.",
+    "expires_at_invalid": "Proporciona una fecha/hora de expiración válida o déjala en blanco."
+  }
+}

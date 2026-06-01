@@ -1,0 +1,23 @@
+<div class="account-page" data-account-page="activity">
+    <div class="account-page-header">
+        <div>
+            <span class="account-eyebrow">{{ t:account.activity.eyebrow }}</span>
+            <h1>{{ t:account.activity.title }}</h1>
+            <p>{{ t:account.activity.lead }}</p>
+        </div>
+    </div>
+
+    <article class="card account-card">
+        <div class="card-body">
+            <div class="account-timeline account-timeline--wide">
+                {{#each account_activity.events}}
+                <div class="account-timeline__item">
+                    <span>{{ created_at }}</span>
+                    <strong>{{ title }}</strong>
+                    <small>{{ body }}</small>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </article>
+</div>

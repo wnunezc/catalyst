@@ -1,0 +1,138 @@
+<div class="col-12">
+    <div class="section-card">
+        <div class="card-header tf-card-header-toggle"
+             data-bs-toggle="collapse"
+             data-bs-target="#all-endpoints-collapse"
+             aria-expanded="false">
+            <i class="fa-solid fa-list me-2"></i>{{ t:devtools.endpoints_catalog.title }}
+            <span class="badge bg-secondary ms-2">{{ t:devtools.endpoints_catalog.expand }}</span>
+        </div>
+        <div class="collapse" id="all-endpoints-collapse">
+            <div class="card-body">
+                <p class="text-muted small mb-3">{{ t:devtools.endpoints_catalog.description }}</p>
+                <div class="row g-3">
+
+                    <div class="col-12 col-md-6">
+                        <p class="text-muted small fw-semibold mb-2">{{ t:devtools.endpoints_catalog.sections.stage_02 }}</p>
+                        <table class="table table-sm sys-table">
+                            <thead><tr><th>{{ t:devtools.endpoints_catalog.columns.endpoint }}</th><th></th></tr></thead>
+                            <tbody>
+                                <tr><td><span class="code-badge">/test-features/e-helper</span></td><td><a href="/test-features/e-helper" target="_blank" class="json-link">↗</a></td></tr>
+                                <tr><td><span class="code-badge">/test-features/layout-test</span></td><td><a href="/test-features/layout-test" target="_blank" class="json-link">↗</a></td></tr>
+                            </tbody>
+                        </table>
+
+                        <p class="text-muted small fw-semibold mb-2 mt-3">{{ t:devtools.endpoints_catalog.sections.json_inspection }}</p>
+                        <table class="table table-sm sys-table">
+                            <thead><tr><th>{{ t:devtools.endpoints_catalog.columns.endpoint }}</th><th></th></tr></thead>
+                            <tbody>
+                                <tr><td><span class="code-badge">/test-features/json</span></td><td><a href="/test-features/json" target="_blank" class="json-link">↗</a></td></tr>
+                                <tr><td><span class="code-badge">/test-features/json-success</span></td><td><a href="/test-features/json-success" target="_blank" class="json-link">↗</a></td></tr>
+                                <tr><td><span class="code-badge">/test-features/json-error</span></td><td><a href="/test-features/json-error" target="_blank" class="json-link">↗</a></td></tr>
+                                <tr><td><span class="code-badge">/test-features/validation-error</span></td><td><a href="/test-features/validation-error" target="_blank" class="json-link">↗</a></td></tr>
+                                <tr><td><span class="code-badge">/test-features/api-response</span></td><td><a href="/test-features/api-response" target="_blank" class="json-link">↗</a></td></tr>
+                            </tbody>
+                        </table>
+
+                        <p class="text-muted small fw-semibold mb-2 mt-3">{{ t:devtools.endpoints_catalog.sections.infrastructure }}</p>
+                        <table class="table table-sm sys-table">
+                            <thead><tr><th>{{ t:devtools.endpoints_catalog.columns.endpoint }}</th><th></th></tr></thead>
+                            <tbody>
+                                <tr><td><span class="code-badge">/test-features/route-cache</span></td><td><a href="/test-features/route-cache" target="_blank" class="json-link">↗</a></td></tr>
+                                <tr><td><span class="code-badge">/test-features/logger-email</span></td><td><a href="/test-features/logger-email" target="_blank" class="json-link">↗</a></td></tr>
+                            </tbody>
+                        </table>
+
+                        <p class="text-muted small fw-semibold mb-2 mt-3">{{ t:devtools.endpoints_catalog.sections.flash_triggers }}</p>
+                        <table class="table table-sm sys-table">
+                            <thead><tr><th>{{ t:devtools.endpoints_catalog.columns.endpoint }}</th><th></th></tr></thead>
+                            <tbody>
+                                <tr><td><span class="code-badge">/test-features/flash/{type}</span></td><td><span class="text-muted small">{{ t:devtools.endpoints_catalog.flash_types }}</span></td></tr>
+                                <tr><td><span class="code-badge">/test-features/flash/{type}/persistent</span></td><td><span class="text-muted small">{{ t:devtools.endpoints_catalog.same_types }}</span></td></tr>
+                                <tr><td><span class="code-badge">/test-features/flash/clear</span></td><td><a href="/test-features/flash/clear" class="json-link">{{ t:devtools.endpoints_catalog.clear }} ↗</a></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <p class="text-muted small fw-semibold mb-2">{{ t:devtools.endpoints_catalog.sections.stage_1_database }}</p>
+                        <table class="table table-sm sys-table">
+                            <thead><tr><th>{{ t:devtools.endpoints_catalog.columns.endpoint }}</th><th></th></tr></thead>
+                            <tbody>
+                                <tr><td><span class="code-badge">/test-features/db-connection</span></td><td><a href="/test-features/db-connection" target="_blank" class="json-link">↗</a></td></tr>
+                            </tbody>
+                        </table>
+
+                        <p class="text-muted small fw-semibold mb-2 mt-3">{{ t:devtools.endpoints_catalog.sections.stage_2_i18n }}</p>
+                        <table class="table table-sm sys-table">
+                            <thead><tr><th>{{ t:devtools.endpoints_catalog.columns.endpoint }}</th><th></th></tr></thead>
+                            <tbody>
+                                <tr><td><span class="code-badge">GET /test-features/i18n</span></td><td><a href="/test-features/i18n" target="_blank" class="json-link">↗</a></td></tr>
+                                <tr><td><span class="code-badge">POST /test-features/i18n/set-locale</span></td><td><span class="text-muted small">{{ t:devtools.endpoints_catalog.form_field }}: locale=en|es</span></td></tr>
+                            </tbody>
+                        </table>
+
+                        <p class="text-muted small fw-semibold mb-2 mt-3">{{ t:devtools.endpoints_catalog.sections.stage_3_validator }}</p>
+                        <table class="table table-sm sys-table">
+                            <thead><tr><th>{{ t:devtools.endpoints_catalog.columns.endpoint }}</th><th></th></tr></thead>
+                            <tbody>
+                                <tr><td><span class="code-badge">POST /test-features/api/validator-test</span></td><td><span class="text-muted small">{{ t:devtools.endpoints_catalog.form_fields }}: name,email,age,password,password_confirmation[,mode]</span></td></tr>
+                                <tr><td><span class="code-badge">POST /test-features/api/validator-unique</span></td><td><span class="text-muted small">{{ t:devtools.endpoints_catalog.form_field }}: email</span></td></tr>
+                            </tbody>
+                        </table>
+
+                        <p class="text-muted small fw-semibold mb-2 mt-3">{{ t:devtools.endpoints_catalog.sections.stage_17_upload }}</p>
+                        <table class="table table-sm sys-table">
+                            <thead><tr><th>{{ t:devtools.endpoints_catalog.columns.endpoint }}</th><th></th></tr></thead>
+                            <tbody>
+                                <tr><td><span class="code-badge">POST /test-features/upload</span></td><td><span class="text-muted small">{{ t:devtools.endpoints_catalog.multipart_payload }}: {attachment}</span></td></tr>
+                            </tbody>
+                        </table>
+
+                        <p class="text-muted small fw-semibold mb-2 mt-3">{{ t:devtools.endpoints_catalog.sections.stage_4_mail }}</p>
+                        <table class="table table-sm sys-table">
+                            <thead><tr><th>{{ t:devtools.endpoints_catalog.columns.endpoint }}</th><th></th></tr></thead>
+                            <tbody>
+                                <tr><td><span class="code-badge">POST /test-features/mail-test</span></td><td><span class="text-muted small">{{ t:devtools.endpoints_catalog.form_fields }}: to,subject,body</span></td></tr>
+                            </tbody>
+                        </table>
+
+                        <p class="text-muted small fw-semibold mb-2 mt-3">{{ t:devtools.endpoints_catalog.sections.stage_6_rbac }}</p>
+                        <table class="table table-sm sys-table">
+                            <thead><tr><th>{{ t:devtools.endpoints_catalog.columns.endpoint }}</th><th></th></tr></thead>
+                            <tbody>
+                                <tr><td><span class="code-badge">GET /test-features/rbac-status</span></td><td><a href="/test-features/rbac-status" target="_blank" class="json-link">↗</a></td></tr>
+                            </tbody>
+                        </table>
+
+                        <p class="text-muted small fw-semibold mb-2 mt-3">{{ t:devtools.endpoints_catalog.sections.stage_9_14_orm }}</p>
+                        <table class="table table-sm sys-table">
+                            <thead><tr><th>{{ t:devtools.endpoints_catalog.columns.endpoint }}</th><th></th></tr></thead>
+                            <tbody>
+                                <tr><td><span class="code-badge">GET /test-features/orm/status</span></td><td><a href="/test-features/orm/status" target="_blank" class="json-link">↗</a></td></tr>
+                                <tr><td><span class="code-badge">POST /test-features/orm/create</span></td><td><span class="text-muted small">{{ t:devtools.endpoints_catalog.body_payload }}: {}</span></td></tr>
+                                <tr><td><span class="code-badge">POST /test-features/orm/update</span></td><td><span class="text-muted small">{{ t:devtools.endpoints_catalog.body_payload }}: {}</span></td></tr>
+                                <tr><td><span class="code-badge">POST /test-features/orm/delete-latest</span></td><td><span class="text-muted small">{{ t:devtools.endpoints_catalog.body_payload }}: {}</span></td></tr>
+                                <tr><td><span class="code-badge">GET /test-features/orm/find-or-fail</span></td><td><a href="/test-features/orm/find-or-fail" target="_blank" class="json-link">↗</a></td></tr>
+                                <tr><td><span class="code-badge">GET /test-features/orm/user-demo</span></td><td><a href="/test-features/orm/user-demo" target="_blank" class="json-link">↗</a></td></tr>
+                            </tbody>
+                        </table>
+
+                        <p class="text-muted small fw-semibold mb-2 mt-3">{{ t:devtools.endpoints_catalog.sections.toaster_api }}</p>
+                        <table class="table table-sm sys-table">
+                            <thead><tr><th>{{ t:devtools.endpoints_catalog.columns.endpoint }}</th><th></th></tr></thead>
+                            <tbody>
+                                <tr><td><span class="code-badge">/test-features/api/toaster-success</span></td><td><a href="/test-features/api/toaster-success" target="_blank" class="json-link">↗</a></td></tr>
+                                <tr><td><span class="code-badge">/test-features/api/toaster-error</span></td><td><a href="/test-features/api/toaster-error" target="_blank" class="json-link">↗</a></td></tr>
+                                <tr><td><span class="code-badge">/test-features/api/toaster-warning</span></td><td><a href="/test-features/api/toaster-warning" target="_blank" class="json-link">↗</a></td></tr>
+                                <tr><td><span class="code-badge">/test-features/api/toaster-info</span></td><td><a href="/test-features/api/toaster-info" target="_blank" class="json-link">↗</a></td></tr>
+                                <tr><td><span class="code-badge">/test-features/api/multiple-toasters</span></td><td><a href="/test-features/api/multiple-toasters" target="_blank" class="json-link">↗</a></td></tr>
+                                <tr><td><span class="code-badge">/test-features/api/modal-trigger</span></td><td><a href="/test-features/api/modal-trigger" target="_blank" class="json-link">↗</a></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

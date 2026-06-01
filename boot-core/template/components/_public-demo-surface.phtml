@@ -1,0 +1,113 @@
+<section class="public-demo public-demo--{{ page.variant }}" data-public-surface="{{ page.routeKey }}">
+    <div class="public-demo__hero">
+        <div class="public-demo__copy card border-0 shadow-sm">
+            <div class="card-body">
+                <span class="public-demo__eyebrow">{{ page.eyebrow }}</span>
+                <span class="public-demo__badge">{{ page.badge }}</span>
+                <h1>{{ page.headline }}</h1>
+                <p class="public-demo__lead">{{ page.lead }}</p>
+
+                <div class="public-demo__actions">
+                    <a class="btn btn-primary" href="{{ page.primaryCta.href }}">{{ page.primaryCta.label }}</a>
+                    <a class="btn btn-outline-primary" href="{{ page.secondaryCta.href }}">{{ page.secondaryCta.label }}</a>
+                </div>
+            </div>
+        </div>
+
+        <aside class="public-demo__visual card border-0 shadow-sm">
+            <div class="card-body">
+                <span class="public-demo__visual-kicker">{{ page.visual.kicker }}</span>
+                <h2>{{ page.visual.title }}</h2>
+                <p>{{ page.visual.body }}</p>
+
+                <div class="public-demo__mini-grid">
+                    {{#each page.visual.items}}
+                    <div class="public-demo__mini-item">
+                        <span>{{ label }}</span>
+                        <strong>{{ value }}</strong>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    {{#if page.stats}}
+    <div class="public-demo__stats">
+        {{#each page.stats}}
+        <article class="public-demo__stat card border-0 shadow-sm">
+            <div class="card-body">
+                <strong>{{ value }}</strong>
+                <span>{{ label }}</span>
+                <small>{{ hint }}</small>
+            </div>
+        </article>
+        {{/each}}
+    </div>
+    {{/if}}
+
+    {{#if page.products}}
+    <section class="public-demo__section" id="public-store-products">
+        <div class="public-demo__section-heading">
+            <span>{{ page.badge }}</span>
+            <h2>{{ page.productsTitle }}</h2>
+        </div>
+        <div class="public-demo__product-grid">
+            {{#each page.products}}
+            <article class="public-demo__product card border-0 shadow-sm">
+                <div class="card-body">
+                    <span class="public-demo__product-badge">{{ badge }}</span>
+                    <h3>{{ title }}</h3>
+                    <p>{{ body }}</p>
+                    <strong>{{ price }}</strong>
+                </div>
+            </article>
+            {{/each}}
+        </div>
+    </section>
+    {{/if}}
+
+    {{#if page.cards}}
+    <section class="public-demo__section">
+        <div class="public-demo__section-heading">
+            <span>{{ page.eyebrow }}</span>
+            <h2>{{ page.cardsTitle }}</h2>
+        </div>
+        <div class="public-demo__card-grid">
+            {{#each page.cards}}
+            <article class="public-demo__feature card border-0 shadow-sm">
+                <div class="card-body">
+                    <i class="{{ icon }}"></i>
+                    <h3>{{ title }}</h3>
+                    <p>{{ body }}</p>
+                </div>
+            </article>
+            {{/each}}
+        </div>
+    </section>
+    {{/if}}
+
+    {{#if page.steps}}
+    <section class="public-demo__section public-demo__section--steps">
+        <div class="public-demo__section-heading">
+            <span>{{ page.badge }}</span>
+            <h2>{{ page.stepsTitle }}</h2>
+        </div>
+        <div class="public-demo__steps">
+            {{#each page.steps}}
+            <article class="public-demo__step">
+                <strong>{{ number }}</strong>
+                <div>
+                    <h3>{{ title }}</h3>
+                    <p>{{ body }}</p>
+                </div>
+            </article>
+            {{/each}}
+        </div>
+    </section>
+    {{/if}}
+
+    <footer class="public-demo__note">
+        <p>{{ page.note }}</p>
+    </footer>
+</section>

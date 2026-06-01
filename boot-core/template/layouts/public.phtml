@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}"
+      dir="ltr"
+      data-bs-theme="light"
+      data-skin="default"
+      data-layout-width="fluid"
+      data-layout-position="fixed"
+      data-menu-color="light"
+      data-sidenav-size="default"
+      data-topbar-color="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ document_title }}</title>
+
+    {{#each meta_tags}}
+    <meta name="{{ name }}" content="{{ content }}">
+    {{/each}}
+
+    {{> "../components/_head-assets" }}
+    <link href="/assets/css/catalyst/public-shell.css?v={{ public_shell_asset_version }}" rel="stylesheet" type="text/css">
+
+    {{#each style_links}}
+    <link href="{{ href }}" rel="{{ rel }}"{{#if has_media}} media="{{ media }}"{{/if}}>
+    {{/each}}
+</head>
+<body class="catalyst-public-shell-body">
+    {{> "../components/_flash-messages" }}
+    {{> "../components/_public-navigation" }}
+
+    <main class="catalyst-public-shell" id="catalyst-public-content">
+        {{{ content }}}
+    </main>
+
+    {{> "../components/_theme-customizer-panel" }}
+    {{> "../components/_toaster-container" }}
+    {{> "../components/_modal-container" }}
+    {{> "../components/_status-bar" }}
+    {{> "../components/_body-scripts" }}
+    {{> "../components/_catalyst-init" }}
+
+    {{#each script_links}}
+    <script src="{{ src }}"{{#if has_type}} type="{{ type }}"{{/if}}{{#if defer}} defer{{/if}}{{#if async}} async{{/if}}{{#if has_nonce}} nonce="{{ nonce }}"{{/if}}></script>
+    {{/each}}
+</body>
+</html>

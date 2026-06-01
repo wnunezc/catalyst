@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}"
+      dir="ltr"
+      data-bs-theme="light"
+      data-skin="default"
+      data-layout-width="fluid"
+      data-layout-position="fixed"
+      data-menu-color="light"
+      data-sidenav-size="default"
+      data-topbar-color="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ document_title }}</title>
+
+    {{#each meta_tags}}
+    <meta name="{{ name }}" content="{{ content }}">
+    {{/each}}
+
+    {{> "../components/_head-assets" }}
+    <link href="/assets/css/catalyst/error-surface.css?v={{ error_surface_asset_version }}" rel="stylesheet" type="text/css">
+</head>
+<body class="catalyst-error-shell-body">
+    {{{ content }}}
+</body>
+</html>

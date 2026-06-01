@@ -1,0 +1,44 @@
+.catalogs-admin-page .catalogs-eyebrow {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--bs-secondary-color);
+}
+
+.catalogs-admin-page .catalogs-title {
+    font-size: clamp(1.8rem, 2vw, 2.4rem);
+    font-weight: 700;
+}
+
+.catalogs-admin-page .catalogs-lede {
+    max-width: 64rem;
+    color: var(--bs-secondary-color);
+}
+
+/* Compact UI pass. */
+.catalogs-admin-page .catalogs-eyebrow {
+    font-size: 0.62rem;
+}
+
+.catalogs-admin-page .catalogs-title {
+    font-size: clamp(1.42rem, 1.75vw, 1.95rem);
+}
+
+.catalogs-admin-page .catalogs-lede {
+    line-height: 1.42;
+}
+
+
+/* Density correction v2: readable text scale with compact spacing. */
+.catalogs-admin-page {
+    font-size: 0.875rem;
+}
+
+.catalogs-admin-page .catalogs-eyebrow {
+    font-size: 0.78rem;
+}
+
+.catalogs-admin-page .catalogs-title {
+    font-size: clamp(1.8rem, 2vw, 2.4rem);
+}
