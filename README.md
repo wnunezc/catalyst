@@ -89,7 +89,21 @@ php public/cli.php status
 php public/cli.php route:list --json
 php public/cli.php config:show app --json
 php public/cli.php security:check
+php public/cli.php quality:check
 ```
+
+## Quality Gate
+
+Run the standard local quality gate before committing framework, routing,
+security, config or asset changes:
+
+```bash
+php public/cli.php quality:check
+```
+
+The gate runs Composer validation/audit plus Catalyst route, structure,
+security and runtime status checks. See [docs/quality-gate.md](docs/quality-gate.md)
+for blocker rules and accepted local WSDD warnings.
 
 ## Configuration Baseline
 
@@ -149,6 +163,7 @@ There is no manual central registration for module route files.
 - [docs/runtime-module-catalog.md](docs/runtime-module-catalog.md) - generated runtime catalog for modules, guards, assets, permissions and representative surfaces
 - [docs/architecture.md](docs/architecture.md) - architecture and runtime model
 - [docs/security-conventions.md](docs/security-conventions.md) - CSP, nonce, JS/view rules
+- [docs/quality-gate.md](docs/quality-gate.md) - local pre-commit/pre-push checks and warning policy
 - [docs/deployment.md](docs/deployment.md) - deployment and packaging safety
 - [API.md](API.md) - subsystem index
 

@@ -79,6 +79,7 @@ use Catalyst\Framework\Cli\Commands\ConcurrencySmokeCommand;
 use Catalyst\Framework\Cli\Commands\QueueFailedCommand;
 use Catalyst\Framework\Cli\Commands\QueueRetryCommand;
 use Catalyst\Framework\Cli\Commands\QueueWorkCommand;
+use Catalyst\Framework\Cli\Commands\QualityCheckCommand;
 use Catalyst\Framework\Cli\Commands\RouteCacheCommand;
 use Catalyst\Framework\Cli\Commands\RouteClearCommand;
 use Catalyst\Framework\Cli\Commands\RouteLintCommand;
@@ -163,6 +164,7 @@ $registry
     ->register(new QueueWorkCommand())
     ->register(new QueueFailedCommand())
     ->register(new QueueRetryCommand())
+    ->register(new QualityCheckCommand())
     ->register(new ReportingRunCommand())
     ->register(new ReportingSmokeCommand())
     ->register(new RetentionRunCommand())

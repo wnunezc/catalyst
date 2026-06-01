@@ -94,7 +94,7 @@ Document expected local warnings separately from blockers:
 
 ### Execution Tasks
 
-- [ ] **Task 4.1: Close phase 2+3 Git checkpoint**
+- [x] **Task 4.1: Close phase 2+3 Git checkpoint**
 
 Run:
 
@@ -118,7 +118,7 @@ Expected:
 - Commit is created without AI co-author metadata.
 - Push updates the private GitHub repository.
 
-- [ ] **Task 4.2: Discover existing CLI command patterns**
+- [x] **Task 4.2: Discover existing CLI command patterns**
 
 Run:
 
@@ -130,14 +130,14 @@ Expected:
 
 - Identify the CLI command interface, registration mechanism, and output conventions before adding anything.
 
-- [ ] **Task 4.3: Decide whether `quality:check` should be code or docs-only**
+- [x] **Task 4.3: Decide whether `quality:check` should be code or docs-only**
 
 Decision rule:
 
 - If commands are easy to compose from the current CLI command framework without invoking shell-specific behavior, implement `quality:check`.
 - If the CLI framework has no clean way to compose commands, create a docs-only quality gate first and defer command implementation.
 
-- [ ] **Task 4.4: Implement or document the quality gate**
+- [x] **Task 4.4: Implement or document the quality gate**
 
 Implementation path:
 
@@ -150,7 +150,7 @@ Docs-only path:
 - Create `docs/quality-gate.md`.
 - Add exact PowerShell commands and expected blocker/warning policy.
 
-- [ ] **Task 4.5: Verify phase 4**
+- [x] **Task 4.5: Verify phase 4**
 
 Run:
 
@@ -176,7 +176,7 @@ Expected:
 - All blocker checks pass.
 - Any local warning is explicitly documented.
 
-- [ ] **Task 4.6: Close phase 4 checkpoint**
+- [x] **Task 4.6: Close phase 4 checkpoint**
 
 Run:
 

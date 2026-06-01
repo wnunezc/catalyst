@@ -46,6 +46,7 @@ Este archivo enruta la documentacion de `catalyst` para que el contexto caliente
 - `docs/navigation-route-matrix-222.md` - snapshot histórico de la matriz runtime previa al cierre de aliases; la verdad viva actual sale de `route:list --json` y `docs/runtime-module-catalog.md`
 - `docs/modules.md` - indice amplio del modelo de modulos y sus rutas documentales
 - `docs/testing.md` - indice amplio de la superficie de verificacion vigente
+- `docs/quality-gate.md` - checks locales pre-commit/pre-push, bloqueantes y warnings aceptables
 - `docs/runtime-module-catalog.md` - catalogo vivo generado desde runtime/registries para modulos, guards, assets, settings y permisos
 - `docs/framework-auth.md` - Auth core
 - `docs/runtime-module-catalog.md` - catalogo vivo suficiente para leer surfaces, guards, permisos, assets y representative routes sin depender del snapshot histórico `222`
@@ -89,6 +90,7 @@ Este archivo enruta la documentacion de `catalyst` para que el contexto caliente
 | checklist de validacion visual, CLI, CSP e integridad de assets CSS publicados | `docs/ui/validation-checklist.md`, `docs/testing.md`, `docs/security-conventions.md` |
 | reestructuracion del arbol `Views`, companions y convencion `scope/` | `docs/framework-view.md`, `docs/views.md`, `STRUCTURE.md` |
 | despliegue, empaquetado, rotacion de secretos | `docs/deployment.md`, `docs/security-conventions.md` |
+| quality gate, pre-commit/pre-push, checks CLI | `docs/quality-gate.md`, `TERMINAL.md`, `public/cli.php` |
 | bootstrap, routing, kernel, entry points | `docs/architecture.md`, `docs/entry-points.md`, `docs/kernel.md` |
 | setup/config | `docs/checklists/setup-completion-e2e.md`, `docs/helpers-config.md` |
 | clases existentes o nuevas | `STRUCTURE.md` |
