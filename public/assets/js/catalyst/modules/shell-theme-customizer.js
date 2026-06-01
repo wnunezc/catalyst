@@ -110,7 +110,7 @@ export function initShellThemeCustomizer(options = {}) {
     const themeConfig = options.themeConfig ?? window.config ?? themeDefaults;
     const quickToggleSelector = typeof options.quickToggleSelector === 'string' && options.quickToggleSelector !== ''
         ? options.quickToggleSelector
-        : '.catalyst-status-bar [data-migrationui-theme-toggle], .catalyst-status-bar [data-theme-quick-toggle]';
+        : '.catalyst-status-bar [data-demoui-theme-toggle], .catalyst-status-bar [data-theme-quick-toggle]';
     const panel = root.querySelector('#theme-settings-offcanvas');
     const themeStorage = resolveThemeStorage(themeStorageKey);
 
@@ -119,7 +119,7 @@ export function initShellThemeCustomizer(options = {}) {
     }
 
     const panelBackdrop = document.createElement('div');
-    panelBackdrop.className = 'migration-ui-theme-backdrop';
+    panelBackdrop.className = 'demo-ui-theme-backdrop';
 
     const quickToggle = root.querySelector(quickToggleSelector);
     const openTriggers = root.querySelectorAll('[data-theme-customizer-toggle]');
@@ -219,7 +219,7 @@ export function initShellThemeCustomizer(options = {}) {
         html.setAttribute('data-layout-width', state.defaults.width);
         html.setAttribute('data-layout-position', state.defaults.position);
         html.setAttribute('dir', state.defaults.dir);
-        html.setAttribute('data-migrationui-theme-mode', state.config.theme);
+        html.setAttribute('data-demoui-theme-mode', state.config.theme);
         html.setAttribute('data-catalyst-closed-skin', closedSkin);
         html.setAttribute('data-catalyst-red-cross-mode', state.config.skin === 'red-cross' ? 'enabled' : 'disabled');
         persistConfig();

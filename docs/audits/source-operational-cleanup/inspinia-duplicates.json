@@ -1,0 +1,22 @@
+[
+  {
+    "count": 6,
+    "bytes_each": 5037,
+    "paths": [
+      "public/assets/vendor/inspinia/images/layouts/sidenav-color-light.png",
+      "public/assets/vendor/inspinia/images/layouts/sidenav-size-default.png",
+      "public/assets/vendor/inspinia/images/layouts/sidenav-size-on-hover-active.png",
+      "public/assets/vendor/inspinia/images/layouts/theme-light.png",
+      "public/assets/vendor/inspinia/images/layouts/topbar-color-light.png",
+      "public/assets/vendor/inspinia/images/layouts/width-fluid.png"
+    ]
+  },
+  {
+    "count": 2,
+    "bytes_each": 4646,
+    "paths": [
+      "public/assets/vendor/inspinia/images/layouts/sidenav-size-condensed.png",
+      "public/assets/vendor/inspinia/images/layouts/sidenav-size-on-hover.png"
+    ]
+  }
+]

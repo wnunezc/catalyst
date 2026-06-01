@@ -172,7 +172,7 @@
         syncing = true;
         document.documentElement.setAttribute(ATTR, theme);
         document.documentElement.setAttribute('data-sidenav-size', DEFAULT_CONFIG['sidenav-size']);
-        document.documentElement.setAttribute('data-migrationui-theme-mode', theme);
+        document.documentElement.setAttribute('data-demoui-theme-mode', theme);
         if (preset !== null) {
             document.documentElement.setAttribute('data-topbar-color', preset['topbar-color']);
             document.documentElement.setAttribute('data-menu-color', preset['sidenav-color']);

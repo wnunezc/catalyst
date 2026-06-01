@@ -1,0 +1,10 @@
+{
+  "mail1": {
+    "mail_host": "",
+    "mail_port": 587,
+    "mail_username": "",
+    "mail_encryption": "tls",
+    "mail_from_address": "",
+    "mail_from_name": "Catalyst"
+  }
+}

@@ -19,6 +19,16 @@ Resolved runtime configuration for JSON-backed framework features.
 3. `.env`-derived defaults compiled by `readDefaults()`
 4. Hard-coded fallback inside the consumer when the section is absent
 
+## Template Configs
+
+Safe starter JSON files live in `boot-core/config/templates/*.json`.
+
+- Templates are not read by the runtime.
+- Runtime still reads `boot-core/config/{environment}/*.json`.
+- `boot-core/config/development/*.json` remains the local WSDD baseline for this repository.
+- `boot-core/config/{environment}/secrets.json`, `boot-core/config/env/.env` and DKIM keys remain local-only and must not be committed.
+- New developers can copy templates into a concrete environment directory or use the setup wizard to write runtime JSON.
+
 ## Public API
 - `get(string $key, mixed $default = null): mixed`  
   Dot-notation access, for example `app.project.project_name`.

@@ -1,0 +1,255 @@
+[
+  {
+    "path": "boot-core\\config\\debug\\dumper.php",
+    "bytes": 2041,
+    "top_keys": []
+  },
+  {
+    "path": "boot-core\\config\\development\\app.json",
+    "bytes": 375,
+    "top_keys": [
+      "project"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\development\\appearance.json",
+    "bytes": 1037,
+    "top_keys": [
+      "platform"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\development\\cache.json",
+    "bytes": 248,
+    "top_keys": [
+      "cache"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\development\\cors.json",
+    "bytes": 515,
+    "top_keys": [
+      "cors"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\development\\db.json",
+    "bytes": 152,
+    "top_keys": [
+      "db1"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\development\\deployments.json",
+    "bytes": 712,
+    "top_keys": [
+      "profiles"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\development\\devtools.json",
+    "bytes": 111,
+    "top_keys": [
+      "devtools"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\development\\features.json",
+    "bytes": 2640,
+    "top_keys": [
+      "catalog"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\development\\ftp.json",
+    "bytes": 187,
+    "top_keys": [
+      "ftp1"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\development\\localization.json",
+    "bytes": 340,
+    "top_keys": [
+      "runtime"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\development\\logging.json",
+    "bytes": 230,
+    "top_keys": [
+      "logging"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\development\\mail.json",
+    "bytes": 259,
+    "top_keys": [
+      "mail1"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\development\\plugins.json",
+    "bytes": 167,
+    "top_keys": [
+      "catalog"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\development\\security.json",
+    "bytes": 84,
+    "top_keys": [
+      "security"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\development\\session.json",
+    "bytes": 351,
+    "top_keys": [
+      "session"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\development\\tenancy.json",
+    "bytes": 1067,
+    "top_keys": [
+      "tenancy"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\development\\websocket.json",
+    "bytes": 207,
+    "top_keys": [
+      "websocket"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\env\\.env.example",
+    "bytes": 2541,
+    "top_keys": []
+  },
+  {
+    "path": "boot-core\\config\\env\\.env.ver",
+    "bytes": 17,
+    "top_keys": []
+  },
+  {
+    "path": "boot-core\\config\\templates\\app.json",
+    "bytes": 328,
+    "top_keys": [
+      "project"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\templates\\appearance.json",
+    "bytes": 859,
+    "top_keys": [
+      "platform"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\templates\\cache.json",
+    "bytes": 248,
+    "top_keys": [
+      "cache"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\templates\\cors.json",
+    "bytes": 515,
+    "top_keys": [
+      "cors"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\templates\\db.json",
+    "bytes": 112,
+    "top_keys": [
+      "db1"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\templates\\deployments.json",
+    "bytes": 712,
+    "top_keys": [
+      "profiles"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\templates\\devtools.json",
+    "bytes": 105,
+    "top_keys": [
+      "devtools"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\templates\\features.json",
+    "bytes": 2640,
+    "top_keys": [
+      "catalog"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\templates\\ftp.json",
+    "bytes": 161,
+    "top_keys": [
+      "ftp1"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\templates\\localization.json",
+    "bytes": 340,
+    "top_keys": [
+      "runtime"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\templates\\logging.json",
+    "bytes": 230,
+    "top_keys": [
+      "logging"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\templates\\mail.json",
+    "bytes": 191,
+    "top_keys": [
+      "mail1"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\templates\\plugins.json",
+    "bytes": 167,
+    "top_keys": [
+      "catalog"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\templates\\security.json",
+    "bytes": 80,
+    "top_keys": [
+      "security"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\templates\\session.json",
+    "bytes": 351,
+    "top_keys": [
+      "session"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\templates\\tenancy.json",
+    "bytes": 844,
+    "top_keys": [
+      "tenancy"
+    ]
+  },
+  {
+    "path": "boot-core\\config\\templates\\websocket.json",
+    "bytes": 191,
+    "top_keys": [
+      "websocket"
+    ]
+  }
+]

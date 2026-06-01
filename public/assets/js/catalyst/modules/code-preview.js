@@ -101,7 +101,7 @@ export function initMarkupCodePreview(options = {}) {
             )
         );
 
-        codeBlock.classList.add('migration-ui-code-ready');
+        codeBlock.classList.add('demo-ui-code-ready');
         codeBlock.textContent = '';
         codeBlock.innerHTML = highlightMarkup(source);
 

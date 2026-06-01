@@ -17,7 +17,7 @@ return static function (array $scope): array {
         'has_auth_email' => $authEmail !== '',
         'auth_menu_label' => (string) ($scope['auth_menu_label'] ?? __('ui.product_nav.account_toggle')),
         'auth_role' => (string) ($scope['auth_role'] ?? $scope['authRole'] ?? ($authUser['role'] ?? '')),
-        'auth_avatar_src' => (string) ($scope['auth_avatar_src'] ?? '/assets/img/inspinia/users/user-1.jpg'),
+        'auth_avatar_src' => (string) ($scope['auth_avatar_src'] ?? '/assets/vendor/inspinia/images/users/user-1.jpg'),
         'logout_csrf_field' => TrustedHtml::fromString(CsrfProtection::getInstance()->getTokenField()),
     ];
 };

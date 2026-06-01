@@ -141,7 +141,7 @@
     html.setAttribute('data-layout-position', defaults.position);
     html.setAttribute('data-layout-width', defaults.width);
     html.setAttribute('dir', defaults.dir);
-    html.setAttribute('data-migrationui-theme-mode', config.theme);
+    html.setAttribute('data-demoui-theme-mode', config.theme);
     html.setAttribute('data-catalyst-closed-skin', closedSkin);
     html.setAttribute('data-catalyst-customizer-policy', isLocked() ? 'locked' : 'user');
     html.setAttribute('data-catalyst-red-cross-mode', config.skin === 'red-cross' ? 'enabled' : 'disabled');

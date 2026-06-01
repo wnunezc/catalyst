@@ -213,51 +213,51 @@ html[data-skin="grempa"] {
     --bs-alert-link-color: var(--theme-danger-text-emphasis);
 }
 
-body.migration-ui-shell-body .modal-backdrop,
-body.migration-ui-shell-body .offcanvas-backdrop {
+body.demo-ui-shell-body .modal-backdrop,
+body.demo-ui-shell-body .offcanvas-backdrop {
     z-index: 1070;
 }
 
-body.migration-ui-shell-body .modal,
-body.migration-ui-shell-body .offcanvas {
+body.demo-ui-shell-body .modal,
+body.demo-ui-shell-body .offcanvas {
     z-index: 1075;
 }
 
-body.migration-ui-shell-body .modal-dialog,
-body.migration-ui-shell-body .modal-dialog-scrollable,
-body.migration-ui-shell-body .modal-dialog-scrollable .modal-content,
-body.migration-ui-shell-body .modal-dialog-scrollable .modal-body,
-body.migration-ui-shell-body .modal-dialog-scrollable .modal-footer {
+body.demo-ui-shell-body .modal-dialog,
+body.demo-ui-shell-body .modal-dialog-scrollable,
+body.demo-ui-shell-body .modal-dialog-scrollable .modal-content,
+body.demo-ui-shell-body .modal-dialog-scrollable .modal-body,
+body.demo-ui-shell-body .modal-dialog-scrollable .modal-footer {
     pointer-events: auto;
 }
 
-body.migration-ui-shell-body .form-floating > label {
+body.demo-ui-shell-body .form-floating > label {
     color: var(--bs-secondary-color);
     opacity: 1;
 }
 
-body.migration-ui-shell-body .form-floating > label::after {
+body.demo-ui-shell-body .form-floating > label::after {
     background-color: var(--bs-body-bg) !important;
     border-radius: .35rem;
 }
 
-body.migration-ui-shell-body .card .form-floating > label::after,
-body.migration-ui-shell-body .modal-content .form-floating > label::after,
-body.migration-ui-shell-body .offcanvas .form-floating > label::after,
-body.migration-ui-shell-body .dropdown-menu .form-floating > label::after {
+body.demo-ui-shell-body .card .form-floating > label::after,
+body.demo-ui-shell-body .modal-content .form-floating > label::after,
+body.demo-ui-shell-body .offcanvas .form-floating > label::after,
+body.demo-ui-shell-body .dropdown-menu .form-floating > label::after {
     background-color: var(--bs-card-bg, var(--theme-card-bg, var(--bs-body-bg))) !important;
 }
 
-body.migration-ui-shell-body .form-floating > .form-control:focus ~ label,
-body.migration-ui-shell-body .form-floating > .form-control:not(:placeholder-shown) ~ label,
-body.migration-ui-shell-body .form-floating > .form-control-plaintext ~ label,
-body.migration-ui-shell-body .form-floating > .form-select ~ label {
+body.demo-ui-shell-body .form-floating > .form-control:focus ~ label,
+body.demo-ui-shell-body .form-floating > .form-control:not(:placeholder-shown) ~ label,
+body.demo-ui-shell-body .form-floating > .form-control-plaintext ~ label,
+body.demo-ui-shell-body .form-floating > .form-select ~ label {
     color: var(--bs-secondary-color);
     opacity: 1;
 }
 
-body.migration-ui-shell-body .form-floating > .form-control:focus,
-body.migration-ui-shell-body .form-floating > .form-select:focus {
+body.demo-ui-shell-body .form-floating > .form-control:focus,
+body.demo-ui-shell-body .form-floating > .form-select:focus {
     border-color: rgba(var(--theme-primary-rgb, var(--bs-primary-rgb)), .62);
     box-shadow: 0 0 0 .2rem rgba(var(--theme-primary-rgb, var(--bs-primary-rgb)), .14);
 }
@@ -275,7 +275,7 @@ body > .offcanvas-backdrop {
     z-index: 1070;
 }
 
-body.migration-ui-shell-body.modal-open .content-page {
+body.demo-ui-shell-body.modal-open .content-page {
     overflow: visible;
 }
 

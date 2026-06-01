@@ -96,7 +96,7 @@ export function initShellSidebar(options = {}) {
     const body = document.body;
     const noScrollClass = typeof options.noScrollClass === 'string' && options.noScrollClass !== ''
         ? options.noScrollClass
-        : 'migration-ui-no-scroll';
+        : 'demo-ui-no-scroll';
 
     const keepSidebarFixed = () => {
         html.setAttribute('data-sidenav-size', 'default');

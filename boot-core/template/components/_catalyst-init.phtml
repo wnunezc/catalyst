@@ -20,7 +20,7 @@ const flushPendingToasts = () => {
 flushPendingToasts();
 document.addEventListener('catalyst:ready', flushPendingToasts, { once: true });
 
-const shellRoot = document.querySelector('.migration-ui-shell-body');
+const shellRoot = document.querySelector('.demo-ui-shell-body');
 const publicRoot = document.querySelector('.catalyst-public-shell-body');
 
 if (shellRoot instanceof HTMLElement && window.Catalyst?.ui?.initShellRuntime) {
@@ -28,13 +28,13 @@ if (shellRoot instanceof HTMLElement && window.Catalyst?.ui?.initShellRuntime) {
         root: shellRoot,
         defaultDoc: 'ui-alerts.html',
         mobileMaxWidth: 767,
-        noScrollClass: 'migration-ui-no-scroll',
-        backdropClass: 'migration-ui-backdrop',
+        noScrollClass: 'demo-ui-no-scroll',
+        backdropClass: 'demo-ui-backdrop',
         topbarSelector: '.app-topbar',
         scrollContainerSelector: '.content-page',
         topbarActiveClass: 'topbar-active',
         themeStorageKey: '__THEME_CONFIG__',
-        quickToggleSelector: '.catalyst-status-bar [data-migrationui-theme-toggle]',
+        quickToggleSelector: '.catalyst-status-bar [data-demoui-theme-toggle]',
     });
 
     const { initDropdowns } = await import(`/assets/js/catalyst/modules/shell-dropdowns.js?v={{ catalyst_asset_version }}`);
@@ -47,13 +47,13 @@ if (publicRoot instanceof HTMLElement && window.Catalyst?.ui?.initShellRuntime) 
         root: publicRoot,
         defaultDoc: 'ui-alerts.html',
         mobileMaxWidth: 767,
-        noScrollClass: 'migration-ui-no-scroll',
-        backdropClass: 'migration-ui-backdrop',
+        noScrollClass: 'demo-ui-no-scroll',
+        backdropClass: 'demo-ui-backdrop',
         topbarSelector: '.catalyst-public-nav',
         scrollContainerSelector: '.catalyst-public-shell__main',
         topbarActiveClass: 'topbar-active',
         themeStorageKey: '__THEME_CONFIG__',
-        quickToggleSelector: '.catalyst-status-bar [data-migrationui-theme-toggle]',
+        quickToggleSelector: '.catalyst-status-bar [data-demoui-theme-toggle]',
     });
 
     const { initDropdowns } = await import(`/assets/js/catalyst/modules/shell-dropdowns.js?v={{ catalyst_asset_version }}`);

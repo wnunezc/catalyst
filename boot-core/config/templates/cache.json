@@ -1,0 +1,11 @@
+{
+    "cache": {
+        "cache_enabled": false,
+        "cache_driver": "file",
+        "cache_prefix": "catalyst_",
+        "app_cache": false,
+        "config_cache": false,
+        "discovery_cache": false,
+        "route_cache": false
+    }
+}

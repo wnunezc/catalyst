@@ -4,7 +4,7 @@
  * Module/App (File Name): Chart Apex RadialBar
  */
 
-const chartVendorBase = window.__migrationUiChartsVendorBase || "/assets/vendor/inspinia"
+const chartVendorBase = window.__DemoUiChartsVendorBase || "/assets/vendor/inspinia"
 
 //
 // BASIC RADIALBAR CHART

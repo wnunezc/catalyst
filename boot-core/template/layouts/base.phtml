@@ -141,7 +141,7 @@
         html.setAttribute('data-layout-position', defaults.position);
         html.setAttribute('data-layout-width', defaults.width);
         html.setAttribute('dir', defaults.dir);
-        html.setAttribute('data-migrationui-theme-mode', config.theme);
+        html.setAttribute('data-demoui-theme-mode', config.theme);
         html.setAttribute('data-catalyst-closed-skin', closedSkin);
         html.setAttribute('data-catalyst-customizer-policy', isLocked() ? 'locked' : 'user');
         html.setAttribute('data-catalyst-red-cross-mode', config.skin === 'red-cross' ? 'enabled' : 'disabled');
@@ -160,7 +160,7 @@
 </head>
 <body class="catalyst-public-shell-body"
       data-public-shell="true"
-      data-migrationui-page="{{ migration_ui_page_slug }}">
+      data-demoui-page="{{ demo_ui_page_slug }}">
 <div class="catalyst-public-shell">
     {{> "../components/_public-navigation" }}
 
@@ -169,8 +169,8 @@
     </main>
 </div>
 
-<div class="offcanvas offcanvas-end overflow-hidden migration-ui-theme-panel" tabindex="-1" id="theme-settings-offcanvas" aria-hidden="true">
-    <div class="d-flex justify-content-between gap-2 p-3 migration-ui-theme-panel__header">
+<div class="offcanvas offcanvas-end overflow-hidden demo-ui-theme-panel" tabindex="-1" id="theme-settings-offcanvas" aria-hidden="true">
+    <div class="d-flex justify-content-between gap-2 p-3 demo-ui-theme-panel__header">
         <div>
             <h5 class="mb-1 fw-bold text-white text-uppercase">{{ t:ui.status_bar.theme_customizer }}</h5>
             <p class="text-white text-opacity-75 fst-italic fw-medium mb-0">{{ t:ui.shell.public_customizer_description }}</p>

@@ -185,7 +185,7 @@ function initDateRangePickers(root) {
             try {
                 config.locale = JSON.parse(config.locale.replace(/'/g, '"'));
             } catch (error) {
-                console.warn('Migration UI: invalid daterangepicker locale config', error);
+                console.warn('Demo UI: invalid daterangepicker locale config', error);
             }
         }
 

@@ -22,20 +22,20 @@
             <div class="topbar-item">
                 <button class="topbar-link" type="button"><i class="ti ti-building-community topbar-link-icon"></i></button>
             </div>
-            <div id="simple-user-dropdown" class="topbar-item nav-user migration-ui-user-dropdown">
+            <div id="simple-user-dropdown" class="topbar-item nav-user demo-ui-user-dropdown">
                 <div class="dropdown">
                     <a class="topbar-link dropdown-toggle drop-arrow-none px-2" data-bs-toggle="dropdown" role="button" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-label="{{ auth_menu_label }}" title="{{ auth_menu_label }}">
                         <img src="{{ auth_avatar_src }}" width="32" class="rounded-circle me-lg-2 d-flex" alt="user-image">
                         <div class="d-lg-flex align-items-center gap-1 d-none">
-                            <h5 class="my-0 migration-ui-account-label">{{ auth_menu_label }}</h5>
+                            <h5 class="my-0 demo-ui-account-label">{{ auth_menu_label }}</h5>
                             <i class="ti ti-chevron-down align-middle"></i>
                         </div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end">
-                        <div class="dropdown-header migration-ui-account-summary">
-                            <span class="migration-ui-account-summary__name">{{ auth_name }}</span>
+                        <div class="dropdown-header demo-ui-account-summary">
+                            <span class="demo-ui-account-summary__name">{{ auth_name }}</span>
                             {{#if has_auth_email}}
-                            <span class="migration-ui-account-summary__email">{{ auth_email }}</span>
+                            <span class="demo-ui-account-summary__email">{{ auth_email }}</span>
                             {{/if}}
                         </div>
 

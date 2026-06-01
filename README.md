@@ -91,6 +91,18 @@ php public/cli.php config:show app --json
 php public/cli.php security:check
 ```
 
+## Configuration Baseline
+
+Runtime configuration is loaded from `boot-core/config/{environment}/*.json`.
+The tracked `boot-core/config/development/*.json` files are the current WSDD
+development baseline for this repository.
+
+Safe starter templates live in `boot-core/config/templates/*.json`. They are
+not consumed directly by runtime code; copy them into a concrete environment or
+use the setup wizard when preparing a fresh project. Secrets stay outside Git:
+`boot-core/config/env/.env`, `boot-core/config/{environment}/secrets.json` and
+DKIM keys are local-only.
+
 ## Repository Layout
 
 ```text

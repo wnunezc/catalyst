@@ -52,7 +52,7 @@ final class AccountShellViewModel
             'auth_name' => $authName !== '' ? $authName : __('account.shell.fallback_user'),
             'auth_email' => $authEmail,
             'has_auth_email' => $authEmail !== '',
-            'auth_avatar_src' => (string) ($scope['auth_avatar_src'] ?? '/assets/img/inspinia/users/user-1.jpg'),
+            'auth_avatar_src' => (string) ($scope['auth_avatar_src'] ?? '/assets/vendor/inspinia/images/users/user-1.jpg'),
             'auth_menu_label' => __('ui.product_nav.account_toggle'),
             'logout_csrf_field' => TrustedHtml::fromString(CsrfProtection::getInstance()->getTokenField()),
             'csp_nonce' => CspNonce::get(),

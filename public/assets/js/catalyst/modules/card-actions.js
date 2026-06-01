@@ -9,7 +9,7 @@ export function initCardActions(options = {}) {
                 return;
             }
 
-            card.classList.add('migration-ui-card-closing');
+            card.classList.add('demo-ui-card-closing');
             window.setTimeout(() => {
                 card.remove();
             }, 300);
@@ -24,7 +24,7 @@ export function initCardActions(options = {}) {
                 return;
             }
 
-            card.classList.toggle('migration-ui-card-collapsed');
+            card.classList.toggle('demo-ui-card-collapsed');
         });
     });
 
@@ -36,7 +36,7 @@ export function initCardActions(options = {}) {
                 return;
             }
 
-            card.classList.toggle('migration-ui-code-collapsed');
+            card.classList.toggle('demo-ui-code-collapsed');
         });
     });
 

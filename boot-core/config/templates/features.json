@@ -1,0 +1,70 @@
+{
+    "catalog": {
+        "mfa": {
+            "label": "MFA",
+            "description": "Enable MFA setup and challenge surfaces for session authentication.",
+            "enabled": true,
+            "scope": "capability"
+        },
+        "module.framework.apiplatform": {
+            "label": "API Platform module",
+            "description": "Load the versioned API admin and bearer-token runtime surfaces.",
+            "enabled": true,
+            "scope": "module"
+        },
+        "module.framework.audit": {
+            "label": "Audit module",
+            "description": "Load audit trails and operational evidence surfaces.",
+            "enabled": true,
+            "scope": "module"
+        },
+        "module.framework.automation": {
+            "label": "Automation module",
+            "description": "Load internal automation rules, logs and workflow triggers.",
+            "enabled": true,
+            "scope": "module"
+        },
+        "module.framework.devtools": {
+            "label": "DevTools module",
+            "description": "Load technical smoke and module designer surfaces.",
+            "enabled": true,
+            "scope": "module"
+        },
+        "module.framework.documents": {
+            "label": "Documents module",
+            "description": "Load document templates, preview and export surfaces.",
+            "enabled": true,
+            "scope": "module"
+        },
+        "module.framework.media": {
+            "label": "Media module",
+            "description": "Load reusable media library and metadata field surfaces.",
+            "enabled": true,
+            "scope": "module"
+        },
+        "module.framework.notification": {
+            "label": "Notification module",
+            "description": "Load authenticated notification APIs and websocket token issuance.",
+            "enabled": true,
+            "scope": "module"
+        },
+        "module.framework.operations": {
+            "label": "Operations module",
+            "description": "Load platform operations surfaces for flags, plugins, deployment and tenancy.",
+            "enabled": true,
+            "scope": "module"
+        },
+        "notifications": {
+            "label": "Notifications",
+            "description": "Enable authenticated notification endpoints and unread counters.",
+            "enabled": true,
+            "scope": "capability"
+        },
+        "social_auth": {
+            "label": "Social auth",
+            "description": "Enable OAuth entry and callback routes when providers are configured.",
+            "enabled": true,
+            "scope": "capability"
+        }
+    }
+}

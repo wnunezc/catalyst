@@ -86,7 +86,7 @@ return static function (array $scope): array {
         'status_bar_show_theme_toggle' => array_key_exists('status_bar_show_theme_toggle', $scope)
             ? (bool) $scope['status_bar_show_theme_toggle']
             : true,
-        'status_bar_theme_toggle_attribute' => (string) ($scope['status_bar_theme_toggle_attribute'] ?? 'data-migrationui-theme-toggle'),
+        'status_bar_theme_toggle_attribute' => (string) ($scope['status_bar_theme_toggle_attribute'] ?? 'data-demoui-theme-toggle'),
         'status_bar_theme_toggle_icon_class' => (string) ($scope['status_bar_theme_toggle_icon_class'] ?? 'ti ti-moon'),
         'status_bar_show_customizer_toggle' => $appearance->isAdminCustomizerEnabled() && (array_key_exists('status_bar_show_customizer_toggle', $scope)
             ? (bool) $scope['status_bar_show_customizer_toggle']

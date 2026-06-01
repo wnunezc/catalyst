@@ -7,9 +7,9 @@ use Catalyst\Framework\Auth\AuthManager;
 use Catalyst\Framework\View\TrustedHtml;
 use Catalyst\Helpers\Security\CsrfProtection;
 
-$migrationProductShell = require __DIR__ . DS . '_migration-product-shell.php';
+$demoProductShell = require __DIR__ . DS . '_demo-product-shell.php';
 
-return static function (array $scope) use ($migrationProductShell): array {
+return static function (array $scope) use ($demoProductShell): array {
     $branding = PlatformAppearanceManager::getInstance()->brandingViewModel();
     $brandName = (string) ($branding['brand_name'] ?? 'Catalyst');
     $title = (string) ($scope['title'] ?? $brandName);
@@ -93,9 +93,9 @@ return static function (array $scope) use ($migrationProductShell): array {
         'active_admin_context' => $activeAdminContext,
         'auth_name' => trim((string) ($authUser['name'] ?? 'Guest')),
         'auth_role' => trim((string) ($authUser['role'] ?? 'guest')),
-        'auth_avatar_src' => (string) ($scope['auth_avatar_src'] ?? '/assets/img/inspinia/users/user-1.jpg'),
+        'auth_avatar_src' => (string) ($scope['auth_avatar_src'] ?? '/assets/vendor/inspinia/images/users/user-1.jpg'),
         'logout_csrf_field' => TrustedHtml::fromString(CsrfProtection::getInstance()->getTokenField()),
     ];
 
-    return $migrationProductShell(array_merge($scope, $payload));
+    return $demoProductShell(array_merge($scope, $payload));
 };

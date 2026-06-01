@@ -21,192 +21,192 @@
     --catalyst-shell-devtools-rgb: 248, 172, 89;
 }
 
-body.migration-ui-shell-body {
+body.demo-ui-shell-body {
     background: var(--theme-body-bg, #f1f2f7);
 }
-body.migration-ui-shell-body .content-page > .container-fluid {
+body.demo-ui-shell-body .content-page > .container-fluid {
     padding: 1rem 1.15rem 1.5rem;
 }
-body.migration-ui-shell-body .content-page .container,
-body.migration-ui-shell-body .content-page .container-lg,
-body.migration-ui-shell-body .content-page .container-xl {
+body.demo-ui-shell-body .content-page .container,
+body.demo-ui-shell-body .content-page .container-lg,
+body.demo-ui-shell-body .content-page .container-xl {
     max-width: none;
 }
-body.migration-ui-shell-body .card,
-body.migration-ui-shell-body .surface-card,
-body.migration-ui-shell-body .admin-card,
-body.migration-ui-shell-body .panel,
-body.migration-ui-shell-body .box,
-body.migration-ui-shell-body .catalyst-card,
-body.migration-ui-shell-body .settings-card,
-body.migration-ui-shell-body .module-card,
-body.migration-ui-shell-body .operation-card {
+body.demo-ui-shell-body .card,
+body.demo-ui-shell-body .surface-card,
+body.demo-ui-shell-body .admin-card,
+body.demo-ui-shell-body .panel,
+body.demo-ui-shell-body .box,
+body.demo-ui-shell-body .catalyst-card,
+body.demo-ui-shell-body .settings-card,
+body.demo-ui-shell-body .module-card,
+body.demo-ui-shell-body .operation-card {
     border: 1px solid var(--theme-border-color, #e7e9eb) !important;
     border-radius: var(--theme-border-radius-lg, .4rem) !important;
     background: var(--theme-secondary-bg, #fff) !important;
     box-shadow: var(--theme-box-shadow, 0 1px 4px rgba(130,143,163,.15)) !important;
 }
-body.migration-ui-shell-body .card-header,
-body.migration-ui-shell-body .surface-card__header,
-body.migration-ui-shell-body .admin-card__header,
-body.migration-ui-shell-body .panel-heading,
-body.migration-ui-shell-body .box-header {
+body.demo-ui-shell-body .card-header,
+body.demo-ui-shell-body .surface-card__header,
+body.demo-ui-shell-body .admin-card__header,
+body.demo-ui-shell-body .panel-heading,
+body.demo-ui-shell-body .box-header {
     padding: .8rem 1rem !important;
     border-bottom: 1px solid var(--theme-border-color, #e7e9eb) !important;
     background: transparent !important;
 }
-body.migration-ui-shell-body .card-body,
-body.migration-ui-shell-body .surface-card__body,
-body.migration-ui-shell-body .admin-card__body,
-body.migration-ui-shell-body .panel-body,
-body.migration-ui-shell-body .box-body {
+body.demo-ui-shell-body .card-body,
+body.demo-ui-shell-body .surface-card__body,
+body.demo-ui-shell-body .admin-card__body,
+body.demo-ui-shell-body .panel-body,
+body.demo-ui-shell-body .box-body {
     padding: 1rem !important;
 }
-body.migration-ui-shell-body h1,
-body.migration-ui-shell-body .h1 { font-size: 1.55rem; }
-body.migration-ui-shell-body h2,
-body.migration-ui-shell-body .h2 { font-size: 1.28rem; }
-body.migration-ui-shell-body h3,
-body.migration-ui-shell-body .h3 { font-size: 1.1rem; }
-body.migration-ui-shell-body h4,
-body.migration-ui-shell-body .h4 { font-size: 1rem; }
-body.migration-ui-shell-body .page-title,
-body.migration-ui-shell-body .surface-title,
-body.migration-ui-shell-body .admin-page-title {
+body.demo-ui-shell-body h1,
+body.demo-ui-shell-body .h1 { font-size: 1.55rem; }
+body.demo-ui-shell-body h2,
+body.demo-ui-shell-body .h2 { font-size: 1.28rem; }
+body.demo-ui-shell-body h3,
+body.demo-ui-shell-body .h3 { font-size: 1.1rem; }
+body.demo-ui-shell-body h4,
+body.demo-ui-shell-body .h4 { font-size: 1rem; }
+body.demo-ui-shell-body .page-title,
+body.demo-ui-shell-body .surface-title,
+body.demo-ui-shell-body .admin-page-title {
     margin-bottom: .75rem !important;
     font-weight: 700;
 }
-body.migration-ui-shell-body .btn {
+body.demo-ui-shell-body .btn {
     border-radius: .35rem;
     font-weight: 600;
     box-shadow: none !important;
 }
-body.migration-ui-shell-body .btn-primary {
+body.demo-ui-shell-body .btn-primary {
     background: var(--theme-primary, #1ab394);
     border-color: var(--theme-primary, #1ab394);
 }
-body.migration-ui-shell-body .btn-outline-primary {
+body.demo-ui-shell-body .btn-outline-primary {
     color: var(--theme-primary, #1ab394);
     border-color: rgba(var(--theme-primary-rgb, 26,179,148), .45);
 }
-body.migration-ui-shell-body .form-control,
-body.migration-ui-shell-body .form-select,
-body.migration-ui-shell-body textarea,
-body.migration-ui-shell-body input[type="text"],
-body.migration-ui-shell-body input[type="email"],
-body.migration-ui-shell-body input[type="password"],
-body.migration-ui-shell-body input[type="number"],
-body.migration-ui-shell-body input[type="search"],
-body.migration-ui-shell-body select {
+body.demo-ui-shell-body .form-control,
+body.demo-ui-shell-body .form-select,
+body.demo-ui-shell-body textarea,
+body.demo-ui-shell-body input[type="text"],
+body.demo-ui-shell-body input[type="email"],
+body.demo-ui-shell-body input[type="password"],
+body.demo-ui-shell-body input[type="number"],
+body.demo-ui-shell-body input[type="search"],
+body.demo-ui-shell-body select {
     border-radius: .35rem !important;
     border-color: var(--theme-border-color, #e7e9eb) !important;
     min-height: 2.25rem;
 }
-body.migration-ui-shell-body label,
-body.migration-ui-shell-body .form-label {
+body.demo-ui-shell-body label,
+body.demo-ui-shell-body .form-label {
     font-weight: 600;
     color: var(--theme-body-color, #4c4c5c);
     margin-bottom: .35rem;
 }
-body.migration-ui-shell-body .table,
-body.migration-ui-shell-body table {
+body.demo-ui-shell-body .table,
+body.demo-ui-shell-body table {
     --theme-table-bg: transparent;
     margin-bottom: 0;
     color: var(--theme-body-color, #4c4c5c);
 }
-body.migration-ui-shell-body .table > :not(caption) > * > *,
-body.migration-ui-shell-body table > :not(caption) > * > * {
+body.demo-ui-shell-body .table > :not(caption) > * > *,
+body.demo-ui-shell-body table > :not(caption) > * > * {
     padding: .65rem .75rem;
     border-bottom-color: var(--theme-border-color, #e7e9eb);
 }
-body.migration-ui-shell-body thead th,
-body.migration-ui-shell-body .table thead th {
+body.demo-ui-shell-body thead th,
+body.demo-ui-shell-body .table thead th {
     background: var(--theme-tertiary-bg, #f6f7fb);
     color: var(--theme-secondary-color, #8a969c);
     font-size: .73rem;
     letter-spacing: .04em;
     text-transform: uppercase;
 }
-body.migration-ui-shell-body .badge {
+body.demo-ui-shell-body .badge {
     border-radius: 999px;
     font-weight: 700;
     letter-spacing: .01em;
 }
-body.migration-ui-shell-body .alert {
+body.demo-ui-shell-body .alert {
     border-radius: .4rem;
     border-width: 1px;
 }
-body.migration-ui-shell-body .breadcrumb {
+body.demo-ui-shell-body .breadcrumb {
     --theme-breadcrumb-margin-bottom: .8rem;
     font-size: .8rem;
 }
-body.migration-ui-shell-body .toolbar,
-body.migration-ui-shell-body .admin-toolbar,
-body.migration-ui-shell-body .datagrid-toolbar,
-body.migration-ui-shell-body .catalyst-datagrid__toolbar {
+body.demo-ui-shell-body .toolbar,
+body.demo-ui-shell-body .admin-toolbar,
+body.demo-ui-shell-body .datagrid-toolbar,
+body.demo-ui-shell-body .catalyst-datagrid__toolbar {
     gap: .5rem !important;
     margin-bottom: .75rem !important;
 }
-body.migration-ui-shell-body .catalyst-datagrid,
-body.migration-ui-shell-body .admin-datagrid {
+body.demo-ui-shell-body .catalyst-datagrid,
+body.demo-ui-shell-body .admin-datagrid {
     border-radius: .4rem;
     overflow: hidden;
     border: 1px solid var(--theme-border-color, #e7e9eb);
     background: var(--theme-secondary-bg, #fff);
 }
-body.migration-ui-shell-body .surface-shell,
-body.migration-ui-shell-body .page-shell,
-body.migration-ui-shell-body .admin-shell-content {
+body.demo-ui-shell-body .surface-shell,
+body.demo-ui-shell-body .page-shell,
+body.demo-ui-shell-body .admin-shell-content {
     padding: 0 !important;
     background: transparent !important;
 }
-body.migration-ui-shell-body .side-nav-title {
+body.demo-ui-shell-body .side-nav-title {
     color: var(--theme-sidenav-title-color, var(--catalyst-response-sidenav-title, var(--catalyst-red-cross-subtle, var(--theme-secondary-color))));
     font-size: .68rem;
     letter-spacing: .08em;
 }
-body.migration-ui-shell-body .side-nav .side-nav-link {
+body.demo-ui-shell-body .side-nav .side-nav-link {
     min-height: 2.15rem;
 }
-body.migration-ui-shell-body .sidenav-menu .scrollbar {
+body.demo-ui-shell-body .sidenav-menu .scrollbar {
     height: calc(100vh - 70px);
     overflow-y: auto;
 }
 @media (max-width: 767.98px) {
-    body.migration-ui-shell-body .content-page > .container-fluid {
+    body.demo-ui-shell-body .content-page > .container-fluid {
         padding: .8rem;
     }
 }
 
 /* Canonical Inspinia shell fixes for migrated admin/base surfaces. */
-body.migration-ui-shell-body .app-topbar {
+body.demo-ui-shell-body .app-topbar {
     min-height: var(--theme-topbar-height, 70px);
     border-bottom: 1px solid var(--theme-border-color, #e7e9eb);
     background: var(--theme-topbar-bg, var(--theme-secondary-bg, #fff));
     box-shadow: var(--theme-box-shadow-sm, 0 1px 4px rgba(130,143,163,.12));
 }
 
-body.migration-ui-shell-body .topbar-menu {
+body.demo-ui-shell-body .topbar-menu {
     min-height: var(--theme-topbar-height, 70px);
     padding-inline: 1rem;
 }
 
-body.migration-ui-shell-body .topbar-link,
-body.migration-ui-shell-body .topnav-toggle-button,
-body.migration-ui-shell-body .sidenav-toggle-button {
+body.demo-ui-shell-body .topbar-link,
+body.demo-ui-shell-body .topnav-toggle-button,
+body.demo-ui-shell-body .sidenav-toggle-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
 }
 
-body.migration-ui-shell-body .topbar-link i,
-body.migration-ui-shell-body .topnav-toggle-button i,
-body.migration-ui-shell-body .sidenav-toggle-button i {
+body.demo-ui-shell-body .topbar-link i,
+body.demo-ui-shell-body .topnav-toggle-button i,
+body.demo-ui-shell-body .sidenav-toggle-button i {
     font-size: 1.25rem;
     line-height: 1;
 }
 
-body.migration-ui-shell-body .topbar-context-switch {
+body.demo-ui-shell-body .topbar-context-switch {
     align-items: center;
     gap: .35rem;
     padding: .22rem;
@@ -215,7 +215,7 @@ body.migration-ui-shell-body .topbar-context-switch {
     background: color-mix(in srgb, var(--theme-secondary-bg, #fff) 88%, transparent);
 }
 
-body.migration-ui-shell-body .topbar-context-switch__item {
+body.demo-ui-shell-body .topbar-context-switch__item {
     display: inline-flex;
     align-items: center;
     gap: .45rem;
@@ -228,17 +228,17 @@ body.migration-ui-shell-body .topbar-context-switch__item {
     font-weight: 700;
 }
 
-body.migration-ui-shell-body .topbar-context-switch__item:hover,
-body.migration-ui-shell-body .topbar-context-switch__item.is-active {
+body.demo-ui-shell-body .topbar-context-switch__item:hover,
+body.demo-ui-shell-body .topbar-context-switch__item.is-active {
     color: var(--theme-primary, #1ab394);
     background: rgba(var(--catalyst-brand-primary-rgb), .08);
 }
 
-body.migration-ui-shell-body .side-nav--rebuild {
+body.demo-ui-shell-body .side-nav--rebuild {
     padding: .35rem .65rem 1.1rem;
 }
 
-body.migration-ui-shell-body .side-nav--rebuild .side-nav-title {
+body.demo-ui-shell-body .side-nav--rebuild .side-nav-title {
     padding: .55rem .65rem .35rem;
     margin: 0;
     color: var(--theme-sidenav-title-color, var(--catalyst-response-sidenav-title, var(--catalyst-red-cross-subtle, var(--theme-secondary-color))));
@@ -248,16 +248,16 @@ body.migration-ui-shell-body .side-nav--rebuild .side-nav-title {
     text-transform: uppercase;
 }
 
-body.migration-ui-shell-body .side-nav--rebuild .side-nav-item {
+body.demo-ui-shell-body .side-nav--rebuild .side-nav-item {
     margin: 0;
 }
 
-body.migration-ui-shell-body .side-nav--rebuild .side-nav-item + .side-nav-item {
+body.demo-ui-shell-body .side-nav--rebuild .side-nav-item + .side-nav-item {
     margin-top: .18rem;
 }
 
-body.migration-ui-shell-body .side-nav--rebuild .side-nav-link,
-body.migration-ui-shell-body .side-nav--rebuild button.side-nav-link {
+body.demo-ui-shell-body .side-nav--rebuild .side-nav-link,
+body.demo-ui-shell-body .side-nav--rebuild button.side-nav-link {
     width: 100%;
     min-height: 2.5rem;
     display: flex;
@@ -276,30 +276,30 @@ body.migration-ui-shell-body .side-nav--rebuild button.side-nav-link {
     text-overflow: clip;
 }
 
-body.migration-ui-shell-body .side-nav--rebuild .side-nav-link:hover,
-body.migration-ui-shell-body .side-nav--rebuild .side-nav-link.active,
-body.migration-ui-shell-body .side-nav--rebuild .side-nav-link[aria-expanded="true"] {
+body.demo-ui-shell-body .side-nav--rebuild .side-nav-link:hover,
+body.demo-ui-shell-body .side-nav--rebuild .side-nav-link.active,
+body.demo-ui-shell-body .side-nav--rebuild .side-nav-link[aria-expanded="true"] {
     color: #fff;
     background: rgba(255,255,255,.075);
 }
 
-body.migration-ui-shell-body .side-nav--rebuild .side-nav-area.is-current > .side-nav-link--area,
-body.migration-ui-shell-body[data-admin-context="workspace"] .side-nav--rebuild .side-nav-link.active,
-body.migration-ui-shell-body[data-admin-context="workspace"] .side-nav--rebuild .side-nav-link[aria-expanded="true"] {
+body.demo-ui-shell-body .side-nav--rebuild .side-nav-area.is-current > .side-nav-link--area,
+body.demo-ui-shell-body[data-admin-context="workspace"] .side-nav--rebuild .side-nav-link.active,
+body.demo-ui-shell-body[data-admin-context="workspace"] .side-nav--rebuild .side-nav-link[aria-expanded="true"] {
     background: linear-gradient(135deg, rgba(var(--catalyst-shell-workspace-rgb), .88), rgba(var(--catalyst-shell-workspace-rgb), .58));
 }
 
-body.migration-ui-shell-body[data-admin-context="administration"] .side-nav--rebuild .side-nav-link.active,
-body.migration-ui-shell-body[data-admin-context="administration"] .side-nav--rebuild .side-nav-link[aria-expanded="true"] {
+body.demo-ui-shell-body[data-admin-context="administration"] .side-nav--rebuild .side-nav-link.active,
+body.demo-ui-shell-body[data-admin-context="administration"] .side-nav--rebuild .side-nav-link[aria-expanded="true"] {
     background: linear-gradient(135deg, rgba(var(--catalyst-shell-administration-rgb), .9), rgba(var(--catalyst-shell-administration-rgb), .58));
 }
 
-body.migration-ui-shell-body[data-admin-context="devtools"] .side-nav--rebuild .side-nav-link.active,
-body.migration-ui-shell-body[data-admin-context="devtools"] .side-nav--rebuild .side-nav-link[aria-expanded="true"] {
+body.demo-ui-shell-body[data-admin-context="devtools"] .side-nav--rebuild .side-nav-link.active,
+body.demo-ui-shell-body[data-admin-context="devtools"] .side-nav--rebuild .side-nav-link[aria-expanded="true"] {
     background: linear-gradient(135deg, rgba(var(--catalyst-shell-devtools-rgb), .92), rgba(var(--catalyst-shell-devtools-rgb), .62));
 }
 
-body.migration-ui-shell-body .side-nav--rebuild .side-nav-link .menu-icon {
+body.demo-ui-shell-body .side-nav--rebuild .side-nav-link .menu-icon {
     width: 1.1rem;
     min-width: 1.1rem;
     display: inline-flex;
@@ -309,7 +309,7 @@ body.migration-ui-shell-body .side-nav--rebuild .side-nav-link .menu-icon {
     line-height: 1;
 }
 
-body.migration-ui-shell-body .side-nav--rebuild .side-nav-link .menu-text {
+body.demo-ui-shell-body .side-nav--rebuild .side-nav-link .menu-text {
     display: block;
     flex: 1 1 auto;
     min-width: 0;
@@ -321,52 +321,52 @@ body.migration-ui-shell-body .side-nav--rebuild .side-nav-link .menu-text {
     text-overflow: clip !important;
 }
 
-body.migration-ui-shell-body .side-nav--rebuild .menu-arrow {
+body.demo-ui-shell-body .side-nav--rebuild .menu-arrow {
     margin-inline-start: auto;
     opacity: .72;
 }
 
-body.migration-ui-shell-body .side-nav--rebuild .sub-menu {
+body.demo-ui-shell-body .side-nav--rebuild .sub-menu {
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
-body.migration-ui-shell-body .side-nav--rebuild .side-nav-area__panel,
-body.migration-ui-shell-body .side-nav--rebuild .sub-menu--area {
+body.demo-ui-shell-body .side-nav--rebuild .side-nav-area__panel,
+body.demo-ui-shell-body .side-nav--rebuild .sub-menu--area {
     margin-top: .22rem;
 }
 
-body.migration-ui-shell-body .side-nav--rebuild .sub-menu--area {
+body.demo-ui-shell-body .side-nav--rebuild .sub-menu--area {
     padding-inline-start: 0;
 }
 
-body.migration-ui-shell-body .side-nav--rebuild .sub-menu--area > .side-nav-item,
-body.migration-ui-shell-body .side-nav--rebuild .sub-menu--group > .side-nav-item + .side-nav-item {
+body.demo-ui-shell-body .side-nav--rebuild .sub-menu--area > .side-nav-item,
+body.demo-ui-shell-body .side-nav--rebuild .sub-menu--group > .side-nav-item + .side-nav-item {
     margin-top: .14rem;
 }
 
-body.migration-ui-shell-body .side-nav--rebuild .side-nav-link--group {
+body.demo-ui-shell-body .side-nav--rebuild .side-nav-link--group {
     min-height: 2.38rem;
     color: rgba(226,232,240,.7);
 }
 
-body.migration-ui-shell-body .side-nav--rebuild .sub-menu--group {
+body.demo-ui-shell-body .side-nav--rebuild .sub-menu--group {
     padding: .28rem 0 .18rem .82rem;
 }
 
-body.migration-ui-shell-body .side-nav--rebuild .side-nav-link-cluster {
+body.demo-ui-shell-body .side-nav--rebuild .side-nav-link-cluster {
     display: flex;
     align-items: stretch;
     gap: .25rem;
 }
 
-body.migration-ui-shell-body .side-nav--rebuild .side-nav-link-cluster > .side-nav-link {
+body.demo-ui-shell-body .side-nav--rebuild .side-nav-link-cluster > .side-nav-link {
     flex: 1 1 auto;
     min-width: 0;
 }
 
-body.migration-ui-shell-body .side-nav--rebuild .side-nav-inline-toggle {
+body.demo-ui-shell-body .side-nav--rebuild .side-nav-inline-toggle {
     width: 2.15rem;
     min-width: 2.15rem;
     display: inline-flex;
@@ -378,42 +378,42 @@ body.migration-ui-shell-body .side-nav--rebuild .side-nav-inline-toggle {
     color: rgba(226,232,240,.58);
 }
 
-body.migration-ui-shell-body .side-nav--rebuild .side-nav-inline-toggle:hover,
-body.migration-ui-shell-body .side-nav--rebuild .side-nav-inline-toggle.is-open,
-body.migration-ui-shell-body .side-nav--rebuild .side-nav-item.active > .side-nav-link-cluster .side-nav-inline-toggle {
+body.demo-ui-shell-body .side-nav--rebuild .side-nav-inline-toggle:hover,
+body.demo-ui-shell-body .side-nav--rebuild .side-nav-inline-toggle.is-open,
+body.demo-ui-shell-body .side-nav--rebuild .side-nav-item.active > .side-nav-link-cluster .side-nav-inline-toggle {
     color: #fff;
     background: rgba(255,255,255,.06);
 }
 
-body.migration-ui-shell-body .side-nav--rebuild .sub-menu--nested {
+body.demo-ui-shell-body .side-nav--rebuild .sub-menu--nested {
     padding: .12rem 0 .2rem 2rem;
 }
 
-body.migration-ui-shell-body .side-nav--rebuild .sub-menu--nested .side-nav-link {
+body.demo-ui-shell-body .side-nav--rebuild .sub-menu--nested .side-nav-link {
     min-height: 2rem;
     padding: .45rem .76rem;
     border-radius: .56rem;
     color: rgba(226,232,240,.64);
 }
 
-body.migration-ui-shell-body .side-nav--rebuild .sub-menu--nested .side-nav-link .menu-text {
+body.demo-ui-shell-body .side-nav--rebuild .sub-menu--nested .side-nav-link .menu-text {
     font-size: .82rem;
     font-weight: 500;
 }
 
-body.migration-ui-shell-body .catalyst-status-bar {
+body.demo-ui-shell-body .catalyst-status-bar {
     min-height: 34px;
     height: 34px;
     padding-inline: 12px;
     z-index: 1090;
 }
 
-body.migration-ui-shell-body .status-bar-left,
-body.migration-ui-shell-body .status-bar-right {
+body.demo-ui-shell-body .status-bar-left,
+body.demo-ui-shell-body .status-bar-right {
     min-width: 0;
 }
 
-body.migration-ui-shell-body .status-bar-btn {
+body.demo-ui-shell-body .status-bar-btn {
     min-width: 2rem;
     min-height: 1.65rem;
     display: inline-flex;
@@ -423,9 +423,9 @@ body.migration-ui-shell-body .status-bar-btn {
     border-radius: .45rem;
 }
 
-body.migration-ui-shell-body .status-bar-btn > i,
-body.migration-ui-shell-body .status-account-menu__item i,
-body.migration-ui-shell-body .notif-panel i {
+body.demo-ui-shell-body .status-bar-btn > i,
+body.demo-ui-shell-body .status-account-menu__item i,
+body.demo-ui-shell-body .notif-panel i {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -435,35 +435,35 @@ body.migration-ui-shell-body .notif-panel i {
     line-height: 1;
 }
 
-body.migration-ui-shell-body .status-bar-btn:hover,
-body.migration-ui-shell-body .status-bar-btn:focus-visible {
+body.demo-ui-shell-body .status-bar-btn:hover,
+body.demo-ui-shell-body .status-bar-btn:focus-visible {
     color: var(--theme-body-color, #4c4c5c);
     background: var(--theme-tertiary-bg, #f6f7fb);
 }
 
 @media (max-width: 767.98px) {
-    body.migration-ui-shell-body .topbar-context-switch {
+    body.demo-ui-shell-body .topbar-context-switch {
         display: none !important;
     }
 
-    body.migration-ui-shell-body .side-nav--rebuild .side-nav-link .menu-text {
+    body.demo-ui-shell-body .side-nav--rebuild .side-nav-link .menu-text {
         font-size: .86rem;
     }
 }
 
 /* Catalyst fixed Inspinia shell: sidebar is permanent; only SimpleBar may scroll menu content. */
-.migration-ui-shell-body .sidenav-toggle-button,
-.migration-ui-shell-body .button-on-hover,
-.migration-ui-shell-body .button-close-offcanvas {
+.demo-ui-shell-body .sidenav-toggle-button,
+.demo-ui-shell-body .button-on-hover,
+.demo-ui-shell-body .button-close-offcanvas {
     display: none !important;
 }
 
-.migration-ui-shell-body .sidenav-menu {
+.demo-ui-shell-body .sidenav-menu {
     overflow: hidden !important;
     overscroll-behavior: contain;
 }
 
-.migration-ui-shell-body .sidenav-menu > .scrollbar[data-simplebar] {
+.demo-ui-shell-body .sidenav-menu > .scrollbar[data-simplebar] {
     flex: 1 1 auto;
     min-height: 0;
     height: auto !important;
@@ -471,44 +471,44 @@ body.migration-ui-shell-body .status-bar-btn:focus-visible {
     overflow: hidden !important;
 }
 
-.migration-ui-shell-body .sidenav-menu > .scrollbar[data-simplebar] > .simplebar-wrapper,
-.migration-ui-shell-body .sidenav-menu > .scrollbar[data-simplebar] > .simplebar-wrapper > .simplebar-mask,
-.migration-ui-shell-body .sidenav-menu > .scrollbar[data-simplebar] > .simplebar-wrapper > .simplebar-mask > .simplebar-offset,
-.migration-ui-shell-body .sidenav-menu > .scrollbar[data-simplebar] > .simplebar-wrapper > .simplebar-mask > .simplebar-offset > .simplebar-content-wrapper {
+.demo-ui-shell-body .sidenav-menu > .scrollbar[data-simplebar] > .simplebar-wrapper,
+.demo-ui-shell-body .sidenav-menu > .scrollbar[data-simplebar] > .simplebar-wrapper > .simplebar-mask,
+.demo-ui-shell-body .sidenav-menu > .scrollbar[data-simplebar] > .simplebar-wrapper > .simplebar-mask > .simplebar-offset,
+.demo-ui-shell-body .sidenav-menu > .scrollbar[data-simplebar] > .simplebar-wrapper > .simplebar-mask > .simplebar-offset > .simplebar-content-wrapper {
     height: 100% !important;
     width: 100% !important;
 }
 
-.migration-ui-shell-body .sidenav-menu > .scrollbar[data-simplebar] > .simplebar-wrapper > .simplebar-mask > .simplebar-offset > .simplebar-content-wrapper {
+.demo-ui-shell-body .sidenav-menu > .scrollbar[data-simplebar] > .simplebar-wrapper > .simplebar-mask > .simplebar-offset > .simplebar-content-wrapper {
     overflow-x: hidden !important;
     overflow-y: scroll !important;
     overscroll-behavior: contain;
 }
 
-html[data-sidenav-size="condensed"] .migration-ui-shell-body .sidenav-menu,
-html[data-sidenav-size="compact"] .migration-ui-shell-body .sidenav-menu,
-html[data-sidenav-size="sm-hover"] .migration-ui-shell-body .sidenav-menu,
-html[data-sidenav-size="sm-hover-active"] .migration-ui-shell-body .sidenav-menu,
-html[data-sidenav-size="offcanvas"] .migration-ui-shell-body .sidenav-menu {
+html[data-sidenav-size="condensed"] .demo-ui-shell-body .sidenav-menu,
+html[data-sidenav-size="compact"] .demo-ui-shell-body .sidenav-menu,
+html[data-sidenav-size="sm-hover"] .demo-ui-shell-body .sidenav-menu,
+html[data-sidenav-size="sm-hover-active"] .demo-ui-shell-body .sidenav-menu,
+html[data-sidenav-size="offcanvas"] .demo-ui-shell-body .sidenav-menu {
     width: var(--theme-sidenav-width) !important;
     min-width: var(--theme-sidenav-width) !important;
     transform: none !important;
     visibility: visible !important;
 }
 
-html[data-sidenav-size="condensed"] .migration-ui-shell-body .content-page,
-html[data-sidenav-size="compact"] .migration-ui-shell-body .content-page,
-html[data-sidenav-size="sm-hover"] .migration-ui-shell-body .content-page,
-html[data-sidenav-size="sm-hover-active"] .migration-ui-shell-body .content-page,
-html[data-sidenav-size="offcanvas"] .migration-ui-shell-body .content-page {
+html[data-sidenav-size="condensed"] .demo-ui-shell-body .content-page,
+html[data-sidenav-size="compact"] .demo-ui-shell-body .content-page,
+html[data-sidenav-size="sm-hover"] .demo-ui-shell-body .content-page,
+html[data-sidenav-size="sm-hover-active"] .demo-ui-shell-body .content-page,
+html[data-sidenav-size="offcanvas"] .demo-ui-shell-body .content-page {
     margin-inline-start: var(--theme-sidenav-width) !important;
 }
 
-html[data-sidenav-size="condensed"] .migration-ui-shell-body .app-topbar,
-html[data-sidenav-size="compact"] .migration-ui-shell-body .app-topbar,
-html[data-sidenav-size="sm-hover"] .migration-ui-shell-body .app-topbar,
-html[data-sidenav-size="sm-hover-active"] .migration-ui-shell-body .app-topbar,
-html[data-sidenav-size="offcanvas"] .migration-ui-shell-body .app-topbar {
+html[data-sidenav-size="condensed"] .demo-ui-shell-body .app-topbar,
+html[data-sidenav-size="compact"] .demo-ui-shell-body .app-topbar,
+html[data-sidenav-size="sm-hover"] .demo-ui-shell-body .app-topbar,
+html[data-sidenav-size="sm-hover-active"] .demo-ui-shell-body .app-topbar,
+html[data-sidenav-size="offcanvas"] .demo-ui-shell-body .app-topbar {
     margin-inline-start: var(--theme-sidenav-width) !important;
 }
 
@@ -518,18 +518,18 @@ html[data-sidenav-size="offcanvas"] .migration-ui-shell-body .app-topbar {
  * include the background mask for regular inputs. Without this mask the input
  * border runs through the label while focused or pre-filled.
  */
-.migration-ui-shell-body .form-floating > .form-control:focus ~ label,
-.migration-ui-shell-body .form-floating > .form-control:not(:placeholder-shown) ~ label,
-.migration-ui-shell-body .form-floating > .form-control-plaintext ~ label,
-.migration-ui-shell-body .form-floating > .form-select ~ label {
+.demo-ui-shell-body .form-floating > .form-control:focus ~ label,
+.demo-ui-shell-body .form-floating > .form-control:not(:placeholder-shown) ~ label,
+.demo-ui-shell-body .form-floating > .form-control-plaintext ~ label,
+.demo-ui-shell-body .form-floating > .form-select ~ label {
     color: rgba(var(--theme-body-color-rgb), 0.74);
     opacity: 1;
 }
 
-.migration-ui-shell-body .form-floating > .form-control:focus ~ label::after,
-.migration-ui-shell-body .form-floating > .form-control:not(:placeholder-shown) ~ label::after,
-.migration-ui-shell-body .form-floating > .form-control-plaintext ~ label::after,
-.migration-ui-shell-body .form-floating > .form-select ~ label::after {
+.demo-ui-shell-body .form-floating > .form-control:focus ~ label::after,
+.demo-ui-shell-body .form-floating > .form-control:not(:placeholder-shown) ~ label::after,
+.demo-ui-shell-body .form-floating > .form-control-plaintext ~ label::after,
+.demo-ui-shell-body .form-floating > .form-select ~ label::after {
     position: absolute;
     inset: 0.92rem 0.385rem auto 0.385rem;
     z-index: -1;
@@ -539,8 +539,8 @@ html[data-sidenav-size="offcanvas"] .migration-ui-shell-body .app-topbar {
     border-radius: var(--theme-border-radius);
 }
 
-.migration-ui-shell-body .form-floating > .form-control:disabled ~ label::after,
-.migration-ui-shell-body .form-floating > .form-select:disabled ~ label::after {
+.demo-ui-shell-body .form-floating > .form-control:disabled ~ label::after,
+.demo-ui-shell-body .form-floating > .form-select:disabled ~ label::after {
     background-color: var(--theme-tertiary-bg);
 }
 

@@ -141,7 +141,7 @@
         html.setAttribute('data-layout-position', defaults.position);
         html.setAttribute('data-layout-width', defaults.width);
         html.setAttribute('dir', defaults.dir);
-        html.setAttribute('data-migrationui-theme-mode', config.theme);
+        html.setAttribute('data-demoui-theme-mode', config.theme);
         html.setAttribute('data-catalyst-closed-skin', closedSkin);
         html.setAttribute('data-catalyst-customizer-policy', isLocked() ? 'locked' : 'user');
         html.setAttribute('data-catalyst-red-cross-mode', config.skin === 'red-cross' ? 'enabled' : 'disabled');
@@ -159,10 +159,10 @@
     <link href="{{ href }}" rel="{{ rel }}"{{#if has_media}} media="{{ media }}"{{/if}}>
     {{/each}}
 </head>
-<body class="migration-ui-shell-body"
+<body class="demo-ui-shell-body"
       data-admin-context="{{ active_admin_context }}"
-      data-migrationui-page="{{ migration_ui_page_slug }}"
-      data-migrationui-doc="{{ selected_doc_file }}">
+      data-demoui-page="{{ demo_ui_page_slug }}"
+      data-demoui-doc="{{ selected_doc_file }}">
 <div class="wrapper">
     <header class="app-topbar">
         <div class="container-fluid topbar-menu">
@@ -190,20 +190,20 @@
                 <div class="topbar-item">
                     <button class="topbar-link" type="button"><i class="ti ti-building-community topbar-link-icon"></i></button>
                 </div>
-                <div id="simple-user-dropdown" class="topbar-item nav-user migration-ui-user-dropdown">
+                <div id="simple-user-dropdown" class="topbar-item nav-user demo-ui-user-dropdown">
                     <div class="dropdown">
                         <a class="topbar-link dropdown-toggle drop-arrow-none px-2" data-bs-toggle="dropdown" role="button" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-label="{{ auth_menu_label }}" title="{{ auth_menu_label }}">
                             <img src="{{ auth_avatar_src }}" width="32" class="rounded-circle me-lg-2 d-flex" alt="user-image">
                             <div class="d-lg-flex align-items-center gap-1 d-none">
-                                <h5 class="my-0 migration-ui-account-label">{{ auth_menu_label }}</h5>
+                                <h5 class="my-0 demo-ui-account-label">{{ auth_menu_label }}</h5>
                                 <i class="ti ti-chevron-down align-middle"></i>
                             </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
-                            <div class="dropdown-header migration-ui-account-summary">
-                                <span class="migration-ui-account-summary__name">{{ auth_name }}</span>
+                            <div class="dropdown-header demo-ui-account-summary">
+                                <span class="demo-ui-account-summary__name">{{ auth_name }}</span>
                                 {{#if has_auth_email}}
-                                <span class="migration-ui-account-summary__email">{{ auth_email }}</span>
+                                <span class="demo-ui-account-summary__email">{{ auth_email }}</span>
                                 {{/if}}
                             </div>
 
@@ -257,7 +257,7 @@
         <div class="scrollbar" data-simplebar="" data-simplebar-auto-hide="false">
             <div id="sidenav-menu">
                 <ul class="side-nav">
-                    {{#each migration_nav_groups}}
+                    {{#each demo_ui_nav_groups}}
                     {{#if is_title}}
                     <li class="side-nav-title mt-2">{{ label }}</li>
                     {{else}}
@@ -331,11 +331,11 @@
     </div>
 </div>
 
-<div class="offcanvas offcanvas-end overflow-hidden migration-ui-theme-panel" tabindex="-1" id="theme-settings-offcanvas" aria-hidden="true">
-    <div class="d-flex justify-content-between gap-2 p-3 migration-ui-theme-panel__header">
+<div class="offcanvas offcanvas-end overflow-hidden demo-ui-theme-panel" tabindex="-1" id="theme-settings-offcanvas" aria-hidden="true">
+    <div class="d-flex justify-content-between gap-2 p-3 demo-ui-theme-panel__header">
         <div>
             <h5 class="mb-1 fw-bold text-white text-uppercase">Admin Customizer</h5>
-            <p class="text-white text-opacity-75 fst-italic fw-medium mb-0">Theme, scheme, and color controls for the migration shell.</p>
+            <p class="text-white text-opacity-75 fst-italic fw-medium mb-0">Theme, scheme, and color controls for the demo shell.</p>
         </div>
 
         <div class="flex-grow-0">

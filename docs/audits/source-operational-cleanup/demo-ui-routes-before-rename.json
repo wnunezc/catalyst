@@ -1,0 +1,402 @@
+[
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@index",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/accordions",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@accordions",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/alerts",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@alerts",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/badges",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@badges",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/basic-elements",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@basicElements",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/breadcrumb",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@breadcrumb",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/buttons",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@buttons",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/cards",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@cards",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/carousel",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@carousel",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/charts/{family}/{page}",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@charts",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/collapse",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@collapse",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/colors",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@colors",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/dropdowns",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@dropdowns",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/file-uploads",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@fileUploads",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/grid-options",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@gridOptions",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/images",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@images",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/links",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@links",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/list-group",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@listGroup",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/modals",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@modals",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/notifications",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@notifications",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/offcanvas",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@offcanvas",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/pagination",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@pagination",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/pickers",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@pickers",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/placeholders",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@placeholders",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/popovers",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@popovers",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/progress",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@progress",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/range-slider",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@rangeSlider",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/scrollspy",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@scrollspy",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/select",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@select",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/spinners",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@spinners",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/tables/datatables/{page}",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@dataTable",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/tables/{page}",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@table",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/tabs",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@tabs",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/text-editors",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@textEditors",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/tooltips",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@tooltips",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/typography",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@typography",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/utilities",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@utilities",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/validation",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@validation",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/videos",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@videos",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  },
+  {
+    "methods": [
+      "GET",
+      "HEAD"
+    ],
+    "uri": "/demo-ui/wizard",
+    "name": "-",
+    "handler": "Catalyst\\Repository\\MigrationUi\\Controllers\\DemoUiController@wizard",
+    "middleware": "Catalyst\\Framework\\Middleware\\AuthMiddleware"
+  }
+]

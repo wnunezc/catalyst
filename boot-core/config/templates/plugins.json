@@ -1,0 +1,10 @@
+{
+    "catalog": {
+        "framework.business": {
+            "enabled": true
+        },
+        "framework.devtools": {
+            "enabled": true
+        }
+    }
+}

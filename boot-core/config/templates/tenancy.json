@@ -1,0 +1,27 @@
+{
+  "tenancy": {
+    "strategy": "shared-db-tenant-id",
+    "target_strategy": "shared-db-tenant-id",
+    "resolution_mode": "host",
+    "fallback_tenant": "default",
+    "fallback_tenant_id": 1,
+    "baseline_status": "tenant-boundary-active",
+    "data_isolation_active": true,
+    "decision_note": "Catalyst opera PA-02 sobre shared-db con tenant_id visible en auth, repositorios, auditoría y operaciones, sin introducir sistemas paralelos de segmentación por tenant.",
+    "tenants": {
+      "default": {
+        "tenant_id": 1,
+        "tenant_key": "default",
+        "tenant_label": "Default tenant",
+        "hosts": []
+      },
+      "sandbox": {
+        "tenant_id": 2,
+        "tenant_key": "sandbox",
+        "tenant_label": "Sandbox tenant",
+        "hosts": []
+      }
+    },
+    "host_map": {}
+  }
+}

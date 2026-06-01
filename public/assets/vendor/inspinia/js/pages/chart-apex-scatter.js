@@ -5,7 +5,7 @@
  * Version: 5.0.0
  */
 
-const chartVendorBase = window.__migrationUiChartsVendorBase || "/assets/vendor/inspinia"
+const chartVendorBase = window.__DemoUiChartsVendorBase || "/assets/vendor/inspinia"
 
 function generateDayWiseTimeSeries(baseval, count, yrange) {
     let i = 0

@@ -1968,19 +1968,19 @@ html[data-sidenav-size="condensed"] .side-nav--rebuild .side-nav-link {
     padding-inline: 0.5rem;
 }
 
-.migration-ui-page {
+.demo-ui-page {
     display: grid;
     gap: 1rem;
 }
 
-.migration-ui-page__header {
+.demo-ui-page__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
 }
 
-.migration-ui-page__eyebrow {
+.demo-ui-page__eyebrow {
     margin-bottom: 0.35rem;
     color: var(--bs-secondary-color);
     font-size: 0.75rem;
@@ -1989,12 +1989,12 @@ html[data-sidenav-size="condensed"] .side-nav--rebuild .side-nav-link {
     text-transform: uppercase;
 }
 
-.migration-ui-page__title {
+.demo-ui-page__title {
     margin: 0;
     font-size: 1.75rem;
 }
 
-.migration-ui-preview {
+.demo-ui-preview {
     overflow: hidden;
     border: var(--theme-theme-card-border-width, 1px) solid var(--theme-theme-card-border-color, var(--bs-border-color));
     border-radius: var(--theme-border-radius, var(--bs-border-radius));
@@ -2002,57 +2002,57 @@ html[data-sidenav-size="condensed"] .side-nav--rebuild .side-nav-link {
     box-shadow: var(--theme-theme-card-box-shadow, none);
 }
 
-.migration-ui-preview--page {
+.demo-ui-preview--page {
     padding: 1rem;
 }
 
-.migration-ui-preview > .row,
-.migration-ui-preview > .container-fluid,
-.migration-ui-preview > div {
+.demo-ui-preview > .row,
+.demo-ui-preview > .container-fluid,
+.demo-ui-preview > div {
     max-width: 100%;
 }
 
-.migration-ui-preview .container-fluid {
+.demo-ui-preview .container-fluid {
     padding: 0;
 }
 
-.migration-ui-preview .app-search,
-.migration-ui-preview .right-bar,
-.migration-ui-preview .content-page,
-.migration-ui-preview .app-topbar,
-.migration-ui-preview .sidenav-menu,
-.migration-ui-preview .logo-topbar,
-.migration-ui-preview .topbar-menu,
-.migration-ui-preview .footer,
-.migration-ui-preview .wrapper > .app-topbar,
-.migration-ui-preview .wrapper > .sidenav-menu {
+.demo-ui-preview .app-search,
+.demo-ui-preview .right-bar,
+.demo-ui-preview .content-page,
+.demo-ui-preview .app-topbar,
+.demo-ui-preview .sidenav-menu,
+.demo-ui-preview .logo-topbar,
+.demo-ui-preview .topbar-menu,
+.demo-ui-preview .footer,
+.demo-ui-preview .wrapper > .app-topbar,
+.demo-ui-preview .wrapper > .sidenav-menu {
     display: none !important;
 }
 
-.migration-ui-preview .row {
+.demo-ui-preview .row {
     --bs-gutter-x: 1.25rem;
 }
 
-.migration-ui-preview .nav-link {
+.demo-ui-preview .nav-link {
     cursor: default;
 }
 
-.migration-ui-preview .dropdown-menu {
+.demo-ui-preview .dropdown-menu {
     display: none !important;
 }
 
-.migration-ui-preview .topbar-link,
-.migration-ui-preview [data-bs-toggle="dropdown"],
-.migration-ui-preview [data-bs-toggle="collapse"] {
+.demo-ui-preview .topbar-link,
+.demo-ui-preview [data-bs-toggle="dropdown"],
+.demo-ui-preview [data-bs-toggle="collapse"] {
     pointer-events: none;
 }
 
-.migration-ui-preview img {
+.demo-ui-preview img {
     max-width: 100%;
     height: auto;
 }
 
-.migration-ui-sidenav .logo {
+.demo-ui-sidenav .logo {
     display: flex;
     align-items: center;
     min-height: var(--theme-topbar-height);
@@ -2060,13 +2060,13 @@ html[data-sidenav-size="condensed"] .side-nav--rebuild .side-nav-link {
     color: #fff;
 }
 
-.migration-ui-sidenav__brand {
+.demo-ui-sidenav__brand {
     display: flex;
     align-items: center;
     gap: 0.75rem;
 }
 
-.migration-ui-sidenav__brand-mark {
+.demo-ui-sidenav__brand-mark {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -2075,54 +2075,54 @@ html[data-sidenav-size="condensed"] .side-nav--rebuild .side-nav-link {
     color: #20c997;
 }
 
-.migration-ui-sidenav__brand-mark i {
+.demo-ui-sidenav__brand-mark i {
     font-size: 1.5rem;
 }
 
-.migration-ui-sidenav__brand-copy {
+.demo-ui-sidenav__brand-copy {
     font-size: 1.8rem;
     font-weight: 800;
     letter-spacing: -0.03em;
 }
 
-.migration-ui-sidenav .side-nav {
+.demo-ui-sidenav .side-nav {
     gap: 0.2rem;
     padding-top: 0.75rem;
 }
 
-.migration-ui-sidenav .side-nav > .side-nav-item {
+.demo-ui-sidenav .side-nav > .side-nav-item {
     padding: 0 0.75rem;
 }
 
-.migration-ui-sidenav .side-nav-title {
+.demo-ui-sidenav .side-nav-title {
     padding-top: 1rem;
     color: #cfd8e3;
 }
 
-.migration-ui-sidenav .sub-menu .side-nav-item .side-nav-link {
+.demo-ui-sidenav .sub-menu .side-nav-item .side-nav-link {
     padding-inline-start: calc(var(--theme-sidenav-item-padding-x) + 2.2rem);
 }
 
-.migration-ui-sidenav .side-nav .side-nav-item.active > a,
-.migration-ui-sidenav .side-nav .side-nav-item > a.active {
+.demo-ui-sidenav .side-nav .side-nav-item.active > a,
+.demo-ui-sidenav .side-nav .side-nav-item > a.active {
     color: var(--theme-sidenav-item-active-color) !important;
     background-color: var(--theme-sidenav-item-active-bg);
 }
 
-.migration-ui-sidenav .side-nav .sub-menu .side-nav-item.active > a {
+.demo-ui-sidenav .side-nav .sub-menu .side-nav-item.active > a {
     color: var(--theme-sidenav-item-hover-color);
     font-weight: var(--theme-sidenav-item-font-weight);
 }
 
 @media (max-width: 1199.98px) {
-    .migration-ui-page__header {
+    .demo-ui-page__header {
         align-items: flex-start;
         flex-direction: column;
     }
 }
 
 
-/* Migration UI cutover: canonical admin routes now use the INSPINIA shell baseline. */
+/* Demo UI cutover: canonical admin routes now use the INSPINIA shell baseline. */
 :root { --theme-body-font-size: 0.875rem; --bs-body-font-size: 0.875rem; }
 .catalyst-admin-shell .content-page { padding-top: var(--catalyst-topbar-height); background: var(--bs-tertiary-bg); }
 .catalyst-admin-shell #app-content { padding: 1rem 1rem 1.25rem; }

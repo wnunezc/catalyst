@@ -369,7 +369,7 @@ html[data-skin="red-cross"] .card {
     border-color: var(--theme-theme-card-border-color, var(--theme-border-color));
 }
 
-html[data-skin="red-cross"] .migration-ui-theme-panel__header {
+html[data-skin="red-cross"] .demo-ui-theme-panel__header {
     background: linear-gradient(135deg, var(--catalyst-red-cross-primary) 0%, var(--catalyst-red-cross-primary-active) 100%);
 }
 

@@ -1,0 +1,1957 @@
+[
+  {
+    "path": "public/assets/vendor/inspinia/css/app.min.css",
+    "asset_url": "/assets/vendor/inspinia/css/app.min.css",
+    "bytes": 627684,
+    "mapped_original": "assets/css/app.min.css",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 5,
+    "exact_reference_files": [
+      "boot-core/template/components/_head-assets.phtml",
+      "boot-core/template/layouts/account.phtml",
+      "boot-core/template/layouts/admin.phtml",
+      "boot-core/template/layouts/base.phtml",
+      "boot-core/template/layouts/demo-ui-shell.phtml"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/css/app.min.css.map",
+    "asset_url": "/assets/vendor/inspinia/css/app.min.css.map",
+    "bytes": 1367566,
+    "mapped_original": "assets/css/app.min.css.map",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/css/fonts/tabler-icons.ttf",
+    "asset_url": "/assets/vendor/inspinia/css/fonts/tabler-icons.ttf",
+    "bytes": 2413932,
+    "mapped_original": "assets/css/fonts/tabler-icons.ttf",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/css/fonts/tabler-icons.woff",
+    "asset_url": "/assets/vendor/inspinia/css/fonts/tabler-icons.woff",
+    "bytes": 1220100,
+    "mapped_original": "assets/css/fonts/tabler-icons.woff",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/css/fonts/tabler-icons.woff2",
+    "asset_url": "/assets/vendor/inspinia/css/fonts/tabler-icons.woff2",
+    "bytes": 831044,
+    "mapped_original": "assets/css/fonts/tabler-icons.woff2",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/css/vendors.min.css",
+    "asset_url": "/assets/vendor/inspinia/css/vendors.min.css",
+    "bytes": 278574,
+    "mapped_original": "assets/css/vendors.min.css",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 5,
+    "exact_reference_files": [
+      "boot-core/template/components/_head-assets.phtml",
+      "boot-core/template/layouts/account.phtml",
+      "boot-core/template/layouts/admin.phtml",
+      "boot-core/template/layouts/base.phtml",
+      "boot-core/template/layouts/demo-ui-shell.phtml"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/data/datatables-rendering.json",
+    "asset_url": "/assets/vendor/inspinia/data/datatables-rendering.json",
+    "bytes": 13495,
+    "mapped_original": "assets/data/datatables-rendering.json",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/data/datatables.json",
+    "asset_url": "/assets/vendor/inspinia/data/datatables.json",
+    "bytes": 15915,
+    "mapped_original": "assets/data/datatables.json",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/data/usa_geo.json",
+    "asset_url": "/assets/vendor/inspinia/data/usa_geo.json",
+    "bytes": 202559,
+    "mapped_original": "assets/data/usa_geo.json",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/favicon.ico",
+    "asset_url": "/assets/vendor/inspinia/images/favicon.ico",
+    "bytes": 109333,
+    "mapped_original": "assets/images/favicon.ico",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 6,
+    "exact_reference_files": [
+      "app/Framework/Appearance/PlatformAppearanceManager.php",
+      "boot-core/template/components/_head-assets.phtml",
+      "boot-core/template/layouts/account.phtml",
+      "boot-core/template/layouts/admin.phtml",
+      "boot-core/template/layouts/base.phtml",
+      "boot-core/template/layouts/demo-ui-shell.phtml"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/dir-ltr.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/dir-ltr.png",
+    "bytes": 5523,
+    "mapped_original": "assets/images/layouts/dir-ltr.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/dir-rtl.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/dir-rtl.png",
+    "bytes": 5550,
+    "mapped_original": "assets/images/layouts/dir-rtl.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/sidenav-color-dark.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/sidenav-color-dark.png",
+    "bytes": 4967,
+    "mapped_original": "assets/images/layouts/sidenav-color-dark.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 4,
+    "exact_reference_files": [
+      "boot-core/template/components/_theme-customizer-panel.phtml",
+      "boot-core/template/layouts/admin.phtml",
+      "boot-core/template/layouts/base.phtml",
+      "Repository/Framework/Operations/Views/scope/pages/appearance.php"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/sidenav-color-gradient.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/sidenav-color-gradient.png",
+    "bytes": 40299,
+    "mapped_original": "assets/images/layouts/sidenav-color-gradient.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/sidenav-color-gray.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/sidenav-color-gray.png",
+    "bytes": 5128,
+    "mapped_original": "assets/images/layouts/sidenav-color-gray.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 4,
+    "exact_reference_files": [
+      "boot-core/template/components/_theme-customizer-panel.phtml",
+      "boot-core/template/layouts/admin.phtml",
+      "boot-core/template/layouts/base.phtml",
+      "Repository/Framework/Operations/Views/scope/pages/appearance.php"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/sidenav-color-image.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/sidenav-color-image.png",
+    "bytes": 63660,
+    "mapped_original": "assets/images/layouts/sidenav-color-image.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/sidenav-color-light.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/sidenav-color-light.png",
+    "bytes": 5037,
+    "mapped_original": "assets/images/layouts/sidenav-color-light.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 4,
+    "exact_reference_files": [
+      "boot-core/template/components/_theme-customizer-panel.phtml",
+      "boot-core/template/layouts/admin.phtml",
+      "boot-core/template/layouts/base.phtml",
+      "Repository/Framework/Operations/Views/scope/pages/appearance.php"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/sidenav-size-compact.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/sidenav-size-compact.png",
+    "bytes": 4819,
+    "mapped_original": "assets/images/layouts/sidenav-size-compact.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/sidenav-size-condensed.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/sidenav-size-condensed.png",
+    "bytes": 4646,
+    "mapped_original": "assets/images/layouts/sidenav-size-condensed.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/sidenav-size-default.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/sidenav-size-default.png",
+    "bytes": 5037,
+    "mapped_original": "assets/images/layouts/sidenav-size-default.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/sidenav-size-offcanvas.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/sidenav-size-offcanvas.png",
+    "bytes": 2931,
+    "mapped_original": "assets/images/layouts/sidenav-size-offcanvas.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/sidenav-size-on-hover-active.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/sidenav-size-on-hover-active.png",
+    "bytes": 5037,
+    "mapped_original": "assets/images/layouts/sidenav-size-on-hover-active.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/sidenav-size-on-hover.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/sidenav-size-on-hover.png",
+    "bytes": 4646,
+    "mapped_original": "assets/images/layouts/sidenav-size-on-hover.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/skin-default.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/skin-default.png",
+    "bytes": 41352,
+    "mapped_original": "assets/images/layouts/skin-default.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 4,
+    "exact_reference_files": [
+      "boot-core/template/components/_theme-customizer-panel.phtml",
+      "boot-core/template/layouts/admin.phtml",
+      "boot-core/template/layouts/base.phtml",
+      "Repository/Framework/Operations/Views/scope/pages/appearance.php"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/skin-flat.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/skin-flat.png",
+    "bytes": 48543,
+    "mapped_original": "assets/images/layouts/skin-flat.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 4,
+    "exact_reference_files": [
+      "boot-core/template/components/_theme-customizer-panel.phtml",
+      "boot-core/template/layouts/admin.phtml",
+      "boot-core/template/layouts/base.phtml",
+      "Repository/Framework/Operations/Views/scope/pages/appearance.php"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/skin-galaxy.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/skin-galaxy.png",
+    "bytes": 80034,
+    "mapped_original": "assets/images/layouts/skin-galaxy.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/skin-luxe.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/skin-luxe.png",
+    "bytes": 38182,
+    "mapped_original": "assets/images/layouts/skin-luxe.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 4,
+    "exact_reference_files": [
+      "boot-core/template/components/_theme-customizer-panel.phtml",
+      "boot-core/template/layouts/admin.phtml",
+      "boot-core/template/layouts/base.phtml",
+      "Repository/Framework/Operations/Views/scope/pages/appearance.php"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/skin-material.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/skin-material.png",
+    "bytes": 36314,
+    "mapped_original": "assets/images/layouts/skin-material.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 4,
+    "exact_reference_files": [
+      "boot-core/template/components/_theme-customizer-panel.phtml",
+      "boot-core/template/layouts/admin.phtml",
+      "boot-core/template/layouts/base.phtml",
+      "Repository/Framework/Operations/Views/scope/pages/appearance.php"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/skin-minimal.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/skin-minimal.png",
+    "bytes": 41088,
+    "mapped_original": "assets/images/layouts/skin-minimal.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 4,
+    "exact_reference_files": [
+      "boot-core/template/components/_theme-customizer-panel.phtml",
+      "boot-core/template/layouts/admin.phtml",
+      "boot-core/template/layouts/base.phtml",
+      "Repository/Framework/Operations/Views/scope/pages/appearance.php"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/skin-modern.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/skin-modern.png",
+    "bytes": 46113,
+    "mapped_original": "assets/images/layouts/skin-modern.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 4,
+    "exact_reference_files": [
+      "boot-core/template/components/_theme-customizer-panel.phtml",
+      "boot-core/template/layouts/admin.phtml",
+      "boot-core/template/layouts/base.phtml",
+      "Repository/Framework/Operations/Views/scope/pages/appearance.php"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/skin-neon.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/skin-neon.png",
+    "bytes": 41595,
+    "mapped_original": "assets/images/layouts/skin-neon.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/skin-pixel.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/skin-pixel.png",
+    "bytes": 46712,
+    "mapped_original": "assets/images/layouts/skin-pixel.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 4,
+    "exact_reference_files": [
+      "boot-core/template/components/_theme-customizer-panel.phtml",
+      "boot-core/template/layouts/admin.phtml",
+      "boot-core/template/layouts/base.phtml",
+      "Repository/Framework/Operations/Views/scope/pages/appearance.php"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/skin-retro.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/skin-retro.png",
+    "bytes": 60474,
+    "mapped_original": "assets/images/layouts/skin-retro.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/skin-saas.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/skin-saas.png",
+    "bytes": 43447,
+    "mapped_original": "assets/images/layouts/skin-saas.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/theme-dark.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/theme-dark.png",
+    "bytes": 4720,
+    "mapped_original": "assets/images/layouts/theme-dark.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 4,
+    "exact_reference_files": [
+      "boot-core/template/components/_theme-customizer-panel.phtml",
+      "boot-core/template/layouts/admin.phtml",
+      "boot-core/template/layouts/base.phtml",
+      "Repository/Framework/Operations/Views/scope/pages/appearance.php"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/theme-light.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/theme-light.png",
+    "bytes": 5037,
+    "mapped_original": "assets/images/layouts/theme-light.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 4,
+    "exact_reference_files": [
+      "boot-core/template/components/_theme-customizer-panel.phtml",
+      "boot-core/template/layouts/admin.phtml",
+      "boot-core/template/layouts/base.phtml",
+      "Repository/Framework/Operations/Views/scope/pages/appearance.php"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/theme-system.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/theme-system.png",
+    "bytes": 4845,
+    "mapped_original": "assets/images/layouts/theme-system.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 4,
+    "exact_reference_files": [
+      "boot-core/template/components/_theme-customizer-panel.phtml",
+      "boot-core/template/layouts/admin.phtml",
+      "boot-core/template/layouts/base.phtml",
+      "Repository/Framework/Operations/Views/scope/pages/appearance.php"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/topbar-color-dark.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/topbar-color-dark.png",
+    "bytes": 5112,
+    "mapped_original": "assets/images/layouts/topbar-color-dark.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 4,
+    "exact_reference_files": [
+      "boot-core/template/components/_theme-customizer-panel.phtml",
+      "boot-core/template/layouts/admin.phtml",
+      "boot-core/template/layouts/base.phtml",
+      "Repository/Framework/Operations/Views/scope/pages/appearance.php"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/topbar-color-gradient.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/topbar-color-gradient.png",
+    "bytes": 20831,
+    "mapped_original": "assets/images/layouts/topbar-color-gradient.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/topbar-color-gray.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/topbar-color-gray.png",
+    "bytes": 5148,
+    "mapped_original": "assets/images/layouts/topbar-color-gray.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 4,
+    "exact_reference_files": [
+      "boot-core/template/components/_theme-customizer-panel.phtml",
+      "boot-core/template/layouts/admin.phtml",
+      "boot-core/template/layouts/base.phtml",
+      "Repository/Framework/Operations/Views/scope/pages/appearance.php"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/topbar-color-light.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/topbar-color-light.png",
+    "bytes": 5037,
+    "mapped_original": "assets/images/layouts/topbar-color-light.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 4,
+    "exact_reference_files": [
+      "boot-core/template/components/_theme-customizer-panel.phtml",
+      "boot-core/template/layouts/admin.phtml",
+      "boot-core/template/layouts/base.phtml",
+      "Repository/Framework/Operations/Views/scope/pages/appearance.php"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/width-boxed.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/width-boxed.png",
+    "bytes": 4701,
+    "mapped_original": "assets/images/layouts/width-boxed.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/layouts/width-fluid.png",
+    "asset_url": "/assets/vendor/inspinia/images/layouts/width-fluid.png",
+    "bytes": 5037,
+    "mapped_original": "assets/images/layouts/width-fluid.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/logo-black.png",
+    "asset_url": "/assets/vendor/inspinia/images/logo-black.png",
+    "bytes": 4852,
+    "mapped_original": "assets/images/logo-black.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 7,
+    "exact_reference_files": [
+      "app/Framework/Appearance/PlatformAppearanceManager.php",
+      "boot-core/template/components/_account-shell-sidenav.phtml",
+      "boot-core/template/components/_account-shell-topbar.phtml",
+      "boot-core/template/components/_admin-shell-sidenav.phtml",
+      "boot-core/template/components/_admin-shell-topbar.phtml",
+      "boot-core/template/layouts/admin.phtml",
+      "boot-core/template/layouts/demo-ui-shell.phtml"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/logo-sm.png",
+    "asset_url": "/assets/vendor/inspinia/images/logo-sm.png",
+    "bytes": 3636,
+    "mapped_original": "assets/images/logo-sm.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 9,
+    "exact_reference_files": [
+      "boot-core/template/components/_account-shell-sidenav.phtml",
+      "boot-core/template/components/_account-shell-topbar.phtml",
+      "boot-core/template/components/_admin-shell-sidenav.phtml",
+      "boot-core/template/components/_admin-shell-topbar.phtml",
+      "boot-core/template/layouts/admin.phtml",
+      "boot-core/template/layouts/demo-ui-shell.phtml",
+      "Repository/Framework/DemoUi/generated/theme-previews/charts-apex-area.html",
+      "Repository/Framework/DemoUi/generated/theme-previews/form-fileuploads.html",
+      "Repository/Framework/DemoUi/generated/theme-previews/ui-notifications.html"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/logo.png",
+    "asset_url": "/assets/vendor/inspinia/images/logo.png",
+    "bytes": 4664,
+    "mapped_original": "assets/images/logo.png",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 7,
+    "exact_reference_files": [
+      "app/Framework/Appearance/PlatformAppearanceManager.php",
+      "boot-core/template/components/_account-shell-sidenav.phtml",
+      "boot-core/template/components/_account-shell-topbar.phtml",
+      "boot-core/template/components/_admin-shell-sidenav.phtml",
+      "boot-core/template/components/_admin-shell-topbar.phtml",
+      "boot-core/template/layouts/admin.phtml",
+      "boot-core/template/layouts/demo-ui-shell.phtml"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/logos/google.svg",
+    "asset_url": "/assets/vendor/inspinia/images/logos/google.svg",
+    "bytes": 990,
+    "mapped_original": "assets/images/logos/google.svg",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/logos/microsoft.svg",
+    "asset_url": "/assets/vendor/inspinia/images/logos/microsoft.svg",
+    "bytes": 378,
+    "mapped_original": "assets/images/logos/microsoft.svg",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/stock/small-1.jpg",
+    "asset_url": "/assets/vendor/inspinia/images/stock/small-1.jpg",
+    "bytes": 257089,
+    "mapped_original": "assets/images/stock/small-1.jpg",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 5,
+    "exact_reference_files": [
+      "Repository/Framework/DemoUi/generated/theme-previews/ui-cards.html",
+      "Repository/Framework/DemoUi/generated/theme-previews/ui-carousel.html",
+      "Repository/Framework/DemoUi/generated/theme-previews/ui-images.html",
+      "Repository/Framework/DemoUi/generated/theme-previews/ui-placeholders.html",
+      "Repository/Framework/DemoUi/generated/theme-previews/ui-utilities.html"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/stock/small-2.jpg",
+    "asset_url": "/assets/vendor/inspinia/images/stock/small-2.jpg",
+    "bytes": 137959,
+    "mapped_original": "assets/images/stock/small-2.jpg",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 3,
+    "exact_reference_files": [
+      "Repository/Framework/DemoUi/generated/theme-previews/ui-cards.html",
+      "Repository/Framework/DemoUi/generated/theme-previews/ui-carousel.html",
+      "Repository/Framework/DemoUi/generated/theme-previews/ui-images.html"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/stock/small-3.jpg",
+    "asset_url": "/assets/vendor/inspinia/images/stock/small-3.jpg",
+    "bytes": 155725,
+    "mapped_original": "assets/images/stock/small-3.jpg",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 3,
+    "exact_reference_files": [
+      "Repository/Framework/DemoUi/generated/theme-previews/ui-cards.html",
+      "Repository/Framework/DemoUi/generated/theme-previews/ui-carousel.html",
+      "Repository/Framework/DemoUi/generated/theme-previews/ui-utilities.html"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/stock/small-4.jpg",
+    "asset_url": "/assets/vendor/inspinia/images/stock/small-4.jpg",
+    "bytes": 265253,
+    "mapped_original": "assets/images/stock/small-4.jpg",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 2,
+    "exact_reference_files": [
+      "Repository/Framework/DemoUi/generated/theme-previews/ui-cards.html",
+      "Repository/Framework/DemoUi/generated/theme-previews/ui-carousel.html"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/stock/small-6.jpg",
+    "asset_url": "/assets/vendor/inspinia/images/stock/small-6.jpg",
+    "bytes": 185807,
+    "mapped_original": "assets/images/stock/small-6.jpg",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "Repository/Framework/DemoUi/generated/theme-previews/ui-cards.html",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/svg/iceland.svg",
+    "asset_url": "/assets/vendor/inspinia/images/svg/iceland.svg",
+    "bytes": 569375,
+    "mapped_original": "assets/images/svg/iceland.svg",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/images/user-bg-pattern.svg",
+    "asset_url": "/assets/vendor/inspinia/images/user-bg-pattern.svg",
+    "bytes": 131677,
+    "mapped_original": "assets/images/user-bg-pattern.svg",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/app.js",
+    "asset_url": "/assets/vendor/inspinia/js/app.js",
+    "bytes": 24932,
+    "mapped_original": "assets/js/app.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/config.js",
+    "asset_url": "/assets/vendor/inspinia/js/config.js",
+    "bytes": 1413,
+    "mapped_original": "assets/js/config.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/maps/world.js",
+    "asset_url": "/assets/vendor/inspinia/js/maps/world.js",
+    "bytes": 102232,
+    "mapped_original": "assets/js/maps/world.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-apex-area.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-apex-area.js",
+    "bytes": 32977,
+    "mapped_original": "assets/js/pages/chart-apex-area.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-apex-bar.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-apex-bar.js",
+    "bytes": 26366,
+    "mapped_original": "assets/js/pages/chart-apex-bar.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-apex-boxplot.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-apex-boxplot.js",
+    "bytes": 5890,
+    "mapped_original": "assets/js/pages/chart-apex-boxplot.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-apex-bubble.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-apex-bubble.js",
+    "bytes": 6527,
+    "mapped_original": "assets/js/pages/chart-apex-bubble.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-apex-candlestick.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-apex-candlestick.js",
+    "bytes": 30811,
+    "mapped_original": "assets/js/pages/chart-apex-candlestick.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-apex-column.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-apex-column.js",
+    "bytes": 43362,
+    "mapped_original": "assets/js/pages/chart-apex-column.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-apex-funnel.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-apex-funnel.js",
+    "bytes": 2921,
+    "mapped_original": "assets/js/pages/chart-apex-funnel.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-apex-heatmap.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-apex-heatmap.js",
+    "bytes": 11617,
+    "mapped_original": "assets/js/pages/chart-apex-heatmap.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-apex-line.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-apex-line.js",
+    "bytes": 27654,
+    "mapped_original": "assets/js/pages/chart-apex-line.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-apex-mixed.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-apex-mixed.js",
+    "bytes": 10659,
+    "mapped_original": "assets/js/pages/chart-apex-mixed.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-apex-pie.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-apex-pie.js",
+    "bytes": 10496,
+    "mapped_original": "assets/js/pages/chart-apex-pie.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-apex-polar-area.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-apex-polar-area.js",
+    "bytes": 2125,
+    "mapped_original": "assets/js/pages/chart-apex-polar-area.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-apex-radar.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-apex-radar.js",
+    "bytes": 3534,
+    "mapped_original": "assets/js/pages/chart-apex-radar.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-apex-radialbar.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-apex-radialbar.js",
+    "bytes": 10633,
+    "mapped_original": "assets/js/pages/chart-apex-radialbar.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-apex-range.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-apex-range.js",
+    "bytes": 4673,
+    "mapped_original": "assets/js/pages/chart-apex-range.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-apex-scatter.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-apex-scatter.js",
+    "bytes": 7440,
+    "mapped_original": "assets/js/pages/chart-apex-scatter.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-apex-slope.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-apex-slope.js",
+    "bytes": 3825,
+    "mapped_original": "assets/js/pages/chart-apex-slope.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-apex-sparklines.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-apex-sparklines.js",
+    "bytes": 11480,
+    "mapped_original": "assets/js/pages/chart-apex-sparklines.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-apex-timeline.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-apex-timeline.js",
+    "bytes": 15007,
+    "mapped_original": "assets/js/pages/chart-apex-timeline.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-apex-treemap.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-apex-treemap.js",
+    "bytes": 6715,
+    "mapped_original": "assets/js/pages/chart-apex-treemap.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-echart-area.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-echart-area.js",
+    "bytes": 20105,
+    "mapped_original": "assets/js/pages/chart-echart-area.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-echart-bar.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-echart-bar.js",
+    "bytes": 47695,
+    "mapped_original": "assets/js/pages/chart-echart-bar.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-echart-candlestick.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-echart-candlestick.js",
+    "bytes": 21035,
+    "mapped_original": "assets/js/pages/chart-echart-candlestick.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-echart-gauge.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-echart-gauge.js",
+    "bytes": 13943,
+    "mapped_original": "assets/js/pages/chart-echart-gauge.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-echart-geo-map.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-echart-geo-map.js",
+    "bytes": 21095,
+    "mapped_original": "assets/js/pages/chart-echart-geo-map.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-echart-heatmap.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-echart-heatmap.js",
+    "bytes": 13524,
+    "mapped_original": "assets/js/pages/chart-echart-heatmap.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-echart-line.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-echart-line.js",
+    "bytes": 20541,
+    "mapped_original": "assets/js/pages/chart-echart-line.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-echart-other.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-echart-other.js",
+    "bytes": 11888,
+    "mapped_original": "assets/js/pages/chart-echart-other.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-echart-pie.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-echart-pie.js",
+    "bytes": 16179,
+    "mapped_original": "assets/js/pages/chart-echart-pie.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-echart-radar.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-echart-radar.js",
+    "bytes": 17650,
+    "mapped_original": "assets/js/pages/chart-echart-radar.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/chart-echart-scatter.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/chart-echart-scatter.js",
+    "bytes": 14779,
+    "mapped_original": "assets/js/pages/chart-echart-scatter.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/custom-table.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/custom-table.js",
+    "bytes": 14004,
+    "mapped_original": "assets/js/pages/custom-table.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-tables.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/datatables-ajax.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/datatables-ajax.js",
+    "bytes": 1839,
+    "mapped_original": "assets/js/pages/datatables-ajax.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-tables.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/datatables-basic.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/datatables-basic.js",
+    "bytes": 1300,
+    "mapped_original": "assets/js/pages/datatables-basic.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-tables.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/datatables-checkbox-select.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/datatables-checkbox-select.js",
+    "bytes": 1473,
+    "mapped_original": "assets/js/pages/datatables-checkbox-select.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-tables.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/datatables-child-rows.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/datatables-child-rows.js",
+    "bytes": 2574,
+    "mapped_original": "assets/js/pages/datatables-child-rows.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-tables.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/datatables-column-search.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/datatables-column-search.js",
+    "bytes": 1952,
+    "mapped_original": "assets/js/pages/datatables-column-search.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-tables.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/datatables-export-data.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/datatables-export-data.js",
+    "bytes": 3880,
+    "mapped_original": "assets/js/pages/datatables-export-data.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-tables.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/datatables-fixed-columns.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/datatables-fixed-columns.js",
+    "bytes": 1408,
+    "mapped_original": "assets/js/pages/datatables-fixed-columns.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-tables.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/datatables-fixed-header.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/datatables-fixed-header.js",
+    "bytes": 1386,
+    "mapped_original": "assets/js/pages/datatables-fixed-header.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-tables.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/datatables-javascript-source.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/datatables-javascript-source.js",
+    "bytes": 5804,
+    "mapped_original": "assets/js/pages/datatables-javascript-source.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-tables.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/datatables-range-search.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/datatables-range-search.js",
+    "bytes": 2339,
+    "mapped_original": "assets/js/pages/datatables-range-search.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-tables.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/datatables-rendering.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/datatables-rendering.js",
+    "bytes": 2639,
+    "mapped_original": "assets/js/pages/datatables-rendering.js",
+    "exists_in_original": true,
+    "same_hash_as_original": false,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-tables.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/datatables-rows-add.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/datatables-rows-add.js",
+    "bytes": 2316,
+    "mapped_original": "assets/js/pages/datatables-rows-add.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-tables.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/datatables-scroll.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/datatables-scroll.js",
+    "bytes": 1623,
+    "mapped_original": "assets/js/pages/datatables-scroll.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-tables.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/datatables-select.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/datatables-select.js",
+    "bytes": 1778,
+    "mapped_original": "assets/js/pages/datatables-select.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-tables.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/js/pages/datatables-show-hide-columns.js",
+    "asset_url": "/assets/vendor/inspinia/js/pages/datatables-show-hide-columns.js",
+    "bytes": 2979,
+    "mapped_original": "assets/js/pages/datatables-show-hide-columns.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-tables.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/apexcharts/apexcharts.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/apexcharts/apexcharts.min.js",
+    "bytes": 559482,
+    "mapped_original": "assets/plugins/apexcharts/apexcharts.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-charts.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/choices/choices.min.css",
+    "asset_url": "/assets/vendor/inspinia/plugins/choices/choices.min.css",
+    "bytes": 10809,
+    "mapped_original": "assets/plugins/choices/choices.min.css",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "Repository/Framework/DemoUi/Controllers/DemoUiController.php",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/choices/choices.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/choices/choices.min.js",
+    "bytes": 77195,
+    "mapped_original": "assets/plugins/choices/choices.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/datatables/buttons.bootstrap5.min.css",
+    "asset_url": "/assets/vendor/inspinia/plugins/datatables/buttons.bootstrap5.min.css",
+    "bytes": 7951,
+    "mapped_original": "assets/plugins/datatables/buttons.bootstrap5.min.css",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "Repository/Framework/DemoUi/Controllers/DemoUiController.php",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/datatables/buttons.bootstrap5.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/datatables/buttons.bootstrap5.min.js",
+    "bytes": 1665,
+    "mapped_original": "assets/plugins/datatables/buttons.bootstrap5.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-tables.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/datatables/buttons.html5.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/datatables/buttons.html5.min.js",
+    "bytes": 26006,
+    "mapped_original": "assets/plugins/datatables/buttons.html5.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-tables.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/datatables/buttons.print.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/datatables/buttons.print.min.js",
+    "bytes": 2963,
+    "mapped_original": "assets/plugins/datatables/buttons.print.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-tables.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/datatables/dataTables.bootstrap5.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/datatables/dataTables.bootstrap5.min.js",
+    "bytes": 1450,
+    "mapped_original": "assets/plugins/datatables/dataTables.bootstrap5.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 2,
+    "exact_reference_files": [
+      "boot-core/template/components/_body-scripts.phtml",
+      "public/assets/js/catalyst/modules/demoui-tables.js"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/datatables/dataTables.buttons.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/datatables/dataTables.buttons.min.js",
+    "bytes": 28075,
+    "mapped_original": "assets/plugins/datatables/dataTables.buttons.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-tables.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/datatables/dataTables.fixedColumns.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/datatables/dataTables.fixedColumns.min.js",
+    "bytes": 8095,
+    "mapped_original": "assets/plugins/datatables/dataTables.fixedColumns.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-tables.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/datatables/dataTables.fixedHeader.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/datatables/dataTables.fixedHeader.min.js",
+    "bytes": 12681,
+    "mapped_original": "assets/plugins/datatables/dataTables.fixedHeader.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-tables.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/datatables/dataTables.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/datatables/dataTables.min.js",
+    "bytes": 97690,
+    "mapped_original": "assets/plugins/datatables/dataTables.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 2,
+    "exact_reference_files": [
+      "boot-core/template/components/_body-scripts.phtml",
+      "public/assets/js/catalyst/modules/demoui-tables.js"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/datatables/dataTables.responsive.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/datatables/dataTables.responsive.min.js",
+    "bytes": 16258,
+    "mapped_original": "assets/plugins/datatables/dataTables.responsive.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 2,
+    "exact_reference_files": [
+      "boot-core/template/components/_body-scripts.phtml",
+      "public/assets/js/catalyst/modules/demoui-tables.js"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/datatables/dataTables.select.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/datatables/dataTables.select.min.js",
+    "bytes": 20534,
+    "mapped_original": "assets/plugins/datatables/dataTables.select.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-tables.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/datatables/fixedColumns.bootstrap5.min.css",
+    "asset_url": "/assets/vendor/inspinia/plugins/datatables/fixedColumns.bootstrap5.min.css",
+    "bytes": 3114,
+    "mapped_original": "assets/plugins/datatables/fixedColumns.bootstrap5.min.css",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "Repository/Framework/DemoUi/Controllers/DemoUiController.php",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/datatables/fixedColumns.bootstrap5.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/datatables/fixedColumns.bootstrap5.min.js",
+    "bytes": 692,
+    "mapped_original": "assets/plugins/datatables/fixedColumns.bootstrap5.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-tables.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/datatables/fixedHeader.bootstrap5.min.css",
+    "asset_url": "/assets/vendor/inspinia/plugins/datatables/fixedHeader.bootstrap5.min.css",
+    "bytes": 405,
+    "mapped_original": "assets/plugins/datatables/fixedHeader.bootstrap5.min.css",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "Repository/Framework/DemoUi/Controllers/DemoUiController.php",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/datatables/fixedHeader.bootstrap5.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/datatables/fixedHeader.bootstrap5.min.js",
+    "bytes": 680,
+    "mapped_original": "assets/plugins/datatables/fixedHeader.bootstrap5.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-tables.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/datatables/jszip.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/datatables/jszip.min.js",
+    "bytes": 97630,
+    "mapped_original": "assets/plugins/datatables/jszip.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-tables.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/datatables/pdfmake.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/datatables/pdfmake.min.js",
+    "bytes": 1399635,
+    "mapped_original": "assets/plugins/datatables/pdfmake.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-tables.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/datatables/responsive.bootstrap5.min.css",
+    "asset_url": "/assets/vendor/inspinia/plugins/datatables/responsive.bootstrap5.min.css",
+    "bytes": 6044,
+    "mapped_original": "assets/plugins/datatables/responsive.bootstrap5.min.css",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 4,
+    "exact_reference_files": [
+      "boot-core/template/layouts/admin.phtml",
+      "boot-core/template/layouts/demo-ui-shell.phtml",
+      "boot-core/template/scope/layouts/_demo-product-shell.php",
+      "Repository/Framework/DemoUi/Controllers/DemoUiController.php"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/datatables/responsive.bootstrap5.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/datatables/responsive.bootstrap5.min.js",
+    "bytes": 1772,
+    "mapped_original": "assets/plugins/datatables/responsive.bootstrap5.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 2,
+    "exact_reference_files": [
+      "boot-core/template/components/_body-scripts.phtml",
+      "public/assets/js/catalyst/modules/demoui-tables.js"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/datatables/select.bootstrap5.min.css",
+    "asset_url": "/assets/vendor/inspinia/plugins/datatables/select.bootstrap5.min.css",
+    "bytes": 403,
+    "mapped_original": "assets/plugins/datatables/select.bootstrap5.min.css",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "Repository/Framework/DemoUi/Controllers/DemoUiController.php",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/datatables/select.bootstrap5.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/datatables/select.bootstrap5.min.js",
+    "bytes": 728,
+    "mapped_original": "assets/plugins/datatables/select.bootstrap5.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-tables.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/datatables/vfs_fonts.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/datatables/vfs_fonts.js",
+    "bytes": 854730,
+    "mapped_original": "assets/plugins/datatables/vfs_fonts.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-tables.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/daterangepicker/daterangepicker.css",
+    "asset_url": "/assets/vendor/inspinia/plugins/daterangepicker/daterangepicker.css",
+    "bytes": 8069,
+    "mapped_original": "assets/plugins/daterangepicker/daterangepicker.css",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "Repository/Framework/DemoUi/Controllers/DemoUiController.php",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/daterangepicker/daterangepicker.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/daterangepicker/daterangepicker.js",
+    "bytes": 67842,
+    "mapped_original": "assets/plugins/daterangepicker/daterangepicker.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/dropzone/dropzone-min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/dropzone/dropzone-min.js",
+    "bytes": 46446,
+    "mapped_original": "assets/plugins/dropzone/dropzone-min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/dropzone/dropzone.css",
+    "asset_url": "/assets/vendor/inspinia/plugins/dropzone/dropzone.css",
+    "bytes": 4772,
+    "mapped_original": "assets/plugins/dropzone/dropzone.css",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "Repository/Framework/DemoUi/Controllers/DemoUiController.php",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/echarts/echarts.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/echarts/echarts.min.js",
+    "bytes": 1121883,
+    "mapped_original": "assets/plugins/echarts/echarts.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "public/assets/js/catalyst/modules/demoui-charts.js",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/filepond/filepond-plugin-file-encode.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/filepond/filepond-plugin-file-encode.min.js",
+    "bytes": 2360,
+    "mapped_original": "assets/plugins/filepond/filepond-plugin-file-encode.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/filepond/filepond-plugin-file-validate-size.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/filepond/filepond-plugin-file-validate-size.min.js",
+    "bytes": 2368,
+    "mapped_original": "assets/plugins/filepond/filepond-plugin-file-validate-size.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/filepond/filepond-plugin-image-exif-orientation.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/filepond/filepond-plugin-image-exif-orientation.min.js",
+    "bytes": 2119,
+    "mapped_original": "assets/plugins/filepond/filepond-plugin-image-exif-orientation.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/filepond/filepond-plugin-image-preview.min.css",
+    "asset_url": "/assets/vendor/inspinia/plugins/filepond/filepond-plugin-image-preview.min.css",
+    "bytes": 3307,
+    "mapped_original": "assets/plugins/filepond/filepond-plugin-image-preview.min.css",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "Repository/Framework/DemoUi/Controllers/DemoUiController.php",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/filepond/filepond-plugin-image-preview.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/filepond/filepond-plugin-image-preview.min.js",
+    "bytes": 24097,
+    "mapped_original": "assets/plugins/filepond/filepond-plugin-image-preview.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/filepond/filepond.min.css",
+    "asset_url": "/assets/vendor/inspinia/plugins/filepond/filepond.min.css",
+    "bytes": 17464,
+    "mapped_original": "assets/plugins/filepond/filepond.min.css",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "Repository/Framework/DemoUi/Controllers/DemoUiController.php",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/filepond/filepond.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/filepond/filepond.min.js",
+    "bytes": 118280,
+    "mapped_original": "assets/plugins/filepond/filepond.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/flatpickr/flatpickr.min.css",
+    "asset_url": "/assets/vendor/inspinia/plugins/flatpickr/flatpickr.min.css",
+    "bytes": 16166,
+    "mapped_original": "assets/plugins/flatpickr/flatpickr.min.css",
+    "exists_in_original": false,
+    "same_hash_as_original": false,
+    "exact_reference_count": 1,
+    "exact_reference_files": "Repository/Framework/DemoUi/Controllers/DemoUiController.php",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/flatpickr/flatpickr.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/flatpickr/flatpickr.min.js",
+    "bytes": 50679,
+    "mapped_original": "assets/plugins/flatpickr/flatpickr.min.js",
+    "exists_in_original": false,
+    "same_hash_as_original": false,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/jquery/jquery.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/jquery/jquery.min.js",
+    "bytes": 87533,
+    "mapped_original": "assets/plugins/jquery/jquery.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 2,
+    "exact_reference_files": [
+      "boot-core/template/components/_body-scripts.phtml",
+      "public/assets/js/catalyst/modules/demoui-tables.js"
+    ],
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/moment/moment.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/moment/moment.min.js",
+    "bytes": 58890,
+    "mapped_original": "assets/plugins/moment/moment.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/nouislider/nouislider.min.css",
+    "asset_url": "/assets/vendor/inspinia/plugins/nouislider/nouislider.min.css",
+    "bytes": 4220,
+    "mapped_original": "assets/plugins/nouislider/nouislider.min.css",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "Repository/Framework/DemoUi/Controllers/DemoUiController.php",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/nouislider/nouislider.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/nouislider/nouislider.min.js",
+    "bytes": 27743,
+    "mapped_original": "assets/plugins/nouislider/nouislider.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/pickr/classic.min.css",
+    "asset_url": "/assets/vendor/inspinia/plugins/pickr/classic.min.css",
+    "bytes": 9059,
+    "mapped_original": "assets/plugins/pickr/classic.min.css",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "Repository/Framework/DemoUi/Controllers/DemoUiController.php",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/pickr/monolith.min.css",
+    "asset_url": "/assets/vendor/inspinia/plugins/pickr/monolith.min.css",
+    "bytes": 9168,
+    "mapped_original": "assets/plugins/pickr/monolith.min.css",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "Repository/Framework/DemoUi/Controllers/DemoUiController.php",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/pickr/nano.min.css",
+    "asset_url": "/assets/vendor/inspinia/plugins/pickr/nano.min.css",
+    "bytes": 9248,
+    "mapped_original": "assets/plugins/pickr/nano.min.css",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "Repository/Framework/DemoUi/Controllers/DemoUiController.php",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/pickr/pickr.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/pickr/pickr.min.js",
+    "bytes": 23562,
+    "mapped_original": "assets/plugins/pickr/pickr.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/quill/quill.bubble.css",
+    "asset_url": "/assets/vendor/inspinia/plugins/quill/quill.bubble.css",
+    "bytes": 25216,
+    "mapped_original": "assets/plugins/quill/quill.bubble.css",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "Repository/Framework/DemoUi/Controllers/DemoUiController.php",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/quill/quill.core.css",
+    "asset_url": "/assets/vendor/inspinia/plugins/quill/quill.core.css",
+    "bytes": 10229,
+    "mapped_original": "assets/plugins/quill/quill.core.css",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "Repository/Framework/DemoUi/Controllers/DemoUiController.php",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/quill/quill.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/quill/quill.js",
+    "bytes": 209274,
+    "mapped_original": "assets/plugins/quill/quill.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/quill/quill.snow.css",
+    "asset_url": "/assets/vendor/inspinia/plugins/quill/quill.snow.css",
+    "bytes": 24606,
+    "mapped_original": "assets/plugins/quill/quill.snow.css",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "Repository/Framework/DemoUi/Controllers/DemoUiController.php",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/select2/select2.min.css",
+    "asset_url": "/assets/vendor/inspinia/plugins/select2/select2.min.css",
+    "bytes": 16264,
+    "mapped_original": "assets/plugins/select2/select2.min.css",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "Repository/Framework/DemoUi/Controllers/DemoUiController.php",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/select2/select2.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/select2/select2.min.js",
+    "bytes": 73163,
+    "mapped_original": "assets/plugins/select2/select2.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/summernote/font/summernote.ttf",
+    "asset_url": "/assets/vendor/inspinia/plugins/summernote/font/summernote.ttf",
+    "bytes": 13892,
+    "mapped_original": "assets/plugins/summernote/font/summernote.ttf",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/summernote/font/summernote.woff",
+    "asset_url": "/assets/vendor/inspinia/plugins/summernote/font/summernote.woff",
+    "bytes": 8328,
+    "mapped_original": "assets/plugins/summernote/font/summernote.woff",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/summernote/font/summernote.woff2",
+    "asset_url": "/assets/vendor/inspinia/plugins/summernote/font/summernote.woff2",
+    "bytes": 6932,
+    "mapped_original": "assets/plugins/summernote/font/summernote.woff2",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/summernote/summernote-bs5.min.css",
+    "asset_url": "/assets/vendor/inspinia/plugins/summernote/summernote-bs5.min.css",
+    "bytes": 19640,
+    "mapped_original": "assets/plugins/summernote/summernote-bs5.min.css",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 1,
+    "exact_reference_files": "Repository/Framework/DemoUi/Controllers/DemoUiController.php",
+    "runtime_reference": true
+  },
+  {
+    "path": "public/assets/vendor/inspinia/plugins/summernote/summernote-bs5.min.js",
+    "asset_url": "/assets/vendor/inspinia/plugins/summernote/summernote-bs5.min.js",
+    "bytes": 173042,
+    "mapped_original": "assets/plugins/summernote/summernote-bs5.min.js",
+    "exists_in_original": true,
+    "same_hash_as_original": true,
+    "exact_reference_count": 0,
+    "exact_reference_files": null,
+    "runtime_reference": false
+  }
+]

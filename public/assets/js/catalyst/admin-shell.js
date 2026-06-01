@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const keepSidebarFixed = () => {
         html.setAttribute('data-sidenav-size', 'default');
         html.classList.remove('sidebar-enable');
-        body.classList.remove('catalyst-admin-sidebar-open', 'migration-ui-no-scroll');
+        body.classList.remove('catalyst-admin-sidebar-open', 'demo-ui-no-scroll');
 
         try {
             window.sessionStorage.removeItem('catalyst-admin-sidebar-size');

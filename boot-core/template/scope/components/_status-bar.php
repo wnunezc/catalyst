@@ -50,9 +50,9 @@ return static function (array $scope = []): array {
         ? (bool) $scope['status_bar_show_theme_toggle']
         : true;
     $showThemeToggle = $requestedThemeToggle && $adminCustomizerEnabled && !$lockedSkinHasFixedScheme;
-    $themeToggleAttribute = trim((string) ($scope['status_bar_theme_toggle_attribute'] ?? 'data-migrationui-theme-toggle'));
+    $themeToggleAttribute = trim((string) ($scope['status_bar_theme_toggle_attribute'] ?? 'data-demoui-theme-toggle'));
     if ($themeToggleAttribute === '' || preg_match('/^[a-zA-Z_:][a-zA-Z0-9:._-]*$/', $themeToggleAttribute) !== 1) {
-        $themeToggleAttribute = 'data-migrationui-theme-toggle';
+        $themeToggleAttribute = 'data-demoui-theme-toggle';
     }
 
     $themeToggleIconClass = trim((string) ($scope['status_bar_theme_toggle_icon_class'] ?? 'ti ti-circle-half-2'));

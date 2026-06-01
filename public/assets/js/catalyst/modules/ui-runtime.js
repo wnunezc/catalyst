@@ -17,8 +17,8 @@ function loadRuntimeModules() {
         import(`./card-actions.js${runtimeModuleSuffix}`),
         import(`./code-preview.js${runtimeModuleSuffix}`),
         import(`./form-validation.js${runtimeModuleSuffix}`),
-        import(`./migrationui-charts.js${runtimeModuleSuffix}`),
-        import(`./migrationui-tables.js${runtimeModuleSuffix}`),
+        import(`./demoui-charts.js${runtimeModuleSuffix}`),
+        import(`./demoui-tables.js${runtimeModuleSuffix}`),
         import(`./simplebar.js${runtimeModuleSuffix}`),
         import(`./ui-enhancers.js${runtimeModuleSuffix}`),
         import(`./shell-dropdowns.js${runtimeModuleSuffix}`),
@@ -31,8 +31,8 @@ function loadRuntimeModules() {
         cardActionsModule,
         codePreviewModule,
         formValidationModule,
-        migrationUiChartsModule,
-        migrationUiTablesModule,
+        demoUiChartsModule,
+        demoUiTablesModule,
         simpleBarModule,
         uiEnhancersModule,
         dropdownsModule,
@@ -45,8 +45,8 @@ function loadRuntimeModules() {
         initCardActions: cardActionsModule.initCardActions,
         initDropdowns: dropdownsModule.initDropdowns,
         initFormValidation: formValidationModule.initFormValidation,
-        initMigrationUiCharts: migrationUiChartsModule.initMigrationUiCharts,
-        initMigrationUiTables: migrationUiTablesModule.initMigrationUiTables,
+        initDemoUiCharts: demoUiChartsModule.initDemoUiCharts,
+        initDemoUiTables: demoUiTablesModule.initDemoUiTables,
         initSimpleBar: simpleBarModule.initSimpleBar,
         initMarkupCodePreview: codePreviewModule.initMarkupCodePreview,
         initUiEnhancers: uiEnhancersModule.initUiEnhancers,
@@ -92,8 +92,8 @@ export async function initShellRuntime(options = {}) {
         initBootstrapComponents,
         initDropdowns,
         initFormValidation,
-        initMigrationUiCharts,
-        initMigrationUiTables,
+        initDemoUiCharts,
+        initDemoUiTables,
         initMarkupCodePreview,
         initSimpleBar,
         initUiEnhancers,
@@ -117,8 +117,8 @@ export async function initShellRuntime(options = {}) {
     initMarkupCodePreview({ root });
     initCardActions({ root });
     initFormValidation({ root });
-    await initMigrationUiCharts({ root: contentRoot });
-    await initMigrationUiTables({ root: contentRoot });
+    await initDemoUiCharts({ root: contentRoot });
+    await initDemoUiTables({ root: contentRoot });
     await initUiEnhancers({ root });
     initTopbarState({
         root,
