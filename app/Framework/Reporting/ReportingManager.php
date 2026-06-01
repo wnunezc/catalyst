@@ -40,9 +40,14 @@ final class ReportingManager
         string $format = 'csv',
         ?array $attachTo = null
     ): ReportRun {
+        $format = strtolower(trim($format)) ?: 'csv';
+        if (!in_array($format, ['csv', 'xls'], true)) {
+            throw new RuntimeException('Unsupported report format. Allowed formats: csv, xls.');
+        }
+
         $run = ReportRun::create([
             'report_key' => trim($reportKey),
-            'format' => trim($format) === '' ? 'csv' : trim($format),
+            'format' => $format,
             'status' => 'pending',
             'criteria_json' => $criteria,
             'attach_resource_key' => trim((string) ($attachTo['resource_key'] ?? '')) ?: null,
@@ -94,13 +99,21 @@ final class ReportingManager
                     ],
                 ], (string) ($definition['filename'] ?? 'report'))->printEnabled(true, (string) __('ui.datagrid.print'));
 
-            $export = $grid->exportCsvRows($rows);
+            $format = strtolower(trim((string) ($snapshot['format'] ?? 'csv'))) ?: 'csv';
+            if (!in_array($format, ['csv', 'xls'], true)) {
+                throw new RuntimeException('Unsupported report format. Allowed formats: csv, xls.');
+            }
+
+            $export = $format === 'xls'
+                ? $grid->exportXlsRows($rows)
+                : $grid->exportCsvRows($rows);
+            $mimeType = $format === 'xls' ? 'application/vnd.ms-excel' : 'text/csv';
             $media = $this->media->createGenerated(
-                name: (string) ($definition['label'] ?? 'Report export') . '.csv',
+                name: (string) ($definition['label'] ?? 'Report export') . '.' . $format,
                 contents: (string) ($export['contents'] ?? ''),
                 options: [
-                    'mime_type' => 'text/csv',
-                    'extension' => 'csv',
+                    'mime_type' => $mimeType,
+                    'extension' => $format,
                     'path_prefix' => 'generated-reports/' . trim((string) ($snapshot['report_key'] ?? 'report')),
                 ]
             );

@@ -11,7 +11,8 @@ final class LocalStorageAdapter implements StorageAdapterInterface
 {
     public function __construct(
         private readonly string $rootPath,
-        private readonly string $urlPrefix = '/'
+        private readonly string $urlPrefix = '/',
+        private readonly bool $public = true
     ) {
     }
 
@@ -77,6 +78,10 @@ final class LocalStorageAdapter implements StorageAdapterInterface
 
     public function url(string $path): string
     {
+        if (!$this->public) {
+            return '';
+        }
+
         $normalized = str_replace(DIRECTORY_SEPARATOR, '/', $this->normalizePath($path));
         $prefix = rtrim($this->urlPrefix, '/');
 

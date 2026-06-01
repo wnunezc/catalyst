@@ -31,11 +31,9 @@ return static function (array $scope): array {
 
         return trim(preg_replace('/\s+/', ' ', $class) ?? $class);
     };
-    $normalizeCell = static function (mixed $value, string $empty, bool $legacyHtml): array {
+    $normalizeCell = static function (mixed $value, string $empty): array {
         $normalized = [
             'class' => '',
-            'is_raw' => false,
-            'raw_html' => null,
             'is_stack' => false,
             'primary' => '',
             'primary_class' => '',
@@ -120,13 +118,6 @@ return static function (array $scope): array {
             }
         }
 
-        if ($legacyHtml) {
-            $normalized['is_raw'] = true;
-            $normalized['raw_html'] = TrustedHtml::fromString((string) $value);
-
-            return $normalized;
-        }
-
         $normalized['text'] = (string) $value;
 
         return $normalized;
@@ -205,7 +196,7 @@ return static function (array $scope): array {
         foreach ((array) ($row['cells'] ?? []) as $cell) {
             $value = $cell['value'] ?? null;
             $empty = (string) ($cell['empty'] ?? '—');
-            $normalizedCell = $normalizeCell($value, $empty, !empty($cell['html']));
+            $normalizedCell = $normalizeCell($value, $empty);
             $normalizedCell['class'] = (string) ($cell['class'] ?? '');
             $cells[] = $normalizedCell;
         }

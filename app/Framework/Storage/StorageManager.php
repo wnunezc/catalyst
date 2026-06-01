@@ -79,6 +79,9 @@ final class StorageManager
             'default_disk' => 'local',
             'local_driver' => $this->disk('local')->getDriverName(),
             'local_root' => implode(DIRECTORY_SEPARATOR, [PD, 'public']),
+            'runtime_driver' => $this->disk('runtime')->getDriverName(),
+            'runtime_root' => implode(DIRECTORY_SEPARATOR, [PD, 'boot-core', 'storage', 'runtime']),
+            'runtime_public' => false,
             'remote_driver' => trim((string) ($ftp['ftp_protocol'] ?? 'ftp')) ?: 'ftp',
             'remote_ready' => $remoteReady,
             'remote_root' => (string) ($ftp['ftp_root'] ?? '/'),
@@ -106,6 +109,11 @@ final class StorageManager
             $this->fingerprint = $fingerprint;
             $this->disks = [
                 'local' => new LocalStorageAdapter(implode(DIRECTORY_SEPARATOR, [PD, 'public']), '/'),
+                'runtime' => new LocalStorageAdapter(
+                    implode(DIRECTORY_SEPARATOR, [PD, 'boot-core', 'storage', 'runtime']),
+                    '',
+                    false
+                ),
                 'ftp' => new FtpStorageAdapter($ftp),
             ];
         }

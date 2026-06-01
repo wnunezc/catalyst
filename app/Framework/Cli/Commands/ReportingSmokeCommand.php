@@ -14,6 +14,7 @@ use Catalyst\Framework\Queue\QueueRepository;
 use Catalyst\Framework\Queue\QueueWorker;
 use Catalyst\Framework\Reporting\ReportingManager;
 use Catalyst\Framework\Tenancy\TenancyManager;
+use Catalyst\Entities\MediaItem;
 use Throwable;
 
 final class ReportingSmokeCommand extends AbstractCommand
@@ -50,7 +51,7 @@ final class ReportingSmokeCommand extends AbstractCommand
             $media = MediaManager::getInstance()->createGenerated(
                 name: $probe . '.txt',
                 contents: 'reporting-smoke',
-                options: ['mime_type' => 'text/plain', 'extension' => 'txt', 'path_prefix' => 'smoke/reporting']
+                options: ['mime_type' => 'text/plain', 'extension' => 'txt', 'path_prefix' => 'smoke/reporting', 'disk' => 'runtime']
             );
             AttachmentManager::getInstance()->attachMedia($resourceKey, $recordId, $media, 'source', 'file');
 
@@ -82,7 +83,12 @@ final class ReportingSmokeCommand extends AbstractCommand
             QueueRepository::getInstance()->retryFailed($failedId);
             $second = $worker->processNext('reports');
             $runRow = DatabaseManager::getInstance()->connection()->selectOne(
-                'SELECT status, output_media_item_id, output_attachment_id FROM report_runs WHERE tenant_id = ? AND id = ?',
+                'SELECT rr.status, rr.output_media_item_id, rr.output_attachment_id, m.extension, m.mime_type
+                 FROM report_runs rr
+                 LEFT JOIN media_library m
+                    ON m.tenant_id = rr.tenant_id
+                   AND m.id = rr.output_media_item_id
+                 WHERE rr.tenant_id = ? AND rr.id = ?',
                 [$tenantId, (int) $run->getKey()]
             );
 
@@ -92,8 +98,52 @@ final class ReportingSmokeCommand extends AbstractCommand
                     && ($runRow['status'] ?? '') === 'completed'
                     && (int) ($runRow['output_media_item_id'] ?? 0) > 0
                     && (int) ($runRow['output_attachment_id'] ?? 0) > 0
+                    && ($runRow['extension'] ?? '') === 'csv'
+                    && ($runRow['mime_type'] ?? '') === 'text/csv'
                     ? 'ok'
                     : 'failed',
+            ];
+
+            $xlsRun = ReportingManager::getInstance()->queue(
+                'framework.attachments.by-resource',
+                ['resource_key' => $resourceKey, 'record_id' => $recordId],
+                'xls',
+                ['resource_key' => $resourceKey, 'record_id' => $recordId]
+            );
+            $third = $worker->processNext('reports');
+            $xlsRow = DatabaseManager::getInstance()->connection()->selectOne(
+                'SELECT rr.status, m.extension, m.mime_type
+                 FROM report_runs rr
+                 INNER JOIN media_library m
+                    ON m.tenant_id = rr.tenant_id
+                   AND m.id = rr.output_media_item_id
+                 WHERE rr.tenant_id = ? AND rr.id = ?',
+                [$tenantId, (int) $xlsRun->getKey()]
+            );
+
+            $result['steps'][] = [
+                'step' => 'xls-output-matches-request',
+                'status' => ($third['status'] ?? '') === 'processed'
+                    && ($xlsRow['status'] ?? '') === 'completed'
+                    && ($xlsRow['extension'] ?? '') === 'xls'
+                    && ($xlsRow['mime_type'] ?? '') === 'application/vnd.ms-excel'
+                    ? 'ok'
+                    : 'failed',
+            ];
+
+            $unsupportedRejected = false;
+            try {
+                ReportingManager::getInstance()->queue(
+                    'framework.attachments.by-resource',
+                    ['resource_key' => $resourceKey, 'record_id' => $recordId],
+                    'html'
+                );
+            } catch (\RuntimeException) {
+                $unsupportedRejected = true;
+            }
+            $result['steps'][] = [
+                'step' => 'unsupported-format-rejected',
+                'status' => $unsupportedRejected ? 'ok' : 'failed',
             ];
 
             $result['success'] = !in_array('failed', array_column($result['steps'], 'status'), true);
@@ -135,14 +185,30 @@ final class ReportingSmokeCommand extends AbstractCommand
         $db = DatabaseManager::getInstance()->connection();
 
         try {
+            $mediaRows = $db->select(
+                'SELECT DISTINCT m.id
+                 FROM media_library m
+                 LEFT JOIN report_runs rr
+                    ON rr.tenant_id = m.tenant_id
+                   AND rr.output_media_item_id = m.id
+                 WHERE m.tenant_id = ?
+                   AND (m.name LIKE ? OR (rr.attach_resource_key = ? AND rr.attach_record_id = ?))',
+                [$tenantId, $probe . '%', $resourceKey, $recordId]
+            ) ?: [];
             $db->execute('DELETE FROM resource_attachments WHERE tenant_id = ? AND resource_key = ?', [$tenantId, $resourceKey]);
             $db->execute(
                 'DELETE FROM report_runs WHERE tenant_id = ? AND attach_resource_key = ? AND attach_record_id = ?',
                 [$tenantId, $resourceKey, $recordId]
             );
-            $db->execute('DELETE FROM media_library WHERE tenant_id = ? AND name LIKE ?', [$tenantId, $probe . '%']);
+
+            foreach ($mediaRows as $mediaRow) {
+                $media = MediaItem::find((int) ($mediaRow['id'] ?? 0));
+                if ($media !== null) {
+                    MediaManager::getInstance()->delete($media);
+                }
+            }
         } catch (Throwable) {
-            // Best-effort cleanup only.
+            $this->warn('Reporting smoke cleanup could not remove all probe data.');
         }
     }
 }

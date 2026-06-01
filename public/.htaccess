@@ -35,7 +35,7 @@
  </IfModule>
 
  # Protect sensitive files and directories
- <FilesMatch "^(\.htaccess|\.env|\.git|composer\.json|composer\.lock)$">
+ <FilesMatch "^(\.htaccess|\.env|\.git|\.user\.ini|php\.ini|composer\.json|composer\.lock)$">
      Require all denied
  </FilesMatch>
 

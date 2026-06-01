@@ -12,6 +12,7 @@ use Catalyst\Framework\Document\Pdf\SimplePdfWriter;
 use Catalyst\Framework\Storage\StorageManager;
 use Catalyst\Framework\Traits\SingletonTrait;
 use Catalyst\Framework\Versioning\VersionManager;
+use Catalyst\Framework\View\HtmlAllowlistSanitizer;
 use Catalyst\Framework\Workflow\WorkflowManager;
 use RuntimeException;
 
@@ -28,6 +29,7 @@ final class DocumentTemplateManager
     private WorkflowManager $workflows;
     private VersionManager $versions;
     private PlatformAppearanceManager $appearance;
+    private HtmlAllowlistSanitizer $htmlSanitizer;
 
     protected function __construct()
     {
@@ -37,6 +39,7 @@ final class DocumentTemplateManager
         $this->workflows = WorkflowManager::getInstance();
         $this->versions = VersionManager::getInstance();
         $this->appearance = PlatformAppearanceManager::getInstance();
+        $this->htmlSanitizer = new HtmlAllowlistSanitizer();
     }
 
     /**
@@ -122,13 +125,17 @@ final class DocumentTemplateManager
         $resolvedPayload = $payload !== [] ? $payload : (array) ($template->toArray()['sample_payload_json'] ?? []);
         $rendered = $this->renderer->render((string) ($template->toArray()['body_template'] ?? ''), $resolvedPayload);
         $format = (string) ($template->toArray()['format'] ?? 'html');
+        $displayContent = $format === 'html'
+            ? $this->htmlSanitizer->sanitize($rendered)
+            : ($format === 'pdf' ? $this->normalizePdfText($rendered) : $rendered);
 
         return [
-            'content' => $rendered,
+            'content' => $displayContent,
+            'rendered_source' => $rendered,
             'checksum_sha256' => hash('sha256', $rendered),
             'payload' => $resolvedPayload,
             'format' => $format,
-            'display_content' => $format === 'pdf' ? $this->normalizePdfText($rendered) : $rendered,
+            'display_content' => $displayContent,
         ];
     }
 
@@ -139,12 +146,8 @@ final class DocumentTemplateManager
     {
         $preview = $this->preview($template, $payload);
         $templateData = $template->toArray();
-        $format = (string) ($preview['format'] ?? 'html');
-        $extension = match ($format) {
-            'text' => 'txt',
-            'pdf' => 'pdf',
-            default => 'html',
-        };
+        $format = 'pdf';
+        $extension = 'pdf';
         $slug = trim((string) ($templateData['slug'] ?? 'template')) ?: 'template';
         $path = sprintf(
             'generated-documents/%s/%s-%s.%s',
@@ -154,14 +157,13 @@ final class DocumentTemplateManager
             $extension
         );
 
-        $content = (string) ($preview['content'] ?? '');
-        if ($format === 'pdf') {
-            $content = $this->pdfWriter->render(
-                trim((string) ($templateData['name'] ?? 'Document export')),
-                $this->normalizePdfText($content),
-                $this->appearance->pdfWatermarkSettings()
-            );
-        }
+        $renderedSource = (string) ($preview['rendered_source'] ?? $preview['content'] ?? '');
+        $normalizedText = $this->normalizePdfText($renderedSource);
+        $content = $this->pdfWriter->render(
+            trim((string) ($templateData['name'] ?? 'Document export')),
+            $normalizedText,
+            $this->appearance->pdfWatermarkSettings()
+        );
 
         $storedPath = $this->storage->put($path, $content, 'local');
 
@@ -175,9 +177,7 @@ final class DocumentTemplateManager
             'public_url' => $this->storage->url($storedPath, 'local'),
             'checksum_sha256' => (string) ($preview['checksum_sha256'] ?? ''),
             'payload_snapshot_json' => (array) ($preview['payload'] ?? []),
-            'rendered_content' => $format === 'pdf'
-                ? $this->normalizePdfText((string) ($preview['content'] ?? ''))
-                : (string) ($preview['content'] ?? ''),
+            'rendered_content' => $normalizedText,
         ]);
     }
 

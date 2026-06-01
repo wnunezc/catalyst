@@ -39,7 +39,6 @@ final class DataGridRowNormalizer
 
                 $cells[] = [
                     'value' => $value,
-                    'html' => (bool) ($column['html'] ?? $column['raw'] ?? false),
                     'class' => (string) ($column['cell_class'] ?? $column['class'] ?? ''),
                     'empty' => (string) ($column['empty'] ?? '—'),
                 ];

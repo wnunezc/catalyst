@@ -601,6 +601,9 @@ Select-String -Path app\Framework\Admin\Grid\DataGrid.php `
 - `DataGridExportNormalizer` reconoce iconografía para `xlsx`, pero el soporte exportable confirmado por `DataGrid::export()` hoy es `csv` y `xls`.
 - `DataGridBulkActionNormalizer` devuelve `variant`, mientras que la clase CSS final de botón se resuelve en el scope companion. Si se espera mover esa responsabilidad al normalizer, queda pendiente de verificación.
 - `DataGridRowActionNormalizer` evalúa visibilidad, pero no expone un campo `visible` en la salida final; si otra documentación histórica afirma lo contrario, debe revisarse.
+- Las celdas DataGrid no aceptan bypass HTML crudo. Para contenido compuesto se
+  mantienen exclusivamente los tipos estructurados `stack`, `code`, `badge` y
+  `badges`.
 
 ## 15. Conclusión
 

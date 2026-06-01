@@ -58,7 +58,6 @@ final class DataGridColumnNormalizer
                 'cell_class' => $this->cellClass($column),
                 'align' => (string) ($column['align'] ?? 'start'),
                 'width' => (string) ($column['width'] ?? ''),
-                'raw' => (bool) ($column['raw'] ?? false),
                 'type' => (string) ($column['type'] ?? 'text'),
                 'formatter' => $column['formatter'] ?? null,
                 'empty' => (string) ($column['empty'] ?? '—'),

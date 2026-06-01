@@ -62,7 +62,7 @@
 | `Catalyst\Framework\Controllers` | `app/Framework/Controllers/`                     | [framework-controllers.md](docs/framework-controllers.md) |
 | `Catalyst\Framework\Container` | `app/Framework/Container/`                       | Lightweight service container used by route dispatch for progressive DI |
 | `Catalyst\Framework\Session` | `app/Framework/Session/`                         | [framework-session.md](docs/framework-session.md) |
-| `Catalyst\Framework\View` | `app/Framework/View/`                            | [framework-view.md](docs/framework-view.md) — View, TrustedHtml, InlineJson |
+| `Catalyst\Framework\View` | `app/Framework/View/`                            | [framework-view.md](docs/framework-view.md) — View, TrustedHtml, InlineJson, HtmlAllowlistSanitizer |
 | `Catalyst\Framework\Security` | `app/Framework/Security/`                        | SignedSerializedPayload — signed serialized envelopes for local cache / route-cache rehydration |
 | `Catalyst\Framework\Traits` | `app/Framework/Traits/`                          | [framework-traits.md](docs/framework-traits.md) |
 | `Catalyst\Framework\Enums` | `app/Framework/Enums/`                           | [framework-enums.md](docs/framework-enums.md) |
@@ -72,7 +72,7 @@
 | `Catalyst\Framework\Schedule` | `app/Framework/Schedule/`                        | [framework-schedule.md](docs/framework-schedule.md) |
 | `Catalyst\Framework\Attachment` | `app/Framework/Attachment/`                      | AttachmentManager, AttachmentRepository — canonical PA-06 attachment/evidence contract over `resource_key` + `record_id`, media and document artifacts |
 | `Catalyst\Framework\Retention` | `app/Framework/Retention/`                       | RetentionManager, RunRetentionPoliciesJob — canonical PA-05 retention / archive / purge policy runtime over media, artifacts, attachments and audit |
-| `Catalyst\Framework\Reporting` | `app/Framework/Reporting/`                       | ReportingManager, RunReportJob — canonical PA-10 queued reporting/export pipeline with persisted CSV outputs and attachment delivery |
+| `Catalyst\Framework\Reporting` | `app/Framework/Reporting/`                       | ReportingManager, RunReportJob — canonical PA-10 queued reporting/export pipeline with persisted CSV/XLS outputs and attachment delivery |
 | `Catalyst\Framework\Argument` | `app/Framework/Argument/`                        | [framework-argument.md](docs/framework-argument.md) |
 | `Catalyst\Framework\Cli` | `app/Framework/Cli/`                             | CliKernel, CommandRegistry, CommandInterface, AbstractCommand, ScaffoldManager |
 | `Catalyst\Framework\Cli\Commands` | `app/Framework/Cli/Commands/`                    | HelpCommand, VersionCommand, StatusCommand, QualityCheckCommand, ConfigSecretsSyncCommand, ClaimsListCommand, ClaimsReleaseCommand, ConcurrencySmokeCommand, SensitivitySmokeCommand, TemporalSmokeCommand, IdempotencySmokeCommand, AttachmentsListCommand, AttachmentsSmokeCommand, RetentionRunCommand, RetentionSmokeCommand, ReportingRunCommand, ReportingSmokeCommand, RouteCacheCommand, RouteClearCommand, InspectModulesCommand, InspectModuleCommand, InspectLintCommand, InspectHarnessCommand, DocsSyncRuntimeCommand, FixturesAuthCommand, FeatureFlagsListCommand, FeatureFlagsSetCommand, PluginListCommand, PluginToggleCommand, DeployListCommand, DeployRunCommand, TenancyStatusCommand, ApiTokensSmokeCommand, SecurityRegressionCommand, MakeControllerCommand, MakeCrudCommand, MakeModelCommand, MakeMiddlewareCommand, MakeModuleCommand, MakePolicyCommand |
@@ -81,6 +81,7 @@
 | `Catalyst\Framework\Admin\Crud` | `app/Framework/Admin/Crud/`                      | CrudScaffoldService — CRUD scaffold over ModuleScaffoldService + FormBuilder + DataGrid, now with migration generation and audit/soft-delete wiring |
 | `Catalyst\Framework\Metadata` | `app/Framework/Metadata/`                        | MetadataResourceRegistry, MetadataFieldRepository, MetadataValueRepository, MetadataManager — reusable dynamic field definitions, typed persistence, validation rules and DataGrid/FormBuilder integration |
 | `Catalyst\Framework\Media` | `app/Framework/Media/`                           | MediaManager, MediaRepository — reusable file library over StorageManager, audit-ready metadata sync and admin listing/filtering |
+| `Catalyst\Framework\Storage` | `app/Framework/Storage/`                         | StorageManager, LocalStorageAdapter, FtpStorageAdapter — public `local`, private `runtime` and configured remote disks |
 | `Catalyst\Framework\Health` | `app/Framework/Health/`                          | HealthReportBuilder — shared health/readiness report for CLI and HTTP surfaces |
 | `Catalyst\Framework\Database` | `app/Framework/Database/`                        | [framework-database.md](docs/framework-database.md) — DatabaseManager, Connection, QueryBuilder, Transaction, Migration, MigrationRunner |
 | `Catalyst\Framework\Concurrency` | `app/Framework/Concurrency/`                     | RecordClaimRepository, RecordClaimManager — canonical PA-01 record claims with expiry, release and audit integration |

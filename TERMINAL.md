@@ -158,5 +158,10 @@ php public/cli.php schedule:run --task=framework.queue.prune-history --force
 - `tenancy:status` no habilita multi-tenancy real por si solo: documenta la decision oficial del framework (`single` hoy, `shared-db-tenant-id` como objetivo) para evitar implementaciones paralelas.
 - El catalogo runtime de `inspect:harness` ahora distingue correctamente rutas JSON protegidas por `ApiTokenMiddleware`: para sesion web `guest/user/admin` deben degradar a `401`, y el perfil operativo `api_token=200` queda documentado en `docs/runtime-module-catalog.md`.
 - Dynamic metadata and media flows are DB-backed; if the Windows host cannot resolve `WSDD-MySql-Server`, run the same verification commands inside `WSDD-Web-Server-PHP8.4` instead of treating it as a framework regression.
+- `attachments:smoke`, `catalogs:smoke`, `reporting:smoke` and `retention:smoke`
+  write auxiliary TXT probes through the private `runtime` disk under
+  `boot-core/storage/runtime/smoke/` and remove them during cleanup.
+- `retention:smoke` scopes retention mutations to IDs created by its own probe;
+  it must not apply retention policies to unrelated historical records.
 - `npm run qa:catalyst:buckets` now fans out Playwright buckets through an isolated runner/output strategy, so parallel bucket traces no longer collide under `test-results/`.
 - This document is secondary to runtime truth. If `public/cli.php` or the registered command classes disagree with this file, the code wins.

@@ -15,7 +15,9 @@ use Catalyst\Framework\Database\DatabaseManager;
 use Catalyst\Framework\Http\JsonResponse;
 use Catalyst\Framework\Middleware\RoleMiddleware;
 use Catalyst\Framework\Route\Route;
+use Catalyst\Framework\Storage\StorageManager;
 use Catalyst\Framework\Tenancy\TenancyManager;
+use Catalyst\Framework\View\HtmlAllowlistSanitizer;
 use Catalyst\Framework\View\InlineJson;
 use Catalyst\Framework\View\TrustedHtml;
 use RuntimeException;
@@ -53,6 +55,8 @@ final class SecurityRegressionCommand extends AbstractCommand
         try {
             $result['steps'][] = $this->assertInlineJsonEscaping();
             $result['steps'][] = $this->assertTrustedHtmlContract();
+            $result['steps'][] = $this->assertPrivateRuntimeStorage();
+            $result['steps'][] = $this->assertHtmlAllowlistSanitizer();
             $result['steps'][] = $this->assertRememberTokenInvalidation();
             $result['steps'][] = $this->assertSignedFileCachePayloads();
             $result['steps'][] = $this->assertRouteCacheMiddlewareSigning();
@@ -138,6 +142,65 @@ final class SecurityRegressionCommand extends AbstractCommand
         return [
             'step' => 'trusted-html-contract',
             'status' => (($data['html_policy'] ?? '') === JsonResponse::HTML_POLICY_TRUSTED) && $rejectsRawString ? 'ok' : 'failed',
+        ];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function assertPrivateRuntimeStorage(): array
+    {
+        $storage = StorageManager::getInstance();
+        $path = 'security-regression/runtime-' . bin2hex(random_bytes(6)) . '.txt';
+
+        try {
+            $storedPath = $storage->put($path, 'private-runtime-probe', 'runtime');
+
+            return [
+                'step' => 'private-runtime-storage',
+                'status' => $storage->exists($storedPath, 'runtime')
+                    && $storage->url($storedPath, 'runtime') === ''
+                    && !is_file(PD . DS . 'public' . DS . str_replace('/', DS, $storedPath))
+                    ? 'ok'
+                    : 'failed',
+            ];
+        } finally {
+            try {
+                $storage->delete($path, 'runtime');
+            } catch (Throwable) {
+                // The regression must report the original storage failure.
+            }
+        }
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function assertHtmlAllowlistSanitizer(): array
+    {
+        $sanitizer = new HtmlAllowlistSanitizer();
+        $sanitized = $sanitizer->sanitize(
+            '<article class="probe" style="color:red" onclick="alert(1)">'
+            . '<a href="javascript:alert(1)">unsafe</a>'
+            . '<a href="https://example.com/path">safe</a>'
+            . '<script>alert(1)</script>'
+            . '<strong>ok</strong>'
+            . '</article>'
+        );
+
+        return [
+            'step' => 'html-allowlist-sanitizer',
+            'status' => str_contains($sanitized, '<article class="probe">')
+                && str_contains($sanitized, '<a>unsafe</a>')
+                && str_contains($sanitized, '<a href="https://example.com/path">safe</a>')
+                && str_contains($sanitized, '<strong>ok</strong>')
+                && !str_contains($sanitized, '<script')
+                && !str_contains($sanitized, 'alert(1)')
+                && !str_contains($sanitized, 'onclick')
+                && !str_contains($sanitized, 'style=')
+                && !str_contains($sanitized, 'javascript:')
+                ? 'ok'
+                : 'failed',
         ];
     }
 

@@ -510,6 +510,16 @@ server-side CSP or view code.
 
 ## References
 
+### Trusted HTML from editable Documents templates
+
+`DocumentTemplateManager::preview()` sanitizes rendered HTML from editable
+templates with `HtmlAllowlistSanitizer` before a view may wrap the fragment in
+`TrustedHtml`. The sanitizer removes active elements, inline styles, event
+handlers and unsafe URL schemes. Do not bypass this boundary in Documents views.
+
+DataGrid cells do not accept a raw HTML escape hatch. Use the structured
+`stack`, `code`, `badge` and `badges` cell kinds instead.
+
 - `app/Framework/Middleware/SecurityHeadersMiddleware.php` — CSP header source of truth
 - `app/Helpers/Security/CspNonce.php` — per-request nonce provider
 - `app/Helpers/Security/CsrfProtection.php` — CSRF token lifecycle

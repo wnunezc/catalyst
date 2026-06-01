@@ -14,6 +14,8 @@ use Catalyst\Framework\Media\MediaManager;
 use Catalyst\Framework\Retention\RetentionManager;
 use Catalyst\Framework\Session\SessionManager;
 use Catalyst\Framework\Tenancy\TenancyManager;
+use Catalyst\Entities\DocumentArtifact;
+use Catalyst\Entities\MediaItem;
 use Throwable;
 
 final class RetentionSmokeCommand extends AbstractCommand
@@ -49,7 +51,7 @@ final class RetentionSmokeCommand extends AbstractCommand
             $media = MediaManager::getInstance()->createGenerated(
                 name: $probe . '.txt',
                 contents: 'retention-media',
-                options: ['mime_type' => 'text/plain', 'extension' => 'txt', 'path_prefix' => 'smoke/retention']
+                options: ['mime_type' => 'text/plain', 'extension' => 'txt', 'path_prefix' => 'smoke/retention', 'disk' => 'runtime']
             );
             $template = DocumentTemplateManager::getInstance()->create([
                 'name' => 'Retention Smoke ' . $probe,
@@ -97,8 +99,18 @@ final class RetentionSmokeCommand extends AbstractCommand
                     gmdate('Y-m-d H:i:s', time() - (190 * 86400)),
                 ]
             );
+            $auditRow = $db->selectOne(
+                'SELECT id FROM audit_logs WHERE tenant_id = ? AND resource = ? AND resource_label = ? ORDER BY id DESC LIMIT 1',
+                [$tenantId, 'retention-smoke', $probe]
+            );
+            $scope = [
+                'media-library' => [(int) $media->getKey()],
+                'document-artifacts' => [(int) $artifact->getKey()],
+                'resource-attachments' => [(int) $attachment->getKey()],
+                'audit-logs' => [(int) ($auditRow['id'] ?? 0)],
+            ];
 
-            $dryRun = RetentionManager::getInstance()->run(null, true, 50);
+            $dryRun = RetentionManager::getInstance()->run(null, true, 10000, $scope);
             $actions = array_map(
                 static fn (array $step): string => (string) ($step['resource_key'] ?? '') . ':' . (string) ($step['action'] ?? ''),
                 (array) ($dryRun['steps'] ?? [])
@@ -113,7 +125,7 @@ final class RetentionSmokeCommand extends AbstractCommand
                     : 'failed',
             ];
 
-            RetentionManager::getInstance()->run(null, false, 50);
+            RetentionManager::getInstance()->run(null, false, 10000, $scope);
 
             $db->execute('UPDATE media_library SET archived_at = ? WHERE tenant_id = ? AND id = ?', [
                 gmdate('Y-m-d H:i:s', time() - (95 * 86400)),
@@ -125,7 +137,7 @@ final class RetentionSmokeCommand extends AbstractCommand
                 $tenantId,
                 (int) $artifact->getKey(),
             ]);
-            RetentionManager::getInstance()->run(null, false, 50);
+            RetentionManager::getInstance()->run(null, false, 10000, $scope);
 
             $remainingMedia = $db->selectOne('SELECT id, archived_at FROM media_library WHERE tenant_id = ? AND id = ?', [$tenantId, (int) $media->getKey()]);
             $remainingArtifact = $db->selectOne('SELECT id, archived_at FROM document_artifacts WHERE tenant_id = ? AND id = ?', [$tenantId, (int) $artifact->getKey()]);
@@ -180,12 +192,35 @@ final class RetentionSmokeCommand extends AbstractCommand
 
         try {
             $db->execute('DELETE FROM resource_attachments WHERE tenant_id = ? AND resource_key = ?', [$tenantId, 'framework.retention.smoke']);
+
+            $artifactRows = $db->select(
+                'SELECT id FROM document_artifacts WHERE tenant_id = ? AND name LIKE ?',
+                [$tenantId, '%Retention Smoke ' . $probe . '%']
+            ) ?: [];
+            foreach ($artifactRows as $artifactRow) {
+                $artifact = DocumentArtifact::find((int) ($artifactRow['id'] ?? 0));
+                if ($artifact !== null) {
+                    DocumentTemplateManager::getInstance()->purgeArtifact($artifact);
+                }
+            }
+
+            $mediaRows = $db->select(
+                'SELECT id FROM media_library WHERE tenant_id = ? AND name LIKE ?',
+                [$tenantId, $probe . '%']
+            ) ?: [];
+            foreach ($mediaRows as $mediaRow) {
+                $media = MediaItem::find((int) ($mediaRow['id'] ?? 0));
+                if ($media !== null) {
+                    MediaManager::getInstance()->delete($media);
+                }
+            }
+
             $db->execute('DELETE FROM document_artifacts WHERE tenant_id = ? AND name LIKE ?', [$tenantId, '%Retention Smoke ' . $probe . '%']);
             $db->execute('DELETE FROM document_templates WHERE tenant_id = ? AND slug = ?', [$tenantId, 'retention-smoke-' . $probe]);
             $db->execute('DELETE FROM media_library WHERE tenant_id = ? AND name LIKE ?', [$tenantId, $probe . '%']);
             $db->execute('DELETE FROM audit_logs WHERE tenant_id = ? AND resource = ? AND resource_label = ?', [$tenantId, 'retention-smoke', $probe]);
         } catch (Throwable) {
-            // Best-effort cleanup only.
+            $this->warn('Retention smoke cleanup could not remove all probe data.');
         }
     }
 }

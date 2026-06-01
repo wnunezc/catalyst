@@ -70,12 +70,19 @@ final class RetentionManager
     /**
      * @return array{success:bool,dry_run:bool,policies:array<string,array<string,mixed>>,steps:array<int,array<string,mixed>>}
      */
-    public function run(?string $resourceKey = null, bool $dryRun = false, int $limit = 100): array
+    public function run(?string $resourceKey = null, bool $dryRun = false, int $limit = 100, array $onlyRecordIds = []): array
     {
         $policies = $this->policies();
         $steps = [];
 
         foreach ($this->candidateSets($resourceKey, $limit) as $candidate) {
+            $candidateResourceKey = (string) ($candidate['resource_key'] ?? '');
+            if ($onlyRecordIds !== []
+                && !in_array((int) ($candidate['record_id'] ?? 0), (array) ($onlyRecordIds[$candidateResourceKey] ?? []), true)
+            ) {
+                continue;
+            }
+
             $steps[] = $candidate;
 
             if ($dryRun) {

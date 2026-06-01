@@ -12,6 +12,7 @@ Apply this checklist before every deployment or archive export:
 - Exclude runtime storage from archives:
   - `boot-core/storage/logs/`
   - `boot-core/storage/throttle/`
+  - `boot-core/storage/runtime/`
   - `boot-core/storage/*.pid`
   - `boot-core/storage/*.stamp`
 - Exclude test uploads from archives:
@@ -22,6 +23,8 @@ Apply this checklist before every deployment or archive export:
   - secrets must be replaced with production values
 - Re-check `boot-core/config/{env}/devtools.json`, `security.json`, `session.json`, `cors.json`, and `websocket.json` against the target environment.
 - Confirm DevTools stays blocked outside development and requires authenticated authorized access in development.
+- Keep `public/.user.ini` and `public/php.ini` available to their intended runtime,
+  but deny HTTP downloads through the web-server configuration.
 
 ## Secret Rotation Checklist
 
@@ -48,6 +51,7 @@ Minimum exclusion set for a release archive:
 - `boot-core/config/dkim/`
 - `boot-core/storage/logs/`
 - `boot-core/storage/throttle/`
+- `boot-core/storage/runtime/`
 - `boot-core/storage/*.pid`
 - `boot-core/storage/*.stamp`
 - `public/uploads/devtools/`

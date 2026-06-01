@@ -119,7 +119,7 @@ final class CatalogsSmokeCommand extends AbstractCommand
             $media = MediaManager::getInstance()->createGenerated(
                 name: $probe . '.txt',
                 contents: 'catalog-smoke',
-                options: ['mime_type' => 'text/plain', 'extension' => 'txt', 'path_prefix' => 'smoke/catalogs']
+                options: ['mime_type' => 'text/plain', 'extension' => 'txt', 'path_prefix' => 'smoke/catalogs', 'disk' => 'runtime']
             );
             $mediaId = (int) $media->getKey();
 
@@ -216,12 +216,15 @@ final class CatalogsSmokeCommand extends AbstractCommand
             );
 
             if ($mediaId > 0) {
-                $db->execute('DELETE FROM media_library WHERE tenant_id = ? AND id = ?', [$tenantId, $mediaId]);
+                $media = \Catalyst\Entities\MediaItem::find($mediaId);
+                if ($media !== null) {
+                    MediaManager::getInstance()->delete($media);
+                }
             } else {
                 $db->execute('DELETE FROM media_library WHERE tenant_id = ? AND name LIKE ?', [$tenantId, $probe . '%']);
             }
         } catch (Throwable) {
-            // Best-effort cleanup only.
+            $this->warn('Catalogs smoke cleanup could not remove all probe data.');
         }
     }
 }
