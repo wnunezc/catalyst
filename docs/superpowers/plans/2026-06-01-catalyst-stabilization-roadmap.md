@@ -32,9 +32,11 @@
    - Reducir dependencia de memoria manual.
    - Documentar que checks bloquean cambios.
 
-5. **Auditar seguridad primero** — Pendiente.
+5. **Auditar seguridad primero** — Completada por confirmacion explicita del usuario.
    - Secretos, `.env`, `secrets.json`, DKIM, uploads publicos.
    - CSRF/throttle, middleware admin, PHP expuesto en `public`.
+   - Evidencia: `docs/audits/security-first/2026-06-01-security-first-audit.md`.
+   - Hardening consolidado: `903019b` (`implement phase 5 security hardening`).
 
 6. **Auditar arquitectura** — Pendiente.
    - Core framework vs demo/app ejemplo.

@@ -2,10 +2,11 @@
 
 ## Estado
 
-Fase 5: auditoria inicial generada / pendiente de decision.
+Fase 5: completada por confirmacion explicita del usuario.
 
-Esta auditoria es de solo lectura. No se modifico runtime, no se borraron archivos
-y no se rotaron secretos.
+La auditoria comenzo en modo solo lectura. Tras decisiones explicitas del usuario,
+se implemento y verifico el hardening acordado, se limpiaron los residuos
+historicos autorizados y se consolido el commit `903019b`.
 
 ## Resumen ejecutivo
 
