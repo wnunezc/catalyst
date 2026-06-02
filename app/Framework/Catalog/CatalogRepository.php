@@ -39,10 +39,10 @@ use Catalyst\Helpers\Log\Logger;
 use Exception;
 
 /**
- * Defines the Catalog Repository class contract.
+ * Persists and queries tenant-scoped catalog definitions and items.
  *
  * @package Catalyst\Framework\Catalog
- * Responsibility: Coordinates the catalog repository behavior within its module boundary.
+ * Responsibility: Provides catalog persistence, filtered lookups and normalized option data.
  */
 final class CatalogRepository
 {
@@ -55,6 +55,8 @@ final class CatalogRepository
 
     /**
      * Initializes the Catalog Repository instance.
+     *
+     * Responsibility: Initializes the Catalog Repository instance.
      */
     protected function __construct()
     {
@@ -65,6 +67,9 @@ final class CatalogRepository
     }
 
     /**
+     * Searches catalog definitions using tenant-scoped filters and pagination.
+     *
+     * Responsibility: Searches catalog definitions using tenant-scoped filters and pagination.
      * @param array<string, mixed> $criteria
      * @return array{rows: array<int, array<string, mixed>>, total: int}
      */
@@ -138,6 +143,9 @@ final class CatalogRepository
     }
 
     /**
+     * Finds a catalog definition row and its aggregate details.
+     *
+     * Responsibility: Finds a catalog definition row and its aggregate details.
      * @return array<string, mixed>|null
      */
     public function findDefinition(int $id): ?array
@@ -188,6 +196,9 @@ final class CatalogRepository
     }
 
     /**
+     * Finds a catalog definition row by normalized key.
+     *
+     * Responsibility: Finds a catalog definition row by normalized key.
      * @return array<string, mixed>|null
      */
     public function findDefinitionByKey(string $catalogKey): ?array
@@ -216,7 +227,9 @@ final class CatalogRepository
     }
 
     /**
-     * Finds the requested record.
+     * Finds a catalog definition model by identifier.
+     *
+     * Responsibility: Finds a catalog definition model by identifier.
      */
     public function findDefinitionModel(int $id): ?CatalogDefinition
     {
@@ -224,7 +237,9 @@ final class CatalogRepository
     }
 
     /**
-     * Finds the requested record.
+     * Finds a catalog item model by identifier.
+     *
+     * Responsibility: Finds a catalog item model by identifier.
      */
     public function findItemModel(int $id): ?CatalogItem
     {
@@ -232,6 +247,9 @@ final class CatalogRepository
     }
 
     /**
+     * Finds an item row inside a catalog.
+     *
+     * Responsibility: Finds an item row inside a catalog.
      * @return array<string, mixed>|null
      */
     public function findItem(int $catalogId, int $itemId): ?array
@@ -258,6 +276,9 @@ final class CatalogRepository
     }
 
     /**
+     * Searches items inside a catalog using filters and pagination.
+     *
+     * Responsibility: Searches items inside a catalog using filters and pagination.
      * @param array<string, mixed> $criteria
      * @return array{rows: array<int, array<string, mixed>>, total: int}
      */
@@ -329,6 +350,9 @@ final class CatalogRepository
     }
 
     /**
+     * Lists catalog items, optionally including unavailable rows.
+     *
+     * Responsibility: Lists catalog items, optionally including unavailable rows.
      * @return array<int, array<string, mixed>>
      */
     public function itemsForCatalog(int $catalogId, bool $includeInactive = false): array
@@ -363,6 +387,9 @@ final class CatalogRepository
     }
 
     /**
+     * Builds item options for a catalog key.
+     *
+     * Responsibility: Builds item options for a catalog key.
      * @param string[] $selectedKeys
      * @return array<string, string>
      */
@@ -378,6 +405,9 @@ final class CatalogRepository
     }
 
     /**
+     * Builds options for all catalog definitions.
+     *
+     * Responsibility: Builds options for all catalog definitions.
      * @return array<string, string>
      */
     public function definitionOptionMap(bool $includeState = true): array
@@ -404,7 +434,9 @@ final class CatalogRepository
     }
 
     /**
-     * Handles the exists catalog key workflow.
+     * Determines whether a catalog key is already registered for the tenant.
+     *
+     * Responsibility: Determines whether a catalog key is already registered for the tenant.
      */
     public function existsCatalogKey(string $catalogKey, ?int $ignoreId = null): bool
     {
@@ -431,7 +463,9 @@ final class CatalogRepository
     }
 
     /**
-     * Handles the exists item key workflow.
+     * Determines whether an item key is already registered in a catalog.
+     *
+     * Responsibility: Determines whether an item key is already registered in a catalog.
      */
     public function existsItemKey(int $catalogId, string $itemKey, ?int $ignoreId = null): bool
     {
@@ -459,7 +493,9 @@ final class CatalogRepository
     }
 
     /**
-     * Handles the delete workflow.
+     * Deletes a catalog definition model.
+     *
+     * Responsibility: Deletes a catalog definition model.
      */
     public function deleteDefinition(CatalogDefinition $definition): void
     {
@@ -467,7 +503,9 @@ final class CatalogRepository
     }
 
     /**
-     * Handles the delete workflow.
+     * Deletes a catalog item model.
+     *
+     * Responsibility: Deletes a catalog item model.
      */
     public function deleteItem(CatalogItem $item): void
     {
@@ -475,6 +513,9 @@ final class CatalogRepository
     }
 
     /**
+     * Captures a catalog definition and its items as a snapshot.
+     *
+     * Responsibility: Captures a catalog definition and its items as a snapshot.
      * @return array<string, mixed>
      */
     public function snapshotDefinition(int $catalogId): array
@@ -491,7 +532,9 @@ final class CatalogRepository
     }
 
     /**
-     * Handles the version count workflow.
+     * Counts the captured versions for a catalog.
+     *
+     * Responsibility: Counts the captured versions for a catalog.
      */
     private function versionCount(int $catalogId): int
     {
@@ -512,6 +555,9 @@ final class CatalogRepository
     }
 
     /**
+     * Normalizes a catalog-definition database row.
+     *
+     * Responsibility: Normalizes a catalog-definition database row.
      * @param array<string, mixed> $row
      * @return array<string, mixed>
      */
@@ -526,6 +572,9 @@ final class CatalogRepository
     }
 
     /**
+     * Normalizes and decorates a catalog-item database row.
+     *
+     * Responsibility: Normalizes and decorates a catalog-item database row.
      * @param array<string, mixed> $row
      * @return array<string, mixed>
      */
@@ -535,7 +584,9 @@ final class CatalogRepository
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves the allowlisted SQL column used to sort catalog definitions.
+     *
+     * Responsibility: Resolves the allowlisted SQL column used to sort catalog definitions.
      */
     private function resolveDefinitionSort(string $sort): string
     {
@@ -550,7 +601,9 @@ final class CatalogRepository
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves the allowlisted SQL column used to sort catalog items.
+     *
+     * Responsibility: Resolves the allowlisted SQL column used to sort catalog items.
      */
     private function resolveItemSort(string $sort): string
     {
@@ -566,7 +619,9 @@ final class CatalogRepository
     }
 
     /**
-     * Resolves the requested value.
+     * Normalizes a requested SQL sort direction.
+     *
+     * Responsibility: Normalizes a requested SQL sort direction.
      */
     private function resolveSortDirection(string $direction): string
     {
@@ -574,7 +629,9 @@ final class CatalogRepository
     }
 
     /**
-     * Handles the current tenant id workflow.
+     * Returns the active tenant identifier required by catalog queries.
+     *
+     * Responsibility: Returns the active tenant identifier required by catalog queries.
      */
     private function currentTenantId(): int
     {

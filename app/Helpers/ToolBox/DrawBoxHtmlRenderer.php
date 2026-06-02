@@ -31,21 +31,26 @@ declare(strict_types=1);
 namespace Catalyst\Helpers\ToolBox;
 
 /**
- * Defines the Draw Box Html Renderer class contract.
+ * Renders draw-box content as escaped HTML sections.
  *
  * @package Catalyst\Helpers\ToolBox
- * Responsibility: Coordinates the draw box html renderer behavior within its module boundary.
+ * Responsibility: Builds styled HTML output with optional header, body and footer regions.
  */
 final class DrawBoxHtmlRenderer
 {
     /**
      * Initializes the Draw Box Html Renderer instance.
+     *
+     * Responsibility: Initializes the Draw Box Html Renderer instance.
      */
     public function __construct(private readonly DrawBoxStylePalette $stylePalette)
     {
     }
 
     /**
+     * Renders escaped content lines into a styled HTML box.
+     *
+     * Responsibility: Renders escaped content lines into a styled HTML box.
      * @param string[] $content
      * @param array<string, mixed> $options
      */

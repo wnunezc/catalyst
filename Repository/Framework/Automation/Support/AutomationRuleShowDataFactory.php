@@ -39,15 +39,17 @@ use Catalyst\Framework\Workflow\WorkflowRepository;
 use Catalyst\Repository\Automation\Actions\AutomationRuleExecutionService;
 
 /**
- * Defines the Automation Rule Show Data Factory class contract.
+ * Assembles automation rule detail view data.
  *
  * @package Catalyst\Repository\Automation\Support
- * Responsibility: Coordinates the automation rule show data factory behavior within its module boundary.
+ * Responsibility: Combine rule state, history, versions, transitions, claims and manual run context for rendering.
  */
 final class AutomationRuleShowDataFactory
 {
     /**
      * Initializes the Automation Rule Show Data Factory instance.
+     *
+     * Responsibility: Initializes the Automation Rule Show Data Factory instance.
      */
     public function __construct(
         private readonly AutomationRuleRepository $repository,
@@ -60,6 +62,9 @@ final class AutomationRuleShowDataFactory
     }
 
     /**
+     * Builds the complete detail-page payload for one automation rule.
+     *
+     * Responsibility: Builds the complete detail-page payload for one automation rule.
      * @param array<string, mixed> $rule
      * @param array<string, mixed> $claimContext
      * @return array<string, mixed>
@@ -95,7 +100,9 @@ final class AutomationRuleShowDataFactory
     }
 
     /**
-     * Handles the json field workflow.
+     * Encodes a value as formatted JSON for the manual run editor.
+     *
+     * Responsibility: Encodes a value as formatted JSON for the manual run editor.
      */
     private function jsonField(mixed $value): string
     {

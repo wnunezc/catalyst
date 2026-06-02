@@ -37,10 +37,10 @@ use Catalyst\Framework\View\TrustedHtml;
 use Catalyst\Helpers\Security\CspNonce;
 
 /**
- * Defines the Demo Ui Controller class contract.
+ * Presents the authenticated INSPINIA reference surface and its preview catalog.
  *
  * @package Catalyst\Repository\DemoUi\Controllers
- * Responsibility: Coordinates the demo ui controller behavior within its module boundary.
+ * Responsibility: Resolves demo routes, navigation groups and trusted generated previews.
  */
 final class DemoUiController extends Controller
 {
@@ -540,6 +540,9 @@ final class DemoUiController extends Controller
     ];
 
     /**
+     * Returns navigation sections exposed by the Demo UI reference surface.
+     *
+     * Responsibility: Returns navigation sections exposed by the Demo UI reference surface.
      * @return array<string, array<int, array{file:string,label:string}>>
      */
     private function demoUiSections(): array
@@ -630,7 +633,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the index workflow.
+     * Renders the requested Demo UI document or the default alerts preview.
+     *
+     * Responsibility: Renders the requested Demo UI document or the default alerts preview.
      */
     public function index(): Response
     {
@@ -662,7 +667,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the basic elements workflow.
+     * Renders the basic form-elements reference page.
+     *
+     * Responsibility: Renders the basic form-elements reference page.
      */
     public function basicElements(): Response
     {
@@ -670,7 +677,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the pickers workflow.
+     * Renders the form-pickers reference page.
+     *
+     * Responsibility: Renders the form-pickers reference page.
      */
     public function pickers(): Response
     {
@@ -678,7 +687,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the select workflow.
+     * Renders the form-select reference page.
+     *
+     * Responsibility: Renders the form-select reference page.
      */
     public function select(): Response
     {
@@ -686,7 +697,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the validation workflow.
+     * Renders the form-validation reference page.
+     *
+     * Responsibility: Renders the form-validation reference page.
      */
     public function validation(): Response
     {
@@ -694,7 +707,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the wizard workflow.
+     * Renders the form-wizard reference page.
+     *
+     * Responsibility: Renders the form-wizard reference page.
      */
     public function wizard(): Response
     {
@@ -702,7 +717,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the file uploads workflow.
+     * Renders the file-upload reference page.
+     *
+     * Responsibility: Renders the file-upload reference page.
      */
     public function fileUploads(): Response
     {
@@ -710,7 +727,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the text editors workflow.
+     * Renders the text-editor reference page.
+     *
+     * Responsibility: Renders the text-editor reference page.
      */
     public function textEditors(): Response
     {
@@ -718,7 +737,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the range slider workflow.
+     * Renders the range-slider reference page.
+     *
+     * Responsibility: Renders the range-slider reference page.
      */
     public function rangeSlider(): Response
     {
@@ -726,7 +747,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the alerts workflow.
+     * Renders the alerts component reference page.
+     *
+     * Responsibility: Renders the alerts component reference page.
      */
     public function alerts(): Response
     {
@@ -734,7 +757,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the accordions workflow.
+     * Renders the accordions component reference page.
+     *
+     * Responsibility: Renders the accordions component reference page.
      */
     public function accordions(): Response
     {
@@ -742,7 +767,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the badges workflow.
+     * Renders the badges component reference page.
+     *
+     * Responsibility: Renders the badges component reference page.
      */
     public function badges(): Response
     {
@@ -750,7 +777,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the breadcrumb workflow.
+     * Renders the breadcrumb component reference page.
+     *
+     * Responsibility: Renders the breadcrumb component reference page.
      */
     public function breadcrumb(): Response
     {
@@ -758,7 +787,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the buttons workflow.
+     * Renders the buttons component reference page.
+     *
+     * Responsibility: Renders the buttons component reference page.
      */
     public function buttons(): Response
     {
@@ -766,7 +797,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the cards workflow.
+     * Renders the cards component reference page.
+     *
+     * Responsibility: Renders the cards component reference page.
      */
     public function cards(): Response
     {
@@ -774,7 +807,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the carousel workflow.
+     * Renders the carousel component reference page.
+     *
+     * Responsibility: Renders the carousel component reference page.
      */
     public function carousel(): Response
     {
@@ -782,7 +817,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the collapse workflow.
+     * Renders the collapse component reference page.
+     *
+     * Responsibility: Renders the collapse component reference page.
      */
     public function collapse(): Response
     {
@@ -790,7 +827,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the colors workflow.
+     * Renders the colors reference page.
+     *
+     * Responsibility: Renders the colors reference page.
      */
     public function colors(): Response
     {
@@ -798,7 +837,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the dropdowns workflow.
+     * Renders the dropdowns component reference page.
+     *
+     * Responsibility: Renders the dropdowns component reference page.
      */
     public function dropdowns(): Response
     {
@@ -806,7 +847,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the grid options workflow.
+     * Renders the grid-options reference page.
+     *
+     * Responsibility: Renders the grid-options reference page.
      */
     public function gridOptions(): Response
     {
@@ -814,7 +857,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the images workflow.
+     * Renders the images reference page.
+     *
+     * Responsibility: Renders the images reference page.
      */
     public function images(): Response
     {
@@ -822,7 +867,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the links workflow.
+     * Renders the links reference page.
+     *
+     * Responsibility: Renders the links reference page.
      */
     public function links(): Response
     {
@@ -830,7 +877,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the list group workflow.
+     * Renders the list-group component reference page.
+     *
+     * Responsibility: Renders the list-group component reference page.
      */
     public function listGroup(): Response
     {
@@ -838,7 +887,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the modals workflow.
+     * Renders the modals component reference page.
+     *
+     * Responsibility: Renders the modals component reference page.
      */
     public function modals(): Response
     {
@@ -846,7 +897,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the notifications workflow.
+     * Renders the notifications component reference page.
+     *
+     * Responsibility: Renders the notifications component reference page.
      */
     public function notifications(): Response
     {
@@ -854,7 +907,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the offcanvas workflow.
+     * Renders the offcanvas component reference page.
+     *
+     * Responsibility: Renders the offcanvas component reference page.
      */
     public function offcanvas(): Response
     {
@@ -862,7 +917,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the pagination workflow.
+     * Renders the pagination component reference page.
+     *
+     * Responsibility: Renders the pagination component reference page.
      */
     public function pagination(): Response
     {
@@ -870,7 +927,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the placeholders workflow.
+     * Renders the placeholders component reference page.
+     *
+     * Responsibility: Renders the placeholders component reference page.
      */
     public function placeholders(): Response
     {
@@ -878,7 +937,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the progress workflow.
+     * Renders the progress component reference page.
+     *
+     * Responsibility: Renders the progress component reference page.
      */
     public function progress(): Response
     {
@@ -886,7 +947,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the popovers workflow.
+     * Renders the popovers component reference page.
+     *
+     * Responsibility: Renders the popovers component reference page.
      */
     public function popovers(): Response
     {
@@ -894,7 +957,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the scrollspy workflow.
+     * Renders the scrollspy component reference page.
+     *
+     * Responsibility: Renders the scrollspy component reference page.
      */
     public function scrollspy(): Response
     {
@@ -902,7 +967,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the spinners workflow.
+     * Renders the spinners component reference page.
+     *
+     * Responsibility: Renders the spinners component reference page.
      */
     public function spinners(): Response
     {
@@ -910,7 +977,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the tabs workflow.
+     * Renders the tabs component reference page.
+     *
+     * Responsibility: Renders the tabs component reference page.
      */
     public function tabs(): Response
     {
@@ -918,7 +987,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the tooltips workflow.
+     * Renders the tooltips component reference page.
+     *
+     * Responsibility: Renders the tooltips component reference page.
      */
     public function tooltips(): Response
     {
@@ -926,7 +997,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the typography workflow.
+     * Renders the typography reference page.
+     *
+     * Responsibility: Renders the typography reference page.
      */
     public function typography(): Response
     {
@@ -934,7 +1007,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the utilities workflow.
+     * Renders the utilities reference page.
+     *
+     * Responsibility: Renders the utilities reference page.
      */
     public function utilities(): Response
     {
@@ -942,7 +1017,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the videos workflow.
+     * Renders the videos reference page.
+     *
+     * Responsibility: Renders the videos reference page.
      */
     public function videos(): Response
     {
@@ -950,7 +1027,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the charts workflow.
+     * Renders a chart reference page selected by family and page slug.
+     *
+     * Responsibility: Renders a chart reference page selected by family and page slug.
      */
     public function charts(string $family, string $page): Response
     {
@@ -958,7 +1037,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the table workflow.
+     * Renders a table reference page selected by page slug.
+     *
+     * Responsibility: Renders a table reference page selected by page slug.
      */
     public function table(string $page): Response
     {
@@ -966,7 +1047,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Handles the data table workflow.
+     * Renders a DataTables reference page selected by page slug.
+     *
+     * Responsibility: Renders a DataTables reference page selected by page slug.
      */
     public function dataTable(string $page): Response
     {
@@ -974,7 +1057,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Renders the current view state.
+     * Renders a base UI component page from its catalog slug.
+     *
+     * Responsibility: Renders a base UI component page from its catalog slug.
      */
     private function renderBaseUiPage(string $pageSlug): Response
     {
@@ -982,7 +1067,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Renders the current view state.
+     * Renders a form reference page from its catalog slug.
+     *
+     * Responsibility: Renders a form reference page from its catalog slug.
      */
     private function renderFormPage(string $pageSlug): Response
     {
@@ -990,7 +1077,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Renders the current view state.
+     * Renders a chart reference page from its catalog identifiers.
+     *
+     * Responsibility: Renders a chart reference page from its catalog identifiers.
      */
     private function renderChartPage(string $family, string $page): Response
     {
@@ -998,7 +1087,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Renders the current view state.
+     * Renders a table reference page from its catalog slug.
+     *
+     * Responsibility: Renders a table reference page from its catalog slug.
      */
     private function renderTablePage(string $pageSlug): Response
     {
@@ -1006,7 +1097,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Renders the current view state.
+     * Renders a DataTables page through the shared table resolver.
+     *
+     * Responsibility: Renders a DataTables page through the shared table resolver.
      */
     private function renderDataTablePage(string $page): Response
     {
@@ -1014,6 +1107,9 @@ final class DemoUiController extends Controller
     }
 
     /**
+     * Resolves and renders a page entry from the supplied catalog.
+     *
+     * Responsibility: Resolves and renders a page entry from the supplied catalog.
      * @param array<string, array{file:string,label:string,route:string,styles:array<int, string>}> $catalog
      */
     private function renderMappedPage(array $catalog, string $sectionKey, string $pageSlug): Response
@@ -1034,7 +1130,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Renders the current view state.
+     * Renders the Demo UI shell with navigation and trusted preview HTML.
+     *
+     * Responsibility: Renders the Demo UI shell with navigation and trusted preview HTML.
      */
     private function renderPage(string $selectedFile, string $selectedSection, string $selectedLabel, ?string $pageSlug = null): Response
     {
@@ -1082,6 +1180,9 @@ final class DemoUiController extends Controller
     }
 
     /**
+     * Builds navigation links for a flat Demo UI item list.
+     *
+     * Responsibility: Builds navigation links for a flat Demo UI item list.
      * @param array<int, array{file:string,label:string}> $items
      * @return array<int, array{file:string,label:string,href:string,is_active:bool,link_class:string}>
      */
@@ -1103,6 +1204,9 @@ final class DemoUiController extends Controller
     }
 
     /**
+     * Builds nested chart navigation for all supported chart families.
+     *
+     * Responsibility: Builds nested chart navigation for all supported chart families.
      * @return array<int, array<string, mixed>>
      */
     private function buildChartNavItems(string $selectedFile): array
@@ -1146,6 +1250,9 @@ final class DemoUiController extends Controller
     }
 
     /**
+     * Flattens chart catalog entries for the Demo UI section list.
+     *
+     * Responsibility: Flattens chart catalog entries for the Demo UI section list.
      * @return array<int, array{file:string,label:string}>
      */
     private function buildChartSectionItems(): array
@@ -1170,6 +1277,9 @@ final class DemoUiController extends Controller
     }
 
     /**
+     * Builds table navigation including nested DataTables links.
+     *
+     * Responsibility: Builds table navigation including nested DataTables links.
      * @return array<int, array<string, mixed>>
      */
     private function buildTableNavItems(string $selectedFile): array
@@ -1231,6 +1341,9 @@ final class DemoUiController extends Controller
     }
 
     /**
+     * Flattens table catalog entries for the Demo UI section list.
+     *
+     * Responsibility: Flattens table catalog entries for the Demo UI section list.
      * @return array<int, array{file:string,label:string}>
      */
     private function buildTableSectionItems(): array
@@ -1267,7 +1380,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves a Demo UI document file to its canonical navigation URL.
+     *
+     * Responsibility: Resolves a Demo UI document file to its canonical navigation URL.
      */
     private function resolveNavHref(string $file): string
     {
@@ -1287,6 +1402,9 @@ final class DemoUiController extends Controller
     }
 
     /**
+     * Builds sidebar navigation groups for the selected Demo UI document.
+     *
+     * Responsibility: Builds sidebar navigation groups for the selected Demo UI document.
      * @param array<string, array<int, array{file:string,label:string}>> $sections
      * @return array<int, array<string, mixed>>
      */
@@ -1352,7 +1470,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Loads the requested data.
+     * Loads trusted generated preview HTML for a Demo UI document.
+     *
+     * Responsibility: Loads trusted generated preview HTML for a Demo UI document.
      */
     private function loadThemePreviewHtml(string $file): string
     {
@@ -1370,7 +1490,9 @@ final class DemoUiController extends Controller
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves a catalog file name to its page slug.
+     *
+     * Responsibility: Resolves a catalog file name to its page slug.
      */
     private function resolveFormPageSlugByFile(string $file): ?string
     {
@@ -1386,6 +1508,9 @@ final class DemoUiController extends Controller
     }
 
     /**
+     * Returns additional stylesheet URLs required by a catalog page.
+     *
+     * Responsibility: Returns additional stylesheet URLs required by a catalog page.
      * @return array<int, string>
      */
     private function resolvePageStyles(?string $pageSlug): array

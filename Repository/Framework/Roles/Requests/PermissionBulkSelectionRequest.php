@@ -33,15 +33,17 @@ namespace Catalyst\Repository\Roles\Requests;
 use Catalyst\Framework\Http\Request;
 
 /**
- * Defines the Permission Bulk Selection Request class contract.
+ * Extracts permission identifiers selected for a bulk action.
  *
  * @package Catalyst\Repository\Roles\Requests
- * Responsibility: Coordinates the permission bulk selection request behavior within its module boundary.
+ * Responsibility: Normalizes submitted permission identifiers and exposes the underlying HTTP request.
  */
 final class PermissionBulkSelectionRequest
 {
     /**
      * Initializes the Permission Bulk Selection Request instance.
+     *
+     * Responsibility: Initializes the Permission Bulk Selection Request instance.
      */
     public function __construct(
         private readonly Request $request
@@ -49,6 +51,9 @@ final class PermissionBulkSelectionRequest
     }
 
     /**
+     * Returns the positive permission identifiers selected by the caller.
+     *
+     * Responsibility: Returns the positive permission identifiers selected by the caller.
      * @return int[]
      */
     public function ids(): array
@@ -60,7 +65,9 @@ final class PermissionBulkSelectionRequest
     }
 
     /**
-     * Handles the request workflow.
+     * Returns the underlying HTTP request.
+     *
+     * Responsibility: Returns the underlying HTTP request.
      */
     public function request(): Request
     {

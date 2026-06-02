@@ -37,15 +37,17 @@ use Catalyst\Repository\Auth\Models\User;
 use Catalyst\Repository\DevTools\Models\DemoEmail;
 
 /**
- * Defines the Orm Test Controller class contract.
+ * Exposes development endpoints that exercise ORM model behavior.
  *
  * @package Catalyst\Repository\DevTools\Controllers
- * Responsibility: Coordinates the orm test controller behavior within its module boundary.
+ * Responsibility: Validates CRUD, collection, pagination and exception flows against demo data.
  */
 class OrmTestController extends Controller
 {
     /**
-     * Handles the unique orm email workflow.
+     * Builds a unique demo email address for ORM write operations.
+     *
+     * Responsibility: Builds a unique demo email address for ORM write operations.
      */
     private function uniqueOrmEmail(string $prefix): string
     {
@@ -53,7 +55,9 @@ class OrmTestController extends Controller
     }
 
     /**
-     * Handles the orm status workflow.
+     * Returns collection and pagination diagnostics for demo email records.
+     *
+     * Responsibility: Returns collection and pagination diagnostics for demo email records.
      */
     public function ormStatus(): JsonResponse
     {
@@ -81,7 +85,9 @@ class OrmTestController extends Controller
     }
 
     /**
-     * Handles the orm create workflow.
+     * Creates a demo email record and reports its persisted state.
+     *
+     * Responsibility: Creates a demo email record and reports its persisted state.
      */
     public function ormCreate(): JsonResponse
     {
@@ -100,7 +106,9 @@ class OrmTestController extends Controller
     }
 
     /**
-     * Handles the orm update workflow.
+     * Updates the latest demo email record and reports dirty-state behavior.
+     *
+     * Responsibility: Updates the latest demo email record and reports dirty-state behavior.
      */
     public function ormUpdate(): JsonResponse
     {
@@ -133,7 +141,9 @@ class OrmTestController extends Controller
     }
 
     /**
-     * Handles the orm delete latest workflow.
+     * Deletes the latest matching demo email record.
+     *
+     * Responsibility: Deletes the latest matching demo email record.
      */
     public function ormDeleteLatest(): JsonResponse
     {
@@ -162,7 +172,9 @@ class OrmTestController extends Controller
     }
 
     /**
-     * Handles the orm find or fail workflow.
+     * Verifies model-not-found exception handling with a missing record.
+     *
+     * Responsibility: Verifies model-not-found exception handling with a missing record.
      */
     public function ormFindOrFail(): JsonResponse
     {
@@ -182,7 +194,9 @@ class OrmTestController extends Controller
     }
 
     /**
-     * Handles the orm user demo workflow.
+     * Returns ORM casting and hidden-field diagnostics for user records.
+     *
+     * Responsibility: Returns ORM casting and hidden-field diagnostics for user records.
      */
     public function ormUserDemo(): JsonResponse
     {

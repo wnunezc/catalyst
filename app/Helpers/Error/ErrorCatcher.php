@@ -36,6 +36,7 @@ use Catalyst\Framework\Traits\SingletonTrait;
  * Class that handles capturing and displaying errors in the application.
  *
  * @package Catalyst\Helpers\Error;
+ * Responsibility: Registers shutdown, exception and PHP error handlers once per request.
  */
 class ErrorCatcher
 {
@@ -50,8 +51,9 @@ class ErrorCatcher
     private bool $initialized = false;
 
     /**
-     * Initialize the error handling system
+     * Initialize the error handling system.
      *
+     * Responsibility: Initialize the error handling system.
      * @return void
      */
     public function initialize(): void
@@ -90,8 +92,9 @@ class ErrorCatcher
     }
     */
     /**
-     * Configure PHP error display settings based on the environment
+     * Configure PHP error display settings based on the environment.
      *
+     * Responsibility: Configure PHP error display settings based on the environment.
      * @return void
      */
     private function configureErrorDisplay(): void

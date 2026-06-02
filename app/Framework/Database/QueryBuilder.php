@@ -39,6 +39,7 @@ use Catalyst\Helpers\Exceptions\QueryException;
  * against a database Connection.
  *
  * @package Catalyst\Framework\Database
+ * Responsibility: Builds validated SQL clauses, bindings and aggregate statements for a table.
  */
 class QueryBuilder
 {
@@ -64,6 +65,8 @@ class QueryBuilder
 
     /**
      * Initializes the Query Builder instance.
+     *
+     * Responsibility: Initializes the Query Builder instance.
      */
     public function __construct(Connection $connection, string $table)
     {
@@ -76,7 +79,9 @@ class QueryBuilder
     // -------------------------------------------------------------------------
 
     /**
-     * Handles the select workflow.
+     * Sets the columns or expressions selected by the query.
+     *
+     * Responsibility: Sets the columns or expressions selected by the query.
      */
     public function select(array|string $columns = ['*']): self
     {
@@ -93,7 +98,9 @@ class QueryBuilder
     // -------------------------------------------------------------------------
 
     /**
-     * Handles the where workflow.
+     * Adds a basic WHERE condition with a validated column and operator.
+     *
+     * Responsibility: Adds a basic WHERE condition with a validated column and operator.
      */
     public function where(string $column, string $operator, mixed $value, string $boolean = 'AND'): self
     {
@@ -108,7 +115,9 @@ class QueryBuilder
     }
 
     /**
-     * Handles the or where workflow.
+     * Adds a basic OR WHERE condition.
+     *
+     * Responsibility: Adds a basic OR WHERE condition.
      */
     public function orWhere(string $column, string $operator, mixed $value): self
     {
@@ -116,7 +125,9 @@ class QueryBuilder
     }
 
     /**
-     * Handles the where equal workflow.
+     * Adds an equality WHERE condition.
+     *
+     * Responsibility: Adds an equality WHERE condition.
      */
     public function whereEqual(string $column, mixed $value): self
     {
@@ -124,7 +135,9 @@ class QueryBuilder
     }
 
     /**
-     * Handles the where in workflow.
+     * Adds a WHERE IN condition with bound values.
+     *
+     * Responsibility: Adds a WHERE IN condition with bound values.
      */
     public function whereIn(string $column, array $values, string $boolean = 'AND'): self
     {
@@ -138,7 +151,9 @@ class QueryBuilder
     }
 
     /**
-     * Handles the or where in workflow.
+     * Adds an OR WHERE IN condition.
+     *
+     * Responsibility: Adds an OR WHERE IN condition.
      */
     public function orWhereIn(string $column, array $values): self
     {
@@ -146,7 +161,9 @@ class QueryBuilder
     }
 
     /**
-     * Handles the where null workflow.
+     * Adds a NULL or NOT NULL WHERE condition.
+     *
+     * Responsibility: Adds a NULL or NOT NULL WHERE condition.
      */
     public function whereNull(string $column, string $boolean = 'AND', bool $not = false): self
     {
@@ -160,7 +177,9 @@ class QueryBuilder
     }
 
     /**
-     * Handles the where not null workflow.
+     * Adds a NOT NULL WHERE condition.
+     *
+     * Responsibility: Adds a NOT NULL WHERE condition.
      */
     public function whereNotNull(string $column, string $boolean = 'AND'): self
     {
@@ -172,7 +191,9 @@ class QueryBuilder
     // -------------------------------------------------------------------------
 
     /**
-     * Handles the order by workflow.
+     * Adds an ORDER BY clause with a validated direction.
+     *
+     * Responsibility: Adds an ORDER BY clause with a validated direction.
      */
     public function orderBy(string $column, string $direction = 'ASC'): self
     {
@@ -184,7 +205,9 @@ class QueryBuilder
     }
 
     /**
-     * Handles the group by workflow.
+     * Adds one or more GROUP BY columns.
+     *
+     * Responsibility: Adds one or more GROUP BY columns.
      */
     public function groupBy(array|string $columns): self
     {
@@ -200,7 +223,9 @@ class QueryBuilder
     }
 
     /**
-     * Handles the having workflow.
+     * Adds a HAVING condition with a validated column and operator.
+     *
+     * Responsibility: Adds a HAVING condition with a validated column and operator.
      */
     public function having(string $column, string $operator, mixed $value, string $boolean = 'AND'): self
     {
@@ -214,7 +239,9 @@ class QueryBuilder
     }
 
     /**
-     * Handles the join workflow.
+     * Adds a validated JOIN clause.
+     *
+     * Responsibility: Adds a validated JOIN clause.
      */
     public function join(
         string $table,
@@ -234,7 +261,9 @@ class QueryBuilder
     }
 
     /**
-     * Handles the left join workflow.
+     * Adds a LEFT JOIN clause.
+     *
+     * Responsibility: Adds a LEFT JOIN clause.
      */
     public function leftJoin(string $table, string $first, string $operator, string $second): self
     {
@@ -242,7 +271,9 @@ class QueryBuilder
     }
 
     /**
-     * Handles the right join workflow.
+     * Adds a RIGHT JOIN clause.
+     *
+     * Responsibility: Adds a RIGHT JOIN clause.
      */
     public function rightJoin(string $table, string $first, string $operator, string $second): self
     {
@@ -254,7 +285,9 @@ class QueryBuilder
     // -------------------------------------------------------------------------
 
     /**
-     * Handles the limit workflow.
+     * Sets the maximum number of rows returned by the query.
+     *
+     * Responsibility: Sets the maximum number of rows returned by the query.
      */
     public function limit(int $limit): self
     {
@@ -263,7 +296,9 @@ class QueryBuilder
     }
 
     /**
-     * Handles the offset workflow.
+     * Sets the row offset used by the query.
+     *
+     * Responsibility: Sets the row offset used by the query.
      */
     public function offset(int $offset): self
     {
@@ -272,7 +307,9 @@ class QueryBuilder
     }
 
     /**
-     * Handles the for page workflow.
+     * Applies offset and limit values for page-based pagination.
+     *
+     * Responsibility: Applies offset and limit values for page-based pagination.
      */
     public function forPage(int $page, int $perPage): self
     {
@@ -284,14 +321,9 @@ class QueryBuilder
     // -------------------------------------------------------------------------
 
     /**
-     * Execute and return the first matching row, or null.
+     * Execute and return the first matching row, or null. Return type is `mixed` to allow ModelQueryBuilder to narrow the return type to `?Model` via PHP 8 covariant return types without violating the Liskov Substitution Principle at the PHP engine level. Direct callers of QueryBuilder (not ModelQueryBuilder) always receive `?array` at runtime; the broadened signature is a type-system necessity.
      *
-     * Return type is `mixed` to allow ModelQueryBuilder to narrow the return
-     * type to `?Model` via PHP 8 covariant return types without violating
-     * the Liskov Substitution Principle at the PHP engine level.
-     * Direct callers of QueryBuilder (not ModelQueryBuilder) always receive
-     * `?array` at runtime; the broadened signature is a type-system necessity.
-     *
+     * Responsibility: Execute and return the first matching row, or null. Return type is `mixed` to allow ModelQueryBuilder to narrow the return type to `?Model` via PHP 8 covariant return types without violating the Liskov Substitution Principle at the PHP engine level. Direct callers of QueryBuilder (not ModelQueryBuilder) always receive `?array` at runtime; the broadened signature is a type-system necessity.
      * @throws QueryException
      */
     public function first(array $columns = ['*']): mixed
@@ -303,12 +335,9 @@ class QueryBuilder
     }
 
     /**
-     * Execute and return all matching rows.
+     * Execute and return all matching rows. Return type is `mixed` to allow ModelQueryBuilder to narrow the return type to `Collection` via PHP 8 covariant return types. Direct callers of QueryBuilder always receive `array` at runtime.
      *
-     * Return type is `mixed` to allow ModelQueryBuilder to narrow the return
-     * type to `Collection` via PHP 8 covariant return types.
-     * Direct callers of QueryBuilder always receive `array` at runtime.
-     *
+     * Responsibility: Execute and return all matching rows. Return type is `mixed` to allow ModelQueryBuilder to narrow the return type to `Collection` via PHP 8 covariant return types. Direct callers of QueryBuilder always receive `array` at runtime.
      * @throws QueryException
      */
     public function get(array $columns = ['*']): mixed
@@ -321,7 +350,9 @@ class QueryBuilder
     }
 
     /**
-     * Alias for get().
+     * Fetches all matching rows through the query builder get() execution path.
+     *
+     * Responsibility: Provides the all() alias while preserving query execution and exception behavior from get().
      *
      * @throws QueryException
      */
@@ -333,6 +364,7 @@ class QueryBuilder
     /**
      * Return the count of matching rows.
      *
+     * Responsibility: Return the count of matching rows.
      * @throws QueryException
      */
     public function count(): int
@@ -348,6 +380,7 @@ class QueryBuilder
     /**
      * Insert a new row and return the last insert ID.
      *
+     * Responsibility: Insert a new row and return the last insert ID.
      * @throws QueryException
      */
     public function insert(array $values): int
@@ -358,6 +391,7 @@ class QueryBuilder
     /**
      * Update matching rows and return the number of affected rows.
      *
+     * Responsibility: Update matching rows and return the number of affected rows.
      * @throws QueryException
      */
     public function update(array $values): int
@@ -369,6 +403,7 @@ class QueryBuilder
     /**
      * Delete matching rows and return the number of affected rows.
      *
+     * Responsibility: Delete matching rows and return the number of affected rows.
      * @throws QueryException
      */
     public function delete(): int
@@ -382,7 +417,9 @@ class QueryBuilder
     // -------------------------------------------------------------------------
 
     /**
-     * Returns the connection value.
+     * Returns the database connection used by this builder.
+     *
+     * Responsibility: Returns the database connection used by this builder.
      */
     public function getConnection(): Connection
     {
@@ -394,7 +431,9 @@ class QueryBuilder
     // -------------------------------------------------------------------------
 
     /**
-     * Handles the compile select workflow.
+     * Compiles the current SELECT query and bindings.
+     *
+     * Responsibility: Compiles the current SELECT query and bindings.
      */
     protected function compileSelect(): array
     {
@@ -437,7 +476,9 @@ class QueryBuilder
     }
 
     /**
-     * Handles the compile columns workflow.
+     * Compiles the selected column list.
+     *
+     * Responsibility: Compiles the selected column list.
      */
     protected function compileColumns(): string
     {
@@ -448,7 +489,9 @@ class QueryBuilder
     }
 
     /**
-     * Handles the compile wheres workflow.
+     * Compiles WHERE clauses and their bound values.
+     *
+     * Responsibility: Compiles WHERE clauses and their bound values.
      */
     protected function compileWheres(): array
     {
@@ -479,7 +522,9 @@ class QueryBuilder
     }
 
     /**
-     * Handles the compile orders workflow.
+     * Compiles ORDER BY clauses.
+     *
+     * Responsibility: Compiles ORDER BY clauses.
      */
     protected function compileOrders(): string
     {
@@ -491,7 +536,9 @@ class QueryBuilder
     }
 
     /**
-     * Handles the compile havings workflow.
+     * Compiles HAVING clauses and their bound values.
+     *
+     * Responsibility: Compiles HAVING clauses and their bound values.
      */
     protected function compileHavings(): array
     {
@@ -509,7 +556,9 @@ class QueryBuilder
     }
 
     /**
-     * Handles the compile update workflow.
+     * Compiles an UPDATE statement and bindings for matching rows.
+     *
+     * Responsibility: Compiles an UPDATE statement and bindings for matching rows.
      */
     protected function compileUpdate(array $values): array
     {
@@ -535,7 +584,9 @@ class QueryBuilder
     }
 
     /**
-     * Handles the compile delete workflow.
+     * Compiles a DELETE statement and bindings for matching rows.
+     *
+     * Responsibility: Compiles a DELETE statement and bindings for matching rows.
      */
     protected function compileDelete(): array
     {
@@ -552,15 +603,9 @@ class QueryBuilder
     }
 
     /**
-     * Run an aggregate function (COUNT, SUM, MAX, …) and return the raw row.
+     * Run an aggregate function (COUNT, SUM, MAX, …) and return the raw row. ⚠ OVERRIDE WARNING — ModelQueryBuilder::aggregate() MUST remain in place. This base implementation indexes $results as an array ($results[0]), which works when get() returns a plain array (QueryBuilder). In ModelQueryBuilder, get() returns a Collection, so $results[0] would throw "Cannot use object of type Collection as array". The override in ModelQueryBuilder bypasses hydration and calls connection->select() directly. Do NOT remove ModelQueryBuilder::aggregate().
      *
-     * ⚠ OVERRIDE WARNING — ModelQueryBuilder::aggregate() MUST remain in place.
-     * This base implementation indexes $results as an array ($results[0]), which
-     * works when get() returns a plain array (QueryBuilder). In ModelQueryBuilder,
-     * get() returns a Collection, so $results[0] would throw
-     * "Cannot use object of type Collection as array". The override in
-     * ModelQueryBuilder bypasses hydration and calls connection->select() directly.
-     * Do NOT remove ModelQueryBuilder::aggregate().
+     * Responsibility: Run an aggregate function (COUNT, SUM, MAX, …) and return the raw row. ⚠ OVERRIDE WARNING — ModelQueryBuilder::aggregate() MUST remain in place. This base implementation indexes $results as an array ($results[0]), which works when get() returns a plain array (QueryBuilder). In ModelQueryBuilder, get() returns a Collection, so $results[0] would throw "Cannot use object of type Collection as array". The override in ModelQueryBuilder bypasses hydration and calls connection->select() directly. Do NOT remove ModelQueryBuilder::aggregate().
      */
     protected function aggregate(string $function, string $column = '*'): ?array
     {

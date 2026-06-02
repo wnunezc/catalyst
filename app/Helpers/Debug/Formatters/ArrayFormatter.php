@@ -41,6 +41,7 @@ use Catalyst\Helpers\Debug\DumperCollapsible;
  * for display in the debug output.
  *
  * @package Catalyst\Helpers\Debug\Formatters;
+ * Responsibility: Formats nested arrays while enforcing dumper depth and child-count limits.
  */
 class ArrayFormatter
 {
@@ -65,8 +66,9 @@ class ArrayFormatter
     private mixed $mainFormatter;
 
     /**
-     * Constructor
+     * Initializes the object with the collaborators or state required for its responsibility.
      *
+     * Responsibility: Initializes the object with the collaborators or state required for its responsibility.
      * @param DumperConfig $config Configuration instance
      * @param DumperColorizer $colorizer Colorizer instance
      * @param DumperCollapsible $collapsible Collapsible instance
@@ -85,8 +87,9 @@ class ArrayFormatter
     }
 
     /**
-     * Format array for output
+     * Format array for output.
      *
+     * Responsibility: Format array for output.
      * @param array $var
      * @param bool $isHtml
      * @param int $depth

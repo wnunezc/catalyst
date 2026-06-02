@@ -39,7 +39,7 @@ use Catalyst\Helpers\Security\CsrfProtection;
 use Closure;
 use Exception;
 
-/**************************************************************************************
+/**
  * Middleware to handle CSRF (Cross-Site Request Forgery) protection.
  *
  * This class extends the CoreMiddleware and provides functionality to validate CSRF tokens
@@ -50,12 +50,7 @@ use Exception;
  * them to the $except array. It also includes logging for debugging purposes during development.
  *
  * @package Catalyst\Framework\Middleware
- */
-/**
- * Defines the Csrf Middleware class contract.
- *
- * @package Catalyst\Framework\Middleware
- * Responsibility: Coordinates the csrf middleware behavior within its module boundary.
+ * Responsibility: Validates CSRF tokens for state-changing browser requests while honoring explicit exemptions.
  */
 class CsrfMiddleware extends CoreMiddleware
 {
@@ -78,8 +73,9 @@ class CsrfMiddleware extends CoreMiddleware
     ];
 
     /**
-     * Process the request and validate CSRF token if needed
+     * Process the request and validate CSRF token if needed.
      *
+     * Responsibility: Process the request and validate CSRF token if needed.
      * @param Request $request The request object
      * @param Closure $next The next middleware handler
      * @return Response The response
@@ -135,8 +131,9 @@ class CsrfMiddleware extends CoreMiddleware
     }
 
     /**
-     * Determine if the request should be validated
+     * Determine if the request should be validated.
      *
+     * Responsibility: Determine if the request should be validated.
      * @param Request $request The request to check
      * @return bool
      */
@@ -176,8 +173,9 @@ class CsrfMiddleware extends CoreMiddleware
     }
 
     /**
-     * Determine if the request is for a static resource
+     * Determine if the request is for a static resource.
      *
+     * Responsibility: Determine if the request is for a static resource.
      * @param Request $request The request to check
      * @return bool True if the request is for a static resource
      */
@@ -190,8 +188,9 @@ class CsrfMiddleware extends CoreMiddleware
     }
 
     /**
-     * Get the CSRF token from the request
+     * Get the CSRF token from the request.
      *
+     * Responsibility: Extracts the submitted CSRF token from request input or headers.
      * @param Request $request The request
      * @return string|null The token or null if not found
      * @throws Exception
@@ -236,7 +235,9 @@ class CsrfMiddleware extends CoreMiddleware
     }
 
     /**
-     * Determines whether is Bearer Api Request.
+     * Determines whether the API request uses bearer-token authentication.
+     *
+     * Responsibility: Determines whether the API request uses bearer-token authentication.
      */
     private function isBearerApiRequest(Request $request): bool
     {

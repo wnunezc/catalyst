@@ -4,13 +4,29 @@ declare(strict_types=1);
 
 use Catalyst\Framework\Database\Migration;
 
+/**
+ * Creates the persistence structures required by the account recovery runtime.
+ *
+ * @package Catalyst\BootCore\Database\Migrations
+ * Responsibility: Provision and remove account recovery requests, tokens, events, and user security states.
+ */
 return new class extends Migration
 {
+    /**
+     * Returns the migration version identifier.
+     *
+     * Responsibility: Returns the migration version identifier.
+     */
     public function getVersion(): string
     {
         return '20260601010000';
     }
 
+    /**
+     * Creates the account recovery runtime tables.
+     *
+     * Responsibility: Creates the account recovery runtime tables.
+     */
     public function up(): void
     {
         $this->createRequestsTable();
@@ -19,6 +35,11 @@ return new class extends Migration
         $this->createSecurityStatesTable();
     }
 
+    /**
+     * Removes the account recovery runtime tables in dependency-safe order.
+     *
+     * Responsibility: Removes the account recovery runtime tables in dependency-safe order.
+     */
     public function down(): void
     {
         if ($this->tableExists('account_recovery_events')) {
@@ -35,6 +56,11 @@ return new class extends Migration
         }
     }
 
+    /**
+     * Creates the table that stores account recovery requests.
+     *
+     * Responsibility: Creates the table that stores account recovery requests.
+     */
     private function createRequestsTable(): void
     {
         if ($this->tableExists('account_recovery_requests')) {
@@ -72,6 +98,11 @@ return new class extends Migration
         );
     }
 
+    /**
+     * Creates the table that stores account recovery tokens.
+     *
+     * Responsibility: Creates the table that stores account recovery tokens.
+     */
     private function createTokensTable(): void
     {
         if ($this->tableExists('account_recovery_tokens')) {
@@ -105,6 +136,11 @@ return new class extends Migration
         );
     }
 
+    /**
+     * Creates the table that records account recovery events.
+     *
+     * Responsibility: Creates the table that records account recovery events.
+     */
     private function createEventsTable(): void
     {
         if ($this->tableExists('account_recovery_events')) {
@@ -137,6 +173,11 @@ return new class extends Migration
         );
     }
 
+    /**
+     * Creates the table that stores user security state flags.
+     *
+     * Responsibility: Creates the table that stores user security state flags.
+     */
     private function createSecurityStatesTable(): void
     {
         if ($this->tableExists('user_security_states')) {

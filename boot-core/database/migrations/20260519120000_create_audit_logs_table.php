@@ -4,13 +4,29 @@ declare(strict_types=1);
 
 use Catalyst\Framework\Database\Migration;
 
+/**
+ * Creates the table that stores audit log entries.
+ *
+ * @package Catalyst\BootCore\Database\Migrations
+ * Responsibility: Provision and remove persistence for runtime audit events and actor context.
+ */
 return new class extends Migration
 {
+    /**
+     * Returns the timestamp identifier used by the migration runner to order and track this migration.
+     *
+     * Responsibility: Returns the timestamp identifier used by the migration runner to order and track this migration.
+     */
     public function getVersion(): string
     {
         return '20260519120000';
     }
 
+    /**
+     * Creates the audit logs table when it is absent.
+     *
+     * Responsibility: Creates the audit logs table when it is absent.
+     */
     public function up(): void
     {
         if ($this->tableExists('audit_logs')) {
@@ -46,6 +62,11 @@ return new class extends Migration
         );
     }
 
+    /**
+     * Removes the audit logs table when it exists.
+     *
+     * Responsibility: Removes the audit logs table when it exists.
+     */
     public function down(): void
     {
         if (!$this->tableExists('audit_logs')) {

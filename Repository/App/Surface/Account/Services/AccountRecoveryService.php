@@ -39,22 +39,26 @@ use Catalyst\Helpers\Log\Logger;
 use Throwable;
 
 /**
- * Defines the Account Recovery Service class contract.
+ * Orchestrates MFA reset and support recovery workflows.
  *
  * @package App\Surface\Account\Services
- * Responsibility: Coordinates the account recovery service behavior within its module boundary.
+ * Responsibility: Applies account recovery business rules, persists request state and sends recovery email.
  */
 final class AccountRecoveryService
 {
     /**
-     * Initializes the Account Recovery Service instance.
+     * Stores the repository used to persist recovery state.
+     *
+     * Responsibility: Stores the repository used to persist recovery state.
      */
     public function __construct(private readonly AccountRecoveryRepository $repository = new AccountRecoveryRepository())
     {
     }
 
     /**
-     * Handles the request mfa reset by email workflow.
+     * Creates an MFA reset request and emails a reset token when the address belongs to an MFA-enabled user.
+     *
+     * Responsibility: Creates an MFA reset request and emails a reset token when the address belongs to an MFA-enabled user.
      */
     public function requestMfaResetByEmail(string $email): void
     {
@@ -90,7 +94,9 @@ final class AccountRecoveryService
     }
 
     /**
-     * Handles the consume mfa reset token workflow.
+     * Consumes an MFA reset token, disables MFA and invalidates remember-me sessions for the user.
+     *
+     * Responsibility: Consumes an MFA reset token, disables MFA and invalidates remember-me sessions for the user.
      */
     public function consumeMfaResetToken(string $token): bool
     {
@@ -113,7 +119,12 @@ final class AccountRecoveryService
         return true;
     }
 
-    /** @param array<string, string> $data */
+    /**
+     * Stores a support recovery request for later administrative review.
+     *
+     * Responsibility: Stores a support recovery request for later administrative review.
+     * @param array<string, string> $data
+     */
     public function submitSupportRequest(array $data): void
     {
         try {
@@ -136,7 +147,9 @@ final class AccountRecoveryService
     }
 
     /**
-     * Handles the send mfa reset email workflow.
+     * Sends the MFA reset email containing the public recovery link.
+     *
+     * Responsibility: Sends the MFA reset email containing the public recovery link.
      */
     private function sendMfaResetEmail(string $email, string $name, string $token): void
     {
@@ -162,7 +175,9 @@ final class AccountRecoveryService
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves the application base URL for recovery links.
+     *
+     * Responsibility: Resolves the application base URL for recovery links.
      */
     private function resolveAppUrl(): string
     {

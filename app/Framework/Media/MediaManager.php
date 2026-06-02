@@ -40,10 +40,10 @@ use Catalyst\Helpers\Log\Logger;
 use RuntimeException;
 
 /**
- * Defines the Media Manager class contract.
+ * Service layer for media-library mutations.
  *
  * @package Catalyst\Framework\Media
- * Responsibility: Coordinates the media manager behavior within its module boundary.
+ * Responsibility: Store, replace, archive and delete media items with metadata sync.
  */
 final class MediaManager
 {
@@ -57,7 +57,9 @@ final class MediaManager
     private Logger $logger;
 
     /**
-     * Initializes the Media Manager instance.
+     * Resolve storage, metadata repositories and logging collaborators.
+     *
+     * Responsibility: Resolve storage, metadata repositories and logging collaborators.
      */
     protected function __construct()
     {
@@ -68,6 +70,9 @@ final class MediaManager
     }
 
     /**
+     * Create a media item from an uploaded file and sync its metadata values.
+     *
+     * Responsibility: Create a media item from an uploaded file and sync its metadata values.
      * @param array<string, mixed> $payload
      */
     public function create(array $payload): MediaItem
@@ -98,6 +103,9 @@ final class MediaManager
     }
 
     /**
+     * Update media item attributes, optionally replace the stored file and sync metadata.
+     *
+     * Responsibility: Update media item attributes, optionally replace the stored file and sync metadata.
      * @param array<string, mixed> $payload
      */
     public function update(MediaItem $item, array $payload): MediaItem
@@ -146,7 +154,9 @@ final class MediaManager
     }
 
     /**
-     * Handles the delete workflow.
+     * Delete metadata values, storage object and media record.
+     *
+     * Responsibility: Delete metadata values, storage object and media record.
      */
     public function delete(MediaItem $item): void
     {
@@ -185,7 +195,9 @@ final class MediaManager
     }
 
     /**
-     * Handles the archive workflow.
+     * Mark the media item as archived when it has not been archived yet.
+     *
+     * Responsibility: Mark the media item as archived when it has not been archived yet.
      */
     public function archive(MediaItem $item): MediaItem
     {
@@ -202,6 +214,9 @@ final class MediaManager
     }
 
     /**
+     * Replace a generated media object and remove the previous storage object.
+     *
+     * Responsibility: Replace a generated media object and remove the previous storage object.
      * @param array<string, mixed> $options
      */
     public function replaceGenerated(MediaItem $item, string $contents, array $options = []): MediaItem
@@ -251,6 +266,9 @@ final class MediaManager
     }
 
     /**
+     * Create a media item from generated contents stored on a configured disk.
+     *
+     * Responsibility: Create a media item from generated contents stored on a configured disk.
      * @param array<string, mixed> $options
      */
     public function createGenerated(string $name, string $contents, array $options = []): MediaItem

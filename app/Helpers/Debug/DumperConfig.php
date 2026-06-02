@@ -38,6 +38,7 @@ namespace Catalyst\Helpers\Debug;
  * maximum nesting depth, and other configuration options.
  *
  * @package Catalyst\Helpers\Debug;
+ * Responsibility: Stores and validates runtime presentation limits and theme preferences for dumps.
  */
 class DumperConfig
 {
@@ -77,8 +78,9 @@ class DumperConfig
     private array $availableThemes;
 
     /**
-     * Constructor
+     * Initializes the object with the collaborators or state required for its responsibility.
      *
+     * Responsibility: Initializes the object with the collaborators or state required for its responsibility.
      * @param array $options Optional configuration options
      */
     public function __construct(array $options = [])
@@ -107,8 +109,9 @@ class DumperConfig
     }
 
     /**
-     * Apply configuration options
+     * Apply configuration options.
      *
+     * Responsibility: Apply configuration options.
      * @param array $options Configuration options
      * @return void
      */
@@ -141,8 +144,9 @@ class DumperConfig
     }
 
     /**
-     * Get maximum string length
+     * Get maximum string length.
      *
+     * Responsibility: Get maximum string length.
      * @return int
      */
     public function getMaxStrLength(): int
@@ -151,8 +155,9 @@ class DumperConfig
     }
 
     /**
-     * Set maximum string length
+     * Set maximum string length.
      *
+     * Responsibility: Set maximum string length.
      * @param int $maxStrLength
      * @return self
      */
@@ -163,8 +168,9 @@ class DumperConfig
     }
 
     /**
-     * Get maximum children
+     * Get maximum children.
      *
+     * Responsibility: Get maximum children.
      * @return int
      */
     public function getMaxChildren(): int
@@ -173,8 +179,9 @@ class DumperConfig
     }
 
     /**
-     * Set maximum children
+     * Set maximum children.
      *
+     * Responsibility: Set maximum children.
      * @param int $maxChildren
      * @return self
      */
@@ -185,7 +192,9 @@ class DumperConfig
     }
 
     /**
-     * Get maximum depth
+     * Returns the maximum nesting depth allowed during dump rendering.
+     *
+     * Responsibility: Exposes the depth guard used by formatters to stop recursive expansion.
      *
      * @return int
      */
@@ -195,7 +204,9 @@ class DumperConfig
     }
 
     /**
-     * Set maximum depth
+     * Updates the maximum nesting depth allowed during dump rendering.
+     *
+     * Responsibility: Stores the depth guard while enforcing the minimum supported value.
      *
      * @param int $maxDepth
      * @return self
@@ -207,8 +218,9 @@ class DumperConfig
     }
 
     /**
-     * Get whether to show a floating button
+     * Get whether to show a floating button.
      *
+     * Responsibility: Get whether to show a floating button.
      * @return bool
      */
     public function getShowFloatingButton(): bool
@@ -217,8 +229,9 @@ class DumperConfig
     }
 
     /**
-     * Set whether to show a floating button
+     * Set whether to show a floating button.
      *
+     * Responsibility: Set whether to show a floating button.
      * @param bool $showFloatingButton
      * @return self
      */
@@ -229,8 +242,9 @@ class DumperConfig
     }
 
     /**
-     * Get whether arrays and objects are initially expanded
+     * Get whether arrays and objects are initially expanded.
      *
+     * Responsibility: Get whether arrays and objects are initially expanded.
      * @return bool
      */
     public function getInitiallyExpanded(): bool
@@ -239,8 +253,9 @@ class DumperConfig
     }
 
     /**
-     * Set whether arrays and objects are initially expanded
+     * Set whether arrays and objects are initially expanded.
      *
+     * Responsibility: Set whether arrays and objects are initially expanded.
      * @param bool $initiallyExpanded
      * @return self
      */
@@ -251,7 +266,9 @@ class DumperConfig
     }
 
     /**
-     * Get a color theme
+     * Returns the active color theme used by dump renderers.
+     *
+     * Responsibility: Exposes the selected palette key for HTML and CLI dumper output.
      *
      * @return string
      */
@@ -261,7 +278,9 @@ class DumperConfig
     }
 
     /**
-     * Set a color theme
+     * Updates the active color theme when the requested palette is available.
+     *
+     * Responsibility: Stores only supported palette keys so dump rendering keeps a valid theme.
      *
      * @param string $colorTheme
      * @return self
@@ -276,8 +295,9 @@ class DumperConfig
     }
     
     /**
-     * Get available color themes
+     * Get available color themes.
      *
+     * Responsibility: Get available color themes.
      * @return array
      */
     public function getAvailableThemes(): array

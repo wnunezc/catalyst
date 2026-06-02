@@ -39,14 +39,17 @@ use Catalyst\Framework\Middleware\SetupGuardMiddleware;
 use Catalyst\Helpers\Config\ConfigManager;
 
 /**
- * Defines the Module Harness Inspector class contract.
+ * Produces module metadata for runtime harness verification.
  *
  * @package Catalyst\Framework\Module
- * Responsibility: Coordinates the module harness inspector behavior within its module boundary.
+ * Responsibility: Classifies module surfaces, routes, assets, and expected access outcomes for harness checks.
  */
 final class ModuleHarnessInspector
 {
     /**
+     * Builds the harness-oriented module inspection report.
+     *
+     * Responsibility: Builds the harness-oriented module inspection report.
      * @return array<string, mixed>
      */
     public function inspect(): array
@@ -133,6 +136,9 @@ final class ModuleHarnessInspector
     }
 
     /**
+     * Selects a stable representative route for a harness probe.
+     *
+     * Responsibility: Selects a stable representative route for a harness probe.
      * @param array<string, mixed> $module
      * @param array<int, array<string, mixed>> $routes
      * @param 'html'|'json' $kind
@@ -166,6 +172,9 @@ final class ModuleHarnessInspector
     }
 
     /**
+     * Collects owned routes matching a harness route category.
+     *
+     * Responsibility: Collects owned routes matching a harness route category.
      * @param array<string, mixed> $module
      * @param 'html'|'json'|'mutation' $kind
      * @return array<int, array<string, mixed>>
@@ -226,6 +235,9 @@ final class ModuleHarnessInspector
     }
 
     /**
+     * Classifies the runtime surface exposed by a module.
+     *
+     * Responsibility: Classifies the runtime surface exposed by a module.
      * @param array<string, mixed> $module
      * @param array<int, array<string, mixed>> $htmlRoutes
      * @param array<int, array<string, mixed>> $jsonRoutes
@@ -275,6 +287,9 @@ final class ModuleHarnessInspector
     }
 
     /**
+     * Computes expected access outcomes for a route across harness actors.
+     *
+     * Responsibility: Computes expected access outcomes for a route across harness actors.
      * @param array<string, mixed> $module
      * @param array<string, mixed> $route
      * @return array{defaults: array<string, string>, states: array<string, string>}
@@ -374,7 +389,9 @@ final class ModuleHarnessInspector
     }
 
     /**
-     * Determines whether is Mfa Globally Enabled.
+     * Determines whether MFA is enabled in global security configuration.
+     *
+     * Responsibility: Determines whether MFA is enabled in global security configuration.
      */
     private function isMfaGloballyEnabled(): bool
     {
@@ -386,6 +403,9 @@ final class ModuleHarnessInspector
     }
 
     /**
+     * Determines whether a route supports a readable HTTP method.
+     *
+     * Responsibility: Determines whether a route supports a readable HTTP method.
      * @param string[] $methods
      */
     private function hasReadMethod(array $methods): bool
@@ -400,6 +420,9 @@ final class ModuleHarnessInspector
     }
 
     /**
+     * Determines whether a route supports a state-changing HTTP method.
+     *
+     * Responsibility: Determines whether a route supports a state-changing HTTP method.
      * @param string[] $methods
      */
     private function hasMutationMethod(array $methods): bool

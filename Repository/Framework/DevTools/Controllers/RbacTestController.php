@@ -37,15 +37,17 @@ use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\JsonResponse;
 
 /**
- * Defines the Rbac Test Controller class contract.
+ * Exposes development diagnostics for role and permission behavior.
  *
  * @package Catalyst\Repository\DevTools\Controllers
- * Responsibility: Coordinates the rbac test controller behavior within its module boundary.
+ * Responsibility: Reports current RBAC state and assigns the demo administrator role.
  */
 class RbacTestController extends Controller
 {
     /**
-     * Handles the rbac status workflow.
+     * Returns role, permission and gate diagnostics for the authenticated user.
+     *
+     * Responsibility: Returns role, permission and gate diagnostics for the authenticated user.
      */
     public function rbacStatus(): JsonResponse
     {
@@ -78,7 +80,9 @@ class RbacTestController extends Controller
     }
 
     /**
-     * Creates the requested object.
+     * Assigns the administrator role to the authenticated development user.
+     *
+     * Responsibility: Assigns the administrator role to the authenticated development user.
      */
     public function makeAdmin(): JsonResponse
     {

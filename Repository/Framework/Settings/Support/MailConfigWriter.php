@@ -33,14 +33,17 @@ namespace Catalyst\Repository\Settings\Support;
 use Catalyst\Helpers\Config\ConfigManager;
 
 /**
- * Defines the Mail Config Writer class contract.
+ * Writes mail transport settings.
  *
  * @package Catalyst\Repository\Settings\Support
- * Responsibility: Coordinates the mail config writer behavior within its module boundary.
+ * Responsibility: Persists SMTP and sender configuration while retaining an unchanged password.
  */
 final class MailConfigWriter
 {
     /**
+     * Saves normalized mail settings.
+     *
+     * Responsibility: Saves normalized mail settings.
      * @param array<string, mixed> $data
      */
     public function save(array $data): void

@@ -31,14 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Repository\Settings\Requests;
 
 /**
- * Defines the Mail Config Request class contract.
+ * Validates mail transport settings from the setup surface.
  *
  * @package Catalyst\Repository\Settings\Requests
- * Responsibility: Coordinates the mail config request behavior within its module boundary.
+ * Responsibility: Defines SMTP connection and sender rules and normalizes submitted values.
  */
 final class MailConfigRequest extends AbstractSettingsRequest
 {
     /**
+     * Returns validation rules for mail settings.
+     *
+     * Responsibility: Returns validation rules for mail settings.
      * @return array<string, string>
      */
     public function rules(): array
@@ -54,6 +57,9 @@ final class MailConfigRequest extends AbstractSettingsRequest
     }
 
     /**
+     * Builds normalized mail input for validation.
+     *
+     * Responsibility: Builds normalized mail input for validation.
      * @return array<string, mixed>
      */
     protected function validationData(): array

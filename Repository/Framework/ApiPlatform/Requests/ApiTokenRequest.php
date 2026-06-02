@@ -39,10 +39,11 @@ use Catalyst\Helpers\Exceptions\ValidationException;
 use Catalyst\Helpers\Validation\Validator;
 
 /**
- * Defines the Api Token Request class contract.
+ * Form request for creating API bearer tokens from the admin surface.
  *
  * @package Catalyst\Repository\ApiPlatform\Requests
- * Responsibility: Coordinates the api token request behavior within its module boundary.
+ * Responsibility: Authorizes token creation, limits accepted input, validates token fields,
+ * and resolves sanitized payload data for the controller.
  */
 final class ApiTokenRequest extends FormRequest
 {
@@ -52,7 +53,9 @@ final class ApiTokenRequest extends FormRequest
     private ?array $resolvedData = null;
 
     /**
-     * Handles the authorize workflow.
+     * Confirms the current user has permission to create API Platform tokens.
+     *
+     * Responsibility: Confirms the current user has permission to create API Platform tokens.
      */
     public function authorize(): bool
     {
@@ -64,6 +67,9 @@ final class ApiTokenRequest extends FormRequest
     }
 
     /**
+     * Declares the request fields accepted for API token creation.
+     *
+     * Responsibility: Declares the request fields accepted for API token creation.
      * @return string[]
      */
     public function only(): array
@@ -77,6 +83,9 @@ final class ApiTokenRequest extends FormRequest
     }
 
     /**
+     * Defines base validation constraints for token name, owner, abilities, and expiration.
+     *
+     * Responsibility: Defines base validation constraints for token name, owner, abilities, and expiration.
      * @return array<string, string>
      */
     public function rules(): array
@@ -90,6 +99,9 @@ final class ApiTokenRequest extends FormRequest
     }
 
     /**
+     * Maps API token fields to translated validation labels.
+     *
+     * Responsibility: Maps API token fields to translated validation labels.
      * @return array<string, string>
      */
     public function labels(): array
@@ -103,6 +115,9 @@ final class ApiTokenRequest extends FormRequest
     }
 
     /**
+     * Returns the validated token payload, resolving validation on first access.
+     *
+     * Responsibility: Returns the validated token payload, resolving validation on first access.
      * @return array<string, mixed>
      */
     public function validated(): array
@@ -115,6 +130,9 @@ final class ApiTokenRequest extends FormRequest
     }
 
     /**
+     * Authorizes, prepares, validates, and stores the resolved API token payload.
+     *
+     * Responsibility: Authorizes, prepares, validates, and stores the resolved API token payload.
      * @throws ValidationException
      * @throws ForbiddenException
      */
@@ -142,6 +160,9 @@ final class ApiTokenRequest extends FormRequest
     }
 
     /**
+     * Adds API-token-specific validation for active users, abilities, and parseable expiration dates.
+     *
+     * Responsibility: Adds API-token-specific validation for active users, abilities, and parseable expiration dates.
      * @param array<string, mixed> $data
      * @return array<string, string[]>
      */

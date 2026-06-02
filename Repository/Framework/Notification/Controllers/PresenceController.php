@@ -39,15 +39,17 @@ use Catalyst\Framework\Presence\PresenceManager;
 use RuntimeException;
 
 /**
- * Defines the Presence Controller class contract.
+ * Exposes authenticated presence heartbeat updates for editable records.
  *
  * @package Catalyst\Repository\Notification\Controllers
- * Responsibility: Coordinates the presence controller behavior within its module boundary.
+ * Responsibility: Refreshes presence state and reports claim conflicts to clients.
  */
 final class PresenceController extends Controller
 {
     /**
-     * Handles the user id workflow.
+     * Returns the authenticated actor identifier used for presence tracking.
+     *
+     * Responsibility: Returns the authenticated actor identifier used for presence tracking.
      */
     private function userId(): int
     {
@@ -55,7 +57,9 @@ final class PresenceController extends Controller
     }
 
     /**
-     * Handles the actor label workflow.
+     * Builds the display label published with the current actor's presence.
+     *
+     * Responsibility: Builds the display label published with the current actor's presence.
      */
     private function actorLabel(): string
     {
@@ -67,7 +71,9 @@ final class PresenceController extends Controller
     }
 
     /**
-     * Handles the heartbeat workflow.
+     * Refreshes record presence and returns the resulting presence snapshot.
+     *
+     * Responsibility: Refreshes record presence and returns the resulting presence snapshot.
      */
     public function heartbeat(Request $request, string $resourceKey, string $recordId): Response
     {

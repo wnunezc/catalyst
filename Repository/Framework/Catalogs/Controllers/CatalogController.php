@@ -54,10 +54,10 @@ use Catalyst\Repository\Catalogs\Support\CatalogGridFactory;
 use RuntimeException;
 
 /**
- * Defines the Catalog Controller class contract.
+ * Serves the administrative catalog and catalog-item workflow.
  *
  * @package Catalyst\Repository\Catalogs\Controllers
- * Responsibility: Coordinates the catalog controller behavior within its module boundary.
+ * Responsibility: Render catalog screens and coordinate authorized CRUD, workflow, version and item actions.
  */
 final class CatalogController extends Controller
 {
@@ -65,6 +65,8 @@ final class CatalogController extends Controller
 
     /**
      * Initializes the Catalog Controller instance.
+     *
+     * Responsibility: Initializes the Catalog Controller instance.
      */
     public function __construct(
         private readonly CatalogRepository $repository,
@@ -81,7 +83,9 @@ final class CatalogController extends Controller
     }
 
     /**
-     * Handles the index workflow.
+     * Renders the searchable catalog definition listing.
+     *
+     * Responsibility: Renders the searchable catalog definition listing.
      */
     public function index(Request $request): Response
     {
@@ -95,7 +99,9 @@ final class CatalogController extends Controller
     }
 
     /**
-     * Handles the create workflow.
+     * Renders the catalog definition creation form.
+     *
+     * Responsibility: Renders the catalog definition creation form.
      */
     public function create(Request $request): Response
     {
@@ -105,7 +111,9 @@ final class CatalogController extends Controller
     }
 
     /**
-     * Handles the persistence workflow.
+     * Persists a validated catalog definition and redirects to its detail view.
+     *
+     * Responsibility: Persists a validated catalog definition and redirects to its detail view.
      */
     public function store(CatalogDefinitionRequest $request): Response
     {
@@ -115,7 +123,9 @@ final class CatalogController extends Controller
     }
 
     /**
-     * Handles the detail display workflow.
+     * Renders the selected catalog definition detail view.
+     *
+     * Responsibility: Renders the selected catalog definition detail view.
      */
     public function show(Request $request, string $id): Response
     {
@@ -123,7 +133,9 @@ final class CatalogController extends Controller
     }
 
     /**
-     * Handles the edit workflow.
+     * Acquires a record claim and renders the catalog definition edit form.
+     *
+     * Responsibility: Acquires a record claim and renders the catalog definition edit form.
      */
     public function edit(Request $request, string $id): Response
     {
@@ -150,7 +162,9 @@ final class CatalogController extends Controller
     }
 
     /**
-     * Handles the update workflow.
+     * Updates a catalog definition while handling concurrency conflicts.
+     *
+     * Responsibility: Updates a catalog definition while handling concurrency conflicts.
      */
     public function update(CatalogDefinitionRequest $request, string $id): Response
     {
@@ -172,7 +186,9 @@ final class CatalogController extends Controller
     }
 
     /**
-     * Handles the destroy workflow.
+     * Deletes a catalog definition through the claim-protected mutation service.
+     *
+     * Responsibility: Deletes a catalog definition through the claim-protected mutation service.
      */
     public function destroy(Request $request, string $id): Response
     {
@@ -193,7 +209,9 @@ final class CatalogController extends Controller
     }
 
     /**
-     * Handles the transition workflow.
+     * Applies the requested workflow transition to a catalog definition.
+     *
+     * Responsibility: Applies the requested workflow transition to a catalog definition.
      */
     public function transition(Request $request, string $id): Response
     {
@@ -222,7 +240,9 @@ final class CatalogController extends Controller
     }
 
     /**
-     * Handles the restore version workflow.
+     * Restores a selected captured version of a catalog definition.
+     *
+     * Responsibility: Restores a selected captured version of a catalog definition.
      */
     public function restoreVersion(Request $request, string $id, string $versionId): Response
     {
@@ -243,7 +263,9 @@ final class CatalogController extends Controller
     }
 
     /**
-     * Handles the create workflow.
+     * Acquires the parent catalog claim and renders the item creation form.
+     *
+     * Responsibility: Acquires the parent catalog claim and renders the item creation form.
      */
     public function createItem(Request $request, string $id): Response
     {
@@ -270,7 +292,9 @@ final class CatalogController extends Controller
     }
 
     /**
-     * Handles the persistence workflow.
+     * Persists a validated item within the selected catalog.
+     *
+     * Responsibility: Persists a validated item within the selected catalog.
      */
     public function storeItem(CatalogItemRequest $request, string $id): Response
     {
@@ -291,7 +315,9 @@ final class CatalogController extends Controller
     }
 
     /**
-     * Handles the edit workflow.
+     * Acquires the parent catalog claim and renders an item edit form.
+     *
+     * Responsibility: Acquires the parent catalog claim and renders an item edit form.
      */
     public function editItem(Request $request, string $id, string $itemId): Response
     {
@@ -320,7 +346,9 @@ final class CatalogController extends Controller
     }
 
     /**
-     * Handles the update workflow.
+     * Updates a catalog item while handling concurrency conflicts.
+     *
+     * Responsibility: Updates a catalog item while handling concurrency conflicts.
      */
     public function updateItem(CatalogItemRequest $request, string $id, string $itemId): Response
     {
@@ -344,7 +372,9 @@ final class CatalogController extends Controller
     }
 
     /**
-     * Handles the destroy workflow.
+     * Deletes an item from the selected catalog.
+     *
+     * Responsibility: Deletes an item from the selected catalog.
      */
     public function destroyItem(Request $request, string $id, string $itemId): Response
     {
@@ -367,6 +397,9 @@ final class CatalogController extends Controller
     }
 
     /**
+     * Builds and renders the create or edit form for a catalog definition.
+     *
+     * Responsibility: Builds and renders the create or edit form for a catalog definition.
      * @param array<string, mixed>|null $catalog
      */
     private function renderForm(string $title, ?array $catalog, ?array $claim = null): Response
@@ -386,7 +419,9 @@ final class CatalogController extends Controller
     }
 
     /**
-     * Renders the current view state.
+     * Builds and renders catalog details, including items, timeline and workflow state.
+     *
+     * Responsibility: Builds and renders catalog details, including items, timeline and workflow state.
      */
     private function renderShow(int $id): Response
     {
@@ -432,6 +467,9 @@ final class CatalogController extends Controller
     }
 
     /**
+     * Builds and renders the create or edit form for one catalog item.
+     *
+     * Responsibility: Builds and renders the create or edit form for one catalog item.
      * @param array<string, mixed> $catalog
      * @param array<string, mixed>|null $item
      */
@@ -453,7 +491,9 @@ final class CatalogController extends Controller
     }
 
     /**
-     * Loads the requested data.
+     * Loads an item only when it belongs to the selected catalog definition.
+     *
+     * Responsibility: Loads an item only when it belongs to the selected catalog definition.
      */
     private function loadCatalogItemModel(int $catalogId, int $itemId): ?CatalogItem
     {

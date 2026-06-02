@@ -55,6 +55,7 @@ use Catalyst\Helpers\Log\Logger;
  *   }
  *
  * @package Catalyst\Framework\Traits
+ * Responsibility: Loads feature configuration once per instance with resilient defaults.
  */
 trait LoadsFeatureConfigTrait
 {
@@ -64,9 +65,9 @@ trait LoadsFeatureConfigTrait
     private bool $featureReady = false;
 
     /**
-     * Load a config section, merging JSON values over $defaults.
-     * Cached per instance: subsequent calls return the same array.
+     * Load a config section, merging JSON values over $defaults. Cached per instance: subsequent calls return the same array.
      *
+     * Responsibility: Load a config section, merging JSON values over $defaults. Cached per instance: subsequent calls return the same array.
      * @param string               $section  Key matching the JSON file and inner key (e.g. 'cors')
      * @param array<string, mixed> $defaults Fallback values; 'enabled'=>true is always injected
      * @return array<string, mixed>
@@ -102,7 +103,9 @@ trait LoadsFeatureConfigTrait
     }
 
     /**
-     * Handles the warn missing config workflow.
+     * Logs and reports a missing feature configuration section.
+     *
+     * Responsibility: Logs and reports a missing feature configuration section.
      */
     private function warnMissingConfig(string $section): void
     {

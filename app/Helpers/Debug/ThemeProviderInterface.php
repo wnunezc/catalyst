@@ -35,6 +35,9 @@ namespace Catalyst\Helpers\Debug;
  *
  * This interface defines the required methods for classes that provide
  * color themes for the Dumper component.
+ *
+ * @package Catalyst\Helpers\Debug;
+ * Responsibility: Defines the palette operations required from dumper theme providers.
  */
 interface ThemeProviderInterface
 {

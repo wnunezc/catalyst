@@ -53,10 +53,10 @@ use Catalyst\Repository\Automation\Support\AutomationRuleShowDataFactory;
 use RuntimeException;
 
 /**
- * Defines the Automation Rule Controller class contract.
+ * Serves the administrative automation rule workflow.
  *
  * @package Catalyst\Repository\Automation\Controllers
- * Responsibility: Coordinates the automation rule controller behavior within its module boundary.
+ * Responsibility: Render automation rule screens and coordinate authorized CRUD, execution and workflow actions.
  */
 final class AutomationRuleController extends Controller
 {
@@ -64,6 +64,8 @@ final class AutomationRuleController extends Controller
 
     /**
      * Initializes the Automation Rule Controller instance.
+     *
+     * Responsibility: Initializes the Automation Rule Controller instance.
      */
     public function __construct(
         private readonly AutomationRuleRepository $repository,
@@ -79,7 +81,9 @@ final class AutomationRuleController extends Controller
     }
 
     /**
-     * Handles the index workflow.
+     * Renders the searchable automation rule listing.
+     *
+     * Responsibility: Renders the searchable automation rule listing.
      */
     public function index(Request $request): Response
     {
@@ -93,7 +97,9 @@ final class AutomationRuleController extends Controller
     }
 
     /**
-     * Handles the create workflow.
+     * Renders the automation rule creation form.
+     *
+     * Responsibility: Renders the automation rule creation form.
      */
     public function create(Request $request): Response
     {
@@ -103,7 +109,9 @@ final class AutomationRuleController extends Controller
     }
 
     /**
-     * Handles the persistence workflow.
+     * Persists a validated automation rule and redirects to its detail view.
+     *
+     * Responsibility: Persists a validated automation rule and redirects to its detail view.
      */
     public function store(AutomationRuleRequest $request): Response
     {
@@ -114,7 +122,9 @@ final class AutomationRuleController extends Controller
     }
 
     /**
-     * Handles the detail display workflow.
+     * Renders the selected automation rule detail view.
+     *
+     * Responsibility: Renders the selected automation rule detail view.
      */
     public function show(Request $request, string $id): Response
     {
@@ -122,7 +132,9 @@ final class AutomationRuleController extends Controller
     }
 
     /**
-     * Handles the edit workflow.
+     * Acquires a record claim and renders the automation rule edit form.
+     *
+     * Responsibility: Acquires a record claim and renders the automation rule edit form.
      */
     public function edit(Request $request, string $id): Response
     {
@@ -149,7 +161,9 @@ final class AutomationRuleController extends Controller
     }
 
     /**
-     * Handles the update workflow.
+     * Updates an automation rule while handling concurrency conflicts.
+     *
+     * Responsibility: Updates an automation rule while handling concurrency conflicts.
      */
     public function update(AutomationRuleRequest $request, string $id): Response
     {
@@ -173,7 +187,9 @@ final class AutomationRuleController extends Controller
     }
 
     /**
-     * Handles the destroy workflow.
+     * Deletes an automation rule through the claim-protected mutation service.
+     *
+     * Responsibility: Deletes an automation rule through the claim-protected mutation service.
      */
     public function destroy(Request $request, string $id): Response
     {
@@ -195,6 +211,8 @@ final class AutomationRuleController extends Controller
 
     /**
      * Executes the command workflow.
+     *
+     * Responsibility: Executes the command workflow.
      */
     public function run(AutomationRunContextRequest $request, string $id): Response
     {
@@ -235,7 +253,9 @@ final class AutomationRuleController extends Controller
     }
 
     /**
-     * Handles the transition workflow.
+     * Applies the requested workflow transition to an automation rule.
+     *
+     * Responsibility: Applies the requested workflow transition to an automation rule.
      */
     public function transition(Request $request, string $id): Response
     {
@@ -259,7 +279,9 @@ final class AutomationRuleController extends Controller
     }
 
     /**
-     * Handles the restore version workflow.
+     * Restores a selected captured version of an automation rule.
+     *
+     * Responsibility: Restores a selected captured version of an automation rule.
      */
     public function restoreVersion(Request $request, string $id, string $versionId): Response
     {
@@ -280,7 +302,9 @@ final class AutomationRuleController extends Controller
     }
 
     /**
-     * Renders the current view state.
+     * Builds and renders the automation rule detail state, including its record claim snapshot.
+     *
+     * Responsibility: Builds and renders the automation rule detail state, including its record claim snapshot.
      */
     private function renderShow(int $id): Response
     {
@@ -308,6 +332,9 @@ final class AutomationRuleController extends Controller
     }
 
     /**
+     * Builds and renders the create or edit form for an automation rule.
+     *
+     * Responsibility: Builds and renders the create or edit form for an automation rule.
      * @param array<string, mixed>|null $rule
      * @param array<string, mixed>|null $claim
      */

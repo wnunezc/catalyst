@@ -41,26 +41,18 @@ use Catalyst\Framework\Mail\MailManager;
 use Catalyst\Helpers\Config\ConfigManager;
 use Exception;
 
-/**************************************************************************************
- * RegisterController — new user registration with email verification.
- *
- * Routes:
- *   GET  /register → showForm()
- *   POST /register → register()
- *
- * @package Catalyst\Repository\Auth\Controllers
- */
 /**
- * Defines the Register Controller class contract.
+ * Handles self-service account registration and email verification delivery.
  *
  * @package Catalyst\Repository\Auth\Controllers
- * Responsibility: Coordinates the register controller behavior within its module boundary.
+ * Responsibility: Validates registration input, creates unverified users, and sends one-time verification links.
  */
 class RegisterController extends Controller
 {
     /**
      * Show the registration form.
      *
+     * Responsibility: Show the registration form.
      * @param Request $request
      * @return Response
      */
@@ -75,6 +67,7 @@ class RegisterController extends Controller
     /**
      * Process registration and send email verification link.
      *
+     * Responsibility: Process registration and send email verification link.
      * @param Request $request
      * @return Response
      */
@@ -172,6 +165,7 @@ class RegisterController extends Controller
     /**
      * Send the email-verification message.
      *
+     * Responsibility: Send the email-verification message.
      * @param string $email
      * @param string $name
      * @param string $rawToken
@@ -203,7 +197,9 @@ class RegisterController extends Controller
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves the public application URL used to build verification links.
+     *
+     * Responsibility: Resolves the public application URL used to build verification links.
      */
     private function resolveAppUrl(): string
     {

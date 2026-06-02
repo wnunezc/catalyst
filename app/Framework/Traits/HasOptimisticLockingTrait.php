@@ -33,10 +33,10 @@ namespace Catalyst\Framework\Traits;
 use Catalyst\Framework\Database\Model;
 
 /**
- * Defines the Has Optimistic Locking Trait trait contract.
+ * Adds lock-version checks to model updates.
  *
  * @package Catalyst\Framework\Traits
- * Responsibility: Coordinates the has optimistic locking trait behavior within its module boundary.
+ * Responsibility: Rejects stale writes and increments optimistic lock versions.
  */
 trait HasOptimisticLockingTrait
 {
@@ -44,7 +44,7 @@ trait HasOptimisticLockingTrait
     public const LOCK_VERSION = 'lock_version';
 
     /**
-     * Handles the boot has optimistic locking trait workflow.
+     * Registers the update hook that validates and increments lock versions.
      */
     protected static function bootHasOptimisticLockingTrait(): void
     {
@@ -58,7 +58,9 @@ trait HasOptimisticLockingTrait
     }
 
     /**
-     * Handles the current lock version workflow.
+     * Returns the model's current lock version.
+     *
+     * Responsibility: Returns the model's current lock version.
      */
     public function currentLockVersion(): ?int
     {

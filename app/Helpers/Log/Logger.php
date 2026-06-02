@@ -37,6 +37,7 @@ use Exception;
  * Logger class for recording system events, errors, and user activities
  *
  * @package Catalyst\Helpers\Log;
+ * Responsibility: Filters, sanitizes, formats and writes application log events.
  */
 class Logger
 {
@@ -67,7 +68,9 @@ class Logger
     private string $requestId;
 
     /**
-     * Logger constructor.
+     * Initializes logger settings, directory readiness and formatting collaborators.
+     *
+     * Responsibility: Prepares the singleton logger pipeline used by channel writers and context sanitization.
      */
     protected function __construct()
     {
@@ -86,8 +89,9 @@ class Logger
     }
 
     /**
-     * Configure logger settings - will only run once per request
+     * Configure logger settings - will only run once per request.
      *
+     * Responsibility: Configure logger settings - will only run once per request.
      * @param array $config Configuration options
      * @return self For method chaining
      */
@@ -104,8 +108,9 @@ class Logger
     }
 
     /**
-     * Log a message with a specific level
+     * Log a message with a specific level.
      *
+     * Responsibility: Log a message with a specific level.
      * @param string $level Log level
      * @param string $message Log message
      * @param array $context Additional context data
@@ -136,7 +141,9 @@ class Logger
     }
 
     /**
-     * Determines whether should Log Web Asset Request.
+     * Determines whether the current asset request should emit the given level.
+     *
+     * Responsibility: Determines whether the current asset request should emit the given level.
      */
     private function shouldLogWebAssetRequest(string $level): bool
     {
@@ -156,8 +163,9 @@ class Logger
     }
 
     /**
-     * Get a unique ID for this request
+     * Get a unique ID for this request.
      *
+     * Responsibility: Get a unique ID for this request.
      * @return string Request ID
      */
     private function getRequestId(): string
@@ -166,6 +174,9 @@ class Logger
     }
 
     /**
+     * Logs a mail-related event through the standard info channel.
+     *
+     * Responsibility: Logs a mail-related event through the standard info channel.
      * @param string $event
      * @param string $message
      * @param array $context
@@ -180,8 +191,9 @@ class Logger
     }
 
     /**
-     * Display log in the terminal or browser - will only be used if explicitly enabled
+     * Display log in the terminal or browser - will only be used if explicitly enabled.
      *
+     * Responsibility: Display log in the terminal or browser - will only be used if explicitly enabled.
      * @param string $level Log level
      * @param string $logEntry Formatted log entry
      * @return void
@@ -201,8 +213,9 @@ class Logger
     }
 
     /**
-     * Log an emergency message
+     * Log an emergency message.
      *
+     * Responsibility: Log an emergency message.
      * @param string $message MailMessage to log
      * @param array $context Additional context
      * @return void Success status
@@ -214,8 +227,9 @@ class Logger
     }
 
     /**
-     * Log an alert message
+     * Log an alert message.
      *
+     * Responsibility: Log an alert message.
      * @param string $message MailMessage to log
      * @param array $context Additional context
      * @return void Success status
@@ -227,8 +241,9 @@ class Logger
     }
 
     /**
-     * Log a critical message
+     * Log a critical message.
      *
+     * Responsibility: Log a critical message.
      * @param string $message MailMessage to log
      * @param array $context Additional context
      * @return void Success status
@@ -240,8 +255,9 @@ class Logger
     }
 
     /**
-     * Log an error message
+     * Log an error message.
      *
+     * Responsibility: Log an error message.
      * @param string $message MailMessage to log
      * @param array $context Additional context
      * @return void Success status
@@ -253,8 +269,9 @@ class Logger
     }
 
     /**
-     * Log a warning message
+     * Log a warning message.
      *
+     * Responsibility: Log a warning message.
      * @param string $message MailMessage to log
      * @param array $context Additional context
      * @return void Success status
@@ -266,8 +283,9 @@ class Logger
     }
 
     /**
-     * Log a notice message
+     * Log a notice message.
      *
+     * Responsibility: Log a notice message.
      * @param string $message MailMessage to log
      * @param array $context Additional context
      * @return void Success status
@@ -279,8 +297,9 @@ class Logger
     }
 
     /**
-     * Log an info message
+     * Log an info message.
      *
+     * Responsibility: Log an info message.
      * @param string $message MailMessage to log
      * @param array $context Additional context
      * @return void Success status
@@ -292,8 +311,9 @@ class Logger
     }
 
     /**
-     * Log a debug message
+     * Log a debug message.
      *
+     * Responsibility: Log a debug message.
      * @param string $message MailMessage to log
      * @param array $context Additional context
      * @return void Success status
@@ -305,7 +325,9 @@ class Logger
     }
 
     /**
-     * Log a system event
+     * Records a system event through the standard informational log channel.
+     *
+     * Responsibility: Adds system event metadata before delegating sanitized context to the shared logger pipeline.
      *
      * @param string $event Event name
      * @param string $message Event description
@@ -321,7 +343,9 @@ class Logger
     }
 
     /**
-     * Log an email event
+     * Records a mail delivery event in the dedicated email log stream.
+     *
+     * Responsibility: Sanitizes email context and writes a formatted delivery entry through the logger writer.
      *
      * @param string $to Recipient email
      * @param string $subject Email subject
@@ -343,7 +367,9 @@ class Logger
     }
 
     /**
-     * Log a user event
+     * Records an application user event through the standard informational log channel.
+     *
+     * Responsibility: Adds user event metadata before delegating sanitized context to the shared logger pipeline.
      *
      * @param string $event Event name
      * @param string $message Event description

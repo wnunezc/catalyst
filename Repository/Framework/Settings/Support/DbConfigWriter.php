@@ -33,15 +33,17 @@ namespace Catalyst\Repository\Settings\Support;
 use Catalyst\Helpers\Config\ConfigManager;
 
 /**
- * Defines the Db Config Writer class contract.
+ * Writes database settings and probes the resulting connection.
  *
  * @package Catalyst\Repository\Settings\Support
- * Responsibility: Coordinates the db config writer behavior within its module boundary.
+ * Responsibility: Persists database credentials, retaining an unchanged password, and returns connection readiness.
  */
 final class DbConfigWriter
 {
     /**
      * Initializes the Db Config Writer instance.
+     *
+     * Responsibility: Initializes the Db Config Writer instance.
      */
     public function __construct(
         private readonly DbConnectivityProbe $probe = new DbConnectivityProbe()
@@ -49,6 +51,9 @@ final class DbConfigWriter
     }
 
     /**
+     * Saves database settings and returns the connectivity probe result.
+     *
+     * Responsibility: Saves database settings and returns the connectivity probe result.
      * @param array<string, mixed> $data
      */
     public function save(array $data): string

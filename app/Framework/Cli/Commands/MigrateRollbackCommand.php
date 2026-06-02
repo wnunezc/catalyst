@@ -37,15 +37,18 @@ use Catalyst\Framework\Database\MigrationRunner;
 use Throwable;
 
 /**
- * Defines the Migrate Rollback Command class contract.
+ * migrate:rollback CLI command.
+ *
+ * Responsibility: Runs the migrate:rollback command to Rollback the most recent migration batch.
  *
  * @package Catalyst\Framework\Cli\Commands
- * Responsibility: Coordinates the migrate rollback command behavior within its module boundary.
  */
 class MigrateRollbackCommand extends AbstractCommand
 {
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -53,7 +56,9 @@ class MigrateRollbackCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
@@ -61,7 +66,9 @@ class MigrateRollbackCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {

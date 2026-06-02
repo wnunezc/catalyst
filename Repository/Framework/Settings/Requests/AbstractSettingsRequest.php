@@ -33,15 +33,17 @@ namespace Catalyst\Repository\Settings\Requests;
 use Catalyst\Framework\Http\FormRequest;
 
 /**
- * Defines the Abstract Settings Request class contract.
+ * Provides common input normalization for setup configuration requests.
  *
  * @package Catalyst\Repository\Settings\Requests
- * Responsibility: Coordinates the abstract settings request behavior within its module boundary.
+ * Responsibility: Normalizes scalar and boolean inputs and removes secrets from replayable validation state.
  */
 abstract class AbstractSettingsRequest extends FormRequest
 {
     /**
-     * Handles the string input workflow.
+     * Returns a trimmed string input value.
+     *
+     * Responsibility: Returns a trimmed string input value.
      */
     protected function stringInput(string $key, string $default = ''): string
     {
@@ -49,7 +51,9 @@ abstract class AbstractSettingsRequest extends FormRequest
     }
 
     /**
-     * Handles the lower string input workflow.
+     * Returns a trimmed lowercase string input value.
+     *
+     * Responsibility: Returns a trimmed lowercase string input value.
      */
     protected function lowerStringInput(string $key, string $default = ''): string
     {
@@ -57,7 +61,9 @@ abstract class AbstractSettingsRequest extends FormRequest
     }
 
     /**
-     * Handles the boolean flag workflow.
+     * Reads a checkbox-like input value as a boolean.
+     *
+     * Responsibility: Reads a checkbox-like input value as a boolean.
      */
     protected function booleanFlag(string $key, bool $default = false): bool
     {
@@ -67,6 +73,9 @@ abstract class AbstractSettingsRequest extends FormRequest
     }
 
     /**
+     * Removes sensitive fields before failed input is replayed.
+     *
+     * Responsibility: Removes sensitive fields before failed input is replayed.
      * @param array<string, mixed> $data
      * @return array<string, mixed>
      */

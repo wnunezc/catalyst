@@ -34,24 +34,28 @@ use Catalyst\Framework\Http\Request;
 use Catalyst\Repository\Operations\Requests\Concerns\NormalizesCheckboxValues;
 
 /**
- * Defines the Locale Sync Request class contract.
+ * Reads locale synchronization input from an HTTP request.
  *
  * @package Catalyst\Repository\Operations\Requests
- * Responsibility: Coordinates the locale sync request behavior within its module boundary.
+ * Responsibility: Supplies normalized locale synchronization fields to the controller.
  */
 final class LocaleSyncRequest
 {
     use NormalizesCheckboxValues;
 
     /**
-     * Initializes the Locale Sync Request instance.
+     * Wraps the incoming HTTP request used to read synchronization fields.
+     *
+     * Responsibility: Wraps the incoming HTTP request used to read synchronization fields.
      */
     public function __construct(private readonly Request $request)
     {
     }
 
     /**
-     * Handles the locale workflow.
+     * Returns the locale code requested for synchronization.
+     *
+     * Responsibility: Returns the locale code requested for synchronization.
      */
     public function locale(): string
     {
@@ -59,7 +63,9 @@ final class LocaleSyncRequest
     }
 
     /**
-     * Handles the dry run workflow.
+     * Returns whether locale synchronization should run as a preview.
+     *
+     * Responsibility: Returns whether locale synchronization should run as a preview.
      */
     public function dryRun(): bool
     {

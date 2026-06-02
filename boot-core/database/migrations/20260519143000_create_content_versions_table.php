@@ -4,13 +4,29 @@ declare(strict_types=1);
 
 use Catalyst\Framework\Database\Migration;
 
+/**
+ * Creates the table that stores content versions.
+ *
+ * @package Catalyst\BootCore\Database\Migrations
+ * Responsibility: Provision and remove resource snapshot and change history persistence.
+ */
 return new class extends Migration
 {
+    /**
+     * Returns the timestamp identifier used by the migration runner to order and track this migration.
+     *
+     * Responsibility: Returns the timestamp identifier used by the migration runner to order and track this migration.
+     */
     public function getVersion(): string
     {
         return '20260519143000';
     }
 
+    /**
+     * Creates the content versions table when it is absent.
+     *
+     * Responsibility: Creates the content versions table when it is absent.
+     */
     public function up(): void
     {
         if ($this->tableExists('content_versions')) {
@@ -36,6 +52,11 @@ return new class extends Migration
         );
     }
 
+    /**
+     * Removes the content versions table when it exists.
+     *
+     * Responsibility: Removes the content versions table when it exists.
+     */
     public function down(): void
     {
         if (!$this->tableExists('content_versions')) {

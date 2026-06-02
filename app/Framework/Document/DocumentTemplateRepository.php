@@ -39,10 +39,10 @@ use Catalyst\Helpers\Log\Logger;
 use Exception;
 
 /**
- * Defines the Document Template Repository class contract.
+ * Repository for tenant document templates and artifacts.
  *
  * @package Catalyst\Framework\Document
- * Responsibility: Coordinates the document template repository behavior within its module boundary.
+ * Responsibility: Persists, reads, searches, archives, and purges document template and artifact records.
  */
 final class DocumentTemplateRepository
 {
@@ -53,6 +53,8 @@ final class DocumentTemplateRepository
 
     /**
      * Initializes the Document Template Repository instance.
+     *
+     * Responsibility: Initializes the Document Template Repository instance.
      */
     protected function __construct()
     {
@@ -61,6 +63,9 @@ final class DocumentTemplateRepository
     }
 
     /**
+     * Coordinates the search method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the search method responsibility within its owning class.
      * @param array<string, mixed> $criteria
      * @return array{rows: array<int, array<string, mixed>>, total: int}
      */
@@ -152,6 +157,9 @@ final class DocumentTemplateRepository
     }
 
     /**
+     * Coordinates the find method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the find method responsibility within its owning class.
      * @return array<string, mixed>|null
      */
     public function find(int $id): ?array
@@ -177,6 +185,8 @@ final class DocumentTemplateRepository
 
     /**
      * Finds the requested record.
+     *
+     * Responsibility: Finds the requested record.
      */
     public function findModel(int $id): ?DocumentTemplate
     {
@@ -184,6 +194,9 @@ final class DocumentTemplateRepository
     }
 
     /**
+     * Coordinates the artifacts for template method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the artifacts for template method responsibility within its owning class.
      * @return array<int, array<string, mixed>>
      */
     public function artifactsForTemplate(int $templateId): array
@@ -205,6 +218,8 @@ final class DocumentTemplateRepository
 
     /**
      * Finds the requested record.
+     *
+     * Responsibility: Finds the requested record.
      */
     public function findArtifactModel(int $artifactId): ?DocumentArtifact
     {
@@ -212,7 +227,9 @@ final class DocumentTemplateRepository
     }
 
     /**
-     * Handles the current tenant id workflow.
+     * Resolves the active tenant id for document repository queries.
+     *
+     * Responsibility: Resolves the active tenant id for document repository queries.
      */
     private function currentTenantId(): int
     {

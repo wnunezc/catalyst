@@ -33,7 +33,10 @@ namespace Catalyst\Framework\Auth;
 use Catalyst\Helpers\Config\ConfigManager;
 
 /**
- * AuthInputGuard centralizes small security checks shared by public auth flows.
+ * Validates and normalizes public authentication inputs.
+ *
+ * @package Catalyst\Framework\Auth
+ * Responsibility: Guard redirect targets, auth tokens, MFA codes and password-policy checks at auth boundaries.
  */
 final class AuthInputGuard
 {
@@ -75,7 +78,7 @@ final class AuthInputGuard
     }
 
     /**
-     * Determines whether is Raw Token.
+     * Checks whether a token matches the expected raw 64-character hex format.
      */
     public static function isRawToken(string $token): bool
     {
@@ -83,7 +86,7 @@ final class AuthInputGuard
     }
 
     /**
-     * Normalizes the provided value.
+     * Trims and uppercases an MFA code candidate before validation or comparison.
      */
     public static function normalizeMfaCode(string $code): string
     {
@@ -91,7 +94,7 @@ final class AuthInputGuard
     }
 
     /**
-     * Determines whether is Mfa Code Candidate.
+     * Checks whether input could be a TOTP code or backup MFA code.
      */
     public static function isMfaCodeCandidate(string $code): bool
     {
@@ -133,7 +136,11 @@ final class AuthInputGuard
         ];
     }
 
-    /** @return array<string, list<string>> */
+    /**
+     * Builds translated password-policy validation errors for the supplied password.
+     *
+     * @return array<string, list<string>>
+     */
     public static function passwordPolicyErrors(string $password): array
     {
         $policy = self::passwordPolicy();
@@ -159,7 +166,7 @@ final class AuthInputGuard
     }
 
     /**
-     * Handles the fallback path workflow.
+     * Normalizes redirect fallback values to local absolute paths.
      */
     private static function fallbackPath(string $fallback): string
     {
@@ -170,7 +177,7 @@ final class AuthInputGuard
     }
 
     /**
-     * Handles the boolean workflow.
+     * Converts config-style boolean values into strict booleans.
      */
     private static function boolean(mixed $value): bool
     {

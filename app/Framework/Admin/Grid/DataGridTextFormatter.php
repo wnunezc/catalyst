@@ -31,15 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Admin\Grid;
 
 /**
- * Defines the Data Grid Text Formatter class contract.
+ * Provides small text formatting helpers for DataGrid metadata.
  *
  * @package Catalyst\Framework\Admin\Grid
- * Responsibility: Coordinates the data grid text formatter behavior within its module boundary.
+ * Responsibility: Generates human-readable labels and filesystem-safe export slugs from configured keys.
  */
 final class DataGridTextFormatter
 {
     /**
-     * Handles the humanize workflow.
+     * Converts snake-case or kebab-case identifiers into display labels.
+     *
+     * Responsibility: Converts snake-case or kebab-case identifiers into display labels.
      */
     public function humanize(string $value): string
     {
@@ -49,7 +51,9 @@ final class DataGridTextFormatter
     }
 
     /**
-     * Handles the slugify workflow.
+     * Converts export names into lowercase URL/file slugs with a fallback for empty values.
+     *
+     * Responsibility: Converts export names into lowercase URL/file slugs with a fallback for empty values.
      */
     public function slugify(string $value, string $fallback = 'grid-export'): string
     {

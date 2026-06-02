@@ -40,16 +40,19 @@ use Catalyst\Helpers\Config\ConfigManager;
 use RuntimeException;
 
 /**
- * Defines the Plugin Manager class contract.
+ * Manages effective plugin enablement state.
  *
  * @package Catalyst\Framework\Plugin
- * Responsibility: Coordinates the plugin manager behavior within its module boundary.
+ * Responsibility: Reads plugin configuration, toggles optional plugins, audits changes, and refreshes discovery caches.
  */
 final class PluginManager
 {
     use SingletonTrait;
 
     /**
+     * Returns registered plugins annotated with their effective state.
+     *
+     * Responsibility: Returns registered plugins annotated with their effective state.
      * @return array<int, array<string, mixed>>
      */
     public function all(): array
@@ -72,6 +75,9 @@ final class PluginManager
     }
 
     /**
+     * Finds an effective plugin definition by key.
+     *
+     * Responsibility: Finds an effective plugin definition by key.
      * @return array<string, mixed>|null
      */
     public function find(string $pluginKey): ?array
@@ -86,7 +92,9 @@ final class PluginManager
     }
 
     /**
-     * Determines whether is Enabled.
+     * Determines whether a plugin is enabled at runtime.
+     *
+     * Responsibility: Determines whether a plugin is enabled at runtime.
      */
     public function isEnabled(string $pluginKey): bool
     {
@@ -96,6 +104,9 @@ final class PluginManager
     }
 
     /**
+     * Returns plugin state overrides from configuration.
+     *
+     * Responsibility: Returns plugin state overrides from configuration.
      * @return array<string, array<string, mixed>>
      */
     public function configStates(): array
@@ -107,7 +118,9 @@ final class PluginManager
     }
 
     /**
-     * Determines whether should Load Module.
+     * Determines whether a module should load according to its owning plugin.
+     *
+     * Responsibility: Determines whether a module should load according to its owning plugin.
      */
     public function shouldLoadModule(string $moduleKey): bool
     {
@@ -120,7 +133,9 @@ final class PluginManager
     }
 
     /**
-     * Updates the enabled value.
+     * Persists an optional plugin state change and refreshes runtime discovery.
+     *
+     * Responsibility: Persists an optional plugin state change and refreshes runtime discovery.
      */
     public function setEnabled(string $pluginKey, bool $enabled): void
     {
@@ -157,7 +172,9 @@ final class PluginManager
     }
 
     /**
-     * Handles the refresh route discovery workflow.
+     * Flushes registries and route discovery after a plugin state change.
+     *
+     * Responsibility: Flushes registries and route discovery after a plugin state change.
      */
     private function refreshRouteDiscovery(): void
     {

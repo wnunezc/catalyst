@@ -31,14 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Document\Pdf;
 
 /**
- * Defines the Simple Pdf Writer class contract.
+ * Minimal PDF writer for rendered document content.
  *
  * @package Catalyst\Framework\Document\Pdf
- * Responsibility: Coordinates the simple pdf writer behavior within its module boundary.
+ * Responsibility: Builds a basic PDF document stream from title and text content without external rendering dependencies.
  */
 final class SimplePdfWriter implements PdfRendererInterface
 {
     /**
+     * Coordinates the render method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the render method responsibility within its owning class.
      * @param array<string, mixed> $watermark
      */
     public function render(string $title, string $body, array $watermark = []): string
@@ -128,6 +131,9 @@ final class SimplePdfWriter implements PdfRendererInterface
     }
 
     /**
+     * Coordinates the build pages method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the build pages method responsibility within its owning class.
      * @param array<string, mixed> $watermark
      * @param array<string, mixed>|null $watermarkImage
      * @return array<int, array{stream: string}>
@@ -230,6 +236,9 @@ final class SimplePdfWriter implements PdfRendererInterface
     }
 
     /**
+     * Coordinates the wrap line method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the wrap line method responsibility within its owning class.
      * @return array<int, string>
      */
     private function wrapLine(string $line, int $width): array
@@ -240,7 +249,9 @@ final class SimplePdfWriter implements PdfRendererInterface
     }
 
     /**
-     * Handles the escape text workflow.
+     * Escapes PDF text content for safe string embedding.
+     *
+     * Responsibility: Escapes PDF text content for safe string embedding.
      */
     private function escapeText(string $text): string
     {
@@ -252,6 +263,9 @@ final class SimplePdfWriter implements PdfRendererInterface
     }
 
     /**
+     * Coordinates the hex to rgb fraction method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the hex to rgb fraction method responsibility within its owning class.
      * @return array{0: float, 1: float, 2: float}
      */
     private function hexToRgbFraction(string $hex): array
@@ -269,6 +283,9 @@ final class SimplePdfWriter implements PdfRendererInterface
     }
 
     /**
+     * Coordinates the load watermark image method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the load watermark image method responsibility within its owning class.
      * @param array<string, mixed> $watermark
      * @return array{bytes: string, width: int, height: int}|null
      */
@@ -302,6 +319,9 @@ final class SimplePdfWriter implements PdfRendererInterface
     }
 
     /**
+     * Coordinates the watermark image placement method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the watermark image placement method responsibility within its owning class.
      * @param array<string, mixed> $image
      * @param array<string, mixed> $watermark
      * @return array{0: float, 1: float, 2: float, 3: float}

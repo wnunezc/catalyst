@@ -31,36 +31,36 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Argument;
 
 /**
- * Container for parsed CLI arguments
- *
- * Stores options and parameters in a structured way
+ * Stores parsed CLI options, positional parameters, and the original argv array.
  *
  * @package Catalyst\Framework\Argument
+ * Responsibility: Provides lookup, existence checks, counts, and array conversion for parsed command-line input.
  */
 class ArgumentBag
 {
     /**
-     * Options (flags) indexed by name
+     * Stores parsed options indexed by their primary name.
      *
      * @var array<string, Option>
      */
     private array $options = [];
 
     /**
-     * Parameters indexed by position
+     * Stores parsed positional parameters indexed by numeric position.
      *
      * @var array<int, Parameter>
      */
     private array $parameters = [];
 
     /**
-     * Raw argv array
+     * Stores the original argv array for consumers that need unparsed input.
      */
     private array $raw = [];
 
     /**
-     * Constructor
+     * Captures the original argv array before options and parameters are added.
      *
+     * Responsibility: Captures the original argv array before options and parameters are added.
      * @param array $raw Raw argv array
      */
     public function __construct(array $raw = [])
@@ -69,8 +69,9 @@ class ArgumentBag
     }
 
     /**
-     * Add an option
+     * Adds an option to the bag using its primary short or long name.
      *
+     * Responsibility: Adds an option to the bag using its primary short or long name.
      * @param Option $option
      * @return self
      */
@@ -85,8 +86,9 @@ class ArgumentBag
     }
 
     /**
-     * Add a parameter
+     * Adds a positional parameter to the bag by its declared position.
      *
+     * Responsibility: Adds a positional parameter to the bag by its declared position.
      * @param Parameter $parameter
      * @return self
      */
@@ -97,8 +99,9 @@ class ArgumentBag
     }
 
     /**
-     * Get option by name (short or long)
+     * Finds a parsed option by direct key, short name, or long name.
      *
+     * Responsibility: Finds a parsed option by direct key, short name, or long name.
      * @param string $name Option name
      * @return Option|null
      */
@@ -120,8 +123,9 @@ class ArgumentBag
     }
 
     /**
-     * Get parameter by position
+     * Returns the positional parameter stored at the requested index.
      *
+     * Responsibility: Returns the positional parameter stored at the requested index.
      * @param int $position Position index
      * @return Parameter|null
      */
@@ -131,8 +135,9 @@ class ArgumentBag
     }
 
     /**
-     * Check if option exists
+     * Checks whether a parsed option exists by short or long name.
      *
+     * Responsibility: Checks whether a parsed option exists by short or long name.
      * @param string $name Option name
      * @return bool
      */
@@ -142,8 +147,9 @@ class ArgumentBag
     }
 
     /**
-     * Check if parameter exists at position
+     * Checks whether a positional parameter exists at the requested index.
      *
+     * Responsibility: Checks whether a positional parameter exists at the requested index.
      * @param int $position Position index
      * @return bool
      */
@@ -153,8 +159,9 @@ class ArgumentBag
     }
 
     /**
-     * Get option value
+     * Returns a parsed option value or the supplied default when absent.
      *
+     * Responsibility: Returns a parsed option value or the supplied default when absent.
      * @param string $name Option name
      * @param mixed $default Default value if not found
      * @return mixed
@@ -166,8 +173,9 @@ class ArgumentBag
     }
 
     /**
-     * Get parameter value
+     * Returns a positional parameter value or the supplied default when absent.
      *
+     * Responsibility: Returns a positional parameter value or the supplied default when absent.
      * @param int $position Position index
      * @param mixed $default Default value if not found
      * @return mixed
@@ -179,8 +187,9 @@ class ArgumentBag
     }
 
     /**
-     * Get all options
+     * Returns all parsed options indexed by primary name.
      *
+     * Responsibility: Returns all parsed options indexed by primary name.
      * @return array<string, Option>
      */
     public function getAllOptions(): array
@@ -189,8 +198,9 @@ class ArgumentBag
     }
 
     /**
-     * Get all parameters
+     * Returns all parsed positional parameters indexed by position.
      *
+     * Responsibility: Returns all parsed positional parameters indexed by position.
      * @return array<int, Parameter>
      */
     public function getAllParameters(): array
@@ -199,17 +209,16 @@ class ArgumentBag
     }
 
     /**
-     * Convert to array format compatible with FileOutput.php
+     * Converts parsed options and parameters into the flat array format used by legacy CLI consumers.
      *
-     * Returns associative array with option names as keys
-     *
+     * Responsibility: Converts parsed options and parameters into the flat array format used by legacy CLI consumers.
      * @return array
      */
     public function toArray(): array
     {
         $result = [];
 
-        // Add all options with their values
+        // Expose options by both short and long names when available.
         foreach ($this->options as $option) {
             $shortName = $option->getShortName();
             $longName = $option->getLongName();
@@ -223,7 +232,7 @@ class ArgumentBag
             }
         }
 
-        // Add parameters as indexed array
+        // Preserve positional parameters under their numeric indexes.
         foreach ($this->parameters as $position => $parameter) {
             $result[$position] = $parameter->getValue();
         }
@@ -232,8 +241,9 @@ class ArgumentBag
     }
 
     /**
-     * Get raw argv
+     * Returns the original argv array captured by the bag.
      *
+     * Responsibility: Returns the original argv array captured by the bag.
      * @return array
      */
     public function getRaw(): array
@@ -242,8 +252,9 @@ class ArgumentBag
     }
 
     /**
-     * Count options
+     * Counts parsed options currently stored in the bag.
      *
+     * Responsibility: Counts parsed options currently stored in the bag.
      * @return int
      */
     public function countOptions(): int
@@ -252,8 +263,9 @@ class ArgumentBag
     }
 
     /**
-     * Count parameters
+     * Counts parsed positional parameters currently stored in the bag.
      *
+     * Responsibility: Counts parsed positional parameters currently stored in the bag.
      * @return int
      */
     public function countParameters(): int

@@ -36,10 +36,10 @@ use Catalyst\Framework\Traits\SingletonTrait;
 use Catalyst\Helpers\Log\Logger;
 
 /**
- * Defines the Deployment Run Repository class contract.
+ * Repository for deployment run records.
  *
  * @package Catalyst\Framework\Deployment
- * Responsibility: Coordinates the deployment run repository behavior within its module boundary.
+ * Responsibility: Searches, reads, creates, and updates deployment run persistence rows.
  */
 final class DeploymentRunRepository
 {
@@ -49,7 +49,9 @@ final class DeploymentRunRepository
     private Logger $logger;
 
     /**
-     * Initializes the Deployment Run Repository instance.
+     * Initializes database and logging collaborators for deployment run access.
+     *
+     * Responsibility: Initializes database and logging collaborators for deployment run access.
      */
     protected function __construct()
     {
@@ -58,6 +60,9 @@ final class DeploymentRunRepository
     }
 
     /**
+     * Searches deployment runs by text and status with pagination metadata.
+     *
+     * Responsibility: Searches deployment runs by text and status with pagination metadata.
      * @param array<string, mixed> $filters
      * @return array<string, mixed>
      */
@@ -107,6 +112,9 @@ final class DeploymentRunRepository
     }
 
     /**
+     * Returns all deployment runs ordered by start time.
+     *
+     * Responsibility: Returns all deployment runs ordered by start time.
      * @return array<int, array<string, mixed>>
      */
     public function all(): array
@@ -122,7 +130,9 @@ final class DeploymentRunRepository
     }
 
     /**
-     * Finds the requested record.
+     * Finds a deployment run row by id.
+     *
+     * Responsibility: Finds a deployment run row by id.
      */
     public function find(int $id): ?array
     {
@@ -138,7 +148,9 @@ final class DeploymentRunRepository
     }
 
     /**
-     * Finds the requested record.
+     * Finds a deployment run model by id.
+     *
+     * Responsibility: Finds a deployment run model by id.
      */
     public function findModel(int $id): ?DeploymentRun
     {
@@ -148,6 +160,9 @@ final class DeploymentRunRepository
     }
 
     /**
+     * Creates a deployment run model from payload data.
+     *
+     * Responsibility: Creates a deployment run model from payload data.
      * @param array<string, mixed> $payload
      */
     public function create(array $payload): DeploymentRun
@@ -159,6 +174,9 @@ final class DeploymentRunRepository
     }
 
     /**
+     * Updates an existing deployment run model with payload data.
+     *
+     * Responsibility: Updates an existing deployment run model with payload data.
      * @param array<string, mixed> $payload
      */
     public function update(DeploymentRun $model, array $payload): DeploymentRun

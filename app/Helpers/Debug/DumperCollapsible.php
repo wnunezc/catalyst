@@ -37,6 +37,7 @@ namespace Catalyst\Helpers\Debug;
  * allowing users to expand and collapse complex data structures for better readability.
  *
  * @package Catalyst\Helpers\Debug;
+ * Responsibility: Builds collapsible debug sections and their CSP-safe browser behavior.
  */
 class DumperCollapsible
 {
@@ -51,8 +52,9 @@ class DumperCollapsible
     private DumperColorizer $colorizer;
 
     /**
-     * Constructor
+     * Initializes the object with the collaborators or state required for its responsibility.
      *
+     * Responsibility: Initializes the object with the collaborators or state required for its responsibility.
      * @param DumperColorizer $colorizer Colorizer instance for text coloring
      */
     public function __construct(DumperColorizer $colorizer)
@@ -61,8 +63,9 @@ class DumperCollapsible
     }
 
     /**
-     * Reset the collapse counter
+     * Reset the collapse counter.
      *
+     * Responsibility: Reset the collapse counter.
      * @return void
      */
     public function resetCounter(): void
@@ -71,8 +74,9 @@ class DumperCollapsible
     }
 
     /**
-     * Create a collapsible section with a chevron toggle
+     * Create a collapsible section with a chevron toggle.
      *
+     * Responsibility: Create a collapsible section with a chevron toggle.
      * @param string $header Header content
      * @param string $content Content to be collapsed/expanded
      * @param bool $isHtml Whether to format for HTML output
@@ -120,12 +124,9 @@ class DumperCollapsible
     }
 
     /**
-     * Generate JavaScript code for collapsible functionality.
+     * Generate JavaScript code for collapsible functionality. CSP-safe: returns a function + a global click delegate on [data-dumper-collapse]. The delegate is attached only once per page even if multiple dumps are rendered (guarded by a window flag).
      *
-     * CSP-safe: returns a function + a global click delegate on
-     * [data-dumper-collapse]. The delegate is attached only once per page
-     * even if multiple dumps are rendered (guarded by a window flag).
-     *
+     * Responsibility: Generate JavaScript code for collapsible functionality. CSP-safe: returns a function + a global click delegate on [data-dumper-collapse]. The delegate is attached only once per page even if multiple dumps are rendered (guarded by a window flag).
      * @return string JavaScript code
      */
     public function getJavaScript(): string

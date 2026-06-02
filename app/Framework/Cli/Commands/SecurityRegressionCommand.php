@@ -51,14 +51,20 @@ use Throwable;
 use TypeError;
 
 /**
- * Defines the Security Regression Command class contract.
+ * security:regression CLI command.
+ *
+ * Responsibility: Runs the security:regression command to Run focused regressions for inline JSON, reset/remember and signed local cache payloads.
  *
  * @package Catalyst\Framework\Cli\Commands
- * Responsibility: Coordinates the security regression command behavior within its module boundary.
  */
 final class SecurityRegressionCommand extends AbstractCommand
 {
-    /** @return Option[] */
+    /**
+     * Defines the accepted option schema for this command.
+     *
+     * Responsibility: Defines the accepted option schema for this command.
+     * @return Option[]
+     */
     public function getOptions(): array
     {
         return [
@@ -67,7 +73,9 @@ final class SecurityRegressionCommand extends AbstractCommand
     }
 
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -75,7 +83,9 @@ final class SecurityRegressionCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
@@ -83,7 +93,9 @@ final class SecurityRegressionCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {
@@ -145,7 +157,9 @@ final class SecurityRegressionCommand extends AbstractCommand
     }
 
     /**
-     * @return array<string, mixed>
+     * Describes the assert inline json escaping helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the assert inline json escaping helper workflow used by this CLI component.
      */
     private function assertInlineJsonEscaping(): array
     {
@@ -161,7 +175,9 @@ final class SecurityRegressionCommand extends AbstractCommand
     }
 
     /**
-     * @return array<string, mixed>
+     * Describes the assert trusted html contract helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the assert trusted html contract helper workflow used by this CLI component.
      */
     private function assertTrustedHtmlContract(): array
     {
@@ -187,7 +203,9 @@ final class SecurityRegressionCommand extends AbstractCommand
     }
 
     /**
-     * @return array<string, mixed>
+     * Describes the assert private runtime storage helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the assert private runtime storage helper workflow used by this CLI component.
      */
     private function assertPrivateRuntimeStorage(): array
     {
@@ -215,7 +233,9 @@ final class SecurityRegressionCommand extends AbstractCommand
     }
 
     /**
-     * @return array<string, mixed>
+     * Describes the assert html allowlist sanitizer helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the assert html allowlist sanitizer helper workflow used by this CLI component.
      */
     private function assertHtmlAllowlistSanitizer(): array
     {
@@ -246,7 +266,9 @@ final class SecurityRegressionCommand extends AbstractCommand
     }
 
     /**
-     * @return array<string, mixed>
+     * Describes the assert remember token invalidation helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the assert remember token invalidation helper workflow used by this CLI component.
      */
     private function assertRememberTokenInvalidation(): array
     {
@@ -303,7 +325,9 @@ final class SecurityRegressionCommand extends AbstractCommand
     }
 
     /**
-     * @return array<string, mixed>
+     * Describes the assert signed file cache payloads helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the assert signed file cache payloads helper workflow used by this CLI component.
      */
     private function assertSignedFileCachePayloads(): array
     {
@@ -347,7 +371,9 @@ final class SecurityRegressionCommand extends AbstractCommand
     }
 
     /**
-     * @return array<string, mixed>
+     * Describes the assert route cache middleware signing helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the assert route cache middleware signing helper workflow used by this CLI component.
      */
     private function assertRouteCacheMiddlewareSigning(): array
     {
@@ -386,7 +412,9 @@ final class SecurityRegressionCommand extends AbstractCommand
     }
 
     /**
-     * Handles the cache path for key workflow.
+     * Describes the cache path for key helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the cache path for key helper workflow used by this CLI component.
      */
     private function cachePathForKey(string $baseDirectory, string $prefix, string $key): string
     {

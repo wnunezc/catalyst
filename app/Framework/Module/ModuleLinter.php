@@ -38,14 +38,17 @@ use Catalyst\Framework\Authorization\PermissionRegistry;
 use Catalyst\Framework\Navigation\NavigationRegistry;
 
 /**
- * Defines the Module Linter class contract.
+ * Validates structural contracts across runtime modules.
  *
  * @package Catalyst\Framework\Module
- * Responsibility: Coordinates the module linter behavior within its module boundary.
+ * Responsibility: Detects manifest, routing, asset, permission, navigation, and plugin inconsistencies.
  */
 final class ModuleLinter
 {
     /**
+     * Runs every module consistency check and returns the aggregated report.
+     *
+     * Responsibility: Runs every module consistency check and returns the aggregated report.
      * @return array<string, mixed>
      */
     public function lint(): array
@@ -90,7 +93,9 @@ final class ModuleLinter
     }
 
     /**
-     * Handles the ensure routes loaded workflow.
+     * Ensures CLI route definitions are loaded before linting.
+     *
+     * Responsibility: Ensures CLI route definitions are loaded before linting.
      */
     private function ensureRoutesLoaded(): void
     {
@@ -100,6 +105,9 @@ final class ModuleLinter
     }
 
     /**
+     * Checks module manifests and required route files.
+     *
+     * Responsibility: Checks module manifests and required route files.
      * @param array<int, array<string, mixed>> $modules
      * @param array<int, array<string, mixed>> $issues
      * @return array<string, int|bool>
@@ -140,6 +148,9 @@ final class ModuleLinter
     }
 
     /**
+     * Detects drift between declared routes and runtime-owned routes.
+     *
+     * Responsibility: Detects drift between declared routes and runtime-owned routes.
      * @param array<int, array<string, mixed>> $modules
      * @param array<int, array<string, mixed>> $issues
      * @return array<string, int|bool>
@@ -220,6 +231,9 @@ final class ModuleLinter
     }
 
     /**
+     * Checks generated asset availability for modules that expose views.
+     *
+     * Responsibility: Checks generated asset availability for modules that expose views.
      * @param array<int, array<string, mixed>> $modules
      * @param array<int, array<string, mixed>> $issues
      * @return array<string, int|bool>
@@ -263,6 +277,9 @@ final class ModuleLinter
     }
 
     /**
+     * Checks consistency between module names, slugs, and view namespaces.
+     *
+     * Responsibility: Checks consistency between module names, slugs, and view namespaces.
      * @param array<int, array<string, mixed>> $modules
      * @param array<int, array<string, mixed>> $issues
      * @return array<string, int|bool>
@@ -302,6 +319,9 @@ final class ModuleLinter
     }
 
     /**
+     * Checks that declared guarded routes expose their required middleware. Checks that permission declarations bridge into registries and navigation.
+     *
+     * Responsibility: Checks that declared guarded routes expose their required middleware. Checks that permission declarations bridge into registries and navigation.
      * @param array<int, array<string, mixed>> $modules
      * @param array<int, array<string, mixed>> $issues
      * @return array<string, int|bool>
@@ -356,6 +376,10 @@ final class ModuleLinter
     }
 
     /**
+     * Checks that permission declarations bridge into registries and navigation.
+     *
+     * Responsibility: Checks that permission declarations bridge into registries and navigation.
+     * @param array<int, array<string, mixed>> $modules
      * @param array<int, array<string, mixed>> $issues
      * @return array<string, int|bool>
      */
@@ -468,6 +492,9 @@ final class ModuleLinter
     }
 
     /**
+     * Checks navigation targets, breadcrumbs, and duplicate links.
+     *
+     * Responsibility: Checks navigation targets, breadcrumbs, and duplicate links.
      * @param array<int, array<string, mixed>> $modules
      * @param array<int, array<string, mixed>> $issues
      * @return array<string, int|bool>
@@ -618,6 +645,9 @@ final class ModuleLinter
     }
 
     /**
+     * Determines whether a route matches any declared guard pattern.
+     *
+     * Responsibility: Determines whether a route matches any declared guard pattern.
      * @param string[] $patterns
      */
     private function matchesGuardPatterns(string $routePattern, array $patterns): bool
@@ -640,6 +670,9 @@ final class ModuleLinter
     }
 
     /**
+     * Checks plugin manifests and module ownership references.
+     *
+     * Responsibility: Checks plugin manifests and module ownership references.
      * @param array<int, array<string, mixed>> $modules
      * @param array<int, array<string, mixed>> $issues
      * @return array<string, int|bool>
@@ -708,6 +741,9 @@ final class ModuleLinter
     }
 
     /**
+     * Finds a module report entry by runtime key.
+     *
+     * Responsibility: Finds a module report entry by runtime key.
      * @param array<int, array<string, mixed>> $modules
      * @return array<string, mixed>|null
      */
@@ -723,6 +759,9 @@ final class ModuleLinter
     }
 
     /**
+     * Determines whether an issue list contains a specific issue type.
+     *
+     * Responsibility: Determines whether an issue list contains a specific issue type.
      * @param array<int, array<string, mixed>> $issues
      */
     private function hasIssuePrefix(array $issues, string $prefix): bool

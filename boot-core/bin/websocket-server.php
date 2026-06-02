@@ -88,6 +88,9 @@ new IoServer(
 $httpSocket = new SocketServer("127.0.0.1:{$internalPort}", [], $loop);
 $httpServer = new ReactHttpServer(
     $loop,
+    /**
+     * Publish internal notification or resource events to connected clients.
+     */
     function (\Psr\Http\Message\ServerRequestInterface $request) use ($notifServer): ReactResponse {
         if ($request->getMethod() !== 'POST' || $request->getUri()->getPath() !== '/publish') {
             return new ReactResponse(404, ['Content-Type' => 'application/json'], '{"ok":false}');

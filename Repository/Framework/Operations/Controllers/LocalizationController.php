@@ -40,15 +40,17 @@ use Catalyst\Repository\Operations\Requests\LocalizationSettingsRequest;
 use RuntimeException;
 
 /**
- * Defines the Localization Controller class contract.
+ * Manages runtime locale settings and translation-catalog synchronization.
  *
  * @package Catalyst\Repository\Operations\Controllers
- * Responsibility: Coordinates the localization controller behavior within its module boundary.
+ * Responsibility: Presents locale diagnostics and applies locale administration actions.
  */
 final class LocalizationController extends Controller
 {
     /**
-     * Handles the index workflow.
+     * Renders locale settings and coverage reports for the selected locale.
+     *
+     * Responsibility: Renders locale settings and coverage reports for the selected locale.
      */
     public function index(Request $request): Response
     {
@@ -81,7 +83,9 @@ final class LocalizationController extends Controller
     }
 
     /**
-     * Handles the update workflow.
+     * Validates and persists runtime locale settings.
+     *
+     * Responsibility: Validates and persists runtime locale settings.
      */
     public function updateSettings(Request $request): Response
     {
@@ -112,7 +116,9 @@ final class LocalizationController extends Controller
     }
 
     /**
-     * Handles the create workflow.
+     * Initializes a locale catalog or previews the initialization actions.
+     *
+     * Responsibility: Initializes a locale catalog or previews the initialization actions.
      */
     public function createLocale(Request $request): Response
     {
@@ -144,7 +150,9 @@ final class LocalizationController extends Controller
     }
 
     /**
-     * Handles the sync locale workflow.
+     * Synchronizes a locale catalog or previews missing translation keys.
+     *
+     * Responsibility: Synchronizes a locale catalog or previews missing translation keys.
      */
     public function syncLocale(Request $request): Response
     {

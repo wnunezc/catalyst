@@ -39,15 +39,18 @@ use InvalidArgumentException;
 use RuntimeException;
 
 /**
- * Defines the Make Migration Command class contract.
+ * make:migration CLI command.
+ *
+ * Responsibility: Runs the make:migration command to Scaffold a new anonymous migration in boot-core/database/migrations/.
  *
  * @package Catalyst\Framework\Cli\Commands
- * Responsibility: Coordinates the make migration command behavior within its module boundary.
  */
 class MakeMigrationCommand extends AbstractCommand
 {
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -55,14 +58,21 @@ class MakeMigrationCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
         return 'Scaffold a new anonymous migration in boot-core/database/migrations/';
     }
 
-    /** @return Parameter[] */
+    /**
+     * Defines the accepted positional parameter schema for this command.
+     *
+     * Responsibility: Defines the accepted positional parameter schema for this command.
+     * @return Parameter[]
+     */
     public function getParameters(): array
     {
         return [
@@ -71,7 +81,9 @@ class MakeMigrationCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {
@@ -101,7 +113,9 @@ class MakeMigrationCommand extends AbstractCommand
     }
 
     /**
-     * Normalizes the provided value.
+     * Describes the normalize migration name helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the normalize migration name helper workflow used by this CLI component.
      */
     private function normalizeMigrationName(string $name): string
     {

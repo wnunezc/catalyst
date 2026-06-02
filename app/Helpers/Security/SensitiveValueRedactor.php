@@ -31,10 +31,10 @@ declare(strict_types=1);
 namespace Catalyst\Helpers\Security;
 
 /**
- * Defines the Sensitive Value Redactor class contract.
+ * Redacts sensitive values from nested payloads.
  *
  * @package Catalyst\Helpers\Security
- * Responsibility: Coordinates the sensitive value redactor behavior within its module boundary.
+ * Responsibility: Detects sensitive key names and replaces their values before exposure.
  */
 final class SensitiveValueRedactor
 {
@@ -88,6 +88,9 @@ final class SensitiveValueRedactor
     ];
 
     /**
+     * Recursively replaces sensitive payload values with the redaction marker.
+     *
+     * Responsibility: Recursively replaces sensitive payload values with the redaction marker.
      * @param array<string, mixed> $payload
      * @return array<string, mixed>
      */
@@ -115,7 +118,9 @@ final class SensitiveValueRedactor
     }
 
     /**
-     * Determines whether is Sensitive Key.
+     * Determines whether a key name indicates sensitive data.
+     *
+     * Responsibility: Determines whether a key name indicates sensitive data.
      */
     public function isSensitiveKey(string $key): bool
     {

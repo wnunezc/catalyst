@@ -36,15 +36,18 @@ use Catalyst\Framework\Cli\AbstractCommand;
 use Catalyst\Framework\Cli\Support\RouteContractInspector;
 
 /**
- * Defines the Route Lint Command class contract.
+ * route:lint CLI command.
+ *
+ * Responsibility: Runs the route:lint command to Validate route casing, approved aliases and work/{slug} asset publication.
  *
  * @package Catalyst\Framework\Cli\Commands
- * Responsibility: Coordinates the route lint command behavior within its module boundary.
  */
 class RouteLintCommand extends AbstractCommand
 {
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -52,14 +55,21 @@ class RouteLintCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
         return 'Validate route casing, approved aliases and work/{slug} asset publication';
     }
 
-    /** @return Option[] */
+    /**
+     * Defines the accepted option schema for this command.
+     *
+     * Responsibility: Defines the accepted option schema for this command.
+     * @return Option[]
+     */
     public function getOptions(): array
     {
         return [
@@ -68,7 +78,9 @@ class RouteLintCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {

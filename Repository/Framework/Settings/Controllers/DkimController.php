@@ -36,25 +36,18 @@ use Catalyst\Framework\Http\Response;
 use Catalyst\Framework\Mail\DkimGenerator;
 use RuntimeException;
 
-/**************************************************************************************
- * DkimController — AJAX endpoint for RSA DKIM key generation.
- *
- * Routes:
- *   POST /setup/dkim/generate → generate()
- *
- * @package Catalyst\Repository\Settings\Controllers
- **************************************************************************************/
 /**
- * Defines the Dkim Controller class contract.
+ * Generates DKIM key material for the mail setup surface.
  *
  * @package Catalyst\Repository\Settings\Controllers
- * Responsibility: Coordinates the dkim controller behavior within its module boundary.
+ * Responsibility: Validates DKIM input, invokes key generation and returns the DNS record payload.
  */
 class DkimController extends Controller
 {
     /**
      * Generate a DKIM RSA key pair and return the DNS TXT record.
      *
+     * Responsibility: Generate a DKIM RSA key pair and return the DNS TXT record.
      * @param Request $request
      * @return Response
      */

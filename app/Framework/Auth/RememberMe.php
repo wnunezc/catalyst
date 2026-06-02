@@ -35,20 +35,11 @@ use Catalyst\Framework\Traits\SingletonTrait;
 use Catalyst\Helpers\Log\Logger;
 use Exception;
 
-/**************************************************************************************
- * RememberMe — persistent login token management
- *
- * Generates a cryptographically random token, stores its SHA-256 hash in
- * `remember_tokens`, and sets an HTTP-only cookie on the client.
- * Tokens are never physically deleted — they are invalidated via active=0.
- *
- * @package Catalyst\Framework\Auth
- */
 /**
- * Defines the Remember Me class contract.
+ * Manages persistent login cookies backed by hashed remember tokens.
  *
  * @package Catalyst\Framework\Auth
- * Responsibility: Coordinates the remember me behavior within its module boundary.
+ * Responsibility: Issue, resolve and invalidate remember-me tokens without storing raw token values.
  */
 class RememberMe
 {
@@ -68,7 +59,9 @@ class RememberMe
     private Logger $logger;
 
     /**
-     * Constructor
+     * Initializes database and logging collaborators for remember-token storage.
+     *
+     * Responsibility: Initializes database and logging collaborators for remember-token storage.
      */
     protected function __construct()
     {
@@ -83,6 +76,7 @@ class RememberMe
     /**
      * Create a remember-me token for a user and set the cookie.
      *
+     * Responsibility: Create a remember-me token for a user and set the cookie.
      * @param int $userId
      * @return void
      */
@@ -118,9 +112,9 @@ class RememberMe
     }
 
     /**
-     * Resolve a remember-me cookie to a user ID.
-     * Returns the user_id if the token is active and not expired, otherwise null.
+     * Resolve a remember-me cookie to a user ID. Returns the user_id if the token is active and not expired, otherwise null.
      *
+     * Responsibility: Resolve a remember-me cookie to a user ID. Returns the user_id if the token is active and not expired, otherwise null.
      * @return int|null
      */
     public function resolve(): ?int
@@ -149,9 +143,9 @@ class RememberMe
     }
 
     /**
-     * Invalidate all active remember-me tokens for a user.
-     * Sets active=0 — never physically deletes rows.
+     * Invalidate all active remember-me tokens for a user. Sets active=0 — never physically deletes rows.
      *
+     * Responsibility: Invalidate all active remember-me tokens for a user. Sets active=0 — never physically deletes rows.
      * @param int $userId
      * @return void
      */
@@ -174,6 +168,7 @@ class RememberMe
     /**
      * Check whether a remember-me cookie is present on the request.
      *
+     * Responsibility: Check whether a remember-me cookie is present on the request.
      * @return bool
      */
     public function hasToken(): bool
@@ -188,6 +183,7 @@ class RememberMe
     /**
      * Delete the remember-me cookie from the client.
      *
+     * Responsibility: Delete the remember-me cookie from the client.
      * @return void
      */
     private function clearCookie(): void
@@ -208,7 +204,9 @@ class RememberMe
     }
 
     /**
-     * Determines whether is Secure Request.
+     * Detects HTTPS requests, including common reverse-proxy headers, for secure cookies.
+     *
+     * Responsibility: Detects HTTPS requests, including common reverse-proxy headers, for secure cookies.
      */
     private function isSecureRequest(): bool
     {

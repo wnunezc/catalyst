@@ -33,30 +33,17 @@ namespace Catalyst\Framework\Database\Relations;
 use Catalyst\Framework\Database\Model;
 
 /**
- * HasOne — one-to-one relationship where the FK lives on the related table.
- *
- * Example:
- *   class User extends Model {
- *       public function profile(): HasOne {
- *           return $this->hasOne(UserProfile::class, 'user_id', 'id');
- *       }
- *   }
- *
- *   $user->profile   // ?UserProfile — lazy loaded on first access
- *
- * SQL (lazy):
- *   SELECT * FROM user_profiles WHERE user_id = :parentId LIMIT 1
- *
- * SQL (eager):
- *   SELECT * FROM user_profiles WHERE user_id IN (:id1, :id2, …)
- *   → distributed to each parent, first-match-wins per FK value
+ * Resolves a one-to-one ORM relation where the related row stores the foreign key.
  *
  * @package Catalyst\Framework\Database\Relations
+ * Responsibility: Load and eager-match one related model for each parent model key.
  */
 class HasOne extends Relation
 {
     /**
-     * Lazy-load: return the single related model for this parent, or null.
+     * Loads the first related model whose foreign key points to the current parent.
+     *
+     * Responsibility: Loads the first related model whose foreign key points to the current parent.
      */
     public function getResults(): ?Model
     {
@@ -72,9 +59,9 @@ class HasOne extends Relation
     }
 
     /**
-     * Eager-load: batch-query all related rows for the given parents,
-     * then distribute one result per parent into their relation caches.
+     * Batch-loads related models for parent keys and stores one matched model in each relation cache.
      *
+     * Responsibility: Batch-loads related models for parent keys and stores one matched model in each relation cache.
      * @param Model[] $models
      */
     public function matchEager(array $models, string $relation): void

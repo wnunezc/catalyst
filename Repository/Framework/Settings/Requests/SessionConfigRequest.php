@@ -31,14 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Repository\Settings\Requests;
 
 /**
- * Defines the Session Config Request class contract.
+ * Validates session settings from the setup surface.
  *
  * @package Catalyst\Repository\Settings\Requests
- * Responsibility: Coordinates the session config request behavior within its module boundary.
+ * Responsibility: Defines session storage and cookie constraints and normalizes submitted values.
  */
 final class SessionConfigRequest extends AbstractSettingsRequest
 {
     /**
+     * Returns validation rules for session settings.
+     *
+     * Responsibility: Returns validation rules for session settings.
      * @return array<string, string>
      */
     public function rules(): array
@@ -54,6 +57,9 @@ final class SessionConfigRequest extends AbstractSettingsRequest
     }
 
     /**
+     * Builds normalized session input for validation.
+     *
+     * Responsibility: Builds normalized session input for validation.
      * @return array<string, mixed>
      */
     protected function validationData(): array

@@ -33,10 +33,10 @@ namespace Catalyst\Helpers\Config;
 use RuntimeException;
 
 /**
- * Defines the Config Secret Store class contract.
+ * Persists environment-specific configuration secrets separately from public JSON.
  *
  * @package Catalyst\Helpers\Config
- * Responsibility: Coordinates the config secret store behavior within its module boundary.
+ * Responsibility: Loads, writes, merges and audits secrets for one runtime environment.
  */
 final class ConfigSecretStore
 {
@@ -44,6 +44,8 @@ final class ConfigSecretStore
 
     /**
      * Initializes the Config Secret Store instance.
+     *
+     * Responsibility: Initializes the Config Secret Store instance.
      */
     public function __construct(string $environment)
     {
@@ -51,7 +53,9 @@ final class ConfigSecretStore
     }
 
     /**
-     * Handles the path workflow.
+     * Returns the secrets file path.
+     *
+     * Responsibility: Returns the secrets file path.
      */
     public function path(): string
     {
@@ -59,7 +63,9 @@ final class ConfigSecretStore
     }
 
     /**
-     * Handles the exists workflow.
+     * Determines whether the secrets file exists.
+     *
+     * Responsibility: Determines whether the secrets file exists.
      */
     public function exists(): bool
     {
@@ -67,6 +73,9 @@ final class ConfigSecretStore
     }
 
     /**
+     * Loads the persisted secrets payload.
+     *
+     * Responsibility: Loads the persisted secrets payload.
      * @return array<string, array<string, mixed>>
      */
     public function load(): array
@@ -86,6 +95,9 @@ final class ConfigSecretStore
     }
 
     /**
+     * Persists or removes the environment secrets payload.
+     *
+     * Responsibility: Persists or removes the environment secrets payload.
      * @param array<string, array<string, mixed>> $payload
      */
     public function persist(array $payload): void
@@ -112,6 +124,9 @@ final class ConfigSecretStore
     }
 
     /**
+     * Merges persisted secrets into an in-memory configuration array.
+     *
+     * Responsibility: Merges persisted secrets into an in-memory configuration array.
      * @param array<string, array> $config
      * @return array<string, array>
      */
@@ -129,6 +144,9 @@ final class ConfigSecretStore
     }
 
     /**
+     * Replaces the persisted secrets for one configuration section.
+     *
+     * Responsibility: Replaces the persisted secrets for one configuration section.
      * @param array<string, mixed> $sectionSecrets
      */
     public function persistSection(string $section, array $sectionSecrets): void
@@ -146,6 +164,9 @@ final class ConfigSecretStore
     }
 
     /**
+     * Returns public configuration sections that still expose secret values.
+     *
+     * Responsibility: Returns public configuration sections that still expose secret values.
      * @return string[]
      */
     public function publicSecretLeaks(): array

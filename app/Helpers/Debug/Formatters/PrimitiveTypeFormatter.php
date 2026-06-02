@@ -41,6 +41,7 @@ use Catalyst\Helpers\Debug\DumperColorizer;
  * and null values.
  *
  * @package Catalyst\Helpers\Debug\Formatters;
+ * Responsibility: Formats scalar and null values according to dumper limits and output mode.
  */
 class PrimitiveTypeFormatter
 {
@@ -55,8 +56,9 @@ class PrimitiveTypeFormatter
     private DumperColorizer $colorizer;
 
     /**
-     * Constructor
+     * Initializes the object with the collaborators or state required for its responsibility.
      *
+     * Responsibility: Initializes the object with the collaborators or state required for its responsibility.
      * @param DumperConfig $config Configuration instance
      * @param DumperColorizer $colorizer Colorizer instance
      */
@@ -69,8 +71,9 @@ class PrimitiveTypeFormatter
     }
 
     /**
-     * Format string for output
+     * Format string for output.
      *
+     * Responsibility: Format string for output.
      * @param string $var
      * @param bool $isHtml
      * @return string
@@ -111,8 +114,9 @@ class PrimitiveTypeFormatter
     }
 
     /**
-     * Format numeric value for output
+     * Format numeric value for output.
      *
+     * Responsibility: Format numeric value for output.
      * @param int|float $var
      * @param bool $isHtml
      * @return string
@@ -123,8 +127,9 @@ class PrimitiveTypeFormatter
     }
 
     /**
-     * Format boolean for output
+     * Format boolean for output.
      *
+     * Responsibility: Format boolean for output.
      * @param bool $var
      * @param bool $isHtml
      * @return string
@@ -135,8 +140,9 @@ class PrimitiveTypeFormatter
     }
 
     /**
-     * Format null for output
+     * Format null for output.
      *
+     * Responsibility: Format null for output.
      * @param bool $isHtml
      * @return string
      */

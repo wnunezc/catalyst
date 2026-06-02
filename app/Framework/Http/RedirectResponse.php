@@ -32,43 +32,29 @@ namespace Catalyst\Framework\Http;
 
 use InvalidArgumentException;
 
-/**************************************************************************************
- * RedirectResponse class for HTTP redirects
- *
- * Specializes the base Response class for redirecting to another URL
- * with appropriate status codes and headers.
- *
- * @package Catalyst\Framework\Http
- */
 /**
- * Defines the Redirect Response class contract.
+ * Represents an HTTP redirect response.
  *
  * @package Catalyst\Framework\Http
- * Responsibility: Coordinates the redirect response behavior within its module boundary.
+ * Responsibility: Validates redirect status codes, sets Location headers and provides fallback HTML redirect content.
  */
 class RedirectResponse extends Response
 {
     /**
-     * The target URL
-     *
-     * @var string
+     * @var string Target URL sent in the Location header.
      */
     protected string $targetUrl;
 
     /**
-     * Valid redirect status codes
-     *
-     * @var array
+     * @var array<int, int> HTTP status codes allowed for redirects.
      */
     protected static array $validStatusCodes = [301, 302, 303, 307, 308];
 
     /**
-     * Create a new redirect response
+     * Creates a redirect response for the target URL.
      *
-     * @param string $url The URL to redirect to
-     * @param int $status The HTTP status code for the redirect
-     * @param array $headers Additional headers to include
-     * @throws InvalidArgumentException When an invalid status code is provided
+     * Responsibility: Creates a redirect response for the target URL.
+     * @throws InvalidArgumentException
      */
     public function __construct(string $url, int $status = 302, array $headers = [])
     {
@@ -89,9 +75,9 @@ class RedirectResponse extends Response
     }
 
     /**
-     * Get the target URL
+     * Returns the redirect target URL.
      *
-     * @return string The target URL
+     * Responsibility: Returns the redirect target URL.
      */
     public function getTargetUrl(): string
     {
@@ -99,10 +85,9 @@ class RedirectResponse extends Response
     }
 
     /**
-     * Set the target URL
+     * Updates the redirect target URL and Location header.
      *
-     * @param string $url The new target URL
-     * @return self For method chaining
+     * Responsibility: Updates the redirect target URL and Location header.
      */
     public function setTargetUrl(string $url): self
     {
@@ -113,9 +98,9 @@ class RedirectResponse extends Response
     }
 
     /**
-     * Prepare the redirect response content
+     * Prepares fallback HTML content for clients that do not follow headers.
      *
-     * @return self For method chaining
+     * Responsibility: Prepares fallback HTML content for clients that do not follow headers.
      */
     protected function prepareContent(): self
     {
@@ -139,9 +124,9 @@ class RedirectResponse extends Response
     }
 
     /**
-     * Send the redirect response
+     * Sends the redirect response after ensuring fallback content exists.
      *
-     * @return self For method chaining
+     * Responsibility: Sends the redirect response after ensuring fallback content exists.
      */
     public function send(): self
     {

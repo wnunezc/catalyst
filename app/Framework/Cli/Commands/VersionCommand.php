@@ -34,7 +34,9 @@ use Catalyst\Framework\Argument\ArgumentBag;
 use Catalyst\Framework\Cli\AbstractCommand;
 
 /**
- * Displays framework and PHP version information
+ * version CLI command.
+ *
+ * Responsibility: Runs the version command to Display framework and PHP version.
  *
  * @package Catalyst\Framework\Cli\Commands
  */
@@ -43,7 +45,9 @@ class VersionCommand extends AbstractCommand
     private const FRAMEWORK_VERSION = '1.0.0-dev';
 
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -51,7 +55,9 @@ class VersionCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
@@ -59,7 +65,9 @@ class VersionCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {

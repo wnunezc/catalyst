@@ -35,15 +35,17 @@ use Catalyst\Framework\Catalog\CatalogManager;
 use Catalyst\Framework\Catalog\CatalogRepository;
 
 /**
- * Defines the Catalog Grid Factory class contract.
+ * Builds the administrative catalog definition data grid.
  *
  * @package Catalyst\Repository\Catalogs\Support
- * Responsibility: Coordinates the catalog grid factory behavior within its module boundary.
+ * Responsibility: Configure catalog columns, filters, row actions and repository-backed pagination.
  */
 final class CatalogGridFactory
 {
     /**
-     * Builds the requested structure.
+     * Builds the catalog definition listing grid backed by repository search.
+     *
+     * Responsibility: Builds the catalog definition listing grid backed by repository search.
      */
     public function buildIndexGrid(CatalogRepository $repository): DataGrid
     {

@@ -44,6 +44,7 @@ use Catalyst\Helpers\Config\ConfigManager;
  * - current repo audit did not confirm business producers beyond NotificationManager
  *
  * @package Catalyst\Framework\WebSocket
+ * Responsibility: Sends notification and resource payloads to the internal WebSocket publisher endpoint.
  */
 class WebSocketPublisher
 {
@@ -52,6 +53,7 @@ class WebSocketPublisher
     /**
      * POST a notification payload to the WS server's internal publisher.
      *
+     * Responsibility: POST a notification payload to the WS server's internal publisher.
      * @param int   $userId
      * @param array $notification Payload to broadcast (type, title, body, id, etc.)
      * @return bool True if the WS server acknowledged the publish
@@ -65,7 +67,9 @@ class WebSocketPublisher
     }
 
     /**
-     * Handles the publish to resource workflow.
+     * Publishes a presence payload for a tenant resource.
+     *
+     * Responsibility: Publishes a presence payload for a tenant resource.
      */
     public function publishToResource(int $tenantId, string $resourceKey, int $recordId, array $payload): bool
     {
@@ -80,6 +84,9 @@ class WebSocketPublisher
     }
 
     /**
+     * Sends a payload to the internal WebSocket publisher endpoint.
+     *
+     * Responsibility: Sends a payload to the internal WebSocket publisher endpoint.
      * @param array<string, mixed> $payload
      */
     private function dispatchPayload(array $payload): bool
@@ -109,7 +116,9 @@ class WebSocketPublisher
     }
 
     /**
-     * Handles the publisher url workflow.
+     * Resolves the configured internal WebSocket publisher URL.
+     *
+     * Responsibility: Resolves the configured internal WebSocket publisher URL.
      */
     private function publisherUrl(): string
     {

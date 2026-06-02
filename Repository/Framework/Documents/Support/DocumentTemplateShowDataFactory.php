@@ -36,15 +36,17 @@ use Catalyst\Framework\Workflow\WorkflowManager;
 use Catalyst\Framework\Workflow\WorkflowRepository;
 
 /**
- * Defines the Document Template Show Data Factory class contract.
+ * Assembles document template detail view data.
  *
  * @package Catalyst\Repository\Documents\Support
- * Responsibility: Coordinates the document template show data factory behavior within its module boundary.
+ * Responsibility: Combine template state, previews, artifacts, versions, transitions and claims for rendering.
  */
 final class DocumentTemplateShowDataFactory
 {
     /**
      * Initializes the Document Template Show Data Factory instance.
+     *
+     * Responsibility: Initializes the Document Template Show Data Factory instance.
      */
     public function __construct(
         private readonly DocumentTemplateRepository $repository,
@@ -56,6 +58,9 @@ final class DocumentTemplateShowDataFactory
     }
 
     /**
+     * Builds the complete detail-page payload for one document template.
+     *
+     * Responsibility: Builds the complete detail-page payload for one document template.
      * @param array<string, mixed> $template
      * @param array<string, mixed> $claimContext
      * @return array<string, mixed>

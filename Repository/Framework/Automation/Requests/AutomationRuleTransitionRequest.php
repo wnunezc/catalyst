@@ -33,14 +33,17 @@ namespace Catalyst\Repository\Automation\Requests;
 use Catalyst\Framework\Http\FormRequest;
 
 /**
- * Defines the Automation Rule Transition Request class contract.
+ * Normalizes automation workflow transition input.
  *
  * @package Catalyst\Repository\Automation\Requests
- * Responsibility: Coordinates the automation rule transition request behavior within its module boundary.
+ * Responsibility: Expose and validate the transition key and optional operator notes.
  */
 final class AutomationRuleTransitionRequest extends FormRequest
 {
     /**
+     * Returns transition fields accepted from input.
+     *
+     * Responsibility: Returns transition fields accepted from input.
      * @return string[]
      */
     public function only(): array
@@ -49,6 +52,9 @@ final class AutomationRuleTransitionRequest extends FormRequest
     }
 
     /**
+     * Requires a workflow transition key.
+     *
+     * Responsibility: Requires a workflow transition key.
      * @return array<string, string>
      */
     public function rules(): array
@@ -59,6 +65,9 @@ final class AutomationRuleTransitionRequest extends FormRequest
     }
 
     /**
+     * Returns translated labels for transition validation errors.
+     *
+     * Responsibility: Returns translated labels for transition validation errors.
      * @return array<string, string>
      */
     public function labels(): array
@@ -69,7 +78,9 @@ final class AutomationRuleTransitionRequest extends FormRequest
     }
 
     /**
-     * Handles the validation message workflow.
+     * Returns the message used when no transition was selected.
+     *
+     * Responsibility: Returns the message used when no transition was selected.
      */
     public function validationMessage(): string
     {
@@ -77,7 +88,9 @@ final class AutomationRuleTransitionRequest extends FormRequest
     }
 
     /**
-     * Determines whether has Transition.
+     * Determines whether a non-empty transition key was submitted.
+     *
+     * Responsibility: Determines whether a non-empty transition key was submitted.
      */
     public function hasTransition(): bool
     {
@@ -85,7 +98,9 @@ final class AutomationRuleTransitionRequest extends FormRequest
     }
 
     /**
-     * Handles the transition workflow.
+     * Returns the normalized transition key.
+     *
+     * Responsibility: Returns the normalized transition key.
      */
     public function transition(): string
     {
@@ -93,7 +108,9 @@ final class AutomationRuleTransitionRequest extends FormRequest
     }
 
     /**
-     * Handles the notes workflow.
+     * Returns normalized optional transition notes.
+     *
+     * Responsibility: Returns normalized optional transition notes.
      */
     public function notes(): ?string
     {

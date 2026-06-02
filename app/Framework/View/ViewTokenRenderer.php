@@ -35,10 +35,10 @@ use Catalyst\Helpers\I18n\Translator;
 use Traversable;
 
 /**
- * Defines the View Token Renderer class contract.
+ * Renders escaped tokens, raw trusted values, blocks and partials in view fragments.
  *
  * @package Catalyst\Framework\View
- * Responsibility: Coordinates the view token renderer behavior within its module boundary.
+ * Responsibility: Evaluates the constrained token-template language without executing PHP.
  */
 final class ViewTokenRenderer
 {
@@ -47,6 +47,8 @@ final class ViewTokenRenderer
 
     /**
      * Initializes the View Token Renderer instance.
+     *
+     * Responsibility: Initializes the View Token Renderer instance.
      */
     public function __construct(
         ?Translator $translator = null
@@ -57,6 +59,9 @@ final class ViewTokenRenderer
     private readonly Translator $translator;
 
     /**
+     * Renders a token-template fragment against a scope.
+     *
+     * Responsibility: Renders a token-template fragment against a scope.
      * @param array<string, mixed> $scope
      */
     public function render(string $fragment, array $scope, ?string $templatePath = null, ?View $view = null): string
@@ -81,6 +86,9 @@ final class ViewTokenRenderer
     }
 
     /**
+     * Renders nested block sections inside a fragment.
+     *
+     * Responsibility: Renders nested block sections inside a fragment.
      * @param array<string, mixed> $scope
      */
     private function renderSegment(string $fragment, array $scope, ?string $templatePath, ?View $view): string
@@ -114,6 +122,9 @@ final class ViewTokenRenderer
     }
 
     /**
+     * Renders inline partial and value tokens.
+     *
+     * Responsibility: Renders inline partial and value tokens.
      * @param array<string, mixed> $scope
      */
     private function renderInline(string $fragment, array $scope, ?string $templatePath, ?View $view): string
@@ -153,6 +164,9 @@ final class ViewTokenRenderer
     }
 
     /**
+     * Renders an if, unless or each block.
+     *
+     * Responsibility: Renders an if, unless or each block.
      * @param array<string, mixed> $scope
      */
     private function renderBlock(string $type, string $expression, string $body, array $scope, ?string $templatePath, ?View $view): string
@@ -200,6 +214,9 @@ final class ViewTokenRenderer
     }
 
     /**
+     * Finds the next opening block token.
+     *
+     * Responsibility: Finds the next opening block token.
      * @param array<string, mixed> $scope
      * @return array{type: string, expression: string, start: int, content_start: int}|null
      */
@@ -229,6 +246,9 @@ final class ViewTokenRenderer
     }
 
     /**
+     * Finds the closing token paired with an opening block.
+     *
+     * Responsibility: Finds the closing token paired with an opening block.
      * @return array{start: int, length: int}|null
      */
     private function findClosingBlock(string $fragment, int $offset, string $outerType): ?array
@@ -262,6 +282,9 @@ final class ViewTokenRenderer
     }
 
     /**
+     * Splits a block body around its top-level else token.
+     *
+     * Responsibility: Splits a block body around its top-level else token.
      * @return array{truthy: string, falsey: string}
      */
     private function splitBlockBody(string $body): array
@@ -294,6 +317,9 @@ final class ViewTokenRenderer
     }
 
     /**
+     * Renders a resolved token value as raw or escaped text.
+     *
+     * Responsibility: Renders a resolved token value as raw or escaped text.
      * @param array<string, mixed> $scope
      */
     private function renderValue(string $expression, array $scope, bool $raw): string
@@ -308,6 +334,9 @@ final class ViewTokenRenderer
     }
 
     /**
+     * Renders a referenced partial through the view service.
+     *
+     * Responsibility: Renders a referenced partial through the view service.
      * @param array<string, mixed> $scope
      */
     private function renderPartial(string $expression, array $scope, ?string $templatePath, ?View $view): string
@@ -320,6 +349,9 @@ final class ViewTokenRenderer
     }
 
     /**
+     * Resolves literals, translations or paths from a token expression.
+     *
+     * Responsibility: Resolves literals, translations or paths from a token expression.
      * @param array<string, mixed> $scope
      */
     private function resolveExpression(string $expression, array $scope): mixed
@@ -340,6 +372,9 @@ final class ViewTokenRenderer
     }
 
     /**
+     * Resolves a translated string expression.
+     *
+     * Responsibility: Resolves a translated string expression.
      * @param array<string, mixed> $scope
      */
     private function translate(string $expression, array $scope): string
@@ -373,6 +408,9 @@ final class ViewTokenRenderer
     }
 
     /**
+     * Resolves a dotted path from the current template scope.
+     *
+     * Responsibility: Resolves a dotted path from the current template scope.
      * @param array<string, mixed> $scope
      */
     private function resolvePath(array $scope, string $path): mixed
@@ -400,7 +438,9 @@ final class ViewTokenRenderer
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves a dotted token path from the current scope.
+     *
+     * Responsibility: Resolves a dotted token path from the current scope.
      */
     private function resolveNested(mixed $value, string $path): mixed
     {
@@ -408,6 +448,9 @@ final class ViewTokenRenderer
     }
 
     /**
+     * Resolves a nested segment and reports whether it exists.
+     *
+     * Responsibility: Resolves a nested segment and reports whether it exists.
      * @return array{exists: bool, value: mixed}
      */
     private function resolveNestedWithExistence(mixed $value, string $path): array
@@ -438,6 +481,9 @@ final class ViewTokenRenderer
     }
 
     /**
+     * Resolves a single segment from arrays, objects or traversable values.
+     *
+     * Responsibility: Resolves a single segment from arrays, objects or traversable values.
      * @return array{exists: bool, value: mixed}
      */
     private function resolveSegment(mixed $value, string $segment): array
@@ -484,6 +530,9 @@ final class ViewTokenRenderer
     }
 
     /**
+     * Converts iterable token values into arrays.
+     *
+     * Responsibility: Converts iterable token values into arrays.
      * @return array<int|string, mixed>
      */
     private function iterableToArray(mixed $value): array
@@ -500,7 +549,9 @@ final class ViewTokenRenderer
     }
 
     /**
-     * Handles the stringify workflow.
+     * Converts a resolved token value into renderable text.
+     *
+     * Responsibility: Converts a resolved token value into renderable text.
      */
     private function stringify(mixed $value): string
     {
@@ -528,7 +579,9 @@ final class ViewTokenRenderer
     }
 
     /**
-     * Determines whether is Quoted Literal.
+     * Determines whether an expression is a quoted literal.
+     *
+     * Responsibility: Determines whether an expression is a quoted literal.
      */
     private function isQuotedLiteral(string $expression): bool
     {
@@ -537,7 +590,9 @@ final class ViewTokenRenderer
     }
 
     /**
-     * Determines whether is Truthy.
+     * Evaluates a token value using template truthiness rules.
+     *
+     * Responsibility: Evaluates a token value using template truthiness rules.
      */
     private function isTruthy(mixed $value): bool
     {

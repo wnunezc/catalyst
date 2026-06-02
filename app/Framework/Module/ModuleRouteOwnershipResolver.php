@@ -34,14 +34,17 @@ use Catalyst\Framework\Route\Route;
 use Catalyst\Framework\Route\Router;
 
 /**
- * Defines the Module Route Ownership Resolver class contract.
+ * Resolves runtime routes owned by repository modules.
  *
  * @package Catalyst\Framework\Module
- * Responsibility: Coordinates the module route ownership resolver behavior within its module boundary.
+ * Responsibility: Maps route handlers back to modules and annotates module metadata with owned route patterns.
  */
 final class ModuleRouteOwnershipResolver
 {
     /**
+     * Annotates each module with the route patterns owned by its handlers.
+     *
+     * Responsibility: Annotates each module with the route patterns owned by its handlers.
      * @param array<int, array<string, mixed>> $modules
      * @return array<int, array<string, mixed>>
      */
@@ -61,6 +64,9 @@ final class ModuleRouteOwnershipResolver
     }
 
     /**
+     * Discovers route patterns owned by a repository module.
+     *
+     * Responsibility: Discovers route patterns owned by a repository module.
      * @return string[]
      */
     private function discoverOwnedRoutes(string $scope, string $moduleName): array
@@ -96,6 +102,9 @@ final class ModuleRouteOwnershipResolver
     }
 
     /**
+     * Resolves repository scope and module name from a route handler.
+     *
+     * Responsibility: Resolves repository scope and module name from a route handler.
      * @return array{scope: string, module: string}|null
      */
     private function resolveRouteOwner(Route $route): ?array

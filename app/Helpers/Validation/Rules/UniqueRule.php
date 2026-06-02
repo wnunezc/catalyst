@@ -39,14 +39,11 @@ use Throwable;
  *
  * Usage: unique:table,column[,ignoreValue,ignoreColumn]
  *
- * Examples:
- *   'email' => 'required|email|unique:users,email'
- *   'email' => 'required|email|unique:users,email,5,id'  (ignore row where id=5)
- *
  * Fails silently (returns true) if the database is unavailable — validation
  * continues for all other rules, and a warning is logged.
  *
  * @package Catalyst\Helpers\Validation\Rules
+ * Responsibility: Checks uniqueness constraints through the database query builder.
  */
 class UniqueRule
 {

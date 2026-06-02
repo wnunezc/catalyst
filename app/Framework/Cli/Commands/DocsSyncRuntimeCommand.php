@@ -37,17 +37,20 @@ use Catalyst\Framework\Module\ModuleRuntimeDocsGenerator;
 use RuntimeException;
 
 /**
- * Defines the Docs Sync Runtime Command class contract.
+ * docs:sync-runtime CLI command.
+ *
+ * Responsibility: Runs the docs:sync-runtime command to Generate living runtime module documentation from registries, inspector, harness and lint.
  *
  * @package Catalyst\Framework\Cli\Commands
- * Responsibility: Coordinates the docs sync runtime command behavior within its module boundary.
  */
 final class DocsSyncRuntimeCommand extends AbstractCommand
 {
     private const string DEFAULT_OUTPUT = PD . DS . 'docs' . DS . 'runtime-module-catalog.md';
 
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -55,14 +58,21 @@ final class DocsSyncRuntimeCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
         return 'Generate living runtime module documentation from registries, inspector, harness and lint';
     }
 
-    /** @return Option[] */
+    /**
+     * Defines the accepted option schema for this command.
+     *
+     * Responsibility: Defines the accepted option schema for this command.
+     * @return Option[]
+     */
     public function getOptions(): array
     {
         return [
@@ -72,7 +82,9 @@ final class DocsSyncRuntimeCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {

@@ -35,10 +35,10 @@ use Catalyst\Framework\Tenancy\TenancyManager;
 use RuntimeException;
 
 /**
- * Defines the Belongs To Tenant Trait trait contract.
+ * Applies tenant ownership to tenant-scoped models before insertion.
  *
  * @package Catalyst\Framework\Traits
- * Responsibility: Coordinates the belongs to tenant trait behavior within its module boundary.
+ * Responsibility: Stamps missing tenant identifiers and rejects cross-tenant inserts.
  */
 trait BelongsToTenantTrait
 {
@@ -46,7 +46,7 @@ trait BelongsToTenantTrait
     public const TENANT_COLUMN = 'tenant_id';
 
     /**
-     * Handles the boot belongs to tenant trait workflow.
+     * Registers the model hook that enforces tenant ownership on insert.
      */
     protected static function bootBelongsToTenantTrait(): void
     {

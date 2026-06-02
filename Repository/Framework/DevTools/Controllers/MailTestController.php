@@ -35,15 +35,17 @@ use Catalyst\Framework\Http\JsonResponse;
 use Catalyst\Framework\Mail\MailManager;
 
 /**
- * Defines the Mail Test Controller class contract.
+ * Exposes a development endpoint for validating outbound mail delivery.
  *
  * @package Catalyst\Repository\DevTools\Controllers
- * Responsibility: Coordinates the mail test controller behavior within its module boundary.
+ * Responsibility: Validates demo mail fields and reports the mail-manager result.
  */
 class MailTestController extends Controller
 {
     /**
-     * Handles the mail test workflow.
+     * Sends a validated test message through the configured mail manager.
+     *
+     * Responsibility: Sends a validated test message through the configured mail manager.
      */
     public function mailTest(): JsonResponse
     {

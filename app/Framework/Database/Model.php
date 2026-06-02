@@ -93,6 +93,7 @@ use JsonSerializable;
  * Events: inserting | inserted | updating | updated | deleting | deleted
  *
  * @package Catalyst\Framework\Database
+ * Responsibility: Provides Active Record persistence, querying, casting and relationship entry points.
  */
 abstract class Model implements JsonSerializable
 {
@@ -191,6 +192,8 @@ abstract class Model implements JsonSerializable
 
     /**
      * Initializes the Model instance.
+     *
+     * Responsibility: Initializes the Model instance.
      */
     public function __construct(array $attributes = [])
     {
@@ -332,7 +335,7 @@ abstract class Model implements JsonSerializable
     }
 
     /**
-     * Returns the primary key value.
+     * Returns the configured primary key column name.
      */
     public static function getPrimaryKey(): string
     {

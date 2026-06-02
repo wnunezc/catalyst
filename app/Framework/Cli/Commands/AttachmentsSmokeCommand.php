@@ -46,14 +46,20 @@ use Catalyst\Framework\Tenancy\TenancyManager;
 use Throwable;
 
 /**
- * Defines the Attachments Smoke Command class contract.
+ * attachments:smoke CLI command.
+ *
+ * Responsibility: Runs the attachments:smoke command to Exercise the canonical PA-06 attachment contract over media, document artifacts, replace and detach flows.
  *
  * @package Catalyst\Framework\Cli\Commands
- * Responsibility: Coordinates the attachments smoke command behavior within its module boundary.
  */
 final class AttachmentsSmokeCommand extends AbstractCommand
 {
-    /** @return Option[] */
+    /**
+     * Defines the accepted option schema for this command.
+     *
+     * Responsibility: Defines the accepted option schema for this command.
+     * @return Option[]
+     */
     public function getOptions(): array
     {
         return [
@@ -62,7 +68,9 @@ final class AttachmentsSmokeCommand extends AbstractCommand
     }
 
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -70,7 +78,9 @@ final class AttachmentsSmokeCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
@@ -78,7 +88,9 @@ final class AttachmentsSmokeCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {
@@ -187,7 +199,9 @@ final class AttachmentsSmokeCommand extends AbstractCommand
     }
 
     /**
-     * Handles the cleanup probe workflow.
+     * Describes the cleanup probe helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the cleanup probe helper workflow used by this CLI component.
      */
     private function cleanupProbe(int $tenantId, string $probe): void
     {
@@ -239,7 +253,9 @@ final class AttachmentsSmokeCommand extends AbstractCommand
     }
 
     /**
-     * Handles the delete workflow.
+     * Describes the delete media helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the delete media helper workflow used by this CLI component.
      */
     private function deleteMedia(MediaItem $media): void
     {
@@ -251,7 +267,9 @@ final class AttachmentsSmokeCommand extends AbstractCommand
     }
 
     /**
-     * Handles the purge artifact workflow.
+     * Describes the purge artifact helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the purge artifact helper workflow used by this CLI component.
      */
     private function purgeArtifact(DocumentArtifact $artifact): void
     {

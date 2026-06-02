@@ -41,10 +41,10 @@ use Catalyst\Helpers\Exceptions\ValidationException;
 use Catalyst\Helpers\Validation\Validator;
 
 /**
- * Defines the Media Item Request class contract.
+ * Validates media asset create and update payloads.
  *
  * @package Catalyst\Repository\Media\Requests
- * Responsibility: Coordinates the media item request behavior within its module boundary.
+ * Responsibility: Authorize media mutations and enforce upload, storage and dynamic metadata constraints.
  */
 final class MediaItemRequest extends FormRequest
 {
@@ -54,7 +54,9 @@ final class MediaItemRequest extends FormRequest
     private ?array $resolvedData = null;
 
     /**
-     * Handles the authorize workflow.
+     * Authorizes creation or update according to the routed media identifier.
+     *
+     * Responsibility: Authorizes creation or update according to the routed media identifier.
      */
     public function authorize(): bool
     {
@@ -66,6 +68,9 @@ final class MediaItemRequest extends FormRequest
     }
 
     /**
+     * Returns fixed and dynamic media asset fields accepted from input.
+     *
+     * Responsibility: Returns fixed and dynamic media asset fields accepted from input.
      * @return string[]
      */
     public function only(): array
@@ -85,6 +90,9 @@ final class MediaItemRequest extends FormRequest
     }
 
     /**
+     * Declares upload, storage and dynamic metadata validation rules.
+     *
+     * Responsibility: Declares upload, storage and dynamic metadata validation rules.
      * @return array<string, string>
      */
     public function rules(): array
@@ -101,6 +109,9 @@ final class MediaItemRequest extends FormRequest
     }
 
     /**
+     * Returns translated labels for fixed and dynamic media validation errors.
+     *
+     * Responsibility: Returns translated labels for fixed and dynamic media validation errors.
      * @return array<string, string>
      */
     public function labels(): array
@@ -113,6 +124,9 @@ final class MediaItemRequest extends FormRequest
     }
 
     /**
+     * Returns the validated media asset payload, resolving it lazily.
+     *
+     * Responsibility: Returns the validated media asset payload, resolving it lazily.
      * @return array<string, mixed>
      */
     public function validated(): array
@@ -125,6 +139,9 @@ final class MediaItemRequest extends FormRequest
     }
 
     /**
+     * Authorizes and validates the complete media asset payload.
+     *
+     * Responsibility: Authorizes and validates the complete media asset payload.
      * @throws ValidationException
      * @throws ForbiddenException
      */
@@ -152,6 +169,9 @@ final class MediaItemRequest extends FormRequest
     }
 
     /**
+     * Validates dynamic metadata and remote storage readiness beyond the base rules.
+     *
+     * Responsibility: Validates dynamic metadata and remote storage readiness beyond the base rules.
      * @param array<string, mixed> $data
      * @return array<string, string[]>
      */

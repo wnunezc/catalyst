@@ -35,10 +35,10 @@ use Catalyst\Framework\Traits\BelongsToTenantTrait;
 use Catalyst\Framework\Traits\HasTimestampsTrait;
 
 /**
- * Defines the Automation Execution Log class contract.
+ * ORM entity for automation rule execution history.
  *
  * @package Catalyst\Entities
- * Responsibility: Coordinates the automation execution log behavior within its module boundary.
+ * Responsibility: Maps trigger context, execution status, messages, and results for tenant automation runs.
  */
 final class AutomationExecutionLog extends Model
 {

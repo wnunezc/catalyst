@@ -35,10 +35,10 @@ use Catalyst\Framework\Traits\BelongsToTenantTrait;
 use Catalyst\Framework\Traits\HasAuditLogTrait;
 
 /**
- * Defines the Timeline Event class contract.
+ * ORM entity for timeline events attached to resource records.
  *
  * @package Catalyst\Entities
- * Responsibility: Coordinates the timeline event behavior within its module boundary.
+ * Responsibility: Maps tenant resource milestones, event labels, metadata, and occurrence timestamps.
  */
 final class TimelineEvent extends Model
 {

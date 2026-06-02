@@ -38,37 +38,18 @@ use Catalyst\Framework\Http\Response;
 use Catalyst\Framework\Session\SessionManager;
 use Catalyst\Helpers\Config\ConfigManager;
 
-/**************************************************************************************
- * LoginController -- handles the login form and credential validation.
- *
- * Login flow:
- *   1. Validate fields (email format, required).
- *   2. Find user by email (any status) + verify password hash.
- *      -> null or wrong password: generic "invalid credentials" (no enumeration leak).
- *   3. Email not verified  -> ask user to verify first.
- *   4. Account not active  -> show inactive message.
- *   5. If MFA globally enabled:
- *        a. mfa_enabled=0 -> pending-setup state -> /mfa/setup  (forced first-time)
- *        b. mfa_enabled=1 -> pending-challenge state -> /mfa/challenge
- *   6. MFA globally disabled -> create session immediately.
- *
- * Routes:
- *   GET  /login  -> showForm()
- *   POST /login  -> login()
- *
- * @package Catalyst\Repository\Auth\Controllers
- */
 /**
- * Defines the Login Controller class contract.
+ * Handles credential login and MFA-aware authentication branching.
  *
  * @package Catalyst\Repository\Auth\Controllers
- * Responsibility: Coordinates the login controller behavior within its module boundary.
+ * Responsibility: Validates login input, protects account state checks, and creates either pending MFA state or a full session.
  */
 class LoginController extends Controller
 {
     /**
-     * Show the login form.
+     * Renders the guest login form with sanitized redirect and preserved email input.
      *
+     * Responsibility: Renders the guest login form with sanitized redirect and preserved email input.
      * @param Request $request
      * @return Response
      */
@@ -82,8 +63,9 @@ class LoginController extends Controller
     }
 
     /**
-     * Process login credentials.
+     * Validates credentials, enforces account status, and routes the user through MFA or session creation.
      *
+     * Responsibility: Validates credentials, enforces account status, and routes the user through MFA or session creation.
      * @param Request $request
      * @return Response
      */

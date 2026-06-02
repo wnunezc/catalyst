@@ -37,10 +37,10 @@ use Catalyst\Helpers\Log\Logger;
 use Exception;
 
 /**
- * Defines the Audit Log Repository class contract.
+ * Reads tenant-scoped audit log rows for admin inspection.
  *
  * @package Catalyst\Framework\Audit
- * Responsibility: Coordinates the audit log repository behavior within its module boundary.
+ * Responsibility: Search, decode and filter audit records without exposing write-side audit logic.
  */
 final class AuditLogRepository
 {
@@ -50,7 +50,9 @@ final class AuditLogRepository
     private Logger $logger;
 
     /**
-     * Initializes the Audit Log Repository instance.
+     * Initializes database and logging collaborators for audit reads.
+     *
+     * Responsibility: Initializes database and logging collaborators for audit reads.
      */
     protected function __construct()
     {
@@ -59,6 +61,9 @@ final class AuditLogRepository
     }
 
     /**
+     * Searches audit log summary rows with filters, sorting and pagination.
+     *
+     * Responsibility: Searches audit log summary rows with filters, sorting and pagination.
      * @param array<string, mixed> $criteria
      * @return array{rows: array<int, array<string, mixed>>, total: int}
      */
@@ -128,6 +133,9 @@ final class AuditLogRepository
     }
 
     /**
+     * Loads a single audit row and decodes its JSON payload fields.
+     *
+     * Responsibility: Loads a single audit row and decodes its JSON payload fields.
      * @return array<string, mixed>|null
      */
     public function find(int $id): ?array
@@ -160,6 +168,9 @@ final class AuditLogRepository
     }
 
     /**
+     * Lists distinct audit channels available for the current tenant.
+     *
+     * Responsibility: Lists distinct audit channels available for the current tenant.
      * @return string[]
      */
     public function distinctChannels(): array
@@ -168,6 +179,9 @@ final class AuditLogRepository
     }
 
     /**
+     * Lists distinct audit actions available for the current tenant.
+     *
+     * Responsibility: Lists distinct audit actions available for the current tenant.
      * @return string[]
      */
     public function distinctActions(): array
@@ -176,6 +190,9 @@ final class AuditLogRepository
     }
 
     /**
+     * Lists distinct audited resources available for the current tenant.
+     *
+     * Responsibility: Lists distinct audited resources available for the current tenant.
      * @return string[]
      */
     public function distinctResources(): array
@@ -184,6 +201,9 @@ final class AuditLogRepository
     }
 
     /**
+     * Reads distinct non-empty values from a whitelisted audit column.
+     *
+     * Responsibility: Reads distinct non-empty values from a whitelisted audit column.
      * @return string[]
      */
     private function distinctValues(string $column): array
@@ -212,7 +232,9 @@ final class AuditLogRepository
     }
 
     /**
-     * Resolves the requested value.
+     * Restricts requested sort columns to safe audit log fields.
+     *
+     * Responsibility: Restricts requested sort columns to safe audit log fields.
      */
     private function resolveSortColumn(string $sort): string
     {
@@ -223,7 +245,9 @@ final class AuditLogRepository
     }
 
     /**
-     * Resolves the requested value.
+     * Normalizes requested sort direction to SQL ASC or DESC.
+     *
+     * Responsibility: Normalizes requested sort direction to SQL ASC or DESC.
      */
     private function resolveSortDirection(string $direction): string
     {
@@ -231,7 +255,9 @@ final class AuditLogRepository
     }
 
     /**
-     * Handles the current tenant id workflow.
+     * Resolves the required tenant identifier for audit queries.
+     *
+     * Responsibility: Resolves the required tenant identifier for audit queries.
      */
     private function currentTenantId(): int
     {

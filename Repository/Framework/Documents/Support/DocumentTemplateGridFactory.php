@@ -35,15 +35,17 @@ use Catalyst\Framework\Document\DocumentTemplateManager;
 use Catalyst\Framework\Document\DocumentTemplateRepository;
 
 /**
- * Defines the Document Template Grid Factory class contract.
+ * Builds the administrative document template data grid.
  *
  * @package Catalyst\Repository\Documents\Support
- * Responsibility: Coordinates the document template grid factory behavior within its module boundary.
+ * Responsibility: Configure template columns, filters, row actions and repository-backed pagination.
  */
 final class DocumentTemplateGridFactory
 {
     /**
-     * Builds the requested structure.
+     * Builds the document template listing grid backed by repository search.
+     *
+     * Responsibility: Builds the document template listing grid backed by repository search.
      */
     public function build(DocumentTemplateRepository $repository): DataGrid
     {

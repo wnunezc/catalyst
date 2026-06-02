@@ -40,13 +40,16 @@ use PDO;
  * Rule: no physical deletes — use read_at (NULL = unread) to manage state.
  *
  * @package Catalyst\Framework\Notification
+ * Responsibility: Persists user notifications and updates their read state without physical deletion.
  */
 class NotificationRepository
 {
     use SingletonTrait;
 
     /**
-     * Handles the db workflow.
+     * Returns the PDO connection used for notification persistence.
+     *
+     * Responsibility: Returns the PDO connection used for notification persistence.
      */
     private function db(): PDO
     {
@@ -55,6 +58,8 @@ class NotificationRepository
 
     /**
      * Insert a new notification and return its ID.
+     *
+     * Responsibility: Insert a new notification and return its ID.
      */
     public function create(int $userId, string $type, string $title, ?string $body = null): int
     {
@@ -68,6 +73,7 @@ class NotificationRepository
     /**
      * Get unread notifications for a user (newest first).
      *
+     * Responsibility: Get unread notifications for a user (newest first).
      * @return array<int, array{id:int, type:string, title:string, body:string|null, created_at:string}>
      */
     public function getUnread(int $userId, int $limit = 50): array
@@ -86,6 +92,7 @@ class NotificationRepository
     /**
      * Get all notifications for a user (newest first), read and unread.
      *
+     * Responsibility: Get all notifications for a user (newest first), read and unread.
      * @return array<int, array>
      */
     public function getAll(int $userId, int $limit = 100, int $offset = 0): array
@@ -103,6 +110,8 @@ class NotificationRepository
 
     /**
      * Count unread notifications for a user.
+     *
+     * Responsibility: Count unread notifications for a user.
      */
     public function countUnread(int $userId): int
     {
@@ -115,6 +124,8 @@ class NotificationRepository
 
     /**
      * Mark a single notification as read.
+     *
+     * Responsibility: Mark a single notification as read.
      */
     public function markRead(int $notificationId, int $userId): void
     {
@@ -126,6 +137,8 @@ class NotificationRepository
 
     /**
      * Mark all unread notifications for a user as read.
+     *
+     * Responsibility: Mark all unread notifications for a user as read.
      */
     public function markAllRead(int $userId): int
     {

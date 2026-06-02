@@ -31,14 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Workflow;
 
 /**
- * Defines the Workflow Definition class contract.
+ * Describes workflow states, transitions and metadata for a resource.
  *
  * @package Catalyst\Framework\Workflow
- * Responsibility: Coordinates the workflow definition behavior within its module boundary.
+ * Responsibility: Provides immutable workflow structure and transition lookups.
  */
 final class WorkflowDefinition
 {
     /**
+     * Creates an immutable workflow definition.
+     *
+     * Responsibility: Creates an immutable workflow definition.
      * @param array<string, string> $states
      * @param array<int, array<string, mixed>> $transitions
      */
@@ -53,6 +56,9 @@ final class WorkflowDefinition
     }
 
     /**
+     * Returns transitions available from a state.
+     *
+     * Responsibility: Returns transitions available from a state.
      * @return array<int, array<string, mixed>>
      */
     public function availableTransitions(string $currentState): array
@@ -69,6 +75,9 @@ final class WorkflowDefinition
     }
 
     /**
+     * Returns a named transition when it is valid from the current state.
+     *
+     * Responsibility: Returns a named transition when it is valid from the current state.
      * @return array<string, mixed>|null
      */
     public function transition(string $transitionKey, string $currentState): ?array

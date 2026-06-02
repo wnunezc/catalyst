@@ -34,32 +34,17 @@ use Catalyst\Framework\Database\Collection;
 use Catalyst\Framework\Database\Model;
 
 /**
- * HasMany — one-to-many relationship where the FK lives on the related table.
- *
- * Example:
- *   class User extends Model {
- *       public function posts(): HasMany {
- *           return $this->hasMany(Post::class, 'user_id', 'id');
- *       }
- *   }
- *
- *   $user->posts                           // Collection<Post> — lazy loaded
- *   User::query()->with('posts')->get()    // eager loaded (no N+1)
- *
- * SQL (lazy):
- *   SELECT * FROM posts WHERE user_id = :parentId
- *
- * SQL (eager):
- *   SELECT * FROM posts WHERE user_id IN (:id1, :id2, …)
- *   → grouped by user_id and distributed to each parent
+ * Resolves a one-to-many ORM relation where related rows store the foreign key.
  *
  * @package Catalyst\Framework\Database\Relations
+ * Responsibility: Load and eager-match collections of related models for each parent model key.
  */
 class HasMany extends Relation
 {
     /**
-     * Lazy-load: return all related models for this parent.
+     * Loads all related models whose foreign key points to the current parent.
      *
+     * Responsibility: Loads all related models whose foreign key points to the current parent.
      * @return Collection<Model>
      */
     public function getResults(): Collection
@@ -76,9 +61,9 @@ class HasMany extends Relation
     }
 
     /**
-     * Eager-load: batch-query all related rows for the given parents,
-     * then distribute a Collection to each parent's relation cache.
+     * Batch-loads related models for parent keys and stores a collection on each parent relation cache.
      *
+     * Responsibility: Batch-loads related models for parent keys and stores a collection on each parent relation cache.
      * @param Model[] $models
      */
     public function matchEager(array $models, string $relation): void

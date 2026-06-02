@@ -45,6 +45,7 @@ namespace Catalyst\Helpers\I18n;
  *   "form.gender_options.male" → string value
  *
  * @package Catalyst\Helpers\I18n
+ * Responsibility: Loads, flattens, merges and caches locale translation groups.
  */
 class TranslationLoader
 {
@@ -56,11 +57,9 @@ class TranslationLoader
     private array $cache = [];
 
     /**
-     * Load and merge translations for a group across all registered paths.
+     * Load and merge translations for a group across all registered paths. Files are merged in order: later paths override earlier ones. This allows module lang files to override global ones when needed.
      *
-     * Files are merged in order: later paths override earlier ones.
-     * This allows module lang files to override global ones when needed.
-     *
+     * Responsibility: Load and merge translations for a group across all registered paths. Files are merged in order: later paths override earlier ones. This allows module lang files to override global ones when needed.
      * @param string   $group  JSON file name without extension (e.g. 'validation')
      * @param string   $locale Language code (e.g. 'en', 'es')
      * @param string[] $paths  Ordered list of lang/ base directories
@@ -103,13 +102,9 @@ class TranslationLoader
     }
 
     /**
-     * Flatten a nested array to dot-notation keys.
+     * Flatten a nested array to dot-notation keys. For each node that is an array, BOTH the array value (at the parent key) AND all its children (recursively) are stored. This allows: - get('form.gender_options.male') → string - getList('form.gender_options') → array.
      *
-     * For each node that is an array, BOTH the array value (at the parent key)
-     * AND all its children (recursively) are stored. This allows:
-     *   - get('form.gender_options.male')  → string
-     *   - getList('form.gender_options')   → array
-     *
+     * Responsibility: Flatten a nested array to dot-notation keys. For each node that is an array, BOTH the array value (at the parent key) AND all its children (recursively) are stored. This allows: - get('form.gender_options.male') → string - getList('form.gender_options') → array.
      * @param array<string, mixed> $array  Input (possibly nested)
      * @param string               $prefix Current prefix for recursion
      * @return array<string, mixed>
@@ -137,6 +132,7 @@ class TranslationLoader
     /**
      * Resolve a subkey within a flat translations array.
      *
+     * Responsibility: Resolve a subkey within a flat translations array.
      * @param string               $subkey       Dot-notation key (e.g. 'required', 'formats.default')
      * @param array<string, mixed> $translations Flat translations for a group
      * @return string|array<string, mixed>|null  Found value, or null if not found
@@ -153,6 +149,7 @@ class TranslationLoader
     /**
      * Invalidate cache entries.
      *
+     * Responsibility: Invalidate cache entries.
      * @param string|null $locale Clear only this locale (null = all)
      * @param string|null $group  Clear only this group (null = all for the locale)
      */

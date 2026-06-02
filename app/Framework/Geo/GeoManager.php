@@ -33,10 +33,10 @@ namespace Catalyst\Framework\Geo;
 use Catalyst\Framework\Traits\SingletonTrait;
 
 /**
- * Defines the Geo Manager class contract.
+ * Provides geographic coordinate and distance utilities.
  *
  * @package Catalyst\Framework\Geo
- * Responsibility: Coordinates the geo manager behavior within its module boundary.
+ * Responsibility: Creates validated coordinates, calculates great-circle distances and derives radius-based bounding boxes.
  */
 final class GeoManager
 {
@@ -45,7 +45,9 @@ final class GeoManager
     private const EARTH_RADIUS_METERS = 6371008.8;
 
     /**
-     * Handles the coordinate workflow.
+     * Creates a validated coordinate from scalar latitude and longitude values.
+     *
+     * Responsibility: Creates a validated coordinate from scalar latitude and longitude values.
      */
     public function coordinate(float|int|string $latitude, float|int|string $longitude): Coordinate
     {
@@ -53,7 +55,9 @@ final class GeoManager
     }
 
     /**
-     * Handles the distance meters workflow.
+     * Calculates the great-circle distance in meters between two coordinates.
+     *
+     * Responsibility: Calculates the great-circle distance in meters between two coordinates.
      */
     public function distanceMeters(Coordinate $from, Coordinate $to): float
     {
@@ -69,7 +73,9 @@ final class GeoManager
     }
 
     /**
-     * Handles the distance kilometers workflow.
+     * Calculates the rounded distance in kilometers between two coordinates.
+     *
+     * Responsibility: Calculates the rounded distance in kilometers between two coordinates.
      */
     public function distanceKilometers(Coordinate $from, Coordinate $to, int $precision = 3): float
     {
@@ -77,7 +83,9 @@ final class GeoManager
     }
 
     /**
-     * Handles the distance miles workflow.
+     * Calculates the rounded distance in miles between two coordinates.
+     *
+     * Responsibility: Calculates the rounded distance in miles between two coordinates.
      */
     public function distanceMiles(Coordinate $from, Coordinate $to, int $precision = 3): float
     {
@@ -85,7 +93,9 @@ final class GeoManager
     }
 
     /**
-     * Handles the bounding box workflow.
+     * Builds a geographic bounding box around a center coordinate and radius.
+     *
+     * Responsibility: Builds a geographic bounding box around a center coordinate and radius.
      */
     public function boundingBox(Coordinate $center, float $radiusMeters): BoundingBox
     {

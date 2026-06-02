@@ -74,6 +74,7 @@ use Catalyst\Helpers\Log\Logger;
  *   DatabaseManager::getInstance()->table('orders', 'db2')->get();
  *
  * @package Catalyst\Framework\Database
+ * Responsibility: Loads database configuration and lazily resolves named connections.
  */
 class DatabaseManager
 {
@@ -91,6 +92,8 @@ class DatabaseManager
 
     /**
      * Initializes the Database Manager instance.
+     *
+     * Responsibility: Initializes the Database Manager instance.
      */
     protected function __construct()
     {
@@ -103,10 +106,9 @@ class DatabaseManager
     // -------------------------------------------------------------------------
 
     /**
-     * Get a connection by name, or the default connection when $name is null.
+     * Get a connection by name, or the default connection when $name is null. Connections are lazy-created: the PDO handshake happens on first use.
      *
-     * Connections are lazy-created: the PDO handshake happens on first use.
-     *
+     * Responsibility: Get a connection by name, or the default connection when $name is null. Connections are lazy-created: the PDO handshake happens on first use.
      * @throws ConnectionException when the name is not configured
      */
     public function connection(?string $name = null): Connection
@@ -131,6 +133,7 @@ class DatabaseManager
     /**
      * Get a QueryBuilder for $table on the specified (or default) connection.
      *
+     * Responsibility: Get a QueryBuilder for $table on the specified (or default) connection.
      * @throws ConnectionException
      */
     public function table(string $table, ?string $connection = null): QueryBuilder
@@ -139,7 +142,9 @@ class DatabaseManager
     }
 
     /**
-     * Updates the default connection value.
+     * Sets the connection name used when no explicit connection is requested.
+     *
+     * Responsibility: Sets the connection name used when no explicit connection is requested.
      */
     public function setDefaultConnection(string $name): self
     {
@@ -147,14 +152,21 @@ class DatabaseManager
         return $this;
     }
 
-    /** @return string[] All configured connection names */
+    /**
+     * Returns every configured connection name.
+     *
+     * Responsibility: Returns every configured connection name.
+     * @return string[]
+     */
     public function getConnectionNames(): array
     {
         return array_keys($this->configs);
     }
 
     /**
-     * Determines whether has Connection.
+     * Determines whether a named database connection has been configured.
+     *
+     * Responsibility: Determines whether a named database connection has been configured.
      */
     public function hasConnection(string $name): bool
     {
@@ -167,6 +179,8 @@ class DatabaseManager
 
     /**
      * Load connection configs from ConfigManager (JSON) or fall back to .env constants.
+     *
+     * Responsibility: Load connection configs from ConfigManager (JSON) or fall back to .env constants.
      */
     private function loadConfigurations(): void
     {
@@ -185,8 +199,9 @@ class DatabaseManager
     }
 
     /**
-     * Build a single "default" connection from .env-derived DB_* constants.
-     * Used only when no JSON config exists (first boot / Setup Wizard not yet run).
+     * Build a single "default" connection from .env-derived DB_* constants. Used only when no JSON config exists (first boot / Setup Wizard not yet run).
+     *
+     * Responsibility: Build a single "default" connection from .env-derived DB_* constants. Used only when no JSON config exists (first boot / Setup Wizard not yet run).
      */
     private function loadFromEnvFallback(): void
     {
@@ -214,11 +229,9 @@ class DatabaseManager
     // -------------------------------------------------------------------------
 
     /**
-     * Instantiate a Connection from a raw config array.
+     * Instantiate a Connection from a raw config array. Accepts both the canonical db.json keys (`db_database`, `db_username`) and the legacy short aliases (`db_name`, `db_user`) for backward compatibility with any config that still uses the older shape.
      *
-     * Accepts both the canonical db.json keys (`db_database`, `db_username`) and
-     * the legacy short aliases (`db_name`, `db_user`) for backward compatibility
-     * with any config that still uses the older shape.
+     * Responsibility: Instantiate a Connection from a raw config array. Accepts both the canonical db.json keys (`db_database`, `db_username`) and the legacy short aliases (`db_name`, `db_user`) for backward compatibility with any config that still uses the older shape.
      */
     private function buildConnection(string $name, array $config): Connection
     {
@@ -236,11 +249,9 @@ class DatabaseManager
     }
 
     /**
-     * Resolve the actual password string from a config value.
+     * Resolve the actual password string from a config value. Passwords stored with "enc:" are encrypted (requires Crypt, Etapa 7). Until then, an "enc:" password logs a warning and passes through as-is — the PDO connect will fail, which is the intended signal that Crypt is needed.
      *
-     * Passwords stored with "enc:" are encrypted (requires Crypt, Etapa 7).
-     * Until then, an "enc:" password logs a warning and passes through as-is —
-     * the PDO connect will fail, which is the intended signal that Crypt is needed.
+     * Responsibility: Resolve the actual password string from a config value. Passwords stored with "enc:" are encrypted (requires Crypt, Etapa 7). Until then, an "enc:" password logs a warning and passes through as-is — the PDO connect will fail, which is the intended signal that Crypt is needed.
      */
     private function resolvePassword(string $password, string $connectionName): string
     {

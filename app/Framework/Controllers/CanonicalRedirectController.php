@@ -33,15 +33,17 @@ namespace Catalyst\Framework\Controllers;
 use Catalyst\Framework\Http\RedirectResponse;
 
 /**
- * Defines the Canonical Redirect Controller class contract.
+ * Controller for canonical path redirects.
  *
  * @package Catalyst\Framework\Controllers
- * Responsibility: Coordinates the canonical redirect controller behavior within its module boundary.
+ * Responsibility: Redirects alternate route aliases back to canonical framework URLs.
  */
 final class CanonicalRedirectController extends Controller
 {
     /**
-     * Handles the root workflow.
+     * Redirects the request to the canonical application root.
+     *
+     * Responsibility: Redirects the request to the canonical application root.
      */
     public function root(): RedirectResponse
     {

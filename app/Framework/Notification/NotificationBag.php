@@ -37,6 +37,7 @@ namespace Catalyst\Framework\Notification;
  * be displayed to the user after a JSON API response.
  *
  * @package Catalyst\Framework\Notification
+ * Responsibility: Collects toaster, modal, and inline alert payloads for JSON responses.
  */
 class NotificationBag
 {
@@ -62,8 +63,9 @@ class NotificationBag
     private array $alerts = [];
 
     /**
-     * Add a toaster notification
+     * Add a toaster notification.
      *
+     * Responsibility: Add a toaster notification.
      * @param Notification $notification The notification to add
      * @return self For method chaining
      */
@@ -74,8 +76,9 @@ class NotificationBag
     }
 
     /**
-     * Add a toaster notification with quick syntax
+     * Add a toaster notification with quick syntax.
      *
+     * Responsibility: Add a toaster notification with quick syntax.
      * @param string $type Notification type (success, error, warning, info)
      * @param string $message Message content
      * @param array $options Additional options
@@ -101,8 +104,9 @@ class NotificationBag
     }
 
     /**
-     * Add a success toaster
+     * Add a success toaster.
      *
+     * Responsibility: Add a success toaster.
      * @param string $message Message content
      * @param array $options Additional options
      * @return self For method chaining
@@ -113,8 +117,9 @@ class NotificationBag
     }
 
     /**
-     * Add an error toaster
+     * Add an error toaster.
      *
+     * Responsibility: Add an error toaster.
      * @param string $message Message content
      * @param array $options Additional options
      * @return self For method chaining
@@ -127,8 +132,9 @@ class NotificationBag
     }
 
     /**
-     * Add a warning toaster
+     * Add a warning toaster.
      *
+     * Responsibility: Add a warning toaster.
      * @param string $message Message content
      * @param array $options Additional options
      * @return self For method chaining
@@ -139,8 +145,9 @@ class NotificationBag
     }
 
     /**
-     * Add an info toaster
+     * Add an info toaster.
      *
+     * Responsibility: Add an info toaster.
      * @param string $message Message content
      * @param array $options Additional options
      * @return self For method chaining
@@ -151,8 +158,9 @@ class NotificationBag
     }
 
     /**
-     * Add a modal to be displayed
+     * Add a modal to be displayed.
      *
+     * Responsibility: Add a modal to be displayed.
      * @param string $contentUrl URL to load modal content from
      * @param array $options Modal options (title, size, backdrop, keyboard, etc.)
      * @return self For method chaining
@@ -173,8 +181,9 @@ class NotificationBag
     }
 
     /**
-     * Shorthand for adding a modal
+     * Shorthand for adding a modal.
      *
+     * Responsibility: Shorthand for adding a modal.
      * @param string $url URL to load modal content from
      * @param array $options Modal options
      * @return self For method chaining
@@ -185,8 +194,9 @@ class NotificationBag
     }
 
     /**
-     * Add an inline alert notification
+     * Add an inline alert notification.
      *
+     * Responsibility: Add an inline alert notification.
      * @param Notification $notification The notification to add
      * @return self For method chaining
      */
@@ -197,8 +207,9 @@ class NotificationBag
     }
 
     /**
-     * Add an inline alert with quick syntax
+     * Add an inline alert with quick syntax.
      *
+     * Responsibility: Add an inline alert with quick syntax.
      * @param string $type Alert type
      * @param string $message Message content
      * @param array $options Additional options
@@ -224,8 +235,9 @@ class NotificationBag
     }
 
     /**
-     * Get all toaster notifications
+     * Get all toaster notifications.
      *
+     * Responsibility: Get all toaster notifications.
      * @return Notification[]
      */
     public function getToasters(): array
@@ -234,8 +246,9 @@ class NotificationBag
     }
 
     /**
-     * Get all modal configurations
+     * Get all modal configurations.
      *
+     * Responsibility: Get all modal configurations.
      * @return array
      */
     public function getModals(): array
@@ -244,8 +257,9 @@ class NotificationBag
     }
 
     /**
-     * Get all inline alerts
+     * Get all inline alerts.
      *
+     * Responsibility: Get all inline alerts.
      * @return Notification[]
      */
     public function getAlerts(): array
@@ -254,8 +268,9 @@ class NotificationBag
     }
 
     /**
-     * Check if the bag is empty
+     * Check if the bag is empty.
      *
+     * Responsibility: Check if the bag is empty.
      * @return bool True if no notifications
      */
     public function isEmpty(): bool
@@ -264,8 +279,9 @@ class NotificationBag
     }
 
     /**
-     * Check if the bag has any toasters
+     * Check if the bag has any toasters.
      *
+     * Responsibility: Check if the bag has any toasters.
      * @return bool
      */
     public function hasToasters(): bool
@@ -274,8 +290,9 @@ class NotificationBag
     }
 
     /**
-     * Check if the bag has any modals
+     * Check if the bag has any modals.
      *
+     * Responsibility: Check if the bag has any modals.
      * @return bool
      */
     public function hasModals(): bool
@@ -284,8 +301,9 @@ class NotificationBag
     }
 
     /**
-     * Check if the bag has any alerts
+     * Check if the bag has any alerts.
      *
+     * Responsibility: Check if the bag has any alerts.
      * @return bool
      */
     public function hasAlerts(): bool
@@ -294,8 +312,9 @@ class NotificationBag
     }
 
     /**
-     * Get total count of all notifications
+     * Get total count of all notifications.
      *
+     * Responsibility: Get total count of all notifications.
      * @return int Total count
      */
     public function count(): int
@@ -304,8 +323,9 @@ class NotificationBag
     }
 
     /**
-     * Convert the notification bag to array for JSON serialization
+     * Convert the notification bag to array for JSON serialization.
      *
+     * Responsibility: Convert the notification bag to array for JSON serialization.
      * @return array Notification data
      */
     public function toArray(): array
@@ -365,8 +385,9 @@ class NotificationBag
     }
 
     /**
-     * Merge another NotificationBag into this one
+     * Merge another NotificationBag into this one.
      *
+     * Responsibility: Merge another NotificationBag into this one.
      * @param NotificationBag $other The bag to merge
      * @return self For method chaining
      */
@@ -388,8 +409,9 @@ class NotificationBag
     }
 
     /**
-     * Clear all notifications
+     * Clear all notifications.
      *
+     * Responsibility: Clear all notifications.
      * @return self For method chaining
      */
     public function clear(): self

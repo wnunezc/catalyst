@@ -44,6 +44,7 @@ use Catalyst\Helpers\Config\ConfigManager;
  * No database storage required — fully stateless.
  *
  * @package Catalyst\Framework\WebSocket
+ * Responsibility: Issues and verifies stateless WebSocket authentication tokens with tenant context.
  */
 class WebSocketToken
 {
@@ -85,6 +86,8 @@ class WebSocketToken
     }
 
     /**
+     * Verifies a token and returns its user and tenant context.
+     *
      * @return array{user_id:int,tenant_id:int,tenant_key:string}|null
      */
     public static function verifyContext(string $token): ?array

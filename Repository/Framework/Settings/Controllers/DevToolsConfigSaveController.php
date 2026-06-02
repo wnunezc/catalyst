@@ -36,15 +36,17 @@ use Catalyst\Repository\Settings\Requests\DevToolsConfigRequest;
 use Catalyst\Repository\Settings\Support\DevToolsConfigWriter;
 
 /**
- * Defines the Dev Tools Config Save Controller class contract.
+ * Persists developer-tool compatibility settings.
  *
  * @package Catalyst\Repository\Settings\Controllers
- * Responsibility: Coordinates the dev tools config save controller behavior within its module boundary.
+ * Responsibility: Delegates validated debug and log-display writes and returns the setup AJAX response.
  */
 final class DevToolsConfigSaveController extends Controller
 {
     /**
      * Initializes the Dev Tools Config Save Controller instance.
+     *
+     * Responsibility: Initializes the Dev Tools Config Save Controller instance.
      */
     public function __construct(
         private readonly DevToolsConfigWriter $writer = new DevToolsConfigWriter()
@@ -53,7 +55,9 @@ final class DevToolsConfigSaveController extends Controller
     }
 
     /**
-     * Persists the current state.
+     * Saves validated developer-tool settings.
+     *
+     * Responsibility: Saves validated developer-tool settings.
      */
     public function saveDevTools(DevToolsConfigRequest $request): Response
     {

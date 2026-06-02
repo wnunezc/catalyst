@@ -4,25 +4,51 @@ declare(strict_types=1);
 
 use Catalyst\Framework\Database\Migration;
 
+/**
+ * Adds temporal automation controls and idempotency persistence.
+ *
+ * @package Catalyst\BootCore\Database\Migrations
+ * Responsibility: Provision automation validity windows and durable idempotency key storage.
+ */
 return new class extends Migration
 {
+    /**
+     * Returns the timestamp identifier used by the migration runner to order and track this migration.
+     *
+     * Responsibility: Returns the timestamp identifier used by the migration runner to order and track this migration.
+     */
     public function getVersion(): string
     {
         return '20260519223000';
     }
 
+    /**
+     * Adds automation validity columns and the idempotency keys table.
+     *
+     * Responsibility: Adds automation validity columns and the idempotency keys table.
+     */
     public function up(): void
     {
         $this->ensureAutomationValidityColumns();
         $this->ensureIdempotencyTable();
     }
 
+    /**
+     * Preserves forward-only runtime history when rollback is requested for this migration.
+     *
+     * Responsibility: Preserves forward-only runtime history when rollback is requested for this migration.
+     */
     public function down(): void
     {
         // Forward-only hardening step. Rolling back would drop runtime
         // dedup history and temporal metadata already attached to live rules.
     }
 
+    /**
+     * Adds validity window columns and their lookup index to automation rules.
+     *
+     * Responsibility: Adds validity window columns and their lookup index to automation rules.
+     */
     private function ensureAutomationValidityColumns(): void
     {
         if (!$this->tableExists('automation_rules')) {
@@ -51,6 +77,11 @@ return new class extends Migration
         }
     }
 
+    /**
+     * Creates the table that records idempotency keys and their outcomes.
+     *
+     * Responsibility: Creates the table that records idempotency keys and their outcomes.
+     */
     private function ensureIdempotencyTable(): void
     {
         if ($this->tableExists('idempotency_keys')) {
@@ -77,6 +108,11 @@ return new class extends Migration
         );
     }
 
+    /**
+     * Checks information_schema so schema changes remain idempotent for an existing column.
+     *
+     * Responsibility: Checks information_schema so schema changes remain idempotent for an existing column.
+     */
     private function columnExists(string $table, string $column): bool
     {
         $row = $this->selectOne(
@@ -95,6 +131,11 @@ return new class extends Migration
         return $row !== null;
     }
 
+    /**
+     * Checks information_schema so schema changes remain idempotent for an existing index.
+     *
+     * Responsibility: Checks information_schema so schema changes remain idempotent for an existing index.
+     */
     private function indexExists(string $table, string $index): bool
     {
         $row = $this->selectOne(

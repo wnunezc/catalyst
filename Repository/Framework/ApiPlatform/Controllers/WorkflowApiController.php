@@ -40,15 +40,18 @@ use Catalyst\Framework\Workflow\WorkflowRepository;
 use RuntimeException;
 
 /**
- * Defines the Workflow Api Controller class contract.
+ * API controller for workflow instance discovery and transitions.
  *
  * @package Catalyst\Repository\ApiPlatform\Controllers
- * Responsibility: Coordinates the workflow api controller behavior within its module boundary.
+ * Responsibility: Filters workflow instances by request criteria, enforces per-resource
+ * visibility, and applies workflow transitions to supported records.
  */
 final class WorkflowApiController extends Controller
 {
     /**
-     * Initializes the Workflow Api Controller instance.
+     * Receives workflow lookup and transition services for API workflow endpoints.
+     *
+     * Responsibility: Receives workflow lookup and transition services for API workflow endpoints.
      */
     public function __construct(
         private readonly WorkflowRepository $repository,
@@ -58,7 +61,9 @@ final class WorkflowApiController extends Controller
     }
 
     /**
-     * Handles the index workflow.
+     * Searches workflow instances, filters them by resource visibility, and returns paginated API data.
+     *
+     * Responsibility: Searches workflow instances, filters them by resource visibility, and returns paginated API data.
      */
     public function index(Request $request): Response
     {
@@ -86,7 +91,9 @@ final class WorkflowApiController extends Controller
     }
 
     /**
-     * Handles the transition workflow.
+     * Applies a requested workflow transition to an accessible workflow instance.
+     *
+     * Responsibility: Applies a requested workflow transition to an accessible workflow instance.
      */
     public function transition(Request $request, string $id): Response
     {
@@ -128,6 +135,9 @@ final class WorkflowApiController extends Controller
     }
 
     /**
+     * Determines whether the current actor may view the resource behind a workflow instance.
+     *
+     * Responsibility: Determines whether the current actor may view the resource behind a workflow instance.
      * @param array<string, mixed> $instance
      */
     private function canViewInstance(array $instance): bool
@@ -143,7 +153,9 @@ final class WorkflowApiController extends Controller
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves the domain record associated with a workflow resource key and record id.
+     *
+     * Responsibility: Resolves the domain record associated with a workflow resource key and record id.
      */
     private function resolveRecord(string $resourceKey, int $recordId): mixed
     {

@@ -31,14 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Module;
 
 /**
- * Defines the Module Localization Decorator class contract.
+ * Localizes visible module declaration fields.
  *
  * @package Catalyst\Framework\Module
- * Responsibility: Coordinates the module localization decorator behavior within its module boundary.
+ * Responsibility: Replaces translatable module metadata keys and applies DevTools-specific translations.
  */
 final class ModuleLocalizationDecorator
 {
     /**
+     * Localizes the visible fields of a module declaration.
+     *
+     * Responsibility: Localizes the visible fields of a module declaration.
      * @param array<string, mixed> $module
      * @return array<string, mixed>
      */
@@ -52,6 +55,9 @@ final class ModuleLocalizationDecorator
     }
 
     /**
+     * Recursively translates visible declaration values that contain translation keys.
+     *
+     * Responsibility: Recursively translates visible declaration values that contain translation keys.
      * @param array<string, mixed> $values
      * @return array<string, mixed>
      */
@@ -76,6 +82,9 @@ final class ModuleLocalizationDecorator
     }
 
     /**
+     * Applies explicit localized labels to the built-in DevTools declaration.
+     *
+     * Responsibility: Applies explicit localized labels to the built-in DevTools declaration.
      * @param array<string, mixed> $module
      * @return array<string, mixed>
      */

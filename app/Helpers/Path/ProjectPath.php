@@ -31,15 +31,15 @@ declare(strict_types=1);
 namespace Catalyst\Helpers\Path;
 
 /**
- * Defines the Project Path class contract.
+ * Builds canonical filesystem paths inside the Catalyst project.
  *
  * @package Catalyst\Helpers\Path
- * Responsibility: Coordinates the project path behavior within its module boundary.
+ * Responsibility: Centralizes paths for boot-core, cache, binaries, storage and migrations.
  */
 final class ProjectPath
 {
     /**
-     * Handles the boot core workflow.
+     * Builds a path below the boot-core directory.
      */
     public static function bootCore(string ...$segments): string
     {
@@ -47,7 +47,7 @@ final class ProjectPath
     }
 
     /**
-     * Handles the cache workflow.
+     * Builds a path below the boot-core cache directory.
      */
     public static function cache(string ...$segments): string
     {
@@ -55,7 +55,7 @@ final class ProjectPath
     }
 
     /**
-     * Handles the route cache file workflow.
+     * Returns the generated route cache file path.
      */
     public static function routeCacheFile(): string
     {
@@ -63,7 +63,7 @@ final class ProjectPath
     }
 
     /**
-     * Handles the bin workflow.
+     * Builds a path below the boot-core binary directory.
      */
     public static function bin(string ...$segments): string
     {
@@ -71,7 +71,7 @@ final class ProjectPath
     }
 
     /**
-     * Handles the database workflow.
+     * Builds a path below the boot-core database directory.
      */
     public static function database(string ...$segments): string
     {
@@ -79,7 +79,7 @@ final class ProjectPath
     }
 
     /**
-     * Handles the storage workflow.
+     * Builds a path below the boot-core storage directory.
      */
     public static function storage(string ...$segments): string
     {
@@ -87,7 +87,7 @@ final class ProjectPath
     }
 
     /**
-     * Handles the migrations workflow.
+     * Builds a path below the migrations directory.
      */
     public static function migrations(string ...$segments): string
     {
@@ -95,7 +95,7 @@ final class ProjectPath
     }
 
     /**
-     * Handles the join workflow.
+     * Joins filesystem path segments after trimming separators.
      */
     private static function join(string ...$segments): string
     {

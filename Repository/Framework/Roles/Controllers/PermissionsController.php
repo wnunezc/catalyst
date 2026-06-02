@@ -43,10 +43,10 @@ use Catalyst\Repository\Roles\Requests\PermissionPayloadRequest;
 use Catalyst\Repository\Roles\Requests\PermissionBulkSelectionRequest;
 
 /**
- * Defines the Permissions Controller class contract.
+ * Manages the administrative permission catalog and its edit forms.
  *
  * @package Catalyst\Repository\Roles\Controllers
- * Responsibility: Coordinates the permissions controller behavior within its module boundary.
+ * Responsibility: Lists, creates, updates and deletes permission records while enforcing authorization and record claims.
  */
 class PermissionsController extends Controller
 {
@@ -54,6 +54,8 @@ class PermissionsController extends Controller
 
     /**
      * Initializes the Permissions Controller instance.
+     *
+     * Responsibility: Initializes the Permissions Controller instance.
      */
     public function __construct(
         private readonly RoleRepository $repo
@@ -62,7 +64,9 @@ class PermissionsController extends Controller
     }
 
     /**
-     * Handles the index workflow.
+     * Displays the searchable permission catalog and handles exports.
+     *
+     * Responsibility: Displays the searchable permission catalog and handles exports.
      */
     public function index(Request $request): Response
     {
@@ -187,7 +191,9 @@ class PermissionsController extends Controller
     }
 
     /**
-     * Handles the create workflow.
+     * Displays the form for creating a permission.
+     *
+     * Responsibility: Displays the form for creating a permission.
      */
     public function create(Request $request): Response
     {
@@ -196,7 +202,9 @@ class PermissionsController extends Controller
     }
 
     /**
-     * Handles the persistence workflow.
+     * Creates a permission from the validated request payload.
+     *
+     * Responsibility: Creates a permission from the validated request payload.
      */
     public function store(PermissionPayloadRequest $request): Response
     {
@@ -212,7 +220,9 @@ class PermissionsController extends Controller
     }
 
     /**
-     * Handles the edit workflow.
+     * Acquires a record claim and displays the permission edit form.
+     *
+     * Responsibility: Acquires a record claim and displays the permission edit form.
      */
     public function edit(Request $request, string $id): Response
     {
@@ -238,7 +248,9 @@ class PermissionsController extends Controller
     }
 
     /**
-     * Handles the update workflow.
+     * Updates a permission while enforcing its active record claim.
+     *
+     * Responsibility: Updates a permission while enforcing its active record claim.
      */
     public function update(PermissionPayloadRequest $request, string $id): Response
     {
@@ -272,7 +284,9 @@ class PermissionsController extends Controller
     }
 
     /**
-     * Handles the destroy workflow.
+     * Deletes a permission when no competing record claim blocks the operation.
+     *
+     * Responsibility: Deletes a permission when no competing record claim blocks the operation.
      */
     public function destroy(Request $request, string $id): Response
     {
@@ -295,7 +309,9 @@ class PermissionsController extends Controller
     }
 
     /**
-     * Handles the bulk destroy workflow.
+     * Deletes the selected permissions after validating concurrency claims.
+     *
+     * Responsibility: Deletes the selected permissions after validating concurrency claims.
      */
     public function bulkDestroy(Request $request): Response
     {
@@ -317,7 +333,9 @@ class PermissionsController extends Controller
     }
 
     /**
-     * Renders the current view state.
+     * Builds and renders the permission create or edit form.
+     *
+     * Responsibility: Builds and renders the permission create or edit form.
      */
     private function renderForm(string $title, ?array $permission, ?array $claim = null): Response
     {
@@ -394,7 +412,9 @@ class PermissionsController extends Controller
     }
 
     /**
-     * Normalizes the provided value.
+     * Trims an optional description and converts an empty value to null.
+     *
+     * Responsibility: Trims an optional description and converts an empty value to null.
      */
     private function normalizeDescription(mixed $description): ?string
     {

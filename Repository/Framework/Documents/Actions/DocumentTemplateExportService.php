@@ -35,15 +35,17 @@ use Catalyst\Entities\DocumentTemplate;
 use Catalyst\Framework\Document\DocumentTemplateManager;
 
 /**
- * Defines the Document Template Export Service class contract.
+ * Exports rendered artifacts from document templates.
  *
  * @package Catalyst\Repository\Documents\Actions
- * Responsibility: Coordinates the document template export service behavior within its module boundary.
+ * Responsibility: Delegate document artifact generation to the document template manager.
  */
 final class DocumentTemplateExportService
 {
     /**
      * Initializes the Document Template Export Service instance.
+     *
+     * Responsibility: Initializes the Document Template Export Service instance.
      */
     public function __construct(
         private readonly DocumentTemplateManager $manager
@@ -51,6 +53,9 @@ final class DocumentTemplateExportService
     }
 
     /**
+     * Exports an artifact by rendering the template with the supplied payload.
+     *
+     * Responsibility: Exports an artifact by rendering the template with the supplied payload.
      * @param array<string, mixed> $payload
      */
     public function export(DocumentTemplate $template, array $payload): DocumentArtifact

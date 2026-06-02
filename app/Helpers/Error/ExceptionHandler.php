@@ -44,6 +44,7 @@ use Throwable;
  * Class that handles registered Exceptions.
  *
  * @package Catalyst\Helpers\Error;
+ * Responsibility: Converts framework exceptions into HTTP, JSON or diagnostic error responses.
  */
 class ExceptionHandler
 {
@@ -54,6 +55,7 @@ class ExceptionHandler
     /**
      * Exception handler. Captures and handles exceptions thrown in the application.
      *
+     * Responsibility: Exception handler. Captures and handles exceptions thrown in the application.
      * @param Throwable $exception The captured exception.
      * @return void
      * @throws Exception
@@ -156,7 +158,9 @@ class ExceptionHandler
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves a safe redirect target after non-AJAX validation failures.
+     *
+     * Responsibility: Resolves a safe redirect target after non-AJAX validation failures.
      */
     private function resolveBackRedirect(): string
     {

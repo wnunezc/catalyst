@@ -39,6 +39,7 @@ use Throwable;
  * such as HTML with modal or CLI. It handles the visual presentation of the data.
  *
  * @package Catalyst\Helpers\Debug;
+ * Responsibility: Renders formatted dump data as terminal text or interactive HTML output.
  */
 class DumperRenderer
 {
@@ -68,8 +69,9 @@ class DumperRenderer
     private string $templatePath;
 
     /**
-     * Constructor
+     * Initializes the object with the collaborators or state required for its responsibility.
      *
+     * Responsibility: Initializes the object with the collaborators or state required for its responsibility.
      * @param DumperConfig $config Configuration instance
      * @param DumperColorizer $colorizer Colorizer instance
      * @param DumperCollapsible $collapsible Collapsible instance
@@ -88,8 +90,9 @@ class DumperRenderer
     }
     
     /**
-     * Load a template file and extract variables into its scope
+     * Load a template file and extract variables into its scope.
      *
+     * Responsibility: Load a template file and extract variables into its scope.
      * @param string $templateName Template file name
      * @param array $variables Variables to extract into template scope
      * @return string Rendered template content
@@ -117,7 +120,11 @@ class DumperRenderer
     }
 
     /**
-     * Resolves the requested value.
+     * Resolve the first existing template path for the requested template name.
+     *
+     * Responsibility: Resolve the first existing template path for the requested template name.
+     * @param string $templateName Template file name
+     * @return string|null Existing template path or null when no candidate exists
      */
     private function resolveTemplatePath(string $templateName): ?string
     {
@@ -138,8 +145,9 @@ class DumperRenderer
     }
 
     /**
-     * Render debug output
+     * Render debug output.
      *
+     * Responsibility: Render debug output.
      * @param array $data Array of variables to dump
      * @param array|null $caller Caller information (file, line)
      * @param bool $isHtml Whether to render as HTML
@@ -159,8 +167,9 @@ class DumperRenderer
     }
 
     /**
-     * Render debug output for CLI
+     * Render debug output for CLI.
      *
+     * Responsibility: Render debug output for CLI.
      * @param array $data Array of variables to dump
      * @param array|null $caller Caller information (file, line)
      * @return string Rendered CLI output
@@ -200,8 +209,9 @@ class DumperRenderer
     }
 
     /**
-     * Render debug output for HTML
+     * Render debug output for HTML.
      *
+     * Responsibility: Render debug output for HTML.
      * @param array $data Array of variables to dump
      * @param array|null $caller Caller information (file, line)
      * @return string Rendered HTML output
@@ -225,8 +235,9 @@ class DumperRenderer
     }
 
     /**
-     * Generate CSS for HTML output
+     * Generate CSS for HTML output.
      *
+     * Responsibility: Generate CSS for HTML output.
      * @param string $dumpId Unique ID for this dump
      * @return string CSS code
      */
@@ -264,8 +275,9 @@ class DumperRenderer
     }
 
     /**
-     * Generate JavaScript for HTML output
+     * Generate JavaScript for HTML output.
      *
+     * Responsibility: Generate JavaScript for HTML output.
      * @param string $dumpId Unique ID for this dump
      * @param string $modalId Modal ID
      * @return string JavaScript code
@@ -288,8 +300,9 @@ class DumperRenderer
     }
 
     /**
-     * Generate modal HTML
+     * Generate modal HTML.
      *
+     * Responsibility: Generate modal HTML.
      * @param string $dumpId Unique ID for this dump
      * @param string $modalId Modal ID
      * @param array $data Array of formatted variables
@@ -327,8 +340,9 @@ class DumperRenderer
     }
 
     /**
-     * Generate floating button HTML
+     * Generate floating button HTML.
      *
+     * Responsibility: Generate floating button HTML.
      * @param string $dumpId Unique ID for this dump
      * @param string $btnId Button ID
      * @param array $data Array of variables
@@ -351,8 +365,9 @@ class DumperRenderer
     }
 
     /**
-     * Adjust brightness of a hex color
+     * Adjust brightness of a hex color.
      *
+     * Responsibility: Adjust brightness of a hex color.
      * @param string $hexColor Hex color code
      * @param int $percent Percentage to adjust (-100 to 100)
      * @return string Adjusted hex color

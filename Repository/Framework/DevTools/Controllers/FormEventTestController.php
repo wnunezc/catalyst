@@ -36,17 +36,19 @@ use Catalyst\Framework\Http\Response;
 use Catalyst\Framework\Traits\HandlesFormEventsTrait;
 
 /**
- * Defines the Form Event Test Controller class contract.
+ * Exercises the form-event response helpers used by interactive forms.
  *
  * @package Catalyst\Repository\DevTools\Controllers
- * Responsibility: Coordinates the form event test controller behavior within its module boundary.
+ * Responsibility: Returns deterministic save, validation, refresh and redirect test responses.
  */
 class FormEventTestController extends Controller
 {
     use HandlesFormEventsTrait;
 
     /**
-     * Handles the form demo store workflow.
+     * Dispatches the submitted demo form event to its handler.
+     *
+     * Responsibility: Dispatches the submitted demo form event to its handler.
      */
     public function formDemoStore(): Response
     {
@@ -54,7 +56,9 @@ class FormEventTestController extends Controller
     }
 
     /**
-     * Handles the on save workflow.
+     * Validates demo contact fields and returns a successful save response.
+     *
+     * Responsibility: Validates demo contact fields and returns a successful save response.
      */
     protected function onSave(): JsonResponse
     {
@@ -87,7 +91,9 @@ class FormEventTestController extends Controller
     }
 
     /**
-     * Handles the on validate workflow.
+     * Returns deterministic field-validation errors for the demo harness.
+     *
+     * Responsibility: Returns deterministic field-validation errors for the demo harness.
      */
     protected function onValidate(): JsonResponse
     {
@@ -98,7 +104,9 @@ class FormEventTestController extends Controller
     }
 
     /**
-     * Handles the on refresh workflow.
+     * Returns a response that schedules a client refresh.
+     *
+     * Responsibility: Returns a response that schedules a client refresh.
      */
     protected function onRefresh(): JsonResponse
     {
@@ -108,7 +116,9 @@ class FormEventTestController extends Controller
     }
 
     /**
-     * Handles the on redirect workflow.
+     * Returns a response that schedules a client redirect.
+     *
+     * Responsibility: Returns a response that schedules a client redirect.
      */
     protected function onRedirect(): JsonResponse
     {

@@ -36,15 +36,17 @@ use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
 
 /**
- * Defines the Health Controller class contract.
+ * Exposes the framework health panel and machine-readable probes.
  *
  * @package Catalyst\Repository\Settings\Controllers
- * Responsibility: Coordinates the health controller behavior within its module boundary.
+ * Responsibility: Builds health reports for the admin panel, liveness endpoint and readiness endpoint.
  */
 class HealthController extends Controller
 {
     /**
      * Initializes the Health Controller instance.
+     *
+     * Responsibility: Initializes the Health Controller instance.
      */
     public function __construct(
         private readonly HealthReportBuilder $reportBuilder = new HealthReportBuilder()
@@ -53,7 +55,9 @@ class HealthController extends Controller
     }
 
     /**
-     * Handles the panel workflow.
+     * Displays the administrative health report.
+     *
+     * Responsibility: Displays the administrative health report.
      */
     public function panel(Request $request): Response
     {
@@ -67,7 +71,9 @@ class HealthController extends Controller
     }
 
     /**
-     * Handles the live workflow.
+     * Returns the liveness probe payload.
+     *
+     * Responsibility: Returns the liveness probe payload.
      */
     public function live(Request $request): Response
     {
@@ -82,7 +88,9 @@ class HealthController extends Controller
     }
 
     /**
-     * Reads the requested value.
+     * Returns the readiness probe payload and status code.
+     *
+     * Responsibility: Returns the readiness probe payload and status code.
      */
     public function ready(Request $request): Response
     {

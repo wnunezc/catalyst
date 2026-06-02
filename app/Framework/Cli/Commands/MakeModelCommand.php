@@ -39,15 +39,18 @@ use InvalidArgumentException;
 use RuntimeException;
 
 /**
- * Defines the Make Model Command class contract.
+ * make:model CLI command.
+ *
+ * Responsibility: Runs the make:model command to Scaffold a new Model in Repository/App/Models/.
  *
  * @package Catalyst\Framework\Cli\Commands
- * Responsibility: Coordinates the make model command behavior within its module boundary.
  */
 class MakeModelCommand extends AbstractCommand
 {
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -55,14 +58,21 @@ class MakeModelCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
         return 'Scaffold a new Model in Repository/App/Models/';
     }
 
-    /** @return Option[] */
+    /**
+     * Defines the accepted option schema for this command.
+     *
+     * Responsibility: Defines the accepted option schema for this command.
+     * @return Option[]
+     */
     public function getOptions(): array
     {
         return [
@@ -77,7 +87,12 @@ class MakeModelCommand extends AbstractCommand
         ];
     }
 
-    /** @return Parameter[] */
+    /**
+     * Defines the accepted positional parameter schema for this command.
+     *
+     * Responsibility: Defines the accepted positional parameter schema for this command.
+     * @return Parameter[]
+     */
     public function getParameters(): array
     {
         return [
@@ -93,7 +108,9 @@ class MakeModelCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {

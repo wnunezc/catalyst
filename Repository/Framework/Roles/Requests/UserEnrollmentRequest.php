@@ -34,15 +34,17 @@ use Catalyst\Framework\Http\Request;
 use Catalyst\Helpers\Validation\Validator;
 
 /**
- * Defines the User Enrollment Request class contract.
+ * Extracts and validates administrative user-enrollment input.
  *
  * @package Catalyst\Repository\Roles\Requests
- * Responsibility: Coordinates the user enrollment request behavior within its module boundary.
+ * Responsibility: Normalizes enrollment fields, reports validation errors and retains only replay-safe input.
  */
 final class UserEnrollmentRequest
 {
     /**
      * Initializes the User Enrollment Request instance.
+     *
+     * Responsibility: Initializes the User Enrollment Request instance.
      */
     public function __construct(
         private readonly Request $request
@@ -50,6 +52,9 @@ final class UserEnrollmentRequest
     }
 
     /**
+     * Returns the normalized enrollment payload.
+     *
+     * Responsibility: Returns the normalized enrollment payload.
      * @return array<string, string>
      */
     public function payload(): array
@@ -65,6 +70,9 @@ final class UserEnrollmentRequest
     }
 
     /**
+     * Returns validation errors for the enrollment payload.
+     *
+     * Responsibility: Returns validation errors for the enrollment payload.
      * @param array<string, string> $payload
      * @return array<string, string[]>
      */
@@ -93,6 +101,9 @@ final class UserEnrollmentRequest
     }
 
     /**
+     * Removes password fields before preserving failed enrollment input.
+     *
+     * Responsibility: Removes password fields before preserving failed enrollment input.
      * @param array<string, string> $payload
      * @return array<string, string>
      */

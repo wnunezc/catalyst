@@ -33,15 +33,17 @@ namespace Catalyst\Framework\Module;
 use Catalyst\Framework\Cli\ScaffoldManager;
 
 /**
- * Defines the Module File Factory class contract.
+ * Builds files emitted by module scaffolding.
  *
  * @package Catalyst\Framework\Module
- * Responsibility: Coordinates the module file factory behavior within its module boundary.
+ * Responsibility: Renders controller, view, asset, localization, route, and manifest file contents.
  */
 final class ModuleFileFactory
 {
     /**
-     * Initializes the Module File Factory instance.
+     * Initializes the factory with scaffold and manifest rendering support.
+     *
+     * Responsibility: Initializes the factory with scaffold and manifest rendering support.
      */
     public function __construct(
         private readonly ScaffoldManager $manager,
@@ -50,6 +52,9 @@ final class ModuleFileFactory
     }
 
     /**
+     * Builds every file definition required by a module blueprint.
+     *
+     * Responsibility: Builds every file definition required by a module blueprint.
      * @param array<string, mixed> $blueprint
      * @return array<int, array<string, string>>
      */
@@ -127,7 +132,9 @@ final class ModuleFileFactory
     }
 
     /**
-     * Builds the requested structure.
+     * Renders the generated module controller source.
+     *
+     * Responsibility: Renders the generated module controller source.
      */
     private function buildControllerContents(string $namespaceRoot, string $controllerName, string $view, ?string $layout): string
     {
@@ -148,6 +155,9 @@ use Catalyst\Framework\Http\Response;
 
 class {$controllerName} extends Controller
 {
+    /**
+     * Renders the default module landing screen.
+     */
     public function index(Request \$request): Response
     {
         {$viewCall}
@@ -158,7 +168,9 @@ PHP;
     }
 
     /**
-     * Builds the requested structure.
+     * Renders the generated module route source for its surface.
+     *
+     * Responsibility: Renders the generated module route source for its surface.
      */
     private function buildRouteTemplate(
         string $surface,

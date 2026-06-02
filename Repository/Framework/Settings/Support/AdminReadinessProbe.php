@@ -34,14 +34,17 @@ use PDO;
 use Throwable;
 
 /**
- * Defines the Admin Readiness Probe class contract.
+ * Probes whether the configured database contains an active administrator.
  *
  * @package Catalyst\Repository\Settings\Support
- * Responsibility: Coordinates the admin readiness probe behavior within its module boundary.
+ * Responsibility: Performs a non-throwing readiness check used while rendering the setup surface.
  */
 final class AdminReadinessProbe
 {
     /**
+     * Returns whether an active administrator role assignment can be found.
+     *
+     * Responsibility: Returns whether an active administrator role assignment can be found.
      * @param array<string, mixed> $db
      */
     public function hasActiveAdministrator(array $db): bool

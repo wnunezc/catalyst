@@ -31,15 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Repository\Settings\Support;
 
 /**
- * Defines the Settings Display Factory class contract.
+ * Builds normalized display and form descriptors for the setup surface.
  *
  * @package Catalyst\Repository\Settings\Support
- * Responsibility: Coordinates the settings display factory behavior within its module boundary.
+ * Responsibility: Produces view-ready rows, fields, modal descriptors and selected-option state.
  */
 final class SettingsDisplayFactory
 {
     /**
-     * Handles the display row workflow.
+     * Builds a read-only settings row with password and boolean presentation rules.
+     *
+     * Responsibility: Builds a read-only settings row with password and boolean presentation rules.
      */
     public function displayRow(
         string $label,
@@ -87,7 +89,9 @@ final class SettingsDisplayFactory
     }
 
     /**
-     * Handles the alert field workflow.
+     * Builds an informational alert descriptor.
+     *
+     * Responsibility: Builds an informational alert descriptor.
      */
     public function alertField(string $message): array
     {
@@ -111,7 +115,9 @@ final class SettingsDisplayFactory
     }
 
     /**
-     * Handles the checkbox field workflow.
+     * Builds a checkbox field descriptor.
+     *
+     * Responsibility: Builds a checkbox field descriptor.
      */
     public function checkboxField(string $name, string $label, bool $checked, bool $disabled = false): array
     {
@@ -135,7 +141,9 @@ final class SettingsDisplayFactory
     }
 
     /**
-     * Handles the input field workflow.
+     * Builds a scalar input field descriptor.
+     *
+     * Responsibility: Builds a scalar input field descriptor.
      */
     public function inputField(
         string $section,
@@ -167,7 +175,9 @@ final class SettingsDisplayFactory
     }
 
     /**
-     * Handles the password field workflow.
+     * Builds a password field descriptor without exposing its stored value.
+     *
+     * Responsibility: Builds a password field descriptor without exposing its stored value.
      */
     public function passwordField(string $section, string $name, string $label, bool $hasValue): array
     {
@@ -192,6 +202,9 @@ final class SettingsDisplayFactory
     }
 
     /**
+     * Builds a select field descriptor with normalized options.
+     *
+     * Responsibility: Builds a select field descriptor with normalized options.
      * @param array<string, string> $options
      */
     public function selectField(
@@ -224,7 +237,9 @@ final class SettingsDisplayFactory
     }
 
     /**
-     * Handles the modal workflow.
+     * Builds a setup modal descriptor for one configuration section.
+     *
+     * Responsibility: Builds a setup modal descriptor for one configuration section.
      */
     public function modal(
         string $id,
@@ -250,6 +265,9 @@ final class SettingsDisplayFactory
     }
 
     /**
+     * Marks the current select option while converting values and labels to strings.
+     *
+     * Responsibility: Marks the current select option while converting values and labels to strings.
      * @param array<string, string> $options
      * @return array<int, array<string, string>>
      */

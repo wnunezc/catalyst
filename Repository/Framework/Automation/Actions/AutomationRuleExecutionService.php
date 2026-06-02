@@ -38,15 +38,17 @@ use Catalyst\Framework\Idempotency\IdempotencyManager;
 use RuntimeException;
 
 /**
- * Defines the Automation Rule Execution Service class contract.
+ * Executes automation rules through the idempotent manual and API run flow.
  *
  * @package Catalyst\Repository\Automation\Actions
- * Responsibility: Coordinates the automation rule execution service behavior within its module boundary.
+ * Responsibility: Validate execution claims and delegate idempotent rule runs to the automation manager.
  */
 final class AutomationRuleExecutionService
 {
     /**
      * Initializes the Automation Rule Execution Service instance.
+     *
+     * Responsibility: Initializes the Automation Rule Execution Service instance.
      */
     public function __construct(
         private readonly AutomationManager $manager,
@@ -55,7 +57,9 @@ final class AutomationRuleExecutionService
     }
 
     /**
-     * Handles the generate key workflow.
+     * Generates an idempotency key for a new automation execution request.
+     *
+     * Responsibility: Generates an idempotency key for a new automation execution request.
      */
     public function generateKey(): string
     {
@@ -63,6 +67,9 @@ final class AutomationRuleExecutionService
     }
 
     /**
+     * Executes a rule once for the supplied context and returns the stored or replayed outcome.
+     *
+     * Responsibility: Executes a rule once for the supplied context and returns the stored or replayed outcome.
      * @param array<string, mixed> $context
      * @return array{replayed:bool,outcome:array<string, mixed>}
      */

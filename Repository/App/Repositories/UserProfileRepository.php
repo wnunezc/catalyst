@@ -37,10 +37,10 @@ use Catalyst\Helpers\Log\Logger;
 use Exception;
 
 /**
- * Defines the User Profile Repository class contract.
+ * Repository for tenant-scoped user profile records.
  *
  * @package App\Repositories
- * Responsibility: Coordinates the user profile repository behavior within its module boundary.
+ * Responsibility: Reads profile data and profile counts through the active tenant boundary.
  */
 final class UserProfileRepository
 {
@@ -48,7 +48,9 @@ final class UserProfileRepository
     private Logger $logger;
 
     /**
-     * Initializes the User Profile Repository instance.
+     * Initializes database and logging collaborators for profile lookups.
+     *
+     * Responsibility: Initializes database and logging collaborators for profile lookups.
      */
     public function __construct()
     {
@@ -57,7 +59,9 @@ final class UserProfileRepository
     }
 
     /**
-     * Finds the requested record.
+     * Finds the profile attached to a user in the current tenant.
+     *
+     * Responsibility: Finds the profile attached to a user in the current tenant.
      */
     public function findByUserId(int $userId): ?UserProfile
     {
@@ -77,7 +81,9 @@ final class UserProfileRepository
     }
 
     /**
-     * Handles the total profiles workflow.
+     * Counts profiles available in the current tenant.
+     *
+     * Responsibility: Counts profiles available in the current tenant.
      */
     public function totalProfiles(): int
     {
@@ -100,7 +106,9 @@ final class UserProfileRepository
     }
 
     /**
-     * Handles the current tenant id workflow.
+     * Resolves the required tenant id for all repository queries.
+     *
+     * Responsibility: Resolves the required tenant id for all repository queries.
      */
     private function currentTenantId(): int
     {

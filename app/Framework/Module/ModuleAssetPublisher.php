@@ -34,15 +34,17 @@ use Catalyst\Framework\Cli\ScaffoldManager;
 use RuntimeException;
 
 /**
- * Defines the Module Asset Publisher class contract.
+ * Publishes generated module front assets.
  *
  * @package Catalyst\Framework\Module
- * Responsibility: Coordinates the module asset publisher behavior within its module boundary.
+ * Responsibility: Copies scaffolded style and script assets into their public work paths.
  */
 final class ModuleAssetPublisher
 {
     /**
-     * Initializes the Module Asset Publisher instance.
+     * Initializes the publisher with filesystem scaffolding support.
+     *
+     * Responsibility: Initializes the publisher with filesystem scaffolding support.
      */
     public function __construct(
         private readonly ScaffoldManager $manager
@@ -50,6 +52,9 @@ final class ModuleAssetPublisher
     }
 
     /**
+     * Publishes generated frontend assets declared by a module blueprint.
+     *
+     * Responsibility: Publishes generated frontend assets declared by a module blueprint.
      * @param array<string, mixed> $blueprint
      * @return string[]
      */

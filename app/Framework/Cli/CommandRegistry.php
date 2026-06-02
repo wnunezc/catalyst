@@ -33,7 +33,9 @@ namespace Catalyst\Framework\Cli;
 use Catalyst\Framework\Traits\SingletonTrait;
 
 /**
- * Singleton registry for all registered CLI commands
+ * Registry for CLI command instances.
+ *
+ * Responsibility: Stores command instances by name and exposes lookup operations for the CLI kernel.
  *
  * @package Catalyst\Framework\Cli
  */
@@ -49,10 +51,9 @@ class CommandRegistry
     private array $commands = [];
 
     /**
-     * Register a command
+     * Stores a command instance under its CLI command name.
      *
-     * @param CommandInterface $command
-     * @return self
+     * Responsibility: Stores a command instance under its CLI command name.
      */
     public function register(CommandInterface $command): self
     {
@@ -61,10 +62,9 @@ class CommandRegistry
     }
 
     /**
-     * Retrieve a command by name
+     * Returns a registered command instance by name.
      *
-     * @param string $name
-     * @return CommandInterface|null
+     * Responsibility: Returns a registered command instance by name.
      */
     public function get(string $name): ?CommandInterface
     {
@@ -72,8 +72,9 @@ class CommandRegistry
     }
 
     /**
-     * Return all registered commands
+     * Returns all registered command instances indexed by name.
      *
+     * Responsibility: Returns all registered command instances indexed by name.
      * @return array<string, CommandInterface>
      */
     public function all(): array
@@ -82,10 +83,9 @@ class CommandRegistry
     }
 
     /**
-     * Check if a command is registered
+     * Reports whether a command name is already registered.
      *
-     * @param string $name
-     * @return bool
+     * Responsibility: Reports whether a command name is already registered.
      */
     public function has(string $name): bool
     {

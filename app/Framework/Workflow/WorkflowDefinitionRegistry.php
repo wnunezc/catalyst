@@ -33,10 +33,10 @@ namespace Catalyst\Framework\Workflow;
 use Catalyst\Framework\Traits\SingletonTrait;
 
 /**
- * Defines the Workflow Definition Registry class contract.
+ * Stores workflow definitions indexed by workflow and resource key.
  *
  * @package Catalyst\Framework\Workflow
- * Responsibility: Coordinates the workflow definition registry behavior within its module boundary.
+ * Responsibility: Registers built-in definitions and resolves definitions for workflow execution.
  */
 final class WorkflowDefinitionRegistry
 {
@@ -47,6 +47,8 @@ final class WorkflowDefinitionRegistry
 
     /**
      * Initializes the Workflow Definition Registry instance.
+     *
+     * Responsibility: Initializes the Workflow Definition Registry instance.
      */
     protected function __construct()
     {
@@ -54,7 +56,9 @@ final class WorkflowDefinitionRegistry
     }
 
     /**
-     * Registers the requested definition.
+     * Registers a workflow definition under its workflow and resource keys.
+     *
+     * Responsibility: Registers a workflow definition under its workflow and resource keys.
      */
     public function register(WorkflowDefinition $definition): self
     {
@@ -64,7 +68,9 @@ final class WorkflowDefinitionRegistry
     }
 
     /**
-     * Returns the runtime value.
+     * Returns a workflow definition by key.
+     *
+     * Responsibility: Returns a workflow definition by key.
      */
     public function get(string $key): ?WorkflowDefinition
     {
@@ -72,6 +78,9 @@ final class WorkflowDefinitionRegistry
     }
 
     /**
+     * Returns all registered workflow definitions.
+     *
+     * Responsibility: Returns all registered workflow definitions.
      * @return WorkflowDefinition[]
      */
     public function all(): array
@@ -80,7 +89,9 @@ final class WorkflowDefinitionRegistry
     }
 
     /**
-     * Handles the for resource workflow.
+     * Returns the workflow definition assigned to a resource key.
+     *
+     * Responsibility: Returns the workflow definition assigned to a resource key.
      */
     public function forResource(string $resourceKey): ?WorkflowDefinition
     {

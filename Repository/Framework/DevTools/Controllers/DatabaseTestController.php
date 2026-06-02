@@ -35,15 +35,17 @@ use Catalyst\Framework\Database\DatabaseManager;
 use Catalyst\Framework\Http\JsonResponse;
 
 /**
- * Defines the Database Test Controller class contract.
+ * Exposes a development diagnostic for the configured database connection.
  *
  * @package Catalyst\Repository\DevTools\Controllers
- * Responsibility: Coordinates the database test controller behavior within its module boundary.
+ * Responsibility: Reports connection health and configuration source for DevTools.
  */
 class DatabaseTestController extends Controller
 {
     /**
-     * Handles the test db connection workflow.
+     * Tests the active database connection and returns diagnostic metadata.
+     *
+     * Responsibility: Tests the active database connection and returns diagnostic metadata.
      */
     public function testDbConnection(): JsonResponse
     {

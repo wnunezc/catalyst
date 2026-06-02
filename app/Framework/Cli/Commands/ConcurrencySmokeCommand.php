@@ -40,14 +40,20 @@ use Catalyst\Helpers\Exceptions\OptimisticLockException;
 use Throwable;
 
 /**
- * Defines the Concurrency Smoke Command class contract.
+ * concurrency:smoke CLI command.
+ *
+ * Responsibility: Runs the concurrency:smoke command to Exercise optimistic locking plus claim reclaim on the canonical PA-01 runtime layer.
  *
  * @package Catalyst\Framework\Cli\Commands
- * Responsibility: Coordinates the concurrency smoke command behavior within its module boundary.
  */
 final class ConcurrencySmokeCommand extends AbstractCommand
 {
-    /** @return Option[] */
+    /**
+     * Defines the accepted option schema for this command.
+     *
+     * Responsibility: Defines the accepted option schema for this command.
+     * @return Option[]
+     */
     public function getOptions(): array
     {
         return [
@@ -58,7 +64,9 @@ final class ConcurrencySmokeCommand extends AbstractCommand
     }
 
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -66,7 +74,9 @@ final class ConcurrencySmokeCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
@@ -74,7 +84,9 @@ final class ConcurrencySmokeCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {

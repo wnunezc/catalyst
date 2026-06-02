@@ -36,17 +36,17 @@ use Catalyst\Framework\Queue\Jobs\PruneQueueHistoryJob;
 use Catalyst\Framework\Retention\Jobs\RunRetentionPoliciesJob;
 
 /**
- * Defines the Framework Schedule Catalog class contract.
+ * Registers the framework-owned recurring maintenance tasks.
  *
  * @package Catalyst\Framework\Schedule
- * Responsibility: Coordinates the framework schedule catalog behavior within its module boundary.
+ * Responsibility: Adds queue-history cleanup, automation evaluation, and retention execution to the scheduler registry once.
  */
 final class FrameworkScheduleCatalog
 {
     private static bool $registered = false;
 
     /**
-     * Registers the requested definition.
+     * Registers the default framework schedule entries once.
      */
     public static function registerDefaults(ScheduleRegistry $registry): void
     {

@@ -35,16 +35,19 @@ use Catalyst\Framework\Tenancy\TenancyManager;
 use Catalyst\Framework\Traits\SingletonTrait;
 
 /**
- * Defines the Attachment Repository class contract.
+ * Reads tenant-scoped resource attachment data and reference counts.
  *
  * @package Catalyst\Framework\Attachment
- * Responsibility: Coordinates the attachment repository behavior within its module boundary.
+ * Responsibility: Query attachment listings, reporting rows and active asset references for the current tenant.
  */
 final class AttachmentRepository
 {
     use SingletonTrait;
 
     /**
+     * Returns attachment rows for a resource record with joined media and artifact metadata.
+     *
+     * Responsibility: Returns attachment rows for a resource record with joined media and artifact metadata.
      * @return array<int, array<string, mixed>>
      */
     public function listForResource(string $resourceKey, int $recordId, bool $includeDetached = false): array
@@ -77,6 +80,9 @@ final class AttachmentRepository
     }
 
     /**
+     * Builds normalized report rows for a resource attachment listing.
+     *
+     * Responsibility: Builds normalized report rows for a resource attachment listing.
      * @param array<string, mixed> $criteria
      * @return array<int, array<string, mixed>>
      */
@@ -113,7 +119,9 @@ final class AttachmentRepository
     }
 
     /**
-     * Handles the count active media references workflow.
+     * Counts active attachment rows that still reference a media item.
+     *
+     * Responsibility: Counts active attachment rows that still reference a media item.
      */
     public function countActiveMediaReferences(int $mediaItemId, ?int $excludeAttachmentId = null): int
     {
@@ -135,7 +143,9 @@ final class AttachmentRepository
     }
 
     /**
-     * Handles the count active artifact references workflow.
+     * Counts active attachment rows that still reference a document artifact.
+     *
+     * Responsibility: Counts active attachment rows that still reference a document artifact.
      */
     public function countActiveArtifactReferences(int $artifactId, ?int $excludeAttachmentId = null): int
     {
@@ -157,7 +167,9 @@ final class AttachmentRepository
     }
 
     /**
-     * Handles the current tenant id workflow.
+     * Resolves the required tenant identifier for attachment queries.
+     *
+     * Responsibility: Resolves the required tenant identifier for attachment queries.
      */
     private function currentTenantId(): int
     {

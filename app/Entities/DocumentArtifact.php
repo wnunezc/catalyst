@@ -36,10 +36,10 @@ use Catalyst\Framework\Traits\HasAuditLogTrait;
 use Catalyst\Framework\Traits\HasTimestampsTrait;
 
 /**
- * Defines the Document Artifact class contract.
+ * ORM entity for rendered document artifacts.
  *
  * @package Catalyst\Entities
- * Responsibility: Coordinates the document artifact behavior within its module boundary.
+ * Responsibility: Maps generated document files, storage locations, checksums, payload snapshots, and archive state.
  */
 final class DocumentArtifact extends Model
 {

@@ -40,6 +40,7 @@ namespace Catalyst\Framework\Notification;
  * constructor body (readonly class would prevent body-phase initialization).
  *
  * @package Catalyst\Framework\Notification
+ * Responsibility: Carries immutable notification content and creates standard notification variants.
  */
 class Notification
 {
@@ -54,11 +55,9 @@ class Notification
     public readonly array $meta;
 
     /**
-     * Create a new Notification instance
+     * Create a new Notification instance The ID is always set at construction time. If not provided, a unique ID is auto-generated once, ensuring getId() and toArray() return a stable value.
      *
-     * The ID is always set at construction time. If not provided, a unique ID
-     * is auto-generated once, ensuring getId() and toArray() return a stable value.
-     *
+     * Responsibility: Create a new Notification instance The ID is always set at construction time. If not provided, a unique ID is auto-generated once, ensuring getId() and toArray() return a stable value.
      * @param NotificationType $type Notification type (success, error, warning, info, etc.)
      * @param string $message The notification message content
      * @param string|null $title Optional title for the notification
@@ -102,10 +101,9 @@ class Notification
     }
 
     /**
-     * Get the notification ID
+     * Get the notification ID Always returns the stable ID set at construction time.
      *
-     * Always returns the stable ID set at construction time.
-     *
+     * Responsibility: Exposes the stable notification identifier assigned at construction time.
      * @return string Notification ID
      */
     public function getId(): string
@@ -114,8 +112,9 @@ class Notification
     }
 
     /**
-     * Get the icon class (uses type default if not set)
+     * Get the icon class (uses type default if not set).
      *
+     * Responsibility: Resolves the explicit icon class or falls back to the notification type default.
      * @return string FontAwesome icon class
      */
     public function getIcon(): string
@@ -124,8 +123,9 @@ class Notification
     }
 
     /**
-     * Convert notification to array for JSON serialization
+     * Convert notification to array for JSON serialization.
      *
+     * Responsibility: Convert notification to array for JSON serialization.
      * @return array Notification data as array
      */
     public function toArray(): array

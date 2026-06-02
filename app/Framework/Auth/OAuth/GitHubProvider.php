@@ -35,30 +35,18 @@ use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
 use Psr\Http\Message\ResponseInterface;
 
-/**************************************************************************************
- * GitHubProvider — GitHub OAuth2 integration via league/oauth2-client
- *
- * Extends AbstractProvider with GitHub-specific endpoints.
- * GitHub may return a null email if the user has it set to private;
- * the OAuthManager handles that case by fetching from /user/emails.
- *
- * Required env vars (in .env):
- *   GITHUB_CLIENT_ID
- *   GITHUB_CLIENT_SECRET
- *   GITHUB_REDIRECT_URI
- *
- * @package Catalyst\Framework\Auth\OAuth
- */
 /**
- * Defines the Git Hub Provider class contract.
+ * Implements the GitHub OAuth2 provider contract.
  *
  * @package Catalyst\Framework\Auth\OAuth
- * Responsibility: Coordinates the git hub provider behavior within its module boundary.
+ * Responsibility: Supply GitHub endpoints, scopes, headers, error handling and normalized OAuth users.
  */
 class GitHubProvider extends AbstractProvider
 {
     /**
-     * @inheritDoc
+     * Returns the GitHub authorization endpoint.
+     *
+     * Responsibility: Returns the GitHub authorization endpoint.
      */
     public function getBaseAuthorizationUrl(): string
     {
@@ -66,7 +54,9 @@ class GitHubProvider extends AbstractProvider
     }
 
     /**
-     * @inheritDoc
+     * Returns the GitHub token exchange endpoint.
+     *
+     * Responsibility: Returns the GitHub token exchange endpoint.
      */
     public function getBaseAccessTokenUrl(array $params): string
     {
@@ -74,7 +64,9 @@ class GitHubProvider extends AbstractProvider
     }
 
     /**
-     * @inheritDoc
+     * Returns the GitHub user profile endpoint.
+     *
+     * Responsibility: Returns the GitHub user profile endpoint.
      */
     public function getResourceOwnerDetailsUrl(AccessToken $token): string
     {
@@ -82,7 +74,9 @@ class GitHubProvider extends AbstractProvider
     }
 
     /**
-     * @inheritDoc
+     * Provides the default GitHub scopes required for user email access.
+     *
+     * Responsibility: Provides the default GitHub scopes required for user email access.
      */
     protected function getDefaultScopes(): array
     {
@@ -90,7 +84,9 @@ class GitHubProvider extends AbstractProvider
     }
 
     /**
-     * @inheritDoc
+     * Uses the GitHub-supported space separator for OAuth scopes.
+     *
+     * Responsibility: Uses the GitHub-supported space separator for OAuth scopes.
      */
     protected function getScopeSeparator(): string
     {
@@ -98,7 +94,9 @@ class GitHubProvider extends AbstractProvider
     }
 
     /**
-     * @inheritDoc
+     * Provides default GitHub API headers for resource-owner requests.
+     *
+     * Responsibility: Provides default GitHub API headers for resource-owner requests.
      */
     protected function getDefaultHeaders(): array
     {
@@ -106,7 +104,9 @@ class GitHubProvider extends AbstractProvider
     }
 
     /**
-     * @inheritDoc
+     * Converts GitHub OAuth and API errors into identity-provider exceptions.
+     *
+     * Responsibility: Converts GitHub OAuth and API errors into identity-provider exceptions.
      */
     protected function checkResponse(ResponseInterface $response, $data): void
     {
@@ -128,7 +128,9 @@ class GitHubProvider extends AbstractProvider
     }
 
     /**
-     * @inheritDoc
+     * Wraps the GitHub resource-owner response in the framework OAuth user type.
+     *
+     * Responsibility: Wraps the GitHub resource-owner response in the framework OAuth user type.
      */
     protected function createResourceOwner(array $response, AccessToken $token): OAuthUser
     {

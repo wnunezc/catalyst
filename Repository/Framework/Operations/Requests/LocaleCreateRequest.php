@@ -34,24 +34,28 @@ use Catalyst\Framework\Http\Request;
 use Catalyst\Repository\Operations\Requests\Concerns\NormalizesCheckboxValues;
 
 /**
- * Defines the Locale Create Request class contract.
+ * Reads locale initialization input from an HTTP request.
  *
  * @package Catalyst\Repository\Operations\Requests
- * Responsibility: Coordinates the locale create request behavior within its module boundary.
+ * Responsibility: Supplies normalized locale creation fields to the controller.
  */
 final class LocaleCreateRequest
 {
     use NormalizesCheckboxValues;
 
     /**
-     * Initializes the Locale Create Request instance.
+     * Wraps the incoming HTTP request used to read locale creation fields.
+     *
+     * Responsibility: Wraps the incoming HTTP request used to read locale creation fields.
      */
     public function __construct(private readonly Request $request)
     {
     }
 
     /**
-     * Handles the locale workflow.
+     * Returns the locale code requested for initialization.
+     *
+     * Responsibility: Returns the locale code requested for initialization.
      */
     public function locale(): string
     {
@@ -59,7 +63,9 @@ final class LocaleCreateRequest
     }
 
     /**
-     * Handles the label workflow.
+     * Returns the display label requested for the locale.
+     *
+     * Responsibility: Returns the display label requested for the locale.
      */
     public function label(): string
     {
@@ -67,7 +73,9 @@ final class LocaleCreateRequest
     }
 
     /**
-     * Handles the dry run workflow.
+     * Returns whether locale initialization should run as a preview.
+     *
+     * Responsibility: Returns whether locale initialization should run as a preview.
      */
     public function dryRun(): bool
     {

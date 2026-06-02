@@ -36,15 +36,17 @@ use Catalyst\Repository\Settings\Requests\MailConfigRequest;
 use Catalyst\Repository\Settings\Support\MailConfigWriter;
 
 /**
- * Defines the Mail Config Save Controller class contract.
+ * Persists mail settings submitted by the setup surface.
  *
  * @package Catalyst\Repository\Settings\Controllers
- * Responsibility: Coordinates the mail config save controller behavior within its module boundary.
+ * Responsibility: Delegates validated mail configuration writes and returns the setup AJAX response.
  */
 final class MailConfigSaveController extends Controller
 {
     /**
      * Initializes the Mail Config Save Controller instance.
+     *
+     * Responsibility: Initializes the Mail Config Save Controller instance.
      */
     public function __construct(
         private readonly MailConfigWriter $writer = new MailConfigWriter()
@@ -53,7 +55,9 @@ final class MailConfigSaveController extends Controller
     }
 
     /**
-     * Persists the current state.
+     * Saves validated mail settings.
+     *
+     * Responsibility: Saves validated mail settings.
      */
     public function saveMail(MailConfigRequest $request): Response
     {

@@ -36,10 +36,10 @@ use Catalyst\Framework\Traits\HasAuditLogTrait;
 use Catalyst\Framework\Traits\HasTimestampsTrait;
 
 /**
- * Defines the Metadata Field Value class contract.
+ * ORM entity for stored metadata field values.
  *
  * @package Catalyst\Entities
- * Responsibility: Coordinates the metadata field value behavior within its module boundary.
+ * Responsibility: Maps resource metadata values across supported scalar, date, datetime, and media-backed types.
  */
 final class MetadataFieldValue extends Model
 {

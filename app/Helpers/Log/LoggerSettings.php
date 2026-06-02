@@ -31,15 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Helpers\Log;
 
 /**
- * Defines the Logger Settings class contract.
+ * Carries mutable runtime logger configuration.
  *
  * @package Catalyst\Helpers\Log
- * Responsibility: Coordinates the logger settings behavior within its module boundary.
+ * Responsibility: Stores destination, threshold, display and rotation options used by logger services.
  */
 final class LoggerSettings
 {
     /**
      * Initializes the Logger Settings instance.
+     *
+     * Responsibility: Initializes the Logger Settings instance.
      */
     public function __construct(
         public string $logDirectory,

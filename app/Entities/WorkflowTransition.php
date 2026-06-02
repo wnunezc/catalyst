@@ -34,10 +34,10 @@ use Catalyst\Framework\Database\Model;
 use Catalyst\Framework\Traits\BelongsToTenantTrait;
 
 /**
- * Defines the Workflow Transition class contract.
+ * ORM entity for workflow state transitions.
  *
  * @package Catalyst\Entities
- * Responsibility: Coordinates the workflow transition behavior within its module boundary.
+ * Responsibility: Maps transition keys, state movement, notes, metadata, actor, and occurrence timestamp.
  */
 final class WorkflowTransition extends Model
 {

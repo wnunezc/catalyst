@@ -35,19 +35,17 @@ use Catalyst\Repository\DevTools\Services\DatabaseResetService;
 use Throwable;
 
 /**
- * DatabaseResetController — development-only database reset endpoint.
+ * Exposes the development-only database reset endpoint.
  *
- * The controller keeps HTTP orchestration thin. Destructive reset details live
- * in DatabaseResetService so SQL/file replay behavior is not embedded directly
- * in the web layer.
+ * @package Catalyst\Repository\DevTools\Controllers
+ * Responsibility: Delegates destructive test-database resets to the reset service.
  */
 class DatabaseResetController extends Controller
 {
     /**
-     * POST /test-features/db-reset
+     * Resets the development database and redirects with the operation result.
      *
-     * Drops all known tables then re-creates and seeds them via the canonical
-     * database SQL and pending migrations. Accessible only in development mode.
+     * Responsibility: Resets the development database and redirects with the operation result.
      */
     public function reset(): Response
     {

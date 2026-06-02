@@ -39,10 +39,10 @@ use Catalyst\Helpers\Log\Logger;
 use Throwable;
 
 /**
- * Defines the Automation Rule Mutation Service class contract.
+ * Applies claim-protected mutations to automation rules.
  *
  * @package Catalyst\Repository\Automation\Actions
- * Responsibility: Coordinates the automation rule mutation service behavior within its module boundary.
+ * Responsibility: Update, delete, transition and restore automation rules while enforcing record claims.
  */
 final class AutomationRuleMutationService
 {
@@ -50,6 +50,8 @@ final class AutomationRuleMutationService
 
     /**
      * Initializes the Automation Rule Mutation Service instance.
+     *
+     * Responsibility: Initializes the Automation Rule Mutation Service instance.
      */
     public function __construct(
         private readonly AutomationManager $manager
@@ -58,6 +60,9 @@ final class AutomationRuleMutationService
     }
 
     /**
+     * Updates an automation rule and releases its record claim after persistence.
+     *
+     * Responsibility: Updates an automation rule and releases its record claim after persistence.
      * @param array<string, mixed> $payload
      */
     public function update(AutomationRule $rule, Request $request, array $payload): void
@@ -74,7 +79,9 @@ final class AutomationRuleMutationService
     }
 
     /**
-     * Handles the delete workflow.
+     * Deletes an automation rule and releases its record claim.
+     *
+     * Responsibility: Deletes an automation rule and releases its record claim.
      */
     public function delete(AutomationRule $rule, Request $request): void
     {
@@ -85,7 +92,9 @@ final class AutomationRuleMutationService
     }
 
     /**
-     * Handles the transition workflow.
+     * Applies a workflow transition to an automation rule after claim validation.
+     *
+     * Responsibility: Applies a workflow transition to an automation rule after claim validation.
      */
     public function transition(AutomationRule $rule, Request $request, string $transition, ?string $notes): void
     {
@@ -94,7 +103,9 @@ final class AutomationRuleMutationService
     }
 
     /**
-     * Handles the restore version workflow.
+     * Restores a captured automation rule version after claim validation.
+     *
+     * Responsibility: Restores a captured automation rule version after claim validation.
      */
     public function restoreVersion(AutomationRule $rule, Request $request, int $versionId): void
     {
@@ -111,7 +122,9 @@ final class AutomationRuleMutationService
     }
 
     /**
-     * Handles the assert claim workflow.
+     * Verifies that the request holds an available claim for the automation rule.
+     *
+     * Responsibility: Verifies that the request holds an available claim for the automation rule.
      */
     private function assertClaim(int $ruleId, Request $request): void
     {
@@ -125,7 +138,9 @@ final class AutomationRuleMutationService
     }
 
     /**
-     * Handles the release claim workflow.
+     * Releases the request claim after a successful mutation without masking persistence success.
+     *
+     * Responsibility: Releases the request claim after a successful mutation without masking persistence success.
      */
     private function releaseClaim(int $ruleId, Request $request, ?string $reason = null): void
     {

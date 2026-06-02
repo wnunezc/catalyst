@@ -37,6 +37,9 @@ use InvalidArgumentException;
  *
  * This class provides color palettes for different themes used in the Dumper
  * component for both HTML and CLI output formats.
+ *
+ * @package Catalyst\Helpers\Debug;
+ * Responsibility: Loads, validates, caches, and exposes dumper theme palettes.
  */
 class DumperPalette implements ThemeProviderInterface
 {

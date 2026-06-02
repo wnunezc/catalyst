@@ -33,14 +33,17 @@ namespace Catalyst\Repository\Automation\Support;
 use Catalyst\Framework\Admin\Form\FormBuilder;
 
 /**
- * Defines the Automation Rule Form Factory class contract.
+ * Builds the administrative automation rule form schema.
  *
  * @package Catalyst\Repository\Automation\Support
- * Responsibility: Coordinates the automation rule form factory behavior within its module boundary.
+ * Responsibility: Define automation rule form sections, fields, defaults and actions for create and edit screens.
  */
 final class AutomationRuleFormFactory
 {
     /**
+     * Builds the form schema for a new or existing automation rule.
+     *
+     * Responsibility: Builds the form schema for a new or existing automation rule.
      * @param array<string, mixed>|null $rule
      * @param array<string, array<string, mixed>> $hiddenFields
      * @return array<string, mixed>
@@ -177,7 +180,9 @@ final class AutomationRuleFormFactory
     }
 
     /**
-     * Handles the json field workflow.
+     * Formats structured defaults as editable JSON while preserving existing JSON strings.
+     *
+     * Responsibility: Formats structured defaults as editable JSON while preserving existing JSON strings.
      */
     private function jsonField(mixed $value): string
     {

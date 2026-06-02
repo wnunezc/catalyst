@@ -37,6 +37,7 @@ use Catalyst\Framework\Traits\{SingletonTrait, OutputCleanerTrait, ErrorTypeTrai
  * Class that handles registered Shutdowns.
  *
  * @package Catalyst\Helpers\Error;
+ * Responsibility: Captures fatal shutdown errors and renders them through the shared error output path.
  */
 class ShutdownHandler
 {
@@ -47,6 +48,7 @@ class ShutdownHandler
     /**
      * Shutdown handler. Captures fatal errors that would otherwise not be caught.
      *
+     * Responsibility: Shutdown handler. Captures fatal errors that would otherwise not be caught.
      * @return void
      * @throws Exception
      */

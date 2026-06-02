@@ -35,6 +35,9 @@ namespace Catalyst\Helpers\Debug;
  *
  * This enum defines all available color types for the Dumper component.
  * Each color type represents a different element or data type in the output.
+ *
+ * @package Catalyst\Helpers\Debug;
+ * Responsibility: Enumerates the semantic color slots supported by dumper palettes.
  */
 enum ColorType: string
 {

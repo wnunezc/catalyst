@@ -38,15 +38,17 @@ use Catalyst\Helpers\Config\AppEntryCatalog;
 use Catalyst\Helpers\Config\ConfigManager;
 
 /**
- * Defines the Route Test Controller class contract.
+ * Resolves the development route-test entry page and configured redirects.
  *
  * @package Catalyst\Repository\DevTools\Controllers
- * Responsibility: Coordinates the route test controller behavior within its module boundary.
+ * Responsibility: Maps configured application entries to their canonical paths.
  */
 class RouteTestController extends Controller
 {
     /**
-     * Handles the index workflow.
+     * Redirects configured projects or renders the route-test landing page.
+     *
+     * Responsibility: Redirects configured projects or renders the route-test landing page.
      */
     public function index(): Response
     {
@@ -69,7 +71,9 @@ class RouteTestController extends Controller
     }
 
     /**
-     * Handles the redirect to root workflow.
+     * Redirects the legacy route-test endpoint to the application root.
+     *
+     * Responsibility: Redirects the legacy route-test endpoint to the application root.
      */
     public function redirectToRoot(): RedirectResponse
     {
@@ -77,7 +81,9 @@ class RouteTestController extends Controller
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves the configured primary or authenticated secondary entry path.
+     *
+     * Responsibility: Resolves the configured primary or authenticated secondary entry path.
      */
     private function resolveConfiguredEntryTarget(ConfigManager $config): ?string
     {
@@ -104,7 +110,9 @@ class RouteTestController extends Controller
     }
 
     /**
-     * Handles the map entry to path workflow.
+     * Maps an application entry identifier to its configured path.
+     *
+     * Responsibility: Maps an application entry identifier to its configured path.
      */
     private function mapEntryToPath(string $entry): ?string
     {

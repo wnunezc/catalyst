@@ -39,6 +39,7 @@ use RuntimeException;
  * Callers may catch this to return a 404 response.
  *
  * @package Catalyst\Helpers\Exceptions
+ * Responsibility: Carries model identity when an expected database record is absent.
  */
 class ModelNotFoundException extends RuntimeException
 {
@@ -82,7 +83,9 @@ class ModelNotFoundException extends RuntimeException
     // -------------------------------------------------------------------------
 
     /**
-     * Returns the model class value.
+     * Returns the missing model class.
+     *
+     * Responsibility: Returns the missing model class.
      */
     public function getModelClass(): string
     {
@@ -90,7 +93,9 @@ class ModelNotFoundException extends RuntimeException
     }
 
     /**
-     * Returns the id value.
+     * Returns the missing record identifier when available.
+     *
+     * Responsibility: Returns the missing record identifier when available.
      */
     public function getId(): int|string|null
     {

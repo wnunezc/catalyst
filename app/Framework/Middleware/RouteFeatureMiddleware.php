@@ -39,15 +39,17 @@ use Catalyst\Helpers\Log\Logger;
 use Closure;
 
 /**
- * Defines the Route Feature Middleware class contract.
+ * Guards a route behind a runtime feature flag.
  *
  * @package Catalyst\Framework\Middleware
- * Responsibility: Coordinates the route feature middleware behavior within its module boundary.
+ * Responsibility: Allows enabled feature routes and returns the configured unavailable response otherwise.
  */
 final class RouteFeatureMiddleware extends CoreMiddleware
 {
     /**
      * Initializes the Route Feature Middleware instance.
+     *
+     * Responsibility: Initializes the Route Feature Middleware instance.
      */
     public function __construct(
         private readonly string $flagKey,
@@ -57,7 +59,9 @@ final class RouteFeatureMiddleware extends CoreMiddleware
     }
 
     /**
-     * Handles the flag key workflow.
+     * Returns the feature flag key evaluated by this guard.
+     *
+     * Responsibility: Returns the feature flag key evaluated by this guard.
      */
     public function flagKey(): string
     {
@@ -65,7 +69,9 @@ final class RouteFeatureMiddleware extends CoreMiddleware
     }
 
     /**
-     * Handles the redirect to workflow.
+     * Returns the optional redirect target used when the feature is disabled.
+     *
+     * Responsibility: Returns the optional redirect target used when the feature is disabled.
      */
     public function redirectTo(): ?string
     {
@@ -73,7 +79,9 @@ final class RouteFeatureMiddleware extends CoreMiddleware
     }
 
     /**
-     * Handles the serialize workflow.
+     * Serializes the guard configuration for route caching.
+     *
+     * Responsibility: Serializes the guard configuration for route caching.
      */
     public function __serialize(): array
     {
@@ -84,7 +92,9 @@ final class RouteFeatureMiddleware extends CoreMiddleware
     }
 
     /**
-     * Handles the unserialize workflow.
+     * Restores the guard configuration and logger after route-cache hydration.
+     *
+     * Responsibility: Restores the guard configuration and logger after route-cache hydration.
      */
     public function __unserialize(array $data): void
     {
@@ -94,7 +104,9 @@ final class RouteFeatureMiddleware extends CoreMiddleware
     }
 
     /**
-     * Processes the current workflow.
+     * Allows enabled routes and blocks disabled feature access.
+     *
+     * Responsibility: Allows enabled routes and blocks disabled feature access.
      */
     public function process(Request $request, Closure $next): Response
     {

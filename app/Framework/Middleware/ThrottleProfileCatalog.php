@@ -33,10 +33,10 @@ namespace Catalyst\Framework\Middleware;
 use Catalyst\Framework\Route\Route;
 
 /**
- * Defines the Throttle Profile Catalog class contract.
+ * Catalogs built-in request throttling profiles.
  *
  * @package Catalyst\Framework\Middleware
- * Responsibility: Coordinates the throttle profile catalog behavior within its module boundary.
+ * Responsibility: Resolves route-specific throttle configuration or derives a default profile from the request path.
  */
 final class ThrottleProfileCatalog
 {
@@ -127,6 +127,8 @@ final class ThrottleProfileCatalog
     ];
 
     /**
+     * Resolves the effective throttle profile for a route and path.
+     *
      * @return array<string, mixed>
      */
     public static function resolve(?Route $route, string $path): array
@@ -147,6 +149,8 @@ final class ThrottleProfileCatalog
     }
 
     /**
+     * Derives the built-in throttle profile associated with a path prefix.
+     *
      * @return array<string, mixed>
      */
     private static function deriveDefaultForPath(string $path): array

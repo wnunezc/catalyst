@@ -37,15 +37,18 @@ use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
 
 /**
- * Defines the Audit Log Controller class contract.
+ * Admin controller for browsing and inspecting audit log entries.
  *
  * @package Catalyst\Repository\Audit\Controllers
- * Responsibility: Coordinates the audit log controller behavior within its module boundary.
+ * Responsibility: Builds the audit log data grid, handles CSV/XLS exports,
+ * and renders individual audit entry details.
  */
 final class AuditLogController extends Controller
 {
     /**
-     * Initializes the Audit Log Controller instance.
+     * Receives the audit repository used by list, export, and detail workflows.
+     *
+     * Responsibility: Receives the audit repository used by list, export, and detail workflows.
      */
     public function __construct(
         private readonly AuditLogRepository $repository
@@ -54,7 +57,9 @@ final class AuditLogController extends Controller
     }
 
     /**
-     * Handles the index workflow.
+     * Builds the searchable audit grid and exports audit rows when an export format is requested.
+     *
+     * Responsibility: Builds the searchable audit grid and exports audit rows when an export format is requested.
      */
     public function index(Request $request): Response
     {
@@ -189,7 +194,9 @@ final class AuditLogController extends Controller
     }
 
     /**
-     * Handles the detail display workflow.
+     * Loads a single audit entry, enforces detail authorization, and renders its detail view.
+     *
+     * Responsibility: Loads a single audit entry, enforces detail authorization, and renders its detail view.
      */
     public function show(Request $request, string $id): Response
     {
@@ -211,6 +218,9 @@ final class AuditLogController extends Controller
     }
 
     /**
+     * Converts distinct repository values into select filter options with readable labels.
+     *
+     * Responsibility: Converts distinct repository values into select filter options with readable labels.
      * @param string[] $values
      * @return array<string, string>
      */

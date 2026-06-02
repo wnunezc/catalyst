@@ -33,14 +33,16 @@ namespace Catalyst\Framework\Schedule;
 use Catalyst\Helpers\Config\ConfigManager;
 
 /**
- * Defines the Schedule Settings class contract.
+ * Resolves scheduler defaults and normalized runtime configuration.
  *
  * @package Catalyst\Framework\Schedule
- * Responsibility: Coordinates the schedule settings behavior within its module boundary.
+ * Responsibility: Provides the scheduler enabled flag and history-table setting.
  */
 final class ScheduleSettings
 {
     /**
+     * Returns the default scheduler configuration.
+     *
      * @return array<string, mixed>
      */
     public static function defaults(): array
@@ -52,6 +54,8 @@ final class ScheduleSettings
     }
 
     /**
+     * Returns the normalized active scheduler configuration.
+     *
      * @return array<string, mixed>
      */
     public static function current(): array

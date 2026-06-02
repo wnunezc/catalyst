@@ -42,10 +42,10 @@ use Catalyst\Framework\Workflow\WorkflowRepository;
 use RuntimeException;
 
 /**
- * Defines the Catalog Manager class contract.
+ * Orchestrates catalog lifecycle operations, versioning and workflow transitions.
  *
  * @package Catalyst\Framework\Catalog
- * Responsibility: Coordinates the catalog manager behavior within its module boundary.
+ * Responsibility: Applies catalog mutations and coordinates persistence, temporal rules and versions.
  */
 final class CatalogManager
 {
@@ -63,6 +63,8 @@ final class CatalogManager
 
     /**
      * Initializes the Catalog Manager instance.
+     *
+     * Responsibility: Initializes the Catalog Manager instance.
      */
     protected function __construct()
     {
@@ -75,6 +77,9 @@ final class CatalogManager
     }
 
     /**
+     * Creates a catalog definition and initializes its workflow history.
+     *
+     * Responsibility: Creates a catalog definition and initializes its workflow history.
      * @param array<string, mixed> $payload
      */
     public function createCatalog(array $payload): CatalogDefinition
@@ -92,6 +97,9 @@ final class CatalogManager
     }
 
     /**
+     * Updates a catalog definition and captures the resulting version.
+     *
+     * Responsibility: Updates a catalog definition and captures the resulting version.
      * @param array<string, mixed> $payload
      */
     public function updateCatalog(CatalogDefinition $catalog, array $payload): CatalogDefinition
@@ -109,7 +117,9 @@ final class CatalogManager
     }
 
     /**
-     * Handles the delete workflow.
+     * Deletes a catalog definition.
+     *
+     * Responsibility: Deletes a catalog definition.
      */
     public function deleteCatalog(CatalogDefinition $catalog): void
     {
@@ -117,7 +127,9 @@ final class CatalogManager
     }
 
     /**
-     * Handles the transition catalog workflow.
+     * Applies a lifecycle transition to a catalog definition.
+     *
+     * Responsibility: Applies a lifecycle transition to a catalog definition.
      */
     public function transitionCatalog(CatalogDefinition $catalog, string $transitionKey, ?string $notes = null): array
     {
@@ -136,6 +148,9 @@ final class CatalogManager
     }
 
     /**
+     * Creates an item inside an existing catalog.
+     *
+     * Responsibility: Creates an item inside an existing catalog.
      * @param array<string, mixed> $payload
      */
     public function createItem(int $catalogId, array $payload): CatalogItem
@@ -160,6 +175,9 @@ final class CatalogManager
     }
 
     /**
+     * Updates an existing catalog item.
+     *
+     * Responsibility: Updates an existing catalog item.
      * @param array<string, mixed> $payload
      */
     public function updateItem(CatalogItem $item, array $payload): CatalogItem
@@ -183,7 +201,9 @@ final class CatalogManager
     }
 
     /**
-     * Handles the delete workflow.
+     * Deletes an item and records the catalog version.
+     *
+     * Responsibility: Deletes an item and records the catalog version.
      */
     public function deleteItem(CatalogItem $item): void
     {
@@ -194,6 +214,9 @@ final class CatalogManager
     }
 
     /**
+     * Returns the selectable options for a catalog key.
+     *
+     * Responsibility: Returns the selectable options for a catalog key.
      * @param string[] $selectedKeys
      * @return array<string, string>
      */
@@ -203,7 +226,9 @@ final class CatalogManager
     }
 
     /**
-     * Determines whether has Option.
+     * Determines whether a catalog exposes an item key as an available option.
+     *
+     * Responsibility: Determines whether a catalog exposes an item key as an available option.
      */
     public function hasOption(string $catalogKey, string $itemKey): bool
     {
@@ -211,6 +236,9 @@ final class CatalogManager
     }
 
     /**
+     * Returns a complete snapshot of a catalog and its items.
+     *
+     * Responsibility: Returns a complete snapshot of a catalog and its items.
      * @return array<string, mixed>
      */
     public function snapshotCatalog(int $catalogId): array
@@ -224,6 +252,9 @@ final class CatalogManager
     }
 
     /**
+     * Restores a catalog and its items from a captured snapshot.
+     *
+     * Responsibility: Restores a catalog and its items from a captured snapshot.
      * @param array<string, mixed> $snapshot
      * @return array<string, mixed>
      */
@@ -275,7 +306,9 @@ final class CatalogManager
     }
 
     /**
-     * Handles the capture catalog version workflow.
+     * Captures the current catalog snapshot as a content version.
+     *
+     * Responsibility: Captures the current catalog snapshot as a content version.
      */
     private function captureCatalogVersion(int $catalogId, string $summary): void
     {
@@ -292,7 +325,9 @@ final class CatalogManager
     }
 
     /**
-     * Handles the require catalog workflow.
+     * Returns an existing catalog definition or fails explicitly.
+     *
+     * Responsibility: Returns an existing catalog definition or fails explicitly.
      */
     private function requireCatalog(int $catalogId): CatalogDefinition
     {
@@ -305,6 +340,9 @@ final class CatalogManager
     }
 
     /**
+     * Decodes a JSON-compatible field into an array.
+     *
+     * Responsibility: Decodes a JSON-compatible field into an array.
      * @param mixed $value
      * @return array<string, mixed>|array<int, mixed>
      */
@@ -320,6 +358,9 @@ final class CatalogManager
     }
 
     /**
+     * Keeps only restorable fields from a catalog snapshot.
+     *
+     * Responsibility: Keeps only restorable fields from a catalog snapshot.
      * @param array<string, mixed> $payload
      * @return array<string, mixed>
      */
@@ -334,6 +375,9 @@ final class CatalogManager
     }
 
     /**
+     * Keeps only restorable fields from a catalog-item snapshot.
+     *
+     * Responsibility: Keeps only restorable fields from a catalog-item snapshot.
      * @param array<string, mixed> $payload
      * @return array<string, mixed>
      */

@@ -37,14 +37,20 @@ use Catalyst\Framework\Cli\AbstractCommand;
 use Catalyst\Framework\Queue\QueueRepository;
 
 /**
- * Defines the Queue Retry Command class contract.
+ * queue:retry CLI command.
+ *
+ * Responsibility: Runs the queue:retry command to Retry one failed job or all failed jobs.
  *
  * @package Catalyst\Framework\Cli\Commands
- * Responsibility: Coordinates the queue retry command behavior within its module boundary.
  */
 final class QueueRetryCommand extends AbstractCommand
 {
-    /** @return Option[] */
+    /**
+     * Defines the accepted option schema for this command.
+     *
+     * Responsibility: Defines the accepted option schema for this command.
+     * @return Option[]
+     */
     public function getOptions(): array
     {
         return [
@@ -52,7 +58,12 @@ final class QueueRetryCommand extends AbstractCommand
         ];
     }
 
-    /** @return Parameter[] */
+    /**
+     * Defines the accepted positional parameter schema for this command.
+     *
+     * Responsibility: Defines the accepted positional parameter schema for this command.
+     * @return Parameter[]
+     */
     public function getParameters(): array
     {
         return [
@@ -61,7 +72,9 @@ final class QueueRetryCommand extends AbstractCommand
     }
 
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -69,7 +82,9 @@ final class QueueRetryCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
@@ -77,7 +92,9 @@ final class QueueRetryCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {

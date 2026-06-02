@@ -42,15 +42,17 @@ use InvalidArgumentException;
 use RuntimeException;
 
 /**
- * Defines the Module Designer Controller class contract.
+ * Presents the module designer and delegates scaffold previews and generation.
  *
  * @package Catalyst\Repository\Operations\Controllers
- * Responsibility: Coordinates the module designer controller behavior within its module boundary.
+ * Responsibility: Manages module-designer requests, redirects and session-backed results.
  */
 final class ModuleDesignerController extends Controller
 {
     /**
-     * Handles the index workflow.
+     * Renders the module designer using any stashed post-action state.
+     *
+     * Responsibility: Renders the module designer using any stashed post-action state.
      */
     public function index(Request $request): Response
     {
@@ -66,7 +68,9 @@ final class ModuleDesignerController extends Controller
     }
 
     /**
-     * Handles the preview workflow.
+     * Generates and stores a module scaffold preview.
+     *
+     * Responsibility: Generates and stores a module scaffold preview.
      */
     public function preview(Request $request): Response
     {
@@ -88,7 +92,9 @@ final class ModuleDesignerController extends Controller
     }
 
     /**
-     * Handles the generate workflow.
+     * Creates a module scaffold from the submitted designer form.
+     *
+     * Responsibility: Creates a module scaffold from the submitted designer form.
      */
     public function generate(Request $request): Response
     {
@@ -114,7 +120,9 @@ final class ModuleDesignerController extends Controller
     }
 
     /**
-     * Handles the legacy index workflow.
+     * Redirects the legacy designer entry point to the canonical workspace.
+     *
+     * Responsibility: Redirects the legacy designer entry point to the canonical workspace.
      */
     public function legacyIndex(Request $request): Response
     {
@@ -122,7 +130,9 @@ final class ModuleDesignerController extends Controller
     }
 
     /**
-     * Handles the legacy preview entry workflow.
+     * Redirects the legacy preview entry point to the canonical workspace.
+     *
+     * Responsibility: Redirects the legacy preview entry point to the canonical workspace.
      */
     public function legacyPreviewEntry(Request $request): Response
     {
@@ -130,7 +140,9 @@ final class ModuleDesignerController extends Controller
     }
 
     /**
-     * Handles the legacy generate entry workflow.
+     * Redirects the legacy generation entry point to the canonical workspace.
+     *
+     * Responsibility: Redirects the legacy generation entry point to the canonical workspace.
      */
     public function legacyGenerateEntry(Request $request): Response
     {
@@ -138,6 +150,9 @@ final class ModuleDesignerController extends Controller
     }
 
     /**
+     * Renders the module designer workspace with inspection and lint state.
+     *
+     * Responsibility: Renders the module designer workspace with inspection and lint state.
      * @param array<string, mixed> $form
      * @param array<string, mixed>|null $preview
      */
@@ -156,6 +171,9 @@ final class ModuleDesignerController extends Controller
     }
 
     /**
+     * Returns the initial module-designer form state.
+     *
+     * Responsibility: Returns the initial module-designer form state.
      * @return array<string, mixed>
      */
     private function defaultFormState(): array
@@ -172,6 +190,9 @@ final class ModuleDesignerController extends Controller
     }
 
     /**
+     * Stores module-designer state for the next redirected request.
+     *
+     * Responsibility: Stores module-designer state for the next redirected request.
      * @param array<string, mixed> $form
      * @param array<string, mixed>|null $preview
      */
@@ -185,6 +206,9 @@ final class ModuleDesignerController extends Controller
     }
 
     /**
+     * Returns and removes any module-designer state stored in the session.
+     *
+     * Responsibility: Returns and removes any module-designer state stored in the session.
      * @return array<string, mixed>|null
      */
     private function consumeDesignerState(): ?array

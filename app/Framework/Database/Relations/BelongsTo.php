@@ -33,36 +33,17 @@ namespace Catalyst\Framework\Database\Relations;
 use Catalyst\Framework\Database\Model;
 
 /**
- * BelongsTo — inverse of HasOne / HasMany.
- * The FK lives on the PARENT (owning) model's table.
- *
- * Constructor semantics differ from HasOne / HasMany:
- *   $foreignKey = column on the PARENT table  (e.g. 'user_id' on posts)
- *   $localKey   = column on the RELATED table (e.g. 'id' on users)
- *
- * Example:
- *   class Post extends Model {
- *       public function author(): BelongsTo {
- *           return $this->belongsTo(User::class, 'user_id', 'id');
- *       }
- *   }
- *
- *   $post->author                          // ?User — lazy loaded
- *   Post::query()->with('author')->get()   // eager loaded (no N+1)
- *
- * SQL (lazy):
- *   SELECT * FROM users WHERE id = :post_user_id LIMIT 1
- *
- * SQL (eager):
- *   SELECT * FROM users WHERE id IN (:fk1, :fk2, …)
- *   → matched back to each post via its FK value
+ * Resolves an inverse ORM relation where the parent model stores the foreign key.
  *
  * @package Catalyst\Framework\Database\Relations
+ * Responsibility: Load and eager-match one owner model for each parent model by comparing parent foreign keys to related local keys.
  */
 class BelongsTo extends Relation
 {
     /**
-     * Lazy-load: look up the owner model by the FK stored on this instance.
+     * Loads the related owner model referenced by the parent foreign key.
+     *
+     * Responsibility: Loads the related owner model referenced by the parent foreign key.
      */
     public function getResults(): ?Model
     {
@@ -78,9 +59,9 @@ class BelongsTo extends Relation
     }
 
     /**
-     * Eager-load: collect all FK values from the parent models,
-     * load the owners in one query, then distribute to each parent.
+     * Batch-loads owner models for parent foreign keys and stores matched owners in each relation cache.
      *
+     * Responsibility: Batch-loads owner models for parent foreign keys and stores matched owners in each relation cache.
      * @param Model[] $models
      */
     public function matchEager(array $models, string $relation): void

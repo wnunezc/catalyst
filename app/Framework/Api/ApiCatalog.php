@@ -31,14 +31,16 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Api;
 
 /**
- * Defines the Api Catalog class contract.
+ * Provides the versioned API route catalog exposed by the framework.
  *
  * @package Catalyst\Framework\Api
- * Responsibility: Coordinates the api catalog behavior within its module boundary.
+ * Responsibility: Lists API endpoints with their HTTP method, path, permission gate, and human description.
  */
 final class ApiCatalog
 {
     /**
+     * Returns the static catalog used to describe first-party versioned API routes.
+     *
      * @return array<int, array<string, mixed>>
      */
     public static function routes(): array

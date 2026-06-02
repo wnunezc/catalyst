@@ -70,10 +70,6 @@ if (!defined('LOADED_DUMP_FUNCTION')) {
     /**
      * Dump variables for inspection (development only).
      *
-     * Optionally pass a theme name as the last string argument:
-     *   ex($var);
-     *   ex($var1, $var2, 'dark');
-     *
      * @param mixed ...$var Variables to dump, with optional theme name as last argument
      */
     function ex(mixed ...$var): void
@@ -107,7 +103,6 @@ if (!defined('LOADED_DUMP_FUNCTION')) {
     /**
      * Escape a value for safe HTML output (XSS prevention).
      *
-     * Use in every template echo: <?= e($variable) ?>
      * Never echo user-supplied data without escaping.
      *
      * @param mixed $value       Value to escape (cast to string)
@@ -122,8 +117,7 @@ if (!defined('LOADED_DUMP_FUNCTION')) {
     /**
      * Get a translated string by dot-notation key (primary i18n helper).
      *
-     * Key format: '{group}.{subkey}' — e.g. 'validation.required', 'messages.save_success'
-     * Placeholder syntax: :key — e.g. __('validation.min', ['field' => 'Password', 'min' => 8])
+     * Supports grouped keys and named placeholder replacements.
      * Falls back to the key itself if no translation is found (never throws).
      *
      * @param string $key          Dot-notation translation key
@@ -154,7 +148,7 @@ if (!defined('LOADED_DUMP_FUNCTION')) {
      *
      * Built-in format keys (defined in boot-core/lang/{locale}/dates.json):
      *   'default', 'long', 'short', 'full', 'time', 'datetime', 'iso'
-     * You may also pass a literal PHP date() format string (e.g. 'Y-m-d').
+     * Literal PHP date() format strings are also accepted.
      *
      * @param DateTimeInterface|string|int $date   DateTime, date string, or Unix timestamp
      * @param string                        $format Named format key or PHP date() format
@@ -192,6 +186,8 @@ if (!defined('LOADED_DUMP_FUNCTION')) {
     }
 
     /**
+     * Read validation messages prepared by the previous HTML validation redirect.
+     *
      * @param string|null $key
      * @param string      $bag
      * @return array<string, string[]>|string[]|array<int, string>
@@ -218,6 +214,13 @@ if (!defined('LOADED_DUMP_FUNCTION')) {
         return is_array($messages) ? $messages : [(string) $messages];
     }
 
+    /**
+     * Read the first validation message for a field from the selected error bag.
+     *
+     * @param string $key
+     * @param string $bag
+     * @return string|null
+     */
     function validation_error(string $key, string $bag = 'default'): ?string
     {
         $messages = validation_errors($key, $bag);

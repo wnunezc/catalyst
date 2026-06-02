@@ -35,14 +35,17 @@ use RecursiveIteratorIterator;
 use SplFileInfo;
 
 /**
- * Defines the Runtime Inventory Generator class contract.
+ * Generator for runtime documentation inventory.
  *
  * @package Catalyst\Framework\Documentation
- * Responsibility: Coordinates the runtime inventory generator behavior within its module boundary.
+ * Responsibility: Scans project files and emits Markdown inventory sections for runtime documentation.
  */
 final class RuntimeInventoryGenerator
 {
     /**
+     * Coordinates the inspect method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the inspect method responsibility within its owning class.
      * @return array<string, mixed>
      */
     public function inspect(): array
@@ -65,7 +68,9 @@ final class RuntimeInventoryGenerator
     }
 
     /**
-     * Handles the generate markdown workflow.
+     * Generates the Markdown inventory document.
+     *
+     * Responsibility: Generates the Markdown inventory document.
      */
     public function generateMarkdown(): string
     {
@@ -166,6 +171,9 @@ final class RuntimeInventoryGenerator
     }
 
     /**
+     * Coordinates the inspect symbols method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the inspect symbols method responsibility within its owning class.
      * @return array<int, array<string, mixed>>
      */
     private function inspectSymbols(): array
@@ -186,6 +194,9 @@ final class RuntimeInventoryGenerator
     }
 
     /**
+     * Coordinates the inspect templates method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the inspect templates method responsibility within its owning class.
      * @return array<int, array<string, mixed>>
      */
     private function inspectTemplates(): array
@@ -202,6 +213,9 @@ final class RuntimeInventoryGenerator
     }
 
     /**
+     * Coordinates the inspect scripts method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the inspect scripts method responsibility within its owning class.
      * @return array<int, array<string, mixed>>
      */
     private function inspectScripts(): array
@@ -218,6 +232,9 @@ final class RuntimeInventoryGenerator
     }
 
     /**
+     * Coordinates the files method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the files method responsibility within its owning class.
      * @param array<string, string> $roots
      * @param array<int, string> $extensions
      * @return iterable<array<string, mixed>>
@@ -258,6 +275,9 @@ final class RuntimeInventoryGenerator
     }
 
     /**
+     * Coordinates the parse php symbols method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the parse php symbols method responsibility within its owning class.
      * @param array<string, mixed> $file
      * @return array<int, array<string, mixed>>
      */
@@ -311,6 +331,9 @@ final class RuntimeInventoryGenerator
     }
 
     /**
+     * Coordinates the read namespace method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the read namespace method responsibility within its owning class.
      * @param array<int, mixed> $tokens
      */
     private function readNamespace(array $tokens, int $start): string
@@ -334,6 +357,9 @@ final class RuntimeInventoryGenerator
     }
 
     /**
+     * Coordinates the read symbol name method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the read symbol name method responsibility within its owning class.
      * @param array<int, mixed> $tokens
      */
     private function readSymbolName(array $tokens, int $start): string
@@ -353,6 +379,9 @@ final class RuntimeInventoryGenerator
     }
 
     /**
+     * Coordinates the is non declaration class token method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the is non declaration class token method responsibility within its owning class.
      * @param array<int, mixed> $tokens
      */
     private function isNonDeclarationClassToken(array $tokens, int $index): bool
@@ -370,7 +399,9 @@ final class RuntimeInventoryGenerator
     }
 
     /**
-     * Handles the relative path workflow.
+     * Converts an absolute path into a project-relative path.
+     *
+     * Responsibility: Converts an absolute path into a project-relative path.
      */
     private function relativePath(string $path): string
     {
@@ -378,7 +409,9 @@ final class RuntimeInventoryGenerator
     }
 
     /**
-     * Determines whether is Ignored Path.
+     * Determines whether a path should be skipped by the inventory scan.
+     *
+     * Responsibility: Determines whether a path should be skipped by the inventory scan.
      */
     private function isIgnoredPath(string $path): bool
     {
@@ -394,6 +427,9 @@ final class RuntimeInventoryGenerator
     }
 
     /**
+     * Coordinates the count by key method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the count by key method responsibility within its owning class.
      * @param array<int, array<string, mixed>> $items
      * @return array<string, int>
      */

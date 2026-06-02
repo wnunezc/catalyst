@@ -35,20 +35,11 @@ use Catalyst\Framework\Traits\SingletonTrait;
 use Catalyst\Helpers\Log\Logger;
 use Exception;
 
-/**************************************************************************************
- * TokenRepository — shared storage for email_verification_tokens and password_reset_tokens
- *
- * Tokens are never physically deleted — they are invalidated via active=0.
- * Each token is a random 32-byte value stored as a SHA-256 hash in the DB.
- * The raw token is sent to the user; only the hash is persisted.
- *
- * @package Catalyst\Framework\Auth
- */
 /**
- * Defines the Token Repository class contract.
+ * Stores email-verification and password-reset tokens as one-time hashes.
  *
  * @package Catalyst\Framework\Auth
- * Responsibility: Coordinates the token repository behavior within its module boundary.
+ * Responsibility: Create, consume and invalidate user recovery tokens without persisting raw token values.
  */
 class TokenRepository
 {
@@ -61,7 +52,9 @@ class TokenRepository
     private Logger $logger;
 
     /**
-     * Constructor
+     * Initializes database and logging collaborators for token storage.
+     *
+     * Responsibility: Initializes database and logging collaborators for token storage.
      */
     protected function __construct()
     {
@@ -74,9 +67,9 @@ class TokenRepository
     // -------------------------------------------------------------------------
 
     /**
-     * Create a new email-verification token for a user.
-     * Invalidates any existing active tokens for that user first.
+     * Create a new email-verification token for a user. Invalidates any existing active tokens for that user first.
      *
+     * Responsibility: Create a new email-verification token for a user. Invalidates any existing active tokens for that user first.
      * @param int $userId
      * @return string  Raw token to embed in the email link
      */
@@ -98,9 +91,9 @@ class TokenRepository
     }
 
     /**
-     * Consume an email-verification token.
-     * Returns the user_id on success, null if invalid/expired/already used.
+     * Consume an email-verification token. Returns the user_id on success, null if invalid/expired/already used.
      *
+     * Responsibility: Consume an email-verification token. Returns the user_id on success, null if invalid/expired/already used.
      * @param string $rawToken
      * @return int|null
      */
@@ -114,9 +107,9 @@ class TokenRepository
     // -------------------------------------------------------------------------
 
     /**
-     * Create a new password-reset token for a user.
-     * Invalidates any existing active tokens for that user first.
+     * Create a new password-reset token for a user. Invalidates any existing active tokens for that user first.
      *
+     * Responsibility: Create a new password-reset token for a user. Invalidates any existing active tokens for that user first.
      * @param int $userId
      * @return string  Raw token to embed in the email link
      */
@@ -138,9 +131,9 @@ class TokenRepository
     }
 
     /**
-     * Consume a password-reset token.
-     * Returns the user_id on success, null if invalid/expired/already used.
+     * Consume a password-reset token. Returns the user_id on success, null if invalid/expired/already used.
      *
+     * Responsibility: Consume a password-reset token. Returns the user_id on success, null if invalid/expired/already used.
      * @param string $rawToken
      * @return int|null
      */
@@ -156,6 +149,7 @@ class TokenRepository
     /**
      * Invalidate all active tokens for a user in the given table.
      *
+     * Responsibility: Invalidate all active tokens for a user in the given table.
      * @param string $table
      * @param int    $userId
      * @return void
@@ -178,6 +172,7 @@ class TokenRepository
     /**
      * Validate a raw token against the given table and mark it as used (active=0).
      *
+     * Responsibility: Validate a raw token against the given table and mark it as used (active=0).
      * @param string $table
      * @param string $rawToken
      * @return int|null  user_id on success

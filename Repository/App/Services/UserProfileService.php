@@ -34,15 +34,17 @@ use App\Repositories\UserProfileRepository;
 use Catalyst\Entities\UserProfile;
 
 /**
- * Defines the User Profile Service class contract.
+ * Service for preparing profile data used by authenticated user dashboards.
  *
  * @package App\Services
- * Responsibility: Coordinates the user profile service behavior within its module boundary.
+ * Responsibility: Combines the current user payload with profile repository data for presentation.
  */
 final class UserProfileService
 {
     /**
-     * Initializes the User Profile Service instance.
+     * Initializes the service with an optional profile repository override.
+     *
+     * Responsibility: Initializes the service with an optional profile repository override.
      */
     public function __construct(
         private readonly ?UserProfileRepository $profiles = null
@@ -50,6 +52,9 @@ final class UserProfileService
     }
 
     /**
+     * Builds a dashboard summary for the authenticated user context.
+     *
+     * Responsibility: Builds a dashboard summary for the authenticated user context.
      * @param array<string, mixed>|null $user
      * @return array<string, mixed>
      */
@@ -74,6 +79,9 @@ final class UserProfileService
     }
 
     /**
+     * Converts a user profile entity into dashboard-safe scalar data.
+     *
+     * Responsibility: Converts a user profile entity into dashboard-safe scalar data.
      * @return array<string, mixed>
      */
     private function serializeProfile(UserProfile $profile): array
@@ -93,7 +101,9 @@ final class UserProfileService
     }
 
     /**
-     * Handles the profiles workflow.
+     * Returns the repository used for profile data access.
+     *
+     * Responsibility: Returns the repository used for profile data access.
      */
     private function profiles(): UserProfileRepository
     {

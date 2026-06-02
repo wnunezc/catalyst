@@ -31,10 +31,10 @@ declare(strict_types=1);
 namespace Catalyst\Helpers\Log;
 
 /**
- * Defines the Logger Level Map class contract.
+ * Maps logger levels to priorities and output categories.
  *
  * @package Catalyst\Helpers\Log
- * Responsibility: Coordinates the logger level map behavior within its module boundary.
+ * Responsibility: Normalizes level names and resolves filtering priorities and directories.
  */
 final class LoggerLevelMap
 {
@@ -53,6 +53,8 @@ final class LoggerLevelMap
     ];
 
     /**
+     * Returns supported logger channel names.
+     *
      * @return string[]
      */
     public static function channels(): array
@@ -61,7 +63,7 @@ final class LoggerLevelMap
     }
 
     /**
-     * Normalizes the provided value.
+     * Normalizes a logger level name when supported.
      */
     public static function normalize(string $level): ?string
     {
@@ -71,7 +73,7 @@ final class LoggerLevelMap
     }
 
     /**
-     * Handles the priority workflow.
+     * Returns the numeric priority for a logger level.
      */
     public static function priority(string $level): ?int
     {
@@ -81,7 +83,7 @@ final class LoggerLevelMap
     }
 
     /**
-     * Handles the category for workflow.
+     * Returns the output directory category for a logger level.
      */
     public static function categoryFor(string $level): string
     {

@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 use Catalyst\Framework\Database\Migration;
 
+/**
+ * Adds optimistic locking versions to administrative framework records.
+ *
+ * @package Catalyst\BootCore\Database\Migrations
+ * Responsibility: Provision and remove lock version columns on editable framework tables.
+ */
 return new class extends Migration
 {
     /**
@@ -16,11 +22,21 @@ return new class extends Migration
         'metadata_field_definitions',
     ];
 
+    /**
+     * Returns the timestamp identifier used by the migration runner to order and track this migration.
+     *
+     * Responsibility: Returns the timestamp identifier used by the migration runner to order and track this migration.
+     */
     public function getVersion(): string
     {
         return '20260519183000';
     }
 
+    /**
+     * Adds missing lock version columns to administrative tables.
+     *
+     * Responsibility: Adds missing lock version columns to administrative tables.
+     */
     public function up(): void
     {
         foreach ($this->tables as $table) {
@@ -35,6 +51,11 @@ return new class extends Migration
         }
     }
 
+    /**
+     * Removes lock version columns from administrative tables.
+     *
+     * Responsibility: Removes lock version columns from administrative tables.
+     */
     public function down(): void
     {
         foreach ($this->tables as $table) {
@@ -49,6 +70,11 @@ return new class extends Migration
         }
     }
 
+    /**
+     * Checks information_schema so schema changes remain idempotent for an existing column.
+     *
+     * Responsibility: Checks information_schema so schema changes remain idempotent for an existing column.
+     */
     private function columnExists(string $table, string $column): bool
     {
         $row = $this->selectOne(

@@ -31,10 +31,10 @@ declare(strict_types=1);
 namespace Catalyst\Helpers\Config;
 
 /**
- * Defines the Config Secret Catalog class contract.
+ * Catalogs configuration fields that must be stored outside public JSON files.
  *
  * @package Catalyst\Helpers\Config
- * Responsibility: Coordinates the config secret catalog behavior within its module boundary.
+ * Responsibility: Splits, merges and audits secret values for managed configuration sections.
  */
 final class ConfigSecretCatalog
 {
@@ -49,6 +49,8 @@ final class ConfigSecretCatalog
     ];
 
     /**
+     * Returns configuration sections with managed secrets.
+     *
      * @return string[]
      */
     public static function managedSections(): array
@@ -57,7 +59,7 @@ final class ConfigSecretCatalog
     }
 
     /**
-     * Handles the manages section workflow.
+     * Determines whether a configuration section contains managed secrets.
      */
     public static function managesSection(string $section): bool
     {
@@ -65,6 +67,8 @@ final class ConfigSecretCatalog
     }
 
     /**
+     * Returns sensitive keys managed for a configuration section.
+     *
      * @return string[]
      */
     public static function sensitiveKeys(string $section): array
@@ -73,6 +77,8 @@ final class ConfigSecretCatalog
     }
 
     /**
+     * Separates public values from secrets before persisting a section.
+     *
      * @param array<string, mixed> $sectionData
      * @return array{public: array<string, mixed>, secrets: array<string, mixed>}
      */
@@ -122,6 +128,8 @@ final class ConfigSecretCatalog
     }
 
     /**
+     * Merges persisted secrets into an in-memory public section.
+     *
      * @param array<string, mixed> $public
      * @param array<string, mixed> $secrets
      * @return array<string, mixed>
@@ -152,6 +160,8 @@ final class ConfigSecretCatalog
     }
 
     /**
+     * Determines whether a public section still contains secret values.
+     *
      * @param array<string, mixed> $sectionData
      */
     public static function containsPublicSecrets(string $section, array $sectionData): bool

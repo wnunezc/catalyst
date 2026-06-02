@@ -38,16 +38,19 @@ use DateTimeImmutable;
 use RuntimeException;
 
 /**
- * Defines the Queue Repository class contract.
+ * Persists queued jobs, failed jobs, and their processing state.
  *
  * @package Catalyst\Framework\Queue
- * Responsibility: Coordinates the queue repository behavior within its module boundary.
+ * Responsibility: Provides the database operations required to enqueue, reserve, retry, complete, inspect, and prune queued work.
  */
 final class QueueRepository
 {
     use SingletonTrait;
 
     /**
+     * Inserts a job that is ready for queue processing at the requested time.
+     *
+     * Responsibility: Inserts a job that is ready for queue processing at the requested time.
      * @param array<string, mixed> $payload
      */
     public function enqueue(
@@ -82,7 +85,9 @@ final class QueueRepository
     }
 
     /**
-     * Handles the reserve next workflow.
+     * Atomically reserves the next available job from a queue.
+     *
+     * Responsibility: Atomically reserves the next available job from a queue.
      */
     public function reserveNext(?string $queueName = null): ?QueuedJobRecord
     {
@@ -137,7 +142,9 @@ final class QueueRepository
     }
 
     /**
-     * Handles the complete workflow.
+     * Removes a successfully processed job from the pending queue.
+     *
+     * Responsibility: Removes a successfully processed job from the pending queue.
      */
     public function complete(int $jobId): void
     {
@@ -151,7 +158,9 @@ final class QueueRepository
     }
 
     /**
-     * Handles the release for retry workflow.
+     * Releases a failed attempt back to the queue with a retry delay.
+     *
+     * Responsibility: Releases a failed attempt back to the queue with a retry delay.
      */
     public function releaseForRetry(QueuedJobRecord $job, string $error, int $delaySeconds): void
     {
@@ -175,7 +184,9 @@ final class QueueRepository
     }
 
     /**
-     * Handles the move to failed workflow.
+     * Moves an exhausted job from the pending queue into failed history.
+     *
+     * Responsibility: Moves an exhausted job from the pending queue into failed history.
      */
     public function moveToFailed(QueuedJobRecord $job, string $error): int
     {
@@ -211,6 +222,9 @@ final class QueueRepository
     }
 
     /**
+     * Lists failed jobs, optionally restricted to one queue.
+     *
+     * Responsibility: Lists failed jobs, optionally restricted to one queue.
      * @return array<int, array<string, mixed>>
      */
     public function listFailed(int $limit = 50, ?string $queueName = null): array
@@ -240,6 +254,9 @@ final class QueueRepository
     }
 
     /**
+     * Requeues one or all failed jobs and returns their new identifiers.
+     *
+     * Responsibility: Requeues one or all failed jobs and returns their new identifiers.
      * @return int[]
      */
     public function retryFailed(?int $failedJobId = null): array
@@ -297,7 +314,9 @@ final class QueueRepository
     }
 
     /**
-     * Handles the pending count workflow.
+     * Counts pending jobs, optionally restricted to one queue.
+     *
+     * Responsibility: Counts pending jobs, optionally restricted to one queue.
      */
     public function pendingCount(?string $queueName = null): int
     {
@@ -321,7 +340,9 @@ final class QueueRepository
     }
 
     /**
-     * Handles the failed count workflow.
+     * Counts failed jobs, optionally restricted to one queue.
+     *
+     * Responsibility: Counts failed jobs, optionally restricted to one queue.
      */
     public function failedCount(?string $queueName = null): int
     {
@@ -345,7 +366,9 @@ final class QueueRepository
     }
 
     /**
-     * Handles the prune failed jobs workflow.
+     * Deletes failed-job history older than the configured window.
+     *
+     * Responsibility: Deletes failed-job history older than the configured window.
      */
     public function pruneFailedJobs(int $olderThanDays = 14): int
     {
@@ -361,6 +384,9 @@ final class QueueRepository
     }
 
     /**
+     * Returns an operational snapshot of the queue backend.
+     *
+     * Responsibility: Returns an operational snapshot of the queue backend.
      * @return array{connection:string,default_queue:string,pending_jobs:int,failed_jobs:int}
      */
     public function summary(): array
@@ -377,7 +403,9 @@ final class QueueRepository
     }
 
     /**
-     * Handles the connection workflow.
+     * Resolves the configured database connection for queue storage.
+     *
+     * Responsibility: Resolves the configured database connection for queue storage.
      */
     private function connection(): Connection
     {
@@ -387,7 +415,9 @@ final class QueueRepository
     }
 
     /**
-     * Handles the quote workflow.
+     * Quotes a validated queue table identifier.
+     *
+     * Responsibility: Quotes a validated queue table identifier.
      */
     private function quote(string $identifier): string
     {

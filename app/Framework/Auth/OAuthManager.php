@@ -40,25 +40,11 @@ use Catalyst\Helpers\Log\Logger;
 use Exception;
 use League\OAuth2\Client\Provider\AbstractProvider;
 
-/**************************************************************************************
- * OAuthManager — manages social login via league/oauth2-client
- *
- * Supported providers: 'google', 'github'
- * Add new providers by registering them in buildProvider().
- *
- * Flow:
- *   1. getAuthorizationUrl($provider) — redirect user to the provider
- *   2. handleCallback($provider, $code, $state) — exchange code for user data
- *
- * State (CSRF) is stored in session key '_oauth_state_{provider}'.
- *
- * @package Catalyst\Framework\Auth
- */
 /**
- * Defines the OAuth Manager class contract.
+ * Orchestrates OAuth authorization-code login for configured providers.
  *
  * @package Catalyst\Framework\Auth
- * Responsibility: Coordinates the o auth manager behavior within its module boundary.
+ * Responsibility: Create provider redirects, validate callback state and normalize provider users.
  */
 class OAuthManager
 {
@@ -71,7 +57,9 @@ class OAuthManager
     private array $providers = [];
 
     /**
-     * Constructor
+     * Initializes session and logging collaborators for OAuth flows.
+     *
+     * Responsibility: Initializes session and logging collaborators for OAuth flows.
      */
     protected function __construct()
     {
@@ -86,6 +74,7 @@ class OAuthManager
     /**
      * Get the authorization URL for the given provider and store CSRF state.
      *
+     * Responsibility: Builds the provider authorization URL while storing OAuth CSRF state in the session.
      * @param string $provider 'google' | 'github'
      * @return string  Redirect URL
      * @throws Exception If provider is unknown or misconfigured
@@ -104,6 +93,7 @@ class OAuthManager
     /**
      * Handle the OAuth callback: validate state, exchange code, return OAuthUser.
      *
+     * Responsibility: Handle the OAuth callback: validate state, exchange code, return OAuthUser.
      * @param string $provider
      * @param string $code   The authorization code from query string
      * @param string $state  The state from query string
@@ -139,6 +129,7 @@ class OAuthManager
     /**
      * Check whether a provider is configured (has client ID/secret in env).
      *
+     * Responsibility: Check whether a provider is configured (has client ID/secret in env).
      * @param string $provider
      * @return bool
      */
@@ -160,6 +151,7 @@ class OAuthManager
     /**
      * Get (or build and cache) a provider instance.
      *
+     * Responsibility: Get (or build and cache) a provider instance.
      * @param string $provider
      * @return AbstractProvider
      * @throws Exception
@@ -177,6 +169,7 @@ class OAuthManager
     /**
      * Build a provider from env configuration.
      *
+     * Responsibility: Build a provider from env configuration.
      * @param string $provider
      * @return AbstractProvider
      * @throws Exception
@@ -203,6 +196,7 @@ class OAuthManager
     /**
      * Build the default callback URI for a provider based on APP_URL env var.
      *
+     * Responsibility: Build the default callback URI for a provider based on APP_URL env var.
      * @param string $provider
      * @return string
      */

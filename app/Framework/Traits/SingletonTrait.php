@@ -36,7 +36,8 @@ use InvalidArgumentException;
 /**
  * Trait that handles: Singleton Instance
  *
- * @package Catalyst\Framework\Traits;
+ * @package Catalyst\Framework\Traits
+ * Responsibility: Provides controlled singleton instantiation, replacement and reset behavior.
  */
 trait SingletonTrait
 {
@@ -51,7 +52,9 @@ trait SingletonTrait
     private static array $arguments = [];
 
     /**
-     * Protected constructor to prevent direct instantiation
+     * Protected constructor to prevent direct instantiation.
+     *
+     * Responsibility: Protected constructor to prevent direct instantiation.
      */
     protected function __construct()
     {
@@ -125,8 +128,9 @@ trait SingletonTrait
     }
 
     /**
-     * Prevent cloning of the instance
+     * Prevent cloning of the instance.
      *
+     * Responsibility: Prevent cloning of the instance.
      * @return void
      */
     private function __clone()
@@ -135,8 +139,9 @@ trait SingletonTrait
     }
 
     /**
-     * Prevent unserialization of the instance
+     * Prevent unserialization of the instance.
      *
+     * Responsibility: Prevent unserialization of the instance.
      * @return void
      * @throws Exception If attempted to unserialize a singleton
      */

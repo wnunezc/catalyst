@@ -36,6 +36,7 @@ namespace Catalyst\Helpers\Validation\Rules;
  * Rules: required, min, max, alpha, alphaNum, regex
  *
  * @package Catalyst\Helpers\Validation\Rules
+ * Responsibility: Validates required values, string lengths, character sets and patterns.
  */
 class StringRules
 {

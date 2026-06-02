@@ -4,13 +4,29 @@ declare(strict_types=1);
 
 use Catalyst\Framework\Database\Migration;
 
+/**
+ * Creates the table that records deployment runs.
+ *
+ * @package Catalyst\BootCore\Database\Migrations
+ * Responsibility: Provision and remove deployment execution history persistence.
+ */
 return new class extends Migration
 {
+    /**
+     * Returns the timestamp identifier used by the migration runner to order and track this migration.
+     *
+     * Responsibility: Returns the timestamp identifier used by the migration runner to order and track this migration.
+     */
     public function getVersion(): string
     {
         return '20260519151000';
     }
 
+    /**
+     * Creates the deployment runs table when it is absent.
+     *
+     * Responsibility: Creates the deployment runs table when it is absent.
+     */
     public function up(): void
     {
         if ($this->tableExists('deployment_runs')) {
@@ -44,6 +60,11 @@ return new class extends Migration
         );
     }
 
+    /**
+     * Removes the deployment runs table when it exists.
+     *
+     * Responsibility: Removes the deployment runs table when it exists.
+     */
     public function down(): void
     {
         if ($this->tableExists('deployment_runs')) {

@@ -31,15 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Repository\Operations\Requests\Concerns;
 
 /**
- * Defines the Normalizes Checkbox Values trait contract.
+ * Normalizes HTML checkbox payloads into boolean values.
  *
  * @package Catalyst\Repository\Operations\Requests\Concerns
- * Responsibility: Coordinates the normalizes checkbox values behavior within its module boundary.
+ * Responsibility: Shares consistent checkbox coercion across operations requests.
  */
 trait NormalizesCheckboxValues
 {
     /**
-     * Handles the checkbox value workflow.
+     * Converts a checkbox-like value into a boolean state.
+     *
+     * Responsibility: Converts a checkbox-like value into a boolean state.
      */
     private function checkboxValue(mixed $value): bool
     {

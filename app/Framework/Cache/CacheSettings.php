@@ -31,14 +31,16 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Cache;
 
 /**
- * Defines the Cache Settings class contract.
+ * Reads and normalizes environment-specific cache settings.
  *
  * @package Catalyst\Framework\Cache
- * Responsibility: Coordinates the cache settings behavior within its module boundary.
+ * Responsibility: Supplies cache defaults, environment paths and feature enablement decisions.
  */
 final class CacheSettings
 {
     /**
+     * Returns the default cache configuration.
+     *
      * @return array<string, mixed>
      */
     public static function defaults(): array
@@ -55,7 +57,7 @@ final class CacheSettings
     }
 
     /**
-     * Handles the environment workflow.
+     * Resolves the active runtime environment name.
      */
     public static function environment(): string
     {
@@ -75,7 +77,7 @@ final class CacheSettings
     }
 
     /**
-     * Handles the config path workflow.
+     * Builds the cache configuration file path for an environment.
      */
     public static function configPath(?string $environment = null): string
     {
@@ -83,6 +85,8 @@ final class CacheSettings
     }
 
     /**
+     * Returns normalized cache settings for an environment.
+     *
      * @return array<string, mixed>
      */
     public static function current(?string $environment = null): array
@@ -99,6 +103,8 @@ final class CacheSettings
     }
 
     /**
+     * Reads the raw cache section from an environment file.
+     *
      * @return array<string, mixed>
      */
     public static function readRaw(?string $environment = null): array
@@ -124,6 +130,8 @@ final class CacheSettings
     }
 
     /**
+     * Determines whether runtime caching is enabled in production.
+     *
      * @param array<string, mixed>|null $config
      */
     public static function runtimeEnabled(?array $config = null): bool
@@ -136,6 +144,8 @@ final class CacheSettings
     }
 
     /**
+     * Determines whether a runtime cache feature is active.
+     *
      * @param array<string, mixed>|null $config
      */
     public static function featureEnabled(string $feature, ?array $config = null): bool
@@ -146,6 +156,8 @@ final class CacheSettings
     }
 
     /**
+     * Returns the configured value of a cache feature without runtime gating.
+     *
      * @param array<string, mixed>|null $config
      */
     public static function configuredFeature(string $feature, ?array $config = null): bool
@@ -156,7 +168,7 @@ final class CacheSettings
     }
 
     /**
-     * Normalizes the provided value.
+     * Normalizes a cache driver to a supported value.
      */
     private static function normalizeDriver(string $driver): string
     {
@@ -166,7 +178,7 @@ final class CacheSettings
     }
 
     /**
-     * Normalizes the provided value.
+     * Normalizes an empty cache prefix to the framework default.
      */
     private static function normalizePrefix(string $prefix): string
     {
@@ -175,4 +187,3 @@ final class CacheSettings
         return $prefix !== '' ? $prefix : 'catalyst_';
     }
 }
-

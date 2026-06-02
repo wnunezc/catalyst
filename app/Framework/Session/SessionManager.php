@@ -42,6 +42,7 @@ use RuntimeException;
  * Handles session initialization, data storage/retrieval, and flash messages.
  *
  * @package Catalyst\Framework\Session
+ * Responsibility: Initializes PHP sessions and provides storage, migration and form-state helpers.
  */
 class SessionManager
 {
@@ -77,8 +78,9 @@ class SessionManager
     ];
 
     /**
-     * Get the session configuration
+     * Get the session configuration.
      *
+     * Responsibility: Exposes the session configuration used to start and manage session state.
      * @return array Session configuration
      */
     public function getConfig(): array
@@ -87,8 +89,9 @@ class SessionManager
     }
 
     /**
-     * Set the session configuration
+     * Set the session configuration.
      *
+     * Responsibility: Stores session configuration before the session manager starts runtime state.
      * @param array $config Configuration options
      * @return self For method chaining
      */
@@ -99,8 +102,9 @@ class SessionManager
     }
 
     /**
-     * Initialize the session with provided configuration
+     * Initialize the session with provided configuration.
      *
+     * Responsibility: Initialize the session with provided configuration.
      * @param array $config Configuration options
      * @return self For method chaining
      * @throws RuntimeException|Exception If session cannot be started
@@ -214,8 +218,9 @@ class SessionManager
     }
 
     /**
-     * Check if a session variable exists
+     * Check if a session variable exists.
      *
+     * Responsibility: Check if a session variable exists.
      * @param string $key Session variable key
      * @return bool True if the variable exists
      */
@@ -226,8 +231,9 @@ class SessionManager
     }
 
     /**
-     * Get a session variable
+     * Returns and removes validation-error bags. Get a session variable.
      *
+     * Responsibility: Returns and removes validation-error bags. Get a session variable.
      * @param string $key Session variable key
      * @param mixed $default Default value if not found
      * @return mixed Session variable value or default
@@ -239,8 +245,9 @@ class SessionManager
     }
 
     /**
-     * Set a session variable
+     * Set a session variable.
      *
+     * Responsibility: Set a session variable.
      * @param string $key Session variable key
      * @param mixed $value Session variable value
      * @return self For method chaining
@@ -253,8 +260,9 @@ class SessionManager
     }
 
     /**
-     * Remove a session variable
+     * Remove a session variable.
      *
+     * Responsibility: Remove a session variable.
      * @param string $key Session variable key
      * @return self For method chaining
      */
@@ -266,8 +274,9 @@ class SessionManager
     }
 
     /**
-     * Get all session data
+     * Get all session data.
      *
+     * Responsibility: Get all session data.
      * @return array All session data
      */
     public function all(): array
@@ -277,8 +286,9 @@ class SessionManager
     }
 
     /**
-     * Clear all session data
+     * Clear all session data.
      *
+     * Responsibility: Clear all session data.
      * @return self For method chaining
      */
     public function clear(): self
@@ -289,8 +299,9 @@ class SessionManager
     }
 
     /**
-     * Destroy the current session
+     * Destroy the current session.
      *
+     * Responsibility: Destroy the current session.
      * @return self For method chaining
      */
     public function destroy(): self
@@ -325,8 +336,9 @@ class SessionManager
     }
 
     /**
-     * Regenerate the session ID
+     * Regenerate the session ID.
      *
+     * Responsibility: Regenerate the session ID.
      * @param bool $deleteOldSession Whether to delete the old session data
      * @return self For method chaining
      */
@@ -338,8 +350,9 @@ class SessionManager
     }
 
     /**
-     * Check if the session is initialized
+     * Check if the session is initialized.
      *
+     * Responsibility: Check if the session is initialized.
      * @return bool True if the session is initialized
      */
     public function isInitialized(): bool
@@ -348,6 +361,9 @@ class SessionManager
     }
 
     /**
+     * Seeds the active session payload into a target persistence driver.
+     *
+     * Responsibility: Seeds the active session payload into a target persistence driver.
      * @param array<string, mixed> $targetConfig
      */
     public function seedActiveSession(array $targetConfig): bool
@@ -389,6 +405,9 @@ class SessionManager
     }
 
     /**
+     * Stores sanitized old form input for the next request.
+     *
+     * Responsibility: Stores sanitized old form input for the next request.
      * @param array<string, mixed> $input
      */
     public function flashOldInput(array $input): self
@@ -400,6 +419,9 @@ class SessionManager
     }
 
     /**
+     * Returns stored old form input without consuming it.
+     *
+     * Responsibility: Returns stored old form input without consuming it.
      * @return array<string, mixed>
      */
     public function peekOldInput(): array
@@ -412,6 +434,9 @@ class SessionManager
     }
 
     /**
+     * Returns and removes stored old form input.
+     *
+     * Responsibility: Returns and removes stored old form input.
      * @return array<string, mixed>
      */
     public function consumeOldInput(): array
@@ -423,6 +448,9 @@ class SessionManager
     }
 
     /**
+     * Stores normalized validation errors for the next request.
+     *
+     * Responsibility: Stores normalized validation errors for the next request.
      * @param array<string, string[]|string> $errors
      */
     public function flashValidationErrors(array $errors, string $bag = 'default'): self
@@ -441,6 +469,9 @@ class SessionManager
     }
 
     /**
+     * Returns validation-error bags without consuming them.
+     *
+     * Responsibility: Returns validation-error bags without consuming them.
      * @return array<string, array<string, string[]>>
      */
     public function peekValidationErrors(): array
@@ -453,6 +484,9 @@ class SessionManager
     }
 
     /**
+     * Returns and removes validation-error bags.
+     *
+     * Responsibility: Returns and removes validation-error bags.
      * @return array<string, array<string, string[]>>
      */
     public function consumeValidationErrors(): array
@@ -464,7 +498,9 @@ class SessionManager
     }
 
     /**
-     * Handles the clear form state workflow.
+     * Clears old input and validation-error state from the session.
+     *
+     * Responsibility: Clears old input and validation-error state from the session.
      */
     public function clearFormState(): self
     {
@@ -476,10 +512,9 @@ class SessionManager
     }
 
     /**
-     * Resolve the secure cookie default based on environment (G11).
-     * Development: false (HTTP allowed). Production/Staging: true (HTTPS required).
-     * Production warning is logged in init() after full config merge.
+     * Resolve the secure cookie default based on environment (G11). Development: false (HTTP allowed). Production/Staging: true (HTTPS required). Production warning is logged in init() after full config merge.
      *
+     * Responsibility: Resolve the secure cookie default based on environment (G11). Development: false (HTTP allowed). Production/Staging: true (HTTPS required). Production warning is logged in init() after full config merge.
      * @return bool
      */
     protected function resolveSecureDefault(): bool
@@ -488,7 +523,9 @@ class SessionManager
     }
 
     /**
-     * Handles the configure session handler workflow.
+     * Configures the requested session persistence driver.
+     *
+     * Responsibility: Configures the requested session persistence driver.
      */
     private function configureSessionHandler(): void
     {
@@ -510,8 +547,9 @@ class SessionManager
     }
 
     /**
-     * Ensure the session is initialized
+     * Ensure the session is initialized.
      *
+     * Responsibility: Ensure the session is initialized.
      * @return void
      * @throws RuntimeException If session is not initialized
      */
@@ -524,6 +562,8 @@ class SessionManager
 
     /**
      * Sanitizes the provided value.
+     *
+     * Responsibility: Sanitizes the provided value.
      */
     private function sanitizeSessionTable(string $table): string
     {
@@ -538,6 +578,8 @@ class SessionManager
 
     /**
      * Writes the requested value.
+     *
+     * Responsibility: Writes the requested value.
      */
     private function writeNativeSessionFile(string $sessionId, string $payload): bool
     {
@@ -579,6 +621,9 @@ class SessionManager
     }
 
     /**
+     * Removes sensitive fields from recursively stored old input.
+     *
+     * Responsibility: Removes sensitive fields from recursively stored old input.
      * @param array<string, mixed> $input
      * @return array<string, mixed>
      */
@@ -595,6 +640,8 @@ class SessionManager
 
     /**
      * Sanitizes the provided value.
+     *
+     * Responsibility: Sanitizes the provided value.
      */
     private function sanitizeOldInputValue(mixed $value): mixed
     {
@@ -614,6 +661,9 @@ class SessionManager
     }
 
     /**
+     * Normalizes validation errors into field-to-message arrays.
+     *
+     * Responsibility: Normalizes validation errors into field-to-message arrays.
      * @param array<string, string[]|string> $errors
      * @return array<string, string[]>
      */

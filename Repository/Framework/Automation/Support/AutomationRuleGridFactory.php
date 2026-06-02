@@ -37,15 +37,17 @@ use Catalyst\Framework\Idempotency\IdempotencyManager;
 use Catalyst\Framework\Temporal\EffectiveWindow;
 
 /**
- * Defines the Automation Rule Grid Factory class contract.
+ * Builds the administrative automation rule data grid.
  *
  * @package Catalyst\Repository\Automation\Support
- * Responsibility: Coordinates the automation rule grid factory behavior within its module boundary.
+ * Responsibility: Configure rule columns, filters, row actions and repository-backed pagination.
  */
 final class AutomationRuleGridFactory
 {
     /**
-     * Builds the requested structure.
+     * Builds the automation rule listing grid backed by repository search.
+     *
+     * Responsibility: Builds the automation rule listing grid backed by repository search.
      */
     public function build(AutomationRuleRepository $repository): DataGrid
     {

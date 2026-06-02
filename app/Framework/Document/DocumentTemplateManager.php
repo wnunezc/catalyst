@@ -43,10 +43,10 @@ use Catalyst\Framework\Workflow\WorkflowManager;
 use RuntimeException;
 
 /**
- * Defines the Document Template Manager class contract.
+ * Manager for document template and artifact workflows.
  *
  * @package Catalyst\Framework\Document
- * Responsibility: Coordinates the document template manager behavior within its module boundary.
+ * Responsibility: Creates, previews, exports, archives, purges, and transitions tenant document templates and artifacts.
  */
 final class DocumentTemplateManager
 {
@@ -65,6 +65,8 @@ final class DocumentTemplateManager
 
     /**
      * Initializes the Document Template Manager instance.
+     *
+     * Responsibility: Initializes the Document Template Manager instance.
      */
     protected function __construct()
     {
@@ -78,6 +80,9 @@ final class DocumentTemplateManager
     }
 
     /**
+     * Coordinates the create method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the create method responsibility within its owning class.
      * @param array<string, mixed> $payload
      */
     public function create(array $payload): DocumentTemplate
@@ -99,6 +104,9 @@ final class DocumentTemplateManager
     }
 
     /**
+     * Coordinates the update method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the update method responsibility within its owning class.
      * @param array<string, mixed> $payload
      */
     public function update(DocumentTemplate $template, array $payload): DocumentTemplate
@@ -120,7 +128,9 @@ final class DocumentTemplateManager
     }
 
     /**
-     * Handles the delete workflow.
+     * Deletes a document template by id.
+     *
+     * Responsibility: Deletes a document template by id.
      */
     public function delete(DocumentTemplate $template): void
     {
@@ -128,7 +138,9 @@ final class DocumentTemplateManager
     }
 
     /**
-     * Handles the archive artifact workflow.
+     * Archives a rendered document artifact and records the actor.
+     *
+     * Responsibility: Archives a rendered document artifact and records the actor.
      */
     public function archiveArtifact(DocumentArtifact $artifact): DocumentArtifact
     {
@@ -145,7 +157,9 @@ final class DocumentTemplateManager
     }
 
     /**
-     * Handles the purge artifact workflow.
+     * Permanently removes a stored document artifact.
+     *
+     * Responsibility: Permanently removes a stored document artifact.
      */
     public function purgeArtifact(DocumentArtifact $artifact): void
     {
@@ -161,6 +175,9 @@ final class DocumentTemplateManager
     }
 
     /**
+     * Coordinates the preview method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the preview method responsibility within its owning class.
      * @param array<string, mixed> $payload
      * @return array<string, mixed>
      */
@@ -184,6 +201,9 @@ final class DocumentTemplateManager
     }
 
     /**
+     * Coordinates the export method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the export method responsibility within its owning class.
      * @param array<string, mixed> $payload
      */
     public function export(DocumentTemplate $template, array $payload = []): DocumentArtifact
@@ -226,7 +246,9 @@ final class DocumentTemplateManager
     }
 
     /**
-     * Handles the transition workflow.
+     * Applies a workflow transition to a document template instance.
+     *
+     * Responsibility: Applies a workflow transition to a document template instance.
      */
     public function transition(DocumentTemplate $template, string $transitionKey, ?string $notes = null): array
     {
@@ -241,6 +263,9 @@ final class DocumentTemplateManager
     }
 
     /**
+     * Coordinates the decode json field method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the decode json field method responsibility within its owning class.
      * @param mixed $value
      * @return array<string, mixed>|array<int, mixed>
      */
@@ -256,7 +281,9 @@ final class DocumentTemplateManager
     }
 
     /**
-     * Handles the workflow instance id workflow.
+     * Resolves the workflow instance id associated with a document template.
+     *
+     * Responsibility: Resolves the workflow instance id associated with a document template.
      */
     private function workflowInstanceId(int $recordId): ?int
     {
@@ -268,6 +295,8 @@ final class DocumentTemplateManager
 
     /**
      * Normalizes the provided value.
+     *
+     * Responsibility: Normalizes the provided value.
      */
     private function normalizePdfText(string $content): string
     {

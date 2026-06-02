@@ -46,6 +46,7 @@ use PDOStatement;
  * queries and managing transactions.
  *
  * @package Catalyst\Framework\Database
+ * Responsibility: Wraps PDO connection lifecycle, queries and transaction callbacks.
  */
 class Connection
 {
@@ -59,6 +60,8 @@ class Connection
 
     /**
      * Initializes the Connection instance.
+     *
+     * Responsibility: Initializes the Connection instance.
      */
     public function __construct(
         string $host,
@@ -82,6 +85,7 @@ class Connection
     /**
      * Get the PDO instance, connecting lazily if necessary.
      *
+     * Responsibility: Provides the active PDO connection, opening it lazily when first requested.
      * @throws ConnectionException
      */
     public function getPdo(): PDO
@@ -96,6 +100,7 @@ class Connection
     /**
      * Establish PDO connection.
      *
+     * Responsibility: Establish PDO connection.
      * @throws ConnectionException
      */
     protected function connect(): void
@@ -133,6 +138,8 @@ class Connection
 
     /**
      * Create a new QueryBuilder for the given table.
+     *
+     * Responsibility: Create a new QueryBuilder for the given table.
      */
     public function table(string $table): QueryBuilder
     {
@@ -142,6 +149,7 @@ class Connection
     /**
      * Execute a prepared SQL query and return the statement.
      *
+     * Responsibility: Execute a prepared SQL query and return the statement.
      * @throws QueryException
      */
     public function query(string $query, array $params = []): PDOStatement
@@ -169,6 +177,7 @@ class Connection
     /**
      * Execute a SELECT query and return all rows.
      *
+     * Responsibility: Execute a SELECT query and return all rows.
      * @throws QueryException
      */
     public function select(string $query, array $params = [], int $fetchMode = PDO::FETCH_ASSOC): array
@@ -179,6 +188,7 @@ class Connection
     /**
      * Execute a SELECT query and return a single row, or null if not found.
      *
+     * Responsibility: Execute a SELECT query and return a single row, or null if not found.
      * @throws QueryException
      */
     public function selectOne(string $query, array $params = [], int $fetchMode = PDO::FETCH_ASSOC): ?array
@@ -190,6 +200,7 @@ class Connection
     /**
      * Execute a non-SELECT statement and return the number of affected rows.
      *
+     * Responsibility: Execute a non-SELECT statement and return the number of affected rows.
      * @throws QueryException
      */
     public function execute(string $query, array $params = []): int
@@ -200,6 +211,7 @@ class Connection
     /**
      * Insert a row into a table and return the last insert ID.
      *
+     * Responsibility: Insert a row into a table and return the last insert ID.
      * @throws QueryException
      */
     public function insert(string $table, array $data): int
@@ -229,9 +241,9 @@ class Connection
     }
 
     /**
-     * Execute a callback within a database transaction.
-     * Automatically commits on success and rolls back on exception.
+     * Execute a callback within a database transaction. Automatically commits on success and rolls back on exception.
      *
+     * Responsibility: Execute a callback within a database transaction. Automatically commits on success and rolls back on exception.
      * @throws QueryException
      */
     public function transaction(Closure $callback): mixed
@@ -261,6 +273,8 @@ class Connection
 
     /**
      * Test the connection by executing a trivial query.
+     *
+     * Responsibility: Test the connection by executing a trivial query.
      */
     public function test(): bool
     {
@@ -274,6 +288,8 @@ class Connection
 
     /**
      * Return connection parameters with the password masked.
+     *
+     * Responsibility: Return connection parameters with the password masked.
      */
     public function getConnectionInfo(): array
     {
@@ -284,6 +300,8 @@ class Connection
 
     /**
      * Return the connection name.
+     *
+     * Responsibility: Return the connection name.
      */
     public function getName(): string
     {
@@ -291,7 +309,9 @@ class Connection
     }
 
     /**
-     * Handles the rollback workflow.
+     * Rolls back the active transaction level on the PDO connection.
+     *
+     * Responsibility: Rolls back the active transaction level on the PDO connection.
      */
     protected function rollback(): void
     {

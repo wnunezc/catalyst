@@ -4,13 +4,29 @@ declare(strict_types=1);
 
 use Catalyst\Framework\Database\Migration;
 
+/**
+ * Adds tenant boundaries to shared framework tables.
+ *
+ * @package Catalyst\BootCore\Database\Migrations
+ * Responsibility: Introduce tenant columns, tenant-aware keys, and lookup indexes across shared runtime persistence.
+ */
 return new class extends Migration
 {
+    /**
+     * Returns the timestamp identifier used by the migration runner to order and track this migration.
+     *
+     * Responsibility: Returns the timestamp identifier used by the migration runner to order and track this migration.
+     */
     public function getVersion(): string
     {
         return '20260519190000';
     }
 
+    /**
+     * Applies tenant columns and tenant-scoped indexes required by shared runtime tables.
+     *
+     * Responsibility: Applies tenant columns and tenant-scoped indexes required by shared runtime tables.
+     */
     public function up(): void
     {
         $this->ensureTenantColumn('users', 'id');
@@ -81,12 +97,22 @@ return new class extends Migration
         $this->ensureIndex('audit_logs', 'idx_audit_logs_tenant_channel', ['tenant_id', 'channel']);
     }
 
+    /**
+     * Preserves forward-only tenant boundary hardening when rollback is requested.
+     *
+     * Responsibility: Preserves forward-only tenant boundary hardening when rollback is requested.
+     */
     public function down(): void
     {
         // PA-02 is a forward-only schema hardening step. Rolling it back would
         // require destructive index and data-shape changes across live records.
     }
 
+    /**
+     * Adds the tenant identifier column needed to scope records in a shared table.
+     *
+     * Responsibility: Adds the tenant identifier column needed to scope records in a shared table.
+     */
     private function ensureTenantColumn(string $table, string $after): void
     {
         if (!$this->tableExists($table) || $this->columnExists($table, 'tenant_id')) {
@@ -100,6 +126,11 @@ return new class extends Migration
         ));
     }
 
+    /**
+     * Adds and normalizes audit tenant key data used by tenant-aware audit lookups.
+     *
+     * Responsibility: Adds and normalizes audit tenant key data used by tenant-aware audit lookups.
+     */
     private function ensureAuditTenantKey(): void
     {
         if (!$this->tableExists('audit_logs')) {
@@ -121,6 +152,11 @@ return new class extends Migration
         );
     }
 
+    /**
+     * Creates a tenant-aware unique index only when the target table still needs it.
+     *
+     * Responsibility: Creates a tenant-aware unique index only when the target table still needs it.
+     */
     private function ensureUniqueIndex(string $table, string $index, array $columns): void
     {
         if (!$this->tableExists($table) || $this->indexExists($table, $index)) {
@@ -135,6 +171,11 @@ return new class extends Migration
         ));
     }
 
+    /**
+     * Creates a tenant-aware lookup index only when the target table still needs it.
+     *
+     * Responsibility: Creates a tenant-aware lookup index only when the target table still needs it.
+     */
     private function ensureIndex(string $table, string $index, array $columns): void
     {
         if (!$this->tableExists($table) || $this->indexExists($table, $index)) {
@@ -149,6 +190,11 @@ return new class extends Migration
         ));
     }
 
+    /**
+     * Removes a legacy index before tenant-aware replacements are created for the table.
+     *
+     * Responsibility: Removes a legacy index before tenant-aware replacements are created for the table.
+     */
     private function dropIndexIfExists(string $table, string $index): void
     {
         if (!$this->tableExists($table) || !$this->indexExists($table, $index)) {
@@ -162,6 +208,11 @@ return new class extends Migration
         ));
     }
 
+    /**
+     * Checks information_schema so schema changes remain idempotent for an existing column.
+     *
+     * Responsibility: Checks information_schema so schema changes remain idempotent for an existing column.
+     */
     private function columnExists(string $table, string $column): bool
     {
         $row = $this->selectOne(
@@ -180,6 +231,11 @@ return new class extends Migration
         return $row !== null;
     }
 
+    /**
+     * Checks information_schema so schema changes remain idempotent for an existing index.
+     *
+     * Responsibility: Checks information_schema so schema changes remain idempotent for an existing index.
+     */
     private function indexExists(string $table, string $index): bool
     {
         $row = $this->selectOne(

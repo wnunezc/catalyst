@@ -46,10 +46,10 @@ use RuntimeException;
 use Throwable;
 
 /**
- * Defines the Automation Manager class contract.
+ * Coordinates rule lifecycle operations and executes automation actions.
  *
  * @package Catalyst\Framework\Automation
- * Responsibility: Coordinates the automation manager behavior within its module boundary.
+ * Responsibility: Creates, updates, transitions and executes automation rules for events and schedules.
  */
 final class AutomationManager
 {
@@ -69,6 +69,8 @@ final class AutomationManager
 
     /**
      * Initializes the Automation Manager instance.
+     *
+     * Responsibility: Initializes the Automation Manager instance.
      */
     protected function __construct()
     {
@@ -83,6 +85,9 @@ final class AutomationManager
     }
 
     /**
+     * Creates an inactive automation rule and captures its initial workflow version.
+     *
+     * Responsibility: Creates an inactive automation rule and captures its initial workflow version.
      * @param array<string, mixed> $payload
      */
     public function create(array $payload): AutomationRule
@@ -109,6 +114,9 @@ final class AutomationManager
     }
 
     /**
+     * Updates an automation rule and captures the resulting version.
+     *
+     * Responsibility: Updates an automation rule and captures the resulting version.
      * @param array<string, mixed> $payload
      */
     public function update(AutomationRule $rule, array $payload): AutomationRule
@@ -134,7 +142,9 @@ final class AutomationManager
     }
 
     /**
-     * Handles the transition workflow.
+     * Applies a lifecycle transition to an automation rule.
+     *
+     * Responsibility: Applies a lifecycle transition to an automation rule.
      */
     public function transition(AutomationRule $rule, string $transitionKey, ?string $notes = null): array
     {
@@ -149,7 +159,9 @@ final class AutomationManager
     }
 
     /**
-     * Processes the current workflow.
+     * Executes enabled automation rules subscribed to an event.
+     *
+     * Responsibility: Executes enabled automation rules subscribed to an event.
      */
     public function processEvent(EventEnvelope $event): void
     {
@@ -167,7 +179,9 @@ final class AutomationManager
     }
 
     /**
-     * Executes the command workflow.
+     * Executes scheduled automation rules due in the current minute.
+     *
+     * Responsibility: Executes scheduled automation rules due in the current minute.
      */
     public function runDueSchedules(): int
     {
@@ -213,6 +227,9 @@ final class AutomationManager
     }
 
     /**
+     * Executes an automation rule with an explicit trigger context.
+     *
+     * Responsibility: Executes an automation rule with an explicit trigger context.
      * @param array<string, mixed> $context
      * @return array<string, mixed>
      */
@@ -222,6 +239,9 @@ final class AutomationManager
     }
 
     /**
+     * Evaluates one rule and dispatches its configured action.
+     *
+     * Responsibility: Evaluates one rule and dispatches its configured action.
      * @param array<string, mixed> $ruleRow
      * @param array<string, mixed> $context
      * @return array<string, mixed>
@@ -287,6 +307,9 @@ final class AutomationManager
     }
 
     /**
+     * Sends or queues the notification configured by an automation rule. Applies a workflow transition derived from an automation context.
+     *
+     * Responsibility: Sends or queues the notification configured by an automation rule. Applies a workflow transition derived from an automation context.
      * @param array<string, mixed> $ruleRow
      * @param array<string, mixed> $context
      * @return array<string, mixed>
@@ -323,6 +346,9 @@ final class AutomationManager
     }
 
     /**
+     * Renders and exports a document from an automation context.
+     *
+     * Responsibility: Renders and exports a document from an automation context.
      * @param array<string, mixed> $context
      * @param array<string, mixed> $payload
      * @return array<string, mixed>
@@ -352,6 +378,9 @@ final class AutomationManager
     }
 
     /**
+     * Coordinates the run render document action method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the run render document action method responsibility within its owning class.
      * @param array<string, mixed> $context
      * @param array<string, mixed> $payload
      * @return array<string, mixed>
@@ -380,6 +409,9 @@ final class AutomationManager
     }
 
     /**
+     * Determines whether all configured conditions match the trigger context.
+     *
+     * Responsibility: Determines whether all configured conditions match the trigger context.
      * @param array<string, mixed> $conditions
      * @param array<string, mixed> $context
      */
@@ -405,6 +437,9 @@ final class AutomationManager
     }
 
     /**
+     * Resolves the target user identifier for a notification action. Resolves a dot-path value from the automation context.
+     *
+     * Responsibility: Resolves the target user identifier for a notification action. Resolves a dot-path value from the automation context.
      * @param array<string, mixed> $payload
      * @param array<string, mixed> $context
      */
@@ -427,6 +462,9 @@ final class AutomationManager
     }
 
     /**
+     * Coordinates the resolve context value method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the resolve context value method responsibility within its owning class.
      * @param array<string, mixed> $context
      */
     private function resolveContextValue(array $context, string $path): mixed
@@ -435,6 +473,9 @@ final class AutomationManager
     }
 
     /**
+     * Normalizes an array or JSON string into an automation payload array.
+     *
+     * Responsibility: Normalizes an array or JSON string into an automation payload array.
      * @param mixed $value
      * @return array<string, mixed>|array<int, mixed>
      */

@@ -33,10 +33,10 @@ namespace Catalyst\Framework\Idempotency;
 use RuntimeException;
 
 /**
- * Defines the Idempotency In Progress Exception class contract.
+ * Signals an idempotent request that is still pending.
  *
  * @package Catalyst\Framework\Idempotency
- * Responsibility: Coordinates the idempotency in progress exception behavior within its module boundary.
+ * Responsibility: Represents replay attempts made before the original idempotent operation has completed.
  */
 final class IdempotencyInProgressException extends RuntimeException
 {

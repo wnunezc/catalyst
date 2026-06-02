@@ -34,17 +34,19 @@ use Catalyst\Framework\Cli\ScaffoldManager;
 use Catalyst\Framework\Cli\Support\PhpValueExporter;
 
 /**
- * Defines the Crud File Factory class contract.
+ * Factory for generated CRUD scaffold files.
  *
  * @package Catalyst\Framework\Admin\Crud
- * Responsibility: Coordinates the crud file factory behavior within its module boundary.
+ * Responsibility: Renders controller, request, entity, migration, view, route, and module files from a CRUD blueprint.
  */
 final class CrudFileFactory
 {
     private readonly PhpValueExporter $exporter;
 
     /**
-     * Initializes the Crud File Factory instance.
+     * Initializes the factory with scaffold rendering and PHP export collaborators.
+     *
+     * Responsibility: Initializes the factory with scaffold rendering and PHP export collaborators.
      */
     public function __construct(
         private readonly ScaffoldManager $manager,
@@ -54,6 +56,9 @@ final class CrudFileFactory
     }
 
     /**
+     * Builds the file list and rendered contents for a CRUD scaffold.
+     *
+     * Responsibility: Builds the file list and rendered contents for a CRUD scaffold.
      * @param array<string, mixed> $blueprint
      * @return array<int, array<string, string>>
      */
@@ -188,7 +193,9 @@ final class CrudFileFactory
     }
 
     /**
-     * Builds the requested structure.
+     * Builds route declarations for generated CRUD endpoints.
+     *
+     * Responsibility: Builds route declarations for generated CRUD endpoints.
      */
     private function buildRoutes(
         string $module,
@@ -273,6 +280,9 @@ PHP;
     }
 
     /**
+     * Builds the module manifest contents with generated route ownership.
+     *
+     * Responsibility: Builds the module manifest contents with generated route ownership.
      * @param array<string, mixed> $moduleBlueprint
      */
     private function buildManifestContents(array $moduleBlueprint, string $routeUri): string
@@ -289,7 +299,9 @@ PHP;
     }
 
     /**
-     * Handles the humanize workflow.
+     * Converts a class or module identifier into a display label.
+     *
+     * Responsibility: Converts a class or module identifier into a display label.
      */
     private function humanize(string $value): string
     {

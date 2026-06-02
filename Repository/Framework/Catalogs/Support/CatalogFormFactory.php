@@ -33,14 +33,17 @@ namespace Catalyst\Repository\Catalogs\Support;
 use Catalyst\Framework\Admin\Form\FormBuilder;
 
 /**
- * Defines the Catalog Form Factory class contract.
+ * Builds administrative catalog definition and item form schemas.
  *
  * @package Catalyst\Repository\Catalogs\Support
- * Responsibility: Coordinates the catalog form factory behavior within its module boundary.
+ * Responsibility: Define catalog form sections, fields, defaults and actions for create and edit screens.
  */
 final class CatalogFormFactory
 {
     /**
+     * Builds the form schema for a new or existing catalog definition.
+     *
+     * Responsibility: Builds the form schema for a new or existing catalog definition.
      * @param array<string, mixed>|null $catalog
      * @param array<string, array<string, mixed>> $hiddenFields
      * @return array<string, mixed>
@@ -103,6 +106,9 @@ final class CatalogFormFactory
     }
 
     /**
+     * Builds the form schema for a new or existing item within a catalog.
+     *
+     * Responsibility: Builds the form schema for a new or existing item within a catalog.
      * @param array<string, mixed> $catalog
      * @param array<string, mixed>|null $item
      * @param array<string, array<string, mixed>> $hiddenFields
@@ -205,7 +211,9 @@ final class CatalogFormFactory
     }
 
     /**
-     * Handles the json field workflow.
+     * Formats structured metadata defaults as editable JSON while preserving existing JSON strings.
+     *
+     * Responsibility: Formats structured metadata defaults as editable JSON while preserving existing JSON strings.
      */
     private function jsonField(mixed $value): string
     {

@@ -37,10 +37,10 @@ use Catalyst\Framework\Tenancy\TenancyManager;
 use Catalyst\Framework\Traits\SingletonTrait;
 
 /**
- * Defines the Metadata Manager class contract.
+ * Coordinator for dynamic metadata field contracts.
  *
  * @package Catalyst\Framework\Metadata
- * Responsibility: Coordinates the metadata manager behavior within its module boundary.
+ * Responsibility: Build metadata form, grid, validation and definition payload contracts.
  */
 final class MetadataManager
 {
@@ -57,7 +57,9 @@ final class MetadataManager
     private DatabaseManager $db;
 
     /**
-     * Initializes the Metadata Manager instance.
+     * Resolve metadata, catalog and database collaborators.
+     *
+     * Responsibility: Resolve metadata, catalog and database collaborators.
      */
     protected function __construct()
     {
@@ -69,6 +71,9 @@ final class MetadataManager
     }
 
     /**
+     * Return supported metadata field types with UI labels.
+     *
+     * Responsibility: Return supported metadata field types with UI labels.
      * @return array<string, string>
      */
     public function supportedTypes(): array
@@ -87,7 +92,9 @@ final class MetadataManager
     }
 
     /**
-     * Handles the supports resource workflow.
+     * Determine whether a resource accepts dynamic metadata fields.
+     *
+     * Responsibility: Determine whether a resource accepts dynamic metadata fields.
      */
     public function supportsResource(string $resourceKey): bool
     {
@@ -95,6 +102,9 @@ final class MetadataManager
     }
 
     /**
+     * Return active metadata definitions for a resource.
+     *
+     * Responsibility: Return active metadata definitions for a resource.
      * @return array<int, array<string, mixed>>
      */
     public function definitionsFor(string $resourceKey): array
@@ -103,6 +113,9 @@ final class MetadataManager
     }
 
     /**
+     * Build grouped form section metadata from field definitions.
+     *
+     * Responsibility: Build grouped form section metadata from field definitions.
      * @param array<int, array<string, mixed>> $definitions
      * @param array<string, mixed> $currentValues
      * @return array<int|string, array<string, mixed>>
@@ -136,6 +149,9 @@ final class MetadataManager
     }
 
     /**
+     * Build FormBuilder-compatible field definitions from metadata definitions.
+     *
+     * Responsibility: Build FormBuilder-compatible field definitions from metadata definitions.
      * @param array<int, array<string, mixed>> $definitions
      * @param array<string, mixed> $currentValues
      * @return array<string, array<string, mixed>>
@@ -178,6 +194,9 @@ final class MetadataManager
     }
 
     /**
+     * Build validation rules for active metadata fields on a resource.
+     *
+     * Responsibility: Build validation rules for active metadata fields on a resource.
      * @return array<string, string>
      */
     public function validationRules(string $resourceKey): array
@@ -211,6 +230,9 @@ final class MetadataManager
     }
 
     /**
+     * Build validation labels for active metadata fields on a resource.
+     *
+     * Responsibility: Build validation labels for active metadata fields on a resource.
      * @return array<string, string>
      */
     public function validationLabels(string $resourceKey): array
@@ -230,6 +252,9 @@ final class MetadataManager
     }
 
     /**
+     * Validate metadata payload values that depend on media or catalog availability.
+     *
+     * Responsibility: Validate metadata payload values that depend on media or catalog availability.
      * @param array<string, mixed> $data
      * @return array<string, string[]>
      */
@@ -271,6 +296,9 @@ final class MetadataManager
     }
 
     /**
+     * Build DataGrid column contracts for listed metadata fields.
+     *
+     * Responsibility: Build DataGrid column contracts for listed metadata fields.
      * @param array<int, array<string, mixed>> $definitions
      * @return array<int, array<string, mixed>>
      */
@@ -302,6 +330,9 @@ final class MetadataManager
     }
 
     /**
+     * Build DataGrid filter contracts for filterable metadata fields.
+     *
+     * Responsibility: Build DataGrid filter contracts for filterable metadata fields.
      * @param array<int, array<string, mixed>> $definitions
      * @return array<int, array<string, mixed>>
      */
@@ -345,6 +376,9 @@ final class MetadataManager
     }
 
     /**
+     * Extract metadata filter values from a grid filter payload.
+     *
+     * Responsibility: Extract metadata filter values from a grid filter payload.
      * @param array<string, mixed> $filters
      * @return array<string, string>
      */
@@ -370,6 +404,9 @@ final class MetadataManager
     }
 
     /**
+     * Normalize raw definition form data into a persistence payload.
+     *
+     * Responsibility: Normalize raw definition form data into a persistence payload.
      * @param array<string, mixed> $payload
      * @return array<string, mixed>
      */
@@ -402,6 +439,9 @@ final class MetadataManager
     }
 
     /**
+     * Validate field-definition payload semantics before persistence.
+     *
+     * Responsibility: Validate field-definition payload semantics before persistence.
      * @param array<string, mixed> $payload
      * @return array<string, string[]>
      */
@@ -448,6 +488,9 @@ final class MetadataManager
     }
 
     /**
+     * Parse newline-delimited select options into value and label pairs.
+     *
+     * Responsibility: Parse newline-delimited select options into value and label pairs.
      * @return array<int, array<string, string>>
      */
     public function parseSelectOptions(string $raw): array
@@ -478,7 +521,9 @@ final class MetadataManager
     }
 
     /**
-     * Handles the select options text workflow.
+     * Render stored select options back into editable text form.
+     *
+     * Responsibility: Render stored select options back into editable text form.
      */
     public function selectOptionsText(array $definition): string
     {
@@ -500,7 +545,9 @@ final class MetadataManager
     }
 
     /**
-     * Handles the media library label workflow.
+     * Resolve a media-library display label for metadata UI.
+     *
+     * Responsibility: Resolve a media-library display label for metadata UI.
      */
     public function mediaLibraryLabel(int $mediaId): ?string
     {
@@ -508,6 +555,9 @@ final class MetadataManager
     }
 
     /**
+     * Return catalog definition options for metadata catalog fields.
+     *
+     * Responsibility: Return catalog definition options for metadata catalog fields.
      * @return array<string, string>
      */
     public function catalogDefinitionOptions(bool $includeState = true): array
@@ -516,7 +566,7 @@ final class MetadataManager
     }
 
     /**
-     * Handles the input key workflow.
+     * Build the form input name for a metadata field key.
      */
     public static function inputKey(string $fieldKey): string
     {
@@ -524,7 +574,7 @@ final class MetadataManager
     }
 
     /**
-     * Handles the filter key workflow.
+     * Build the grid filter name for a metadata field key.
      */
     public static function filterKey(string $fieldKey): string
     {
@@ -532,7 +582,7 @@ final class MetadataManager
     }
 
     /**
-     * Handles the grid column key workflow.
+     * Build the grid column key for a metadata field key.
      */
     public static function gridColumnKey(string $fieldKey): string
     {
@@ -540,6 +590,9 @@ final class MetadataManager
     }
 
     /**
+     * Build validation rule fragments for one metadata type.
+     *
+     * Responsibility: Build validation rule fragments for one metadata type.
      * @param array<string, mixed> $definition
      * @return string[]
      */
@@ -591,6 +644,9 @@ final class MetadataManager
     }
 
     /**
+     * Resolve selectable options for one metadata form field.
+     *
+     * Responsibility: Resolve selectable options for one metadata form field.
      * @param array<string, mixed> $definition
      * @return array<int|string, string|array<string, string>>
      */
@@ -631,6 +687,9 @@ final class MetadataManager
     }
 
     /**
+     * Build HTML attributes for one metadata form field.
+     *
+     * Responsibility: Build HTML attributes for one metadata form field.
      * @param array<string, mixed> $definition
      * @return array<string, scalar|array<int, scalar>>
      */
@@ -659,6 +718,9 @@ final class MetadataManager
     }
 
     /**
+     * Resolve selectable filter options for one metadata field.
+     *
+     * Responsibility: Resolve selectable filter options for one metadata field.
      * @param array<string, mixed> $definition
      * @return array<string, string>
      */
@@ -696,6 +758,9 @@ final class MetadataManager
     }
 
     /**
+     * Resolve a field default value in the shape expected by form controls.
+     *
+     * Responsibility: Resolve a field default value in the shape expected by form controls.
      * @param array<string, mixed> $definition
      */
     private function defaultValue(array $definition): mixed
@@ -711,7 +776,9 @@ final class MetadataManager
     }
 
     /**
-     * Handles the supports filter type workflow.
+     * Determine whether a metadata type can participate in grid filtering.
+     *
+     * Responsibility: Determine whether a metadata type can participate in grid filtering.
      */
     private function supportsFilterType(string $type): bool
     {
@@ -719,7 +786,9 @@ final class MetadataManager
     }
 
     /**
-     * Handles the form field type workflow.
+     * Map a metadata type to a FormBuilder field type.
+     *
+     * Responsibility: Map a metadata type to a FormBuilder field type.
      */
     private function formFieldType(string $type): string
     {
@@ -735,6 +804,9 @@ final class MetadataManager
     }
 
     /**
+     * Return media item options for metadata media fields.
+     *
+     * Responsibility: Return media item options for metadata media fields.
      * @return array<string, string>
      */
     private function mediaOptions(): array
@@ -767,7 +839,9 @@ final class MetadataManager
     }
 
     /**
-     * Handles the media label workflow.
+     * Resolve the tenant-scoped media name for a media identifier.
+     *
+     * Responsibility: Resolve the tenant-scoped media name for a media identifier.
      */
     private function mediaLabel(int $mediaId): ?string
     {
@@ -793,7 +867,9 @@ final class MetadataManager
     }
 
     /**
-     * Handles the nullable string workflow.
+     * Normalize an optional string value.
+     *
+     * Responsibility: Normalize an optional string value.
      */
     private function nullableString(mixed $value): ?string
     {
@@ -803,7 +879,9 @@ final class MetadataManager
     }
 
     /**
-     * Handles the nullable lower string workflow.
+     * Normalize an optional lowercase string value.
+     *
+     * Responsibility: Normalize an optional lowercase string value.
      */
     private function nullableLowerString(mixed $value): ?string
     {
@@ -813,7 +891,9 @@ final class MetadataManager
     }
 
     /**
-     * Handles the nullable int workflow.
+     * Normalize an optional integer value.
+     *
+     * Responsibility: Normalize an optional integer value.
      */
     private function nullableInt(mixed $value): ?int
     {
@@ -825,7 +905,9 @@ final class MetadataManager
     }
 
     /**
-     * Handles the nullable float workflow.
+     * Normalize an optional float value.
+     *
+     * Responsibility: Normalize an optional float value.
      */
     private function nullableFloat(mixed $value): ?float
     {
@@ -837,7 +919,9 @@ final class MetadataManager
     }
 
     /**
-     * Handles the humanize workflow.
+     * Convert a machine key into a human-readable label.
+     *
+     * Responsibility: Convert a machine key into a human-readable label.
      */
     private function humanize(string $value): string
     {
@@ -847,7 +931,9 @@ final class MetadataManager
     }
 
     /**
-     * Handles the current tenant id workflow.
+     * Return the current required tenant identifier.
+     *
+     * Responsibility: Return the current required tenant identifier.
      */
     private function currentTenantId(): int
     {

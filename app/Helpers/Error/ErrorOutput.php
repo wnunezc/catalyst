@@ -39,6 +39,7 @@ use Exception;
  * Class to handle output of errors caught by BugCatcher
  *
  * @package Catalyst\Helpers\Error;
+ * Responsibility: Formats caught errors for CLI boxes or web error templates.
  */
 class ErrorOutput
 {
@@ -50,8 +51,9 @@ class ErrorOutput
     private const string TEMPLATE_PATH = PD . '/boot-core/template/errors/';
 
     /**
-     * Output the error information based on environment (CLI or Web)
+     * Output the error information based on environment (CLI or Web).
      *
+     * Responsibility: Output the error information based on environment (CLI or Web).
      * @param array $errorData Error data to display
      * @return void
      * @throws Exception
@@ -70,8 +72,9 @@ class ErrorOutput
     }
 
     /**
-     * Display error information in CLI mode
+     * Display error information in CLI mode.
      *
+     * Responsibility: Display error information in CLI mode.
      * @param array $errorData Error data to display
      * @return void
      * @throws Exception
@@ -93,8 +96,9 @@ class ErrorOutput
     }
 
     /**
-     * Format error data for CLI output
+     * Format error data for CLI output.
      *
+     * Responsibility: Format error data for CLI output.
      * @param array $errorData Error data to format
      * @return string Formatted error information
      */
@@ -116,8 +120,9 @@ class ErrorOutput
     }
 
     /**
-     * Display error information in web mode using templates
+     * Display error information in web mode using templates.
      *
+     * Responsibility: Display error information in web mode using templates.
      * @param array $errorData Error data to display
      * @return void
      */
@@ -150,7 +155,9 @@ class ErrorOutput
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves the first available error template path for a template name.
+     *
+     * Responsibility: Resolves the first available error template path for a template name.
      */
     private function resolveTemplatePath(string $templateName): ?string
     {
@@ -165,8 +172,9 @@ class ErrorOutput
     }
 
     /**
-     * Get a code snippet from the file where the error occurred
+     * Get a code snippet from the file where the error occurred.
      *
+     * Responsibility: Get a code snippet from the file where the error occurred.
      * @param string $file File path
      * @param int $line Line number
      * @param int $contextLines Number of lines to show before and after the error line
@@ -205,8 +213,9 @@ class ErrorOutput
     }
 
     /**
-     * Generate formatted backtrace
+     * Generate formatted backtrace.
      *
+     * Responsibility: Generate formatted backtrace.
      * @param array $errorData Error data containing trace information
      * @return string Formatted backtrace string
      */
@@ -237,8 +246,8 @@ class ErrorOutput
     /**
      * Format arguments for display.
      *
+     * Responsibility: Format arguments for display.
      * @param array $args Arguments array.
-     *
      * @return string Formatted arguments.
      */
     private function formatArguments(array $args): string
@@ -265,8 +274,8 @@ class ErrorOutput
     /**
      * Get a description of the route (file and line) or magic call method.
      *
+     * Responsibility: Get a description of the route (file and line) or magic call method.
      * @param array $track Stack trace information.
-     *
      * @return string Route description.
      */
     private function getRouteDescription(array $track): string

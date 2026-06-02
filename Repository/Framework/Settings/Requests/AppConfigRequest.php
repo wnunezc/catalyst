@@ -38,10 +38,10 @@ use Catalyst\Helpers\Exceptions\ValidationException;
 use Catalyst\Helpers\Validation\Validator;
 
 /**
- * Defines the App Config Request class contract.
+ * Validates and resolves application settings from the setup surface.
  *
  * @package Catalyst\Repository\Settings\Requests
- * Responsibility: Coordinates the app config request behavior within its module boundary.
+ * Responsibility: Validates application metadata, entry points and locale choices before persistence.
  */
 final class AppConfigRequest extends AbstractSettingsRequest
 {
@@ -51,6 +51,9 @@ final class AppConfigRequest extends AbstractSettingsRequest
     private ?array $resolvedData = null;
 
     /**
+     * Returns validation rules for application settings.
+     *
+     * Responsibility: Returns validation rules for application settings.
      * @return array<string, string>
      */
     public function rules(): array
@@ -68,6 +71,9 @@ final class AppConfigRequest extends AbstractSettingsRequest
     }
 
     /**
+     * Returns the resolved application payload after validation.
+     *
+     * Responsibility: Returns the resolved application payload after validation.
      * @return array<string, mixed>
      */
     public function validated(): array
@@ -80,6 +86,9 @@ final class AppConfigRequest extends AbstractSettingsRequest
     }
 
     /**
+     * Authorizes, validates and resolves the application payload.
+     *
+     * Responsibility: Authorizes, validates and resolves the application payload.
      * @throws ValidationException
      * @throws ForbiddenException
      */
@@ -108,6 +117,9 @@ final class AppConfigRequest extends AbstractSettingsRequest
     }
 
     /**
+     * Builds normalized application input for validation.
+     *
+     * Responsibility: Builds normalized application input for validation.
      * @return array<string, mixed>
      */
     protected function validationData(): array
@@ -128,6 +140,9 @@ final class AppConfigRequest extends AbstractSettingsRequest
     }
 
     /**
+     * Returns entry-point and locale errors not expressible by scalar rules.
+     *
+     * Responsibility: Returns entry-point and locale errors not expressible by scalar rules.
      * @param array<string, mixed> $data
      * @return array<string, string[]>
      */
@@ -160,6 +175,9 @@ final class AppConfigRequest extends AbstractSettingsRequest
     }
 
     /**
+     * Clears an unused secondary entry point from the persisted payload.
+     *
+     * Responsibility: Clears an unused secondary entry point from the persisted payload.
      * @param array<string, mixed> $data
      * @return array<string, mixed>
      */

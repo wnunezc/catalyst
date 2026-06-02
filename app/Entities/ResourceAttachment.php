@@ -36,10 +36,10 @@ use Catalyst\Framework\Traits\HasAuditLogTrait;
 use Catalyst\Framework\Traits\HasTimestampsTrait;
 
 /**
- * Defines the Resource Attachment class contract.
+ * ORM entity for files attached to resource records.
  *
  * @package Catalyst\Entities
- * Responsibility: Coordinates the resource attachment behavior within its module boundary.
+ * Responsibility: Maps media or document attachments, purpose, primary marker, detach state, and audit metadata.
  */
 final class ResourceAttachment extends Model
 {

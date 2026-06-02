@@ -34,24 +34,28 @@ use Catalyst\Framework\Http\Request;
 use Catalyst\Repository\Operations\Requests\Concerns\NormalizesCheckboxValues;
 
 /**
- * Defines the Feature Flag Default Request class contract.
+ * Reads a normalized feature-flag default state from an HTTP request.
  *
  * @package Catalyst\Repository\Operations\Requests
- * Responsibility: Coordinates the feature flag default request behavior within its module boundary.
+ * Responsibility: Supplies the requested default flag state to the controller.
  */
 final class FeatureFlagDefaultRequest
 {
     use NormalizesCheckboxValues;
 
     /**
-     * Initializes the Feature Flag Default Request instance.
+     * Wraps the incoming HTTP request used to read flag state.
+     *
+     * Responsibility: Wraps the incoming HTTP request used to read flag state.
      */
     public function __construct(private readonly Request $request)
     {
     }
 
     /**
-     * Handles the enabled workflow.
+     * Returns the requested enabled state for a feature flag.
+     *
+     * Responsibility: Returns the requested enabled state for a feature flag.
      */
     public function enabled(): bool
     {

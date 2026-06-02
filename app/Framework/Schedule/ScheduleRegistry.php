@@ -34,10 +34,10 @@ use Catalyst\Entities\ScheduledTask;
 use Catalyst\Framework\Traits\SingletonTrait;
 
 /**
- * Defines the Schedule Registry class contract.
+ * Stores scheduled tasks available to the framework scheduler.
  *
  * @package Catalyst\Framework\Schedule
- * Responsibility: Coordinates the schedule registry behavior within its module boundary.
+ * Responsibility: Loads framework defaults and indexes scheduled tasks by their unique name.
  */
 final class ScheduleRegistry
 {
@@ -48,6 +48,8 @@ final class ScheduleRegistry
 
     /**
      * Initializes the Schedule Registry instance.
+     *
+     * Responsibility: Initializes the Schedule Registry instance.
      */
     protected function __construct()
     {
@@ -55,7 +57,9 @@ final class ScheduleRegistry
     }
 
     /**
-     * Registers the requested definition.
+     * Registers or replaces a scheduled task by name.
+     *
+     * Responsibility: Registers or replaces a scheduled task by name.
      */
     public function register(ScheduledTask $task): self
     {
@@ -65,6 +69,9 @@ final class ScheduleRegistry
     }
 
     /**
+     * Returns every registered scheduled task keyed by name.
+     *
+     * Responsibility: Returns every registered scheduled task keyed by name.
      * @return array<string, ScheduledTask>
      */
     public function all(): array
@@ -73,7 +80,9 @@ final class ScheduleRegistry
     }
 
     /**
-     * Returns the runtime value.
+     * Returns one registered scheduled task by name.
+     *
+     * Responsibility: Returns one registered scheduled task by name.
      */
     public function get(string $name): ?ScheduledTask
     {

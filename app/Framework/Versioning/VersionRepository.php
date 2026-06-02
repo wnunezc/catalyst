@@ -38,10 +38,10 @@ use Catalyst\Helpers\Log\Logger;
 use Exception;
 
 /**
- * Defines the Version Repository class contract.
+ * Queries tenant-scoped content-version history.
  *
  * @package Catalyst\Framework\Versioning
- * Responsibility: Coordinates the version repository behavior within its module boundary.
+ * Responsibility: Provides ordered version lookups and normalized snapshots for versioned resources.
  */
 final class VersionRepository
 {
@@ -51,7 +51,9 @@ final class VersionRepository
     private Logger $logger;
 
     /**
-     * Initializes the Version Repository instance.
+     * Lists versions captured for a resource record. Initializes the Version Repository instance.
+     *
+     * Responsibility: Lists versions captured for a resource record. Initializes the Version Repository instance.
      */
     protected function __construct()
     {
@@ -60,6 +62,9 @@ final class VersionRepository
     }
 
     /**
+     * Lists captured versions for a resource record.
+     *
+     * Responsibility: Lists captured versions for a resource record.
      * @return array<int, array<string, mixed>>
      */
     public function listFor(string $resourceKey, int $recordId): array
@@ -83,6 +88,9 @@ final class VersionRepository
     }
 
     /**
+     * Returns the latest captured version for a resource record.
+     *
+     * Responsibility: Returns the latest captured version for a resource record.
      * @return array<string, mixed>|null
      */
     public function latest(string $resourceKey, int $recordId): ?array
@@ -106,7 +114,9 @@ final class VersionRepository
     }
 
     /**
-     * Handles the next version number workflow.
+     * Calculates the next version number for a resource record.
+     *
+     * Responsibility: Calculates the next version number for a resource record.
      */
     public function nextVersionNumber(string $resourceKey, int $recordId): int
     {
@@ -116,7 +126,9 @@ final class VersionRepository
     }
 
     /**
-     * Finds the requested record.
+     * Finds a content-version model by identifier.
+     *
+     * Responsibility: Finds a content-version model by identifier.
      */
     public function findModel(int $versionId): ?ContentVersion
     {
@@ -124,6 +136,9 @@ final class VersionRepository
     }
 
     /**
+     * Normalizes serialized snapshot fields in a version row.
+     *
+     * Responsibility: Normalizes serialized snapshot fields in a version row.
      * @param array<string, mixed> $row
      * @return array<string, mixed>
      */
@@ -140,7 +155,9 @@ final class VersionRepository
     }
 
     /**
-     * Handles the current tenant id workflow.
+     * Returns the active tenant identifier required by version queries.
+     *
+     * Responsibility: Returns the active tenant identifier required by version queries.
      */
     private function currentTenantId(): int
     {

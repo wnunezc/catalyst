@@ -36,7 +36,7 @@ use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
 use Closure;
 
-/**************************************************************************************
+/**
  * GuestMiddleware — protects guest-only routes (login, register)
  *
  * Redirects already-authenticated users to '/' so they cannot
@@ -49,17 +49,14 @@ use Closure;
  *          ->middleware(GuestMiddleware::class);
  *
  * @package Catalyst\Framework\Middleware
- */
-/**
- * Defines the Guest Middleware class contract.
- *
- * @package Catalyst\Framework\Middleware
- * Responsibility: Coordinates the guest middleware behavior within its module boundary.
+ * Responsibility: Redirects authenticated users away from routes reserved for guests.
  */
 class GuestMiddleware extends CoreMiddleware
 {
     /**
-     * @inheritDoc
+     * Redirects authenticated users and allows guest requests to continue.
+     *
+     * Responsibility: Redirects authenticated users and allows guest requests to continue.
      */
     public function process(Request $request, Closure $next): Response
     {

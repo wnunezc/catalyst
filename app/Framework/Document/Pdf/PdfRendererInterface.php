@@ -31,14 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Document\Pdf;
 
 /**
- * Defines the Pdf Renderer Interface interface contract.
+ * Contract for PDF renderer implementations.
  *
  * @package Catalyst\Framework\Document\Pdf
- * Responsibility: Coordinates the pdf renderer interface behavior within its module boundary.
+ * Responsibility: Defines the boundary for rendering document title and HTML/text content into PDF bytes.
  */
 interface PdfRendererInterface
 {
     /**
+     * Coordinates the render method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the render method responsibility within its owning class.
      * @param array<string, mixed> $watermark
      */
     public function render(string $title, string $body, array $watermark = []): string;

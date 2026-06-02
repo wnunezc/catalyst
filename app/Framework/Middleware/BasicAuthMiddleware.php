@@ -36,7 +36,7 @@ use Catalyst\Helpers\Config\ConfigManager;
 use Closure;
 use Exception;
 
-/**************************************************************************************
+/**
  * BasicAuthMiddleware class for HTTP Basic Authentication
  *
  * Provides HTTP Basic Authentication with file-based failed-attempt throttling.
@@ -47,12 +47,7 @@ use Exception;
  * - keep as an internal/legacy guard until a concrete runtime caller is restored
  *
  * @package Catalyst\Framework\Middleware
- */
-/**
- * Defines the Basic Auth Middleware class contract.
- *
- * @package Catalyst\Framework\Middleware
- * Responsibility: Coordinates the basic auth middleware behavior within its module boundary.
+ * Responsibility: Validates configured Basic Auth credentials and throttles repeated failed attempts by client IP.
  */
 class BasicAuthMiddleware extends CoreMiddleware
 {
@@ -63,6 +58,9 @@ class BasicAuthMiddleware extends CoreMiddleware
     private const string STORAGE_PATH = 'logs/auth/attempts.json';
 
     /**
+     * Validates Basic Auth credentials before allowing the request to continue.
+     *
+     * Responsibility: Validates Basic Auth credentials before allowing the request to continue.
      * @throws Exception
      */
     public function process(Request $request, Closure $next): Response
@@ -108,8 +106,9 @@ class BasicAuthMiddleware extends CoreMiddleware
     }
 
     /**
-     * Check if client is allowed to attempt authentication
+     * Check if client is allowed to attempt authentication.
      *
+     * Responsibility: Check if client is allowed to attempt authentication.
      * @param string $clientIp Client IP address
      * @return array Status array with 'allowed' and 'wait_time' keys
      */
@@ -181,8 +180,9 @@ class BasicAuthMiddleware extends CoreMiddleware
     }
 
     /**
-     * Record a failed authentication attempt
+     * Record a failed authentication attempt.
      *
+     * Responsibility: Record a failed authentication attempt.
      * @param string $clientIp Client IP address
      * @return void
      */
@@ -204,8 +204,9 @@ class BasicAuthMiddleware extends CoreMiddleware
     }
 
     /**
-     * Reset failed attempts counter for an IP
+     * Reset failed attempts counter for an IP.
      *
+     * Responsibility: Reset failed attempts counter for an IP.
      * @param string $clientIp Client IP address
      * @return void
      */
@@ -220,8 +221,9 @@ class BasicAuthMiddleware extends CoreMiddleware
     }
 
     /**
-     * Get all failed authentication attempts
+     * Get all failed authentication attempts.
      *
+     * Responsibility: Get all failed authentication attempts.
      * @return array Failed attempts data
      */
     protected function getFailedAttempts(): array
@@ -242,8 +244,9 @@ class BasicAuthMiddleware extends CoreMiddleware
     }
 
     /**
-     * Save failed attempts data
+     * Save failed attempts data.
      *
+     * Responsibility: Save failed attempts data.
      * @param array $attempts Failed attempts data
      * @return void
      */
@@ -261,8 +264,9 @@ class BasicAuthMiddleware extends CoreMiddleware
     }
 
     /**
-     * Get storage path for failed attempts
+     * Get storage path for failed attempts.
      *
+     * Responsibility: Get storage path for failed attempts.
      * @return string Full path to storage file
      */
     protected function getStoragePath(): string
@@ -271,8 +275,9 @@ class BasicAuthMiddleware extends CoreMiddleware
     }
 
     /**
-     * Get configured username for authentication
+     * Get configured username for authentication.
      *
+     * Responsibility: Get configured username for authentication.
      * @return string Expected username
      */
     protected function getConfigUsername(): string
@@ -293,8 +298,9 @@ class BasicAuthMiddleware extends CoreMiddleware
     }
 
     /**
-     * Get configured password for authentication
+     * Get configured password for authentication.
      *
+     * Responsibility: Get configured password for authentication.
      * @return string Expected password
      */
     protected function getConfigPassword(): string
@@ -315,7 +321,9 @@ class BasicAuthMiddleware extends CoreMiddleware
     }
 
     /**
-     * Returns the config value value.
+     * Reads a scalar configuration value used by Basic Auth fallback credentials.
+     *
+     * Responsibility: Reads a scalar configuration value used by Basic Auth fallback credentials.
      */
     protected function getConfigValue(string $key): ?string
     {

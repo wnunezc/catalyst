@@ -41,10 +41,10 @@ use DateTimeImmutable;
 use RuntimeException;
 
 /**
- * Defines the Record Claim Manager class contract.
+ * Manager for concurrent record ownership claims.
  *
  * @package Catalyst\Framework\Concurrency
- * Responsibility: Coordinates the record claim manager behavior within its module boundary.
+ * Responsibility: Acquires, renews, releases, validates, audits, and broadcasts record claim state.
  */
 final class RecordClaimManager
 {
@@ -54,7 +54,9 @@ final class RecordClaimManager
     private DatabaseManager $db;
 
     /**
-     * Initializes the Record Claim Manager instance.
+     * Initializes claim persistence and database transaction collaborators.
+     *
+     * Responsibility: Initializes claim persistence and database transaction collaborators.
      */
     protected function __construct()
     {
@@ -63,6 +65,9 @@ final class RecordClaimManager
     }
 
     /**
+     * Acquires or renews a claim for a tenant resource record.
+     *
+     * Responsibility: Acquires or renews a claim for a tenant resource record.
      * @param array<string, mixed> $metadata
      * @return array<string, mixed>
      */
@@ -176,7 +181,9 @@ final class RecordClaimManager
     }
 
     /**
-     * Handles the release workflow.
+     * Releases an active claim when owned by the actor or forced.
+     *
+     * Responsibility: Releases an active claim when owned by the actor or forced.
      */
     public function release(
         string $resourceKey,
@@ -272,6 +279,9 @@ final class RecordClaimManager
     }
 
     /**
+     * Returns the decorated claim snapshot for a resource record.
+     *
+     * Responsibility: Returns the decorated claim snapshot for a resource record.
      * @return array<string, mixed>|null
      */
     public function snapshot(string $resourceKey, int $recordId): ?array
@@ -286,6 +296,9 @@ final class RecordClaimManager
     }
 
     /**
+     * Resolves the current claim actor identity.
+     *
+     * Responsibility: Resolves the current claim actor identity.
      * @return array{actor_id:?int,actor_label:string}
      */
     public function actor(?int $actorId = null, ?string $actorLabel = null): array
@@ -299,6 +312,9 @@ final class RecordClaimManager
     }
 
     /**
+     * Determines whether a claim snapshot belongs to the resolved actor.
+     *
+     * Responsibility: Determines whether a claim snapshot belongs to the resolved actor.
      * @param array<string, mixed> $snapshot
      */
     public function owns(array $snapshot, ?int $actorId = null, ?string $actorLabel = null): bool
@@ -315,6 +331,9 @@ final class RecordClaimManager
     }
 
     /**
+     * Asserts that a resource is unclaimed or claimed by the current actor.
+     *
+     * Responsibility: Asserts that a resource is unclaimed or claimed by the current actor.
      * @return array<string, mixed>|null
      */
     public function assertAvailable(
@@ -353,6 +372,9 @@ final class RecordClaimManager
     }
 
     /**
+     * Resolves actor id and label from explicit input, session user, or runtime fallback.
+     *
+     * Responsibility: Resolves actor id and label from explicit input, session user, or runtime fallback.
      * @return array{0:?int,1:string}
      */
     private function resolveActor(?int $actorId, ?string $actorLabel): array
@@ -386,6 +408,9 @@ final class RecordClaimManager
     }
 
     /**
+     * Creates a new claim row or recovers the row created by a concurrent transaction.
+     *
+     * Responsibility: Creates a new claim row or recovers the row created by a concurrent transaction.
      * @param array<string, mixed> $metadata
      */
     private function createOrRecoverClaim(
@@ -446,7 +471,9 @@ final class RecordClaimManager
     }
 
     /**
-     * Determines whether is Owned By.
+     * Determines whether a claim entity belongs to the supplied actor.
+     *
+     * Responsibility: Determines whether a claim entity belongs to the supplied actor.
      */
     private function isOwnedBy(RecordClaim $claim, ?int $actorId, string $actorLabel): bool
     {
@@ -461,6 +488,9 @@ final class RecordClaimManager
     }
 
     /**
+     * Writes an audit record for claim lifecycle changes.
+     *
+     * Responsibility: Writes an audit record for claim lifecycle changes.
      * @param array<string, mixed>|null $before
      * @param array<string, mixed>|null $after
      * @param array<string, mixed> $metadata
@@ -486,6 +516,9 @@ final class RecordClaimManager
     }
 
     /**
+     * Decorates a claim entity as the public claim snapshot shape.
+     *
+     * Responsibility: Decorates a claim entity as the public claim snapshot shape.
      * @return array<string, mixed>
      */
     private function normalizeClaim(RecordClaim $claim): array
@@ -494,7 +527,9 @@ final class RecordClaimManager
     }
 
     /**
-     * Handles the now workflow.
+     * Returns the current timestamp for claim calculations.
+     *
+     * Responsibility: Returns the current timestamp for claim calculations.
      */
     private function now(): DateTimeImmutable
     {
@@ -502,7 +537,9 @@ final class RecordClaimManager
     }
 
     /**
-     * Handles the seconds between workflow.
+     * Calculates the non-negative number of seconds between timestamps.
+     *
+     * Responsibility: Calculates the non-negative number of seconds between timestamps.
      */
     private function secondsBetween(DateTimeImmutable $start, DateTimeImmutable $end): int
     {

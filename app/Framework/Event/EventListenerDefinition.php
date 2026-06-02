@@ -31,10 +31,10 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Event;
 
 /**
- * Defines the Event Listener Definition class contract.
+ * Value object describing an event listener registration.
  *
  * @package Catalyst\Framework\Event
- * Responsibility: Coordinates the event listener definition behavior within its module boundary.
+ * Responsibility: Carries listener target, queue eligibility, and queue name for event dispatch.
  */
 final class EventListenerDefinition
 {
@@ -42,6 +42,8 @@ final class EventListenerDefinition
 
     /**
      * Initializes the Event Listener Definition instance.
+     *
+     * Responsibility: Initializes the Event Listener Definition instance.
      */
     public function __construct(
         mixed $listener,

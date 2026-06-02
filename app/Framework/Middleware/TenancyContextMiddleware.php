@@ -37,15 +37,17 @@ use Catalyst\Framework\Tenancy\TenancyManager;
 use Closure;
 
 /**
- * Defines the Tenancy Context Middleware class contract.
+ * Applies tenant context to the current request.
  *
  * @package Catalyst\Framework\Middleware
- * Responsibility: Coordinates the tenancy context middleware behavior within its module boundary.
+ * Responsibility: Resolves the request tenant and mirrors its context into the initialized session.
  */
 final class TenancyContextMiddleware extends CoreMiddleware
 {
     /**
-     * Processes the current workflow.
+     * Applies tenant context, updates session metadata, and forwards the request.
+     *
+     * Responsibility: Applies tenant context, updates session metadata, and forwards the request.
      */
     public function process(Request $request, Closure $next): Response
     {

@@ -38,21 +38,17 @@ use Catalyst\Framework\Notification\NotificationRepository;
 use Catalyst\Framework\WebSocket\WebSocketToken;
 
 /**
- * REST API for user notifications.
- *
- * All endpoints require authentication (AuthMiddleware on routes).
- *
- * GET  /api/notifications          → list (paginated)
- * GET  /api/notifications/unread   → unread count
- * POST /api/notifications/read-all → mark all read
- * POST /api/notifications/{id}/read → mark one read
+ * Exposes authenticated notification queries and read-state mutations.
  *
  * @package Catalyst\Repository\Notification\Controllers
+ * Responsibility: Coordinates notification API responses for the current user.
  */
 class NotificationController extends Controller
 {
     /**
-     * Handles the user id workflow.
+     * Returns the authenticated user identifier used by notification queries.
+     *
+     * Responsibility: Returns the authenticated user identifier used by notification queries.
      */
     private function userId(): int
     {
@@ -60,9 +56,9 @@ class NotificationController extends Controller
     }
 
     /**
-     * GET /api/ws-token
-     * Returns a fresh WebSocket authentication token for the current user.
-     * Used by the client to refresh the token before reconnecting.
+     * Issues a fresh WebSocket authentication token for the current user.
+     *
+     * Responsibility: Issues a fresh WebSocket authentication token for the current user.
      */
     public function wsToken(Request $request): Response
     {
@@ -71,8 +67,9 @@ class NotificationController extends Controller
     }
 
     /**
-     * GET /api/notifications
-     * Returns paginated notifications (newest first).
+     * Returns the current user's paginated notifications and unread count.
+     *
+     * Responsibility: Returns the current user's paginated notifications and unread count.
      */
     public function index(Request $request): Response
     {
@@ -90,8 +87,9 @@ class NotificationController extends Controller
     }
 
     /**
-     * GET /api/notifications/unread-count
-     * Returns the unread count only (lightweight, for badge updates).
+     * Returns the current user's unread notification count.
+     *
+     * Responsibility: Returns the current user's unread notification count.
      */
     public function unreadCount(Request $request): Response
     {
@@ -100,8 +98,9 @@ class NotificationController extends Controller
     }
 
     /**
-     * POST /api/notifications/{id}/read
-     * Mark a single notification as read.
+     * Marks one notification as read for the current user.
+     *
+     * Responsibility: Marks one notification as read for the current user.
      */
     public function markRead(Request $request, string $id): Response
     {
@@ -116,8 +115,9 @@ class NotificationController extends Controller
     }
 
     /**
-     * POST /api/notifications/read-all
-     * Mark all notifications as read.
+     * Marks all notifications as read for the current user.
+     *
+     * Responsibility: Marks all notifications as read for the current user.
      */
     public function markAllRead(Request $request): Response
     {

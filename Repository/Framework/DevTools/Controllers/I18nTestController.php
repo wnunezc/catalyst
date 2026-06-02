@@ -35,15 +35,17 @@ use Catalyst\Framework\Http\JsonResponse;
 use Catalyst\Helpers\I18n\Translator;
 
 /**
- * Defines the I18n Test Controller class contract.
+ * Exposes development diagnostics for translation and locale behavior.
  *
  * @package Catalyst\Repository\DevTools\Controllers
- * Responsibility: Coordinates the i18n test controller behavior within its module boundary.
+ * Responsibility: Reports translation samples and switches the active test locale.
  */
 class I18nTestController extends Controller
 {
     /**
-     * Handles the test i18n workflow.
+     * Returns translation, catalog and date-format diagnostics for the active locale.
+     *
+     * Responsibility: Returns translation, catalog and date-format diagnostics for the active locale.
      */
     public function testI18n(): JsonResponse
     {
@@ -73,7 +75,9 @@ class I18nTestController extends Controller
     }
 
     /**
-     * Updates the locale value.
+     * Validates and activates a supported locale for the current session.
+     *
+     * Responsibility: Validates and activates a supported locale for the current session.
      */
     public function setLocale(): JsonResponse
     {

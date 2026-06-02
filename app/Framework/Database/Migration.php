@@ -33,32 +33,40 @@ namespace Catalyst\Framework\Database;
 use RuntimeException;
 
 /**
- * Defines the Migration class contract.
+ * Base class for database migration definitions.
  *
  * @package Catalyst\Framework\Database
- * Responsibility: Coordinates the migration behavior within its module boundary.
+ * Responsibility: Provides migration versioning, connection access, SQL execution, table checks, and foreign key helpers.
  */
 abstract class Migration
 {
     private ?Connection $connection = null;
 
     /**
-     * Returns the version value.
+     * Returns the migration version identifier.
+     *
+     * Responsibility: Returns the migration version identifier.
      */
     abstract public function getVersion(): string;
 
     /**
-     * Handles the up workflow.
+     * Applies the schema or data changes for the migration.
+     *
+     * Responsibility: Applies the schema or data changes for the migration.
      */
     abstract public function up(): void;
 
     /**
-     * Handles the down workflow.
+     * Reverts the schema or data changes for the migration.
+     *
+     * Responsibility: Reverts the schema or data changes for the migration.
      */
     abstract public function down(): void;
 
     /**
-     * Updates the connection value.
+     * Sets the database connection used by this migration.
+     *
+     * Responsibility: Sets the database connection used by this migration.
      */
     final public function setConnection(Connection $connection): static
     {
@@ -68,7 +76,9 @@ abstract class Migration
     }
 
     /**
-     * Handles the connection workflow.
+     * Returns the active database connection for this migration.
+     *
+     * Responsibility: Returns the active database connection for this migration.
      */
     protected function connection(): Connection
     {
@@ -80,7 +90,9 @@ abstract class Migration
     }
 
     /**
-     * Handles the statement workflow.
+     * Executes a SQL statement against the migration connection.
+     *
+     * Responsibility: Executes a SQL statement against the migration connection.
      */
     protected function statement(string $sql): void
     {
@@ -88,7 +100,9 @@ abstract class Migration
     }
 
     /**
-     * Executes the service workflow.
+     * Executes a prepared SQL statement and returns affected rows.
+     *
+     * Responsibility: Executes a prepared SQL statement and returns affected rows.
      */
     protected function execute(string $sql, array $params = []): int
     {
@@ -96,7 +110,9 @@ abstract class Migration
     }
 
     /**
-     * Handles the select workflow.
+     * Executes a SQL select query and returns all rows.
+     *
+     * Responsibility: Executes a SQL select query and returns all rows.
      */
     protected function select(string $sql, array $params = []): array
     {
@@ -104,7 +120,9 @@ abstract class Migration
     }
 
     /**
-     * Handles the select one workflow.
+     * Executes a SQL select query and returns the first row.
+     *
+     * Responsibility: Executes a SQL select query and returns the first row.
      */
     protected function selectOne(string $sql, array $params = []): ?array
     {
@@ -112,7 +130,9 @@ abstract class Migration
     }
 
     /**
-     * Handles the table exists workflow.
+     * Determines whether a table exists in the current database.
+     *
+     * Responsibility: Determines whether a table exists in the current database.
      */
     protected function tableExists(string $table): bool
     {
@@ -129,7 +149,9 @@ abstract class Migration
     }
 
     /**
-     * Handles the foreign key exists workflow.
+     * Determines whether a named foreign key exists on a table.
+     *
+     * Responsibility: Determines whether a named foreign key exists on a table.
      */
     protected function foreignKeyExists(string $table, string $constraint): bool
     {
@@ -152,7 +174,9 @@ abstract class Migration
     }
 
     /**
-     * Handles the foreign key delete rule workflow.
+     * Resolves the delete rule configured for a named foreign key.
+     *
+     * Responsibility: Resolves the delete rule configured for a named foreign key.
      */
     protected function foreignKeyDeleteRule(string $table, string $constraint): ?string
     {
@@ -177,7 +201,9 @@ abstract class Migration
     }
 
     /**
-     * Handles the drop foreign key workflow.
+     * Drops a foreign key when it exists on the target table.
+     *
+     * Responsibility: Drops a foreign key when it exists on the target table.
      */
     protected function dropForeignKey(string $table, string $constraint): void
     {
@@ -191,7 +217,9 @@ abstract class Migration
     }
 
     /**
-     * Handles the add foreign key workflow.
+     * Adds a foreign key constraint to a table.
+     *
+     * Responsibility: Adds a foreign key constraint to a table.
      */
     protected function addForeignKey(
         string $table,
@@ -217,7 +245,9 @@ abstract class Migration
     }
 
     /**
-     * Handles the quote identifier workflow.
+     * Quotes a SQL identifier for safe DDL composition.
+     *
+     * Responsibility: Quotes a SQL identifier for safe DDL composition.
      */
     protected function quoteIdentifier(string $identifier): string
     {

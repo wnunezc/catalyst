@@ -39,10 +39,11 @@ use Catalyst\Helpers\Config\AppEntryCatalog;
 use Catalyst\Helpers\Config\ConfigManager;
 
 /**
- * Defines the Route Contract Inspector class contract.
+ * Inspector for route contract metadata.
+ *
+ * Responsibility: Collects route, middleware and asset-contract metadata for CLI inspection commands.
  *
  * @package Catalyst\Framework\Cli\Support
- * Responsibility: Coordinates the route contract inspector behavior within its module boundary.
  */
 final class RouteContractInspector
 {
@@ -51,12 +52,9 @@ final class RouteContractInspector
     private const REPOSITORY_NAMESPACE_PREFIX = 'Catalyst\\Repository\\';
 
     /**
-     * @return array{
-     *   ok: bool,
-     *   issue_count: int,
-     *   checks: array<string, array<string, int|bool>>,
-     *   issues: array<int, array<string, string>>
-     * }
+     * Describes the inspect helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the inspect helper workflow used by this CLI component.
      */
     public function inspect(): array
     {
@@ -84,9 +82,9 @@ final class RouteContractInspector
     }
 
     /**
-     * @param Route[] $routes
-     * @param array<int, array<string, string>> $issues
-     * @return array<string, int|bool>
+     * Describes the inspect entry targets helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the inspect entry targets helper workflow used by this CLI component.
      */
     private function inspectEntryTargets(array $routes, array &$issues): array
     {
@@ -121,9 +119,9 @@ final class RouteContractInspector
     }
 
     /**
-     * @param Route[] $routes
-     * @param array<int, array<string, string>> $issues
-     * @return array<string, int|bool>
+     * Describes the inspect legacy aliases helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the inspect legacy aliases helper workflow used by this CLI component.
      */
     private function inspectLegacyAliases(array $routes, array &$issues): array
     {
@@ -149,9 +147,9 @@ final class RouteContractInspector
     }
 
     /**
-     * @param Route[] $routes
-     * @param array<int, array<string, string>> $issues
-     * @return array<string, int|bool>
+     * Describes the inspect unexpected uppercase routes helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the inspect unexpected uppercase routes helper workflow used by this CLI component.
      */
     private function inspectUnexpectedUppercaseRoutes(array $routes, array &$issues): array
     {
@@ -180,8 +178,9 @@ final class RouteContractInspector
     }
 
     /**
-     * @param array<int, array<string, string>> $issues
-     * @return array<string, int|bool>
+     * Describes the inspect work assets helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the inspect work assets helper workflow used by this CLI component.
      */
     private function inspectWorkAssets(array &$issues): array
     {
@@ -225,9 +224,9 @@ final class RouteContractInspector
     }
 
     /**
-     * @param Route[] $routes
-     * @param array<int, array<string, string>> $issues
-     * @return array<string, int|bool>
+     * Describes the inspect module html ownership helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the inspect module html ownership helper workflow used by this CLI component.
      */
     private function inspectModuleHtmlOwnership(array $routes, array &$issues): array
     {
@@ -278,9 +277,9 @@ final class RouteContractInspector
     }
 
     /**
-     * @param Route[] $routes
-     * @param array<int, array<string, string>> $issues
-     * @return array<string, int|bool>
+     * Describes the inspect public module json routes helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the inspect public module json routes helper workflow used by this CLI component.
      */
     private function inspectPublicModuleJsonRoutes(array $routes, array &$issues): array
     {
@@ -335,8 +334,9 @@ final class RouteContractInspector
     }
 
     /**
-     * @param Route[] $routes
-     * @return array<string, bool>
+     * Describes the route patterns helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the route patterns helper workflow used by this CLI component.
      */
     private function routePatterns(array $routes): array
     {
@@ -350,18 +350,9 @@ final class RouteContractInspector
     }
 
     /**
-     * @param 'App'|'Framework'|null $scope
-     * @return array<int, array{
-     *   scope: string,
-     *   name: string,
-     *   slug: string,
-     *   path: string,
-     *   has_views: bool,
-     *   runtime_enabled: bool,
-     *   route_guards: array<int, array<string, mixed>>,
-     *   navigation_admin: array<int, array<string, mixed>>,
-     *   navigation_public: array<int, array<string, mixed>>
-     * }>
+     * Describes the discover modules helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the discover modules helper workflow used by this CLI component.
      */
     private function discoverModules(?string $scope = null): array
     {
@@ -385,7 +376,9 @@ final class RouteContractInspector
     }
 
     /**
-     * Determines whether is Html Route.
+     * Describes the is html route helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the is html route helper workflow used by this CLI component.
      */
     private function isHtmlRoute(Route $route): bool
     {
@@ -399,7 +392,9 @@ final class RouteContractInspector
     }
 
     /**
-     * @param array<string, mixed> $module
+     * Describes the is public app module helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the is public app module helper workflow used by this CLI component.
      */
     private function isPublicAppModule(array $module): bool
     {
@@ -410,8 +405,9 @@ final class RouteContractInspector
     }
 
     /**
-     * @param Route $route
-     * @return array{scope: string, module: string}|null
+     * Describes the resolve module owner helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the resolve module owner helper workflow used by this CLI component.
      */
     private function resolveModuleOwner(Route $route): ?array
     {
@@ -456,7 +452,9 @@ final class RouteContractInspector
     }
 
     /**
-     * @param array<int, array<string, string>> $issues
+     * Describes the has issue type helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the has issue type helper workflow used by this CLI component.
      */
     private function hasIssueType(array $issues, string $type): bool
     {
@@ -470,7 +468,9 @@ final class RouteContractInspector
     }
 
     /**
-     * Handles the relative path workflow.
+     * Describes the relative path helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the relative path helper workflow used by this CLI component.
      */
     private function relativePath(string $path): string
     {

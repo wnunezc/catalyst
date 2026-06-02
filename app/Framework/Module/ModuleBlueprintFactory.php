@@ -34,10 +34,10 @@ use Catalyst\Framework\Cli\ScaffoldManager;
 use RuntimeException;
 
 /**
- * Defines the Module Blueprint Factory class contract.
+ * Builds normalized module scaffold blueprints.
  *
  * @package Catalyst\Framework\Module
- * Responsibility: Coordinates the module blueprint factory behavior within its module boundary.
+ * Responsibility: Validates scaffold input and assembles manifest, paths, and generated file definitions.
  */
 final class ModuleBlueprintFactory
 {
@@ -50,7 +50,9 @@ final class ModuleBlueprintFactory
     ];
 
     /**
-     * Initializes the Module Blueprint Factory instance.
+     * Initializes the factory with scaffold, manifest, and file builders.
+     *
+     * Responsibility: Initializes the factory with scaffold, manifest, and file builders.
      */
     public function __construct(
         private readonly ScaffoldManager $manager,
@@ -60,6 +62,9 @@ final class ModuleBlueprintFactory
     }
 
     /**
+     * Builds a normalized scaffold blueprint from user input.
+     *
+     * Responsibility: Builds a normalized scaffold blueprint from user input.
      * @param array<string, mixed> $input
      * @return array<string, mixed>
      */
@@ -116,7 +121,9 @@ final class ModuleBlueprintFactory
     }
 
     /**
-     * Normalizes the provided value.
+     * Validates and normalizes a module surface name.
+     *
+     * Responsibility: Validates and normalizes a module surface name.
      */
     private function normalizeSurface(string $surface): string
     {
@@ -132,7 +139,9 @@ final class ModuleBlueprintFactory
     }
 
     /**
-     * Normalizes the provided value.
+     * Supplies a default scaffold description when none is provided.
+     *
+     * Responsibility: Supplies a default scaffold description when none is provided.
      */
     private function normalizeDescription(string $description, string $module): string
     {
@@ -144,6 +153,9 @@ final class ModuleBlueprintFactory
     }
 
     /**
+     * Normalizes a comma- or newline-delimited option list.
+     *
+     * Responsibility: Normalizes a comma- or newline-delimited option list.
      * @param mixed $value
      * @return string[]
      */
@@ -167,7 +179,9 @@ final class ModuleBlueprintFactory
     }
 
     /**
-     * Normalizes the provided value.
+     * Validates and normalizes an optional permission slug.
+     *
+     * Responsibility: Validates and normalizes an optional permission slug.
      */
     private function normalizePermissionSlug(string $slug): string
     {
@@ -185,7 +199,9 @@ final class ModuleBlueprintFactory
     }
 
     /**
-     * Handles the assert permission surface compatibility workflow.
+     * Rejects permission slugs on surfaces that cannot enforce them.
+     *
+     * Responsibility: Rejects permission slugs on surfaces that cannot enforce them.
      */
     private function assertPermissionSurfaceCompatibility(string $surface, string $permissionSlug): void
     {

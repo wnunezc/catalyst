@@ -39,10 +39,10 @@ use Catalyst\Helpers\Log\Logger;
 use Exception;
 
 /**
- * Defines the Workflow Repository class contract.
+ * Persists tenant-scoped workflow instances and transition history.
  *
  * @package Catalyst\Framework\Workflow
- * Responsibility: Coordinates the workflow repository behavior within its module boundary.
+ * Responsibility: Provides workflow state lookups, mutations and transition audit queries.
  */
 final class WorkflowRepository
 {
@@ -53,6 +53,8 @@ final class WorkflowRepository
 
     /**
      * Initializes the Workflow Repository instance.
+     *
+     * Responsibility: Initializes the Workflow Repository instance.
      */
     protected function __construct()
     {
@@ -61,7 +63,9 @@ final class WorkflowRepository
     }
 
     /**
-     * Finds the requested record.
+     * Finds a workflow instance row by identifier.
+     *
+     * Responsibility: Finds a workflow instance row by identifier.
      */
     public function findById(int $id): ?array
     {
@@ -78,7 +82,9 @@ final class WorkflowRepository
     }
 
     /**
-     * Finds the requested record.
+     * Finds a workflow instance row for a resource record.
+     *
+     * Responsibility: Finds a workflow instance row for a resource record.
      */
     public function findByResource(string $definitionKey, string $resourceKey, int $recordId): ?array
     {
@@ -99,7 +105,9 @@ final class WorkflowRepository
     }
 
     /**
-     * Finds the requested record.
+     * Finds a workflow instance model by identifier.
+     *
+     * Responsibility: Finds a workflow instance model by identifier.
      */
     public function findModel(int $id): ?WorkflowInstance
     {
@@ -107,6 +115,9 @@ final class WorkflowRepository
     }
 
     /**
+     * Creates a workflow instance at its initial state.
+     *
+     * Responsibility: Creates a workflow instance at its initial state.
      * @param array<string, mixed> $context
      */
     public function createInstance(
@@ -126,6 +137,9 @@ final class WorkflowRepository
     }
 
     /**
+     * Persists a workflow instance state and merged context.
+     *
+     * Responsibility: Persists a workflow instance state and merged context.
      * @param array<string, mixed> $context
      */
     public function updateState(WorkflowInstance $instance, string $state, array $context = []): WorkflowInstance
@@ -142,6 +156,9 @@ final class WorkflowRepository
     }
 
     /**
+     * Records a workflow transition audit row.
+     *
+     * Responsibility: Records a workflow transition audit row.
      * @param array<string, mixed> $metadata
      */
     public function logTransition(
@@ -166,6 +183,9 @@ final class WorkflowRepository
     }
 
     /**
+     * Searches workflow instances using tenant-scoped filters.
+     *
+     * Responsibility: Searches workflow instances using tenant-scoped filters.
      * @param array<string, mixed> $criteria
      * @return array{rows: array<int, array<string, mixed>>, total: int}
      */
@@ -242,6 +262,9 @@ final class WorkflowRepository
     }
 
     /**
+     * Lists transition history for a workflow instance.
+     *
+     * Responsibility: Lists transition history for a workflow instance.
      * @return array<int, array<string, mixed>>
      */
     public function transitionsForInstance(int $instanceId): array
@@ -262,6 +285,9 @@ final class WorkflowRepository
     }
 
     /**
+     * Builds a record-to-state map for a workflow resource.
+     *
+     * Responsibility: Builds a record-to-state map for a workflow resource.
      * @param int[] $recordIds
      * @return array<int, string>
      */
@@ -299,7 +325,9 @@ final class WorkflowRepository
     }
 
     /**
-     * Handles the current tenant id workflow.
+     * Returns the active tenant identifier required by workflow queries.
+     *
+     * Responsibility: Returns the active tenant identifier required by workflow queries.
      */
     private function currentTenantId(): int
     {

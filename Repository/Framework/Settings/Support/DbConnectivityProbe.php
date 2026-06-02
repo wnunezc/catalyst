@@ -35,15 +35,17 @@ use PDOException;
 use Throwable;
 
 /**
- * Defines the Db Connectivity Probe class contract.
+ * Tests database connectivity without mutating server state.
  *
  * @package Catalyst\Repository\Settings\Support
- * Responsibility: Coordinates the db connectivity probe behavior within its module boundary.
+ * Responsibility: Distinguishes a usable connection, a missing database and an unreachable server.
  */
 final class DbConnectivityProbe
 {
     /**
-     * Handles the probe workflow.
+     * Probes the configured database and falls back to a server-level connection check.
+     *
+     * Responsibility: Probes the configured database and falls back to a server-level connection check.
      */
     public function probe(
         string $host,

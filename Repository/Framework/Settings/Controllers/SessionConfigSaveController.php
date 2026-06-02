@@ -36,15 +36,17 @@ use Catalyst\Repository\Settings\Requests\SessionConfigRequest;
 use Catalyst\Repository\Settings\Support\SessionConfigWriter;
 
 /**
- * Defines the Session Config Save Controller class contract.
+ * Persists session settings submitted by the setup surface.
  *
  * @package Catalyst\Repository\Settings\Controllers
- * Responsibility: Coordinates the session config save controller behavior within its module boundary.
+ * Responsibility: Delegates validated session configuration writes and returns the setup AJAX response.
  */
 final class SessionConfigSaveController extends Controller
 {
     /**
      * Initializes the Session Config Save Controller instance.
+     *
+     * Responsibility: Initializes the Session Config Save Controller instance.
      */
     public function __construct(
         private readonly SessionConfigWriter $writer = new SessionConfigWriter()
@@ -53,7 +55,9 @@ final class SessionConfigSaveController extends Controller
     }
 
     /**
-     * Persists the current state.
+     * Saves validated session settings.
+     *
+     * Responsibility: Saves validated session settings.
      */
     public function saveSession(SessionConfigRequest $request): Response
     {

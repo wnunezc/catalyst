@@ -36,6 +36,7 @@ namespace Catalyst\Framework\Notification;
  * Defines the available positions for toaster notifications on the screen.
  *
  * @package Catalyst\Framework\Notification
+ * Responsibility: Maps toaster positions to CSS placement and stacking direction.
  */
 enum NotificationPosition: string
 {
@@ -47,8 +48,9 @@ enum NotificationPosition: string
     case BOTTOM_CENTER = 'bottom-center';
 
     /**
-     * Get CSS positioning styles for this position
+     * Get CSS positioning styles for this position.
      *
+     * Responsibility: Get CSS positioning styles for this position.
      * @return array CSS style properties
      */
     public function getCssStyles(): array
@@ -96,8 +98,9 @@ enum NotificationPosition: string
     }
 
     /**
-     * Check if this position is at the top of the screen
+     * Check if this position is at the top of the screen.
      *
+     * Responsibility: Check if this position is at the top of the screen.
      * @return bool True if top position
      */
     public function isTop(): bool
@@ -106,8 +109,9 @@ enum NotificationPosition: string
     }
 
     /**
-     * Check if this position is at the bottom of the screen
+     * Check if this position is at the bottom of the screen.
      *
+     * Responsibility: Check if this position is at the bottom of the screen.
      * @return bool True if bottom position
      */
     public function isBottom(): bool
@@ -116,8 +120,9 @@ enum NotificationPosition: string
     }
 
     /**
-     * Get the stacking direction for toasts
+     * Get the stacking direction for toasts.
      *
+     * Responsibility: Exposes the toast stacking direction associated with the screen position.
      * @return string 'down' for top positions, 'up' for bottom positions
      */
     public function getStackDirection(): string

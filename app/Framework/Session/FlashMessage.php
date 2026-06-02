@@ -37,6 +37,9 @@ use Catalyst\Framework\Traits\SingletonTrait;
  *
  * Storage, history TTL, and dismiss tracking live in FlashBag so this class
  * can stay focused on the controller/template API.
+ *
+ * @package Catalyst\Framework\Session
+ * Responsibility: Exposes the controller-facing API for one-shot and persistent flash messages.
  */
 class FlashMessage
 {
@@ -46,6 +49,8 @@ class FlashMessage
 
     /**
      * Initializes the Flash Message instance.
+     *
+     * Responsibility: Initializes the Flash Message instance.
      */
     protected function __construct()
     {
@@ -53,7 +58,9 @@ class FlashMessage
     }
 
     /**
-     * Handles the add workflow.
+     * Adds a one-shot flash message.
+     *
+     * Responsibility: Adds a one-shot flash message.
      */
     public function add(string $type, string $message, ?string $customId = null): self
     {
@@ -62,7 +69,9 @@ class FlashMessage
     }
 
     /**
-     * Handles the add persistent workflow.
+     * Adds a persistent flash message.
+     *
+     * Responsibility: Adds a persistent flash message.
      */
     public function addPersistent(string $type, string $message, ?string $customId = null): self
     {
@@ -71,7 +80,9 @@ class FlashMessage
     }
 
     /**
-     * Handles the dismiss workflow.
+     * Dismisses a persistent flash message by identifier.
+     *
+     * Responsibility: Dismisses a persistent flash message by identifier.
      */
     public function dismiss(string $id): self
     {
@@ -80,7 +91,9 @@ class FlashMessage
     }
 
     /**
-     * Handles the success workflow.
+     * Adds a one-shot success message.
+     *
+     * Responsibility: Adds a one-shot success message.
      */
     public function success(string $message, ?string $id = null): self
     {
@@ -88,7 +101,9 @@ class FlashMessage
     }
 
     /**
-     * Handles the success persistent workflow.
+     * Adds a persistent success message.
+     *
+     * Responsibility: Adds a persistent success message.
      */
     public function successPersistent(string $message, ?string $id = null): self
     {
@@ -96,7 +111,9 @@ class FlashMessage
     }
 
     /**
-     * Handles the error workflow.
+     * Adds a one-shot error message.
+     *
+     * Responsibility: Adds a one-shot error message.
      */
     public function error(string $message, ?string $id = null): self
     {
@@ -104,7 +121,9 @@ class FlashMessage
     }
 
     /**
-     * Handles the error persistent workflow.
+     * Adds a persistent error message.
+     *
+     * Responsibility: Adds a persistent error message.
      */
     public function errorPersistent(string $message, ?string $id = null): self
     {
@@ -112,7 +131,9 @@ class FlashMessage
     }
 
     /**
-     * Handles the warning workflow.
+     * Adds a one-shot warning message.
+     *
+     * Responsibility: Adds a one-shot warning message.
      */
     public function warning(string $message, ?string $id = null): self
     {
@@ -120,7 +141,9 @@ class FlashMessage
     }
 
     /**
-     * Handles the warning persistent workflow.
+     * Adds a persistent warning message.
+     *
+     * Responsibility: Adds a persistent warning message.
      */
     public function warningPersistent(string $message, ?string $id = null): self
     {
@@ -128,7 +151,9 @@ class FlashMessage
     }
 
     /**
-     * Handles the info workflow.
+     * Adds a one-shot informational message.
+     *
+     * Responsibility: Adds a one-shot informational message.
      */
     public function info(string $message, ?string $id = null): self
     {
@@ -136,7 +161,9 @@ class FlashMessage
     }
 
     /**
-     * Handles the info persistent workflow.
+     * Adds a persistent informational message.
+     *
+     * Responsibility: Adds a persistent informational message.
      */
     public function infoPersistent(string $message, ?string $id = null): self
     {
@@ -144,6 +171,9 @@ class FlashMessage
     }
 
     /**
+     * Consumes grouped one-shot flash messages.
+     *
+     * Responsibility: Consumes grouped one-shot flash messages.
      * @return array<string, array<string>>
      */
     public function all(): array
@@ -152,6 +182,9 @@ class FlashMessage
     }
 
     /**
+     * Returns visible persistent messages.
+     *
+     * Responsibility: Returns visible persistent messages.
      * @return array<int, array{id: string, type: string, message: string}>
      */
     public function allPersistent(): array
@@ -160,6 +193,9 @@ class FlashMessage
     }
 
     /**
+     * Consumes unread messages of a selected type.
+     *
+     * Responsibility: Consumes unread messages of a selected type.
      * @return array<string>
      */
     public function get(string $type): array
@@ -168,7 +204,9 @@ class FlashMessage
     }
 
     /**
-     * Handles the has workflow.
+     * Determines whether unread one-shot messages remain.
+     *
+     * Responsibility: Determines whether unread one-shot messages remain.
      */
     public function has(?string $type = null): bool
     {
@@ -177,6 +215,8 @@ class FlashMessage
 
     /**
      * Determines whether has Persistent.
+     *
+     * Responsibility: Determines whether has Persistent.
      */
     public function hasPersistent(?string $type = null): bool
     {
@@ -184,7 +224,9 @@ class FlashMessage
     }
 
     /**
-     * Handles the clear workflow.
+     * Clears one-shot messages.
+     *
+     * Responsibility: Clears one-shot messages.
      */
     public function clear(): self
     {
@@ -193,7 +235,9 @@ class FlashMessage
     }
 
     /**
-     * Handles the clear persistent workflow.
+     * Clears persistent messages.
+     *
+     * Responsibility: Clears persistent messages.
      */
     public function clearPersistent(): self
     {
@@ -202,7 +246,9 @@ class FlashMessage
     }
 
     /**
-     * Handles the clear history workflow.
+     * Clears displayed-message history.
+     *
+     * Responsibility: Clears displayed-message history.
      */
     public function clearHistory(): self
     {
@@ -211,7 +257,9 @@ class FlashMessage
     }
 
     /**
-     * Handles the clear dismissed workflow.
+     * Clears dismissed-message identifiers.
+     *
+     * Responsibility: Clears dismissed-message identifiers.
      */
     public function clearDismissed(): self
     {
@@ -220,7 +268,9 @@ class FlashMessage
     }
 
     /**
-     * Handles the reset workflow.
+     * Clears all flash-message state.
+     *
+     * Responsibility: Clears all flash-message state.
      */
     public function reset(): self
     {
@@ -229,6 +279,9 @@ class FlashMessage
     }
 
     /**
+     * Returns queued one-shot messages without consuming them.
+     *
+     * Responsibility: Returns queued one-shot messages without consuming them.
      * @return array<int, array{id: string, type: string, message: string, created_at: int}>
      */
     public function peek(): array
@@ -237,7 +290,9 @@ class FlashMessage
     }
 
     /**
-     * Handles the count workflow.
+     * Counts unread and visible flash messages.
+     *
+     * Responsibility: Counts unread and visible flash messages.
      */
     public function count(): int
     {

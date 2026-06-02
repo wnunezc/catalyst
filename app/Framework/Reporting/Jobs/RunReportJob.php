@@ -34,15 +34,17 @@ use Catalyst\Framework\Queue\QueueableJobInterface;
 use Catalyst\Framework\Reporting\ReportingManager;
 
 /**
- * Defines the Run Report Job class contract.
+ * Generates a persisted report run through the queue.
  *
  * @package Catalyst\Framework\Reporting\Jobs
- * Responsibility: Coordinates the run report job behavior within its module boundary.
+ * Responsibility: Carries a report-run identifier across the queue boundary and invokes report generation.
  */
 final class RunReportJob implements QueueableJobInterface
 {
     /**
      * Initializes the Run Report Job instance.
+     *
+     * Responsibility: Initializes the Run Report Job instance.
      */
     public function __construct(
         private readonly int $reportRunId,
@@ -51,7 +53,9 @@ final class RunReportJob implements QueueableJobInterface
     }
 
     /**
-     * Handles the request workflow.
+     * Processes the queued report run.
+     *
+     * Responsibility: Processes the queued report run.
      */
     public function handle(): void
     {
@@ -59,7 +63,9 @@ final class RunReportJob implements QueueableJobInterface
     }
 
     /**
-     * Handles the display name workflow.
+     * Returns the report-generation label.
+     *
+     * Responsibility: Returns the report-generation label.
      */
     public function displayName(): string
     {
@@ -67,7 +73,9 @@ final class RunReportJob implements QueueableJobInterface
     }
 
     /**
-     * Handles the queue name workflow.
+     * Returns the queue selected for report generation.
+     *
+     * Responsibility: Returns the queue selected for report generation.
      */
     public function queueName(): string
     {
@@ -75,7 +83,9 @@ final class RunReportJob implements QueueableJobInterface
     }
 
     /**
-     * Handles the max attempts workflow.
+     * Returns the allowed report-generation attempt count.
+     *
+     * Responsibility: Returns the allowed report-generation attempt count.
      */
     public function maxAttempts(): int
     {
@@ -83,7 +93,9 @@ final class RunReportJob implements QueueableJobInterface
     }
 
     /**
-     * Handles the backoff seconds workflow.
+     * Returns the retry delay for report-generation failures.
+     *
+     * Responsibility: Returns the retry delay for report-generation failures.
      */
     public function backoffSeconds(): int
     {
@@ -91,6 +103,9 @@ final class RunReportJob implements QueueableJobInterface
     }
 
     /**
+     * Exports the report-run identifier and queue routing for persistence.
+     *
+     * Responsibility: Exports the report-run identifier and queue routing for persistence.
      * @return array<string, mixed>
      */
     public function toPayload(): array
@@ -102,6 +117,8 @@ final class RunReportJob implements QueueableJobInterface
     }
 
     /**
+     * Restores a report-generation job from persisted state.
+     *
      * @param array<string, mixed> $payload
      */
     public static function fromPayload(array $payload): static

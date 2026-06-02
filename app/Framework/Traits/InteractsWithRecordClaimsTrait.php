@@ -36,15 +36,17 @@ use RuntimeException;
 use Throwable;
 
 /**
- * Defines the Interacts With Record Claims Trait trait contract.
+ * Adds record-claim coordination helpers to mutation controllers.
  *
  * @package Catalyst\Framework\Traits
- * Responsibility: Coordinates the interacts with record claims trait behavior within its module boundary.
+ * Responsibility: Acquires, validates, releases and exposes concurrency claim state.
  */
 trait InteractsWithRecordClaimsTrait
 {
     /**
-     * Handles the acquire record claim workflow.
+     * Acquires a claim for a resource record.
+     *
+     * Responsibility: Acquires a claim for a resource record.
      */
     protected function acquireRecordClaim(string $resourceKey, int $recordId, array $metadata = []): array
     {
@@ -56,7 +58,9 @@ trait InteractsWithRecordClaimsTrait
     }
 
     /**
-     * Handles the assert record claim available workflow.
+     * Verifies that a record claim permits the requested mutation.
+     *
+     * Responsibility: Verifies that a record claim permits the requested mutation.
      */
     protected function assertRecordClaimAvailable(string $resourceKey, int $recordId, Request $request): ?array
     {
@@ -70,7 +74,9 @@ trait InteractsWithRecordClaimsTrait
     }
 
     /**
-     * Handles the release record claim workflow.
+     * Releases a record claim after a mutation.
+     *
+     * Responsibility: Releases a record claim after a mutation.
      */
     protected function releaseRecordClaim(string $resourceKey, int $recordId, Request $request, ?string $reason = null): void
     {
@@ -93,6 +99,9 @@ trait InteractsWithRecordClaimsTrait
     }
 
     /**
+     * Normalizes a record claim for view consumption.
+     *
+     * Responsibility: Normalizes a record claim for view consumption.
      * @param array<string, mixed>|null $claim
      * @return array<string, mixed>|null
      */
@@ -120,6 +129,9 @@ trait InteractsWithRecordClaimsTrait
     }
 
     /**
+     * Builds hidden form fields required for concurrency checks.
+     *
+     * Responsibility: Builds hidden form fields required for concurrency checks.
      * @return array<string, array<string, mixed>>
      */
     protected function concurrencyHiddenFields(?array $claim, ?int $lockVersion = null): array
@@ -146,7 +158,9 @@ trait InteractsWithRecordClaimsTrait
     }
 
     /**
-     * Handles the remember concurrency conflict workflow.
+     * Stores a concurrency conflict as a validation error.
+     *
+     * Responsibility: Stores a concurrency conflict as a validation error.
      */
     protected function rememberConcurrencyConflict(Request $request, RuntimeException $e, string $bag = 'default'): void
     {

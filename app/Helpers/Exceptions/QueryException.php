@@ -37,7 +37,8 @@ use RuntimeException;
  *
  * Thrown when a database query error occurs.
  *
- * @package Catalyst\Framework\Exceptions
+ * @package Catalyst\Helpers\Exceptions
+ * Responsibility: Represents failures while executing database queries.
  */
 class QueryException extends RuntimeException
 {

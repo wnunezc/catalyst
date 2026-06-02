@@ -36,10 +36,10 @@ use Catalyst\Framework\Traits\HasOptimisticLockingTrait;
 use Catalyst\Framework\Traits\HasTimestampsTrait;
 
 /**
- * Defines the Media Item class contract.
+ * ORM entity for media library items.
  *
  * @package Catalyst\Entities
- * Responsibility: Coordinates the media item behavior within its module boundary.
+ * Responsibility: Maps uploaded file identity, storage location, public URL, MIME metadata, archive state, and lock state.
  */
 final class MediaItem extends Model
 {

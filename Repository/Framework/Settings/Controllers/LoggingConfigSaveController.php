@@ -36,15 +36,17 @@ use Catalyst\Repository\Settings\Requests\LoggingConfigRequest;
 use Catalyst\Repository\Settings\Support\LoggingConfigWriter;
 
 /**
- * Defines the Logging Config Save Controller class contract.
+ * Persists logging settings submitted by the setup surface.
  *
  * @package Catalyst\Repository\Settings\Controllers
- * Responsibility: Coordinates the logging config save controller behavior within its module boundary.
+ * Responsibility: Delegates validated logging configuration writes and returns the setup AJAX response.
  */
 final class LoggingConfigSaveController extends Controller
 {
     /**
      * Initializes the Logging Config Save Controller instance.
+     *
+     * Responsibility: Initializes the Logging Config Save Controller instance.
      */
     public function __construct(
         private readonly LoggingConfigWriter $writer = new LoggingConfigWriter()
@@ -53,7 +55,9 @@ final class LoggingConfigSaveController extends Controller
     }
 
     /**
-     * Persists the current state.
+     * Saves validated logging settings.
+     *
+     * Responsibility: Saves validated logging settings.
      */
     public function saveLogging(LoggingConfigRequest $request): Response
     {

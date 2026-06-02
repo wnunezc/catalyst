@@ -31,10 +31,10 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Cache;
 
 /**
- * Defines the Array Cache Store class contract.
+ * Stores cache entries in process memory.
  *
  * @package Catalyst\Framework\Cache
- * Responsibility: Coordinates the array cache store behavior within its module boundary.
+ * Responsibility: Provides ephemeral cache storage with optional expiration for the current process.
  */
 final class ArrayCacheStore implements CacheStoreInterface
 {
@@ -42,7 +42,9 @@ final class ArrayCacheStore implements CacheStoreInterface
     private array $items = [];
 
     /**
-     * Returns the runtime value.
+     * Returns an in-memory cached value or the supplied default.
+     *
+     * Responsibility: Returns an in-memory cached value or the supplied default.
      */
     public function get(string $key, mixed $default = null): mixed
     {
@@ -54,7 +56,9 @@ final class ArrayCacheStore implements CacheStoreInterface
     }
 
     /**
-     * Handles the put workflow.
+     * Stores an in-memory value with an optional time-to-live.
+     *
+     * Responsibility: Stores an in-memory value with an optional time-to-live.
      */
     public function put(string $key, mixed $value, int $ttlSeconds = 0): bool
     {
@@ -67,7 +71,9 @@ final class ArrayCacheStore implements CacheStoreInterface
     }
 
     /**
-     * Handles the forever workflow.
+     * Stores an in-memory value without expiration.
+     *
+     * Responsibility: Stores an in-memory value without expiration.
      */
     public function forever(string $key, mixed $value): bool
     {
@@ -75,7 +81,9 @@ final class ArrayCacheStore implements CacheStoreInterface
     }
 
     /**
-     * Handles the has workflow.
+     * Determines whether a non-expired in-memory entry exists.
+     *
+     * Responsibility: Determines whether a non-expired in-memory entry exists.
      */
     public function has(string $key): bool
     {
@@ -93,7 +101,9 @@ final class ArrayCacheStore implements CacheStoreInterface
     }
 
     /**
-     * Handles the forget workflow.
+     * Removes one in-memory entry.
+     *
+     * Responsibility: Removes one in-memory entry.
      */
     public function forget(string $key): bool
     {
@@ -102,7 +112,9 @@ final class ArrayCacheStore implements CacheStoreInterface
     }
 
     /**
-     * Handles the clear workflow.
+     * Removes every in-memory entry.
+     *
+     * Responsibility: Removes every in-memory entry.
      */
     public function clear(): bool
     {
@@ -111,7 +123,9 @@ final class ArrayCacheStore implements CacheStoreInterface
     }
 
     /**
-     * Handles the remember workflow.
+     * Returns an existing entry or stores the resolver result.
+     *
+     * Responsibility: Returns an existing entry or stores the resolver result.
      */
     public function remember(string $key, callable $resolver, int $ttlSeconds = 0): mixed
     {
@@ -126,11 +140,12 @@ final class ArrayCacheStore implements CacheStoreInterface
     }
 
     /**
-     * Returns the driver name value.
+     * Returns the array driver name.
+     *
+     * Responsibility: Returns the array driver name.
      */
     public function getDriverName(): string
     {
         return 'array';
     }
 }
-

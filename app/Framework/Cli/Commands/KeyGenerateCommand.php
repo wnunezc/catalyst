@@ -38,15 +38,18 @@ use Random\RandomException;
 use RuntimeException;
 
 /**
- * Defines the Key Generate Command class contract.
+ * key:generate CLI command.
+ *
+ * Responsibility: Runs the key:generate command to Generate a new APP_KEY and persist it to .env plus the managed secret config store.
  *
  * @package Catalyst\Framework\Cli\Commands
- * Responsibility: Coordinates the key generate command behavior within its module boundary.
  */
 class KeyGenerateCommand extends AbstractCommand
 {
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -54,14 +57,21 @@ class KeyGenerateCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
         return 'Generate a new APP_KEY and persist it to .env plus the managed secret config store';
     }
 
-    /** @return Option[] */
+    /**
+     * Defines the accepted option schema for this command.
+     *
+     * Responsibility: Defines the accepted option schema for this command.
+     * @return Option[]
+     */
     public function getOptions(): array
     {
         return [
@@ -70,7 +80,9 @@ class KeyGenerateCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {
@@ -105,7 +117,9 @@ class KeyGenerateCommand extends AbstractCommand
     }
 
     /**
-     * @throws RandomException
+     * Describes the generate key helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the generate key helper workflow used by this CLI component.
      */
     private function generateKey(): string
     {
@@ -113,7 +127,9 @@ class KeyGenerateCommand extends AbstractCommand
     }
 
     /**
-     * @throws RuntimeException
+     * Describes the persist env key helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the persist env key helper workflow used by this CLI component.
      */
     private function persistEnvKey(string $key): void
     {
@@ -140,7 +156,9 @@ class KeyGenerateCommand extends AbstractCommand
     }
 
     /**
-     * @throws RuntimeException
+     * Describes the persist app config key helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the persist app config key helper workflow used by this CLI component.
      */
     private function persistAppConfigKey(string $key): void
     {

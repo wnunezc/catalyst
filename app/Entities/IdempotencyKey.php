@@ -35,10 +35,10 @@ use Catalyst\Framework\Traits\BelongsToTenantTrait;
 use Catalyst\Framework\Traits\HasTimestampsTrait;
 
 /**
- * Defines the Idempotency Key class contract.
+ * ORM entity for tenant idempotency keys.
  *
  * @package Catalyst\Entities
- * Responsibility: Coordinates the idempotency key behavior within its module boundary.
+ * Responsibility: Maps scoped request fingerprints, processing status, stored outcomes, and completion timestamps.
  */
 final class IdempotencyKey extends Model
 {

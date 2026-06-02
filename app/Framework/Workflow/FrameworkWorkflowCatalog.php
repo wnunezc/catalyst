@@ -33,17 +33,17 @@ namespace Catalyst\Framework\Workflow;
 use Catalyst\Entities\AutomationRule;
 
 /**
- * Defines the Framework Workflow Catalog class contract.
+ * Registers the framework's built-in workflow definitions.
  *
  * @package Catalyst\Framework\Workflow
- * Responsibility: Coordinates the framework workflow catalog behavior within its module boundary.
+ * Responsibility: Supplies lifecycle definitions and built-in transition side effects.
  */
 final class FrameworkWorkflowCatalog
 {
     private static bool $registered = false;
 
     /**
-     * Registers the requested definition.
+     * Registers built-in definitions once per runtime.
      */
     public static function registerDefaults(WorkflowDefinitionRegistry $registry): void
     {
@@ -195,7 +195,7 @@ final class FrameworkWorkflowCatalog
     }
 
     /**
-     * Handles the sync rule enabled state workflow.
+     * Synchronizes an automation rule enabled flag with its workflow state.
      */
     private static function syncRuleEnabledState(mixed $record, bool $enabled): void
     {

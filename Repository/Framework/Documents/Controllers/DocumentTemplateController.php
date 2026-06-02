@@ -51,10 +51,10 @@ use Catalyst\Repository\Documents\Support\DocumentTemplateShowDataFactory;
 use RuntimeException;
 
 /**
- * Defines the Document Template Controller class contract.
+ * Serves the administrative document template workflow.
  *
  * @package Catalyst\Repository\Documents\Controllers
- * Responsibility: Coordinates the document template controller behavior within its module boundary.
+ * Responsibility: Render template screens and coordinate authorized CRUD, preview, export and workflow actions.
  */
 final class DocumentTemplateController extends Controller
 {
@@ -62,6 +62,8 @@ final class DocumentTemplateController extends Controller
 
     /**
      * Initializes the Document Template Controller instance.
+     *
+     * Responsibility: Initializes the Document Template Controller instance.
      */
     public function __construct(
         private readonly DocumentTemplateRepository $repository,
@@ -77,7 +79,9 @@ final class DocumentTemplateController extends Controller
     }
 
     /**
-     * Handles the index workflow.
+     * Renders the searchable document template listing.
+     *
+     * Responsibility: Renders the searchable document template listing.
      */
     public function index(Request $request): Response
     {
@@ -91,7 +95,9 @@ final class DocumentTemplateController extends Controller
     }
 
     /**
-     * Handles the create workflow.
+     * Renders the document template creation form.
+     *
+     * Responsibility: Renders the document template creation form.
      */
     public function create(Request $request): Response
     {
@@ -101,7 +107,9 @@ final class DocumentTemplateController extends Controller
     }
 
     /**
-     * Handles the persistence workflow.
+     * Persists a validated document template and redirects to its detail view.
+     *
+     * Responsibility: Persists a validated document template and redirects to its detail view.
      */
     public function store(DocumentTemplateRequest $request): Response
     {
@@ -112,7 +120,9 @@ final class DocumentTemplateController extends Controller
     }
 
     /**
-     * Handles the detail display workflow.
+     * Renders the selected document template detail view.
+     *
+     * Responsibility: Renders the selected document template detail view.
      */
     public function show(Request $request, string $id): Response
     {
@@ -120,7 +130,9 @@ final class DocumentTemplateController extends Controller
     }
 
     /**
-     * Handles the edit workflow.
+     * Acquires a record claim and renders the document template edit form.
+     *
+     * Responsibility: Acquires a record claim and renders the document template edit form.
      */
     public function edit(Request $request, string $id): Response
     {
@@ -145,7 +157,9 @@ final class DocumentTemplateController extends Controller
     }
 
     /**
-     * Handles the update workflow.
+     * Updates a document template while handling concurrency conflicts.
+     *
+     * Responsibility: Updates a document template while handling concurrency conflicts.
      */
     public function update(DocumentTemplateRequest $request, string $id): Response
     {
@@ -171,7 +185,9 @@ final class DocumentTemplateController extends Controller
     }
 
     /**
-     * Handles the destroy workflow.
+     * Deletes a document template through the claim-protected mutation service.
+     *
+     * Responsibility: Deletes a document template through the claim-protected mutation service.
      */
     public function destroy(Request $request, string $id): Response
     {
@@ -192,7 +208,9 @@ final class DocumentTemplateController extends Controller
     }
 
     /**
-     * Handles the preview workflow.
+     * Renders and stores a one-time document preview for the detail screen.
+     *
+     * Responsibility: Renders and stores a one-time document preview for the detail screen.
      */
     public function preview(DocumentPreviewPayloadRequest $request, string $id): Response
     {
@@ -214,7 +232,9 @@ final class DocumentTemplateController extends Controller
     }
 
     /**
-     * Handles the export workflow.
+     * Exports a document artifact through the claim-protected mutation service.
+     *
+     * Responsibility: Exports a document artifact through the claim-protected mutation service.
      */
     public function export(DocumentExportPayloadRequest $request, string $id): Response
     {
@@ -235,7 +255,9 @@ final class DocumentTemplateController extends Controller
     }
 
     /**
-     * Handles the transition workflow.
+     * Applies the requested workflow transition to a document template.
+     *
+     * Responsibility: Applies the requested workflow transition to a document template.
      */
     public function transition(Request $request, string $id): Response
     {
@@ -259,7 +281,9 @@ final class DocumentTemplateController extends Controller
     }
 
     /**
-     * Handles the restore version workflow.
+     * Restores a selected captured version of a document template.
+     *
+     * Responsibility: Restores a selected captured version of a document template.
      */
     public function restoreVersion(Request $request, string $id, string $versionId): Response
     {
@@ -280,7 +304,9 @@ final class DocumentTemplateController extends Controller
     }
 
     /**
-     * Renders the current view state.
+     * Builds and renders document template details, including previews, artifacts and workflow state.
+     *
+     * Responsibility: Builds and renders document template details, including previews, artifacts and workflow state.
      */
     private function renderShow(int $id): Response
     {
@@ -310,6 +336,9 @@ final class DocumentTemplateController extends Controller
     }
 
     /**
+     * Builds and renders the create or edit form for a document template.
+     *
+     * Responsibility: Builds and renders the create or edit form for a document template.
      * @param array<string, mixed>|null $template
      * @param array<string, mixed>|null $claim
      */

@@ -36,10 +36,10 @@ use Catalyst\Helpers\Exceptions\ValidationException;
 use Catalyst\Helpers\Validation\Validator;
 
 /**
- * Defines the Cache Config Request class contract.
+ * Validates and resolves cache settings from the setup surface.
  *
  * @package Catalyst\Repository\Settings\Requests
- * Responsibility: Coordinates the cache config request behavior within its module boundary.
+ * Responsibility: Restricts cache activation to production and converts submitted cache flags to booleans.
  */
 final class CacheConfigRequest extends AbstractSettingsRequest
 {
@@ -49,6 +49,9 @@ final class CacheConfigRequest extends AbstractSettingsRequest
     private ?array $resolvedData = null;
 
     /**
+     * Returns validation rules for cache settings.
+     *
+     * Responsibility: Returns validation rules for cache settings.
      * @return array<string, string>
      */
     public function rules(): array
@@ -65,7 +68,9 @@ final class CacheConfigRequest extends AbstractSettingsRequest
     }
 
     /**
-     * Handles the validation message workflow.
+     * Returns the cache-specific validation failure message.
+     *
+     * Responsibility: Returns the cache-specific validation failure message.
      */
     public function validationMessage(): string
     {
@@ -73,6 +78,9 @@ final class CacheConfigRequest extends AbstractSettingsRequest
     }
 
     /**
+     * Returns the resolved cache payload after validation.
+     *
+     * Responsibility: Returns the resolved cache payload after validation.
      * @return array<string, mixed>
      */
     public function validated(): array
@@ -85,6 +93,9 @@ final class CacheConfigRequest extends AbstractSettingsRequest
     }
 
     /**
+     * Authorizes, validates and resolves the cache payload.
+     *
+     * Responsibility: Authorizes, validates and resolves the cache payload.
      * @throws ValidationException
      * @throws ForbiddenException
      */
@@ -124,6 +135,9 @@ final class CacheConfigRequest extends AbstractSettingsRequest
     }
 
     /**
+     * Builds normalized cache input for validation.
+     *
+     * Responsibility: Builds normalized cache input for validation.
      * @return array<string, mixed>
      */
     protected function validationData(): array
@@ -140,7 +154,9 @@ final class CacheConfigRequest extends AbstractSettingsRequest
     }
 
     /**
-     * Handles the to boolean workflow.
+     * Converts a checkbox-like value to a boolean.
+     *
+     * Responsibility: Converts a checkbox-like value to a boolean.
      */
     private function toBoolean(mixed $value): bool
     {

@@ -31,51 +31,66 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Cache;
 
 /**
- * Defines the Cache Store Interface interface contract.
+ * Defines the operations required from a runtime cache store.
  *
  * @package Catalyst\Framework\Cache
- * Responsibility: Coordinates the cache store interface behavior within its module boundary.
+ * Responsibility: Standardizes cache reads, writes, eviction and resolver-backed retrieval.
  */
 interface CacheStoreInterface
 {
     /**
-     * Returns the runtime value.
+     * Returns a cached value or the supplied default.
+     *
+     * Responsibility: Returns a cached value or the supplied default.
      */
     public function get(string $key, mixed $default = null): mixed;
 
     /**
-     * Handles the put workflow.
+     * Stores a value with an optional time-to-live.
+     *
+     * Responsibility: Stores a value with an optional time-to-live.
      */
     public function put(string $key, mixed $value, int $ttlSeconds = 0): bool;
 
     /**
-     * Handles the forever workflow.
+     * Stores a value without expiration.
+     *
+     * Responsibility: Stores a value without expiration.
      */
     public function forever(string $key, mixed $value): bool;
 
     /**
-     * Handles the has workflow.
+     * Determines whether a usable cache entry exists.
+     *
+     * Responsibility: Determines whether a usable cache entry exists.
      */
     public function has(string $key): bool;
 
     /**
-     * Handles the forget workflow.
+     * Removes one cache entry.
+     *
+     * Responsibility: Removes one cache entry.
      */
     public function forget(string $key): bool;
 
     /**
-     * Handles the clear workflow.
+     * Removes all entries managed by the store.
+     *
+     * Responsibility: Removes all entries managed by the store.
      */
     public function clear(): bool;
 
     /**
-     * Handles the remember workflow.
+     * Returns a cached value or stores the resolver result.
+     *
+     * Responsibility: Returns a cached value or stores the resolver result.
      */
     public function remember(string $key, callable $resolver, int $ttlSeconds = 0): mixed;
 
     /**
-     * Returns the driver name value.
+     * Returns the cache driver name.
+     *
+     * Responsibility: Returns the cache driver name.
      */
     public function getDriverName(): string;
 }
-

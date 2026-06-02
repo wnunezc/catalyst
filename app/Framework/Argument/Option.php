@@ -31,52 +31,52 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Argument;
 
 /**
- * Represents a CLI option (flag)
- *
- * Options can be short (-f) or long (--file) and may have values
+ * Represents a parsed or predefined command-line option.
  *
  * @package Catalyst\Framework\Argument
+ * Responsibility: Stores option names, value/default state, required metadata, description, and value acceptance rules.
  */
 class Option
 {
     /**
-     * Short name of the option (single character)
+     * Stores the single-character short option name.
      */
     private ?string $shortName = null;
 
     /**
-     * Long name of the option
+     * Stores the long option name.
      */
     private ?string $longName = null;
 
     /**
-     * Value of the option
+     * Stores the current parsed or default option value.
      */
     private mixed $value = null;
 
     /**
-     * Whether this option is required
+     * Indicates whether validation requires this option to be present.
      */
     private bool $required = false;
 
     /**
-     * Default value if option is not provided
+     * Stores the fallback value used before the option is parsed.
      */
     private mixed $default = null;
 
     /**
-     * Description of the option
+     * Stores the human-readable option description.
      */
     private string $description = '';
 
     /**
-     * Whether this option accepts a value
+     * Indicates whether the option requires or accepts an explicit value.
      */
     private bool $acceptsValue = true;
 
     /**
-     * Constructor
+     * Creates an option definition or parsed option with its default value applied.
      *
+     * Responsibility: Creates an option definition or parsed option with its default value applied.
      * @param string|null $shortName Short name (single character)
      * @param string|null $longName Long name
      * @param mixed $default Default value
@@ -102,8 +102,9 @@ class Option
     }
 
     /**
-     * Get short name
+     * Returns the configured short option name.
      *
+     * Responsibility: Returns the configured short option name.
      * @return string|null
      */
     public function getShortName(): ?string
@@ -112,8 +113,9 @@ class Option
     }
 
     /**
-     * Get long name
+     * Returns the configured long option name.
      *
+     * Responsibility: Returns the configured long option name.
      * @return string|null
      */
     public function getLongName(): ?string
@@ -122,8 +124,9 @@ class Option
     }
 
     /**
-     * Set value
+     * Updates the current parsed value for the option.
      *
+     * Responsibility: Updates the current parsed value for the option.
      * @param mixed $value
      * @return self
      */
@@ -134,8 +137,9 @@ class Option
     }
 
     /**
-     * Get value
+     * Returns the current parsed or default value.
      *
+     * Responsibility: Returns the current parsed or default value.
      * @return mixed
      */
     public function getValue(): mixed
@@ -144,8 +148,9 @@ class Option
     }
 
     /**
-     * Check if option is required
+     * Reports whether validation requires this option.
      *
+     * Responsibility: Reports whether validation requires this option.
      * @return bool
      */
     public function isRequired(): bool
@@ -154,8 +159,9 @@ class Option
     }
 
     /**
-     * Get default value
+     * Returns the fallback value assigned to the option.
      *
+     * Responsibility: Returns the fallback value assigned to the option.
      * @return mixed
      */
     public function getDefault(): mixed
@@ -164,8 +170,9 @@ class Option
     }
 
     /**
-     * Get description
+     * Returns the human-readable option description.
      *
+     * Responsibility: Returns the human-readable option description.
      * @return string
      */
     public function getDescription(): string
@@ -174,8 +181,9 @@ class Option
     }
 
     /**
-     * Check if option accepts a value
+     * Reports whether this option accepts an explicit value.
      *
+     * Responsibility: Reports whether this option accepts an explicit value.
      * @return bool
      */
     public function acceptsValue(): bool
@@ -184,7 +192,7 @@ class Option
     }
 
     /**
-     * Check if option has been set
+     * Reports whether parsing changed the option value away from its default.
      *
      * @return bool
      */
@@ -194,22 +202,24 @@ class Option
     }
 
     /**
-     * Match option name (short or long)
+     * Checks whether a supplied name matches the short or long option name.
      *
+     * Responsibility: Checks whether a supplied name matches the short or long option name.
      * @param string $name Name to match
      * @return bool
      */
     public function matches(string $name): bool
     {
-        // Remove leading dashes
+        // Accept caller input with or without CLI dash prefixes.
         $name = ltrim($name, '-');
 
         return $name === $this->shortName || $name === $this->longName;
     }
 
     /**
-     * Get primary name (long if available, otherwise short)
+     * Returns the long option name when available, otherwise the short name.
      *
+     * Responsibility: Returns the long option name when available, otherwise the short name.
      * @return string|null
      */
     public function getPrimaryName(): ?string

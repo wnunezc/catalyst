@@ -31,15 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Admin\Grid;
 
 /**
- * Defines the Data Grid Filter Normalizer class contract.
+ * Normalizes DataGrid filter configuration for filter forms.
  *
  * @package Catalyst\Framework\Admin\Grid
- * Responsibility: Coordinates the data grid filter normalizer behavior within its module boundary.
+ * Responsibility: Converts filter definitions and request state into render-ready filter controls.
  */
 final class DataGridFilterNormalizer
 {
     /**
-     * Initializes the Data Grid Filter Normalizer instance.
+     * Receives the text formatter used for fallback filter labels.
+     *
+     * Responsibility: Receives the text formatter used for fallback filter labels.
      */
     public function __construct(
         private readonly DataGridTextFormatter $textFormatter
@@ -48,8 +50,9 @@ final class DataGridFilterNormalizer
     }
 
     /**
-     * Normalize configured filters for rendering.
+     * Converts configured filters into form controls populated from the current grid state.
      *
+     * Responsibility: Converts configured filters into form controls populated from the current grid state.
      * @param array<int, array<string, mixed>> $filters
      * @param array<string, mixed> $state
      * @return array<int, array<string, mixed>>

@@ -35,7 +35,7 @@ use Catalyst\Helpers\Log\Logger;
 use Exception;
 use Random\RandomException;
 
-/**************************************************************************************
+/**
  * CsrfProtection component for the Catalyst Framework.
  *
  * This class provides methods to generate, validate, and manage CSRF tokens to protect
@@ -46,12 +46,7 @@ use Random\RandomException;
  * The class also supports logging for debugging purposes.
  *
  * @package Catalyst\Helpers\Security
- */
-/**
- * Defines the Csrf Protection class contract.
- *
- * @package Catalyst\Helpers\Security
- * Responsibility: Coordinates the csrf protection behavior within its module boundary.
+ * Responsibility: Generates, validates, expires and renders session-backed CSRF tokens.
  */
 class CsrfProtection
 {
@@ -80,7 +75,9 @@ class CsrfProtection
     protected ?Logger $logger = null;
 
     /**
-     * Constructor
+     * Initializes the object with the collaborators or state required for its responsibility.
+     *
+     * Responsibility: Initializes the object with the collaborators or state required for its responsibility.
      */
     protected function __construct()
     {
@@ -88,8 +85,9 @@ class CsrfProtection
     }
 
     /**
-     * Generate a new CSRF token
+     * Generate a new CSRF token.
      *
+     * Responsibility: Generate a new CSRF token.
      * @param string|null $action Optional action context for the token
      * @param int|null $expiry Token expiration time in seconds
      * @return string The generated token
@@ -136,8 +134,9 @@ class CsrfProtection
     }
 
     /**
-     * Validate a CSRF token
+     * Validate a CSRF token.
      *
+     * Responsibility: Validate a CSRF token.
      * @param string $token Token to validate
      * @param string|null $action Optional action context for validation
      * @param bool $removeOnSuccess Whether to remove the token after successful validation
@@ -195,8 +194,9 @@ class CsrfProtection
     }
 
     /**
-     * Clean expired tokens from the session
+     * Clean expired tokens from the session.
      *
+     * Responsibility: Clean expired tokens from the session.
      * @return void
      */
     private function cleanExpiredTokens(): void
@@ -214,8 +214,9 @@ class CsrfProtection
     }
 
     /**
-     * Manage the number of tokens to stay within the limit
+     * Manage the number of tokens to stay within the limit.
      *
+     * Responsibility: Manage the number of tokens to stay within the limit.
      * @return void
      */
     private function manageTokenLimit(): void
@@ -242,8 +243,9 @@ class CsrfProtection
     }
 
     /**
-     * Get HTML input field for CSRF token
+     * Get HTML input field for CSRF token.
      *
+     * Responsibility: Get HTML input field for CSRF token.
      * @param string|null $action Optional action context for the token
      * @return string HTML input field
      * @throws RandomException
@@ -255,8 +257,9 @@ class CsrfProtection
     }
 
     /**
-     * Get a CSRF token for use in JavaScript
+     * Get a CSRF token for use in JavaScript.
      *
+     * Responsibility: Get a CSRF token for use in JavaScript.
      * @param string|null $action Optional action context for the token
      * @return string The generated token
      * @throws RandomException
@@ -268,9 +271,9 @@ class CsrfProtection
     }
 
     /**
-     * Get HTML meta-tag for CSRF token
-     * Useful for SPA applications that need to access the token via JavaScript
+     * Get HTML meta-tag for CSRF token Useful for SPA applications that need to access the token via JavaScript.
      *
+     * Responsibility: Get HTML meta-tag for CSRF token Useful for SPA applications that need to access the token via JavaScript.
      * @param string|null $action Optional action context for the token
      * @return string HTML meta tag
      * @throws RandomException

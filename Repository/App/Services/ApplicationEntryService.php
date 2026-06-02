@@ -35,15 +35,17 @@ use Catalyst\Helpers\Config\AppEntryCatalog;
 use Catalyst\Helpers\Config\ConfigManager;
 
 /**
- * Defines the Application Entry Service class contract.
+ * Service for resolving the configured root entry target.
  *
  * @package App\Services
- * Responsibility: Coordinates the application entry service behavior within its module boundary.
+ * Responsibility: Maps project entry configuration and authentication state to the first route users should reach.
  */
 final class ApplicationEntryService
 {
     /**
-     * Resolves the requested value.
+     * Resolves the root redirect target from project configuration.
+     *
+     * Responsibility: Resolves the root redirect target from project configuration.
      */
     public function resolveRootTarget(): ?string
     {
@@ -74,7 +76,9 @@ final class ApplicationEntryService
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves a configured catalog entry into a navigable path.
+     *
+     * Responsibility: Resolves a configured catalog entry into a navigable path.
      */
     private function resolveCatalogPath(string $entry): ?string
     {

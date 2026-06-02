@@ -35,16 +35,19 @@ use Catalyst\Framework\Traits\SingletonTrait;
 use Catalyst\Framework\WebSocket\WebSocketPublisher;
 
 /**
- * Defines the Presence Manager class contract.
+ * Coordinates collaborative record presence.
  *
  * @package Catalyst\Framework\Presence
- * Responsibility: Coordinates the presence manager behavior within its module boundary.
+ * Responsibility: Converts record claims into presence payloads and broadcasts claim snapshots through WebSocket.
  */
 final class PresenceManager
 {
     use SingletonTrait;
 
     /**
+     * Converts a record claim into a client-facing presence payload.
+     *
+     * Responsibility: Converts a record claim into a client-facing presence payload.
      * @param array<string, mixed>|null $claim
      * @return array<string, mixed>|null
      */
@@ -71,6 +74,9 @@ final class PresenceManager
     }
 
     /**
+     * Publishes a valid record claim snapshot to subscribed clients.
+     *
+     * Responsibility: Publishes a valid record claim snapshot to subscribed clients.
      * @param array<string, mixed>|null $claim
      */
     public function publishClaimSnapshot(?array $claim): bool
@@ -98,6 +104,9 @@ final class PresenceManager
     }
 
     /**
+     * Refreshes a record claim and returns its updated presence payload.
+     *
+     * Responsibility: Refreshes a record claim and returns its updated presence payload.
      * @param array<string, mixed> $metadata
      * @return array<string, mixed>
      */

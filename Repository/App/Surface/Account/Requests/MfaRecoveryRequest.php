@@ -34,14 +34,19 @@ use Catalyst\Framework\Http\Request;
 use Catalyst\Helpers\Validation\Validator;
 
 /**
- * Defines the Mfa Recovery Request class contract.
+ * Validates MFA recovery form input.
  *
  * @package App\Surface\Account\Requests
- * Responsibility: Coordinates the mfa recovery request behavior within its module boundary.
+ * Responsibility: Normalizes and validates the email address used to request an MFA reset.
  */
 final class MfaRecoveryRequest
 {
-    /** @return array{data: array<string, string>, errors: array<string, string[]>} */
+    /**
+     * Extracts the submitted email and returns validation errors keyed by field.
+     *
+     * Responsibility: Extracts the submitted email and returns validation errors keyed by field.
+     * @return array{data: array<string, string>, errors: array<string, string[]>}
+     */
     public function validate(Request $request): array
     {
         $data = [

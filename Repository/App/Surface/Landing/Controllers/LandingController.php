@@ -37,15 +37,17 @@ use Catalyst\Framework\Http\RedirectResponse;
 use Catalyst\Framework\Http\Response;
 
 /**
- * Defines the Landing Controller class contract.
+ * Serves the public marketing landing surface and companion API payload.
  *
  * @package App\Surface\Landing\Controllers
- * Responsibility: Coordinates the landing controller behavior within its module boundary.
+ * Responsibility: Renders the landing demo page, publishes its catalog-backed payload, and normalizes legacy landing aliases.
  */
 class LandingController extends PublicPageController
 {
     /**
-     * Handles the index workflow.
+     * Renders the public landing surface using the shared demo catalog payload.
+     *
+     * Responsibility: Renders the public landing surface using the shared demo catalog payload.
      */
     public function index(): Response
     {
@@ -53,7 +55,9 @@ class LandingController extends PublicPageController
     }
 
     /**
-     * Handles the api workflow.
+     * Returns the landing companion payload for public surface consumers.
+     *
+     * Responsibility: Returns the landing companion payload for public surface consumers.
      */
     public function api(): JsonResponse
     {
@@ -63,7 +67,9 @@ class LandingController extends PublicPageController
     }
 
     /**
-     * Handles the redirect legacy workflow.
+     * Redirects legacy landing aliases to the canonical landing route.
+     *
+     * Responsibility: Redirects legacy landing aliases to the canonical landing route.
      */
     public function redirectLegacy(): RedirectResponse
     {

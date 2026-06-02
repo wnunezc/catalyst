@@ -30,71 +30,20 @@ declare(strict_types=1);
 
 namespace Catalyst\Framework\Authorization;
 
-/**************************************************************************************
- * Policy (abstract)
- *
- * Base class for Catalyst authorization policies. Subclasses represent
- * authorization logic for a specific model or resource.
- *
- * ## Usage
- *
- *   class PostPolicy extends Policy
- *   {
- *       public function canEdit(array $user, array $post): bool
- *       {
- *           return $user['id'] === $post['user_id'];
- *       }
- *
- *       public function canDelete(array $user, array $post): bool
- *       {
- *           return $user['role'] === 'admin';
- *       }
- *   }
- *
- *   // Register the policy in routes.php:
- *   Gate::policy(Post::class, PostPolicy::class);
- *
- *   // Use in controller:
- *   $this->authorize('edit', $post);   // calls PostPolicy::canEdit
- *
- * ## Superadmin bypass
- *
- *   Override before() to grant access unconditionally for certain users:
- *
- *   public function before(array $user, string $ability): ?bool
- *   {
- *       return $user['role'] === 'admin' ? true : null;
- *   }
- *
- *   Returning true  → grant immediately (skip can* method)
- *   Returning false → deny immediately (skip can* method)
- *   Returning null  → evaluate can{Ability}() normally
- *
- * ## Method naming
- *
- *   Ability 'edit'   → method canEdit(array $user, mixed $model): bool
- *   Ability 'delete' → method canDelete(array $user, mixed $model): bool
- *   Ability 'view'   → method canView(array $user, mixed $model): bool
- *
- * @package Catalyst\Framework\Authorization
- */
 /**
- * Defines the Policy class contract.
+ * Provides the base hook for policy-based authorization decisions.
  *
  * @package Catalyst\Framework\Authorization
- * Responsibility: Coordinates the policy behavior within its module boundary.
+ * Responsibility: Lets concrete policies short-circuit ability checks before can* methods run.
  */
 abstract class Policy
 {
     /**
-     * Optional bypass hook — evaluated before any can* method.
+     * Optionally grants, denies, or defers an ability before the concrete policy method runs.
      *
-     * Return true  → grant access unconditionally.
-     * Return false → deny access unconditionally.
-     * Return null  → fall through to the specific can* method.
-     *
+     * Responsibility: Optionally grants, denies, or defers an ability before the concrete policy method runs.
      * @param array  $user    Current authenticated user
-     * @param string $ability Ability being checked (e.g. 'edit', 'delete')
+     * @param string $ability Ability being checked.
      * @return bool|null
      */
     public function before(array $user, string $ability): ?bool

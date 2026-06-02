@@ -34,14 +34,17 @@ use Catalyst\Framework\Http\JsonResponse;
 use Catalyst\Helpers\Config\ConfigManager;
 
 /**
- * Defines the Setup Access Trait trait contract.
+ * Provides shared first-run setup access helpers.
  *
  * @package Catalyst\Framework\Middleware
- * Responsibility: Coordinates the setup access trait behavior within its module boundary.
+ * Responsibility: Normalizes setup paths, recognizes bypass routes, and builds setup JSON errors.
  */
 trait SetupAccessTrait
 {
     /**
+     * Returns routes that remain reachable while initial setup is incomplete.
+     *
+     * Responsibility: Returns routes that remain reachable while initial setup is incomplete.
      * @return string[]
      */
     protected function setupBypassPrefixes(): array
@@ -58,7 +61,9 @@ trait SetupAccessTrait
     }
 
     /**
-     * Determines whether is Framework Configured.
+     * Determines whether application configuration is complete.
+     *
+     * Responsibility: Determines whether application configuration is complete.
      */
     protected function isFrameworkConfigured(): bool
     {
@@ -66,7 +71,9 @@ trait SetupAccessTrait
     }
 
     /**
-     * Normalizes the provided value.
+     * Normalizes a setup request URI for comparison.
+     *
+     * Responsibility: Normalizes a setup request URI for comparison.
      */
     protected function normalizeSetupUri(string $uri): string
     {
@@ -74,7 +81,9 @@ trait SetupAccessTrait
     }
 
     /**
-     * Determines whether is Setup Bypass Uri.
+     * Determines whether a URI is allowed before setup completes.
+     *
+     * Responsibility: Determines whether a URI is allowed before setup completes.
      */
     protected function isSetupBypassUri(string $uri): bool
     {
@@ -91,7 +100,9 @@ trait SetupAccessTrait
     }
 
     /**
-     * Updates the up json error value.
+     * Builds a standardized setup JSON error response.
+     *
+     * Responsibility: Builds a standardized setup JSON error response.
      */
     protected function setupJsonError(string $message, int $status): JsonResponse
     {

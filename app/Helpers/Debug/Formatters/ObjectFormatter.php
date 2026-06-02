@@ -45,6 +45,7 @@ use ReflectionNamedType;
  * circular references, and formatting constants, properties, and methods.
  *
  * @package Catalyst\Helpers\Debug\Formatters;
+ * Responsibility: Formats reflected object structure while enforcing depth, size, and recursion limits.
  */
 class ObjectFormatter
 {
@@ -76,8 +77,9 @@ class ObjectFormatter
     private array $objectsBeingFormatted = [];
 
     /**
-     * Constructor
+     * Initializes the object with the collaborators or state required for its responsibility.
      *
+     * Responsibility: Initializes the object with the collaborators or state required for its responsibility.
      * @param DumperConfig $config Configuration instance
      * @param DumperColorizer $colorizer Colorizer instance
      * @param DumperCollapsible $collapsible Collapsible instance
@@ -96,8 +98,9 @@ class ObjectFormatter
     }
 
     /**
-     * Format object for output
+     * Format object for output.
      *
+     * Responsibility: Format object for output.
      * @param object $var
      * @param bool $isHtml
      * @param int $depth
@@ -195,8 +198,9 @@ class ObjectFormatter
     }
     
     /**
-     * Get class constants with their visibility
+     * Get class constants with their visibility.
      *
+     * Responsibility: Get class constants with their visibility.
      * @param ReflectionClass $reflection
      * @return array Array of constants with their name, value, and visibility
      */
@@ -238,8 +242,9 @@ class ObjectFormatter
     }
     
     /**
-     * Format constants for output
+     * Format constants for output.
      *
+     * Responsibility: Format constants for output.
      * @param array $constants Array of constants with their name, value, and visibility
      * @param bool $isHtml
      * @param int $depth
@@ -282,8 +287,9 @@ class ObjectFormatter
     }
     
     /**
-     * Format properties for output
+     * Format properties for output.
      *
+     * Responsibility: Format properties for output.
      * @param object $var
      * @param array $properties
      * @param bool $isHtml
@@ -356,8 +362,9 @@ class ObjectFormatter
     }
     
     /**
-     * Format methods for output
+     * Format methods for output.
      *
+     * Responsibility: Format methods for output.
      * @param array $methods
      * @param bool $isHtml
      * @param int $depth

@@ -34,15 +34,17 @@ use Catalyst\Helpers\Exceptions\FileSystemException;
 use Exception;
 
 /**
- * Defines the Logger Writer class contract.
+ * Writes formatted log entries to configured destinations.
  *
  * @package Catalyst\Helpers\Log
- * Responsibility: Coordinates the logger writer behavior within its module boundary.
+ * Responsibility: Resolves log paths, creates directories, rotates files and appends entries.
  */
 final class LoggerWriter
 {
     /**
      * Initializes the Logger Writer instance.
+     *
+     * Responsibility: Initializes the Logger Writer instance.
      */
     public function __construct(
         private readonly LogRotator $rotator = new LogRotator()
@@ -50,6 +52,9 @@ final class LoggerWriter
     }
 
     /**
+     * Writes a categorized application log entry.
+     *
+     * Responsibility: Writes a categorized application log entry.
      * @throws Exception
      */
     public function write(LoggerSettings $settings, string $level, string $logEntry): void
@@ -62,6 +67,9 @@ final class LoggerWriter
     }
 
     /**
+     * Writes an entry to the daily email log.
+     *
+     * Responsibility: Writes an entry to the daily email log.
      * @throws Exception
      */
     public function writeEmail(LoggerSettings $settings, string $logEntry): void
@@ -77,7 +85,9 @@ final class LoggerWriter
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves the destination path for a log level and channel.
+     *
+     * Responsibility: Resolves the destination path for a log level and channel.
      */
     private function resolveLogFile(LoggerSettings $settings, string $level): string
     {
@@ -96,7 +106,9 @@ final class LoggerWriter
     }
 
     /**
-     * Handles the ensure directory workflow.
+     * Creates a log directory when missing.
+     *
+     * Responsibility: Creates a log directory when missing.
      */
     private function ensureDirectory(string $directory): void
     {
@@ -106,6 +118,9 @@ final class LoggerWriter
     }
 
     /**
+     * Rotates and appends one entry to a log destination.
+     *
+     * Responsibility: Rotates and appends one entry to a log destination.
      * @throws Exception
      */
     private function appendToFile(string $logFile, string $logEntry, LoggerSettings $settings): void

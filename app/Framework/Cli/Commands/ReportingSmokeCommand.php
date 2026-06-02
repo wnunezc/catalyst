@@ -44,14 +44,20 @@ use Catalyst\Entities\MediaItem;
 use Throwable;
 
 /**
- * Defines the Reporting Smoke Command class contract.
+ * reporting:smoke CLI command.
+ *
+ * Responsibility: Runs the reporting:smoke command to Exercise canonical PA-10 queue + retry + persisted output flows over the unified reporting pipeline.
  *
  * @package Catalyst\Framework\Cli\Commands
- * Responsibility: Coordinates the reporting smoke command behavior within its module boundary.
  */
 final class ReportingSmokeCommand extends AbstractCommand
 {
-    /** @return Option[] */
+    /**
+     * Defines the accepted option schema for this command.
+     *
+     * Responsibility: Defines the accepted option schema for this command.
+     * @return Option[]
+     */
     public function getOptions(): array
     {
         return [
@@ -60,7 +66,9 @@ final class ReportingSmokeCommand extends AbstractCommand
     }
 
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -68,7 +76,9 @@ final class ReportingSmokeCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
@@ -76,7 +86,9 @@ final class ReportingSmokeCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {
@@ -222,7 +234,9 @@ final class ReportingSmokeCommand extends AbstractCommand
     }
 
     /**
-     * Handles the cleanup probe workflow.
+     * Describes the cleanup probe helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the cleanup probe helper workflow used by this CLI component.
      */
     private function cleanupProbe(int $tenantId, string $probe, string $resourceKey, int $recordId): void
     {

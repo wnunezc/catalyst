@@ -39,15 +39,17 @@ use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
 
 /**
- * Defines the Account Recovery Controller class contract.
+ * Serves public account recovery flows for users who cannot sign in.
  *
  * @package App\Surface\Account\Controllers
- * Responsibility: Coordinates the account recovery controller behavior within its module boundary.
+ * Responsibility: Renders guest recovery forms, submits support requests and consumes MFA reset tokens.
  */
 final class AccountRecoveryController extends Controller
 {
     /**
-     * Handles the start workflow.
+     * Renders the public account recovery option picker.
+     *
+     * Responsibility: Renders the public account recovery option picker.
      */
     public function start(): Response
     {
@@ -55,7 +57,9 @@ final class AccountRecoveryController extends Controller
     }
 
     /**
-     * Handles the detail display workflow.
+     * Renders the public MFA reset request form.
+     *
+     * Responsibility: Renders the public MFA reset request form.
      */
     public function showMfaRequest(): Response
     {
@@ -63,7 +67,9 @@ final class AccountRecoveryController extends Controller
     }
 
     /**
-     * Handles the request mfa reset workflow.
+     * Validates a public MFA reset request and sends the recovery email when eligible.
+     *
+     * Responsibility: Validates a public MFA reset request and sends the recovery email when eligible.
      */
     public function requestMfaReset(Request $request): Response
     {
@@ -81,7 +87,9 @@ final class AccountRecoveryController extends Controller
     }
 
     /**
-     * Handles the consume mfa reset workflow.
+     * Consumes an MFA reset token and disables MFA when the token is valid.
+     *
+     * Responsibility: Consumes an MFA reset token and disables MFA when the token is valid.
      */
     public function consumeMfaReset(string $token): Response
     {
@@ -94,7 +102,9 @@ final class AccountRecoveryController extends Controller
     }
 
     /**
-     * Handles the detail display workflow.
+     * Renders the public support recovery request form.
+     *
+     * Responsibility: Renders the public support recovery request form.
      */
     public function showSupportRequest(): Response
     {
@@ -106,7 +116,9 @@ final class AccountRecoveryController extends Controller
     }
 
     /**
-     * Handles the submit support request workflow.
+     * Submits a public support recovery request.
+     *
+     * Responsibility: Submits a public support recovery request.
      */
     public function submitSupportRequest(Request $request): Response
     {
@@ -114,7 +126,9 @@ final class AccountRecoveryController extends Controller
     }
 
     /**
-     * Handles the detail display workflow.
+     * Renders the public compromised-account recovery request form.
+     *
+     * Responsibility: Renders the public compromised-account recovery request form.
      */
     public function showCompromisedRequest(): Response
     {
@@ -126,7 +140,9 @@ final class AccountRecoveryController extends Controller
     }
 
     /**
-     * Handles the submit compromised request workflow.
+     * Submits a public compromised-account recovery request.
+     *
+     * Responsibility: Submits a public compromised-account recovery request.
      */
     public function submitCompromisedRequest(Request $request): Response
     {
@@ -134,7 +150,9 @@ final class AccountRecoveryController extends Controller
     }
 
     /**
-     * Handles the request workflow.
+     * Validates and stores a public support recovery request.
+     *
+     * Responsibility: Validates and stores a public support recovery request.
      */
     private function handleSupport(Request $request, ?string $forcedType, string $fallback): Response
     {
@@ -151,7 +169,12 @@ final class AccountRecoveryController extends Controller
         return $this->redirect('/login');
     }
 
-    /** @param array<string, mixed> $data */
+    /**
+     * Renders a guest recovery view with the shared account shell scope.
+     *
+     * Responsibility: Renders a guest recovery view with the shared account shell scope.
+     * @param array<string, mixed> $data
+     */
     private function guest(string $view, string $title, array $data = []): Response
     {
         $shell = new AccountShellViewModel();

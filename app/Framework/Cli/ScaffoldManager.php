@@ -34,17 +34,20 @@ use InvalidArgumentException;
 use RuntimeException;
 
 /**
- * Defines the Scaffold Manager class contract.
+ * Scaffolding helper for CLI generators.
+ *
+ * Responsibility: Normalizes names, renders stubs and writes generated framework artifacts.
  *
  * @package Catalyst\Framework\Cli
- * Responsibility: Coordinates the scaffold manager behavior within its module boundary.
  */
 class ScaffoldManager
 {
     private string $stubPath;
 
     /**
-     * Initializes the Scaffold Manager instance.
+     * Initializes dependencies required by this CLI component.
+     *
+     * Responsibility: Initializes dependencies required by this CLI component.
      */
     public function __construct(?string $stubPath = null)
     {
@@ -52,7 +55,9 @@ class ScaffoldManager
     }
 
     /**
-     * Normalizes the provided value.
+     * Normalizes generated class names and enforces the expected suffix.
+     *
+     * Responsibility: Normalizes generated class names and enforces the expected suffix.
      */
     public function normalizeClassName(string $name, string $suffix = ''): string
     {
@@ -73,7 +78,9 @@ class ScaffoldManager
     }
 
     /**
-     * Normalizes the provided value.
+     * Normalizes an application surface module name for generated artifacts.
+     *
+     * Responsibility: Normalizes an application surface module name for generated artifacts.
      */
     public function normalizeAppModule(string $module): string
     {
@@ -97,7 +104,9 @@ class ScaffoldManager
     }
 
     /**
-     * Normalizes the provided value.
+     * Normalizes a module name into namespace-safe segments.
+     *
+     * Responsibility: Normalizes a module name into namespace-safe segments.
      */
     public function normalizeModuleName(string $module): string
     {
@@ -117,7 +126,9 @@ class ScaffoldManager
     }
 
     /**
-     * Normalizes the provided value.
+     * Normalizes the target repository space for module scaffolding.
+     *
+     * Responsibility: Normalizes the target repository space for module scaffolding.
      */
     public function normalizeSpace(?string $space): string
     {
@@ -137,7 +148,9 @@ class ScaffoldManager
     }
 
     /**
-     * Renders the current view state.
+     * Renders a named stub with resolved template variables.
+     *
+     * Responsibility: Renders a named stub with resolved template variables.
      */
     public function renderStub(string $stubName, array $variables): string
     {
@@ -162,7 +175,9 @@ class ScaffoldManager
     }
 
     /**
-     * Handles the ensure directory workflow.
+     * Creates a target directory when it does not already exist.
+     *
+     * Responsibility: Creates a target directory when it does not already exist.
      */
     public function ensureDirectory(string $directory): void
     {
@@ -176,7 +191,9 @@ class ScaffoldManager
     }
 
     /**
-     * Writes the requested value.
+     * Writes generated file contents after guarding against existing paths.
+     *
+     * Responsibility: Writes generated file contents after guarding against existing paths.
      */
     public function writeFile(string $path, string $contents): void
     {
@@ -193,7 +210,9 @@ class ScaffoldManager
     }
 
     /**
-     * Handles the module base directory workflow.
+     * Builds the base directory path for a generated module.
+     *
+     * Responsibility: Builds the base directory path for a generated module.
      */
     public function moduleBaseDirectory(string $space, string $module): string
     {
@@ -205,7 +224,9 @@ class ScaffoldManager
     }
 
     /**
-     * Handles the module namespace root workflow.
+     * Builds the namespace root for a generated module.
+     *
+     * Responsibility: Builds the namespace root for a generated module.
      */
     public function moduleNamespaceRoot(string $space, string $module): string
     {
@@ -217,7 +238,9 @@ class ScaffoldManager
     }
 
     /**
-     * Handles the space directory workflow.
+     * Returns the repository directory for a normalized space.
+     *
+     * Responsibility: Returns the repository directory for a normalized space.
      */
     public function spaceDirectory(string $space): string
     {
@@ -225,7 +248,9 @@ class ScaffoldManager
     }
 
     /**
-     * Handles the module view namespace workflow.
+     * Builds the view namespace used by a generated module.
+     *
+     * Responsibility: Builds the view namespace used by a generated module.
      */
     public function moduleViewNamespace(string $module): string
     {
@@ -233,7 +258,9 @@ class ScaffoldManager
     }
 
     /**
-     * Handles the module route uri workflow.
+     * Builds the default route URI prefix for a generated module.
+     *
+     * Responsibility: Builds the default route URI prefix for a generated module.
      */
     public function moduleRouteUri(string $module): string
     {
@@ -241,7 +268,9 @@ class ScaffoldManager
     }
 
     /**
-     * Handles the default table name workflow.
+     * Derives the default table name for a generated model class.
+     *
+     * Responsibility: Derives the default table name for a generated model class.
      */
     public function defaultTableName(string $className): string
     {
@@ -252,7 +281,9 @@ class ScaffoldManager
     }
 
     /**
-     * Normalizes the provided value.
+     * Normalizes one namespace or path segment for scaffolding.
+     *
+     * Responsibility: Normalizes one namespace or path segment for scaffolding.
      */
     private function normalizeSegment(string $value, string $label): string
     {
@@ -277,7 +308,9 @@ class ScaffoldManager
     }
 
     /**
-     * Handles the to snake case workflow.
+     * Converts a name to snake_case.
+     *
+     * Responsibility: Converts a name to snake_case.
      */
     private function toSnakeCase(string $value): string
     {
@@ -287,7 +320,9 @@ class ScaffoldManager
     }
 
     /**
-     * Handles the to kebab case workflow.
+     * Converts a name to kebab-case.
+     *
+     * Responsibility: Converts a name to kebab-case.
      */
     private function toKebabCase(string $value): string
     {
@@ -297,7 +332,9 @@ class ScaffoldManager
     }
 
     /**
-     * Handles the pluralize workflow.
+     * Applies the framework default plural form for generated table names.
+     *
+     * Responsibility: Applies the framework default plural form for generated table names.
      */
     private function pluralize(string $value): string
     {

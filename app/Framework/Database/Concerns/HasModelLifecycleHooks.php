@@ -33,15 +33,15 @@ namespace Catalyst\Framework\Database\Concerns;
 use Closure;
 
 /**
- * Defines the Has Model Lifecycle Hooks trait contract.
+ * Splits model boot and lifecycle hook registration behavior out of Model.
  *
  * @package Catalyst\Framework\Database\Concerns
- * Responsibility: Coordinates the has model lifecycle hooks behavior within its module boundary.
+ * Responsibility: Boot model traits once per concrete class and dispatch registered ORM lifecycle callbacks.
  */
 trait HasModelLifecycleHooks
 {
     /**
-     * Handles the boot if needed workflow.
+     * Boots the concrete model class once and invokes discovered trait boot methods.
      */
     protected static function bootIfNeeded(): void
     {
@@ -69,7 +69,7 @@ trait HasModelLifecycleHooks
     }
 
     /**
-     * Registers the requested definition.
+     * Registers a callback for one ORM lifecycle event on the concrete model class.
      */
     public static function registerHook(string $event, Closure $callback): void
     {
@@ -77,7 +77,9 @@ trait HasModelLifecycleHooks
     }
 
     /**
-     * Handles the fire hook workflow.
+     * Dispatches registered callbacks for the given lifecycle event on the current model.
+     *
+     * Responsibility: Dispatches registered callbacks for the given lifecycle event on the current model.
      */
     protected function fireHook(string $event): void
     {

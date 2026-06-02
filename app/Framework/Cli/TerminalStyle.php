@@ -31,10 +31,11 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Cli;
 
 /**
- * Defines the Terminal Style class contract.
+ * Terminal color formatter.
+ *
+ * Responsibility: Wraps CLI output text with ANSI color sequences when supported.
  *
  * @package Catalyst\Framework\Cli
- * Responsibility: Coordinates the terminal style behavior within its module boundary.
  */
 final class TerminalStyle
 {
@@ -47,7 +48,7 @@ final class TerminalStyle
     private static ?bool $supportsAnsi = null;
 
     /**
-     * Handles the red workflow.
+     * Wraps text in the red ANSI color when supported.
      */
     public static function red(string $text): string
     {
@@ -55,7 +56,7 @@ final class TerminalStyle
     }
 
     /**
-     * Handles the green workflow.
+     * Wraps text in the green ANSI color when supported.
      */
     public static function green(string $text): string
     {
@@ -63,7 +64,7 @@ final class TerminalStyle
     }
 
     /**
-     * Handles the yellow workflow.
+     * Wraps text in the yellow ANSI color when supported.
      */
     public static function yellow(string $text): string
     {
@@ -71,7 +72,7 @@ final class TerminalStyle
     }
 
     /**
-     * Handles the cyan workflow.
+     * Wraps text in the cyan ANSI color when supported.
      */
     public static function cyan(string $text): string
     {
@@ -79,7 +80,7 @@ final class TerminalStyle
     }
 
     /**
-     * Handles the supports ansi workflow.
+     * Determines whether the current output stream supports ANSI color.
      */
     public static function supportsAnsi(): bool
     {
@@ -103,7 +104,7 @@ final class TerminalStyle
     }
 
     /**
-     * Handles the wrap workflow.
+     * Applies an ANSI color wrapper when supported.
      */
     private static function wrap(string $text, string $color): string
     {

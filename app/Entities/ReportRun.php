@@ -36,10 +36,10 @@ use Catalyst\Framework\Traits\HasAuditLogTrait;
 use Catalyst\Framework\Traits\HasTimestampsTrait;
 
 /**
- * Defines the Report Run class contract.
+ * ORM entity for asynchronous report runs.
  *
  * @package Catalyst\Entities
- * Responsibility: Coordinates the report run behavior within its module boundary.
+ * Responsibility: Maps report criteria, output attachments, queue linkage, execution status, and timing.
  */
 final class ReportRun extends Model
 {

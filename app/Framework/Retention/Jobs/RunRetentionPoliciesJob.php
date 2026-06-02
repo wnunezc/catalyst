@@ -34,15 +34,17 @@ use Catalyst\Framework\Queue\QueueableJobInterface;
 use Catalyst\Framework\Retention\RetentionManager;
 
 /**
- * Defines the Run Retention Policies Job class contract.
+ * Executes retention policies asynchronously through the maintenance queue.
  *
  * @package Catalyst\Framework\Retention\Jobs
- * Responsibility: Coordinates the run retention policies job behavior within its module boundary.
+ * Responsibility: Carries retention scope across the queue boundary and invokes policy evaluation.
  */
 final class RunRetentionPoliciesJob implements QueueableJobInterface
 {
     /**
      * Initializes the Run Retention Policies Job instance.
+     *
+     * Responsibility: Initializes the Run Retention Policies Job instance.
      */
     public function __construct(
         private readonly ?string $resourceKey = null,
@@ -52,7 +54,9 @@ final class RunRetentionPoliciesJob implements QueueableJobInterface
     }
 
     /**
-     * Handles the request workflow.
+     * Runs retention policies for the configured resource scope.
+     *
+     * Responsibility: Runs retention policies for the configured resource scope.
      */
     public function handle(): void
     {
@@ -60,7 +64,9 @@ final class RunRetentionPoliciesJob implements QueueableJobInterface
     }
 
     /**
-     * Handles the display name workflow.
+     * Returns the retention-job label.
+     *
+     * Responsibility: Returns the retention-job label.
      */
     public function displayName(): string
     {
@@ -68,7 +74,9 @@ final class RunRetentionPoliciesJob implements QueueableJobInterface
     }
 
     /**
-     * Handles the queue name workflow.
+     * Returns the queue selected for retention work.
+     *
+     * Responsibility: Returns the queue selected for retention work.
      */
     public function queueName(): string
     {
@@ -76,7 +84,9 @@ final class RunRetentionPoliciesJob implements QueueableJobInterface
     }
 
     /**
-     * Handles the max attempts workflow.
+     * Returns the allowed retention-attempt count.
+     *
+     * Responsibility: Returns the allowed retention-attempt count.
      */
     public function maxAttempts(): int
     {
@@ -84,7 +94,9 @@ final class RunRetentionPoliciesJob implements QueueableJobInterface
     }
 
     /**
-     * Handles the backoff seconds workflow.
+     * Returns the retry delay for retention failures.
+     *
+     * Responsibility: Returns the retry delay for retention failures.
      */
     public function backoffSeconds(): int
     {
@@ -92,6 +104,9 @@ final class RunRetentionPoliciesJob implements QueueableJobInterface
     }
 
     /**
+     * Exports retention scope and queue routing for persistence.
+     *
+     * Responsibility: Exports retention scope and queue routing for persistence.
      * @return array<string, mixed>
      */
     public function toPayload(): array
@@ -104,6 +119,8 @@ final class RunRetentionPoliciesJob implements QueueableJobInterface
     }
 
     /**
+     * Restores a retention job from persisted state.
+     *
      * @param array<string, mixed> $payload
      */
     public static function fromPayload(array $payload): static

@@ -37,27 +37,18 @@ use Catalyst\Framework\Http\Response;
 use Catalyst\Helpers\Config\ConfigManager;
 use Catalyst\Repository\Settings\Support\AdminReadinessProbe;
 
-/**************************************************************************************
- * ConfigController — renders the Settings panel.
- *
- * Routes:
- *   GET /configuration/environment-setup → index()
- *
- * Loads config values from ConfigManager JSON (if configured) or falls back
- * to GET_ENV_VAR defaults from .env. Passes them to the view for pre-population.
- *
- * @package Catalyst\Repository\Settings\Controllers
- **************************************************************************************/
 /**
- * Defines the Config Controller class contract.
+ * Renders the environment setup panel with current configuration values.
  *
  * @package Catalyst\Repository\Settings\Controllers
- * Responsibility: Coordinates the config controller behavior within its module boundary.
+ * Responsibility: Loads configurable sections, evaluates administrator readiness and exposes the canonical setup route.
  */
 class ConfigController extends Controller
 {
     /**
      * Initializes the Config Controller instance.
+     *
+     * Responsibility: Initializes the Config Controller instance.
      */
     public function __construct(
         private readonly AdminReadinessProbe $adminReadinessProbe = new AdminReadinessProbe()
@@ -68,6 +59,7 @@ class ConfigController extends Controller
     /**
      * Display the framework settings panel.
      *
+     * Responsibility: Display the framework settings panel.
      * @param Request $request
      * @return Response
      */
@@ -136,7 +128,9 @@ class ConfigController extends Controller
     }
 
     /**
-     * Handles the redirect canonical workflow.
+     * Redirects legacy setup entry requests to the canonical route.
+     *
+     * Responsibility: Redirects legacy setup entry requests to the canonical route.
      */
     public function redirectCanonical(): RedirectResponse
     {

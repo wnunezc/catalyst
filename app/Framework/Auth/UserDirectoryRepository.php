@@ -39,8 +39,8 @@ use Exception;
 /**
  * Read-side repository for administration surfaces that need user directory data.
  *
- * Controllers use this repository instead of embedding SQL so user lookup,
- * listing, sorting and option-building rules remain centralized and reusable.
+ * @package Catalyst\Framework\Auth
+ * Responsibility: Provide tenant-scoped user summaries, select options and admin listings.
  */
 final class UserDirectoryRepository
 {
@@ -50,7 +50,9 @@ final class UserDirectoryRepository
     private Logger $logger;
 
     /**
-     * Initializes the User Directory Repository instance.
+     * Initializes database and logging collaborators for user directory reads.
+     *
+     * Responsibility: Initializes database and logging collaborators for user directory reads.
      */
     protected function __construct()
     {
@@ -59,6 +61,9 @@ final class UserDirectoryRepository
     }
 
     /**
+     * Returns a compact active-user summary for display and lookup surfaces.
+     *
+     * Responsibility: Returns a compact active-user summary for display and lookup surfaces.
      * @return array{id:int,name:string,email:string}|null
      */
     public function findActiveSummary(int $id): ?array
@@ -91,6 +96,9 @@ final class UserDirectoryRepository
     }
 
     /**
+     * Builds active-user select options for tenant-scoped forms.
+     *
+     * Responsibility: Builds active-user select options for tenant-scoped forms.
      * @return array<int, array{value:string,label:string}>
      */
     public function activeUserOptions(string $fallbackLabel = 'User'): array
@@ -124,6 +132,9 @@ final class UserDirectoryRepository
     }
 
     /**
+     * Searches users for administration grids with filters, roles and pagination.
+     *
+     * Responsibility: Searches users for administration grids with filters, roles and pagination.
      * @param array<string, mixed> $state
      * @return array{rows: array<int, array<string, mixed>>, total: int}
      */
@@ -234,7 +245,9 @@ final class UserDirectoryRepository
     }
 
     /**
-     * Resolves the requested value.
+     * Restricts requested user sort columns to safe SQL expressions.
+     *
+     * Responsibility: Restricts requested user sort columns to safe SQL expressions.
      */
     private function resolveUserSort(string $column): string
     {
@@ -249,7 +262,9 @@ final class UserDirectoryRepository
     }
 
     /**
-     * Resolves the requested value.
+     * Normalizes requested user sort direction to SQL ASC or DESC.
+     *
+     * Responsibility: Normalizes requested user sort direction to SQL ASC or DESC.
      */
     private function resolveUserDirection(string $direction): string
     {
@@ -257,7 +272,9 @@ final class UserDirectoryRepository
     }
 
     /**
-     * Handles the current tenant id workflow.
+     * Resolves the required tenant identifier for user directory queries.
+     *
+     * Responsibility: Resolves the required tenant identifier for user directory queries.
      */
     private function currentTenantId(): int
     {

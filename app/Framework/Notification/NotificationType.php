@@ -37,6 +37,7 @@ namespace Catalyst\Framework\Notification;
  * and corresponding FontAwesome icons.
  *
  * @package Catalyst\Framework\Notification
+ * Responsibility: Maps notification semantic types to Bootstrap classes, icons, and contrast styles.
  */
 enum NotificationType: string
 {
@@ -49,8 +50,9 @@ enum NotificationType: string
     case SECONDARY = 'secondary';
 
     /**
-     * Get the Bootstrap alert class for this notification type
+     * Get the Bootstrap alert class for this notification type.
      *
+     * Responsibility: Maps the notification type to its Bootstrap alert presentation class.
      * @return string Bootstrap alert class
      */
     public function toBootstrapClass(): string
@@ -66,8 +68,9 @@ enum NotificationType: string
     }
 
     /**
-     * Get the default FontAwesome icon for this notification type
+     * Get the default FontAwesome icon for this notification type.
      *
+     * Responsibility: Maps the notification type to its default FontAwesome icon class.
      * @return string FontAwesome icon class
      */
     public function getDefaultIcon(): string
@@ -83,8 +86,9 @@ enum NotificationType: string
     }
 
     /**
-     * Get the toast background class for this notification type
+     * Get the toast background class for this notification type.
      *
+     * Responsibility: Maps the notification type to its Bootstrap toast background class.
      * @return string Toast background class
      */
     public function toToastClass(): string
@@ -100,8 +104,9 @@ enum NotificationType: string
     }
 
     /**
-     * Get text color class for contrast
+     * Get text color class for contrast.
      *
+     * Responsibility: Get text color class for contrast.
      * @return string Text color class
      */
     public function getTextClass(): string

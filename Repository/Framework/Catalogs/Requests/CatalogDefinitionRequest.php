@@ -40,10 +40,10 @@ use Catalyst\Helpers\Exceptions\ValidationException;
 use Catalyst\Helpers\Validation\Validator;
 
 /**
- * Defines the Catalog Definition Request class contract.
+ * Validates catalog definition create and update payloads.
  *
  * @package Catalyst\Repository\Catalogs\Requests
- * Responsibility: Coordinates the catalog definition request behavior within its module boundary.
+ * Responsibility: Authorize catalog mutations and enforce accepted fields, validation rules and key uniqueness.
  */
 final class CatalogDefinitionRequest extends FormRequest
 {
@@ -53,7 +53,9 @@ final class CatalogDefinitionRequest extends FormRequest
     private ?array $resolvedData = null;
 
     /**
-     * Handles the authorize workflow.
+     * Authorizes creation or update according to the routed catalog identifier.
+     *
+     * Responsibility: Authorizes creation or update according to the routed catalog identifier.
      */
     public function authorize(): bool
     {
@@ -65,6 +67,9 @@ final class CatalogDefinitionRequest extends FormRequest
     }
 
     /**
+     * Returns the catalog definition fields accepted from input.
+     *
+     * Responsibility: Returns the catalog definition fields accepted from input.
      * @return string[]
      */
     public function only(): array
@@ -77,6 +82,9 @@ final class CatalogDefinitionRequest extends FormRequest
     }
 
     /**
+     * Declares validation rules for catalog definition input.
+     *
+     * Responsibility: Declares validation rules for catalog definition input.
      * @return array<string, string>
      */
     public function rules(): array
@@ -89,6 +97,9 @@ final class CatalogDefinitionRequest extends FormRequest
     }
 
     /**
+     * Returns translated labels for catalog definition validation errors.
+     *
+     * Responsibility: Returns translated labels for catalog definition validation errors.
      * @return array<string, string>
      */
     public function labels(): array
@@ -101,7 +112,9 @@ final class CatalogDefinitionRequest extends FormRequest
     }
 
     /**
-     * Handles the sensitive resource key workflow.
+     * Identifies catalogs as the sensitivity policy resource.
+     *
+     * Responsibility: Identifies catalogs as the sensitivity policy resource.
      */
     protected function sensitiveResourceKey(): ?string
     {
@@ -109,6 +122,9 @@ final class CatalogDefinitionRequest extends FormRequest
     }
 
     /**
+     * Returns the validated catalog definition payload, resolving it lazily.
+     *
+     * Responsibility: Returns the validated catalog definition payload, resolving it lazily.
      * @return array<string, mixed>
      */
     public function validated(): array
@@ -121,6 +137,9 @@ final class CatalogDefinitionRequest extends FormRequest
     }
 
     /**
+     * Authorizes and validates the complete catalog definition payload.
+     *
+     * Responsibility: Authorizes and validates the complete catalog definition payload.
      * @throws ValidationException
      * @throws ForbiddenException
      */
@@ -148,6 +167,9 @@ final class CatalogDefinitionRequest extends FormRequest
     }
 
     /**
+     * Validates catalog key uniqueness beyond the base field rules.
+     *
+     * Responsibility: Validates catalog key uniqueness beyond the base field rules.
      * @param array<string, mixed> $data
      * @return array<string, string[]>
      */

@@ -32,7 +32,7 @@ namespace Catalyst\Helpers\Exceptions;
 
 use RuntimeException;
 
-/**************************************************************************************
+/**
  * ForbiddenException — HTTP 403 Forbidden
  *
  * Thrown when an authenticated user lacks the role or permission required
@@ -40,18 +40,8 @@ use RuntimeException;
  *
  * ExceptionHandler converts this to a 403 JSON response (API) or 403 page (web).
  *
- * Factory methods:
- *   ForbiddenException::role('admin')                 — route requires a role
- *   ForbiddenException::permission('manage-users')    — route requires a permission
- *   ForbiddenException::action('edit-post')           — Gate/Policy denied an ability
- *
  * @package Catalyst\Helpers\Exceptions
- */
-/**
- * Defines the Forbidden Exception class contract.
- *
- * @package Catalyst\Helpers\Exceptions
- * Responsibility: Coordinates the forbidden exception behavior within its module boundary.
+ * Responsibility: Carries denial context for role, permission and policy authorization failures.
  */
 class ForbiddenException extends RuntimeException
 {
@@ -60,6 +50,8 @@ class ForbiddenException extends RuntimeException
 
     /**
      * Initializes the Forbidden Exception instance.
+     *
+     * Responsibility: Initializes the Forbidden Exception instance.
      */
     private function __construct(string $message, string $context, string $contextValue)
     {
@@ -117,7 +109,9 @@ class ForbiddenException extends RuntimeException
     // -- Accessors -------------------------------------------------------------
 
     /**
-     * Returns the context value.
+     * Returns the denial context type.
+     *
+     * Responsibility: Returns the denial context type.
      */
     public function getContext(): string
     {
@@ -125,7 +119,9 @@ class ForbiddenException extends RuntimeException
     }
 
     /**
-     * Returns the context value value.
+     * Returns the role, permission or ability associated with the denial.
+     *
+     * Responsibility: Returns the role, permission or ability associated with the denial.
      */
     public function getContextValue(): string
     {

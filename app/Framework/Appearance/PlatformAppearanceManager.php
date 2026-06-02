@@ -37,10 +37,10 @@ use Catalyst\Helpers\Config\ConfigManager;
 use InvalidArgumentException;
 
 /**
- * Defines the Platform Appearance Manager class contract.
+ * Manages platform appearance settings, branding assets, and runtime theme payloads.
  *
  * @package Catalyst\Framework\Appearance
- * Responsibility: Coordinates the platform appearance manager behavior within its module boundary.
+ * Responsibility: Normalizes appearance configuration, exposes view models, stores brand assets, and constrains customizer values.
  */
 final class PlatformAppearanceManager
 {
@@ -70,7 +70,9 @@ final class PlatformAppearanceManager
     private StorageManager $storage;
 
     /**
-     * Initializes the Platform Appearance Manager instance.
+     * Initializes configuration and storage services used by appearance workflows.
+     *
+     * Responsibility: Initializes configuration and storage services used by appearance workflows.
      */
     protected function __construct()
     {
@@ -79,6 +81,9 @@ final class PlatformAppearanceManager
     }
 
     /**
+     * Returns normalized platform appearance settings with legacy top-level aliases.
+     *
+     * Responsibility: Returns normalized platform appearance settings with legacy top-level aliases.
      * @return array<string, mixed>
      */
     public function settings(): array
@@ -89,6 +94,9 @@ final class PlatformAppearanceManager
     }
 
     /**
+     * Returns the available theme families and their default branding metadata.
+     *
+     * Responsibility: Returns the available theme families and their default branding metadata.
      * @return array<string, array<string, mixed>>
      */
     public function themeCatalog(): array
@@ -113,6 +121,9 @@ final class PlatformAppearanceManager
     }
 
     /**
+     * Resolves the requested theme family or falls back to the active configured theme.
+     *
+     * Responsibility: Resolves the requested theme family or falls back to the active configured theme.
      * @return array<string, mixed>
      */
     public function themeDefinition(?string $family = null): array
@@ -126,6 +137,9 @@ final class PlatformAppearanceManager
     }
 
     /**
+     * Builds default brand labels from the selected theme definition.
+     *
+     * Responsibility: Builds default brand labels from the selected theme definition.
      * @return array{brand_name: string, brand_short_name: string, brand_tagline: string}
      */
     public function themeBrandDefaults(?string $family = null): array
@@ -142,7 +156,9 @@ final class PlatformAppearanceManager
     }
 
     /**
-     * Handles the theme family workflow.
+     * Resolves the active theme family from branding settings and validates it against the catalog.
+     *
+     * Responsibility: Resolves the active theme family from branding settings and validates it against the catalog.
      */
     public function themeFamily(): string
     {
@@ -154,7 +170,9 @@ final class PlatformAppearanceManager
     }
 
     /**
-     * Handles the default variant workflow.
+     * Resolves the configured light or dark default variant for the platform shell.
+     *
+     * Responsibility: Resolves the configured light or dark default variant for the platform shell.
      */
     public function defaultVariant(): string
     {
@@ -166,7 +184,9 @@ final class PlatformAppearanceManager
     }
 
     /**
-     * Handles the allow user variant override workflow.
+     * Reports whether end users may override the platform color variant.
+     *
+     * Responsibility: Reports whether end users may override the platform color variant.
      */
     public function allowUserVariantOverride(): bool
     {
@@ -174,7 +194,9 @@ final class PlatformAppearanceManager
     }
 
     /**
-     * Determines whether is Admin Customizer Enabled.
+     * Determines whether the Inspinia admin customizer is exposed to users.
+     *
+     * Responsibility: Determines whether the Inspinia admin customizer is exposed to users.
      */
     public function isAdminCustomizerEnabled(): bool
     {
@@ -185,6 +207,9 @@ final class PlatformAppearanceManager
     }
 
     /**
+     * Returns the locked platform theme configuration used when the customizer is disabled.
+     *
+     * Responsibility: Returns the locked platform theme configuration used when the customizer is disabled.
      * @return array<string, string>
      */
     public function platformThemeConfig(): array
@@ -197,6 +222,9 @@ final class PlatformAppearanceManager
     }
 
     /**
+     * Builds the runtime payload consumed by the shell and customizer front-end.
+     *
+     * Responsibility: Builds the runtime payload consumed by the shell and customizer front-end.
      * @return array<string, mixed>
      */
     public function runtimeViewModel(): array
@@ -217,6 +245,9 @@ final class PlatformAppearanceManager
     }
 
     /**
+     * Lists the allowed customizer values accepted by the platform appearance contract.
+     *
+     * Responsibility: Lists the allowed customizer values accepted by the platform appearance contract.
      * @return array<string, list<string>|array<string, array<string, string>>>
      */
     public function customizerAllowedValues(): array
@@ -231,6 +262,9 @@ final class PlatformAppearanceManager
     }
 
     /**
+     * Sanitizes an incoming theme configuration and applies closed-skin presets when selected.
+     *
+     * Responsibility: Sanitizes an incoming theme configuration and applies closed-skin presets when selected.
      * @return array<string, string>
      */
     public function sanitizeThemeConfig(array $config): array
@@ -265,6 +299,9 @@ final class PlatformAppearanceManager
     }
 
     /**
+     * Builds the branding view model used by layouts, logos, favicon, and PDF settings.
+     *
+     * Responsibility: Builds the branding view model used by layouts, logos, favicon, and PDF settings.
      * @return array<string, mixed>
      */
     public function brandingViewModel(): array
@@ -310,6 +347,9 @@ final class PlatformAppearanceManager
     }
 
     /**
+     * Builds the compact appearance payload injected during document head bootstrap.
+     *
+     * Responsibility: Builds the compact appearance payload injected during document head bootstrap.
      * @return array<string, mixed>
      */
     public function headBootstrapPayload(): array
@@ -331,6 +371,9 @@ final class PlatformAppearanceManager
     }
 
     /**
+     * Resolves watermark text, color, size, and supported local logo path for PDF rendering.
+     *
+     * Responsibility: Resolves watermark text, color, size, and supported local logo path for PDF rendering.
      * @return array<string, mixed>
      */
     public function pdfWatermarkSettings(): array
@@ -358,6 +401,9 @@ final class PlatformAppearanceManager
     }
 
     /**
+     * Merges and persists normalized appearance settings into the platform configuration section.
+     *
+     * Responsibility: Merges and persists normalized appearance settings into the platform configuration section.
      * @param array<string, mixed> $payload
      */
     public function writeSettings(array $payload): void
@@ -375,7 +421,9 @@ final class PlatformAppearanceManager
     }
 
     /**
-     * Handles the persistence workflow.
+     * Stores an uploaded branding asset in the requested logo or favicon slot.
+     *
+     * Responsibility: Stores an uploaded branding asset in the requested logo or favicon slot.
      */
     public function storeBrandAsset(UploadedFile $file, string $slot): string
     {
@@ -387,6 +435,9 @@ final class PlatformAppearanceManager
     }
 
     /**
+     * Provides the baseline appearance configuration used before stored overrides are applied.
+     *
+     * Responsibility: Provides the baseline appearance configuration used before stored overrides are applied.
      * @return array<string, mixed>
      */
     private function defaults(): array
@@ -416,6 +467,9 @@ final class PlatformAppearanceManager
     }
 
     /**
+     * Provides default Inspinia customizer values for a locked platform theme.
+     *
+     * Responsibility: Provides default Inspinia customizer values for a locked platform theme.
      * @return array<string, string>
      */
     private function themeConfigDefaults(): array
@@ -433,6 +487,9 @@ final class PlatformAppearanceManager
     }
 
     /**
+     * Lists skin presets whose palette values are fixed by the platform.
+     *
+     * Responsibility: Lists skin presets whose palette values are fixed by the platform.
      * @return array<string, array{theme: string, topbar-color: string, sidenav-color: string}>
      */
     private function closedSkinPresets(): array
@@ -462,6 +519,9 @@ final class PlatformAppearanceManager
     }
 
     /**
+     * Normalizes stored appearance settings, legacy keys, booleans, theme values, and branding fields.
+     *
+     * Responsibility: Normalizes stored appearance settings, legacy keys, booleans, theme values, and branding fields.
      * @param array<string, mixed> $raw
      * @return array<string, mixed>
      */
@@ -522,6 +582,9 @@ final class PlatformAppearanceManager
     }
 
     /**
+     * Adds legacy top-level branding keys to the normalized settings array.
+     *
+     * Responsibility: Adds legacy top-level branding keys to the normalized settings array.
      * @param array<string, mixed> $settings
      * @return array<string, mixed>
      */
@@ -536,6 +599,9 @@ final class PlatformAppearanceManager
     }
 
     /**
+     * Selects a value when it belongs to the allowed list or returns the fallback.
+     *
+     * Responsibility: Selects a value when it belongs to the allowed list or returns the fallback.
      * @param list<string> $choices
      */
     private function pickAllowed(string $value, string $fallback, array $choices): string
@@ -544,7 +610,9 @@ final class PlatformAppearanceManager
     }
 
     /**
-     * Handles the boolean value workflow.
+     * Coerces common scalar boolean representations while preserving a default for unknown values.
+     *
+     * Responsibility: Coerces common scalar boolean representations while preserving a default for unknown values.
      */
     private function booleanValue(mixed $value, bool $default): bool
     {
@@ -573,7 +641,9 @@ final class PlatformAppearanceManager
     }
 
     /**
-     * Handles the default brand name workflow.
+     * Resolves the default brand name from project configuration.
+     *
+     * Responsibility: Resolves the default brand name from project configuration.
      */
     private function defaultBrandName(): string
     {
@@ -583,7 +653,9 @@ final class PlatformAppearanceManager
     }
 
     /**
-     * Handles the initials workflow.
+     * Derives an uppercase short brand label from the words in a display name.
+     *
+     * Responsibility: Derives an uppercase short brand label from the words in a display name.
      */
     private function initials(string $value): string
     {
@@ -602,7 +674,9 @@ final class PlatformAppearanceManager
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves blank or legacy administration tagline text through translation.
+     *
+     * Responsibility: Resolves blank or legacy administration tagline text through translation.
      */
     private function resolveBrandTagline(string $value): string
     {
@@ -616,7 +690,9 @@ final class PlatformAppearanceManager
     }
 
     /**
-     * Normalizes the provided value.
+     * Normalizes a stored asset reference into an external URL, absolute public path, or storage URL.
+     *
+     * Responsibility: Normalizes a stored asset reference into an external URL, absolute public path, or storage URL.
      */
     private function normalizeAssetPath(string $path): string
     {
@@ -638,7 +714,9 @@ final class PlatformAppearanceManager
     }
 
     /**
-     * Normalizes the provided value.
+     * Normalizes a hex color to uppercase six-digit form or returns the PDF-safe default.
+     *
+     * Responsibility: Normalizes a hex color to uppercase six-digit form or returns the PDF-safe default.
      */
     private function normalizeHexColor(string $value): string
     {
@@ -652,7 +730,9 @@ final class PlatformAppearanceManager
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves a public asset reference to a local filesystem path when the file exists.
+     *
+     * Responsibility: Resolves a public asset reference to a local filesystem path when the file exists.
      */
     private function resolveLocalPublicAssetPath(string $path): string
     {
@@ -671,7 +751,9 @@ final class PlatformAppearanceManager
     }
 
     /**
-     * Determines whether is Supported Pdf Watermark Logo.
+     * Determines whether a local asset path can be used as a PDF watermark logo.
+     *
+     * Responsibility: Determines whether a local asset path can be used as a PDF watermark logo.
      */
     private function isSupportedPdfWatermarkLogo(string $path): bool
     {
@@ -679,6 +761,9 @@ final class PlatformAppearanceManager
     }
 
     /**
+     * Recursively merges override values into a base settings array without numeric append semantics.
+     *
+     * Responsibility: Recursively merges override values into a base settings array without numeric append semantics.
      * @param array<string, mixed> $base
      * @param array<string, mixed> $overrides
      * @return array<string, mixed>

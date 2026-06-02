@@ -35,7 +35,7 @@ use Catalyst\Framework\Http\Response;
 use Catalyst\Framework\Traits\LoadsFeatureConfigTrait;
 use Closure;
 
-/**************************************************************************************
+/**
  * CorsMiddleware — handles CORS headers for cross-origin requests.
  *
  * Runs globally (registered before CsrfMiddleware) so that:
@@ -59,12 +59,7 @@ use Closure;
  *   - OPTIONS preflight returns 204 No Content immediately; no further middleware runs.
  *
  * @package Catalyst\Framework\Middleware
- **************************************************************************************/
-/**
- * Defines the Cors Middleware class contract.
- *
- * @package Catalyst\Framework\Middleware
- * Responsibility: Coordinates the cors middleware behavior within its module boundary.
+ * Responsibility: Loads CORS policy, handles preflight requests, and appends cross-origin response headers.
  */
 class CorsMiddleware extends CoreMiddleware implements FeatureFlagInterface
 {
@@ -96,6 +91,7 @@ class CorsMiddleware extends CoreMiddleware implements FeatureFlagInterface
     /**
      * Process the request: handle preflight or add CORS headers to the response.
      *
+     * Responsibility: Process the request: handle preflight or add CORS headers to the response.
      * @param Request $request
      * @param Closure $next
      * @return Response
@@ -129,6 +125,8 @@ class CorsMiddleware extends CoreMiddleware implements FeatureFlagInterface
 
     /**
      * Handle OPTIONS preflight and return 204 No Content.
+     *
+     * Responsibility: Handle OPTIONS preflight and return 204 No Content.
      */
     private function handlePreflight(Request $request, string $origin): Response
     {
@@ -166,6 +164,8 @@ class CorsMiddleware extends CoreMiddleware implements FeatureFlagInterface
 
     /**
      * Append CORS headers to an already-built response.
+     *
+     * Responsibility: Append CORS headers to an already-built response.
      */
     private function addCorsHeaders(string $origin, Response $response): Response
     {
@@ -191,7 +191,9 @@ class CorsMiddleware extends CoreMiddleware implements FeatureFlagInterface
     // --- Helpers --------------------------------------------------------------
 
     /**
-     * Determines whether is Origin Allowed.
+     * Determines whether the request origin matches the configured CORS allowlist.
+     *
+     * Responsibility: Determines whether the request origin matches the configured CORS allowlist.
      */
     private function isOriginAllowed(string $origin): bool
     {
@@ -207,7 +209,9 @@ class CorsMiddleware extends CoreMiddleware implements FeatureFlagInterface
     }
 
     /**
-     * Determines whether is Method Allowed.
+     * Determines whether the requested method is permitted by the CORS policy.
+     *
+     * Responsibility: Determines whether the requested method is permitted by the CORS policy.
      */
     private function isMethodAllowed(string $method): bool
     {
@@ -215,8 +219,9 @@ class CorsMiddleware extends CoreMiddleware implements FeatureFlagInterface
     }
 
     /**
-     * Returns the concrete origin when credentials are required
-     * (browsers reject wildcard + credentials).
+     * Returns the concrete origin when credentials are required (browsers reject wildcard + credentials).
+     *
+     * Responsibility: Returns the concrete origin when credentials are required (browsers reject wildcard + credentials).
      */
     private function resolveOriginHeader(string $origin): string
     {
@@ -229,7 +234,9 @@ class CorsMiddleware extends CoreMiddleware implements FeatureFlagInterface
     // --- Config ---------------------------------------------------------------
 
     /**
-     * Determines whether is Enabled.
+     * Determines whether CORS handling is enabled by feature configuration.
+     *
+     * Responsibility: Determines whether CORS handling is enabled by feature configuration.
      */
     public function isEnabled(): bool
     {
@@ -238,7 +245,9 @@ class CorsMiddleware extends CoreMiddleware implements FeatureFlagInterface
     }
 
     /**
-     * Loads the requested data.
+     * Loads and normalizes CORS feature configuration once per middleware instance.
+     *
+     * Responsibility: Loads and normalizes CORS feature configuration once per middleware instance.
      */
     private function loadConfig(): void
     {
@@ -277,6 +286,7 @@ class CorsMiddleware extends CoreMiddleware implements FeatureFlagInterface
     /**
      * Parse a comma-separated env string into a trimmed string array.
      *
+     * Responsibility: Parse a comma-separated env string into a trimmed string array.
      * @param mixed        $value
      * @param string[]     $default
      * @return string[]

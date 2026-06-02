@@ -31,14 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Repository\Settings\Requests;
 
 /**
- * Defines the Web Socket Config Request class contract.
+ * Validates WebSocket settings from the setup surface.
  *
  * @package Catalyst\Repository\Settings\Requests
- * Responsibility: Coordinates the web socket config request behavior within its module boundary.
+ * Responsibility: Defines WebSocket bind, publisher and port constraints and normalizes submitted values.
  */
 final class WebSocketConfigRequest extends AbstractSettingsRequest
 {
     /**
+     * Returns validation rules for WebSocket settings.
+     *
+     * Responsibility: Returns validation rules for WebSocket settings.
      * @return array<string, string>
      */
     public function rules(): array
@@ -52,6 +55,9 @@ final class WebSocketConfigRequest extends AbstractSettingsRequest
     }
 
     /**
+     * Builds normalized WebSocket input for validation.
+     *
+     * Responsibility: Builds normalized WebSocket input for validation.
      * @return array<string, mixed>
      */
     protected function validationData(): array

@@ -34,19 +34,11 @@ use Catalyst\Framework\Traits\SingletonTrait;
 use Catalyst\Helpers\Log\Logger;
 use Exception;
 
-/**************************************************************************************
- * Request class for handling HTTP request data
- *
- * Provides methods for accessing and sanitizing request data
- * from various sources ($_GET, $_POST, $_REQUEST, etc.)
- *
- * @package Catalyst\Framework\Http
- */
 /**
- * Defines the Request class contract.
+ * Captures and normalizes the current HTTP request.
  *
  * @package Catalyst\Framework\Http
- * Responsibility: Coordinates the request behavior within its module boundary.
+ * Responsibility: Stores sanitized superglobal data, parses JSON input, resolves headers, files, attributes and request metadata for framework consumers.
  */
 class Request
 {
@@ -103,7 +95,9 @@ class Request
     private string $contentType;
 
     /**
-     * Constructor
+     * Captures request method, content type and normalized input state.
+     *
+     * Responsibility: Captures request method, content type and normalized input state.
      * @throws Exception
      */
     protected function __construct()
@@ -115,9 +109,9 @@ class Request
     }
 
     /**
-     * Clean and store superglobal values
+     * Stores superglobal values and trims GET and POST input recursively.
      *
-     * @return self
+     * Responsibility: Stores superglobal values and trims GET and POST input recursively.
      * @throws Exception
      */
     public function cleanSuperGlobals(): self
@@ -153,9 +147,9 @@ class Request
     }
 
     /**
-     * Parse the raw input content based on content type
+     * Parses raw JSON request content into POST input.
      *
-     * @return self
+     * Responsibility: Parses raw JSON request content into POST input.
      */
     public function parseInputContent(): self
     {
@@ -175,9 +169,9 @@ class Request
     }
 
     /**
-     * Get request method
+     * Returns the HTTP request method.
      *
-     * @return string Request method (GET, POST, etc.)
+     * Responsibility: Returns the HTTP request method.
      */
     public function getMethod(): string
     {
@@ -185,11 +179,9 @@ class Request
     }
 
     /**
-     * Get value from GET parameters
+     * Returns a value from GET parameters.
      *
-     * @param string $key Parameter name
-     * @param mixed $default Default value if parameter doesn't exist
-     * @return mixed Parameter value or default
+     * Responsibility: Returns a value from GET parameters.
      */
     public function get(string $key, mixed $default = null): mixed
     {
@@ -197,11 +189,9 @@ class Request
     }
 
     /**
-     * Get value from POST parameters
+     * Returns a value from POST parameters.
      *
-     * @param string $key Parameter name
-     * @param mixed $default Default value if parameter doesn't exist
-     * @return mixed Parameter value or default
+     * Responsibility: Returns a value from POST parameters.
      */
     public function post(string $key, mixed $default = null): mixed
     {
@@ -209,9 +199,9 @@ class Request
     }
 
     /**
-     * Get all GET parameters
+     * Returns all GET parameters.
      *
-     * @return array All GET parameters
+     * Responsibility: Returns all GET parameters.
      */
     public function getAllGet(): array
     {
@@ -219,9 +209,9 @@ class Request
     }
 
     /**
-     * Get all POST parameters
+     * Returns all POST parameters.
      *
-     * @return array All POST parameters
+     * Responsibility: Returns all POST parameters.
      */
     public function getAllPost(): array
     {
@@ -229,9 +219,9 @@ class Request
     }
 
     /**
-     * Get raw input content
+     * Returns the raw request body content.
      *
-     * @return string|null Raw input content
+     * Responsibility: Returns the raw request body content.
      */
     public function getContent(): ?string
     {
@@ -239,25 +229,9 @@ class Request
     }
 
     /**
-     * Sanitize input recursively.
+     * Trims string input recursively without applying output escaping.
      *
-     * DESIGN DECISION — Input layer strategy:
-     * Only trim() is applied here. htmlspecialchars() is intentionally NOT applied at input.
-     *
-     * Rationale:
-     * - XSS prevention belongs at the OUTPUT layer (templates), not input.
-     *   Use the e() helper in every template: <?= e($value) ?>
-     * - SQL injection is prevented by prepared statements in the DB layer,
-     *   NOT by htmlspecialchars() (which does not prevent SQL injection).
-     * - Applying htmlspecialchars() at input corrupts data stored in the database
-     *   (e.g. O'Brien becomes O&#039;Brien), breaks string comparisons, and forces
-     *   the ORM/DB layer to reverse-decode values before writing.
-     *
-     * Output escaping reference: app/Helpers/GlobalFunction/dump-function.php — e()
-     * DB safety reference: all queries must use prepared statements (PDO/MySQLi).
-     *
-     * @param mixed $input Input to sanitize
-     * @return mixed Sanitized input
+     * Responsibility: Trims string input recursively without applying output escaping.
      */
     private function sanitizeInput(mixed $input): mixed
     {
@@ -273,9 +247,9 @@ class Request
     }
 
     /**
-     * Get the current request URI
+     * Returns the current request URI.
      *
-     * @return string Request URI
+     * Responsibility: Returns the current request URI.
      */
     public function getUri(): string
     {
@@ -283,11 +257,9 @@ class Request
     }
 
     /**
-     * Get value from SERVER parameters
+     * Returns a value from SERVER parameters.
      *
-     * @param string $key Parameter name
-     * @param mixed $default Default value if parameter doesn't exist
-     * @return mixed Parameter value or default
+     * Responsibility: Returns a value from SERVER parameters.
      */
     public function server(string $key, mixed $default = null): mixed
     {
@@ -295,9 +267,9 @@ class Request
     }
 
     /**
-     * Get all SERVER parameters
+     * Returns all SERVER parameters.
      *
-     * @return array All SERVER parameters
+     * Responsibility: Returns all SERVER parameters.
      */
     public function getAllServer(): array
     {
@@ -305,7 +277,9 @@ class Request
     }
 
     /**
-     * Updates the attribute value.
+     * Stores an internal request attribute.
+     *
+     * Responsibility: Stores an internal request attribute.
      */
     public function setAttribute(string $key, mixed $value): self
     {
@@ -315,7 +289,9 @@ class Request
     }
 
     /**
-     * Handles the attribute workflow.
+     * Returns an internal request attribute.
+     *
+     * Responsibility: Returns an internal request attribute.
      */
     public function attribute(string $key, mixed $default = null): mixed
     {
@@ -323,6 +299,9 @@ class Request
     }
 
     /**
+     * Merges multiple internal request attributes.
+     *
+     * Responsibility: Merges multiple internal request attributes.
      * @param array<string, mixed> $attributes
      */
     public function mergeAttributes(array $attributes): self
@@ -333,6 +312,9 @@ class Request
     }
 
     /**
+     * Returns all internal request attributes.
+     *
+     * Responsibility: Returns all internal request attributes.
      * @return array<string, mixed>
      */
     public function attributes(): array
@@ -341,10 +323,9 @@ class Request
     }
 
     /**
-     * Get HTTP headers from the request
+     * Returns all HTTP headers or a single normalized header value.
      *
-     * @param string|null $name Specific header name to retrieve (optional)
-     * @return array|string|null All headers or specific header value if name provided
+     * Responsibility: Returns all HTTP headers or a single normalized header value.
      */
     public function getHeaders(?string $name = null): array|string|null
     {
@@ -386,7 +367,9 @@ class Request
     }
 
     /**
-     * Handles the idempotency key workflow.
+     * Returns the submitted idempotency key from headers or input.
+     *
+     * Responsibility: Returns the submitted idempotency key from headers or input.
      */
     public function idempotencyKey(): string
     {
@@ -406,10 +389,9 @@ class Request
     }
 
     /**
-     * Get the current domain of the application
+     * Resolves the current request domain from host server values.
      *
-     * @param Request $request The current request
-     * @return string The current domain
+     * Responsibility: Resolves the current request domain from host server values.
      */
     public function getCurrentDomain(Request $request): string
     {
@@ -435,10 +417,9 @@ class Request
 
 
     /**
-     * Get the client IP address
+     * Resolves the client IP address, optionally trusting proxy headers.
      *
-     * @param bool $trustProxy Whether to trust proxy headers (default: true)
-     * @return string Client IP address
+     * Responsibility: Resolves the client IP address, optionally trusting proxy headers.
      */
     public function getClientIp(bool $trustProxy = false): string
     {
@@ -481,9 +462,9 @@ class Request
     }
 
     /**
-     * Check if the request is an AJAX request
+     * Checks whether the request was sent through XMLHttpRequest.
      *
-     * @return bool
+     * Responsibility: Checks whether the request was sent through XMLHttpRequest.
      */
     public function isAjax(): bool
     {
@@ -491,9 +472,9 @@ class Request
     }
 
     /**
-     * Check if the request expects a JSON response
+     * Checks whether the request expects a JSON response.
      *
-     * @return bool
+     * Responsibility: Checks whether the request expects a JSON response.
      */
     public function expectsJson(): bool
     {
@@ -502,11 +483,9 @@ class Request
     }
 
     /**
-     * Get an input value from GET or POST
+     * Returns an input value from POST or GET data.
      *
-     * @param string $key Input key
-     * @param mixed $default Default value if not found
-     * @return mixed
+     * Responsibility: Returns an input value from POST or GET data.
      */
     public function input(string $key, mixed $default = null): mixed
     {
@@ -514,9 +493,9 @@ class Request
     }
 
     /**
-     * Get all input from GET and POST merged
+     * Returns merged GET and POST input.
      *
-     * @return array
+     * Responsibility: Returns merged GET and POST input.
      */
     public function all(): array
     {
@@ -524,10 +503,9 @@ class Request
     }
 
     /**
-     * Get only specific input keys
+     * Returns only the requested input keys.
      *
-     * @param array $keys Keys to retrieve
-     * @return array
+     * Responsibility: Returns only the requested input keys.
      */
     public function only(array $keys): array
     {
@@ -536,10 +514,9 @@ class Request
     }
 
     /**
-     * Get all input except specific keys
+     * Returns input except the requested keys.
      *
-     * @param array $keys Keys to exclude
-     * @return array
+     * Responsibility: Returns input except the requested keys.
      */
     public function except(array $keys): array
     {
@@ -548,10 +525,9 @@ class Request
     }
 
     /**
-     * Check if an input key exists
+     * Checks whether an input key exists.
      *
-     * @param string $key Input key
-     * @return bool
+     * Responsibility: Checks whether an input key exists.
      */
     public function has(string $key): bool
     {
@@ -559,10 +535,9 @@ class Request
     }
 
     /**
-     * Check if input is filled (exists and not empty)
+     * Checks whether an input key exists and is not empty.
      *
-     * @param string $key Input key
-     * @return bool
+     * Responsibility: Checks whether an input key exists and is not empty.
      */
     public function filled(string $key): bool
     {
@@ -571,10 +546,9 @@ class Request
     }
 
     /**
-     * Get a normalized uploaded file by key.
+     * Returns a normalized uploaded file by key.
      *
-     * @param string $key
-     * @return UploadedFile|null
+     * Responsibility: Returns a normalized uploaded file by key.
      */
     public function file(string $key): ?UploadedFile
     {
@@ -584,8 +558,9 @@ class Request
     }
 
     /**
-     * Get all normalized uploaded files.
+     * Returns all normalized uploaded files.
      *
+     * Responsibility: Returns all normalized uploaded files.
      * @return array<string, UploadedFile>
      */
     public function files(): array
@@ -610,6 +585,9 @@ class Request
     }
 
     /**
+     * Normalizes one PHP file upload array into an UploadedFile instance.
+     *
+     * Responsibility: Normalizes one PHP file upload array into an UploadedFile instance.
      * @param mixed $fileData
      * @return UploadedFile|null
      */

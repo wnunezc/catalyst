@@ -34,10 +34,11 @@ use Catalyst\Framework\Argument\ArgumentBag;
 use Catalyst\Framework\Cli\AbstractCommand;
 
 /**
- * Defines the Quality Check Command class contract.
+ * quality:check CLI command.
+ *
+ * Responsibility: Runs the quality:check command to Run the standard local Composer, routing, structural, security and status checks.
  *
  * @package Catalyst\Framework\Cli\Commands
- * Responsibility: Coordinates the quality check command behavior within its module boundary.
  */
 final class QualityCheckCommand extends AbstractCommand
 {
@@ -78,7 +79,9 @@ final class QualityCheckCommand extends AbstractCommand
     ];
 
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -86,7 +89,9 @@ final class QualityCheckCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
@@ -94,7 +99,9 @@ final class QualityCheckCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {
@@ -148,7 +155,9 @@ final class QualityCheckCommand extends AbstractCommand
     }
 
     /**
-     * Executes the command workflow.
+     * Describes the run shell command helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the run shell command helper workflow used by this CLI component.
      */
     private function runShellCommand(string $command): int
     {

@@ -38,10 +38,10 @@ use Catalyst\Helpers\Exceptions\ValidationException;
 use Catalyst\Helpers\Validation\Validator;
 
 /**
- * Defines the Mfa Code Request class contract.
+ * Validates MFA challenge and setup confirmation codes.
  *
  * @package Catalyst\Repository\Auth\Requests
- * Responsibility: Coordinates the mfa code request behavior within its module boundary.
+ * Responsibility: Accepts TOTP codes and, when allowed, backup-code input before controllers verify the secret.
  */
 final class MfaCodeRequest extends FormRequest
 {
@@ -53,7 +53,9 @@ final class MfaCodeRequest extends FormRequest
     private ?array $resolvedData = null;
 
     /**
-     * Initializes the Mfa Code Request instance.
+     * Captures whether backup-code format is allowed for this MFA request.
+     *
+     * Responsibility: Captures whether backup-code format is allowed for this MFA request.
      */
     public function __construct(?Request $request = null, bool $allowBackupCode = true)
     {
@@ -62,6 +64,9 @@ final class MfaCodeRequest extends FormRequest
     }
 
     /**
+     * Limits validation data to the MFA code field.
+     *
+     * Responsibility: Limits validation data to the MFA code field.
      * @return string[]
      */
     public function only(): array
@@ -70,6 +75,9 @@ final class MfaCodeRequest extends FormRequest
     }
 
     /**
+     * Requires the MFA code field and constrains the accepted input length.
+     *
+     * Responsibility: Requires the MFA code field and constrains the accepted input length.
      * @return array<string, string>
      */
     public function rules(): array
@@ -80,6 +88,9 @@ final class MfaCodeRequest extends FormRequest
     }
 
     /**
+     * Provides the translated field label used in validation feedback.
+     *
+     * Responsibility: Provides the translated field label used in validation feedback.
      * @return array<string, string>
      */
     public function labels(): array
@@ -90,7 +101,9 @@ final class MfaCodeRequest extends FormRequest
     }
 
     /**
-     * Handles the validation message workflow.
+     * Returns the generic message displayed when MFA code validation fails.
+     *
+     * Responsibility: Returns the generic message displayed when MFA code validation fails.
      */
     public function validationMessage(): string
     {
@@ -98,6 +111,9 @@ final class MfaCodeRequest extends FormRequest
     }
 
     /**
+     * Returns normalized data, resolving validation once when needed.
+     *
+     * Responsibility: Returns normalized data, resolving validation once when needed.
      * @return array<string, mixed>
      */
     public function validated(): array
@@ -110,6 +126,9 @@ final class MfaCodeRequest extends FormRequest
     }
 
     /**
+     * Authorizes and validates the request, then stores the normalized MFA code payload.
+     *
+     * Responsibility: Authorizes and validates the request, then stores the normalized MFA code payload.
      * @throws ValidationException
      * @throws ForbiddenException
      */
@@ -140,6 +159,9 @@ final class MfaCodeRequest extends FormRequest
     }
 
     /**
+     * Builds validation data from the request using the trimmed MFA code value.
+     *
+     * Responsibility: Builds validation data from the request using the trimmed MFA code value.
      * @return array<string, mixed>
      */
     protected function validationData(): array
@@ -150,6 +172,9 @@ final class MfaCodeRequest extends FormRequest
     }
 
     /**
+     * Rejects codes that match neither TOTP format nor an allowed backup-code format.
+     *
+     * Responsibility: Rejects codes that match neither TOTP format nor an allowed backup-code format.
      * @param array<string, mixed> $data
      * @return array<string, string[]>
      */

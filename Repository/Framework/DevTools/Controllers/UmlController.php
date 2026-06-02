@@ -36,15 +36,17 @@ use Catalyst\Framework\Http\Response;
 use Catalyst\Helpers\Config\ConfigManager;
 
 /**
- * Defines the Uml Controller class contract.
+ * Presents the development UML and runtime architecture workspace.
  *
  * @package Catalyst\Repository\DevTools\Controllers
- * Responsibility: Coordinates the uml controller behavior within its module boundary.
+ * Responsibility: Supplies configuration diagnostics to the trusted UML renderer.
  */
 class UmlController extends Controller
 {
     /**
-     * Handles the index workflow.
+     * Renders UML diagnostics with loaded configuration metadata.
+     *
+     * Responsibility: Renders UML diagnostics with loaded configuration metadata.
      */
     public function index(Request $request): Response
     {

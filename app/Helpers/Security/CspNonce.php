@@ -41,6 +41,7 @@ use Random\RandomException;
  * View templates use get() to add the nonce attribute to inline scripts.
  *
  * @package Catalyst\Helpers\Security
+ * Responsibility: Generates and exposes the nonce shared by CSP headers and inline scripts.
  */
 class CspNonce
 {

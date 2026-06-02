@@ -36,19 +36,14 @@ use Countable;
 use IteratorAggregate;
 use Traversable;
 
-/**************************************************************************************
+/**
  * RouteCollection class for storing and managing routes
  *
  * Stores routes organized by method and name, and provides lookup capabilities
  * for route matching and URL generation.
  *
  * @package Catalyst\Framework\Route
- */
-/**
- * Defines the Route Collection class contract.
- *
- * @package Catalyst\Framework\Route
- * Responsibility: Coordinates the route collection behavior within its module boundary.
+ * Responsibility: Indexes routes by method and name, performs route matching, and exposes reverse URL generation.
  */
 class RouteCollection implements Countable, IteratorAggregate
 {
@@ -96,8 +91,9 @@ class RouteCollection implements Countable, IteratorAggregate
     }
 
     /**
-     * Add a route to the collection
+     * Add a route to the collection.
      *
+     * Responsibility: Add a route to the collection.
      * @param Route $route Route to add
      * @return self For method chaining
      */
@@ -119,8 +115,9 @@ class RouteCollection implements Countable, IteratorAggregate
     }
 
     /**
-     * Get a route by name
+     * Get a route by name.
      *
+     * Responsibility: Get a route by name.
      * @param string $name Route name
      * @return Route The named route
      * @throws RouteNotFoundException If the named route doesn't exist
@@ -135,8 +132,9 @@ class RouteCollection implements Countable, IteratorAggregate
     }
 
     /**
-     * Get routes that match a specific HTTP method
+     * Get routes that match a specific HTTP method.
      *
+     * Responsibility: Get routes that match a specific HTTP method.
      * @param string $method HTTP method
      * @return Route[] Array of routes
      */
@@ -188,8 +186,9 @@ class RouteCollection implements Countable, IteratorAggregate
     }
 
     /**
-     * Try to match a URI against an array of routes
+     * Try to match a URI against an array of routes.
      *
+     * Responsibility: Try to match a URI against an array of routes.
      * @param Route[] $routes Routes to check
      * @param string $uri URI to match
      * @param array &$params Matched parameters (passed by reference)
@@ -210,8 +209,9 @@ class RouteCollection implements Countable, IteratorAggregate
     }
 
     /**
-     * Get all routes in the collection
+     * Get all routes in the collection.
      *
+     * Responsibility: Get all routes in the collection.
      * @return Route[] Array of all routes
      */
     public function all(): array
@@ -220,8 +220,9 @@ class RouteCollection implements Countable, IteratorAggregate
     }
 
     /**
-     * Get all named routes
+     * Get all named routes.
      *
+     * Responsibility: Get all named routes.
      * @return array<string, Route> Array of named routes
      */
     public function getNamedRoutes(): array
@@ -230,8 +231,9 @@ class RouteCollection implements Countable, IteratorAggregate
     }
 
     /**
-     * Check if a named route exists
+     * Check if a named route exists.
      *
+     * Responsibility: Check if a named route exists.
      * @param string $name Route name
      * @return bool True if route exists
      */
@@ -241,8 +243,9 @@ class RouteCollection implements Countable, IteratorAggregate
     }
 
     /**
-     * Get URL generator for reverse routing
+     * Get URL generator for reverse routing.
      *
+     * Responsibility: Get URL generator for reverse routing.
      * @return UrlGenerator URL generator instance
      */
     public function getUrlGenerator(): UrlGenerator
@@ -255,8 +258,9 @@ class RouteCollection implements Countable, IteratorAggregate
     }
 
     /**
-     * Get the number of routes in the collection
+     * Get the number of routes in the collection.
      *
+     * Responsibility: Exposes the registered route count for Countable consumers and diagnostics.
      * @return int Route count
      */
     public function count(): int
@@ -265,8 +269,9 @@ class RouteCollection implements Countable, IteratorAggregate
     }
 
     /**
-     * Get iterator for routes
+     * Get iterator for routes.
      *
+     * Responsibility: Get iterator for routes.
      * @return Traversable Route iterator
      */
     public function getIterator(): Traversable

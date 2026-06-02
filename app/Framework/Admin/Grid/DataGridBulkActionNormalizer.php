@@ -31,15 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Admin\Grid;
 
 /**
- * Defines the Data Grid Bulk Action Normalizer class contract.
+ * Normalizes configured bulk actions for DataGrid rendering.
  *
  * @package Catalyst\Framework\Admin\Grid
- * Responsibility: Coordinates the data grid bulk action normalizer behavior within its module boundary.
+ * Responsibility: Converts bulk action definitions into form-ready metadata while preserving grid query state.
  */
 final class DataGridBulkActionNormalizer
 {
     /**
-     * Initializes the Data Grid Bulk Action Normalizer instance.
+     * Receives the URL builder used to preserve grid state on bulk action targets.
+     *
+     * Responsibility: Receives the URL builder used to preserve grid state on bulk action targets.
      */
     public function __construct(
         private readonly DataGridUrlBuilder $urlBuilder
@@ -47,8 +49,9 @@ final class DataGridBulkActionNormalizer
     }
 
     /**
-     * Normalize configured bulk actions into render-ready definitions.
+     * Converts configured bulk actions into button/form definitions consumed by grid templates.
      *
+     * Responsibility: Converts configured bulk actions into button/form definitions consumed by grid templates.
      * @param array<int, array<string, mixed>> $bulkActions
      * @param array<string, mixed> $state
      * @param array<string, mixed> $config

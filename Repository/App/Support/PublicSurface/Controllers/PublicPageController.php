@@ -36,14 +36,17 @@ use Catalyst\Framework\Http\Response;
 use Catalyst\Framework\Navigation\NavigationRegistry;
 
 /**
- * Defines the Public Page Controller class contract.
+ * Base controller for public demo surface pages.
  *
  * @package App\Support\PublicSurface\Controllers
- * Responsibility: Coordinates the public page controller behavior within its module boundary.
+ * Responsibility: Prepares shared public layout context, navigation, and versioned surface assets.
  */
 abstract class PublicPageController extends Controller
 {
     /**
+     * Renders a public page with shared metadata, navigation, and work asset wiring.
+     *
+     * Responsibility: Renders a public page with shared metadata, navigation, and work asset wiring.
      * @param array<string, mixed> $page
      */
     protected function renderPublicPage(string $template, array $page): Response
@@ -85,7 +88,9 @@ abstract class PublicPageController extends Controller
     }
 
     /**
-     * Handles the redirect legacy path workflow.
+     * Redirects legacy public paths to the current surface route.
+     *
+     * Responsibility: Redirects legacy public paths to the current surface route.
      */
     protected function redirectLegacyPath(string $path): RedirectResponse
     {
@@ -93,7 +98,9 @@ abstract class PublicPageController extends Controller
     }
 
     /**
-     * Handles the public asset workflow.
+     * Builds a cache-busted public asset URL from a repository-relative file path.
+     *
+     * Responsibility: Builds a cache-busted public asset URL from a repository-relative file path.
      */
     private function publicAsset(string $href, string $relativePath): string
     {

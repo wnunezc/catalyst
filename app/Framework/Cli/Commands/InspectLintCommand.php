@@ -36,15 +36,18 @@ use Catalyst\Framework\Cli\AbstractCommand;
 use Catalyst\Framework\Module\ModuleLinter;
 
 /**
- * Defines the Inspect Lint Command class contract.
+ * inspect:lint CLI command.
+ *
+ * Responsibility: Runs the inspect:lint command to Run structural framework lint on modules, registries, guards and work assets.
  *
  * @package Catalyst\Framework\Cli\Commands
- * Responsibility: Coordinates the inspect lint command behavior within its module boundary.
  */
 final class InspectLintCommand extends AbstractCommand
 {
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -52,14 +55,21 @@ final class InspectLintCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
         return 'Run structural framework lint on modules, registries, guards and work assets';
     }
 
-    /** @return Option[] */
+    /**
+     * Defines the accepted option schema for this command.
+     *
+     * Responsibility: Defines the accepted option schema for this command.
+     * @return Option[]
+     */
     public function getOptions(): array
     {
         return [
@@ -68,7 +78,9 @@ final class InspectLintCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {

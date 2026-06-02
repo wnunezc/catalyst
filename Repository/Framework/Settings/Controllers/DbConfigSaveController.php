@@ -38,15 +38,17 @@ use Catalyst\Repository\Settings\Requests\DbConfigRequest;
 use Catalyst\Repository\Settings\Support\DbConfigWriter;
 
 /**
- * Defines the Db Config Save Controller class contract.
+ * Persists database settings and reports connectivity readiness.
  *
  * @package Catalyst\Repository\Settings\Controllers
- * Responsibility: Coordinates the db config save controller behavior within its module boundary.
+ * Responsibility: Delegates validated database writes and surfaces connectivity warnings without discarding saved configuration.
  */
 final class DbConfigSaveController extends Controller
 {
     /**
      * Initializes the Db Config Save Controller instance.
+     *
+     * Responsibility: Initializes the Db Config Save Controller instance.
      */
     public function __construct(
         private readonly DbConfigWriter $writer = new DbConfigWriter()
@@ -55,7 +57,9 @@ final class DbConfigSaveController extends Controller
     }
 
     /**
-     * Persists the current state.
+     * Saves validated database settings and reports the probe outcome.
+     *
+     * Responsibility: Saves validated database settings and reports the probe outcome.
      */
     public function saveDb(DbConfigRequest $request): Response
     {

@@ -37,7 +37,8 @@ use Exception;
  *
  * Handles mail-related errors with specific error codes and messages.
  *
- * @package Catalyst\Framework\Exceptions
+ * @package Catalyst\Helpers\Exceptions
+ * Responsibility: Provides typed error codes and factories for mail delivery failures.
  */
 class MailException extends Exception
 {

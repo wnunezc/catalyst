@@ -31,14 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Helpers\ToolBox;
 
 /**
- * Defines the Draw Box Style Palette class contract.
+ * Maps draw-box style identifiers to CLI and HTML presentation values.
  *
  * @package Catalyst\Helpers\ToolBox
- * Responsibility: Coordinates the draw box style palette behavior within its module boundary.
+ * Responsibility: Supplies terminal escape codes and CSS class names for formatted boxes.
  */
 final class DrawBoxStylePalette
 {
     /**
+     * Returns CLI color and reset sequences for a style identifier.
+     *
+     * Responsibility: Returns CLI color and reset sequences for a style identifier.
      * @return array{r: string, c: string}
      */
     public function getCliScheme(int $styleType): array
@@ -73,7 +76,9 @@ final class DrawBoxStylePalette
     }
 
     /**
-     * Returns the html style class value.
+     * Returns the HTML CSS class for a style identifier.
+     *
+     * Responsibility: Returns the HTML CSS class for a style identifier.
      */
     public function getHtmlStyleClass(int $styleType, bool $isError): string
     {
@@ -96,6 +101,9 @@ final class DrawBoxStylePalette
     }
 
     /**
+     * Returns the default style associated with the active environment.
+     *
+     * Responsibility: Returns the default style associated with the active environment.
      * @return array{color: int, label: string}
      */
     private function getEnvironmentBasedStyle(): array

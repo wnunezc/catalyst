@@ -46,19 +46,14 @@ use ReflectionException;
 use ReflectionFunction;
 use ReflectionMethod;
 
-/**************************************************************************************
+/**
  * RouteDispatcher class for matching and executing routes
  *
  * Handles route matching, controller resolution, parameter binding, and
  * middleware execution.
  *
  * @package Catalyst\Framework\Route
- */
-/**
- * Defines the Route Dispatcher class contract.
- *
- * @package Catalyst\Framework\Route
- * Responsibility: Coordinates the route dispatcher behavior within its module boundary.
+ * Responsibility: Matches requests, runs middleware, resolves handler dependencies, executes handlers, and normalizes responses.
  */
 class RouteDispatcher
 {
@@ -66,6 +61,8 @@ class RouteDispatcher
 
     /**
      * Initializes the Route Dispatcher instance.
+     *
+     * Responsibility: Initializes the Route Dispatcher instance.
      */
     public function __construct()
     {
@@ -73,8 +70,9 @@ class RouteDispatcher
     }
 
     /**
-     * Dispatch the request to the appropriate route handler
+     * Dispatch the request to the appropriate route handler.
      *
+     * Responsibility: Dispatch the request to the appropriate route handler.
      * @param Request $request HTTP request to dispatch
      * @param RouteCollection $routes Collection of routes to match against
      * @param MiddlewareStack $middleware Global middleware stack
@@ -112,6 +110,9 @@ class RouteDispatcher
     }
 
     /**
+     * Resolves the matching route or raises the appropriate routing exception.
+     *
+     * Responsibility: Resolves the matching route or raises the appropriate routing exception.
      * @return array{0: Route, 1: array<string, mixed>}
      */
     private function matchRoute(RouteCollection $routes, string $uri, string $method): array
@@ -134,8 +135,9 @@ class RouteDispatcher
     }
 
     /**
-     * Execute a route handler with the given parameters
+     * Execute a route handler with the given parameters.
      *
+     * Responsibility: Execute a route handler with the given parameters.
      * @param Route $route The matched route
      * @param Request $request The current request
      * @param array $parameters Route parameters
@@ -177,8 +179,9 @@ class RouteDispatcher
     }
 
     /**
-     * Execute a controller from array format [ControllerClass::class, 'method']
+     * Execute a controller from array format [ControllerClass::class, 'method'].
      *
+     * Responsibility: Execute a controller from array format [ControllerClass::class, 'method'].
      * @param array $handler [ControllerClass, method] array
      * @param Request $request The current request
      * @param array $parameters Route parameters
@@ -214,8 +217,9 @@ class RouteDispatcher
     }
 
     /**
-     * Execute a controller method
+     * Execute a controller method.
      *
+     * Responsibility: Execute a controller method.
      * @param string $handler Controller@method string
      * @param string|null $namespace Controller namespace
      * @param Request $request The current request
@@ -262,8 +266,9 @@ class RouteDispatcher
     }
 
     /**
-     * Execute a closure handler
+     * Execute a closure handler.
      *
+     * Responsibility: Execute a closure handler.
      * @param Closure $closure The route handler
      * @param Request $request The current request
      * @param array $parameters Route parameters
@@ -282,8 +287,9 @@ class RouteDispatcher
     }
 
     /**
-     * Resolve method dependencies using reflection
+     * Resolve method dependencies using reflection.
      *
+     * Responsibility: Resolve method dependencies using reflection.
      * @param ReflectionMethod|ReflectionFunction $reflector Method or function reflector
      * @param Request $request The current request
      * @param array $routeParameters Route parameters
@@ -341,8 +347,9 @@ class RouteDispatcher
     }
 
     /**
-     * Convert a raw response to a Response object
+     * Convert a raw response to a Response object.
      *
+     * Responsibility: Convert a raw response to a Response object.
      * @param mixed $response Raw response from handler
      * @return HtmlResponse|JsonResponse|Response Proper Response object
      */
@@ -365,8 +372,9 @@ class RouteDispatcher
     }
 
     /**
-     * Normalize URI by removing query string and ensuring correct format
+     * Normalize URI by removing query string and ensuring correct format.
      *
+     * Responsibility: Normalize URI by removing query string and ensuring correct format.
      * @param string $uri URI to normalize
      * @return string Normalized URI
      */

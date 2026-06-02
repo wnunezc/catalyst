@@ -39,37 +39,11 @@ use Catalyst\Repository\Settings\Services\SetupDatabaseException;
 use Catalyst\Repository\Settings\Services\SetupDatabaseService;
 use Throwable;
 
-/**************************************************************************************
- * SetupCompletionController — setup admin provisioning + finalization.
- *
- * This is the ONLY controller that flips `app.project.project_config` to true.
- * Partial setup save controllers must never touch that flag, so the
- * framework does not lock itself out of login while configuration is still
- * incomplete (e.g. DB not reachable yet).
- *
- * Responsibilities:
- *   1. createAdmin() provisions the initial active administrator account.
- *   2. complete() flips project_config=true only after an active admin exists.
- *
- * Validation battery run by complete():
- *   1. Reject if already configured.
- *   2. app.json and db.json exist on disk.
- *   3. Database is reachable (auto-create DB if missing).
- *   4. Core auth tables exist (`users`, `roles`, `user_roles`).
- *   5. At least one active admin user exists.
- *   6. Write project_config=true to app.json.
- *
- * Route:
- *   POST /configuration/environment-setup/admin    → createAdmin()
- *   POST /configuration/environment-setup/complete → complete()
- *
- * @package Catalyst\Repository\Settings\Controllers
- **************************************************************************************/
 /**
- * Defines the Setup Completion Controller class contract.
+ * Provisions the initial administrator and finalizes environment setup.
  *
  * @package Catalyst\Repository\Settings\Controllers
- * Responsibility: Coordinates the setup completion controller behavior within its module boundary.
+ * Responsibility: Creates the first administrator, validates setup readiness and toggles the configured state.
  */
 class SetupCompletionController extends Controller
 {
@@ -79,6 +53,8 @@ class SetupCompletionController extends Controller
 
     /**
      * Initializes the Setup Completion Controller instance.
+     *
+     * Responsibility: Initializes the Setup Completion Controller instance.
      */
     public function __construct()
     {
@@ -91,6 +67,7 @@ class SetupCompletionController extends Controller
     /**
      * Create the initial active administrator account without finalizing setup.
      *
+     * Responsibility: Create the initial active administrator account without finalizing setup.
      * @param Request $request
      * @return Response  JSON only (AJAX endpoint)
      */
@@ -195,6 +172,7 @@ class SetupCompletionController extends Controller
     /**
      * Finalize the setup wizard.
      *
+     * Responsibility: Finalize the setup wizard.
      * @param Request $request
      * @return Response  JSON only (AJAX endpoint)
      */
@@ -242,11 +220,9 @@ class SetupCompletionController extends Controller
     }
 
     /**
-     * Reset the setup wizard — flips project_config back to false so the
-     * finalize form becomes available again. Admin-only (enforced via route middleware).
+     * Reset the setup wizard — flips project_config back to false so the finalize form becomes available again. Admin-only (enforced via route middleware). This does NOT erase any existing config values; it only unlocks the wizard.
      *
-     * This does NOT erase any existing config values; it only unlocks the wizard.
-     *
+     * Responsibility: Reset the setup wizard — flips project_config back to false so the finalize form becomes available again. Admin-only (enforced via route middleware). This does NOT erase any existing config values; it only unlocks the wizard.
      * @param Request $request
      * @return Response  JSON only (AJAX endpoint)
      */

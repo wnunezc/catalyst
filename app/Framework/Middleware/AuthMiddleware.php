@@ -37,7 +37,7 @@ use Catalyst\Framework\Http\RedirectTarget;
 use Catalyst\Framework\Http\Response;
 use Closure;
 
-/**************************************************************************************
+/**
  * AuthMiddleware — session-based route guard
  *
  * Order of checks:
@@ -55,17 +55,14 @@ use Closure;
  *   });
  *
  * @package Catalyst\Framework\Middleware
- */
-/**
- * Defines the Auth Middleware class contract.
- *
- * @package Catalyst\Framework\Middleware
- * Responsibility: Coordinates the auth middleware behavior within its module boundary.
+ * Responsibility: Allows authenticated requests, restores remember-me sessions, or rejects unauthenticated access.
  */
 class AuthMiddleware extends CoreMiddleware
 {
     /**
-     * @inheritDoc
+     * Allows authenticated sessions, restores remember-me sessions, or rejects access.
+     *
+     * Responsibility: Allows authenticated sessions, restores remember-me sessions, or rejects access.
      */
     public function process(Request $request, Closure $next): Response
     {

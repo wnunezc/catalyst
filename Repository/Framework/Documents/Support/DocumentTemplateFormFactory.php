@@ -33,14 +33,17 @@ namespace Catalyst\Repository\Documents\Support;
 use Catalyst\Framework\Admin\Form\FormBuilder;
 
 /**
- * Defines the Document Template Form Factory class contract.
+ * Builds the administrative document template form schema.
  *
  * @package Catalyst\Repository\Documents\Support
- * Responsibility: Coordinates the document template form factory behavior within its module boundary.
+ * Responsibility: Define template form sections, fields, defaults and actions for create and edit screens.
  */
 final class DocumentTemplateFormFactory
 {
     /**
+     * Builds the form schema for a new or existing document template.
+     *
+     * Responsibility: Builds the form schema for a new or existing document template.
      * @param array<string, mixed>|null $template
      * @param array<string, array<string, mixed>> $hiddenFields
      * @return array<string, mixed>
@@ -129,7 +132,9 @@ final class DocumentTemplateFormFactory
     }
 
     /**
-     * Handles the json field workflow.
+     * Formats structured defaults as editable JSON while preserving existing JSON strings.
+     *
+     * Responsibility: Formats structured defaults as editable JSON while preserving existing JSON strings.
      */
     private function jsonField(mixed $value): string
     {

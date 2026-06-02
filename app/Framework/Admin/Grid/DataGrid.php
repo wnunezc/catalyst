@@ -36,10 +36,10 @@ use InvalidArgumentException;
 use RuntimeException;
 
 /**
- * Defines the Data Grid class contract.
+ * Configures, resolves, and exports admin data grids.
  *
  * @package Catalyst\Framework\Admin\Grid
- * Responsibility: Coordinates the data grid behavior within its module boundary.
+ * Responsibility: Coordinates grid configuration, request state, provider results, presentation metadata, and CSV/XLS responses.
  */
 final class DataGrid
 {
@@ -103,7 +103,9 @@ final class DataGrid
     private DataGridRowNormalizer $rowNormalizer;
 
     /**
-     * Initializes the Data Grid instance.
+     * Builds the grid coordinator and wires default normalizer/export collaborators.
+     *
+     * Responsibility: Builds the grid coordinator and wires default normalizer/export collaborators.
      */
     public function __construct(
         ?DataGridUrlBuilder $urlBuilder = null,
@@ -146,7 +148,7 @@ final class DataGrid
     }
 
     /**
-     * Creates the requested object.
+     * Creates a new grid instance for fluent configuration.
      */
     public static function make(): self
     {
@@ -154,6 +156,8 @@ final class DataGrid
     }
 
     /**
+     * Builds a structured two-line cell value for display and export normalization.
+     *
      * @param array<string, mixed> $options
      * @return array<string, mixed>
      */
@@ -171,6 +175,8 @@ final class DataGrid
     }
 
     /**
+     * Builds a structured code-style cell value.
+     *
      * @return array<string, mixed>
      */
     public static function code(string $text, string $class = ''): array
@@ -183,6 +189,8 @@ final class DataGrid
     }
 
     /**
+     * Builds a structured badge cell value.
+     *
      * @return array<string, mixed>
      */
     public static function badge(string $label, string $class = 'text-bg-light'): array
@@ -195,6 +203,8 @@ final class DataGrid
     }
 
     /**
+     * Builds a structured list of badge cell values, discarding entries without labels.
+     *
      * @param array<int, array<string, mixed>> $badges
      * @return array<string, mixed>
      */
@@ -213,6 +223,8 @@ final class DataGrid
     }
 
     /**
+     * Builds a structured badge that selects label and style from a boolean value.
+     *
      * @return array<string, mixed>
      */
     public static function booleanBadge(
@@ -229,7 +241,9 @@ final class DataGrid
     }
 
     /**
-     * Handles the base url workflow.
+     * Sets the base URL used for grid links such as sorting, pagination, and exports.
+     *
+     * Responsibility: Sets the base URL used for grid links such as sorting, pagination, and exports.
      */
     public function baseUrl(string $baseUrl): self
     {
@@ -239,7 +253,9 @@ final class DataGrid
     }
 
     /**
-     * Handles the title workflow.
+     * Sets the visible grid title and optional subtitle.
+     *
+     * Responsibility: Sets the visible grid title and optional subtitle.
      */
     public function title(string $title, string $subtitle = ''): self
     {
@@ -250,7 +266,9 @@ final class DataGrid
     }
 
     /**
-     * Handles the empty state workflow.
+     * Sets the empty-state copy and optional action shown when no rows are available.
+     *
+     * Responsibility: Sets the empty-state copy and optional action shown when no rows are available.
      */
     public function emptyState(string $title, string $message, ?array $action = null): self
     {
@@ -262,6 +280,9 @@ final class DataGrid
     }
 
     /**
+     * Replaces the configured column definitions used for rendering and exports.
+     *
+     * Responsibility: Replaces the configured column definitions used for rendering and exports.
      * @param array<int, array<string, mixed>> $columns
      */
     public function columns(array $columns): self
@@ -272,6 +293,9 @@ final class DataGrid
     }
 
     /**
+     * Replaces the configured filter definitions used to resolve and render filter state.
+     *
+     * Responsibility: Replaces the configured filter definitions used to resolve and render filter state.
      * @param array<int, array<string, mixed>> $filters
      */
     public function filters(array $filters): self
@@ -282,6 +306,9 @@ final class DataGrid
     }
 
     /**
+     * Replaces the configured per-row actions.
+     *
+     * Responsibility: Replaces the configured per-row actions.
      * @param array<int, array<string, mixed>> $actions
      */
     public function actions(array $actions): self
@@ -292,6 +319,9 @@ final class DataGrid
     }
 
     /**
+     * Replaces the configured bulk actions for selected rows.
+     *
+     * Responsibility: Replaces the configured bulk actions for selected rows.
      * @param array<int, array<string, mixed>> $actions
      */
     public function bulkActions(array $actions): self
@@ -302,6 +332,9 @@ final class DataGrid
     }
 
     /**
+     * Sets the enabled export formats and optionally overrides the exported filename stem.
+     *
+     * Responsibility: Sets the enabled export formats and optionally overrides the exported filename stem.
      * @param array<int|string, string|array<string, mixed>> $formats
      */
     public function exportFormats(array $formats, ?string $filename = null): self
@@ -316,7 +349,9 @@ final class DataGrid
     }
 
     /**
-     * Handles the resource key workflow.
+     * Sets the resource key used by sensitive-data policy during exports.
+     *
+     * Responsibility: Sets the resource key used by sensitive-data policy during exports.
      */
     public function resourceKey(string $resourceKey): self
     {
@@ -326,7 +361,9 @@ final class DataGrid
     }
 
     /**
-     * Handles the row key workflow.
+     * Sets the row field used as selection and identity key in rendered rows.
+     *
+     * Responsibility: Sets the row field used as selection and identity key in rendered rows.
      */
     public function rowKey(string $rowKey): self
     {
@@ -336,7 +373,9 @@ final class DataGrid
     }
 
     /**
-     * Handles the default sort workflow.
+     * Sets the fallback sort column and direction used when the request has no valid sort.
+     *
+     * Responsibility: Sets the fallback sort column and direction used when the request has no valid sort.
      */
     public function defaultSort(string $column, string $direction = 'asc'): self
     {
@@ -347,6 +386,9 @@ final class DataGrid
     }
 
     /**
+     * Sets the default page size and allowed page-size options.
+     *
+     * Responsibility: Sets the default page size and allowed page-size options.
      * @param int[] $options
      */
     public function pagination(int $perPage, array $options = [10, 25, 50]): self
@@ -361,7 +403,9 @@ final class DataGrid
     }
 
     /**
-     * Handles the search placeholder workflow.
+     * Sets the placeholder text for the grid search control.
+     *
+     * Responsibility: Sets the placeholder text for the grid search control.
      */
     public function searchPlaceholder(string $placeholder): self
     {
@@ -371,7 +415,9 @@ final class DataGrid
     }
 
     /**
-     * Handles the provider workflow.
+     * Registers the provider callback that returns rows and total count for resolved state.
+     *
+     * Responsibility: Registers the provider callback that returns rows and total count for resolved state.
      */
     public function provider(callable $provider): self
     {
@@ -381,6 +427,9 @@ final class DataGrid
     }
 
     /**
+     * Resolves the current grid state from the request without loading provider rows.
+     *
+     * Responsibility: Resolves the current grid state from the request without loading provider rows.
      * @return array<string, mixed>
      */
     public function state(Request $request): array
@@ -389,7 +438,9 @@ final class DataGrid
     }
 
     /**
-     * Handles the export format workflow.
+     * Returns the requested export format when it is enabled for this grid.
+     *
+     * Responsibility: Returns the requested export format when it is enabled for this grid.
      */
     public function exportFormat(Request $request): ?string
     {
@@ -400,7 +451,9 @@ final class DataGrid
     }
 
     /**
-     * Handles the print enabled workflow.
+     * Enables or disables the print toolbar action and optionally sets its label.
+     *
+     * Responsibility: Enables or disables the print toolbar action and optionally sets its label.
      */
     public function printEnabled(bool $enabled = true, ?string $label = null): self
     {
@@ -414,7 +467,9 @@ final class DataGrid
     }
 
     /**
-     * Handles the export csv workflow.
+     * Exports the current grid request through the shared export pipeline.
+     *
+     * Responsibility: Exports the current grid request through the shared export pipeline.
      */
     public function exportCsv(Request $request): Response
     {
@@ -422,7 +477,9 @@ final class DataGrid
     }
 
     /**
-     * Handles the export workflow.
+     * Resolves export state, requests export rows from the provider, and returns the matching response.
+     *
+     * Responsibility: Resolves export state, requests export rows from the provider, and returns the matching response.
      */
     public function export(Request $request): Response
     {
@@ -457,6 +514,9 @@ final class DataGrid
     }
 
     /**
+     * Converts provider rows into CSV filename and contents for the current grid configuration.
+     *
+     * Responsibility: Converts provider rows into CSV filename and contents for the current grid configuration.
      * @param array<int, array<string, mixed>> $rows
      * @param array<string, mixed> $state
      * @return array{filename:string,contents:string}
@@ -512,12 +572,9 @@ final class DataGrid
     }
 
     /**
-     * Export rows as an Excel-compatible HTML table with .xls extension.
+     * Converts provider rows into an Excel-compatible HTML table with .xls extension. This is intentionally not a real XLSX document. It is an HTML table served with the Excel MIME type, which is enough for alpha/RC local usage without adding PhpSpreadsheet yet.
      *
-     * This is intentionally not a real XLSX document. It is an HTML table served
-     * with the Excel MIME type, which is enough for alpha/RC local usage without
-     * adding PhpSpreadsheet yet.
-     *
+     * Responsibility: Converts provider rows into an Excel-compatible HTML table with .xls extension. This is intentionally not a real XLSX document. It is an HTML table served with the Excel MIME type, which is enough for alpha/RC local usage without adding PhpSpreadsheet yet.
      * @param array<int, array<string, mixed>> $rows
      * @param array<string, mixed> $state
      * @return array{filename:string,contents:string}
@@ -594,6 +651,9 @@ final class DataGrid
     }
 
     /**
+     * Resolves provider data and returns the complete render model consumed by grid templates.
+     *
+     * Responsibility: Resolves provider data and returns the complete render model consumed by grid templates.
      * @return array<string, mixed>
      */
     public function resolve(Request $request): array
@@ -642,6 +702,9 @@ final class DataGrid
     }
 
     /**
+     * Resolves request-driven pagination, sorting, search, filter, and query state.
+     *
+     * Responsibility: Resolves request-driven pagination, sorting, search, filter, and query state.
      * @return array<string, mixed>
      */
     private function resolveState(Request $request): array
@@ -650,6 +713,9 @@ final class DataGrid
     }
 
     /**
+     * Converts configured columns into render-ready column metadata for the current state.
+     *
+     * Responsibility: Converts configured columns into render-ready column metadata for the current state.
      * @param array<string, mixed> $state
      * @return array<int, array<string, mixed>>
      */
@@ -663,6 +729,9 @@ final class DataGrid
     }
 
     /**
+     * Converts provider rows into render-ready row metadata for the current state.
+     *
+     * Responsibility: Converts provider rows into render-ready row metadata for the current state.
      * @param array<int, array<string, mixed>> $rows
      * @param array<string, mixed> $state
      * @return array<int, array<string, mixed>>
@@ -677,6 +746,9 @@ final class DataGrid
     }
 
     /**
+     * Converts configured filters into render-ready filter metadata for the current state.
+     *
+     * Responsibility: Converts configured filters into render-ready filter metadata for the current state.
      * @param array<string, mixed> $state
      * @return array<int, array<string, mixed>>
      */
@@ -689,6 +761,9 @@ final class DataGrid
     }
 
     /**
+     * Builds pagination metadata from the current state and total provider row count.
+     *
+     * Responsibility: Builds pagination metadata from the current state and total provider row count.
      * @param array<string, mixed> $state
      * @return array<string, mixed>
      */
@@ -702,6 +777,9 @@ final class DataGrid
     }
 
     /**
+     * Normalizes the optional empty-state action or returns null when no action is configured.
+     *
+     * Responsibility: Normalizes the optional empty-state action or returns null when no action is configured.
      * @return array<string, mixed>|null
      */
     private function normalizeEmptyAction(): ?array
@@ -721,6 +799,9 @@ final class DataGrid
     }
 
     /**
+     * Converts configured bulk actions into render-ready metadata for the current state.
+     *
+     * Responsibility: Converts configured bulk actions into render-ready metadata for the current state.
      * @param array<string, mixed> $state
      * @return array<int, array<string, mixed>>
      */
@@ -734,6 +815,9 @@ final class DataGrid
     }
 
     /**
+     * Converts configured export formats into render-ready toolbar actions for the current state.
+     *
+     * Responsibility: Converts configured export formats into render-ready toolbar actions for the current state.
      * @param array<string, mixed> $state
      * @return array<int, array<string, mixed>>
      */
@@ -747,6 +831,9 @@ final class DataGrid
     }
 
     /**
+     * Normalizes configured export format definitions into a keyed lookup used for request validation.
+     *
+     * Responsibility: Normalizes configured export format definitions into a keyed lookup used for request validation.
      * @return array<string, array<string, string>>
      */
     private function normalizeExportFormats(): array
@@ -786,6 +873,9 @@ final class DataGrid
     }
 
     /**
+     * Wraps CSV export contents in an HTTP download response.
+     *
+     * Responsibility: Wraps CSV export contents in an HTTP download response.
      * @param array<int, array<string, mixed>> $rows
      * @param array<string, mixed> $state
      */
@@ -804,6 +894,9 @@ final class DataGrid
     }
 
     /**
+     * Wraps Excel-compatible HTML export contents in an HTTP download response.
+     *
+     * Responsibility: Wraps Excel-compatible HTML export contents in an HTTP download response.
      * @param array<int, array<string, mixed>> $rows
      * @param array<string, mixed> $state
      */

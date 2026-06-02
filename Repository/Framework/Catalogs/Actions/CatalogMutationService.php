@@ -41,10 +41,10 @@ use RuntimeException;
 use Throwable;
 
 /**
- * Defines the Catalog Mutation Service class contract.
+ * Applies claim-protected mutations to catalogs and their items.
  *
  * @package Catalyst\Repository\Catalogs\Actions
- * Responsibility: Coordinates the catalog mutation service behavior within its module boundary.
+ * Responsibility: Update, delete, transition and restore catalog data while enforcing parent catalog claims.
  */
 final class CatalogMutationService
 {
@@ -52,6 +52,8 @@ final class CatalogMutationService
 
     /**
      * Initializes the Catalog Mutation Service instance.
+     *
+     * Responsibility: Initializes the Catalog Mutation Service instance.
      */
     public function __construct(
         private readonly CatalogManager $manager
@@ -60,6 +62,9 @@ final class CatalogMutationService
     }
 
     /**
+     * Updates a catalog definition and releases its record claim after persistence.
+     *
+     * Responsibility: Updates a catalog definition and releases its record claim after persistence.
      * @param array<string, mixed> $payload
      */
     public function updateCatalog(CatalogDefinition $catalog, Request $request, array $payload): void
@@ -76,7 +81,9 @@ final class CatalogMutationService
     }
 
     /**
-     * Handles the delete workflow.
+     * Deletes a catalog definition and releases its record claim.
+     *
+     * Responsibility: Deletes a catalog definition and releases its record claim.
      */
     public function deleteCatalog(CatalogDefinition $catalog, Request $request): void
     {
@@ -87,7 +94,9 @@ final class CatalogMutationService
     }
 
     /**
-     * Handles the transition catalog workflow.
+     * Applies a workflow transition to a catalog definition after claim validation.
+     *
+     * Responsibility: Applies a workflow transition to a catalog definition after claim validation.
      */
     public function transitionCatalog(CatalogDefinition $catalog, Request $request, string $transition, ?string $notes): void
     {
@@ -97,7 +106,9 @@ final class CatalogMutationService
     }
 
     /**
-     * Handles the restore catalog version workflow.
+     * Restores a captured catalog definition version after claim validation.
+     *
+     * Responsibility: Restores a captured catalog definition version after claim validation.
      */
     public function restoreCatalogVersion(CatalogDefinition $catalog, Request $request, int $versionId): void
     {
@@ -115,6 +126,9 @@ final class CatalogMutationService
     }
 
     /**
+     * Creates an item within a claimed catalog definition.
+     *
+     * Responsibility: Creates an item within a claimed catalog definition.
      * @param array<string, mixed> $payload
      */
     public function createItem(int $catalogId, Request $request, array $payload): void
@@ -125,6 +139,9 @@ final class CatalogMutationService
     }
 
     /**
+     * Updates an item within a claimed catalog definition.
+     *
+     * Responsibility: Updates an item within a claimed catalog definition.
      * @param array<string, mixed> $payload
      */
     public function updateItem(int $catalogId, CatalogItem $item, Request $request, array $payload): void
@@ -140,7 +157,9 @@ final class CatalogMutationService
     }
 
     /**
-     * Handles the delete workflow.
+     * Deletes an item from a claimed catalog definition.
+     *
+     * Responsibility: Deletes an item from a claimed catalog definition.
      */
     public function deleteItem(int $catalogId, CatalogItem $item, Request $request): void
     {
@@ -150,7 +169,9 @@ final class CatalogMutationService
     }
 
     /**
-     * Handles the assert claim workflow.
+     * Verifies that the request holds an available claim for the parent catalog.
+     *
+     * Responsibility: Verifies that the request holds an available claim for the parent catalog.
      */
     private function assertClaim(int $catalogId, Request $request): void
     {
@@ -164,7 +185,9 @@ final class CatalogMutationService
     }
 
     /**
-     * Handles the release claim workflow.
+     * Releases the parent catalog claim after a successful mutation without masking persistence success.
+     *
+     * Responsibility: Releases the parent catalog claim after a successful mutation without masking persistence success.
      */
     private function releaseClaim(int $catalogId, Request $request, ?string $reason = null): void
     {

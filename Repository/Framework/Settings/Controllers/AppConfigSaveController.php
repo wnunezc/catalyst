@@ -36,15 +36,17 @@ use Catalyst\Repository\Settings\Requests\AppConfigRequest;
 use Catalyst\Repository\Settings\Support\AppConfigWriter;
 
 /**
- * Defines the App Config Save Controller class contract.
+ * Persists application settings submitted by the setup surface.
  *
  * @package Catalyst\Repository\Settings\Controllers
- * Responsibility: Coordinates the app config save controller behavior within its module boundary.
+ * Responsibility: Delegates validated application configuration writes and returns the setup AJAX response.
  */
 final class AppConfigSaveController extends Controller
 {
     /**
      * Initializes the App Config Save Controller instance.
+     *
+     * Responsibility: Initializes the App Config Save Controller instance.
      */
     public function __construct(
         private readonly AppConfigWriter $writer = new AppConfigWriter()
@@ -53,7 +55,9 @@ final class AppConfigSaveController extends Controller
     }
 
     /**
-     * Persists the current state.
+     * Saves validated application settings.
+     *
+     * Responsibility: Saves validated application settings.
      */
     public function saveApp(AppConfigRequest $request): Response
     {

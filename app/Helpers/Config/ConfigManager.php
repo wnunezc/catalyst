@@ -80,6 +80,7 @@ use Exception;
  *   ConfigManager::getInstance()->isConfigured();
  *
  * @package Catalyst\Helpers\Config
+ * Responsibility: Loads, exposes and persists environment configuration while isolating secret values.
  */
 class ConfigManager
 {
@@ -95,6 +96,9 @@ class ConfigManager
     private ConfigSecretStore $secretStore;
 
     /**
+     * Initializes the object with the collaborators or state required for its responsibility.
+     *
+     * Responsibility: Initializes the object with the collaborators or state required for its responsibility.
      * @throws Exception
      */
     protected function __construct()
@@ -109,12 +113,9 @@ class ConfigManager
     // -------------------------------------------------------------------------
 
     /**
-     * Retrieve a config value by dot-notation key.
+     * Retrieve a config value by dot-notation key. Examples: get('db.db1.db_host') → 'localhost' get('mail.mail1.mail_port') → 587 get('app.project.project_name', 'Catalyst') → value or default.
      *
-     * Examples:
-     *   get('db.db1.db_host')       → 'localhost'
-     *   get('mail.mail1.mail_port') → 587
-     *   get('app.project.project_name', 'Catalyst') → value or default
+     * Responsibility: Retrieve a config value by dot-notation key. Examples: get('db.db1.db_host') → 'localhost' get('mail.mail1.mail_port') → 587 get('app.project.project_name', 'Catalyst') → value or default.
      */
     public function get(string $key, mixed $default = null): mixed
     {
@@ -133,6 +134,8 @@ class ConfigManager
 
     /**
      * Check whether a dot-notation key exists and is non-null.
+     *
+     * Responsibility: Check whether a dot-notation key exists and is non-null.
      */
     public function has(string $key): bool
     {
@@ -140,9 +143,9 @@ class ConfigManager
     }
 
     /**
-     * Return all instances within a section (e.g. 'db' → ['db1'=>[...], 'db2'=>[...]]).
-     * Returns null when the section does not exist.
+     * Return all instances within a section (e.g. 'db' → ['db1'=>[...], 'db2'=>[...]]). Returns null when the section does not exist.
      *
+     * Responsibility: Return all instances within a section (e.g. 'db' → ['db1'=>[...], 'db2'=>[...]]). Returns null when the section does not exist.
      * @return array<string, array>|null
      */
     public function section(string $section): ?array
@@ -155,6 +158,7 @@ class ConfigManager
     /**
      * Return the full config array (all sections).
      *
+     * Responsibility: Return the full config array (all sections).
      * @return array<string, array>
      */
     public function all(): array
@@ -165,6 +169,7 @@ class ConfigManager
     /**
      * Return .env-derived defaults for a single section.
      *
+     * Responsibility: Return .env-derived defaults for a single section.
      * @return array<string, mixed>
      */
     public function defaults(string $section): array
@@ -173,19 +178,9 @@ class ConfigManager
     }
 
     /**
-     * Return one named entry inside a section, merged over .env-derived defaults.
+     * Return one named entry inside a section, merged over .env-derived defaults. Typical mappings: app → project session → session cache → cache logging → logging security → security websocket → websocket cors → cors db → db1 mail → mail1.
      *
-     * Typical mappings:
-     *   app        → project
-     *   session    → session
-     *   cache      → cache
-     *   logging    → logging
-     *   security   → security
-     *   websocket  → websocket
-     *   cors       → cors
-     *   db         → db1
-     *   mail       → mail1
-     *
+     * Responsibility: Return one named entry inside a section, merged over .env-derived defaults. Typical mappings: app → project session → session cache → cache logging → logging security → security websocket → websocket cors → cors db → db1 mail → mail1.
      * @param array<string, mixed>|null $defaults
      * @return array<string, mixed>
      */
@@ -203,8 +198,9 @@ class ConfigManager
     }
 
     /**
-     * True when the Setup Wizard has run and app.json is present with
-     * project_config = true. False on first boot.
+     * True when the Setup Wizard has run and app.json is present with project_config = true. False on first boot.
+     *
+     * Responsibility: True when the Setup Wizard has run and app.json is present with project_config = true. False on first boot.
      */
     public function isConfigured(): bool
     {
@@ -213,6 +209,8 @@ class ConfigManager
 
     /**
      * Return the resolved environment name (development | staging | testing | production).
+     *
+     * Responsibility: Return the resolved environment name (development | staging | testing | production).
      */
     public function getEnvironment(): string
     {
@@ -224,12 +222,9 @@ class ConfigManager
     // -------------------------------------------------------------------------
 
     /**
-     * Persist a config section to disk and update the in-memory cache.
+     * Persist a config section to disk and update the in-memory cache. Writes (or overwrites) boot-core/config/{environment}/{section}.json. Creates the config directory if it does not exist. Re-evaluates isConfigured() after the write.
      *
-     * Writes (or overwrites) boot-core/config/{environment}/{section}.json.
-     * Creates the config directory if it does not exist.
-     * Re-evaluates isConfigured() after the write.
-     *
+     * Responsibility: Persist a config section to disk and update the in-memory cache. Writes (or overwrites) boot-core/config/{environment}/{section}.json. Creates the config directory if it does not exist. Re-evaluates isConfigured() after the write.
      * @param string               $section  Section name (e.g. 'app', 'db', 'mail')
      * @param array<string, mixed> $data     Full section data to write
      * @throws \RuntimeException on directory creation or write failure
@@ -263,9 +258,9 @@ class ConfigManager
     }
 
     /**
-     * Return default values for all config sections from GET_ENV_VAR.
-     * Used by ConfigController to pre-populate forms on first boot.
+     * Return default values for all config sections from GET_ENV_VAR. Used by ConfigController to pre-populate forms on first boot.
      *
+     * Responsibility: Return default values for all config sections from GET_ENV_VAR. Used by ConfigController to pre-populate forms on first boot.
      * @return array<string, mixed>
      */
     public function readDefaults(): array
@@ -386,11 +381,9 @@ class ConfigManager
     // -------------------------------------------------------------------------
 
     /**
-     * Load all JSON files from boot-core/config/{environment}/.
+     * Load all JSON files from boot-core/config/{environment}/. Fails silently when the directory does not exist (first boot). Throws on malformed JSON to surface configuration errors early.
      *
-     * Fails silently when the directory does not exist (first boot).
-     * Throws on malformed JSON to surface configuration errors early.
-     *
+     * Responsibility: Load all JSON files from boot-core/config/{environment}/. Fails silently when the directory does not exist (first boot). Throws on malformed JSON to surface configuration errors early.
      * @throws Exception on invalid JSON
      */
     private function load(): void
@@ -445,6 +438,8 @@ class ConfigManager
 
     /**
      * True when app.json is loaded and project_config is set to true.
+     *
+     * Responsibility: True when app.json is loaded and project_config is set to true.
      */
     private function detectConfigured(): bool
     {
@@ -454,6 +449,8 @@ class ConfigManager
 
     /**
      * Resolve the environment name from existing IS_* constants.
+     *
+     * Responsibility: Resolve the environment name from existing IS_* constants.
      */
     private function resolveEnvironment(): string
     {
@@ -470,7 +467,9 @@ class ConfigManager
     }
 
     /**
-     * Handles the secret store workflow.
+     * Returns the environment secret store used by this manager.
+     *
+     * Responsibility: Returns the environment secret store used by this manager.
      */
     public function secretStore(): ConfigSecretStore
     {

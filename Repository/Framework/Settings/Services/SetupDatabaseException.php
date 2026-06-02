@@ -8,16 +8,18 @@ use RuntimeException;
 use Throwable;
 
 /**
- * Defines the Setup Database Exception class contract.
+ * Carries a translated setup-database failure and its HTTP response status.
  *
  * @package Catalyst\Repository\Settings\Services
- * Responsibility: Coordinates the setup database exception behavior within its module boundary.
+ * Responsibility: Preserves a translation key, response status, diagnostic detail and previous failure for setup responses.
  */
 final class SetupDatabaseException extends RuntimeException
 {
     /**
- * Initializes the Setup Database Exception instance.
- */
+     * Initializes the Setup Database Exception instance.
+     *
+     * Responsibility: Initializes the Setup Database Exception instance.
+     */
 public function __construct(
         private readonly string $translationKey,
         private readonly int $httpStatus = 422,
@@ -28,32 +30,40 @@ public function __construct(
     }
 
     /**
- * Handles the translation key workflow.
- */
+     * Returns the translation key for the public failure message.
+     *
+     * Responsibility: Returns the translation key for the public failure message.
+     */
 public function translationKey(): string
     {
         return $this->translationKey;
     }
 
     /**
- * Handles the http status workflow.
- */
+     * Returns the HTTP status associated with the setup failure.
+     *
+     * Responsibility: Returns the HTTP status associated with the setup failure.
+     */
 public function httpStatus(): int
     {
         return $this->httpStatus;
     }
 
     /**
- * Handles the detail workflow.
- */
+     * Returns the diagnostic detail captured for the failure.
+     *
+     * Responsibility: Returns the diagnostic detail captured for the failure.
+     */
 public function detail(): string
     {
         return $this->detail;
     }
 
     /**
- * Handles the translated message workflow.
- */
+     * Returns the translated failure message with optional diagnostic detail.
+     *
+     * Responsibility: Returns the translated failure message with optional diagnostic detail.
+     */
 public function translatedMessage(): string
     {
         $message = __($this->translationKey);

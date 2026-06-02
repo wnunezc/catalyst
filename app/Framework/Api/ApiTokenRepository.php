@@ -38,10 +38,10 @@ use Catalyst\Helpers\Log\Logger;
 use Exception;
 
 /**
- * Defines the Api Token Repository class contract.
+ * Provides tenant-scoped persistence helpers for API token records.
  *
  * @package Catalyst\Framework\Api
- * Responsibility: Coordinates the api token repository behavior within its module boundary.
+ * Responsibility: Searches, resolves, and revokes API tokens while constraining queries to the current tenant.
  */
 final class ApiTokenRepository
 {
@@ -51,7 +51,9 @@ final class ApiTokenRepository
     private Logger $logger;
 
     /**
-     * Initializes the Api Token Repository instance.
+     * Initializes database access and logging for token persistence operations.
+     *
+     * Responsibility: Initializes database access and logging for token persistence operations.
      */
     protected function __construct()
     {
@@ -60,6 +62,9 @@ final class ApiTokenRepository
     }
 
     /**
+     * Searches active API tokens for the current tenant, optionally constrained by owner user.
+     *
+     * Responsibility: Searches active API tokens for the current tenant, optionally constrained by owner user.
      * @return array<int, array<string, mixed>>
      */
     public function search(array $criteria = []): array
@@ -90,7 +95,9 @@ final class ApiTokenRepository
     }
 
     /**
-     * Finds the requested record.
+     * Loads an API token entity by primary key without applying search filters.
+     *
+     * Responsibility: Loads an API token entity by primary key without applying search filters.
      */
     public function findModel(int $id): ?ApiToken
     {
@@ -98,7 +105,9 @@ final class ApiTokenRepository
     }
 
     /**
-     * Handles the revoke by id workflow.
+     * Revokes an active token by id when it belongs to the current tenant.
+     *
+     * Responsibility: Revokes an active token by id when it belongs to the current tenant.
      */
     public function revokeById(int $id): void
     {
@@ -122,6 +131,9 @@ final class ApiTokenRepository
     }
 
     /**
+     * Finds an unexpired, unrevoked token record by hashing the supplied plain-text secret.
+     *
+     * Responsibility: Finds an unexpired, unrevoked token record by hashing the supplied plain-text secret.
      * @return array<string, mixed>|null
      */
     public function findActiveByPlainText(string $token): ?array
@@ -145,7 +157,9 @@ final class ApiTokenRepository
     }
 
     /**
-     * Handles the current tenant id workflow.
+     * Resolves the tenant id required to scope API token persistence.
+     *
+     * Responsibility: Resolves the tenant id required to scope API token persistence.
      */
     private function currentTenantId(): int
     {

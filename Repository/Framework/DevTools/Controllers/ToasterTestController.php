@@ -35,15 +35,17 @@ use Catalyst\Framework\Http\JsonResponse;
 use Catalyst\Framework\View\TrustedHtml;
 
 /**
- * Defines the Toaster Test Controller class contract.
+ * Exposes notification-envelope variants for client toaster diagnostics.
  *
  * @package Catalyst\Repository\DevTools\Controllers
- * Responsibility: Coordinates the toaster test controller behavior within its module boundary.
+ * Responsibility: Returns deterministic toaster, modal and partial-refresh responses.
  */
 class ToasterTestController extends Controller
 {
     /**
-     * Handles the api toaster success workflow.
+     * Returns a successful response with a success toaster.
+     *
+     * Responsibility: Returns a successful response with a success toaster.
      */
     public function apiToasterSuccess(): JsonResponse
     {
@@ -57,7 +59,9 @@ class ToasterTestController extends Controller
     }
 
     /**
-     * Handles the api toaster error workflow.
+     * Returns an error response with an error toaster.
+     *
+     * Responsibility: Returns an error response with an error toaster.
      */
     public function apiToasterError(): JsonResponse
     {
@@ -71,7 +75,9 @@ class ToasterTestController extends Controller
     }
 
     /**
-     * Handles the api toaster warning workflow.
+     * Returns a partial-success response with a warning toaster.
+     *
+     * Responsibility: Returns a partial-success response with a warning toaster.
      */
     public function apiToasterWarning(): JsonResponse
     {
@@ -85,7 +91,9 @@ class ToasterTestController extends Controller
     }
 
     /**
-     * Handles the api toaster info workflow.
+     * Returns a successful response with an informational toaster.
+     *
+     * Responsibility: Returns a successful response with an informational toaster.
      */
     public function apiToasterInfo(): JsonResponse
     {
@@ -99,7 +107,9 @@ class ToasterTestController extends Controller
     }
 
     /**
-     * Handles the api multiple toasters workflow.
+     * Returns a response carrying multiple queued toasters.
+     *
+     * Responsibility: Returns a response carrying multiple queued toasters.
      */
     public function apiMultipleToasters(): JsonResponse
     {
@@ -113,7 +123,9 @@ class ToasterTestController extends Controller
     }
 
     /**
-     * Handles the api modal trigger workflow.
+     * Returns a response that instructs the client to load a modal.
+     *
+     * Responsibility: Returns a response that instructs the client to load a modal.
      */
     public function apiModalTrigger(): JsonResponse
     {
@@ -127,7 +139,9 @@ class ToasterTestController extends Controller
     }
 
     /**
-     * Handles the api js enhancement partial refresh workflow.
+     * Returns refreshed partial HTML and its update notification.
+     *
+     * Responsibility: Returns refreshed partial HTML and its update notification.
      */
     public function apiJsEnhancementPartialRefresh(): JsonResponse
     {

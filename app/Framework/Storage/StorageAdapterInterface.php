@@ -33,45 +33,59 @@ namespace Catalyst\Framework\Storage;
 use Catalyst\Framework\Http\UploadedFile;
 
 /**
- * Defines the Storage Adapter Interface interface contract.
+ * Defines the storage operations implemented by framework disks.
  *
  * @package Catalyst\Framework\Storage
- * Responsibility: Coordinates the storage adapter interface behavior within its module boundary.
+ * Responsibility: Standardizes object storage, retrieval, deletion and URL resolution.
  */
 interface StorageAdapterInterface
 {
     /**
-     * Returns the driver name value.
+     * Returns the storage driver name.
+     *
+     * Responsibility: Returns the storage driver name.
      */
     public function getDriverName(): string;
 
     /**
-     * Handles the put workflow.
+     * Stores string contents and returns the normalized object path.
+     *
+     * Responsibility: Stores string contents and returns the normalized object path.
      */
     public function put(string $path, string $contents): string;
 
     /**
-     * Handles the put file workflow.
+     * Stores an uploaded file and returns the normalized object path.
+     *
+     * Responsibility: Stores an uploaded file and returns the normalized object path.
      */
     public function putFile(UploadedFile $file, string $path): string;
 
     /**
-     * Returns the runtime value.
+     * Reads stored object contents.
+     *
+     * Responsibility: Reads stored object contents.
      */
     public function get(string $path): string;
 
     /**
-     * Handles the delete workflow.
+     * Deletes a stored object.
+     *
+     * Responsibility: Deletes a stored object.
      */
     public function delete(string $path): bool;
 
     /**
-     * Handles the exists workflow.
+     * Determines whether a stored object exists.
+     *
+     * Responsibility: Determines whether a stored object exists.
      */
     public function exists(string $path): bool;
 
     /**
-     * Handles the url workflow.
+     * Returns the URL for a stored object.
+     *
+     * Responsibility: Returns the URL for a stored object.
      */
     public function url(string $path): string;
 }

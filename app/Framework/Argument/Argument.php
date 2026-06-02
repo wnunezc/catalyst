@@ -33,41 +33,41 @@ namespace Catalyst\Framework\Argument;
 use Catalyst\Framework\Traits\SingletonTrait;
 
 /**
- * Main CLI argument handling class
- *
- * Provides a unified interface for accessing command-line arguments
- * Used by FileOutput and other CLI components
+ * Provides the shared entry point for parsing and querying CLI arguments.
  *
  * @package Catalyst\Framework\Argument
+ * Responsibility: Maintains parser, validator, parsed bag, and optional option schema for command-line consumers.
  */
 class Argument
 {
     use SingletonTrait;
 
     /**
-     * Parsed argument bag
+     * Holds the latest parsed command-line arguments.
      */
     private ?ArgumentBag $bag = null;
 
     /**
-     * Argument parser
+     * Converts raw argv input into an argument bag.
      */
     private ArgumentParser $parser;
 
     /**
-     * Argument validator
+     * Validates parsed arguments against defined option requirements.
      */
     private Validator $validator;
 
     /**
-     * Predefined options schema
+     * Stores option definitions used when parsing with a schema.
      *
      * @var array<Option>
      */
     private array $definedOptions = [];
 
     /**
-     * Constructor
+     * Initializes parsing and validation services, then parses the current CLI input.
+     *
+     * Responsibility: Initializes parsing and validation services, then parses the current CLI input.
      */
     protected function __construct()
     {
@@ -79,8 +79,9 @@ class Argument
     }
 
     /**
-     * Parse command line arguments
+     * Parses raw command-line input into the internal argument bag.
      *
+     * Responsibility: Parses raw command-line input into the internal argument bag.
      * @param array|null $argv Override argv (useful for testing)
      * @return self
      */
@@ -100,10 +101,9 @@ class Argument
     }
 
     /**
-     * Get all arguments as associative array
+     * Returns parsed options and positional parameters as a flat associative array.
      *
-     * Compatible with FileOutput.php usage: $arguments = (new Argument)->getArguments();
-     *
+     * Responsibility: Returns parsed options and positional parameters as a flat associative array.
      * @return array
      */
     public function getArguments(): array
@@ -116,8 +116,9 @@ class Argument
     }
 
     /**
-     * Check if an option exists
+     * Checks whether a parsed option is present by short or long name.
      *
+     * Responsibility: Checks whether a parsed option is present by short or long name.
      * @param string $name Option name (short or long)
      * @return bool
      */
@@ -131,8 +132,9 @@ class Argument
     }
 
     /**
-     * Get option value
+     * Returns a parsed option value or the supplied default when the option is absent.
      *
+     * Responsibility: Returns a parsed option value or the supplied default when the option is absent.
      * @param string $name Option name
      * @param mixed $default Default value if not found
      * @return mixed
@@ -147,8 +149,9 @@ class Argument
     }
 
     /**
-     * Get parameter value by position
+     * Returns a positional parameter value or the supplied default when absent.
      *
+     * Responsibility: Returns a positional parameter value or the supplied default when absent.
      * @param int $position Position index
      * @param mixed $default Default value if not found
      * @return mixed
@@ -163,8 +166,9 @@ class Argument
     }
 
     /**
-     * Get all options
+     * Returns every parsed option object indexed by primary name.
      *
+     * Responsibility: Returns every parsed option object indexed by primary name.
      * @return array<string, Option>
      */
     public function getAllOptions(): array
@@ -177,8 +181,9 @@ class Argument
     }
 
     /**
-     * Get all parameters
+     * Returns every parsed positional parameter indexed by position.
      *
+     * Responsibility: Returns every parsed positional parameter indexed by position.
      * @return array<int, Parameter>
      */
     public function getAllParameters(): array
@@ -191,8 +196,9 @@ class Argument
     }
 
     /**
-     * Define an option schema
+     * Registers a single option definition for schema-aware parsing and validation.
      *
+     * Responsibility: Registers a single option definition for schema-aware parsing and validation.
      * @param Option $option Option definition
      * @return self
      */
@@ -203,8 +209,9 @@ class Argument
     }
 
     /**
-     * Define multiple option schemas
+     * Registers multiple option definitions for schema-aware parsing and validation.
      *
+     * Responsibility: Registers multiple option definitions for schema-aware parsing and validation.
      * @param array<Option> $options Array of Option objects
      * @return self
      */
@@ -217,8 +224,9 @@ class Argument
     }
 
     /**
-     * Validate arguments
+     * Validates the current parsed bag against all required defined options.
      *
+     * Responsibility: Validates the current parsed bag against all required defined options.
      * @return bool True if valid
      */
     public function validate(): bool
@@ -236,8 +244,9 @@ class Argument
     }
 
     /**
-     * Get validation errors
+     * Returns validation error messages collected by the validator.
      *
+     * Responsibility: Returns validation error messages collected by the validator.
      * @return array
      */
     public function getValidationErrors(): array
@@ -246,8 +255,9 @@ class Argument
     }
 
     /**
-     * Get validator instance
+     * Returns the validator used by this argument facade.
      *
+     * Responsibility: Returns the validator used by this argument facade.
      * @return Validator
      */
     public function getValidator(): Validator
@@ -256,8 +266,9 @@ class Argument
     }
 
     /**
-     * Get parser instance
+     * Returns the parser used by this argument facade.
      *
+     * Responsibility: Returns the parser used by this argument facade.
      * @return ArgumentParser
      */
     public function getParser(): ArgumentParser
@@ -266,8 +277,9 @@ class Argument
     }
 
     /**
-     * Get argument bag
+     * Returns the current parsed argument bag, if parsing has produced one.
      *
+     * Responsibility: Returns the current parsed argument bag, if parsing has produced one.
      * @return ArgumentBag|null
      */
     public function getBag(): ?ArgumentBag
@@ -276,8 +288,9 @@ class Argument
     }
 
     /**
-     * Get raw argv
+     * Returns the original argv array stored in the parsed bag.
      *
+     * Responsibility: Returns the original argv array stored in the parsed bag.
      * @return array
      */
     public function getRaw(): array
@@ -290,7 +303,7 @@ class Argument
     }
 
     /**
-     * Check if running in CLI mode
+     * Determines whether the current PHP process is running in CLI mode.
      *
      * @return bool
      */
@@ -300,8 +313,9 @@ class Argument
     }
 
     /**
-     * Get script name
+     * Returns the executable script basename from the current argv array.
      *
+     * Responsibility: Returns the executable script basename from the current argv array.
      * @return string
      */
     public function getScriptName(): string

@@ -33,15 +33,17 @@ namespace Catalyst\Framework\Event;
 use Catalyst\Entities\EventEnvelope;
 
 /**
- * Defines the Event Listener Interface interface contract.
+ * Contract for event listener classes.
  *
  * @package Catalyst\Framework\Event
- * Responsibility: Coordinates the event listener interface behavior within its module boundary.
+ * Responsibility: Defines the handler method required for class-based event listeners.
  */
 interface EventListenerInterface
 {
     /**
-     * Handles the request workflow.
+     * Handles an event envelope.
+     *
+     * Responsibility: Handles an event envelope.
      */
     public function handle(EventEnvelope $event): void;
 }

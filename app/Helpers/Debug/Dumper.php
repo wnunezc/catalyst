@@ -39,6 +39,7 @@ use Catalyst\Framework\Traits\SingletonTrait;
  * It coordinates the process of dumping variables for inspection.
  *
  * @package Catalyst\Helpers\Debug;
+ * Responsibility: Coordinates dumper configuration, formatting, and rendering for each debug inspection.
  */
 class Dumper
 {
@@ -70,8 +71,9 @@ class Dumper
     private DumperRenderer $renderer;
 
     /**
-     * Constructor with dependency injection
+     * Initializes the dumper with formatter and rendering collaborators.
      *
+     * Responsibility: Constructor with dependency injection.
      * @param DumperConfig|null $config Configuration instance
      * @param DumperColorizer|null $colorizer Colorizer instance
      * @param DumperCollapsible|null $collapsible Collapsible instance
@@ -89,8 +91,9 @@ class Dumper
     }
 
     /**
-     * Initialize the Dumper instance with dependencies
+     * Initialize the Dumper instance with dependencies.
      *
+     * Responsibility: Initialize the Dumper instance with dependencies.
      * @param DumperConfig|null $config Configuration instance
      * @param DumperColorizer|null $colorizer Colorizer instance
      * @param DumperCollapsible|null $collapsible Collapsible instance

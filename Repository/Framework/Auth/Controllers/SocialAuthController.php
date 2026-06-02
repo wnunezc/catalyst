@@ -38,29 +38,18 @@ use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
 use Exception;
 
-/**************************************************************************************
- * SocialAuthController — OAuth2 social login via league/oauth2-client.
- *
- * Routes:
- *   GET /auth/social/{provider}          → redirectToProvider()
- *   GET /auth/social/callback/{provider} → callback()
- *
- * Supported providers: 'google', 'github'
- * Configure via env: GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, etc.
- *
- * @package Catalyst\Repository\Auth\Controllers
- */
 /**
- * Defines the Social Auth Controller class contract.
+ * Handles OAuth provider redirects and callbacks for social login.
  *
  * @package Catalyst\Repository\Auth\Controllers
- * Responsibility: Coordinates the social auth controller behavior within its module boundary.
+ * Responsibility: Starts provider authorization, validates callback data, links OAuth identities, and signs in local users.
  */
 class SocialAuthController extends Controller
 {
     /**
      * Redirect the user to the OAuth provider's authorization page.
      *
+     * Responsibility: Redirect the user to the OAuth provider's authorization page.
      * @param Request $request
      * @param string  $provider  'google' | 'github'
      * @return Response
@@ -90,6 +79,7 @@ class SocialAuthController extends Controller
     /**
      * Handle the OAuth provider callback, find or create the user, and log them in.
      *
+     * Responsibility: Handle the OAuth provider callback, find or create the user, and log them in.
      * @param Request $request
      * @param string  $provider
      * @return Response

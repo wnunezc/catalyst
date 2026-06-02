@@ -80,6 +80,7 @@ use Catalyst\Framework\Database\Model;
  * Override resolveCurrentUserId() in your model to customise resolution logic.
  *
  * @package Catalyst\Framework\Traits
+ * Responsibility: Stamps actor identifiers and records model lifecycle mutations.
  */
 trait HasAuditLogTrait
 {
@@ -137,6 +138,8 @@ trait HasAuditLogTrait
 
     /**
      * Set created_by if not already set (preserves explicit overrides).
+     *
+     * Responsibility: Set created_by if not already set (preserves explicit overrides).
      */
     public function stampCreatedBy(): void
     {
@@ -149,6 +152,8 @@ trait HasAuditLogTrait
 
     /**
      * Refresh updated_by on every update.
+     *
+     * Responsibility: Refresh updated_by on every update.
      */
     public function stampUpdatedBy(): void
     {
@@ -160,8 +165,9 @@ trait HasAuditLogTrait
     }
 
     /**
-     * Set deleted_by before the row is soft-deleted or hard-deleted.
-     * For hard deletes the column value is never persisted — this is a no-op.
+     * Set deleted_by before the row is soft-deleted or hard-deleted. For hard deletes the column value is never persisted — this is a no-op.
+     *
+     * Responsibility: Set deleted_by before the row is soft-deleted or hard-deleted. For hard deletes the column value is never persisted — this is a no-op.
      */
     public function stampDeletedBy(): void
     {
@@ -177,7 +183,9 @@ trait HasAuditLogTrait
     // -------------------------------------------------------------------------
 
     /**
-     * Handles the create workflow.
+     * Returns the user identifier that created the model.
+     *
+     * Responsibility: Returns the user identifier that created the model.
      */
     public function createdBy(): ?int
     {
@@ -186,7 +194,9 @@ trait HasAuditLogTrait
     }
 
     /**
-     * Handles the update workflow.
+     * Returns the user identifier that last updated the model.
+     *
+     * Responsibility: Returns the user identifier that last updated the model.
      */
     public function updatedBy(): ?int
     {
@@ -195,7 +205,9 @@ trait HasAuditLogTrait
     }
 
     /**
-     * Handles the delete workflow.
+     * Returns the user identifier that deleted the model.
+     *
+     * Responsibility: Returns the user identifier that deleted the model.
      */
     public function deletedBy(): ?int
     {
@@ -208,14 +220,9 @@ trait HasAuditLogTrait
     // -------------------------------------------------------------------------
 
     /**
-     * Resolve the current authenticated user ID from the session.
+     * Resolve the current authenticated user ID from the session. Returns null when: - PHP session is not active - No user is logged in (user_id absent in session) Override this method in your model to use a different resolution strategy (e.g. reading from a request context object, JWT claim, etc.).
      *
-     * Returns null when:
-     * - PHP session is not active
-     * - No user is logged in (user_id absent in session)
-     *
-     * Override this method in your model to use a different resolution strategy
-     * (e.g. reading from a request context object, JWT claim, etc.).
+     * Responsibility: Resolve the current authenticated user ID from the session. Returns null when: - PHP session is not active - No user is logged in (user_id absent in session) Override this method in your model to use a different resolution strategy (e.g. reading from a request context object, JWT claim, etc.).
      */
     protected function resolveCurrentUserId(): ?int
     {

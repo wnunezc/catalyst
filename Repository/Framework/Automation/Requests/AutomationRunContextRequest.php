@@ -36,10 +36,10 @@ use Catalyst\Helpers\Exceptions\ValidationException;
 use Catalyst\Helpers\Validation\Validator;
 
 /**
- * Defines the Automation Run Context Request class contract.
+ * Validates the execution context submitted for a manual or API automation run.
  *
  * @package Catalyst\Repository\Automation\Requests
- * Responsibility: Coordinates the automation run context request behavior within its module boundary.
+ * Responsibility: Decode automation context JSON and expose a normalized execution payload.
  */
 final class AutomationRunContextRequest extends FormRequest
 {
@@ -49,6 +49,9 @@ final class AutomationRunContextRequest extends FormRequest
     private ?array $resolvedData = null;
 
     /**
+     * Declares validation rules for the execution context wrapper.
+     *
+     * Responsibility: Declares validation rules for the execution context wrapper.
      * @return array<string, string>
      */
     public function rules(): array
@@ -57,7 +60,9 @@ final class AutomationRunContextRequest extends FormRequest
     }
 
     /**
-     * Handles the validation message workflow.
+     * Returns the message used for malformed execution context JSON.
+     *
+     * Responsibility: Returns the message used for malformed execution context JSON.
      */
     public function validationMessage(): string
     {
@@ -65,6 +70,9 @@ final class AutomationRunContextRequest extends FormRequest
     }
 
     /**
+     * Returns the normalized execution context wrapper, resolving it lazily.
+     *
+     * Responsibility: Returns the normalized execution context wrapper, resolving it lazily.
      * @return array<string, mixed>
      */
     public function validated(): array
@@ -77,6 +85,9 @@ final class AutomationRunContextRequest extends FormRequest
     }
 
     /**
+     * Returns the decoded automation execution context.
+     *
+     * Responsibility: Returns the decoded automation execution context.
      * @return array<string, mixed>
      */
     public function context(): array
@@ -85,7 +96,9 @@ final class AutomationRunContextRequest extends FormRequest
     }
 
     /**
-     * Handles the context json workflow.
+     * Returns the normalized JSON representation of the execution context.
+     *
+     * Responsibility: Returns the normalized JSON representation of the execution context.
      */
     public function contextJson(): string
     {
@@ -93,6 +106,9 @@ final class AutomationRunContextRequest extends FormRequest
     }
 
     /**
+     * Authorizes the request and resolves a valid array execution context.
+     *
+     * Responsibility: Authorizes the request and resolves a valid array execution context.
      * @throws ValidationException
      * @throws ForbiddenException
      */

@@ -38,14 +38,17 @@ use Catalyst\Framework\Route\Router;
 use Catalyst\Helpers\Config\ConfigManager;
 
 /**
- * Defines the Cache Config Writer class contract.
+ * Writes cache settings and reconciles affected runtime caches.
  *
  * @package Catalyst\Repository\Settings\Support
- * Responsibility: Coordinates the cache config writer behavior within its module boundary.
+ * Responsibility: Persists cache flags, refreshes cache services and clears disabled cache layers.
  */
 final class CacheConfigWriter
 {
     /**
+     * Saves cache settings and reconciles runtime cache state.
+     *
+     * Responsibility: Saves cache settings and reconciles runtime cache state.
      * @param array<string, mixed> $data
      */
     public function save(array $data): void

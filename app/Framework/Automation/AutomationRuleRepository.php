@@ -44,10 +44,10 @@ use DateTimeZone;
 use Exception;
 
 /**
- * Defines the Automation Rule Repository class contract.
+ * Persists automation rules and their execution history.
  *
  * @package Catalyst\Framework\Automation
- * Responsibility: Coordinates the automation rule repository behavior within its module boundary.
+ * Responsibility: Queries tenant-scoped automation rules, schedules and execution records.
  */
 final class AutomationRuleRepository
 {
@@ -59,6 +59,8 @@ final class AutomationRuleRepository
 
     /**
      * Initializes the Automation Rule Repository instance.
+     *
+     * Responsibility: Initializes the Automation Rule Repository instance.
      */
     protected function __construct()
     {
@@ -68,6 +70,9 @@ final class AutomationRuleRepository
     }
 
     /**
+     * Searches tenant automation rules using pagination and optional filters.
+     *
+     * Responsibility: Searches tenant automation rules using pagination and optional filters.
      * @param array<string, mixed> $criteria
      * @return array{rows: array<int, array<string, mixed>>, total: int}
      */
@@ -149,6 +154,9 @@ final class AutomationRuleRepository
     }
 
     /**
+     * Finds a tenant automation rule with its current workflow state.
+     *
+     * Responsibility: Finds a tenant automation rule with its current workflow state.
      * @return array<string, mixed>|null
      */
     public function find(int $id): ?array
@@ -175,7 +183,9 @@ final class AutomationRuleRepository
     }
 
     /**
-     * Finds the requested record.
+     * Finds an automation rule model by identifier.
+     *
+     * Responsibility: Finds an automation rule model by identifier.
      */
     public function findModel(int $id): ?AutomationRule
     {
@@ -183,6 +193,9 @@ final class AutomationRuleRepository
     }
 
     /**
+     * Returns enabled rules subscribed to the given event.
+     *
+     * Responsibility: Returns enabled rules subscribed to the given event.
      * @return array<int, array<string, mixed>>
      */
     public function eventRules(string $eventName): array
@@ -205,6 +218,9 @@ final class AutomationRuleRepository
     }
 
     /**
+     * Returns scheduled rules whose cron expressions are due.
+     *
+     * Responsibility: Returns scheduled rules whose cron expressions are due.
      * @return array<int, array<string, mixed>>
      */
     public function dueScheduleRules(?DateTimeImmutable $now = null): array
@@ -239,7 +255,9 @@ final class AutomationRuleRepository
     }
 
     /**
-     * Handles the touch last run workflow.
+     * Records the latest successful execution time for a rule.
+     *
+     * Responsibility: Records the latest successful execution time for a rule.
      */
     public function touchLastRun(int $ruleId): void
     {
@@ -253,6 +271,9 @@ final class AutomationRuleRepository
     }
 
     /**
+     * Persists an automation execution log after sanitizing sensitive fields.
+     *
+     * Responsibility: Persists an automation execution log after sanitizing sensitive fields.
      * @param array<string, mixed> $context
      * @param array<string, mixed> $result
      */
@@ -285,6 +306,9 @@ final class AutomationRuleRepository
     }
 
     /**
+     * Returns the latest execution logs for one tenant rule.
+     *
+     * Responsibility: Returns the latest execution logs for one tenant rule.
      * @return array<int, array<string, mixed>>
      */
     public function logsForRule(int $ruleId): array
@@ -305,7 +329,9 @@ final class AutomationRuleRepository
     }
 
     /**
-     * Handles the current tenant id workflow.
+     * Returns the required tenant identifier for repository queries.
+     *
+     * Responsibility: Returns the required tenant identifier for repository queries.
      */
     private function currentTenantId(): int
     {

@@ -41,19 +41,14 @@ use Catalyst\Helpers\Log\Logger;
 use Closure;
 use Exception;
 
-/**************************************************************************************
+/**
  * Router class for handling HTTP routing
  *
  * Responsible for registering routes, matching URL patterns, and dispatching
  * to appropriate controllers or handlers.
  *
- * @package Catalyst\Framework\Route;
- */
-/**
- * Defines the Router class contract.
- *
  * @package Catalyst\Framework\Route
- * Responsibility: Coordinates the router behavior within its module boundary.
+ * Responsibility: Registers routes and middleware, manages route caching, and dispatches HTTP requests.
  */
 class Router
 {
@@ -102,7 +97,9 @@ class Router
     private string $cacheFile;
 
     /**
-     * Router constructor
+     * Initializes the router registries, dispatcher, middleware stack and cache path.
+     *
+     * Responsibility: Prepares the singleton router state used by route registration, caching and dispatch.
      */
     protected function __construct()
     {
@@ -113,8 +110,9 @@ class Router
     }
 
     /**
-     * Register a GET route
+     * Register a GET route.
      *
+     * Responsibility: Register a GET route.
      * @param string $pattern Route URL pattern
      * @param mixed $handler Route handler (controller@method, callable, etc.)
      * @return Route Created route instance
@@ -125,8 +123,9 @@ class Router
     }
 
     /**
-     * Register a POST route
+     * Register a POST route.
      *
+     * Responsibility: Register a POST route.
      * @param string $pattern Route URL pattern
      * @param mixed $handler Route handler (controller@method, callable, etc.)
      * @return Route Created route instance
@@ -137,8 +136,9 @@ class Router
     }
 
     /**
-     * Register a PUT route
+     * Register a PUT route.
      *
+     * Responsibility: Register a PUT route.
      * @param string $pattern Route URL pattern
      * @param mixed $handler Route handler (controller@method, callable, etc.)
      * @return Route Created route instance
@@ -149,8 +149,9 @@ class Router
     }
 
     /**
-     * Register a DELETE route
+     * Register a DELETE route.
      *
+     * Responsibility: Register a DELETE route.
      * @param string $pattern Route URL pattern
      * @param mixed $handler Route handler (controller@method, callable, etc.)
      * @return Route Created route instance
@@ -161,8 +162,9 @@ class Router
     }
 
     /**
-     * Register a PATCH route
+     * Register a PATCH route.
      *
+     * Responsibility: Register a PATCH route.
      * @param string $pattern Route URL pattern
      * @param mixed $handler Route handler (controller@method, callable, etc.)
      * @return Route Created route instance
@@ -173,8 +175,9 @@ class Router
     }
 
     /**
-     * Register a OPTIONS route
+     * Register a OPTIONS route.
      *
+     * Responsibility: Register a OPTIONS route.
      * @param string $pattern Route URL pattern
      * @param mixed $handler Route handler (controller@method, callable, etc.)
      * @return Route Created route instance
@@ -185,8 +188,9 @@ class Router
     }
 
     /**
-     * Register a route that responds to any HTTP method
+     * Register a route that responds to any HTTP method.
      *
+     * Responsibility: Register a route that responds to any HTTP method.
      * @param string $pattern Route URL pattern
      * @param mixed $handler Route handler (controller@method, callable, etc.)
      * @return Route Created route instance
@@ -210,8 +214,9 @@ class Router
     }
 
     /**
-     * Register a resource route group for CRUD operations
+     * Register a resource route group for CRUD operations.
      *
+     * Responsibility: Register a resource route group for CRUD operations.
      * @param string $name Resource name
      * @param string $controller Controller class
      * @param array $options Resource options
@@ -247,8 +252,9 @@ class Router
     }
 
     /**
-     * Create a route group with shared attributes
+     * Create a route group with shared attributes.
      *
+     * Responsibility: Create a route group with shared attributes.
      * @param array $attributes Shared group attributes
      * @param callable $callback Callback to define routes within group
      * @return void
@@ -272,8 +278,9 @@ class Router
     }
 
     /**
-     * Dispatch the request to the appropriate route
+     * Dispatch the request to the appropriate route.
      *
+     * Responsibility: Dispatch the request to the appropriate route.
      * @param Request $request The HTTP request to dispatch
      * @return Response The response from the route handler
      * @throws RouteNotFoundException If no matching route is found
@@ -306,8 +313,9 @@ class Router
     }
 
     /**
-     * Add global middleware to be applied to all routes
+     * Add global middleware to be applied to all routes.
      *
+     * Responsibility: Add global middleware to be applied to all routes.
      * @param string|callable $middleware Middleware to add
      * @return self For method chaining
      */
@@ -318,6 +326,9 @@ class Router
     }
 
     /**
+     * Returns the middleware applied globally to routed requests.
+     *
+     * Responsibility: Returns the middleware applied globally to routed requests.
      * @return array<int, string|callable>
      */
     public function getGlobalMiddleware(): array
@@ -326,8 +337,9 @@ class Router
     }
 
     /**
-     * Generate a URL for a named route
+     * Generate a URL for a named route.
      *
+     * Responsibility: Generate a URL for a named route.
      * @param string $name Route name
      * @param array $parameters Route parameters
      * @param bool $absolute Whether to generate absolute URL
@@ -340,8 +352,9 @@ class Router
     }
 
     /**
-     * Add a route to the collection
+     * Add a route to the collection.
      *
+     * Responsibility: Add a route to the collection.
      * @param array $methods Allowed HTTP methods
      * @param string $pattern Route pattern
      * @param mixed $handler Route handler
@@ -379,8 +392,9 @@ class Router
     }
 
     /**
-     * Load routes from cache file
+     * Load routes from cache file.
      *
+     * Responsibility: Load routes from cache file.
      * @return bool Success status
      */
     public function loadCachedRoutes(): bool
@@ -400,9 +414,9 @@ class Router
     }
 
     /**
-     * Cache all registered routes to a file.
-     * Routes with Closure handlers cannot be cached — returns false if any exist.
+     * Cache all registered routes to a file. Routes with Closure handlers cannot be cached — returns false if any exist.
      *
+     * Responsibility: Cache all registered routes to a file. Routes with Closure handlers cannot be cached — returns false if any exist.
      * @return bool Success status, false if routes contain closures or write fails
      */
     public function cacheRoutes(): bool
@@ -436,8 +450,9 @@ class Router
     }
 
     /**
-     * Get the route cache file path
+     * Get the route cache file path.
      *
+     * Responsibility: Exposes the filesystem path used to read and write the compiled route cache.
      * @return string Absolute path to the cache file
      */
     public function getCacheFile(): string
@@ -446,8 +461,9 @@ class Router
     }
 
     /**
-     * Clear the route cache
+     * Clear the route cache.
      *
+     * Responsibility: Clear the route cache.
      * @return bool Success status
      */
     public function clearRouteCache(): bool
@@ -459,8 +475,9 @@ class Router
     }
 
     /**
-     * Get all registered routes
+     * Get all registered routes.
      *
+     * Responsibility: Get all registered routes.
      * @return RouteCollection
      */
     public function getRoutes(): RouteCollection

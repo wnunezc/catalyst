@@ -37,10 +37,10 @@ use PDO;
 use RuntimeException;
 
 /**
- * Development-only database reset workflow.
+ * Rebuilds the development database from canonical SQL and migrations.
  *
- * Keeps destructive SQL orchestration out of the HTTP controller while preserving
- * the existing dev-only reset behavior and schema replay sequence.
+ * @package Catalyst\Repository\DevTools\Services
+ * Responsibility: Orchestrates destructive DevTools database reset operations.
  */
 final class DatabaseResetService
 {
@@ -50,7 +50,9 @@ final class DatabaseResetService
     private const string DEVELOPMENT_OVERLAY_FILE = 'create-catalyst-db.development.sql';
 
     /**
-     * Handles the reset workflow.
+     * Drops current tables and replays the canonical development schema.
+     *
+     * Responsibility: Drops current tables and replays the canonical development schema.
      */
     public function reset(): void
     {
@@ -67,11 +69,9 @@ final class DatabaseResetService
     }
 
     /**
-     * Execute a .sql file against the active PDO connection.
+     * Executes a Catalyst-controlled SQL file against the active connection.
      *
-     * The SQL file comes from Catalyst-controlled database assets. Statements
-     * that switch/create databases are skipped because the connection already
-     * targets the configured schema.
+     * Responsibility: Executes a Catalyst-controlled SQL file against the active connection.
      */
     private function executeSqlFile(PDO $pdo, string $path): void
     {
@@ -99,7 +99,9 @@ final class DatabaseResetService
     }
 
     /**
-     * Executes the service workflow.
+     * Replays the optional development SQL overlay when present.
+     *
+     * Responsibility: Replays the optional development SQL overlay when present.
      */
     private function executeDevelopmentOverlay(PDO $pdo): void
     {
@@ -113,7 +115,9 @@ final class DatabaseResetService
     }
 
     /**
-     * Handles the drop all tables workflow.
+     * Drops every table in the active schema with foreign-key checks disabled.
+     *
+     * Responsibility: Drops every table in the active schema with foreign-key checks disabled.
      */
     private function dropAllTables(PDO $pdo): void
     {

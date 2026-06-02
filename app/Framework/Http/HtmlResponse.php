@@ -30,30 +30,18 @@ declare(strict_types=1);
 
 namespace Catalyst\Framework\Http;
 
-
-/**************************************************************************************
- * HtmlResponse class for simple HTML content responses
- *
- * Specializes the base Response class for HTML content with appropriate
- * content-type headers.
- *
- * @package Catalyst\Framework\Http
- */
 /**
- * Defines the Html Response class contract.
+ * Represents an HTTP response for HTML content.
  *
  * @package Catalyst\Framework\Http
- * Responsibility: Coordinates the html response behavior within its module boundary.
+ * Responsibility: Ensures HTML responses carry the correct Content-Type header before delegating response transport to the base class.
  */
 class HtmlResponse extends Response
 {
     /**
-     * Create a new HTML response
+     * Creates an HTML response with a charset-aware content type.
      *
-     * @param string $content HTML content
-     * @param int $status HTTP status code
-     * @param array $headers HTTP headers
-     * @param string $charset Character set
+     * Responsibility: Creates an HTML response with a charset-aware content type.
      */
     public function __construct(
         string $content = '',

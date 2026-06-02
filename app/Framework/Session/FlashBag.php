@@ -36,6 +36,9 @@ namespace Catalyst\Framework\Session;
  * FlashMessage remains the public facade used by controllers and templates.
  * This bag owns the session structure, validation, history TTL, and dismiss
  * tracking so the higher-level API stays focused on intent.
+ *
+ * @package Catalyst\Framework\Session
+ * Responsibility: Persists, consumes and deduplicates flash-message state in the session.
  */
 class FlashBag
 {
@@ -48,6 +51,8 @@ class FlashBag
 
     /**
      * Initializes the Flash Bag instance.
+     *
+     * Responsibility: Initializes the Flash Bag instance.
      */
     public function __construct(private readonly SessionManager $session)
     {
@@ -55,7 +60,9 @@ class FlashBag
     }
 
     /**
-     * Handles the add workflow.
+     * Adds a one-shot flash message unless it was already displayed.
+     *
+     * Responsibility: Adds a one-shot flash message unless it was already displayed.
      */
     public function add(string $type, string $message, ?string $customId = null): void
     {
@@ -84,7 +91,9 @@ class FlashBag
     }
 
     /**
-     * Handles the add persistent workflow.
+     * Adds a persistent flash message unless it was dismissed.
+     *
+     * Responsibility: Adds a persistent flash message unless it was dismissed.
      */
     public function addPersistent(string $type, string $message, ?string $customId = null): void
     {
@@ -113,7 +122,9 @@ class FlashBag
     }
 
     /**
-     * Handles the dismiss workflow.
+     * Dismisses a persistent message and removes it from the active list.
+     *
+     * Responsibility: Dismisses a persistent message and removes it from the active list.
      */
     public function dismiss(string $id): void
     {
@@ -129,6 +140,9 @@ class FlashBag
     }
 
     /**
+     * Consumes unread one-shot messages grouped by type.
+     *
+     * Responsibility: Consumes unread one-shot messages grouped by type.
      * @return array<string, array<string>>
      */
     public function all(): array
@@ -151,6 +165,9 @@ class FlashBag
     }
 
     /**
+     * Returns visible persistent messages.
+     *
+     * Responsibility: Returns visible persistent messages.
      * @return array<int, array{id: string, type: string, message: string}>
      */
     public function allPersistent(): array
@@ -174,6 +191,9 @@ class FlashBag
     }
 
     /**
+     * Consumes unread messages of a selected type.
+     *
+     * Responsibility: Consumes unread messages of a selected type.
      * @return array<string>
      */
     public function get(string $type): array
@@ -198,7 +218,9 @@ class FlashBag
     }
 
     /**
-     * Handles the has workflow.
+     * Determines whether unread one-shot messages remain.
+     *
+     * Responsibility: Determines whether unread one-shot messages remain.
      */
     public function has(?string $type = null): bool
     {
@@ -218,7 +240,9 @@ class FlashBag
     }
 
     /**
-     * Determines whether has Persistent.
+     * Determines whether visible persistent messages remain.
+     *
+     * Responsibility: Determines whether visible persistent messages remain.
      */
     public function hasPersistent(?string $type = null): bool
     {
@@ -238,7 +262,9 @@ class FlashBag
     }
 
     /**
-     * Handles the clear workflow.
+     * Clears one-shot messages.
+     *
+     * Responsibility: Clears one-shot messages.
      */
     public function clear(): void
     {
@@ -246,7 +272,9 @@ class FlashBag
     }
 
     /**
-     * Handles the clear persistent workflow.
+     * Clears persistent messages.
+     *
+     * Responsibility: Clears persistent messages.
      */
     public function clearPersistent(): void
     {
@@ -254,7 +282,9 @@ class FlashBag
     }
 
     /**
-     * Handles the clear history workflow.
+     * Clears the displayed-message history.
+     *
+     * Responsibility: Clears the displayed-message history.
      */
     public function clearHistory(): void
     {
@@ -265,7 +295,9 @@ class FlashBag
     }
 
     /**
-     * Handles the clear dismissed workflow.
+     * Clears the dismissed-message identifiers.
+     *
+     * Responsibility: Clears the dismissed-message identifiers.
      */
     public function clearDismissed(): void
     {
@@ -273,7 +305,9 @@ class FlashBag
     }
 
     /**
-     * Handles the reset workflow.
+     * Clears all flash-message storage.
+     *
+     * Responsibility: Clears all flash-message storage.
      */
     public function reset(): void
     {
@@ -284,6 +318,9 @@ class FlashBag
     }
 
     /**
+     * Returns queued one-shot messages without consuming them.
+     *
+     * Responsibility: Returns queued one-shot messages without consuming them.
      * @return array<int, array{id: string, type: string, message: string, created_at: int}>
      */
     public function peek(): array
@@ -293,7 +330,9 @@ class FlashBag
     }
 
     /**
-     * Handles the count workflow.
+     * Counts unread and visible flash messages.
+     *
+     * Responsibility: Counts unread and visible flash messages.
      */
     public function count(): int
     {
@@ -315,7 +354,9 @@ class FlashBag
     }
 
     /**
-     * Handles the initialize storage workflow.
+     * Initializes and validates flash-message session storage.
+     *
+     * Responsibility: Initializes and validates flash-message session storage.
      */
     private function initializeStorage(): void
     {
@@ -349,7 +390,9 @@ class FlashBag
     }
 
     /**
-     * Determines whether is Valid Message.
+     * Determines whether a stored message has the expected shape.
+     *
+     * Responsibility: Determines whether a stored message has the expected shape.
      */
     private function isValidMessage(mixed $message): bool
     {
@@ -361,7 +404,9 @@ class FlashBag
     }
 
     /**
-     * Handles the generate message id workflow.
+     * Generates a unique identifier for a flash message.
+     *
+     * Responsibility: Generates a unique identifier for a flash message.
      */
     private function generateMessageId(string $type, string $message): string
     {
@@ -376,7 +421,9 @@ class FlashBag
     }
 
     /**
-     * Determines whether is Displayed.
+     * Determines whether a message was already displayed.
+     *
+     * Responsibility: Determines whether a message was already displayed.
      */
     private function isDisplayed(string $id): bool
     {
@@ -385,7 +432,9 @@ class FlashBag
     }
 
     /**
-     * Determines whether is Dismissed.
+     * Determines whether a persistent message was dismissed.
+     *
+     * Responsibility: Determines whether a persistent message was dismissed.
      */
     private function isDismissed(string $id): bool
     {
@@ -394,7 +443,9 @@ class FlashBag
     }
 
     /**
-     * Handles the mark as displayed workflow.
+     * Records a message as displayed and bounds history size.
+     *
+     * Responsibility: Records a message as displayed and bounds history size.
      */
     private function markAsDisplayed(string $id): void
     {
@@ -413,7 +464,9 @@ class FlashBag
     }
 
     /**
-     * Handles the cleanup history workflow.
+     * Removes expired displayed-message history entries.
+     *
+     * Responsibility: Removes expired displayed-message history entries.
      */
     private function cleanupHistory(): void
     {

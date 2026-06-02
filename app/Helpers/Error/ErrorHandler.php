@@ -37,6 +37,7 @@ use Catalyst\Framework\Traits\{SingletonTrait, OutputCleanerTrait, ErrorTypeTrai
  * Class that handles registered Errors.
  *
  * @package Catalyst\Helpers\Error;
+ * Responsibility: Converts reportable PHP errors into Catalyst diagnostic output.
  */
 class ErrorHandler
 {
@@ -47,6 +48,7 @@ class ErrorHandler
     /**
      * Error handler. Captures and handles errors generated in the application.
      *
+     * Responsibility: Error handler. Captures and handles errors generated in the application.
      * @param int $errorLevel Error level.
      * @param string $errorDesc Error description.
      * @param string $errorFile File where the error occurred.

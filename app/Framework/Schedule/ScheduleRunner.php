@@ -39,15 +39,17 @@ use RuntimeException;
 use Throwable;
 
 /**
- * Defines the Schedule Runner class contract.
+ * Evaluates scheduled tasks and dispatches due work to the queue.
  *
  * @package Catalyst\Framework\Schedule
- * Responsibility: Coordinates the schedule runner behavior within its module boundary.
+ * Responsibility: Resolves task scope, checks cron slots, prevents duplicate execution, queues due jobs, and reports outcomes.
  */
 final class ScheduleRunner
 {
     /**
      * Initializes the Schedule Runner instance.
+     *
+     * Responsibility: Initializes the Schedule Runner instance.
      */
     public function __construct(
         private readonly ScheduleLockManager $lockManager = new ScheduleLockManager()
@@ -55,6 +57,9 @@ final class ScheduleRunner
     }
 
     /**
+     * Evaluates due tasks or one requested task and returns dispatch outcomes.
+     *
+     * Responsibility: Evaluates due tasks or one requested task and returns dispatch outcomes.
      * @return array<int, array{task:string,status:string,job_id?:int,message?:string}>
      */
     public function run(?string $taskName = null, bool $force = false): array
@@ -123,7 +128,9 @@ final class ScheduleRunner
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves a registered scheduled task or fails for an unknown name.
+     *
+     * Responsibility: Resolves a registered scheduled task or fails for an unknown name.
      */
     private function resolveTask(string $taskName): ScheduledTask
     {
@@ -137,7 +144,9 @@ final class ScheduleRunner
     }
 
     /**
-     * Handles the claim task slot workflow.
+     * Claims the task slot before queue dispatch to prevent duplicate runs.
+     *
+     * Responsibility: Claims the task slot before queue dispatch to prevent duplicate runs.
      */
     private function claimTaskSlot(ScheduledTask $task, string $slotKey): bool
     {

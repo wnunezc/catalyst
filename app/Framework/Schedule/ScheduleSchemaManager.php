@@ -33,17 +33,17 @@ namespace Catalyst\Framework\Schedule;
 use Catalyst\Framework\Database\DatabaseManager;
 
 /**
- * Defines the Schedule Schema Manager class contract.
+ * Ensures scheduler history storage exists before repository operations run.
  *
  * @package Catalyst\Framework\Schedule
- * Responsibility: Coordinates the schedule schema manager behavior within its module boundary.
+ * Responsibility: Creates the scheduler history table once per request using the queue database connection.
  */
 final class ScheduleSchemaManager
 {
     private static bool $ready = false;
 
     /**
-     * Handles the ensure workflow.
+     * Creates the scheduler history table when it has not been initialized yet.
      */
     public static function ensure(): void
     {
@@ -78,7 +78,7 @@ final class ScheduleSchemaManager
     }
 
     /**
-     * Handles the quote workflow.
+     * Quotes a scheduler table identifier for schema statements.
      */
     private static function quote(string $identifier): string
     {

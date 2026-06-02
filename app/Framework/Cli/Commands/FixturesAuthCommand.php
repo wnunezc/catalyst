@@ -39,15 +39,18 @@ use InvalidArgumentException;
 use Throwable;
 
 /**
- * Defines the Fixtures Auth Command class contract.
+ * fixtures:auth CLI command.
+ *
+ * Responsibility: Runs the fixtures:auth command to Inspect, apply, snapshot and mutate official auth/RBAC fixtures for development and smoke flows.
  *
  * @package Catalyst\Framework\Cli\Commands
- * Responsibility: Coordinates the fixtures auth command behavior within its module boundary.
  */
 final class FixturesAuthCommand extends AbstractCommand
 {
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -55,14 +58,21 @@ final class FixturesAuthCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
         return 'Inspect, apply, snapshot and mutate official auth/RBAC fixtures for development and smoke flows';
     }
 
-    /** @return Option[] */
+    /**
+     * Defines the accepted option schema for this command.
+     *
+     * Responsibility: Defines the accepted option schema for this command.
+     * @return Option[]
+     */
     public function getOptions(): array
     {
         return [
@@ -84,7 +94,9 @@ final class FixturesAuthCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {
@@ -172,7 +184,9 @@ final class FixturesAuthCommand extends AbstractCommand
     }
 
     /**
-     * @param array<string, mixed> $payload
+     * Describes the render helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the render helper workflow used by this CLI component.
      */
     private function render(bool $asJson, array $payload): void
     {
@@ -204,7 +218,9 @@ final class FixturesAuthCommand extends AbstractCommand
     }
 
     /**
-     * Handles the require user workflow.
+     * Describes the require user helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the require user helper workflow used by this CLI component.
      */
     private function requireUser(string $user, string $action): string
     {
@@ -216,7 +232,9 @@ final class FixturesAuthCommand extends AbstractCommand
     }
 
     /**
-     * @return string[]
+     * Describes the parse csv helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the parse csv helper workflow used by this CLI component.
      */
     private function parseCsv(string $value): array
     {
@@ -233,7 +251,9 @@ final class FixturesAuthCommand extends AbstractCommand
     }
 
     /**
-     * Handles the parse boolean flag workflow.
+     * Describes the parse boolean flag helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the parse boolean flag helper workflow used by this CLI component.
      */
     private function parseBooleanFlag(string $value, string $option): bool
     {

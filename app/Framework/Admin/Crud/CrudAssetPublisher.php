@@ -34,15 +34,17 @@ use Catalyst\Framework\Cli\ScaffoldManager;
 use RuntimeException;
 
 /**
- * Defines the Crud Asset Publisher class contract.
+ * Publisher for generated CRUD frontend assets.
  *
  * @package Catalyst\Framework\Admin\Crud
- * Responsibility: Coordinates the crud asset publisher behavior within its module boundary.
+ * Responsibility: Copies generated front CSS and JavaScript files into the public work asset directories.
  */
 final class CrudAssetPublisher
 {
     /**
-     * Initializes the Crud Asset Publisher instance.
+     * Initializes the publisher with the scaffold file manager.
+     *
+     * Responsibility: Initializes the publisher with the scaffold file manager.
      */
     public function __construct(
         private readonly ScaffoldManager $manager
@@ -50,6 +52,9 @@ final class CrudAssetPublisher
     }
 
     /**
+     * Publishes generated style and script files for a work asset slug.
+     *
+     * Responsibility: Publishes generated style and script files for a work asset slug.
      * @param array<int, array<string, string>> $files
      * @return string[]
      */

@@ -33,15 +33,17 @@ namespace Catalyst\Repository\Roles\Requests;
 use Catalyst\Framework\Http\Request;
 
 /**
- * Defines the Role Permission Sync Request class contract.
+ * Extracts permission identifiers submitted for a role synchronization.
  *
  * @package Catalyst\Repository\Roles\Requests
- * Responsibility: Coordinates the role permission sync request behavior within its module boundary.
+ * Responsibility: Normalizes the selected permission identifiers and exposes the underlying HTTP request.
  */
 final class RolePermissionSyncRequest
 {
     /**
      * Initializes the Role Permission Sync Request instance.
+     *
+     * Responsibility: Initializes the Role Permission Sync Request instance.
      */
     public function __construct(
         private readonly Request $request
@@ -49,6 +51,9 @@ final class RolePermissionSyncRequest
     }
 
     /**
+     * Returns the submitted permission identifiers as strings.
+     *
+     * Responsibility: Returns the submitted permission identifiers as strings.
      * @return string[]
      */
     public function selectedIds(): array
@@ -57,7 +62,9 @@ final class RolePermissionSyncRequest
     }
 
     /**
-     * Handles the request workflow.
+     * Returns the underlying HTTP request.
+     *
+     * Responsibility: Returns the underlying HTTP request.
      */
     public function request(): Request
     {

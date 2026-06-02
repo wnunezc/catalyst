@@ -37,15 +37,17 @@ use Catalyst\Framework\Http\RedirectResponse;
 use Catalyst\Framework\Http\Response;
 
 /**
- * Defines the Store Controller class contract.
+ * Serves the public storefront surface and companion API payload.
  *
  * @package App\Surface\Store\Controllers
- * Responsibility: Coordinates the store controller behavior within its module boundary.
+ * Responsibility: Renders the store catalog demo page, publishes its companion payload, and normalizes legacy store aliases.
  */
 class StoreController extends PublicPageController
 {
     /**
-     * Handles the index workflow.
+     * Renders the public store surface using the shared demo catalog payload.
+     *
+     * Responsibility: Renders the public store surface using the shared demo catalog payload.
      */
     public function index(): Response
     {
@@ -53,7 +55,9 @@ class StoreController extends PublicPageController
     }
 
     /**
-     * Handles the api workflow.
+     * Returns the store companion payload for public surface consumers.
+     *
+     * Responsibility: Returns the store companion payload for public surface consumers.
      */
     public function api(): JsonResponse
     {
@@ -63,7 +67,9 @@ class StoreController extends PublicPageController
     }
 
     /**
-     * Handles the redirect legacy workflow.
+     * Redirects legacy store aliases to the canonical store route.
+     *
+     * Responsibility: Redirects legacy store aliases to the canonical store route.
      */
     public function redirectLegacy(): RedirectResponse
     {

@@ -31,15 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Admin\Grid;
 
 /**
- * Defines the Data Grid Pagination Builder class contract.
+ * Builds pagination metadata for DataGrid listings.
  *
  * @package Catalyst\Framework\Admin\Grid
- * Responsibility: Coordinates the data grid pagination builder behavior within its module boundary.
+ * Responsibility: Calculates page bounds, result ranges, per-page options, and navigation URLs.
  */
 final class DataGridPaginationBuilder
 {
     /**
-     * Initializes the Data Grid Pagination Builder instance.
+     * Receives the URL builder used to generate pagination links from grid query state.
+     *
+     * Responsibility: Receives the URL builder used to generate pagination links from grid query state.
      */
     public function __construct(
         private readonly DataGridUrlBuilder $urlBuilder
@@ -47,8 +49,9 @@ final class DataGridPaginationBuilder
     }
 
     /**
-     * Build pagination metadata and navigation links.
+     * Builds pagination counters, available page sizes, and first/previous/next/last links.
      *
+     * Responsibility: Builds pagination counters, available page sizes, and first/previous/next/last links.
      * @param array<string, mixed> $state
      * @param array<string, mixed> $config
      * @return array<string, mixed>
@@ -153,8 +156,9 @@ final class DataGridPaginationBuilder
     }
 
     /**
-     * Return a compact page window around the current page.
+     * Returns the compact set of page numbers that should be displayed around the current page.
      *
+     * Responsibility: Returns the compact set of page numbers that should be displayed around the current page.
      * @return array<int, int>
      */
     private function pageWindow(int $currentPage, int $lastPage): array

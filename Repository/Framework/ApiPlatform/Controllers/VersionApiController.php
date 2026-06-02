@@ -41,15 +41,18 @@ use Catalyst\Framework\Versioning\VersionRepository;
 use RuntimeException;
 
 /**
- * Defines the Version Api Controller class contract.
+ * API controller for version history lookup and restore operations.
  *
  * @package Catalyst\Repository\ApiPlatform\Controllers
- * Responsibility: Coordinates the version api controller behavior within its module boundary.
+ * Responsibility: Resolves versioned resources, authorizes access, returns history,
+ * and restores stored content versions through the versioning manager.
  */
 final class VersionApiController extends Controller
 {
     /**
-     * Initializes the Version Api Controller instance.
+     * Receives version storage and restore services for API version endpoints.
+     *
+     * Responsibility: Receives version storage and restore services for API version endpoints.
      */
     public function __construct(
         private readonly VersionRepository $repository,
@@ -59,7 +62,9 @@ final class VersionApiController extends Controller
     }
 
     /**
-     * Handles the index workflow.
+     * Lists the version history for a supported resource record after resource authorization.
+     *
+     * Responsibility: Lists the version history for a supported resource record after resource authorization.
      */
     public function index(Request $request, string $resourceKey, string $recordId): Response
     {
@@ -80,7 +85,9 @@ final class VersionApiController extends Controller
     }
 
     /**
-     * Handles the restore workflow.
+     * Restores a stored content version and captures a follow-up version entry for the restored record.
+     *
+     * Responsibility: Restores a stored content version and captures a follow-up version entry for the restored record.
      */
     public function restore(Request $request, string $id): Response
     {
@@ -116,7 +123,9 @@ final class VersionApiController extends Controller
     }
 
     /**
-     * Resolves the requested value.
+     * Maps an API resource key and record id to its versioned entity instance.
+     *
+     * Responsibility: Maps an API resource key and record id to its versioned entity instance.
      */
     private function resolveRecord(string $resourceKey, int $recordId): DocumentTemplate|AutomationRule|null
     {

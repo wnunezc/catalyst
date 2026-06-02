@@ -35,15 +35,17 @@ use Catalyst\Framework\Notification\NotificationManager;
 use Catalyst\Framework\Queue\QueueableJobInterface;
 
 /**
- * Defines the Dispatch Notification Job class contract.
+ * Delivers a notification through the notification manager from the queue.
  *
  * @package Catalyst\Framework\Queue\Jobs
- * Responsibility: Coordinates the dispatch notification job behavior within its module boundary.
+ * Responsibility: Carries notification state across the queue boundary and executes notification delivery.
  */
 final class DispatchNotificationJob implements QueueableJobInterface
 {
     /**
      * Initializes the Dispatch Notification Job instance.
+     *
+     * Responsibility: Initializes the Dispatch Notification Job instance.
      */
     public function __construct(
         private readonly NotificationDispatch $notification,
@@ -52,7 +54,9 @@ final class DispatchNotificationJob implements QueueableJobInterface
     }
 
     /**
-     * Handles the request workflow.
+     * Sends the queued notification.
+     *
+     * Responsibility: Sends the queued notification.
      */
     public function handle(): void
     {
@@ -60,7 +64,9 @@ final class DispatchNotificationJob implements QueueableJobInterface
     }
 
     /**
-     * Handles the display name workflow.
+     * Returns a diagnostic label containing the notification type.
+     *
+     * Responsibility: Returns a diagnostic label containing the notification type.
      */
     public function displayName(): string
     {
@@ -68,7 +74,9 @@ final class DispatchNotificationJob implements QueueableJobInterface
     }
 
     /**
-     * Handles the queue name workflow.
+     * Returns the queue selected for notification delivery.
+     *
+     * Responsibility: Returns the queue selected for notification delivery.
      */
     public function queueName(): string
     {
@@ -76,7 +84,9 @@ final class DispatchNotificationJob implements QueueableJobInterface
     }
 
     /**
-     * Handles the max attempts workflow.
+     * Returns the allowed delivery-attempt count.
+     *
+     * Responsibility: Returns the allowed delivery-attempt count.
      */
     public function maxAttempts(): int
     {
@@ -84,7 +94,9 @@ final class DispatchNotificationJob implements QueueableJobInterface
     }
 
     /**
-     * Handles the backoff seconds workflow.
+     * Returns the retry delay for failed notification delivery.
+     *
+     * Responsibility: Returns the retry delay for failed notification delivery.
      */
     public function backoffSeconds(): int
     {
@@ -92,6 +104,9 @@ final class DispatchNotificationJob implements QueueableJobInterface
     }
 
     /**
+     * Exports notification state for queue persistence.
+     *
+     * Responsibility: Exports notification state for queue persistence.
      * @return array<string, mixed>
      */
     public function toPayload(): array
@@ -103,6 +118,8 @@ final class DispatchNotificationJob implements QueueableJobInterface
     }
 
     /**
+     * Restores a notification-delivery job from persisted state.
+     *
      * @param array<string, mixed> $payload
      */
     public static function fromPayload(array $payload): static

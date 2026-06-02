@@ -4,13 +4,29 @@ declare(strict_types=1);
 
 use Catalyst\Framework\Database\Migration;
 
+/**
+ * Creates the tables that persist document templates and rendered artifacts.
+ *
+ * @package Catalyst\BootCore\Database\Migrations
+ * Responsibility: Provision and remove document template configuration and generated artifact persistence.
+ */
 return new class extends Migration
 {
+    /**
+     * Returns the timestamp identifier used by the migration runner to order and track this migration.
+     *
+     * Responsibility: Returns the timestamp identifier used by the migration runner to order and track this migration.
+     */
     public function getVersion(): string
     {
         return '20260519141000';
     }
 
+    /**
+     * Creates document template and artifact tables when absent.
+     *
+     * Responsibility: Creates document template and artifact tables when absent.
+     */
     public function up(): void
     {
         if (!$this->tableExists('document_templates')) {
@@ -70,6 +86,11 @@ return new class extends Migration
         );
     }
 
+    /**
+     * Removes document artifact and template tables in dependency-safe order.
+     *
+     * Responsibility: Removes document artifact and template tables in dependency-safe order.
+     */
     public function down(): void
     {
         if ($this->tableExists('document_artifacts')) {

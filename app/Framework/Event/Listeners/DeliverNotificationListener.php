@@ -36,15 +36,17 @@ use Catalyst\Framework\Notification\NotificationManager;
 use RuntimeException;
 
 /**
- * Defines the Deliver Notification Listener class contract.
+ * Listener for delivering notification dispatch events.
  *
  * @package Catalyst\Framework\Event\Listeners
- * Responsibility: Coordinates the deliver notification listener behavior within its module boundary.
+ * Responsibility: Converts notification event payloads into stored or broadcast user notifications.
  */
 final class DeliverNotificationListener implements EventListenerInterface
 {
     /**
-     * Handles the request workflow.
+     * Handles an event envelope.
+     *
+     * Responsibility: Handles an event envelope.
      */
     public function handle(EventEnvelope $event): void
     {

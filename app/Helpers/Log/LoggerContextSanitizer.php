@@ -34,10 +34,10 @@ use Catalyst\Framework\Sensitivity\SensitiveDataPolicy;
 use Catalyst\Helpers\Security\SensitiveValueRedactor;
 
 /**
- * Defines the Logger Context Sanitizer class contract.
+ * Sanitizes contextual data before it reaches log destinations.
  *
  * @package Catalyst\Helpers\Log
- * Responsibility: Coordinates the logger context sanitizer behavior within its module boundary.
+ * Responsibility: Applies resource sensitivity policies to nested and top-level logging context.
  */
 final class LoggerContextSanitizer
 {
@@ -45,6 +45,8 @@ final class LoggerContextSanitizer
 
     /**
      * Initializes the Logger Context Sanitizer instance.
+     *
+     * Responsibility: Initializes the Logger Context Sanitizer instance.
      */
     public function __construct(
         private readonly SensitiveValueRedactor $redactor = new SensitiveValueRedactor()
@@ -54,6 +56,8 @@ final class LoggerContextSanitizer
 
     /**
      * Sanitizes the provided value.
+     *
+     * Responsibility: Sanitizes the provided value.
      */
     public function sanitize(array $context): array
     {

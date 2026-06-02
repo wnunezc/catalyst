@@ -39,6 +39,9 @@ use PDO;
  * when the related extension is not loaded. That makes CLI inspections,
  * smoke checks and partial environments more tolerant while still using
  * MySQL-specific options when pdo_mysql is available.
+ *
+ * @package Catalyst\Framework\Database
+ * Responsibility: Builds PDO option arrays without requiring unavailable driver constants.
  */
 final class PdoOptionsFactory
 {

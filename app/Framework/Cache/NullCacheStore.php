@@ -31,15 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Cache;
 
 /**
- * Defines the Null Cache Store class contract.
+ * Implements a cache store that intentionally persists nothing.
  *
  * @package Catalyst\Framework\Cache
- * Responsibility: Coordinates the null cache store behavior within its module boundary.
+ * Responsibility: Disables caching while preserving the cache store contract.
  */
 final class NullCacheStore implements CacheStoreInterface
 {
     /**
-     * Returns the runtime value.
+     * Returns the supplied default because no values are stored.
+     *
+     * Responsibility: Returns the supplied default because no values are stored.
      */
     public function get(string $key, mixed $default = null): mixed
     {
@@ -47,7 +49,9 @@ final class NullCacheStore implements CacheStoreInterface
     }
 
     /**
-     * Handles the put workflow.
+     * Rejects storage because the null driver is disabled.
+     *
+     * Responsibility: Rejects storage because the null driver is disabled.
      */
     public function put(string $key, mixed $value, int $ttlSeconds = 0): bool
     {
@@ -55,7 +59,9 @@ final class NullCacheStore implements CacheStoreInterface
     }
 
     /**
-     * Handles the forever workflow.
+     * Rejects non-expiring storage because the null driver is disabled.
+     *
+     * Responsibility: Rejects non-expiring storage because the null driver is disabled.
      */
     public function forever(string $key, mixed $value): bool
     {
@@ -63,7 +69,9 @@ final class NullCacheStore implements CacheStoreInterface
     }
 
     /**
-     * Handles the has workflow.
+     * Reports that no cached value exists.
+     *
+     * Responsibility: Reports that no cached value exists.
      */
     public function has(string $key): bool
     {
@@ -71,7 +79,9 @@ final class NullCacheStore implements CacheStoreInterface
     }
 
     /**
-     * Handles the forget workflow.
+     * Reports successful eviction because no cached value exists.
+     *
+     * Responsibility: Reports successful eviction because no cached value exists.
      */
     public function forget(string $key): bool
     {
@@ -79,7 +89,9 @@ final class NullCacheStore implements CacheStoreInterface
     }
 
     /**
-     * Handles the clear workflow.
+     * Reports successful clearing because the store is empty.
+     *
+     * Responsibility: Reports successful clearing because the store is empty.
      */
     public function clear(): bool
     {
@@ -87,7 +99,9 @@ final class NullCacheStore implements CacheStoreInterface
     }
 
     /**
-     * Handles the remember workflow.
+     * Resolves and returns the value without caching it.
+     *
+     * Responsibility: Resolves and returns the value without caching it.
      */
     public function remember(string $key, callable $resolver, int $ttlSeconds = 0): mixed
     {
@@ -95,11 +109,12 @@ final class NullCacheStore implements CacheStoreInterface
     }
 
     /**
-     * Returns the driver name value.
+     * Returns the null driver name.
+     *
+     * Responsibility: Returns the null driver name.
      */
     public function getDriverName(): string
     {
         return 'null';
     }
 }
-

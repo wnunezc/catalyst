@@ -34,14 +34,17 @@ use Catalyst\Helpers\Path\ProjectPath;
 use RuntimeException;
 
 /**
- * Defines the Schedule Lock Manager class contract.
+ * Serializes scheduled task execution through filesystem locks.
  *
  * @package Catalyst\Framework\Schedule
- * Responsibility: Coordinates the schedule lock manager behavior within its module boundary.
+ * Responsibility: Creates task-specific lock files and executes callbacks only while holding an exclusive non-blocking lock.
  */
 final class ScheduleLockManager
 {
     /**
+     * Runs a task callback while holding its scheduler lock.
+     *
+     * Responsibility: Runs a task callback while holding its scheduler lock.
      * @template T
      * @param callable():T $callback
      * @return T
@@ -76,7 +79,9 @@ final class ScheduleLockManager
     }
 
     /**
-     * Handles the lock path workflow.
+     * Builds the storage path for a sanitized task lock file.
+     *
+     * Responsibility: Builds the storage path for a sanitized task lock file.
      */
     private function lockPath(string $taskName): string
     {

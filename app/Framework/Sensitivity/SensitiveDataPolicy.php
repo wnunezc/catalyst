@@ -34,10 +34,10 @@ use Catalyst\Framework\Traits\SingletonTrait;
 use Catalyst\Helpers\Security\SensitiveValueRedactor;
 
 /**
- * Defines the Sensitive Data Policy class contract.
+ * Applies channel-aware masking and redaction rules to sensitive payloads.
  *
  * @package Catalyst\Framework\Sensitivity
- * Responsibility: Coordinates the sensitive data policy behavior within its module boundary.
+ * Responsibility: Sanitizes structured data before it leaves its intended disclosure boundary.
  */
 final class SensitiveDataPolicy
 {
@@ -62,6 +62,8 @@ final class SensitiveDataPolicy
 
     /**
      * Initializes the Sensitive Data Policy instance.
+     *
+     * Responsibility: Initializes the Sensitive Data Policy instance.
      */
     protected function __construct()
     {
@@ -70,6 +72,9 @@ final class SensitiveDataPolicy
     }
 
     /**
+     * Sanitizes every field in a payload for the requested output channel.
+     *
+     * Responsibility: Sanitizes every field in a payload for the requested output channel.
      * @param array<string, mixed> $payload
      * @return array<string, mixed>
      */
@@ -87,6 +92,8 @@ final class SensitiveDataPolicy
 
     /**
      * Sanitizes the provided value.
+     *
+     * Responsibility: Sanitizes the provided value.
      */
     public function sanitizeField(?string $resourceKey, string $field, mixed $value, string $channel): mixed
     {
@@ -108,7 +115,9 @@ final class SensitiveDataPolicy
     }
 
     /**
-     * Handles the mask scalar workflow.
+     * Masks a scalar while retaining a minimal identifying prefix and suffix.
+     *
+     * Responsibility: Masks a scalar while retaining a minimal identifying prefix and suffix.
      */
     public function maskScalar(mixed $value): mixed
     {
@@ -133,7 +142,9 @@ final class SensitiveDataPolicy
     }
 
     /**
-     * Handles the apply policy workflow.
+     * Applies a resolved disclosure policy to a value.
+     *
+     * Responsibility: Applies a resolved disclosure policy to a value.
      */
     private function applyPolicy(mixed $value, string $policy): mixed
     {
@@ -146,7 +157,9 @@ final class SensitiveDataPolicy
     }
 
     /**
-     * Handles the mask value workflow.
+     * Masks scalar or nested values recursively.
+     *
+     * Responsibility: Masks scalar or nested values recursively.
      */
     private function maskValue(mixed $value): mixed
     {

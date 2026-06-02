@@ -33,17 +33,19 @@ namespace Catalyst\Framework\Module;
 use Catalyst\Framework\Cli\Support\PhpValueExporter;
 
 /**
- * Defines the Module Manifest Builder class contract.
+ * Builds scaffolded module manifests.
  *
  * @package Catalyst\Framework\Module
- * Responsibility: Coordinates the module manifest builder behavior within its module boundary.
+ * Responsibility: Produces manifest declarations for routes, permissions, guards, and navigation.
  */
 final class ModuleManifestBuilder
 {
     private readonly PhpValueExporter $exporter;
 
     /**
-     * Initializes the Module Manifest Builder instance.
+     * Initializes the builder with PHP value rendering support.
+     *
+     * Responsibility: Initializes the builder with PHP value rendering support.
      */
     public function __construct(?PhpValueExporter $exporter = null)
     {
@@ -51,6 +53,9 @@ final class ModuleManifestBuilder
     }
 
     /**
+     * Builds the complete declaration for a scaffolded module.
+     *
+     * Responsibility: Builds the complete declaration for a scaffolded module.
      * @param string[] $settings
      * @param string[] $featureFlags
      * @return array<string, mixed>
@@ -82,6 +87,9 @@ final class ModuleManifestBuilder
     }
 
     /**
+     * Renders a module manifest as executable PHP source.
+     *
+     * Responsibility: Renders a module manifest as executable PHP source.
      * @param array<string, mixed> $manifest
      */
     public function render(array $manifest): string
@@ -92,6 +100,9 @@ final class ModuleManifestBuilder
     }
 
     /**
+     * Builds optional permission declarations for a guarded surface.
+     *
+     * Responsibility: Builds optional permission declarations for a guarded surface.
      * @return array<int, array<string, mixed>>
      */
     private function buildPermissions(string $module, string $routeUri, string $surface, string $permissionSlug): array
@@ -115,6 +126,9 @@ final class ModuleManifestBuilder
     }
 
     /**
+     * Builds route guard declarations appropriate to a module surface.
+     *
+     * Responsibility: Builds route guard declarations appropriate to a module surface.
      * @return array<int, array<string, mixed>>
      */
     private function buildRouteGuards(string $routeUri, string $surface): array
@@ -138,6 +152,9 @@ final class ModuleManifestBuilder
     }
 
     /**
+     * Builds public or administrative navigation declarations for a module.
+     *
+     * Responsibility: Builds public or administrative navigation declarations for a module.
      * @return array<string, array<int, array<string, mixed>>>
      */
     private function buildNavigation(
@@ -191,6 +208,9 @@ final class ModuleManifestBuilder
     }
 
     /**
+     * Builds navigation visibility rules for a guarded surface.
+     *
+     * Responsibility: Builds navigation visibility rules for a guarded surface.
      * @return array<int, array<string, mixed>>
      */
     private function buildVisibility(string $surface, string $permissionSlug): array

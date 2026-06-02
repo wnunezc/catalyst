@@ -36,38 +36,11 @@ use Catalyst\Helpers\Exceptions\ForbiddenException;
 use Closure;
 use LogicException;
 
-/**************************************************************************************
- * Gate — Authorization Engine
- *
- * Provides two complementary authorization mechanisms:
- *
- * 1. Gates (closures)
- *    Named Closure callbacks for arbitrary authorization logic.
- *    Registered with Gate::define(), checked with Gate::allows().
- *
- *    Gate::define('edit-post', function(array $user, array $post): bool {
- *        return $user['id'] === $post['user_id'];
- *    });
- *    Gate::allows('edit-post', $post);   // true / false
- *    Gate::authorize('edit-post', $post); // throws ForbiddenException if false
- *
- * 2. Policies (classes)
- *    Classes extending Policy, registered per model class.
- *    The Gate resolves the correct method by ability name (canEdit, canDelete…).
- *
- *    Gate::policy(Post::class, PostPolicy::class);
- *    Gate::allows('edit', $post);         // calls PostPolicy::canEdit($user, $post)
- *
- * The current authenticated user is resolved automatically from AuthManager.
- * To override: Gate::forUser($user)->allows('edit', $post)
- *
- * @package Catalyst\Framework\Authorization
- */
 /**
- * Defines the Gate class contract.
+ * Resolves named gates and model policies for the current or scoped user.
  *
  * @package Catalyst\Framework\Authorization
- * Responsibility: Coordinates the gate behavior within its module boundary.
+ * Responsibility: Evaluates authorization abilities through registered closures and policy classes.
  */
 class Gate
 {
@@ -85,12 +58,11 @@ class Gate
     // -- Registration ----------------------------------------------------------
 
     /**
-     * Register a gate closure for a named ability.
+     * Registers a closure callback for a named ability.
      *
-     * The closure receives (array $user, mixed ...$args).
-     *
-     * @param string  $ability  e.g. 'edit-post', 'admin-area'
-     * @param Closure $callback function(array $user, mixed ...$args): bool
+     * Responsibility: Registers a closure callback for a named ability.
+     * @param string  $ability  Ability slug resolved by authorization checks.
+     * @param Closure $callback Callback receiving the resolved user and ability arguments.
      */
     public function define(string $ability, Closure $callback): void
     {
@@ -98,10 +70,11 @@ class Gate
     }
 
     /**
-     * Register a Policy class for a model class.
+     * Registers the policy class responsible for a model class.
      *
-     * @param string $modelClass  FQCN of the model (e.g. Post::class)
-     * @param string $policyClass FQCN of the policy (e.g. PostPolicy::class)
+     * Responsibility: Registers the policy class responsible for a model class.
+     * @param string $modelClass  Model FQCN or subject class key.
+     * @param string $policyClass Policy FQCN that must extend Policy.
      */
     public function policy(string $modelClass, string $policyClass): void
     {
@@ -111,10 +84,9 @@ class Gate
     // -- Evaluation ------------------------------------------------------------
 
     /**
-     * Check if the current user passes the given ability.
+     * Checks whether the resolved user is allowed to perform an ability.
      *
-     * Resolves to a Gate closure or a Policy method, in that order.
-     *
+     * Responsibility: Checks whether the resolved user is allowed to perform an ability.
      * @param mixed ...$args Optional model or extra arguments for the callback
      */
     public function allows(string $ability, mixed ...$args): bool
@@ -129,7 +101,9 @@ class Gate
     }
 
     /**
-     * Inverse of allows().
+     * Checks whether the resolved user is denied an ability.
+     *
+     * Responsibility: Checks whether the resolved user is denied an ability.
      */
     public function denies(string $ability, mixed ...$args): bool
     {
@@ -137,8 +111,9 @@ class Gate
     }
 
     /**
-     * Assert the ability is allowed; throw ForbiddenException otherwise.
+     * Enforces an ability and raises a forbidden exception when it is denied.
      *
+     * Responsibility: Enforces an ability and raises a forbidden exception when it is denied.
      * @throws ForbiddenException
      */
     public function authorize(string $ability, mixed ...$args): void
@@ -151,10 +126,9 @@ class Gate
     // -- User override ---------------------------------------------------------
 
     /**
-     * Return a new Gate scoped to the given user (does not mutate the singleton).
+     * Returns a cloned gate instance scoped to an explicit user payload.
      *
-     * Example:
-     *   Gate::getInstance()->forUser($otherUser)->allows('edit-post', $post)
+     * Responsibility: Returns a cloned gate instance scoped to an explicit user payload.
      */
     public function forUser(array $user): static
     {
@@ -166,7 +140,9 @@ class Gate
     // -- Private helpers -------------------------------------------------------
 
     /**
-     * Resolves the requested value.
+     * Resolves the explicit scoped user or the authenticated session user.
+     *
+     * Responsibility: Resolves the explicit scoped user or the authenticated session user.
      */
     private function resolveUser(): ?array
     {
@@ -178,7 +154,9 @@ class Gate
     }
 
     /**
-     * Core evaluation: gate closure first, then policy.
+     * Evaluates an ability through a registered gate closure or matching policy.
+     *
+     * Responsibility: Evaluates an ability through a registered gate closure or matching policy.
      */
     private function check(string $ability, array $user, array $args): bool
     {
@@ -201,8 +179,9 @@ class Gate
     }
 
     /**
-     * Find a registered policy class for the given model instance.
-     * Supports exact class match and parent class / interface matches.
+     * Finds the registered policy class for an object, class string, parent, or interface.
+     *
+     * Responsibility: Finds the registered policy class for an object, class string, parent, or interface.
      */
     private function findPolicyForArg(mixed $model): ?string
     {
@@ -229,7 +208,9 @@ class Gate
     }
 
     /**
-     * Instantiate the policy and call before() + can{Ability}().
+     * Instantiates a policy and evaluates its before hook and ability method.
+     *
+     * Responsibility: Instantiates a policy and evaluates its before hook and ability method.
      */
     private function callPolicy(string $ability, string $policyClass, array $user, array $args): bool
     {

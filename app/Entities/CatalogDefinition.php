@@ -37,10 +37,10 @@ use Catalyst\Framework\Traits\HasOptimisticLockingTrait;
 use Catalyst\Framework\Traits\HasTimestampsTrait;
 
 /**
- * Defines the Catalog Definition class contract.
+ * ORM entity for tenant catalog definitions.
  *
  * @package Catalyst\Entities
- * Responsibility: Coordinates the catalog definition behavior within its module boundary.
+ * Responsibility: Maps catalog identity, labels, descriptions, audit fields, and optimistic locking state.
  */
 final class CatalogDefinition extends Model
 {

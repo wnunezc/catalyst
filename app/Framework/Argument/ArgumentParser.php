@@ -31,17 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Argument;
 
 /**
- * Parser for CLI arguments
- *
- * Converts $argv into structured Option and Parameter objects
+ * Parses raw CLI argv input into structured option and parameter objects.
  *
  * @package Catalyst\Framework\Argument
+ * Responsibility: Recognizes long options, short options, combined short flags, option values, and positional parameters.
  */
 class ArgumentParser
 {
     /**
-     * Parse argv array into ArgumentBag
+     * Parses an argv array into an argument bag, skipping the executable script name.
      *
+     * Responsibility: Parses an argv array into an argument bag, skipping the executable script name.
      * @param array $argv Raw command line arguments
      * @return ArgumentBag
      */
@@ -49,7 +49,7 @@ class ArgumentParser
     {
         $bag = new ArgumentBag($argv);
 
-        // Skip script name (first argument)
+        // The first argv item is the script name and is not exposed as a parameter.
         $args = array_slice($argv, 1);
 
         $parameterPosition = 0;
@@ -59,15 +59,15 @@ class ArgumentParser
         while ($i < $count) {
             $arg = $args[$i];
 
-            // Long option: --option or --option=value
+            // Long options may be boolean flags or carry values inline/after the flag.
             if (str_starts_with($arg, '--')) {
                 $i = $this->parseLongOption($args, $i, $bag);
             }
-            // Short option: -o or -o value or combined -abc
+            // Short options may be single flags with values or combined boolean flags.
             elseif (str_starts_with($arg, '-') && strlen($arg) > 1) {
                 $i = $this->parseShortOption($args, $i, $bag);
             }
-            // Positional parameter
+            // Non-option tokens are stored as positional parameters in encounter order.
             else {
                 $parameter = new Parameter($parameterPosition++, $arg);
                 $bag->addParameter($parameter);
@@ -79,8 +79,9 @@ class ArgumentParser
     }
 
     /**
-     * Parse long option (--option or --option=value)
+     * Parses a long option token and stores it in the provided bag.
      *
+     * Responsibility: Parses a long option token and stores it in the provided bag.
      * @param array $args All arguments
      * @param int $index Current index
      * @param ArgumentBag $bag Argument bag to add to
@@ -89,17 +90,17 @@ class ArgumentParser
     private function parseLongOption(array $args, int $index, ArgumentBag $bag): int
     {
         $arg = $args[$index];
-        $name = substr($arg, 2); // Remove --
-        $value = true; // Default for boolean flags
+        $name = substr($arg, 2); // Strip the long-option marker.
+        $value = true; // Boolean long flags default to true.
 
-        // Check for --option=value format
+        // Inline assignment keeps the value in the same token.
         if (str_contains($name, '=')) {
             [$name, $value] = explode('=', $name, 2);
         }
-        // Check if next argument is a value (not another option)
+        // A following non-option token is consumed as the option value.
         elseif (isset($args[$index + 1]) && !str_starts_with($args[$index + 1], '-')) {
             $value = $args[$index + 1];
-            $index++; // Skip next argument as it's the value
+            $index++; // Advance past the consumed value token.
         }
 
         $option = new Option(null, $name, null, false, '', $value !== true);
@@ -110,8 +111,9 @@ class ArgumentParser
     }
 
     /**
-     * Parse short option (-o or -o value or combined -abc)
+     * Parses a short option token or combined short flags and stores them in the bag.
      *
+     * Responsibility: Parses a short option token or combined short flags and stores them in the bag.
      * @param array $args All arguments
      * @param int $index Current index
      * @param ArgumentBag $bag Argument bag to add to
@@ -120,16 +122,16 @@ class ArgumentParser
     private function parseShortOption(array $args, int $index, ArgumentBag $bag): int
     {
         $arg = $args[$index];
-        $flags = substr($arg, 1); // Remove -
+        $flags = substr($arg, 1); // Strip the short-option marker.
 
-        // Single flag: -f value
+        // A single short flag may consume the following value token.
         if (strlen($flags) === 1) {
             $value = true;
 
-            // Check if next argument is a value
+            // A following non-option token is consumed as the short-option value.
             if (isset($args[$index + 1]) && !str_starts_with($args[$index + 1], '-')) {
                 $value = $args[$index + 1];
-                $index++; // Skip next argument
+                $index++; // Advance past the consumed value token.
             }
 
             $option = new Option($flags, null, null, false, '', $value !== true);
@@ -139,8 +141,7 @@ class ArgumentParser
             return $index + 1;
         }
 
-        // Combined flags: -abc
-        // Each flag is treated as boolean
+        // Combined short flags are stored as independent boolean options.
         for ($j = 0; $j < strlen($flags); $j++) {
             $flag = $flags[$j];
             $option = new Option($flag, null, null, false, '', false);
@@ -152,8 +153,9 @@ class ArgumentParser
     }
 
     /**
-     * Parse arguments with predefined options schema
+     * Parses argv and overlays predefined option objects onto matching parsed options.
      *
+     * Responsibility: Parses argv and overlays predefined option objects onto matching parsed options.
      * @param array $argv Raw command line arguments
      * @param array<Option> $definedOptions Array of predefined Option objects
      * @return ArgumentBag
@@ -162,12 +164,12 @@ class ArgumentParser
     {
         $bag = $this->parse($argv);
 
-        // Match parsed options with defined options
+        // Match parsed values back onto their schema definitions.
         foreach ($definedOptions as $definedOption) {
             $shortName = $definedOption->getShortName();
             $longName = $definedOption->getLongName();
 
-            // Check if this option was provided
+            // Locate a parsed option by either schema name.
             $parsedOption = null;
             if ($shortName && $bag->hasOption($shortName)) {
                 $parsedOption = $bag->getOption($shortName);
@@ -175,12 +177,12 @@ class ArgumentParser
                 $parsedOption = $bag->getOption($longName);
             }
 
-            // If found, update defined option with parsed value
+            // Preserve the schema object while carrying the parsed value forward.
             if ($parsedOption) {
                 $definedOption->setValue($parsedOption->getValue());
             }
 
-            // Add defined option to bag (replaces basic parsed version)
+            // Store schema definitions in the bag so validation can inspect metadata.
             $bag->addOption($definedOption);
         }
 

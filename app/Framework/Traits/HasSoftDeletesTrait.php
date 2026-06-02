@@ -61,6 +61,7 @@ use Catalyst\Framework\Database\ModelQueryBuilder;
  *   const DELETED_AT = 'deleted_at';
  *
  * @package Catalyst\Framework\Traits
+ * Responsibility: Replaces destructive model deletion with restorable timestamp markers.
  */
 trait HasSoftDeletesTrait
 {
@@ -75,7 +76,7 @@ trait HasSoftDeletesTrait
     // -------------------------------------------------------------------------
 
     /**
-     * Handles the boot has soft deletes trait workflow.
+     * Declares the soft-delete trait boot hook.
      */
     protected static function bootHasSoftDeletesTrait(): void
     {
@@ -88,10 +89,9 @@ trait HasSoftDeletesTrait
     // -------------------------------------------------------------------------
 
     /**
-     * Soft-delete the model by setting the deleted_at column.
+     * Soft-delete the model by setting the deleted_at column. Fires the deleting / deleted hooks so other traits (e.g. HasAuditLogTrait) can inject fields (deleted_by) before the UPDATE is executed.
      *
-     * Fires the deleting / deleted hooks so other traits (e.g. HasAuditLogTrait)
-     * can inject fields (deleted_by) before the UPDATE is executed.
+     * Responsibility: Soft-delete the model by setting the deleted_at column. Fires the deleting / deleted hooks so other traits (e.g. HasAuditLogTrait) can inject fields (deleted_by) before the UPDATE is executed.
      */
     public function delete(): bool
     {
@@ -132,6 +132,8 @@ trait HasSoftDeletesTrait
 
     /**
      * Permanently remove the row from the database.
+     *
+     * Responsibility: Permanently remove the row from the database.
      */
     public function forceDelete(): bool
     {
@@ -166,6 +168,8 @@ trait HasSoftDeletesTrait
 
     /**
      * Restore a soft-deleted model by clearing deleted_at (and deleted_by).
+     *
+     * Responsibility: Restore a soft-deleted model by clearing deleted_at (and deleted_by).
      */
     public function restore(): bool
     {
@@ -205,6 +209,8 @@ trait HasSoftDeletesTrait
 
     /**
      * Check whether this model has been soft-deleted.
+     *
+     * Responsibility: Check whether this model has been soft-deleted.
      */
     public function trashed(): bool
     {

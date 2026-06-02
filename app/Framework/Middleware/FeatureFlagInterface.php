@@ -38,12 +38,14 @@ namespace Catalyst\Framework\Middleware;
  * When isEnabled() returns false, process() must pass-through unchanged.
  *
  * @package Catalyst\Framework\Middleware
+ * Responsibility: Defines the runtime enablement contract for configurable middleware.
  */
 interface FeatureFlagInterface
 {
     /**
-     * Whether this middleware feature is currently active.
-     * When false, process() passes the request through without modification.
+     * Whether this middleware feature is currently active. When false, process() passes the request through without modification.
+     *
+     * Responsibility: Whether this middleware feature is currently active. When false, process() passes the request through without modification.
      */
     public function isEnabled(): bool;
 }

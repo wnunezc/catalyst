@@ -31,15 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Admin\Grid;
 
 /**
- * Defines the Data Grid Export Normalizer class contract.
+ * Normalizes DataGrid export controls for the toolbar.
  *
  * @package Catalyst\Framework\Admin\Grid
- * Responsibility: Coordinates the data grid export normalizer behavior within its module boundary.
+ * Responsibility: Converts export format configuration and print support into render-ready toolbar actions.
  */
 final class DataGridExportNormalizer
 {
     /**
-     * Initializes the Data Grid Export Normalizer instance.
+     * Receives the URL builder used to generate export links with current grid state.
+     *
+     * Responsibility: Receives the URL builder used to generate export links with current grid state.
      */
     public function __construct(
         private readonly DataGridUrlBuilder $urlBuilder
@@ -47,8 +49,9 @@ final class DataGridExportNormalizer
     }
 
     /**
-     * Normalize export formats into render-ready export links.
+     * Converts configured export formats into toolbar links and appends the print action when enabled.
      *
+     * Responsibility: Converts configured export formats into toolbar links and appends the print action when enabled.
      * @param array<int|string, string|array<string, mixed>> $exportFormats
      * @param array<string, mixed> $state
      * @param array<string, mixed> $config
@@ -100,7 +103,9 @@ final class DataGridExportNormalizer
     }
 
     /**
-     * Handles the default icon workflow.
+     * Resolves the default icon class for an export format.
+     *
+     * Responsibility: Resolves the default icon class for an export format.
      */
     private function defaultIcon(string $format): string
     {

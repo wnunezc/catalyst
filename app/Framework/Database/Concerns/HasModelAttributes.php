@@ -35,15 +35,17 @@ use Catalyst\Framework\Database\Model;
 use DateTimeImmutable;
 
 /**
- * Defines the Has Model Attributes trait contract.
+ * Splits model attribute mass-assignment, casting, dirty state, and serialization behavior out of Model.
  *
  * @package Catalyst\Framework\Database\Concerns
- * Responsibility: Coordinates the has model attributes behavior within its module boundary.
+ * Responsibility: Manage in-memory ORM attributes, fill rules, type casts, dirty tracking, and array/JSON output.
  */
 trait HasModelAttributes
 {
     /**
-     * Handles the fill workflow.
+     * Assigns only fillable attributes through the normal casting pipeline.
+     *
+     * Responsibility: Assigns only fillable attributes through the normal casting pipeline.
      */
     public function fill(array $attributes): static
     {
@@ -57,7 +59,9 @@ trait HasModelAttributes
     }
 
     /**
-     * Handles the force fill workflow.
+     * Assigns every provided attribute through the normal casting pipeline.
+     *
+     * Responsibility: Assigns every provided attribute through the normal casting pipeline.
      */
     public function forceFill(array $attributes): static
     {
@@ -69,7 +73,9 @@ trait HasModelAttributes
     }
 
     /**
-     * Returns the attribute value.
+     * Returns a casted attribute value or null when the attribute is absent.
+     *
+     * Responsibility: Returns a casted attribute value or null when the attribute is absent.
      */
     public function getAttribute(string $key): mixed
     {
@@ -81,7 +87,9 @@ trait HasModelAttributes
     }
 
     /**
-     * Updates the attribute value.
+     * Stores an attribute after converting supported cast types for persistence.
+     *
+     * Responsibility: Stores an attribute after converting supported cast types for persistence.
      */
     public function setAttribute(string $key, mixed $value): void
     {
@@ -89,7 +97,9 @@ trait HasModelAttributes
     }
 
     /**
-     * Returns the raw attribute value.
+     * Returns the stored attribute value without read-time casting.
+     *
+     * Responsibility: Returns the stored attribute value without read-time casting.
      */
     public function getRawAttribute(string $key): mixed
     {
@@ -97,7 +107,9 @@ trait HasModelAttributes
     }
 
     /**
-     * Returns the attributes value.
+     * Returns all stored attributes in their persistence-ready form.
+     *
+     * Responsibility: Returns all stored attributes in their persistence-ready form.
      */
     public function getAttributes(): array
     {
@@ -105,7 +117,9 @@ trait HasModelAttributes
     }
 
     /**
-     * Returns the key value.
+     * Returns the current model primary key value.
+     *
+     * Responsibility: Returns the current model primary key value.
      */
     public function getKey(): int|string|null
     {
@@ -113,7 +127,9 @@ trait HasModelAttributes
     }
 
     /**
-     * Determines whether is Dirty.
+     * Reports whether one attribute or the whole model differs from the original state.
+     *
+     * Responsibility: Reports whether one attribute or the whole model differs from the original state.
      */
     public function isDirty(?string $key = null): bool
     {
@@ -125,7 +141,9 @@ trait HasModelAttributes
     }
 
     /**
-     * Returns the dirty value.
+     * Returns all attributes whose stored values differ from the original state.
+     *
+     * Responsibility: Returns all attributes whose stored values differ from the original state.
      */
     public function getDirty(): array
     {
@@ -141,7 +159,9 @@ trait HasModelAttributes
     }
 
     /**
-     * Handles the was changed workflow.
+     * Reports whether an attribute or the model state has changed since hydration or save.
+     *
+     * Responsibility: Reports whether an attribute or the model state has changed since hydration or save.
      */
     public function wasChanged(?string $key = null): bool
     {
@@ -149,7 +169,9 @@ trait HasModelAttributes
     }
 
     /**
-     * Handles the to array workflow.
+     * Converts visible attributes and loaded relations into array output.
+     *
+     * Responsibility: Converts visible attributes and loaded relations into array output.
      */
     public function toArray(): array
     {
@@ -180,7 +202,9 @@ trait HasModelAttributes
     }
 
     /**
-     * Handles the to json workflow.
+     * Encodes the array representation as JSON with caller-provided flags.
+     *
+     * Responsibility: Encodes the array representation as JSON with caller-provided flags.
      */
     public function toJson(int $flags = 0): string
     {
@@ -188,7 +212,9 @@ trait HasModelAttributes
     }
 
     /**
-     * Handles the json serialize workflow.
+     * Provides the array representation for JsonSerializable consumers.
+     *
+     * Responsibility: Provides the array representation for JsonSerializable consumers.
      */
     public function jsonSerialize(): array
     {
@@ -196,7 +222,9 @@ trait HasModelAttributes
     }
 
     /**
-     * Handles the cast attribute workflow.
+     * Converts stored values to their configured runtime types.
+     *
+     * Responsibility: Converts stored values to their configured runtime types.
      */
     protected function castAttribute(string $key, mixed $value): mixed
     {
@@ -228,7 +256,9 @@ trait HasModelAttributes
     }
 
     /**
-     * Handles the cast for storage workflow.
+     * Converts runtime values to their configured storage representation.
+     *
+     * Responsibility: Converts runtime values to their configured storage representation.
      */
     protected function castForStorage(string $key, mixed $value): mixed
     {
@@ -258,7 +288,9 @@ trait HasModelAttributes
     }
 
     /**
-     * Handles the cast to datetime workflow.
+     * Normalizes supported date and timestamp inputs into DateTimeImmutable values.
+     *
+     * Responsibility: Normalizes supported date and timestamp inputs into DateTimeImmutable values.
      */
     protected function castToDatetime(mixed $value): ?DateTimeImmutable
     {
@@ -283,7 +315,9 @@ trait HasModelAttributes
     }
 
     /**
-     * Handles the cast to date workflow.
+     * Normalizes supported date inputs into DateTimeImmutable values at midnight.
+     *
+     * Responsibility: Normalizes supported date inputs into DateTimeImmutable values at midnight.
      */
     protected function castToDate(mixed $value): ?DateTimeImmutable
     {
@@ -292,7 +326,9 @@ trait HasModelAttributes
     }
 
     /**
-     * Determines whether is Fillable.
+     * Applies the model fillable and guarded assignment rules for one attribute.
+     *
+     * Responsibility: Applies the model fillable and guarded assignment rules for one attribute.
      */
     protected function isFillable(string $key): bool
     {

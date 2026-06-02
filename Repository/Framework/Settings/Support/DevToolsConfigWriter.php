@@ -33,14 +33,17 @@ namespace Catalyst\Repository\Settings\Support;
 use Catalyst\Helpers\Config\ConfigManager;
 
 /**
- * Defines the Dev Tools Config Writer class contract.
+ * Writes legacy developer-tool compatibility settings.
  *
  * @package Catalyst\Repository\Settings\Support
- * Responsibility: Coordinates the dev tools config writer behavior within its module boundary.
+ * Responsibility: Mirrors debug and log-display flags into their canonical sections and the deprecated compatibility section.
  */
 final class DevToolsConfigWriter
 {
     /**
+     * Saves debug and log-display compatibility settings.
+     *
+     * Responsibility: Saves debug and log-display compatibility settings.
      * @param array<string, mixed> $data
      */
     public function save(array $data): void

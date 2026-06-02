@@ -33,15 +33,17 @@ namespace Catalyst\Helpers\Exceptions;
 use RuntimeException;
 
 /**
- * Defines the Optimistic Lock Exception class contract.
+ * Represents an optimistic-lock conflict while persisting a model.
  *
  * @package Catalyst\Helpers\Exceptions
- * Responsibility: Coordinates the optimistic lock exception behavior within its module boundary.
+ * Responsibility: Carries model identity and expected versus stored lock versions.
  */
 final class OptimisticLockException extends RuntimeException
 {
     /**
      * Initializes the Optimistic Lock Exception instance.
+     *
+     * Responsibility: Initializes the Optimistic Lock Exception instance.
      */
     public function __construct(
         private readonly string $modelClass,
@@ -64,7 +66,7 @@ final class OptimisticLockException extends RuntimeException
     }
 
     /**
-     * Handles the for model workflow.
+     * Creates a conflict exception for a model persistence attempt.
      */
     public static function forModel(
         string $modelClass,
@@ -77,7 +79,9 @@ final class OptimisticLockException extends RuntimeException
     }
 
     /**
-     * Handles the model class workflow.
+     * Returns the conflicted model class.
+     *
+     * Responsibility: Returns the conflicted model class.
      */
     public function modelClass(): string
     {
@@ -85,7 +89,9 @@ final class OptimisticLockException extends RuntimeException
     }
 
     /**
-     * Handles the record id workflow.
+     * Returns the conflicted record identifier.
+     *
+     * Responsibility: Returns the conflicted record identifier.
      */
     public function recordId(): int|string|null
     {
@@ -93,7 +99,9 @@ final class OptimisticLockException extends RuntimeException
     }
 
     /**
-     * Handles the column workflow.
+     * Returns the lock-version column name.
+     *
+     * Responsibility: Returns the lock-version column name.
      */
     public function column(): string
     {
@@ -101,7 +109,9 @@ final class OptimisticLockException extends RuntimeException
     }
 
     /**
-     * Handles the expected version workflow.
+     * Returns the version expected by the writer.
+     *
+     * Responsibility: Returns the version expected by the writer.
      */
     public function expectedVersion(): int
     {
@@ -109,7 +119,9 @@ final class OptimisticLockException extends RuntimeException
     }
 
     /**
-     * Handles the current version workflow.
+     * Returns the current stored version when known.
+     *
+     * Responsibility: Returns the current stored version when known.
      */
     public function currentVersion(): ?int
     {

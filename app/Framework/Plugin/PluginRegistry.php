@@ -33,10 +33,10 @@ namespace Catalyst\Framework\Plugin;
 use Catalyst\Framework\Traits\SingletonTrait;
 
 /**
- * Defines the Plugin Registry class contract.
+ * Loads plugin manifests from the runtime plugin directory.
  *
  * @package Catalyst\Framework\Plugin
- * Responsibility: Coordinates the plugin registry behavior within its module boundary.
+ * Responsibility: Discovers plugin manifests, records validation errors, and resolves module ownership.
  */
 final class PluginRegistry
 {
@@ -48,6 +48,9 @@ final class PluginRegistry
     private ?array $plugins = null;
 
     /**
+     * Returns every discovered plugin manifest.
+     *
+     * Responsibility: Returns every discovered plugin manifest.
      * @return array<int, array<string, mixed>>
      */
     public function all(): array
@@ -77,7 +80,9 @@ final class PluginRegistry
     }
 
     /**
-     * Handles the flush cache workflow.
+     * Clears cached plugin manifests.
+     *
+     * Responsibility: Clears cached plugin manifests.
      */
     public function flushCache(): void
     {
@@ -85,6 +90,9 @@ final class PluginRegistry
     }
 
     /**
+     * Finds a plugin manifest by key.
+     *
+     * Responsibility: Finds a plugin manifest by key.
      * @return array<string, mixed>|null
      */
     public function find(string $pluginKey): ?array
@@ -104,6 +112,9 @@ final class PluginRegistry
     }
 
     /**
+     * Finds the plugin that declares ownership of a module.
+     *
+     * Responsibility: Finds the plugin that declares ownership of a module.
      * @return array<string, mixed>|null
      */
     public function forModule(string $moduleKey): ?array
@@ -118,6 +129,9 @@ final class PluginRegistry
     }
 
     /**
+     * Loads and validates one plugin manifest.
+     *
+     * Responsibility: Loads and validates one plugin manifest.
      * @return array{0: array<string, mixed>, 1: string[]}
      */
     private function loadManifest(string $file): array

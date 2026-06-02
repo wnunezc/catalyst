@@ -31,15 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Module;
 
 /**
- * Defines the Module Runtime Docs Generator class contract.
+ * Generates the runtime module catalog document.
  *
  * @package Catalyst\Framework\Module
- * Responsibility: Coordinates the module runtime docs generator behavior within its module boundary.
+ * Responsibility: Renders inspection, harness, and lint results into a Markdown module inventory.
  */
 final class ModuleRuntimeDocsGenerator
 {
     /**
-     * Handles the generate workflow.
+     * Generates the complete runtime module catalog in Markdown.
+     *
+     * Responsibility: Generates the complete runtime module catalog in Markdown.
      */
     public function generate(): string
     {
@@ -159,6 +161,9 @@ final class ModuleRuntimeDocsGenerator
     }
 
     /**
+     * Renders a Markdown table for inspected routes.
+     *
+     * Responsibility: Renders a Markdown table for inspected routes.
      * @param array<int, array<string, mixed>> $routes
      */
     private function renderRouteTable(array $routes): string
@@ -188,6 +193,9 @@ final class ModuleRuntimeDocsGenerator
     }
 
     /**
+     * Formats route state expectations for inline Markdown output.
+     *
+     * Responsibility: Formats route state expectations for inline Markdown output.
      * @param array<string, string> $states
      */
     private function inlineStateExpectations(array $states): string
@@ -207,6 +215,9 @@ final class ModuleRuntimeDocsGenerator
     }
 
     /**
+     * Formats a list of scalar values for inline Markdown output.
+     *
+     * Responsibility: Formats a list of scalar values for inline Markdown output.
      * @param array<int, string> $items
      */
     private function inlineList(array $items): string
@@ -224,7 +235,9 @@ final class ModuleRuntimeDocsGenerator
     }
 
     /**
-     * Handles the inline scalar workflow.
+     * Formats a scalar value as inline Markdown or an unavailable marker.
+     *
+     * Responsibility: Formats a scalar value as inline Markdown or an unavailable marker.
      */
     private function inlineScalar(mixed $value): string
     {
@@ -238,7 +251,9 @@ final class ModuleRuntimeDocsGenerator
     }
 
     /**
-     * Handles the plain value workflow.
+     * Formats a plain text value or an unavailable marker.
+     *
+     * Responsibility: Formats a plain text value or an unavailable marker.
      */
     private function plainValue(string $value): string
     {
@@ -248,6 +263,9 @@ final class ModuleRuntimeDocsGenerator
     }
 
     /**
+     * Returns the rendered asset status label for a harness module.
+     *
+     * Responsibility: Returns the rendered asset status label for a harness module.
      * @param array<string, mixed> $assets
      */
     private function assetStatusLabel(array $assets): string

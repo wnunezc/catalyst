@@ -31,15 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Helpers\Log;
 
 /**
- * Defines the Log Rotator class contract.
+ * Rotates filesystem logs when they exceed configured size limits.
  *
  * @package Catalyst\Helpers\Log
- * Responsibility: Coordinates the log rotator behavior within its module boundary.
+ * Responsibility: Preserves bounded log history while excluding stream destinations.
  */
 final class LogRotator
 {
     /**
-     * Handles the rotate if needed workflow.
+     * Rotates a log file when rotation is enabled and its size limit is reached.
+     *
+     * Responsibility: Rotates a log file when rotation is enabled and its size limit is reached.
      */
     public function rotateIfNeeded(string $logFile, LoggerSettings $settings): void
     {
@@ -69,7 +71,9 @@ final class LogRotator
     }
 
     /**
-     * Handles the rotate workflow.
+     * Shifts rotated files and reopens the active log path.
+     *
+     * Responsibility: Shifts rotated files and reopens the active log path.
      */
     private function rotate(string $logFile, int $maxFiles): void
     {
@@ -93,7 +97,9 @@ final class LogRotator
     }
 
     /**
-     * Determines whether is Stream.
+     * Determines whether a path targets a PHP stream.
+     *
+     * Responsibility: Determines whether a path targets a PHP stream.
      */
     private function isStream(string $path): bool
     {

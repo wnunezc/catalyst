@@ -35,15 +35,17 @@ use Catalyst\Framework\Authorization\PermissionRegistry;
 use Catalyst\Framework\Http\FormRequest;
 
 /**
- * Defines the Deployment Run Request class contract.
+ * Validates deployment execution input for platform operations.
  *
  * @package Catalyst\Repository\Operations\Requests
- * Responsibility: Coordinates the deployment run request behavior within its module boundary.
+ * Responsibility: Authorizes and constrains deployment profile and dry-run fields.
  */
 final class DeploymentRunRequest extends FormRequest
 {
     /**
-     * Handles the authorize workflow.
+     * Returns whether the current user may execute deployment operations.
+     *
+     * Responsibility: Returns whether the current user may execute deployment operations.
      */
     public function authorize(): bool
     {
@@ -55,6 +57,9 @@ final class DeploymentRunRequest extends FormRequest
     }
 
     /**
+     * Returns the deployment fields accepted from the request.
+     *
+     * Responsibility: Returns the deployment fields accepted from the request.
      * @return string[]
      */
     public function only(): array
@@ -63,6 +68,9 @@ final class DeploymentRunRequest extends FormRequest
     }
 
     /**
+     * Returns validation rules for deployment execution input.
+     *
+     * Responsibility: Returns validation rules for deployment execution input.
      * @return array<string, string|array<int, string>>
      */
     public function rules(): array

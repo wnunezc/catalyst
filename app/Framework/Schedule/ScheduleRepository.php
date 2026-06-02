@@ -37,17 +37,19 @@ use Catalyst\Framework\Traits\SingletonTrait;
 use RuntimeException;
 
 /**
- * Defines the Schedule Repository class contract.
+ * Persists scheduler slot claims and execution history.
  *
  * @package Catalyst\Framework\Schedule
- * Responsibility: Coordinates the schedule repository behavior within its module boundary.
+ * Responsibility: Prevents duplicate slot dispatches, records queued or skipped runs, summarizes history, and prunes old records.
  */
 final class ScheduleRepository
 {
     use SingletonTrait;
 
     /**
-     * Handles the claim slot workflow.
+     * Claims a scheduler slot by inserting its unique task-and-slot record.
+     *
+     * Responsibility: Claims a scheduler slot by inserting its unique task-and-slot record.
      */
     public function claimSlot(string $taskName, string $expression, string $slotKey, string $queueName): bool
     {
@@ -74,7 +76,9 @@ final class ScheduleRepository
     }
 
     /**
-     * Handles the mark queued workflow.
+     * Marks a claimed slot as queued with its generated job identifier.
+     *
+     * Responsibility: Marks a claimed slot as queued with its generated job identifier.
      */
     public function markQueued(string $taskName, string $slotKey, int $jobId, ?string $message = null): void
     {
@@ -101,7 +105,9 @@ final class ScheduleRepository
     }
 
     /**
-     * Handles the mark skipped workflow.
+     * Records a scheduler slot that was skipped before queue dispatch.
+     *
+     * Responsibility: Records a scheduler slot that was skipped before queue dispatch.
      */
     public function markSkipped(string $taskName, string $expression, string $slotKey, string $queueName, string $message): void
     {
@@ -124,7 +130,9 @@ final class ScheduleRepository
     }
 
     /**
-     * Handles the prune runs workflow.
+     * Deletes scheduler history older than the requested retention window.
+     *
+     * Responsibility: Deletes scheduler history older than the requested retention window.
      */
     public function pruneRuns(int $olderThanDays = 30): int
     {
@@ -139,6 +147,9 @@ final class ScheduleRepository
     }
 
     /**
+     * Returns an operational summary of scheduler history.
+     *
+     * Responsibility: Returns an operational summary of scheduler history.
      * @return array<string, mixed>
      */
     public function summary(): array
@@ -159,7 +170,9 @@ final class ScheduleRepository
     }
 
     /**
-     * Handles the connection workflow.
+     * Resolves the queue database connection used for scheduler history.
+     *
+     * Responsibility: Resolves the queue database connection used for scheduler history.
      */
     private function connection(): Connection
     {
@@ -167,7 +180,9 @@ final class ScheduleRepository
     }
 
     /**
-     * Handles the quote workflow.
+     * Quotes a validated scheduler table identifier.
+     *
+     * Responsibility: Quotes a validated scheduler table identifier.
      */
     private function quote(string $identifier): string
     {

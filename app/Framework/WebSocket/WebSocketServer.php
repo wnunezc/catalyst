@@ -47,6 +47,7 @@ use SplObjectStorage;
  *   WebSocketServer::broadcastToUser(userId, payload)
  *
  * @package Catalyst\Framework\WebSocket
+ * Responsibility: Authenticates connections, manages subscriptions and broadcasts user or resource payloads.
  */
 class WebSocketServer implements MessageComponentInterface
 {
@@ -70,6 +71,8 @@ class WebSocketServer implements MessageComponentInterface
 
     /**
      * Initializes the Web Socket Server instance.
+     *
+     * Responsibility: Initializes the Web Socket Server instance.
      */
     public function __construct()
     {
@@ -77,7 +80,9 @@ class WebSocketServer implements MessageComponentInterface
     }
 
     /**
-     * Handles the on open workflow.
+     * Registers a newly opened WebSocket connection.
+     *
+     * Responsibility: Registers a newly opened WebSocket connection.
      */
     public function onOpen(ConnectionInterface $conn): void
     {
@@ -86,7 +91,9 @@ class WebSocketServer implements MessageComponentInterface
     }
 
     /**
-     * Handles the on message workflow.
+     * Processes authentication, subscription and heartbeat client messages.
+     *
+     * Responsibility: Processes authentication, subscription and heartbeat client messages.
      */
     public function onMessage(ConnectionInterface $from, $msg): void
     {
@@ -193,7 +200,9 @@ class WebSocketServer implements MessageComponentInterface
     }
 
     /**
-     * Handles the on close workflow.
+     * Removes a closed connection and its subscriptions.
+     *
+     * Responsibility: Removes a closed connection and its subscriptions.
      */
     public function onClose(ConnectionInterface $conn): void
     {
@@ -229,7 +238,9 @@ class WebSocketServer implements MessageComponentInterface
     }
 
     /**
-     * Handles the on error workflow.
+     * Reports a connection error and closes the affected connection.
+     *
+     * Responsibility: Reports a connection error and closes the affected connection.
      */
     public function onError(ConnectionInterface $conn, \Exception $e): void
     {
@@ -240,6 +251,7 @@ class WebSocketServer implements MessageComponentInterface
     /**
      * Send a payload to all active connections for the given user.
      *
+     * Responsibility: Send a payload to all active connections for the given user.
      * @param int   $userId
      * @param array $payload JSON-serializable array
      */
@@ -254,7 +266,9 @@ class WebSocketServer implements MessageComponentInterface
     }
 
     /**
-     * Handles the broadcast to resource workflow.
+     * Broadcasts a presence payload to subscribers of a tenant resource.
+     *
+     * Responsibility: Broadcasts a presence payload to subscribers of a tenant resource.
      */
     public function broadcastToResource(int $tenantId, string $resourceKey, int $recordId, array $payload): void
     {
@@ -273,6 +287,8 @@ class WebSocketServer implements MessageComponentInterface
 
     /**
      * Number of currently connected users (unique).
+     *
+     * Responsibility: Number of currently connected users (unique).
      */
     public function connectedUserCount(): int
     {
@@ -280,7 +296,9 @@ class WebSocketServer implements MessageComponentInterface
     }
 
     /**
-     * Handles the resource subscription key workflow.
+     * Builds the stable key for a tenant resource subscription.
+     *
+     * Responsibility: Builds the stable key for a tenant resource subscription.
      */
     private function resourceSubscriptionKey(int $tenantId, string $resourceKey, int $recordId): string
     {

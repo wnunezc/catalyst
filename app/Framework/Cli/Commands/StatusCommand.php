@@ -36,22 +36,30 @@ use Catalyst\Framework\Cli\AbstractCommand;
 use Catalyst\Framework\Health\HealthReportBuilder;
 
 /**
- * Defines the Status Command class contract.
+ * Reports framework runtime readiness from the terminal.
+ *
+ * Responsibility: Builds and renders system health sections for human or JSON CLI status checks.
  *
  * @package Catalyst\Framework\Cli\Commands
- * Responsibility: Coordinates the status command behavior within its module boundary.
  */
 class StatusCommand extends AbstractCommand
 {
     /**
-     * Initializes the Status Command instance.
+     * Initializes dependencies required by this CLI component.
+     *
+     * Responsibility: Initializes dependencies required by this CLI component.
      */
     public function __construct(
         private readonly HealthReportBuilder $reportBuilder = new HealthReportBuilder()
     ) {
     }
 
-    /** @return Option[] */
+    /**
+     * Defines the accepted option schema for this command.
+     *
+     * Responsibility: Defines the accepted option schema for this command.
+     * @return Option[]
+     */
     public function getOptions(): array
     {
         return [
@@ -60,7 +68,9 @@ class StatusCommand extends AbstractCommand
     }
 
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -68,7 +78,9 @@ class StatusCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
@@ -76,7 +88,9 @@ class StatusCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {
@@ -131,7 +145,9 @@ class StatusCommand extends AbstractCommand
     }
 
     /**
-     * Handles the print check workflow.
+     * Describes the print check helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the print check helper workflow used by this CLI component.
      */
     private function printCheck(string $label, bool $ok): void
     {
@@ -145,7 +161,9 @@ class StatusCommand extends AbstractCommand
     }
 
     /**
-     * @param array<int, array{label:string,status:string,detail?:string}> $checks
+     * Describes the render section helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the render section helper workflow used by this CLI component.
      */
     private function renderSection(string $title, array $checks): void
     {

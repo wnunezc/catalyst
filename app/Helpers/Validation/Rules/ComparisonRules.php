@@ -36,6 +36,7 @@ namespace Catalyst\Helpers\Validation\Rules;
  * Rules: same, different, confirmed, in, notIn
  *
  * @package Catalyst\Helpers\Validation\Rules
+ * Responsibility: Validates relationships between fields and membership in allowed value sets.
  */
 class ComparisonRules
 {

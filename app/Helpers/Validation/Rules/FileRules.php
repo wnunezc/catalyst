@@ -43,11 +43,12 @@ use Catalyst\Framework\Http\UploadedFile;
  * enforce file presence).
  *
  * @package Catalyst\Helpers\Validation\Rules
+ * Responsibility: Resolves uploaded files and validates file presence, size, extension and MIME type.
  */
 class FileRules
 {
     /**
-     * Handles the file workflow.
+     * Determines whether the value resolves to a valid uploaded file.
      */
     public static function file(mixed $value): bool
     {
@@ -144,7 +145,7 @@ class FileRules
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves an uploaded-file instance from a value or request field.
      */
     private static function resolveUploadedFile(mixed $fieldOrFile): ?UploadedFile
     {

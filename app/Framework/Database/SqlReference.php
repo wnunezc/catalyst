@@ -33,10 +33,10 @@ namespace Catalyst\Framework\Database;
 use InvalidArgumentException;
 
 /**
- * Defines the Sql Reference class contract.
+ * Validator for SQL identifiers and operators used by query builders.
  *
  * @package Catalyst\Framework\Database
- * Responsibility: Coordinates the sql reference behavior within its module boundary.
+ * Responsibility: Guards table, column, alias, operator, and join fragments before they are interpolated into SQL.
  */
 final class SqlReference
 {
@@ -58,7 +58,7 @@ final class SqlReference
     ];
 
     /**
-     * Handles the assert table workflow.
+     * Validates a table reference and returns it unchanged.
      */
     public static function assertTable(string $table): string
     {
@@ -66,7 +66,7 @@ final class SqlReference
     }
 
     /**
-     * Handles the assert column workflow.
+     * Validates a column reference and returns it unchanged.
      */
     public static function assertColumn(string $column, string $context = 'column'): string
     {
@@ -80,7 +80,7 @@ final class SqlReference
     }
 
     /**
-     * Handles the assert selectable workflow.
+     * Validates a selectable SQL reference, wildcard, or aliased aggregate expression.
      */
     public static function assertSelectable(string $column): string
     {
@@ -105,7 +105,7 @@ final class SqlReference
     }
 
     /**
-     * Handles the assert operator workflow.
+     * Validates a comparison operator allowed in WHERE clauses.
      */
     public static function assertOperator(string $operator): string
     {
@@ -119,7 +119,7 @@ final class SqlReference
     }
 
     /**
-     * Handles the assert join operator workflow.
+     * Validates a comparison operator allowed in JOIN clauses.
      */
     public static function assertJoinOperator(string $operator): string
     {
@@ -127,7 +127,7 @@ final class SqlReference
     }
 
     /**
-     * Handles the assert join type workflow.
+     * Validates and normalizes a supported SQL join type.
      */
     public static function assertJoinType(string $type): string
     {
@@ -141,7 +141,7 @@ final class SqlReference
     }
 
     /**
-     * Normalizes the provided value.
+     * Validates and normalizes an ORDER BY direction.
      */
     public static function normalizeDirection(string $direction): string
     {
@@ -155,7 +155,7 @@ final class SqlReference
     }
 
     /**
-     * Handles the assert aliased reference workflow.
+     * Validates a SQL reference that may include a single alias.
      */
     private static function assertAliasedReference(string $reference, string $context): string
     {

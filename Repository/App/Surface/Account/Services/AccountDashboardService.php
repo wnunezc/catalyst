@@ -35,14 +35,19 @@ use Catalyst\Framework\Auth\AuthManager;
 use Catalyst\Framework\Auth\UserProvider;
 
 /**
- * Defines the Account Dashboard Service class contract.
+ * Builds account-related data for the dashboard surface.
  *
  * @package App\Surface\Account\Services
- * Responsibility: Coordinates the account dashboard service behavior within its module boundary.
+ * Responsibility: Combines current user, MFA and recovery activity state into dashboard metrics.
  */
 final class AccountDashboardService
 {
-    /** @return array<string, mixed> */
+    /**
+     * Returns dashboard metric cards and recent recovery activity for the signed-in user.
+     *
+     * Responsibility: Returns dashboard metric cards and recent recovery activity for the signed-in user.
+     * @return array<string, mixed>
+     */
     public function dashboard(): array
     {
         $user = AuthManager::getInstance()->user() ?? [];

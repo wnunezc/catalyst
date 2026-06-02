@@ -33,15 +33,17 @@ namespace Catalyst\Framework\Geo;
 use InvalidArgumentException;
 
 /**
- * Defines the Bounding Box class contract.
+ * Represents a latitude and longitude bounding box.
  *
  * @package Catalyst\Framework\Geo
- * Responsibility: Coordinates the bounding box behavior within its module boundary.
+ * Responsibility: Stores box edges, validates north-south bounds and tests whether coordinates fall inside the box.
  */
 final class BoundingBox
 {
     /**
-     * Initializes the Bounding Box instance.
+     * Creates a bounding box from normalized geographic edges.
+     *
+     * Responsibility: Creates a bounding box from normalized geographic edges.
      */
     public function __construct(
         private readonly float $north,
@@ -55,7 +57,9 @@ final class BoundingBox
     }
 
     /**
-     * Handles the north workflow.
+     * Returns the northern latitude edge.
+     *
+     * Responsibility: Returns the northern latitude edge.
      */
     public function north(): float
     {
@@ -63,7 +67,9 @@ final class BoundingBox
     }
 
     /**
-     * Handles the south workflow.
+     * Returns the southern latitude edge.
+     *
+     * Responsibility: Returns the southern latitude edge.
      */
     public function south(): float
     {
@@ -71,7 +77,9 @@ final class BoundingBox
     }
 
     /**
-     * Handles the east workflow.
+     * Returns the eastern longitude edge.
+     *
+     * Responsibility: Returns the eastern longitude edge.
      */
     public function east(): float
     {
@@ -79,7 +87,9 @@ final class BoundingBox
     }
 
     /**
-     * Handles the west workflow.
+     * Returns the western longitude edge.
+     *
+     * Responsibility: Returns the western longitude edge.
      */
     public function west(): float
     {
@@ -87,7 +97,9 @@ final class BoundingBox
     }
 
     /**
-     * Handles the contains workflow.
+     * Checks whether a coordinate is inside the box, including antimeridian spans.
+     *
+     * Responsibility: Checks whether a coordinate is inside the box, including antimeridian spans.
      */
     public function contains(Coordinate $coordinate): bool
     {
@@ -106,6 +118,9 @@ final class BoundingBox
     }
 
     /**
+     * Exports the bounding box edges as an array.
+     *
+     * Responsibility: Exports the bounding box edges as an array.
      * @return array{north:float,south:float,east:float,west:float}
      */
     public function toArray(): array

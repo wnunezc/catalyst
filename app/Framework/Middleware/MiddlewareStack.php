@@ -36,18 +36,13 @@ use Catalyst\Helpers\Log\Logger;
 use Closure;
 use Exception;
 
-/**************************************************************************************
+/**
  * MiddlewareStack class for managing middleware execution
  *
  * Handles storage, resolution and execution of middleware in the correct order.
  *
  * @package Catalyst\Framework\Middleware
- */
-/**
- * Defines the Middleware Stack class contract.
- *
- * @package Catalyst\Framework\Middleware
- * Responsibility: Coordinates the middleware stack behavior within its module boundary.
+ * Responsibility: Stores middleware definitions, resolves them, and executes the resulting request chain.
  */
 class MiddlewareStack
 {
@@ -59,8 +54,9 @@ class MiddlewareStack
     private array $stack = [];
 
     /**
-     * Add middleware to the stack
+     * Add middleware to the stack.
      *
+     * Responsibility: Add middleware to the stack.
      * @param string|callable|MiddlewareInterface $middleware Middleware to add
      * @return self For method chaining
      */
@@ -71,8 +67,9 @@ class MiddlewareStack
     }
 
     /**
-     * Process a request through the middleware stack
+     * Process a request through the middleware stack.
      *
+     * Responsibility: Process a request through the middleware stack.
      * @param Request $request Request to process
      * @param Closure $coreHandler Core handler to execute after middleware
      * @return Response Response from the middleware chain
@@ -88,8 +85,9 @@ class MiddlewareStack
     }
 
     /**
-     * Create the middleware execution chain
+     * Create the middleware execution chain.
      *
+     * Responsibility: Create the middleware execution chain.
      * @param Closure $coreHandler Core handler to execute after middleware
      * @return Closure Complete middleware execution chain
      */
@@ -120,8 +118,9 @@ class MiddlewareStack
     }
 
     /**
-     * Resolve middleware from string, callable, or object
+     * Resolve middleware from string, callable, or object.
      *
+     * Responsibility: Resolve middleware from string, callable, or object.
      * @param string|callable|MiddlewareInterface $middleware Middleware to resolve
      * @return MiddlewareInterface Resolved middleware instance
      * @throws Exception If middleware cannot be resolved
@@ -157,8 +156,9 @@ class MiddlewareStack
     }
 
     /**
-     * Get all middleware in the stack
+     * Get all middleware in the stack.
      *
+     * Responsibility: Get all middleware in the stack.
      * @return array Middleware stack
      */
     public function getStack(): array
@@ -167,8 +167,9 @@ class MiddlewareStack
     }
 
     /**
-     * Check if the stack is empty
+     * Check if the stack is empty.
      *
+     * Responsibility: Check if the stack is empty.
      * @return bool True if stack is empty
      */
     public function isEmpty(): bool

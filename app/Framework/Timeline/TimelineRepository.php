@@ -38,10 +38,10 @@ use Catalyst\Helpers\Log\Logger;
 use Exception;
 
 /**
- * Defines the Timeline Repository class contract.
+ * Persists and queries tenant-scoped timeline events.
  *
  * @package Catalyst\Framework\Timeline
- * Responsibility: Coordinates the timeline repository behavior within its module boundary.
+ * Responsibility: Provides ordered timeline history and normalized event rows for resources.
  */
 final class TimelineRepository
 {
@@ -52,6 +52,8 @@ final class TimelineRepository
 
     /**
      * Initializes the Timeline Repository instance.
+     *
+     * Responsibility: Initializes the Timeline Repository instance.
      */
     protected function __construct()
     {
@@ -60,6 +62,9 @@ final class TimelineRepository
     }
 
     /**
+     * Lists timeline events for a resource record in chronological order.
+     *
+     * Responsibility: Lists timeline events for a resource record in chronological order.
      * @return array<int, array<string, mixed>>
      */
     public function listFor(string $resourceKey, int $recordId): array
@@ -84,7 +89,9 @@ final class TimelineRepository
     }
 
     /**
-     * Handles the create workflow.
+     * Creates a timeline event for a resource record.
+     *
+     * Responsibility: Creates a timeline event for a resource record.
      */
     public function create(string $resourceKey, int $recordId, string $eventKey, string $eventType, string $label, array $metadata, string $occurredAt): TimelineEvent
     {
@@ -100,6 +107,9 @@ final class TimelineRepository
     }
 
     /**
+     * Normalizes a timeline event row for consumers.
+     *
+     * Responsibility: Normalizes a timeline event row for consumers.
      * @return array<string, mixed>
      */
     private function normalizeRow(array $row): array
@@ -115,7 +125,9 @@ final class TimelineRepository
     }
 
     /**
-     * Handles the current tenant id workflow.
+     * Returns the active tenant identifier required by timeline queries.
+     *
+     * Responsibility: Returns the active tenant identifier required by timeline queries.
      */
     private function currentTenantId(): int
     {

@@ -31,14 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Authorization;
 
 /**
- * Defines the Ability Subject class contract.
+ * Carries the resource, record, and context used by resource authorization policies.
  *
  * @package Catalyst\Framework\Authorization
- * Responsibility: Coordinates the ability subject behavior within its module boundary.
+ * Responsibility: Represents the subject passed to resource-level authorization checks.
  */
 final class AbilitySubject
 {
     /**
+     * Stores the target resource, optional record, and contextual authorization data.
+     *
+     * Responsibility: Stores the target resource, optional record, and contextual authorization data.
      * @param array<string, mixed> $context
      */
     public function __construct(
@@ -49,6 +52,8 @@ final class AbilitySubject
     }
 
     /**
+     * Builds an authorization subject for a resource ability check.
+     *
      * @param array<string, mixed> $context
      */
     public static function make(string $resource, mixed $record = null, array $context = []): self
@@ -57,7 +62,9 @@ final class AbilitySubject
     }
 
     /**
-     * Handles the resource workflow.
+     * Returns the canonical resource name being authorized.
+     *
+     * Responsibility: Returns the canonical resource name being authorized.
      */
     public function resource(): string
     {
@@ -65,7 +72,9 @@ final class AbilitySubject
     }
 
     /**
-     * Handles the record workflow.
+     * Returns the optional record attached to the authorization subject.
+     *
+     * Responsibility: Returns the optional record attached to the authorization subject.
      */
     public function record(): mixed
     {
@@ -73,6 +82,9 @@ final class AbilitySubject
     }
 
     /**
+     * Returns additional data used by permission condition matching.
+     *
+     * Responsibility: Returns additional data used by permission condition matching.
      * @return array<string, mixed>
      */
     public function context(): array

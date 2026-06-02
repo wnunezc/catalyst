@@ -34,10 +34,10 @@ use Catalyst\Framework\Database\Model;
 use Catalyst\Framework\Traits\BelongsToTenantTrait;
 
 /**
- * Defines the Audit Log Entry class contract.
+ * ORM entity for captured audit log records.
  *
  * @package Catalyst\Entities
- * Responsibility: Coordinates the audit log entry behavior within its module boundary.
+ * Responsibility: Maps actor, tenant, request, resource, and payload fields written by audit logging.
  */
 final class AuditLogEntry extends Model
 {

@@ -34,14 +34,17 @@ use Catalyst\Helpers\ToolBox\DrawBox;
 use Exception;
 
 /**
- * Defines the Logger Inline Display class contract.
+ * Renders enabled log output in CLI boxes.
  *
  * @package Catalyst\Helpers\Log
- * Responsibility: Coordinates the logger inline display behavior within its module boundary.
+ * Responsibility: Maps logger levels to CLI styles and emits formatted diagnostic output.
  */
 final class LoggerInlineDisplay
 {
     /**
+     * Renders a formatted log entry when inline CLI display is enabled.
+     *
+     * Responsibility: Renders a formatted log entry when inline CLI display is enabled.
      * @throws Exception
      */
     public function render(string $level, string $logEntry): void

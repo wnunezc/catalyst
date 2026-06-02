@@ -40,10 +40,10 @@ use Catalyst\Helpers\Exceptions\ValidationException;
 use Catalyst\Helpers\Validation\Validator;
 
 /**
- * Defines the Document Template Request class contract.
+ * Validates document template create and update payloads.
  *
  * @package Catalyst\Repository\Documents\Requests
- * Responsibility: Coordinates the document template request behavior within its module boundary.
+ * Responsibility: Authorize template mutations and enforce accepted fields, JSON schemas and slug uniqueness.
  */
 final class DocumentTemplateRequest extends FormRequest
 {
@@ -53,7 +53,9 @@ final class DocumentTemplateRequest extends FormRequest
     private ?array $resolvedData = null;
 
     /**
-     * Handles the authorize workflow.
+     * Authorizes creation or update according to the routed document template identifier.
+     *
+     * Responsibility: Authorizes creation or update according to the routed document template identifier.
      */
     public function authorize(): bool
     {
@@ -65,6 +67,9 @@ final class DocumentTemplateRequest extends FormRequest
     }
 
     /**
+     * Returns the document template fields accepted from input.
+     *
+     * Responsibility: Returns the document template fields accepted from input.
      * @return string[]
      */
     public function only(): array
@@ -81,6 +86,9 @@ final class DocumentTemplateRequest extends FormRequest
     }
 
     /**
+     * Declares validation rules for document template input.
+     *
+     * Responsibility: Declares validation rules for document template input.
      * @return array<string, string>
      */
     public function rules(): array
@@ -97,6 +105,9 @@ final class DocumentTemplateRequest extends FormRequest
     }
 
     /**
+     * Returns translated labels for document template validation errors.
+     *
+     * Responsibility: Returns translated labels for document template validation errors.
      * @return array<string, string>
      */
     public function labels(): array
@@ -113,7 +124,9 @@ final class DocumentTemplateRequest extends FormRequest
     }
 
     /**
-     * Handles the sensitive resource key workflow.
+     * Identifies document templates as the sensitivity policy resource.
+     *
+     * Responsibility: Identifies document templates as the sensitivity policy resource.
      */
     protected function sensitiveResourceKey(): ?string
     {
@@ -121,6 +134,9 @@ final class DocumentTemplateRequest extends FormRequest
     }
 
     /**
+     * Returns the validated document template payload, resolving it lazily.
+     *
+     * Responsibility: Returns the validated document template payload, resolving it lazily.
      * @return array<string, mixed>
      */
     public function validated(): array
@@ -133,6 +149,9 @@ final class DocumentTemplateRequest extends FormRequest
     }
 
     /**
+     * Authorizes and validates the complete document template payload.
+     *
+     * Responsibility: Authorizes and validates the complete document template payload.
      * @throws ValidationException
      * @throws ForbiddenException
      */
@@ -160,6 +179,9 @@ final class DocumentTemplateRequest extends FormRequest
     }
 
     /**
+     * Validates slug uniqueness and JSON fields beyond the base rules.
+     *
+     * Responsibility: Validates slug uniqueness and JSON fields beyond the base rules.
      * @param array<string, mixed> $data
      * @return array<string, string[]>
      */

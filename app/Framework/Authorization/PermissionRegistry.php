@@ -33,10 +33,10 @@ namespace Catalyst\Framework\Authorization;
 use Catalyst\Framework\Traits\SingletonTrait;
 use Catalyst\Framework\Module\ModuleRegistry;
 /**
- * Defines the Permission Registry class contract.
+ * Loads permission definitions and evaluates role, permission, and resource abilities.
  *
  * @package Catalyst\Framework\Authorization
- * Responsibility: Coordinates the permission registry behavior within its module boundary.
+ * Responsibility: Bridges module permission metadata with Gate and RoleRepository checks.
  */
 final class PermissionRegistry
 {
@@ -48,6 +48,9 @@ final class PermissionRegistry
     private ?array $definitions = null;
 
     /**
+     * Returns all module-declared permission definitions cached for the request.
+     *
+     * Responsibility: Returns all module-declared permission definitions cached for the request.
      * @return array<int, array<string, mixed>>
      */
     public function all(): array
@@ -60,7 +63,9 @@ final class PermissionRegistry
     }
 
     /**
-     * Handles the flush cache workflow.
+     * Clears cached permission definitions so module metadata can be reloaded.
+     *
+     * Responsibility: Clears cached permission definitions so module metadata can be reloaded.
      */
     public function flushCache(): void
     {
@@ -68,6 +73,9 @@ final class PermissionRegistry
     }
 
     /**
+     * Returns permission definitions declared by a module key.
+     *
+     * Responsibility: Returns permission definitions declared by a module key.
      * @return array<int, array<string, mixed>>
      */
     public function forModule(string $moduleKey): array
@@ -79,6 +87,9 @@ final class PermissionRegistry
     }
 
     /**
+     * Finds a permission definition by slug.
+     *
+     * Responsibility: Finds a permission definition by slug.
      * @return array<string, mixed>|null
      */
     public function find(string $slug): ?array
@@ -93,7 +104,9 @@ final class PermissionRegistry
     }
 
     /**
-     * Registers the requested definition.
+     * Registers permission slugs and resource policies on the given gate instance.
+     *
+     * Responsibility: Registers permission slugs and resource policies on the given gate instance.
      */
     public function registerGateDefinitions(Gate $gate): void
     {
@@ -114,7 +127,9 @@ final class PermissionRegistry
     }
 
     /**
-     * Handles the user has role workflow.
+     * Checks whether the resolved user has a specific role slug.
+     *
+     * Responsibility: Checks whether the resolved user has a specific role slug.
      */
     public function userHasRole(?array $user, string $roleSlug): bool
     {
@@ -127,6 +142,9 @@ final class PermissionRegistry
     }
 
     /**
+     * Checks whether the resolved user has at least one role slug.
+     *
+     * Responsibility: Checks whether the resolved user has at least one role slug.
      * @param string[] $roleSlugs
      */
     public function userHasAnyRole(?array $user, array $roleSlugs): bool
@@ -140,7 +158,9 @@ final class PermissionRegistry
     }
 
     /**
-     * Handles the user has permission workflow.
+     * Checks whether the resolved user has a permission and satisfies its conditions.
+     *
+     * Responsibility: Checks whether the resolved user has a permission and satisfies its conditions.
      */
     public function userHasPermission(?array $user, string $slug, mixed $record = null): bool
     {
@@ -171,6 +191,9 @@ final class PermissionRegistry
     }
 
     /**
+     * Checks whether the resolved user has at least one permission slug.
+     *
+     * Responsibility: Checks whether the resolved user has at least one permission slug.
      * @param string[] $slugs
      */
     public function userHasAnyPermission(?array $user, array $slugs, mixed $record = null): bool
@@ -185,6 +208,9 @@ final class PermissionRegistry
     }
 
     /**
+     * Checks whether the resolved user has a permission matching a resource ability.
+     *
+     * Responsibility: Checks whether the resolved user has a permission matching a resource ability.
      * @param array<string, mixed> $context
      */
     public function userHasResourceAbility(
@@ -217,6 +243,9 @@ final class PermissionRegistry
     }
 
     /**
+     * Returns permission definitions matching a resource and ability pair.
+     *
+     * Responsibility: Returns permission definitions matching a resource and ability pair.
      * @return array<int, array<string, mixed>>
      */
     public function resourceAbilityDefinitions(string $resource, string $ability): array
@@ -239,6 +268,9 @@ final class PermissionRegistry
     }
 
     /**
+     * Validates record ownership, state, and delegated policy constraints.
+     *
+     * Responsibility: Validates record ownership, state, and delegated policy constraints.
      * @param array<string, mixed> $user
      * @param array<string, mixed> $definition
      */
@@ -275,6 +307,9 @@ final class PermissionRegistry
     }
 
     /**
+     * Checks whether a permission definition applies to the requested resource.
+     *
+     * Responsibility: Checks whether a permission definition applies to the requested resource.
      * @param array<string, mixed> $definition
      */
     private function definitionMatchesResource(array $definition, string $resource): bool
@@ -289,6 +324,9 @@ final class PermissionRegistry
     }
 
     /**
+     * Checks whether a permission definition applies to the requested ability.
+     *
+     * Responsibility: Checks whether a permission definition applies to the requested ability.
      * @param array<string, mixed> $definition
      */
     private function definitionMatchesAbility(array $definition, string $ability): bool
@@ -312,6 +350,9 @@ final class PermissionRegistry
     }
 
     /**
+     * Returns action aliases accepted for a generic resource ability.
+     *
+     * Responsibility: Returns action aliases accepted for a generic resource ability.
      * @return string[]
      */
     private function abilityActionAliases(string $ability): array
@@ -332,7 +373,9 @@ final class PermissionRegistry
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves the numeric user ID from an authorization user payload.
+     *
+     * Responsibility: Resolves the numeric user ID from an authorization user payload.
      */
     private function resolveUserId(?array $user): ?int
     {
@@ -345,7 +388,9 @@ final class PermissionRegistry
     }
 
     /**
-     * Handles the extract value workflow.
+     * Extracts a field value from an array, object property, or getter method.
+     *
+     * Responsibility: Extracts a field value from an array, object property, or getter method.
      */
     private function extractValue(mixed $record, string $field): mixed
     {

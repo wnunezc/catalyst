@@ -31,14 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Helpers\ToolBox;
 
 /**
- * Defines the Draw Box File Output Decorator class contract.
+ * Appends file-output status to a rendered CLI box.
  *
  * @package Catalyst\Helpers\ToolBox
- * Responsibility: Coordinates the draw box file output decorator behavior within its module boundary.
+ * Responsibility: Inserts a colored separator and centered persistence message before the box footer.
  */
 final class DrawBoxFileOutputDecorator
 {
     /**
+     * Initializes the object with the collaborators or state required for its responsibility.
+     *
+     * Responsibility: Initializes the object with the collaborators or state required for its responsibility.
      * @param array<string, string> $boxChars
      */
     public function __construct(private readonly array $boxChars)
@@ -46,6 +49,9 @@ final class DrawBoxFileOutputDecorator
     }
 
     /**
+     * Appends a file-output result line to an existing CLI box.
+     *
+     * Responsibility: Appends a file-output result line to an existing CLI box.
      * @param array{success: bool, filename: string, message: string} $result
      */
     public function append(string $boxOutput, array $result): string

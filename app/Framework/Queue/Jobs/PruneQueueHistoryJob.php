@@ -35,15 +35,17 @@ use Catalyst\Framework\Queue\QueueableJobInterface;
 use Catalyst\Framework\Schedule\ScheduleRepository;
 
 /**
- * Defines the Prune Queue History Job class contract.
+ * Prunes failed queue jobs and old scheduler history from the maintenance queue.
  *
  * @package Catalyst\Framework\Queue\Jobs
- * Responsibility: Coordinates the prune queue history job behavior within its module boundary.
+ * Responsibility: Executes periodic cleanup for queue failures and scheduler run records.
  */
 final class PruneQueueHistoryJob implements QueueableJobInterface
 {
     /**
      * Initializes the Prune Queue History Job instance.
+     *
+     * Responsibility: Initializes the Prune Queue History Job instance.
      */
     public function __construct(
         private readonly int $failedOlderThanDays = 14,
@@ -53,7 +55,9 @@ final class PruneQueueHistoryJob implements QueueableJobInterface
     }
 
     /**
-     * Handles the request workflow.
+     * Deletes queue and scheduler history outside their retention windows.
+     *
+     * Responsibility: Deletes queue and scheduler history outside their retention windows.
      */
     public function handle(): void
     {
@@ -62,7 +66,9 @@ final class PruneQueueHistoryJob implements QueueableJobInterface
     }
 
     /**
-     * Handles the display name workflow.
+     * Returns the maintenance-job label.
+     *
+     * Responsibility: Returns the maintenance-job label.
      */
     public function displayName(): string
     {
@@ -70,7 +76,9 @@ final class PruneQueueHistoryJob implements QueueableJobInterface
     }
 
     /**
-     * Handles the queue name workflow.
+     * Returns the queue selected for maintenance work.
+     *
+     * Responsibility: Returns the queue selected for maintenance work.
      */
     public function queueName(): string
     {
@@ -78,7 +86,9 @@ final class PruneQueueHistoryJob implements QueueableJobInterface
     }
 
     /**
-     * Handles the max attempts workflow.
+     * Returns the allowed maintenance-attempt count.
+     *
+     * Responsibility: Returns the allowed maintenance-attempt count.
      */
     public function maxAttempts(): int
     {
@@ -86,7 +96,9 @@ final class PruneQueueHistoryJob implements QueueableJobInterface
     }
 
     /**
-     * Handles the backoff seconds workflow.
+     * Returns the retry delay for maintenance failures.
+     *
+     * Responsibility: Returns the retry delay for maintenance failures.
      */
     public function backoffSeconds(): int
     {
@@ -94,6 +106,9 @@ final class PruneQueueHistoryJob implements QueueableJobInterface
     }
 
     /**
+     * Exports cleanup windows and queue routing for persistence.
+     *
+     * Responsibility: Exports cleanup windows and queue routing for persistence.
      * @return array<string, mixed>
      */
     public function toPayload(): array
@@ -106,6 +121,8 @@ final class PruneQueueHistoryJob implements QueueableJobInterface
     }
 
     /**
+     * Restores a cleanup job from persisted state.
+     *
      * @param array<string, mixed> $payload
      */
     public static function fromPayload(array $payload): static

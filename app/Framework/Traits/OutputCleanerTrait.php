@@ -33,14 +33,16 @@ namespace Catalyst\Framework\Traits;
 /**
  * Trait that provides output buffer cleaning functionality
  *
- * @package Catalyst\Framework\Traits;
+ * @package Catalyst\Framework\Traits
+ * Responsibility: Resets output buffering before framework error rendering.
  */
 trait OutputCleanerTrait
 {
 
     /**
-     * Clean any output that might have been sent before an error occurred
+     * Clean any output that might have been sent before an error occurred.
      *
+     * Responsibility: Clean any output that might have been sent before an error occurred.
      * @return void
      */
     protected function cleanOutput(): void

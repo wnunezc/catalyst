@@ -34,14 +34,17 @@ use Catalyst\Framework\Session\SessionManager;
 use Catalyst\Helpers\Config\ConfigManager;
 
 /**
- * Defines the Session Config Writer class contract.
+ * Writes session settings and refreshes the active session metadata.
  *
  * @package Catalyst\Repository\Settings\Support
- * Responsibility: Coordinates the session config writer behavior within its module boundary.
+ * Responsibility: Persists storage and cookie settings and seeds the current session with its active backend.
  */
 final class SessionConfigWriter
 {
     /**
+     * Saves normalized session settings and updates the active session backend metadata.
+     *
+     * Responsibility: Saves normalized session settings and updates the active session backend metadata.
      * @param array<string, mixed> $data
      */
     public function save(array $data): void
@@ -70,7 +73,9 @@ final class SessionConfigWriter
     }
 
     /**
-     * Normalizes the provided value.
+     * Accepts a safe session table name or falls back to the default.
+     *
+     * Responsibility: Accepts a safe session table name or falls back to the default.
      */
     private function normalizeTable(string $table): string
     {

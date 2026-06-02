@@ -33,14 +33,17 @@ namespace Catalyst\Repository\Settings\Support;
 use Catalyst\Helpers\Config\ConfigManager;
 
 /**
- * Defines the Logging Config Writer class contract.
+ * Writes logging and rotation settings.
  *
  * @package Catalyst\Repository\Settings\Support
- * Responsibility: Coordinates the logging config writer behavior within its module boundary.
+ * Responsibility: Persists the selected logging channel, severity and bounded rotation limits.
  */
 final class LoggingConfigWriter
 {
     /**
+     * Saves normalized logging settings.
+     *
+     * Responsibility: Saves normalized logging settings.
      * @param array<string, mixed> $data
      */
     public function save(array $data): void

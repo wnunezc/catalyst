@@ -4,13 +4,29 @@ declare(strict_types=1);
 
 use Catalyst\Framework\Database\Migration;
 
+/**
+ * Adds cascading user foreign keys to authentication-related tables.
+ *
+ * @package Catalyst\BootCore\Database\Migrations
+ * Responsibility: Enforce and remove user ownership constraints for authentication and notification records.
+ */
 return new class extends Migration
 {
+    /**
+     * Returns the timestamp identifier used by the migration runner to order and track this migration.
+     *
+     * Responsibility: Returns the timestamp identifier used by the migration runner to order and track this migration.
+     */
     public function getVersion(): string
     {
         return '20260421000000';
     }
 
+    /**
+     * Applies the user ownership constraints required by the authentication runtime.
+     *
+     * Responsibility: Applies the user ownership constraints required by the authentication runtime.
+     */
     public function up(): void
     {
         foreach ($this->definitions() as $definition) {
@@ -41,6 +57,11 @@ return new class extends Migration
         }
     }
 
+    /**
+     * Removes the user ownership constraints managed by this migration during rollback.
+     *
+     * Responsibility: Removes the user ownership constraints managed by this migration during rollback.
+     */
     public function down(): void
     {
         foreach ($this->definitions() as $definition) {
@@ -55,6 +76,9 @@ return new class extends Migration
     }
 
     /**
+     * Returns the user ownership constraints managed by this migration.
+     *
+     * Responsibility: Returns the user ownership constraints managed by this migration.
      * @return array<int, array{table:string,constraint:string,column:string,reference_table:string,reference_column:string}>
      */
     private function definitions(): array

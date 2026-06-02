@@ -33,14 +33,17 @@ namespace Catalyst\Repository\Documents\Support;
 use Catalyst\Framework\Session\SessionManager;
 
 /**
- * Defines the Document Preview State class contract.
+ * Stores the most recent document preview in the session.
  *
  * @package Catalyst\Repository\Documents\Support
- * Responsibility: Coordinates the document preview state behavior within its module boundary.
+ * Responsibility: Carry one rendered preview and its payload across the redirect to the detail view.
  */
 final class DocumentPreviewState
 {
     /**
+     * Stores a rendered preview for the selected document template.
+     *
+     * Responsibility: Stores a rendered preview for the selected document template.
      * @param array<string, mixed> $preview
      */
     public function stash(int $templateId, array $preview, string $payloadJson): void
@@ -53,6 +56,9 @@ final class DocumentPreviewState
     }
 
     /**
+     * Consumes the pending preview when it belongs to the selected document template.
+     *
+     * Responsibility: Consumes the pending preview when it belongs to the selected document template.
      * @return array{preview: array<string, mixed>|null, payload_json: string}|null
      */
     public function consume(int $templateId): ?array

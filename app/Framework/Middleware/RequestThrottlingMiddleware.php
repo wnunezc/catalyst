@@ -40,10 +40,10 @@ use Catalyst\Framework\Route\Router;
 use Closure;
 
 /**
- * Defines the Request Throttling Middleware class contract.
+ * Enforces mutation request throttling according to route profiles.
  *
  * @package Catalyst\Framework\Middleware
- * Responsibility: Coordinates the request throttling middleware behavior within its module boundary.
+ * Responsibility: Resolves a request throttle policy, updates its bucket, and rejects requests during lockout.
  */
 class RequestThrottlingMiddleware extends CoreMiddleware
 {
@@ -51,6 +51,8 @@ class RequestThrottlingMiddleware extends CoreMiddleware
 
     /**
      * Initializes the Request Throttling Middleware instance.
+     *
+     * Responsibility: Initializes the Request Throttling Middleware instance.
      */
     public function __construct()
     {
@@ -66,7 +68,9 @@ class RequestThrottlingMiddleware extends CoreMiddleware
     }
 
     /**
-     * Processes the current workflow.
+     * Applies the matching throttle profile before forwarding an allowed mutation.
+     *
+     * Responsibility: Applies the matching throttle profile before forwarding an allowed mutation.
      */
     public function process(Request $request, Closure $next): Response
     {
@@ -146,7 +150,9 @@ class RequestThrottlingMiddleware extends CoreMiddleware
     }
 
     /**
-     * Normalizes the provided value.
+     * Normalizes the request URI into a route path.
+     *
+     * Responsibility: Normalizes the request URI into a route path.
      */
     private function normalizedPath(Request $request): string
     {
@@ -161,7 +167,9 @@ class RequestThrottlingMiddleware extends CoreMiddleware
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves the authenticated-user or hashed-IP bucket actor.
+     *
+     * Responsibility: Resolves the authenticated-user or hashed-IP bucket actor.
      */
     private function resolveActorKey(): string
     {
@@ -176,6 +184,9 @@ class RequestThrottlingMiddleware extends CoreMiddleware
     }
 
     /**
+     * Builds a stable hash key for the configured throttle bucket.
+     *
+     * Responsibility: Builds a stable hash key for the configured throttle bucket.
      * @param array<string, mixed> $policy
      */
     private function buildBucketKey(Request $request, string $path, ?Route $route, array $policy): string
@@ -201,7 +212,9 @@ class RequestThrottlingMiddleware extends CoreMiddleware
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves the route matched by the current path and method.
+     *
+     * Responsibility: Resolves the route matched by the current path and method.
      */
     private function resolveMatchedRoute(string $path, string $method): ?Route
     {
@@ -211,7 +224,9 @@ class RequestThrottlingMiddleware extends CoreMiddleware
     }
 
     /**
-     * Handles the too many attempts response workflow.
+     * Builds the HTML or JSON response returned during lockout.
+     *
+     * Responsibility: Builds the HTML or JSON response returned during lockout.
      */
     private function tooManyAttemptsResponse(Request $request, int $retryAfter, string $path, string $profile): Response
     {
@@ -238,6 +253,9 @@ class RequestThrottlingMiddleware extends CoreMiddleware
 
 
     /**
+     * Loads persisted request throttle buckets from storage.
+     *
+     * Responsibility: Loads persisted request throttle buckets from storage.
      * @return array<string, array{count:int,window_start:int,locked_until:int|null,window_seconds?:int}>
      */
     private function loadData(): array
@@ -257,6 +275,9 @@ class RequestThrottlingMiddleware extends CoreMiddleware
     }
 
     /**
+     * Prunes expired request buckets and persists the throttle state.
+     *
+     * Responsibility: Prunes expired request buckets and persists the throttle state.
      * @param array<string, array{count:int,window_start:int,locked_until:int|null,window_seconds?:int}> $data
      */
     private function saveData(array $data): void

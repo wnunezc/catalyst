@@ -39,10 +39,10 @@ use Catalyst\Helpers\Exceptions\ValidationException;
 use Catalyst\Helpers\Validation\Validator;
 
 /**
- * Defines the Metadata Field Definition Request class contract.
+ * Validates dynamic metadata field definition payloads.
  *
  * @package Catalyst\Repository\Media\Requests
- * Responsibility: Coordinates the metadata field definition request behavior within its module boundary.
+ * Responsibility: Authorize metadata definition mutations and enforce resource, type and field configuration rules.
  */
 final class MetadataFieldDefinitionRequest extends FormRequest
 {
@@ -52,7 +52,9 @@ final class MetadataFieldDefinitionRequest extends FormRequest
     private ?array $resolvedData = null;
 
     /**
-     * Handles the authorize workflow.
+     * Authorizes creation or update according to the routed metadata field identifier.
+     *
+     * Responsibility: Authorizes creation or update according to the routed metadata field identifier.
      */
     public function authorize(): bool
     {
@@ -64,6 +66,9 @@ final class MetadataFieldDefinitionRequest extends FormRequest
     }
 
     /**
+     * Returns metadata definition fields accepted from input.
+     *
+     * Responsibility: Returns metadata definition fields accepted from input.
      * @return string[]
      */
     public function only(): array
@@ -91,6 +96,9 @@ final class MetadataFieldDefinitionRequest extends FormRequest
     }
 
     /**
+     * Declares resource-aware validation rules for metadata definitions.
+     *
+     * Responsibility: Declares resource-aware validation rules for metadata definitions.
      * @return array<string, string>
      */
     public function rules(): array
@@ -121,6 +129,9 @@ final class MetadataFieldDefinitionRequest extends FormRequest
     }
 
     /**
+     * Returns translated labels for metadata definition validation errors.
+     *
+     * Responsibility: Returns translated labels for metadata definition validation errors.
      * @return array<string, string>
      */
     public function labels(): array
@@ -148,6 +159,9 @@ final class MetadataFieldDefinitionRequest extends FormRequest
     }
 
     /**
+     * Returns the validated metadata definition payload, resolving it lazily.
+     *
+     * Responsibility: Returns the validated metadata definition payload, resolving it lazily.
      * @return array<string, mixed>
      */
     public function validated(): array
@@ -160,6 +174,9 @@ final class MetadataFieldDefinitionRequest extends FormRequest
     }
 
     /**
+     * Authorizes and validates the complete metadata definition payload.
+     *
+     * Responsibility: Authorizes and validates the complete metadata definition payload.
      * @throws ValidationException
      * @throws ForbiddenException
      */

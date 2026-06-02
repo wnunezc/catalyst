@@ -38,15 +38,17 @@ use Catalyst\Framework\Http\Response;
 use Closure;
 
 /**
- * Defines the Api Token Middleware class contract.
+ * Middleware for authenticating bearer API tokens.
  *
  * @package Catalyst\Framework\Middleware
- * Responsibility: Coordinates the api token middleware behavior within its module boundary.
+ * Responsibility: Extracts bearer tokens, resolves active API token users, and scopes authentication for API requests.
  */
 final class ApiTokenMiddleware extends CoreMiddleware
 {
     /**
-     * Processes the current workflow.
+     * Authenticates the bearer token and passes the request with a scoped API user.
+     *
+     * Responsibility: Authenticates the bearer token and passes the request with a scoped API user.
      */
     public function process(Request $request, Closure $next): Response
     {
@@ -71,7 +73,9 @@ final class ApiTokenMiddleware extends CoreMiddleware
     }
 
     /**
-     * Handles the extract bearer token workflow.
+     * Extracts a non-empty bearer token from the Authorization header.
+     *
+     * Responsibility: Extracts a non-empty bearer token from the Authorization header.
      */
     private function extractBearerToken(Request $request): ?string
     {

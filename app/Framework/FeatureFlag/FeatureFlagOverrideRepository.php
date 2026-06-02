@@ -38,10 +38,10 @@ use Catalyst\Framework\Traits\SingletonTrait;
 use Catalyst\Helpers\Log\Logger;
 
 /**
- * Defines the Feature Flag Override Repository class contract.
+ * Persists and resolves per-user and per-role feature flag overrides.
  *
  * @package Catalyst\Framework\FeatureFlag
- * Responsibility: Coordinates the feature flag override repository behavior within its module boundary.
+ * Responsibility: Queries override records, applies actor precedence and records repository audit events for override mutations.
  */
 final class FeatureFlagOverrideRepository
 {
@@ -51,7 +51,9 @@ final class FeatureFlagOverrideRepository
     private Logger $logger;
 
     /**
-     * Initializes the Feature Flag Override Repository instance.
+     * Initializes database and logging collaborators for override storage.
+     *
+     * Responsibility: Initializes database and logging collaborators for override storage.
      */
     protected function __construct()
     {
@@ -60,6 +62,9 @@ final class FeatureFlagOverrideRepository
     }
 
     /**
+     * Searches override rows with filtering, sorting and pagination.
+     *
+     * Responsibility: Searches override rows with filtering, sorting and pagination.
      * @param array<string, mixed> $filters
      * @return array<string, mixed>
      */
@@ -119,6 +124,9 @@ final class FeatureFlagOverrideRepository
     }
 
     /**
+     * Returns all override rows ordered for administration.
+     *
+     * Responsibility: Returns all override rows ordered for administration.
      * @return array<int, array<string, mixed>>
      */
     public function all(): array
@@ -134,6 +142,9 @@ final class FeatureFlagOverrideRepository
     }
 
     /**
+     * Resolves effective flag override values for a user and role set.
+     *
+     * Responsibility: Resolves effective flag override values for a user and role set.
      * @return array<string, bool>
      */
     public function resolveForActor(?int $userId, array $roleSlugs = []): array
@@ -183,7 +194,9 @@ final class FeatureFlagOverrideRepository
     }
 
     /**
-     * Finds the requested record.
+     * Finds an override row by numeric identifier.
+     *
+     * Responsibility: Finds an override row by numeric identifier.
      */
     public function find(int $id): ?array
     {
@@ -199,7 +212,9 @@ final class FeatureFlagOverrideRepository
     }
 
     /**
-     * Finds the requested record.
+     * Finds an override model for a flag and actor subject.
+     *
+     * Responsibility: Finds an override model for a flag and actor subject.
      */
     public function findBySubject(string $flagKey, string $subjectType, string $subjectKey): ?FeatureFlagOverride
     {
@@ -221,7 +236,9 @@ final class FeatureFlagOverrideRepository
     }
 
     /**
-     * Finds the requested record.
+     * Loads an override model by primary key.
+     *
+     * Responsibility: Loads an override model by primary key.
      */
     public function findModel(int $id): ?FeatureFlagOverride
     {
@@ -231,6 +248,9 @@ final class FeatureFlagOverrideRepository
     }
 
     /**
+     * Creates or updates an override model from request payload data.
+     *
+     * Responsibility: Creates or updates an override model from request payload data.
      * @param array<string, mixed> $payload
      */
     public function persist(array $payload, ?FeatureFlagOverride $model = null): FeatureFlagOverride
@@ -268,7 +288,9 @@ final class FeatureFlagOverrideRepository
     }
 
     /**
-     * Handles the delete workflow.
+     * Deletes an override model and records the audit trail.
+     *
+     * Responsibility: Deletes an override model and records the audit trail.
      */
     public function delete(FeatureFlagOverride $model): void
     {

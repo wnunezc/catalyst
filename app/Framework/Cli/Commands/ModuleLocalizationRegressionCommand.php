@@ -35,15 +35,18 @@ use Catalyst\Framework\Cli\AbstractCommand;
 use Catalyst\Framework\Module\ModuleRegistry;
 
 /**
- * Defines the Module Localization Regression Command class contract.
+ * modules:localization-regression CLI command.
+ *
+ * Responsibility: Runs the modules:localization-regression command to Verify manifest localization contract.
  *
  * @package Catalyst\Framework\Cli\Commands
- * Responsibility: Coordinates the module localization regression command behavior within its module boundary.
  */
 final class ModuleLocalizationRegressionCommand extends AbstractCommand
 {
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -51,7 +54,9 @@ final class ModuleLocalizationRegressionCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
@@ -59,7 +64,9 @@ final class ModuleLocalizationRegressionCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {
@@ -96,7 +103,9 @@ final class ModuleLocalizationRegressionCommand extends AbstractCommand
     }
 
     /**
-     * Handles the contents workflow.
+     * Describes the contents helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the contents helper workflow used by this CLI component.
      */
     private function contents(string $relativePath): string
     {

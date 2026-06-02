@@ -31,14 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Repository\Settings\Requests;
 
 /**
- * Defines the Security Config Request class contract.
+ * Validates security settings from the setup surface.
  *
  * @package Catalyst\Repository\Settings\Requests
- * Responsibility: Coordinates the security config request behavior within its module boundary.
+ * Responsibility: Constrains password hashing cost and normalizes framework-wide MFA activation.
  */
 final class SecurityConfigRequest extends AbstractSettingsRequest
 {
     /**
+     * Returns validation rules for security settings.
+     *
+     * Responsibility: Returns validation rules for security settings.
      * @return array<string, string>
      */
     public function rules(): array
@@ -49,6 +52,9 @@ final class SecurityConfigRequest extends AbstractSettingsRequest
     }
 
     /**
+     * Builds normalized security input for validation.
+     *
+     * Responsibility: Builds normalized security input for validation.
      * @return array<string, mixed>
      */
     protected function validationData(): array

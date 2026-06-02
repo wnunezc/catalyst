@@ -39,6 +39,7 @@ use Catalyst\Helpers\Debug\DumperColorizer;
  * for display in the debug output.
  *
  * @package Catalyst\Helpers\Debug\Formatters;
+ * Responsibility: Formats PHP resources with their runtime identifier and resource type.
  */
 class ResourceFormatter
 {
@@ -48,8 +49,9 @@ class ResourceFormatter
     private DumperColorizer $colorizer;
 
     /**
-     * Constructor
+     * Initializes the object with the collaborators or state required for its responsibility.
      *
+     * Responsibility: Initializes the object with the collaborators or state required for its responsibility.
      * @param DumperColorizer $colorizer Colorizer instance
      */
     public function __construct(DumperColorizer $colorizer)
@@ -58,8 +60,9 @@ class ResourceFormatter
     }
 
     /**
-     * Format resource for output
+     * Format resource for output.
      *
+     * Responsibility: Format resource for output.
      * @param resource $var
      * @param bool $isHtml
      * @return string

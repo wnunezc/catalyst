@@ -36,10 +36,10 @@ use Catalyst\Framework\Traits\SingletonTrait;
 use Catalyst\Helpers\Config\ConfigManager;
 
 /**
- * Defines the Navigation Registry class contract.
+ * Builds runtime navigation from active module declarations.
  *
  * @package Catalyst\Framework\Navigation
- * Responsibility: Coordinates the navigation registry behavior within its module boundary.
+ * Responsibility: Resolves administrative shells, public menus, breadcrumbs, and visibility rules.
  */
 final class NavigationRegistry
 {
@@ -82,6 +82,9 @@ final class NavigationRegistry
     ];
 
     /**
+     * Builds the administrative navigation shell for the current path and user.
+     *
+     * Responsibility: Builds the administrative navigation shell for the current path and user.
      * @return array<string, mixed>
      */
     public function adminShell(string $currentPath, ?array $user = null): array
@@ -150,6 +153,9 @@ final class NavigationRegistry
     }
 
     /**
+     * Resolves the breadcrumb trail matching the current path.
+     *
+     * Responsibility: Resolves the breadcrumb trail matching the current path.
      * @return array<string, string|null>
      */
     public function breadcrumbs(string $currentPath, ?array $user = null): array
@@ -193,6 +199,9 @@ final class NavigationRegistry
     }
 
     /**
+     * Builds visible public navigation items for the current path.
+     *
+     * Responsibility: Builds visible public navigation items for the current path.
      * @return array<int, array<string, mixed>>
      */
     public function publicMenu(string $currentPath = '/', ?array $user = null): array
@@ -222,6 +231,9 @@ final class NavigationRegistry
     }
 
     /**
+     * Returns navigation declarations contributed by one module.
+     *
+     * Responsibility: Returns navigation declarations contributed by one module.
      * @return array<string, array<int, array<string, mixed>>>
      */
     public function definitionsForModule(string $moduleKey): array
@@ -239,6 +251,9 @@ final class NavigationRegistry
     }
 
     /**
+     * Returns navigation declarations contributed by all modules.
+     *
+     * Responsibility: Returns navigation declarations contributed by all modules.
      * @return array<string, array<int, array<string, mixed>>>
      */
     public function allDefinitions(): array
@@ -266,6 +281,9 @@ final class NavigationRegistry
     }
 
     /**
+     * Determines whether any visibility rule group allows an item.
+     *
+     * Responsibility: Determines whether any visibility rule group allows an item.
      * @param array<int, array<string, mixed>> $visibility
      */
     private function isVisible(array $visibility, ?array $user): bool
@@ -288,6 +306,9 @@ final class NavigationRegistry
     }
 
     /**
+     * Determines whether one visibility rule group matches the user and environment.
+     *
+     * Responsibility: Determines whether one visibility rule group matches the user and environment.
      * @param array<string, mixed> $group
      */
     private function matchesVisibilityGroup(array $group, ?array $user): bool
@@ -322,6 +343,9 @@ final class NavigationRegistry
     }
 
     /**
+     * Resolves the active administrative navigation context.
+     *
+     * Responsibility: Resolves the active administrative navigation context.
      * @param array<string, array<int, array<string, mixed>>> $itemsByContext
      */
     private function resolveActiveContext(string $currentPath, array $itemsByContext): string
@@ -338,6 +362,9 @@ final class NavigationRegistry
     }
 
     /**
+     * Determines whether a path matches any navigation pattern.
+     *
+     * Responsibility: Determines whether a path matches any navigation pattern.
      * @param string[] $patterns
      */
     private function matchesAny(string $path, array $patterns): bool
@@ -352,7 +379,9 @@ final class NavigationRegistry
     }
 
     /**
-     * Handles the translate context meta workflow.
+     * Translates context metadata when a localized value exists.
+     *
+     * Responsibility: Translates context metadata when a localized value exists.
      */
     private function translateContextMeta(string $key): string
     {

@@ -39,10 +39,10 @@ use Catalyst\Framework\Traits\SingletonTrait;
 use RuntimeException;
 
 /**
- * Defines the Attachment Manager class contract.
+ * Coordinates resource attachments for media assets and document artifacts.
  *
  * @package Catalyst\Framework\Attachment
- * Responsibility: Coordinates the attachment manager behavior within its module boundary.
+ * Responsibility: Attach, replace, list and detach resource-owned assets while preserving reference safety.
  */
 final class AttachmentManager
 {
@@ -56,6 +56,8 @@ final class AttachmentManager
 
     /**
      * Initializes the Attachment Manager instance.
+     *
+     * Responsibility: Initializes the Attachment Manager instance.
      */
     protected function __construct()
     {
@@ -65,6 +67,9 @@ final class AttachmentManager
     }
 
     /**
+     * Lists attachments for a resource record, optionally including detached rows.
+     *
+     * Responsibility: Lists attachments for a resource record, optionally including detached rows.
      * @return array<int, array<string, mixed>>
      */
     public function listForResource(string $resourceKey, int $recordId, bool $includeDetached = false): array
@@ -73,7 +78,9 @@ final class AttachmentManager
     }
 
     /**
-     * Handles the attach media workflow.
+     * Creates an attachment row that links a media library item to a resource record.
+     *
+     * Responsibility: Creates an attachment row that links a media library item to a resource record.
      */
     public function attachMedia(
         string $resourceKey,
@@ -96,7 +103,9 @@ final class AttachmentManager
     }
 
     /**
-     * Handles the attach artifact workflow.
+     * Creates an attachment row that links a document artifact to a resource record.
+     *
+     * Responsibility: Creates an attachment row that links a document artifact to a resource record.
      */
     public function attachArtifact(
         string $resourceKey,
@@ -119,6 +128,9 @@ final class AttachmentManager
     }
 
     /**
+     * Updates the media asset behind an attachment and optionally changes attachment metadata.
+     *
+     * Responsibility: Updates the media asset behind an attachment and optionally changes attachment metadata.
      * @param array<string, mixed> $payload
      */
     public function replaceMediaAttachment(
@@ -167,7 +179,9 @@ final class AttachmentManager
     }
 
     /**
-     * Handles the detach workflow.
+     * Marks an attachment as detached and optionally deletes unreferenced linked assets.
+     *
+     * Responsibility: Marks an attachment as detached and optionally deletes unreferenced linked assets.
      */
     public function detach(ResourceAttachment $attachment, bool $deleteAsset = false): void
     {
@@ -206,7 +220,9 @@ final class AttachmentManager
     }
 
     /**
-     * Handles the assert resource target workflow.
+     * Rejects empty resource keys and invalid record identifiers before attachment writes.
+     *
+     * Responsibility: Rejects empty resource keys and invalid record identifiers before attachment writes.
      */
     private function assertResourceTarget(string $resourceKey, int $recordId): void
     {
@@ -216,7 +232,9 @@ final class AttachmentManager
     }
 
     /**
-     * Normalizes the provided value.
+     * Trims and bounds the attachment purpose with a default fallback.
+     *
+     * Responsibility: Trims and bounds the attachment purpose with a default fallback.
      */
     private function normalizePurpose(string $value): string
     {
@@ -226,7 +244,9 @@ final class AttachmentManager
     }
 
     /**
-     * Normalizes the provided value.
+     * Trims and bounds the attachment type with a default fallback.
+     *
+     * Responsibility: Trims and bounds the attachment type with a default fallback.
      */
     private function normalizeType(string $value): string
     {

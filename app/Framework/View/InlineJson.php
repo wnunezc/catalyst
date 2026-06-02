@@ -33,10 +33,10 @@ namespace Catalyst\Framework\View;
 use JsonException;
 
 /**
- * Defines the Inline Json class contract.
+ * Encodes values for safe inline JSON embedding.
  *
  * @package Catalyst\Framework\View
- * Responsibility: Coordinates the inline json behavior within its module boundary.
+ * Responsibility: Applies browser-safe JSON flags and returns a stable fallback on encoding failure.
  */
 final class InlineJson
 {
@@ -48,7 +48,7 @@ final class InlineJson
         | JSON_HEX_QUOT;
 
     /**
-     * Handles the encode workflow.
+     * Encodes a value using inline-safe JSON options.
      */
     public static function encode(mixed $value, int $options = self::DEFAULT_OPTIONS): string
     {

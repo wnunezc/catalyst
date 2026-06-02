@@ -39,15 +39,18 @@ use InvalidArgumentException;
 use RuntimeException;
 
 /**
- * Defines the Make Command Command class contract.
+ * make:command CLI command.
+ *
+ * Responsibility: Runs the make:command command to Scaffold an auto-discovered CLI command in Repository/App/Surface/{Module}/Commands/.
  *
  * @package Catalyst\Framework\Cli\Commands
- * Responsibility: Coordinates the make command command behavior within its module boundary.
  */
 class MakeCommandCommand extends AbstractCommand
 {
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -55,14 +58,21 @@ class MakeCommandCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
         return 'Scaffold an auto-discovered CLI command in Repository/App/Surface/{Module}/Commands/';
     }
 
-    /** @return Option[] */
+    /**
+     * Defines the accepted option schema for this command.
+     *
+     * Responsibility: Defines the accepted option schema for this command.
+     * @return Option[]
+     */
     public function getOptions(): array
     {
         return [
@@ -70,7 +80,12 @@ class MakeCommandCommand extends AbstractCommand
         ];
     }
 
-    /** @return Parameter[] */
+    /**
+     * Defines the accepted positional parameter schema for this command.
+     *
+     * Responsibility: Defines the accepted positional parameter schema for this command.
+     * @return Parameter[]
+     */
     public function getParameters(): array
     {
         return [
@@ -79,7 +94,9 @@ class MakeCommandCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {
@@ -114,7 +131,9 @@ class MakeCommandCommand extends AbstractCommand
     }
 
     /**
-     * Handles the command name from class workflow.
+     * Describes the command name from class helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the command name from class helper workflow used by this CLI component.
      */
     private function commandNameFromClass(string $className): string
     {

@@ -33,14 +33,17 @@ namespace Catalyst\Repository\Documents\Requests;
 use Catalyst\Framework\Http\FormRequest;
 
 /**
- * Defines the Document Template Index Request class contract.
+ * Normalizes document template listing filters.
  *
  * @package Catalyst\Repository\Documents\Requests
- * Responsibility: Coordinates the document template index request behavior within its module boundary.
+ * Responsibility: Convert listing inputs into bounded repository criteria.
  */
 final class DocumentTemplateIndexRequest extends FormRequest
 {
     /**
+     * Declares listing validation rules.
+     *
+     * Responsibility: Declares listing validation rules.
      * @return array<string, string>
      */
     public function rules(): array
@@ -49,6 +52,9 @@ final class DocumentTemplateIndexRequest extends FormRequest
     }
 
     /**
+     * Normalizes pagination and filter values for repository search.
+     *
+     * Responsibility: Normalizes pagination and filter values for repository search.
      * @return array{page:int,per_page:int,search:string,format:string,state:string}
      */
     public function criteria(): array

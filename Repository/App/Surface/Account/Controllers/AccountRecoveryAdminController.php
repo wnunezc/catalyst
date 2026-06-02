@@ -39,15 +39,17 @@ use Catalyst\Framework\View\TrustedHtml;
 use Catalyst\Helpers\Security\CsrfProtection;
 
 /**
- * Defines the Account Recovery Admin Controller class contract.
+ * Provides administrative review screens for account recovery requests.
  *
  * @package App\Surface\Account\Controllers
- * Responsibility: Coordinates the account recovery admin controller behavior within its module boundary.
+ * Responsibility: Lists support recovery requests, shows request details and records approve/reject decisions.
  */
 final class AccountRecoveryAdminController extends Controller
 {
     /**
-     * Initializes the Account Recovery Admin Controller instance.
+     * Stores the recovery repository used by the admin review actions.
+     *
+     * Responsibility: Stores the recovery repository used by the admin review actions.
      */
     public function __construct(private readonly AccountRecoveryRepository $repository = new AccountRecoveryRepository())
     {
@@ -55,7 +57,9 @@ final class AccountRecoveryAdminController extends Controller
     }
 
     /**
-     * Handles the index workflow.
+     * Renders the latest account recovery requests for admin review.
+     *
+     * Responsibility: Renders the latest account recovery requests for admin review.
      */
     public function index(Request $request): Response
     {
@@ -67,7 +71,9 @@ final class AccountRecoveryAdminController extends Controller
     }
 
     /**
-     * Handles the detail display workflow.
+     * Renders one recovery request or redirects when the request is unavailable.
+     *
+     * Responsibility: Renders one recovery request or redirects when the request is unavailable.
      */
     public function show(Request $request, string $id): Response
     {
@@ -86,7 +92,9 @@ final class AccountRecoveryAdminController extends Controller
     }
 
     /**
-     * Handles the approve workflow.
+     * Marks a recovery request as approved.
+     *
+     * Responsibility: Marks a recovery request as approved.
      */
     public function approve(Request $request, string $id): Response
     {
@@ -94,7 +102,9 @@ final class AccountRecoveryAdminController extends Controller
     }
 
     /**
-     * Handles the reject workflow.
+     * Marks a recovery request as rejected.
+     *
+     * Responsibility: Marks a recovery request as rejected.
      */
     public function reject(Request $request, string $id): Response
     {
@@ -102,7 +112,9 @@ final class AccountRecoveryAdminController extends Controller
     }
 
     /**
-     * Handles the review workflow.
+     * Persists an admin review decision and flashes the result.
+     *
+     * Responsibility: Persists an admin review decision and flashes the result.
      */
     private function review(int $id, string $status): Response
     {
@@ -117,6 +129,9 @@ final class AccountRecoveryAdminController extends Controller
     }
 
     /**
+     * Normalizes recovery request rows for the admin index template.
+     *
+     * Responsibility: Normalizes recovery request rows for the admin index template.
      * @param list<array<string, mixed>> $rows
      * @return list<array<string, mixed>>
      */
@@ -125,7 +140,12 @@ final class AccountRecoveryAdminController extends Controller
         return array_map(fn (array $row): array => $this->normalizeRow($row), $rows);
     }
 
-    /** @param array<string, mixed> $row */
+    /**
+     * Adds display labels and review state flags to one recovery request row.
+     *
+     * Responsibility: Adds display labels and review state flags to one recovery request row.
+     * @param array<string, mixed> $row
+     */
     private function normalizeRow(array $row): array
     {
         $status = (string) ($row['status'] ?? 'pending_support_review');

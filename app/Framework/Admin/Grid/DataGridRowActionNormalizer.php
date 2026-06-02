@@ -33,16 +33,17 @@ namespace Catalyst\Framework\Admin\Grid;
 use Closure;
 
 /**
- * Defines the Data Grid Row Action Normalizer class contract.
+ * Normalizes per-row DataGrid actions.
  *
  * @package Catalyst\Framework\Admin\Grid
- * Responsibility: Coordinates the data grid row action normalizer behavior within its module boundary.
+ * Responsibility: Resolves visibility, labels, URLs, confirmation text, and styling for actions on a row.
  */
 final class DataGridRowActionNormalizer
 {
     /**
-     * Normalize row-level actions for a single row.
+     * Converts configured row actions into render-ready actions for one row and current grid state.
      *
+     * Responsibility: Converts configured row actions into render-ready actions for one row and current grid state.
      * @param array<int, array<string, mixed>> $actions
      * @param array<string, mixed> $row
      * @param array<string, mixed> $state
@@ -98,6 +99,9 @@ final class DataGridRowActionNormalizer
     }
 
     /**
+     * Resolves whether an action should be displayed for the current row and grid state.
+     *
+     * Responsibility: Resolves whether an action should be displayed for the current row and grid state.
      * @param mixed $visible
      * @param array<string, mixed> $row
      * @param array<string, mixed> $state
@@ -112,8 +116,9 @@ final class DataGridRowActionNormalizer
     }
 
     /**
-     * Replace placeholders like {id}, {slug}, {email} with row values.
+     * Replaces named placeholders in action strings with values from the current row.
      *
+     * Responsibility: Replaces named placeholders in action strings with values from the current row.
      * @param array<string, mixed> $row
      */
     private function interpolate(string $template, array $row): string

@@ -43,10 +43,10 @@ use JsonException;
 use RuntimeException;
 
 /**
- * Defines the Auth Fixture Manager class contract.
+ * Applies, captures and restores development authentication fixtures.
  *
  * @package Catalyst\Framework\Testing
- * Responsibility: Coordinates the auth fixture manager behavior within its module boundary.
+ * Responsibility: Manages reversible tenant-scoped auth fixture profiles for development and QA.
  */
 final class AuthFixtureManager
 {
@@ -82,6 +82,8 @@ final class AuthFixtureManager
 
     /**
      * Initializes the Auth Fixture Manager instance.
+     *
+     * Responsibility: Initializes the Auth Fixture Manager instance.
      */
     public function __construct()
     {
@@ -90,6 +92,9 @@ final class AuthFixtureManager
     }
 
     /**
+     * Summarizes a configured authentication fixture profile.
+     *
+     * Responsibility: Summarizes a configured authentication fixture profile.
      * @return array<string, mixed>
      */
     public function catalogSummary(string $profile = AuthFixtureCatalog::DEFAULT_PROFILE): array
@@ -130,6 +135,9 @@ final class AuthFixtureManager
     }
 
     /**
+     * Inspects configured and persisted state for a fixture user.
+     *
+     * Responsibility: Inspects configured and persisted state for a fixture user.
      * @return array<string, mixed>
      */
     public function inspectUser(string $userKey, string $profile = AuthFixtureCatalog::DEFAULT_PROFILE): array
@@ -163,6 +171,9 @@ final class AuthFixtureManager
     }
 
     /**
+     * Replaces tenant-scoped authentication data with a fixture profile.
+     *
+     * Responsibility: Replaces tenant-scoped authentication data with a fixture profile.
      * @return array<string, mixed>
      */
     public function applyProfile(string $profile = AuthFixtureCatalog::DEFAULT_PROFILE): array
@@ -251,6 +262,9 @@ final class AuthFixtureManager
     }
 
     /**
+     * Captures a named reversible fixture slot.
+     *
+     * Responsibility: Captures a named reversible fixture slot.
      * @return array<string, mixed>
      */
     public function captureSlot(string $slot, ?string $userKey = null, string $profile = AuthFixtureCatalog::DEFAULT_PROFILE): array
@@ -272,6 +286,9 @@ final class AuthFixtureManager
     }
 
     /**
+     * Restores authentication data from a named fixture slot.
+     *
+     * Responsibility: Restores authentication data from a named fixture slot.
      * @return array<string, mixed>
      */
     public function restoreSlot(string $slot): array
@@ -303,6 +320,9 @@ final class AuthFixtureManager
     }
 
     /**
+     * Replaces the role assignments for a fixture user.
+     *
+     * Responsibility: Replaces the role assignments for a fixture user.
      * @param string[] $roleSlugs
      * @return array<string, mixed>
      */
@@ -350,6 +370,9 @@ final class AuthFixtureManager
     }
 
     /**
+     * Updates the email-verification state for a fixture user.
+     *
+     * Responsibility: Updates the email-verification state for a fixture user.
      * @return array<string, mixed>
      */
     public function setUserEmailVerified(string $userKey, bool $verified, string $profile = AuthFixtureCatalog::DEFAULT_PROFILE): array
@@ -372,6 +395,9 @@ final class AuthFixtureManager
     }
 
     /**
+     * Updates the MFA state for a fixture user.
+     *
+     * Responsibility: Updates the MFA state for a fixture user.
      * @return array<string, mixed>
      */
     public function setUserMfaEnabled(string $userKey, bool $enabled, string $profile = AuthFixtureCatalog::DEFAULT_PROFILE): array
@@ -395,6 +421,9 @@ final class AuthFixtureManager
     }
 
     /**
+     * Reads a selected persisted field for a fixture user.
+     *
+     * Responsibility: Reads a selected persisted field for a fixture user.
      * @return array<string, mixed>
      */
     public function readUserField(string $userKey, string $field, string $profile = AuthFixtureCatalog::DEFAULT_PROFILE): array
@@ -432,6 +461,9 @@ final class AuthFixtureManager
     }
 
     /**
+     * Verifies a password against a fixture user's persisted hash.
+     *
+     * Responsibility: Verifies a password against a fixture user's persisted hash.
      * @return array<string, mixed>
      */
     public function checkUserPassword(string $userKey, string $password, string $profile = AuthFixtureCatalog::DEFAULT_PROFILE): array
@@ -458,6 +490,9 @@ final class AuthFixtureManager
     }
 
     /**
+     * Counts persisted authentication tokens for a fixture user.
+     *
+     * Responsibility: Counts persisted authentication tokens for a fixture user.
      * @return array<string, mixed>
      */
     public function readUserTokenCounts(string $userKey, string $profile = AuthFixtureCatalog::DEFAULT_PROFILE): array
@@ -475,6 +510,9 @@ final class AuthFixtureManager
     }
 
     /**
+     * Issues a supported authentication token for a fixture user.
+     *
+     * Responsibility: Issues a supported authentication token for a fixture user.
      * @return array<string, mixed>
      */
     public function issueToken(string $userKey, string $type, string $profile = AuthFixtureCatalog::DEFAULT_PROFILE): array
@@ -498,14 +536,10 @@ final class AuthFixtureManager
     }
 
     /**
+     * Captures the development-overlay fixture tables. permissions: array<int, array<string, mixed>>, roles: array<int, array<string, mixed>>, role_permissions: array<int, array<string, mixed>>, users: array<int, array<string, mixed>>, user_roles: array<int, array<string, mixed>>, user_social_accounts: array<int, array<string, mixed>> }.
+     *
+     * Responsibility: Captures the development-overlay fixture tables. permissions: array<int, array<string, mixed>>, roles: array<int, array<string, mixed>>, role_permissions: array<int, array<string, mixed>>, users: array<int, array<string, mixed>>, user_roles: array<int, array<string, mixed>>, user_social_accounts: array<int, array<string, mixed>> }.
      * @return array{
-     *   permissions: array<int, array<string, mixed>>,
-     *   roles: array<int, array<string, mixed>>,
-     *   role_permissions: array<int, array<string, mixed>>,
-     *   users: array<int, array<string, mixed>>,
-     *   user_roles: array<int, array<string, mixed>>,
-     *   user_social_accounts: array<int, array<string, mixed>>
-     * }
      */
     public function captureOverlaySnapshot(): array
     {
@@ -567,14 +601,10 @@ final class AuthFixtureManager
     }
 
     /**
+     * Renders SQL statements that restore a development-overlay snapshot. permissions: array<int, array<string, mixed>>, roles: array<int, array<string, mixed>>, role_permissions: array<int, array<string, mixed>>, users: array<int, array<string, mixed>>, user_roles: array<int, array<string, mixed>>, user_social_accounts: array<int, array<string, mixed>> } $snapshot.
+     *
+     * Responsibility: Renders SQL statements that restore a development-overlay snapshot. permissions: array<int, array<string, mixed>>, roles: array<int, array<string, mixed>>, role_permissions: array<int, array<string, mixed>>, users: array<int, array<string, mixed>>, user_roles: array<int, array<string, mixed>>, user_social_accounts: array<int, array<string, mixed>> } $snapshot.
      * @param array{
-     *   permissions: array<int, array<string, mixed>>,
-     *   roles: array<int, array<string, mixed>>,
-     *   role_permissions: array<int, array<string, mixed>>,
-     *   users: array<int, array<string, mixed>>,
-     *   user_roles: array<int, array<string, mixed>>,
-     *   user_social_accounts: array<int, array<string, mixed>>
-     * } $snapshot
      */
     public function renderOverlaySql(array $snapshot): string
     {
@@ -618,7 +648,9 @@ final class AuthFixtureManager
     }
 
     /**
-     * Handles the connection workflow.
+     * Returns the configured database connection.
+     *
+     * Responsibility: Returns the configured database connection.
      */
     private function connection(): Connection
     {
@@ -626,6 +658,9 @@ final class AuthFixtureManager
     }
 
     /**
+     * Captures all tenant-scoped fixture tables.
+     *
+     * Responsibility: Captures all tenant-scoped fixture tables.
      * @return array<string, mixed>
      */
     private function captureFullSnapshot(): array
@@ -646,6 +681,9 @@ final class AuthFixtureManager
     }
 
     /**
+     * Captures fixture tables related to one user.
+     *
+     * Responsibility: Captures fixture tables related to one user.
      * @param array<string, mixed> $fixture
      * @return array<string, mixed>
      */
@@ -711,6 +749,9 @@ final class AuthFixtureManager
     }
 
     /**
+     * Restores a complete tenant-scoped fixture snapshot.
+     *
+     * Responsibility: Restores a complete tenant-scoped fixture snapshot.
      * @param array<string, mixed> $snapshot
      */
     private function restoreFullSnapshot(array $snapshot): void
@@ -739,6 +780,9 @@ final class AuthFixtureManager
     }
 
     /**
+     * Restores a fixture snapshot for one user.
+     *
+     * Responsibility: Restores a fixture snapshot for one user.
      * @param array<string, mixed> $snapshot
      */
     private function restoreUserSnapshot(array $snapshot): void
@@ -798,6 +842,9 @@ final class AuthFixtureManager
     }
 
     /**
+     * Executes a callback with foreign-key checks disabled.
+     *
+     * Responsibility: Executes a callback with foreign-key checks disabled.
      * @param callable(): void $callback
      */
     private function withForeignKeysDisabled(callable $callback): void
@@ -813,6 +860,9 @@ final class AuthFixtureManager
     }
 
     /**
+     * Returns role slugs assigned to a profile user.
+     *
+     * Responsibility: Returns role slugs assigned to a profile user.
      * @param array<string, mixed> $profileData
      * @return string[]
      */
@@ -833,6 +883,9 @@ final class AuthFixtureManager
     }
 
     /**
+     * Resolves a fixture user definition by key.
+     *
+     * Responsibility: Resolves a fixture user definition by key.
      * @return array<string, mixed>
      */
     private function resolveFixtureUser(string $identifier, string $profile = AuthFixtureCatalog::DEFAULT_PROFILE): array
@@ -862,7 +915,9 @@ final class AuthFixtureManager
     }
 
     /**
-     * Handles the slot path workflow.
+     * Resolves the storage path for a named fixture slot.
+     *
+     * Responsibility: Resolves the storage path for a named fixture slot.
      */
     private function slotPath(string $slot): string
     {
@@ -879,6 +934,9 @@ final class AuthFixtureManager
     }
 
     /**
+     * Writes a fixture snapshot as JSON.
+     *
+     * Responsibility: Writes a fixture snapshot as JSON.
      * @param array<string, mixed> $data
      */
     private function writeJson(string $path, array $data): void
@@ -900,6 +958,9 @@ final class AuthFixtureManager
     }
 
     /**
+     * Reads and decodes a fixture snapshot from JSON.
+     *
+     * Responsibility: Reads and decodes a fixture snapshot from JSON.
      * @return array<string, mixed>
      */
     private function readJson(string $path): array
@@ -923,6 +984,9 @@ final class AuthFixtureManager
     }
 
     /**
+     * Renders an SQL insert statement for a snapshot row.
+     *
+     * Responsibility: Renders an SQL insert statement for a snapshot row.
      * @param string $table
      * @param array<int, array<string, mixed>> $rows
      */
@@ -954,7 +1018,9 @@ final class AuthFixtureManager
     }
 
     /**
-     * Handles the to sql literal workflow.
+     * Renders a scalar value as an SQL literal.
+     *
+     * Responsibility: Renders a scalar value as an SQL literal.
      */
     private function toSqlLiteral(mixed $value): string
     {
@@ -980,7 +1046,9 @@ final class AuthFixtureManager
     }
 
     /**
-     * Handles the order by for table workflow.
+     * Returns a deterministic ordering clause for a fixture table.
+     *
+     * Responsibility: Returns a deterministic ordering clause for a fixture table.
      */
     private function orderByForTable(string $table): string
     {
@@ -993,7 +1061,9 @@ final class AuthFixtureManager
     }
 
     /**
-     * Handles the require development environment workflow.
+     * Rejects fixture mutations outside development environments.
+     *
+     * Responsibility: Rejects fixture mutations outside development environments.
      */
     private function requireDevelopmentEnvironment(string $operation): void
     {
@@ -1004,6 +1074,9 @@ final class AuthFixtureManager
     }
 
     /**
+     * Reads tenant-scoped rows from a fixture table.
+     *
+     * Responsibility: Reads tenant-scoped rows from a fixture table.
      * @return array<int, array<string, mixed>>
      */
     private function selectTenantScopedRows(string $table): array
@@ -1025,7 +1098,9 @@ final class AuthFixtureManager
     }
 
     /**
-     * Handles the delete workflow.
+     * Deletes tenant-scoped rows from a fixture table.
+     *
+     * Responsibility: Deletes tenant-scoped rows from a fixture table.
      */
     private function deleteTenantScopedRows(string $table): void
     {
@@ -1046,7 +1121,9 @@ final class AuthFixtureManager
     }
 
     /**
-     * Handles the current tenant id workflow.
+     * Returns the active tenant identifier required by fixture operations.
+     *
+     * Responsibility: Returns the active tenant identifier required by fixture operations.
      */
     private function currentTenantId(): int
     {

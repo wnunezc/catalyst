@@ -37,15 +37,18 @@ use Catalyst\Framework\Cli\AbstractCommand;
 use Catalyst\Framework\Module\ModuleInspector;
 
 /**
- * Defines the Inspect Module Command class contract.
+ * inspect:module CLI command.
+ *
+ * Responsibility: Runs the inspect:module command to Inspect one module in detail by key, slug or name.
  *
  * @package Catalyst\Framework\Cli\Commands
- * Responsibility: Coordinates the inspect module command behavior within its module boundary.
  */
 final class InspectModuleCommand extends AbstractCommand
 {
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -53,14 +56,21 @@ final class InspectModuleCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
         return 'Inspect one module in detail by key, slug or name';
     }
 
-    /** @return Option[] */
+    /**
+     * Defines the accepted option schema for this command.
+     *
+     * Responsibility: Defines the accepted option schema for this command.
+     * @return Option[]
+     */
     public function getOptions(): array
     {
         return [
@@ -68,7 +78,12 @@ final class InspectModuleCommand extends AbstractCommand
         ];
     }
 
-    /** @return Parameter[] */
+    /**
+     * Defines the accepted positional parameter schema for this command.
+     *
+     * Responsibility: Defines the accepted positional parameter schema for this command.
+     * @return Parameter[]
+     */
     public function getParameters(): array
     {
         return [
@@ -77,7 +92,9 @@ final class InspectModuleCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {

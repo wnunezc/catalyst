@@ -34,10 +34,10 @@ use Catalyst\Framework\Database\Model;
 use Catalyst\Framework\Traits\BelongsToTenantTrait;
 
 /**
- * Defines the Content Version class contract.
+ * ORM entity for versioned content snapshots.
  *
  * @package Catalyst\Entities
- * Responsibility: Coordinates the content version behavior within its module boundary.
+ * Responsibility: Maps resource version numbers, snapshots, diffs, summaries, and actor metadata.
  */
 final class ContentVersion extends Model
 {

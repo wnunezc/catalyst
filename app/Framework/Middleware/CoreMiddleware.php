@@ -37,19 +37,14 @@ use Catalyst\Helpers\Log\Logger;
 use Closure;
 use Exception;
 
-/**************************************************************************************
+/**
  * CoreMiddleware abstract class for implementing middleware
  *
  * Provides base functionality for middleware components with common
  * helper methods and utilities.
  *
  * @package Catalyst\Framework\Middleware
- */
-/**
- * Defines the Core Middleware class contract.
- *
- * @package Catalyst\Framework\Middleware
- * Responsibility: Coordinates the core middleware behavior within its module boundary.
+ * Responsibility: Provides shared pipeline forwarding, logging, and request inspection helpers.
  */
 abstract class CoreMiddleware implements MiddlewareInterface
 {
@@ -61,7 +56,9 @@ abstract class CoreMiddleware implements MiddlewareInterface
     protected ?Logger $logger = null;
 
     /**
-     * Constructor
+     * Initializes the object with the collaborators or state required for its responsibility.
+     *
+     * Responsibility: Initializes the object with the collaborators or state required for its responsibility.
      */
     public function __construct()
     {
@@ -70,10 +67,9 @@ abstract class CoreMiddleware implements MiddlewareInterface
     }
 
     /**
-     * Process an incoming server request
+     * Process an incoming server request This method must be implemented by concrete middleware classes.
      *
-     * This method must be implemented by concrete middleware classes.
-     *
+     * Responsibility: Process an incoming server request This method must be implemented by concrete middleware classes.
      * @param Request $request The request object
      * @param Closure $next The next middleware handler
      * @return Response The response object
@@ -81,9 +77,9 @@ abstract class CoreMiddleware implements MiddlewareInterface
     abstract public function process(Request $request, Closure $next): Response;
 
     /**
-     * Helper method to pass the request to the next middleware
-     * and capture the response
+     * Helper method to pass the request to the next middleware and capture the response.
      *
+     * Responsibility: Helper method to pass the request to the next middleware and capture the response.
      * @param Request $request The request object
      * @param Closure $next The next middleware handler
      * @return Response The response from the next middleware
@@ -100,8 +96,9 @@ abstract class CoreMiddleware implements MiddlewareInterface
     }
 
     /**
-     * Log middleware execution information
+     * Log middleware execution information.
      *
+     * Responsibility: Log middleware execution information.
      * @param string $message Log message
      * @param array $context Additional context data
      * @return void
@@ -119,8 +116,9 @@ abstract class CoreMiddleware implements MiddlewareInterface
     }
 
     /**
-     * Log exception information
+     * Log exception information.
      *
+     * Responsibility: Log exception information.
      * @param Exception $exception The exception to log
      * @return void
      * @throws Exception
@@ -135,8 +133,9 @@ abstract class CoreMiddleware implements MiddlewareInterface
     }
 
     /**
-     * Check if the request is an AJAX request
+     * Check if the request is an AJAX request.
      *
+     * Responsibility: Check if the request is an AJAX request.
      * @param Request $request The request to check
      * @return bool True if it's an AJAX request
      */
@@ -149,8 +148,9 @@ abstract class CoreMiddleware implements MiddlewareInterface
     }
 
     /**
-     * Check if the request expects a JSON response
+     * Check if the request expects a JSON response.
      *
+     * Responsibility: Check if the request expects a JSON response.
      * @param Request $request The request to check
      * @return bool True if JSON is expected
      */
@@ -163,8 +163,9 @@ abstract class CoreMiddleware implements MiddlewareInterface
     }
 
     /**
-     * Get client IP address
+     * Get client IP address.
      *
+     * Responsibility: Get client IP address.
      * @return string IP address
      */
     protected function getClientIp(): string
@@ -185,8 +186,9 @@ abstract class CoreMiddleware implements MiddlewareInterface
     }
 
     /**
-     * Get current user agent
+     * Get current user agent.
      *
+     * Responsibility: Get current user agent.
      * @return string User agent
      */
     protected function getUserAgent(): string

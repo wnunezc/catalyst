@@ -33,14 +33,17 @@ namespace Catalyst\Repository\Operations\Controllers;
 use Catalyst\Framework\Controllers\Controller;
 
 /**
- * Defines the Abstract Operations Controller class contract.
+ * Provides shared grid and checkbox normalization helpers for operations pages.
  *
  * @package Catalyst\Repository\Operations\Controllers
- * Responsibility: Coordinates the abstract operations controller behavior within its module boundary.
+ * Responsibility: Centralizes reusable operations-controller presentation helpers.
  */
 abstract class AbstractOperationsController extends Controller
 {
     /**
+     * Filters, sorts and paginates an in-memory grid row collection.
+     *
+     * Responsibility: Filters, sorts and paginates an in-memory grid row collection.
      * @param array<int, array<string, mixed>> $rows
      * @param array<string, mixed> $state
      * @param string[] $sortableColumns
@@ -75,7 +78,9 @@ abstract class AbstractOperationsController extends Controller
     }
 
     /**
-     * Handles the checkbox value workflow.
+     * Normalizes checkbox-like input into a boolean value.
+     *
+     * Responsibility: Normalizes checkbox-like input into a boolean value.
      */
     protected function checkboxValue(mixed $value): bool
     {

@@ -72,15 +72,14 @@ use Catalyst\Framework\Http\Response;
  * response instead of silently doing nothing.
  *
  * @package Catalyst\Framework\Traits
+ * Responsibility: Routes submitted form event names to controller handler methods.
  */
 trait HandlesFormEventsTrait
 {
     /**
-     * Dispatch the incoming POST event to the appropriate handler method.
+     * Dispatch the incoming POST event to the appropriate handler method. Reads `_event` from POST input and calls `on{EventName}()` on `$this`. Event name is ucfirst'd: event "saveUser" → method "onSaveUser()".
      *
-     * Reads `_event` from POST input and calls `on{EventName}()` on `$this`.
-     * Event name is ucfirst'd: event "saveUser" → method "onSaveUser()".
-     *
+     * Responsibility: Dispatch the incoming POST event to the appropriate handler method. Reads `_event` from POST input and calls `on{EventName}()` on `$this`. Event name is ucfirst'd: event "saveUser" → method "onSaveUser()".
      * @return Response
      */
     protected function dispatchEvent(): Response
@@ -102,9 +101,9 @@ trait HandlesFormEventsTrait
     }
 
     /**
-     * Default handler — called when the POST request has no `_event` field.
-     * Override in the controller to handle plain (event-less) POST requests.
+     * Default handler — called when the POST request has no `_event` field. Override in the controller to handle plain (event-less) POST requests.
      *
+     * Responsibility: Default handler — called when the POST request has no `_event` field. Override in the controller to handle plain (event-less) POST requests.
      * @return Response
      */
     protected function onDefault(): Response
@@ -115,6 +114,7 @@ trait HandlesFormEventsTrait
     /**
      * Return the current event name, or null if none was sent.
      *
+     * Responsibility: Return the current event name, or null if none was sent.
      * @return string|null
      */
     protected function eventName(): ?string

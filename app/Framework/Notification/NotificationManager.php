@@ -52,13 +52,16 @@ use Catalyst\Framework\WebSocket\WebSocketPublisher;
  * - no in-repo business producers were confirmed beyond this facade itself
  *
  * @package Catalyst\Framework\Notification
+ * Responsibility: Persists notification dispatches, emits events, queues delivery, and publishes WebSocket updates.
  */
 class NotificationManager
 {
     use SingletonTrait;
 
     /**
-     * Handles the send workflow.
+     * Persists a dispatch, broadcasts it, and emits its delivery event.
+     *
+     * Responsibility: Persists a dispatch, broadcasts it, and emits its delivery event.
      */
     public function send(NotificationDispatch $dispatch): int
     {
@@ -88,7 +91,9 @@ class NotificationManager
     }
 
     /**
-     * Handles the emit workflow.
+     * Emits a synchronous or asynchronous notification dispatch event.
+     *
+     * Responsibility: Emits a synchronous or asynchronous notification dispatch event.
      */
     public function emit(NotificationDispatch $dispatch, bool $async = false): \Catalyst\Entities\EventEnvelope
     {
@@ -99,7 +104,9 @@ class NotificationManager
     }
 
     /**
-     * Handles the queue workflow.
+     * Queues a notification dispatch job with an optional delay.
+     *
+     * Responsibility: Queues a notification dispatch job with an optional delay.
      */
     public function queue(NotificationDispatch $dispatch, int $delaySeconds = 0, ?string $queueName = null): int
     {
@@ -113,6 +120,7 @@ class NotificationManager
     /**
      * Persist a notification and broadcast it to the user's WS connection.
      *
+     * Responsibility: Persist a notification and broadcast it to the user's WS connection.
      * @param int         $userId
      * @param string      $type   info | success | warning | error | system
      * @param string      $title
@@ -124,31 +132,51 @@ class NotificationManager
         return $this->send(new NotificationDispatch($userId, $type, $title, $body));
     }
 
-    /** Convenience: info notification */
+    /**
+     * Sends an informational notification to the user.
+     *
+     * Responsibility: Sends an informational notification to the user.
+     */
     public function info(int $userId, string $title, ?string $body = null): int
     {
         return $this->notify($userId, 'info', $title, $body);
     }
 
-    /** Convenience: success notification */
+    /**
+     * Sends a success notification to the user.
+     *
+     * Responsibility: Sends a success notification to the user.
+     */
     public function success(int $userId, string $title, ?string $body = null): int
     {
         return $this->notify($userId, 'success', $title, $body);
     }
 
-    /** Convenience: warning notification */
+    /**
+     * Sends a warning notification to the user.
+     *
+     * Responsibility: Sends a warning notification to the user.
+     */
     public function warning(int $userId, string $title, ?string $body = null): int
     {
         return $this->notify($userId, 'warning', $title, $body);
     }
 
-    /** Convenience: error notification */
+    /**
+     * Sends an error notification to the user.
+     *
+     * Responsibility: Sends an error notification to the user.
+     */
     public function error(int $userId, string $title, ?string $body = null): int
     {
         return $this->notify($userId, 'error', $title, $body);
     }
 
-    /** Convenience: system notification */
+    /**
+     * Sends a system notification to the user.
+     *
+     * Responsibility: Sends a system notification to the user.
+     */
     public function system(int $userId, string $title, ?string $body = null): int
     {
         return $this->notify($userId, 'system', $title, $body);

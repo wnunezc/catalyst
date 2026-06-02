@@ -35,10 +35,10 @@ use Catalyst\Framework\Traits\HasAuditLogTrait;
 use Catalyst\Framework\Traits\HasTimestampsTrait;
 
 /**
- * Defines the Deployment Run class contract.
+ * ORM entity for deployment execution records.
  *
  * @package Catalyst\Entities
- * Responsibility: Coordinates the deployment run behavior within its module boundary.
+ * Responsibility: Maps deployment profile runs, status, artifact paths, remote paths, summaries, and timing.
  */
 final class DeploymentRun extends Model
 {

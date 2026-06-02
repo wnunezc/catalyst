@@ -33,11 +33,9 @@ namespace Catalyst\Framework\Cli;
 use Catalyst\Framework\Argument\ArgumentParser;
 
 /**
- * CLI application kernel
+ * Dispatcher for the framework CLI runtime.
  *
- * Parses $argv, resolves a command from the registry, and dispatches it.
- * Falls back to global help when no command is specified.
- * Auto-discovers commands from app surface command directories under Repository/App/Surface/{Module}/Commands/.
+ * Responsibility: Parses argv, resolves commands, renders help and discovers application surface commands.
  *
  * @package Catalyst\Framework\Cli
  */
@@ -47,7 +45,9 @@ class CliKernel
     private ArgumentParser  $parser;
 
     /**
-     * Initializes the Cli Kernel instance.
+     * Initializes dependencies required by this CLI component.
+     *
+     * Responsibility: Initializes dependencies required by this CLI component.
      */
     public function __construct()
     {
@@ -56,10 +56,9 @@ class CliKernel
     }
 
     /**
-     * Run the CLI application
+     * Dispatches the CLI request from raw argv to the resolved command.
      *
-     * @param array $argv Raw $argv from PHP
-     * @return int Exit code
+     * Responsibility: Dispatches the CLI request from raw argv to the resolved command.
      */
     public function run(array $argv): int
     {
@@ -117,7 +116,9 @@ class CliKernel
     // -------------------------------------------------------------------------
 
     /**
-     * Handles the detail display workflow.
+     * Renders global command help for the CLI entrypoint.
+     *
+     * Responsibility: Renders global command help for the CLI entrypoint.
      */
     private function showGlobalHelp(): int
     {
@@ -146,7 +147,9 @@ class CliKernel
     }
 
     /**
-     * Handles the detail display workflow.
+     * Renders option and parameter help for one command.
+     *
+     * Responsibility: Renders option and parameter help for one command.
      */
     private function showCommandHelp(CommandInterface $command): int
     {
@@ -189,8 +192,9 @@ class CliKernel
     // -------------------------------------------------------------------------
 
     /**
-     * Load command classes from Repository/App/Surface/{*}/Commands/*.php
-     * and register any new CommandInterface implementors found.
+     * Loads application surface command classes and registers new implementations.
+     *
+     * Responsibility: Loads application surface command classes and registers new implementations.
      */
     public function autoDiscover(): void
     {

@@ -31,15 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Helpers\Log;
 
 /**
- * Defines the Logger Entry Formatter class contract.
+ * Formats structured application and email log entries.
  *
  * @package Catalyst\Helpers\Log
- * Responsibility: Coordinates the logger entry formatter behavior within its module boundary.
+ * Responsibility: Adds request metadata, timestamps, client identity and serialized context to log messages.
  */
 final class LoggerEntryFormatter
 {
     /**
-     * Handles the format workflow.
+     * Formats an application log entry with request metadata when available.
+     *
+     * Responsibility: Formats an application log entry with request metadata when available.
      */
     public function format(string $level, string $message, array $context, string $requestId): string
     {
@@ -57,7 +59,9 @@ final class LoggerEntryFormatter
     }
 
     /**
-     * Handles the format email workflow.
+     * Formats an email log entry.
+     *
+     * Responsibility: Formats an email log entry.
      */
     public function formatEmail(string $message, array $context): string
     {
@@ -65,7 +69,9 @@ final class LoggerEntryFormatter
     }
 
     /**
-     * Builds the requested structure.
+     * Builds the common serialized log entry representation.
+     *
+     * Responsibility: Builds the common serialized log entry representation.
      */
     private function buildEntry(string $level, string $message, array $context): string
     {
@@ -86,7 +92,9 @@ final class LoggerEntryFormatter
     }
 
     /**
-     * Returns the current user id value.
+     * Returns the authenticated user identifier or the guest marker.
+     *
+     * Responsibility: Returns the authenticated user identifier or the guest marker.
      */
     private function getCurrentUserId(): string
     {
@@ -98,7 +106,9 @@ final class LoggerEntryFormatter
     }
 
     /**
-     * Returns the client ip value.
+     * Returns the client IP address or CLI marker.
+     *
+     * Responsibility: Returns the client IP address or CLI marker.
      */
     private function getClientIp(): string
     {

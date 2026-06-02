@@ -42,14 +42,20 @@ use Catalyst\Framework\View\ModuleViewPathRegistrar;
 use Catalyst\Framework\View\View;
 
 /**
- * Defines the Route Bootstrap Regression Command class contract.
+ * route:bootstrap-regression CLI command.
+ *
+ * Responsibility: Runs the route:bootstrap-regression command to Verify cache-safe middleware, module view paths and route discovery order.
  *
  * @package Catalyst\Framework\Cli\Commands
- * Responsibility: Coordinates the route bootstrap regression command behavior within its module boundary.
  */
 final class RouteBootstrapRegressionCommand extends AbstractCommand
 {
-    /** @return Option[] */
+    /**
+     * Defines the accepted option schema for this command.
+     *
+     * Responsibility: Defines the accepted option schema for this command.
+     * @return Option[]
+     */
     public function getOptions(): array
     {
         return [
@@ -58,7 +64,9 @@ final class RouteBootstrapRegressionCommand extends AbstractCommand
     }
 
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -66,7 +74,9 @@ final class RouteBootstrapRegressionCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
@@ -74,7 +84,9 @@ final class RouteBootstrapRegressionCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {
@@ -116,8 +128,9 @@ final class RouteBootstrapRegressionCommand extends AbstractCommand
     }
 
     /**
-     * @param array<int, array<string, mixed>> $modules
-     * @param array<string, string> $paths
+     * Describes the module view paths are registered helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the module view paths are registered helper workflow used by this CLI component.
      */
     private function moduleViewPathsAreRegistered(array $modules, array $paths): bool
     {
@@ -138,7 +151,9 @@ final class RouteBootstrapRegressionCommand extends AbstractCommand
     }
 
     /**
-     * @param string[] $files
+     * Describes the route files are ordered helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the route files are ordered helper workflow used by this CLI component.
      */
     private function routeFilesAreOrdered(array $files): bool
     {
@@ -166,7 +181,9 @@ final class RouteBootstrapRegressionCommand extends AbstractCommand
     }
 
     /**
-     * Handles the optional api route file follows global routes workflow.
+     * Describes the optional api route file follows global routes helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the optional api route file follows global routes helper workflow used by this CLI component.
      */
     private function optionalApiRouteFileFollowsGlobalRoutes(): bool
     {
@@ -178,7 +195,9 @@ final class RouteBootstrapRegressionCommand extends AbstractCommand
     }
 
     /**
-     * Handles the login redirect is readable and safe workflow.
+     * Describes the login redirect is readable and safe helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the login redirect is readable and safe helper workflow used by this CLI component.
      */
     private function loginRedirectIsReadableAndSafe(): bool
     {

@@ -33,10 +33,10 @@ namespace Catalyst\Framework\Geo;
 use InvalidArgumentException;
 
 /**
- * Defines the Coordinate class contract.
+ * Represents a validated geographic coordinate.
  *
  * @package Catalyst\Framework\Geo
- * Responsibility: Coordinates the coordinate behavior within its module boundary.
+ * Responsibility: Validates latitude, normalizes longitude and exposes degree/radian values for distance calculations.
  */
 final class Coordinate
 {
@@ -44,7 +44,9 @@ final class Coordinate
     private float $longitude;
 
     /**
-     * Initializes the Coordinate instance.
+     * Creates a coordinate from latitude and longitude degrees.
+     *
+     * Responsibility: Creates a coordinate from latitude and longitude degrees.
      */
     public function __construct(float $latitude, float $longitude)
     {
@@ -57,6 +59,8 @@ final class Coordinate
     }
 
     /**
+     * Creates a coordinate from latitude and longitude payload aliases.
+     *
      * @param array<string, mixed> $payload
      */
     public static function fromArray(array $payload): self
@@ -72,7 +76,9 @@ final class Coordinate
     }
 
     /**
-     * Handles the latitude workflow.
+     * Returns the latitude in degrees.
+     *
+     * Responsibility: Returns the latitude in degrees.
      */
     public function latitude(): float
     {
@@ -80,7 +86,9 @@ final class Coordinate
     }
 
     /**
-     * Handles the longitude workflow.
+     * Returns the normalized longitude in degrees.
+     *
+     * Responsibility: Returns the normalized longitude in degrees.
      */
     public function longitude(): float
     {
@@ -88,6 +96,9 @@ final class Coordinate
     }
 
     /**
+     * Exports the coordinate as latitude and longitude degrees.
+     *
+     * Responsibility: Exports the coordinate as latitude and longitude degrees.
      * @return array{latitude:float,longitude:float}
      */
     public function toArray(): array
@@ -99,7 +110,9 @@ final class Coordinate
     }
 
     /**
-     * Handles the latitude radians workflow.
+     * Returns the latitude in radians.
+     *
+     * Responsibility: Returns the latitude in radians.
      */
     public function latitudeRadians(): float
     {
@@ -107,7 +120,9 @@ final class Coordinate
     }
 
     /**
-     * Handles the longitude radians workflow.
+     * Returns the longitude in radians.
+     *
+     * Responsibility: Returns the longitude in radians.
      */
     public function longitudeRadians(): float
     {
@@ -115,7 +130,7 @@ final class Coordinate
     }
 
     /**
-     * Normalizes the provided value.
+     * Normalizes longitude degrees into the -180 to 180 range.
      */
     public static function normalizeLongitude(float $longitude): float
     {

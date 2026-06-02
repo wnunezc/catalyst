@@ -49,6 +49,9 @@ declare(strict_types=1);
  *   - Catalyst\Framework\Sensitivity\ → app/Framework/Sensitivity
  */
 
+/**
+ * Resolve bootstrap-phase classes from the supported namespace map.
+ */
 spl_autoload_register(function (string $class): bool {
     $supportedNamespaces = [
         'Catalyst\\Framework\\Traits\\'    => 'app/Framework/Traits',

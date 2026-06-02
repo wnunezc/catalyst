@@ -39,14 +39,17 @@ use Catalyst\Helpers\Security\CspNonce;
 use Catalyst\Helpers\Security\CsrfProtection;
 
 /**
- * Defines the Account Shell View Model class contract.
+ * Builds shared scope data for account surface templates.
  *
  * @package App\Surface\Account\Support
- * Responsibility: Coordinates the account shell view model behavior within its module boundary.
+ * Responsibility: Provides authenticated and guest shell metadata, navigation, CSRF, CSP and appearance data.
  */
 final class AccountShellViewModel
 {
     /**
+     * Builds shell data for a signed-in account page.
+     *
+     * Responsibility: Builds shell data for a signed-in account page.
      * @param array<string, mixed> $scope
      * @return array<string, mixed>
      */
@@ -56,6 +59,9 @@ final class AccountShellViewModel
     }
 
     /**
+     * Builds shell data for a public account recovery page.
+     *
+     * Responsibility: Builds shell data for a public account recovery page.
      * @param array<string, mixed> $scope
      * @return array<string, mixed>
      */
@@ -65,6 +71,9 @@ final class AccountShellViewModel
     }
 
     /**
+     * Merges account shell defaults with page scope for authenticated or guest rendering.
+     *
+     * Responsibility: Merges account shell defaults with page scope for authenticated or guest rendering.
      * @param array<string, mixed> $scope
      * @return array<string, mixed>
      */
@@ -104,7 +113,12 @@ final class AccountShellViewModel
         ], $scope);
     }
 
-    /** @return list<array<string, mixed>> */
+    /**
+     * Builds account sidebar navigation groups with active-state metadata.
+     *
+     * Responsibility: Builds account sidebar navigation groups with active-state metadata.
+     * @return list<array<string, mixed>>
+     */
     private function navGroups(string $currentPath): array
     {
         $makeItem = static function (string $label, string $href, string $icon, string $hint) use ($currentPath): array {

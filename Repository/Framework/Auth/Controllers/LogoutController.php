@@ -35,29 +35,18 @@ use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
 
-/**************************************************************************************
- * LogoutController — destroys the authenticated session.
- *
- * Routes:
- *   POST /logout → logout()
- *
- * @package Catalyst\Repository\Auth\Controllers
- */
 /**
- * Defines the Logout Controller class contract.
+ * Handles authenticated session termination.
  *
  * @package Catalyst\Repository\Auth\Controllers
- * Responsibility: Coordinates the logout controller behavior within its module boundary.
+ * Responsibility: Invalidates the active auth state and returns the user to a same-origin destination with feedback.
  */
 class LogoutController extends Controller
 {
     /**
-     * Destroy the session and redirect back (or to / if Referer is absent).
+     * Destroy the session and redirect back (or to / if Referer is absent). Public pages: stay on same page, show success toaster. Protected pages: AuthMiddleware will catch the next request and redirect to /login, where the toaster will render after that redirect.
      *
-     * Public pages: stay on same page, show success toaster.
-     * Protected pages: AuthMiddleware will catch the next request and redirect to /login,
-     * where the toaster will render after that redirect.
-     *
+     * Responsibility: Destroy the session and redirect back (or to / if Referer is absent). Public pages: stay on same page, show success toaster. Protected pages: AuthMiddleware will catch the next request and redirect to /login, where the toaster will render after that redirect.
      * @param Request $request
      * @return Response
      */

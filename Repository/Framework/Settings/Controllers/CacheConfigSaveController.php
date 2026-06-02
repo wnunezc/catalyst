@@ -36,15 +36,17 @@ use Catalyst\Repository\Settings\Requests\CacheConfigRequest;
 use Catalyst\Repository\Settings\Support\CacheConfigWriter;
 
 /**
- * Defines the Cache Config Save Controller class contract.
+ * Persists cache settings submitted by the setup surface.
  *
  * @package Catalyst\Repository\Settings\Controllers
- * Responsibility: Coordinates the cache config save controller behavior within its module boundary.
+ * Responsibility: Delegates validated cache configuration writes and returns the setup AJAX response.
  */
 final class CacheConfigSaveController extends Controller
 {
     /**
      * Initializes the Cache Config Save Controller instance.
+     *
+     * Responsibility: Initializes the Cache Config Save Controller instance.
      */
     public function __construct(
         private readonly CacheConfigWriter $writer = new CacheConfigWriter()
@@ -53,7 +55,9 @@ final class CacheConfigSaveController extends Controller
     }
 
     /**
-     * Persists the current state.
+     * Saves validated cache settings.
+     *
+     * Responsibility: Saves validated cache settings.
      */
     public function saveCache(CacheConfigRequest $request): Response
     {

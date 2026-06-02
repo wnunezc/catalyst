@@ -33,14 +33,16 @@ namespace Catalyst\Framework\Queue;
 use Catalyst\Helpers\Config\ConfigManager;
 
 /**
- * Defines the Queue Settings class contract.
+ * Resolves queue defaults and normalized runtime configuration.
  *
  * @package Catalyst\Framework\Queue
- * Responsibility: Coordinates the queue settings behavior within its module boundary.
+ * Responsibility: Provides validated queue connection, table, default queue, and stale-reservation settings.
  */
 final class QueueSettings
 {
     /**
+     * Returns the default queue configuration.
+     *
      * @return array<string, mixed>
      */
     public static function defaults(): array
@@ -56,6 +58,8 @@ final class QueueSettings
     }
 
     /**
+     * Returns the normalized active queue configuration.
+     *
      * @return array<string, mixed>
      */
     public static function current(): array

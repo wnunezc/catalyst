@@ -36,29 +36,11 @@ use Catalyst\Framework\Tenancy\TenancyManager;
 use Catalyst\Framework\Traits\SingletonTrait;
 use Catalyst\Helpers\Log\Logger;
 
-/**************************************************************************************
- * AuthManager — login, logout, session check, remember-me
- *
- * Orchestrates UserProvider, RememberMe, and SessionManager.
- * All session state is stored via SessionManager (never $_SESSION directly).
- *
- * Session keys:
- *   _auth_logged_in  — bool
- *   _auth_user_id    — int
- *   _auth_user_email — string
- *   _auth_user_name  — string
- *   _auth_user_role  — string
- *   _auth_tenant_id  — int
- *   _auth_tenant_key — string
- *   _auth_tenant_label — string
- *
- * @package Catalyst\Framework\Auth
- */
 /**
- * Defines the Auth Manager class contract.
+ * Manages authenticated sessions, remember-me restoration and MFA pending states.
  *
  * @package Catalyst\Framework\Auth
- * Responsibility: Coordinates the auth manager behavior within its module boundary.
+ * Responsibility: Orchestrate user authentication state through SessionManager, RememberMe and tenant-aware user context.
  */
 class AuthManager
 {
@@ -74,7 +56,9 @@ class AuthManager
     private ?array $scopedUser = null;
 
     /**
-     * Constructor
+     * Initializes authentication storage, session and logging collaborators.
+     *
+     * Responsibility: Initializes authentication storage, session and logging collaborators.
      */
     protected function __construct()
     {
@@ -91,6 +75,7 @@ class AuthManager
     /**
      * Attempt to log in a user with email and password.
      *
+     * Responsibility: Attempt to log in a user with email and password.
      * @param string $email
      * @param string $password  Plain-text password
      * @param bool   $remember  Whether to set a remember-me cookie
@@ -122,10 +107,10 @@ class AuthManager
     }
 
     /**
-     * Log in a user directly from their data array (used after OAuth / registration).
-     * Does NOT issue a remember-me token.
+     * Log in a user directly from their data array (used after OAuth / registration). Does NOT issue a remember-me token.
      *
-     * @param array $user  Full user row from the database
+     * Responsibility: Log in a user directly from their data array (used after OAuth / registration). Does NOT issue a remember-me token.
+     * @param array<string, mixed> $user Full user row from the database.
      * @return void
      */
     public function loginUser(array $user): void
@@ -136,13 +121,10 @@ class AuthManager
     }
 
     /**
-     * Create a full authenticated session from a pre-verified user row.
-     * Optionally issues a remember-me token.
+     * Create a full authenticated session from a pre-verified user row. Optionally issues a remember-me token. Used by LoginController after MFA-aware credential check and by MfaController after successful TOTP/backup verification (via completeMfaLogin()).
      *
-     * Used by LoginController after MFA-aware credential check and by MfaController
-     * after successful TOTP/backup verification (via completeMfaLogin()).
-     *
-     * @param array $user     Full user row
+     * Responsibility: Create a full authenticated session from a pre-verified user row. Optionally issues a remember-me token. Used by LoginController after MFA-aware credential check and by MfaController after successful TOTP/backup verification (via completeMfaLogin()).
+     * @param array<string, mixed> $user Full user row.
      * @param bool  $remember Whether to set a remember-me cookie
      * @return void
      */
@@ -161,6 +143,7 @@ class AuthManager
     /**
      * Attempt to restore a session from a remember-me cookie.
      *
+     * Responsibility: Attempt to restore a session from a remember-me cookie.
      * @return bool True if a valid token was found and the session was restored
      */
     public function loginFromRemember(): bool
@@ -190,6 +173,7 @@ class AuthManager
     /**
      * Destroy the current authenticated session and remember-me token.
      *
+     * Responsibility: Destroy the current authenticated session and remember-me token.
      * @return void
      */
     public function logout(): void
@@ -221,6 +205,7 @@ class AuthManager
     /**
      * Check whether a user is currently authenticated.
      *
+     * Responsibility: Check whether a user is currently authenticated.
      * @return bool
      */
     public function check(): bool
@@ -249,6 +234,7 @@ class AuthManager
     /**
      * Get the authenticated user's data array.
      *
+     * Responsibility: Exposes the authenticated user payload stored in the active session.
      * @return array|null
      */
     public function user(): ?array
@@ -275,6 +261,7 @@ class AuthManager
     /**
      * Get the authenticated user's ID.
      *
+     * Responsibility: Exposes the authenticated user identifier from the active session payload.
      * @return int|null
      */
     public function id(): ?int
@@ -294,11 +281,9 @@ class AuthManager
     }
 
     /**
-     * Scope an authenticated user to the current request without mutating the session.
+     * Scope an authenticated user to the current request without mutating the session. Used by non-session guards such as bearer API tokens so Gate, middleware and audit logging can keep consuming AuthManager as the single auth boundary.
      *
-     * Used by non-session guards such as bearer API tokens so Gate, middleware and
-     * audit logging can keep consuming AuthManager as the single auth boundary.
-     *
+     * Responsibility: Scope an authenticated user to the current request without mutating the session. Used by non-session guards such as bearer API tokens so Gate, middleware and audit logging can keep consuming AuthManager as the single auth boundary.
      * @param array<string, mixed> $user
      */
     public function beginScopedUser(array $user): void
@@ -307,7 +292,9 @@ class AuthManager
     }
 
     /**
-     * Handles the clear scoped user workflow.
+     * Clears the request-only authenticated user context.
+     *
+     * Responsibility: Clears the request-only authenticated user context.
      */
     public function clearScopedUser(): void
     {
@@ -319,14 +306,9 @@ class AuthManager
     // -------------------------------------------------------------------------
 
     /**
-     * Store a pending-MFA state after successful credential verification.
-     * The full session is NOT created yet — it will be completed by completeMfaLogin().
+     * Store a pending-MFA state after successful credential verification. The full session is NOT created yet — it will be completed by completeMfaLogin(). Session keys written: _mfa_pending_user_id — int _mfa_pending_remember — bool _mfa_pending_redirect — string.
      *
-     * Session keys written:
-     *   _mfa_pending_user_id   — int
-     *   _mfa_pending_remember  — bool
-     *   _mfa_pending_redirect  — string
-     *
+     * Responsibility: Store a pending-MFA state after successful credential verification. The full session is NOT created yet — it will be completed by completeMfaLogin(). Session keys written: _mfa_pending_user_id — int _mfa_pending_remember — bool _mfa_pending_redirect — string.
      * @param int    $userId
      * @param bool   $remember  Whether to set remember-me after MFA passes
      * @param string $redirect  Safe redirect path after full login
@@ -349,6 +331,7 @@ class AuthManager
     /**
      * Check whether a pending MFA challenge is in progress.
      *
+     * Responsibility: Check whether a pending MFA challenge is in progress.
      * @return bool
      */
     public function hasMfaPending(): bool
@@ -359,6 +342,7 @@ class AuthManager
     /**
      * Return the user ID stored in the pending MFA state, or null if absent.
      *
+     * Responsibility: Return the user ID stored in the pending MFA state, or null if absent.
      * @return int|null
      */
     public function getMfaPendingUserId(): ?int
@@ -370,6 +354,7 @@ class AuthManager
     /**
      * Return the remember flag stored in the pending MFA state.
      *
+     * Responsibility: Return the remember flag stored in the pending MFA state.
      * @return bool
      */
     public function getMfaPendingRemember(): bool
@@ -380,6 +365,7 @@ class AuthManager
     /**
      * Return the redirect path stored in the pending MFA state.
      *
+     * Responsibility: Return the redirect path stored in the pending MFA state.
      * @return string
      */
     public function getMfaPendingRedirect(): string
@@ -390,6 +376,7 @@ class AuthManager
     /**
      * Complete the MFA challenge: create full auth session and clear pending state.
      *
+     * Responsibility: Complete the MFA challenge: create full auth session and clear pending state.
      * @return bool  False if no pending state or user no longer exists
      */
     public function completeMfaLogin(): bool
@@ -422,6 +409,7 @@ class AuthManager
     /**
      * Remove all pending MFA session keys.
      *
+     * Responsibility: Remove all pending MFA session keys.
      * @return void
      */
     public function clearPendingMfa(): void
@@ -444,9 +432,9 @@ class AuthManager
     // -------------------------------------------------------------------------
 
     /**
-     * Store a pending-MFA-setup state after successful credential verification.
-     * Used when MFA is globally on and the user has never configured it.
+     * Store a pending-MFA-setup state after successful credential verification. Used when MFA is globally on and the user has never configured it.
      *
+     * Responsibility: Store a pending-MFA-setup state after successful credential verification. Used when MFA is globally on and the user has never configured it.
      * @param int    $userId
      * @param bool   $remember
      * @param string $redirect  Safe redirect after setup completes
@@ -468,6 +456,7 @@ class AuthManager
     /**
      * Check whether a forced-MFA-setup flow is in progress.
      *
+     * Responsibility: Check whether a forced-MFA-setup flow is in progress.
      * @return bool
      */
     public function hasMfaSetupPending(): bool
@@ -475,29 +464,44 @@ class AuthManager
         return $this->session->get('_mfa_setup_pending_user_id') !== null;
     }
 
-    /** @return int|null */
+    /**
+     * Returns the user ID stored in the pending MFA setup state, or null if absent.
+     *
+     * Responsibility: Returns the user ID stored in the pending MFA setup state, or null if absent.
+     * @return int|null
+     */
     public function getMfaSetupPendingUserId(): ?int
     {
         $id = $this->session->get('_mfa_setup_pending_user_id');
         return $id !== null ? (int)$id : null;
     }
 
-    /** @return bool */
+    /**
+     * Returns the remember flag stored in the pending MFA setup state.
+     *
+     * Responsibility: Returns the remember flag stored in the pending MFA setup state.
+     * @return bool
+     */
     public function getMfaSetupPendingRemember(): bool
     {
         return (bool)$this->session->get('_mfa_setup_pending_remember', false);
     }
 
-    /** @return string */
+    /**
+     * Returns the safe redirect path stored in the pending MFA setup state.
+     *
+     * Responsibility: Returns the safe redirect path stored in the pending MFA setup state.
+     * @return string
+     */
     public function getMfaSetupPendingRedirect(): string
     {
         return AuthInputGuard::localRedirect((string)$this->session->get('_mfa_setup_pending_redirect', '/'));
     }
 
     /**
-     * Complete a forced-setup login: create full session, issue remember-me if needed,
-     * and clear the pending-setup state.
+     * Complete a forced-setup login: create full session, issue remember-me if needed, and clear the pending-setup state.
      *
+     * Responsibility: Complete a forced-setup login: create full session, issue remember-me if needed, and clear the pending-setup state.
      * @return bool  False if pending state is missing or user no longer exists
      */
     public function completeMfaSetupLogin(): bool
@@ -530,6 +534,7 @@ class AuthManager
     /**
      * Remove all pending-MFA-setup session keys.
      *
+     * Responsibility: Remove all pending-MFA-setup session keys.
      * @return void
      */
     public function clearMfaSetupPending(): void
@@ -545,7 +550,10 @@ class AuthManager
     // -------------------------------------------------------------------------
 
     /**
-     * Handles the create workflow.
+     * Creates the tenant-aware session keys for a fully authenticated user.
+     *
+     * Responsibility: Creates the tenant-aware session keys for a fully authenticated user.
+     * @param array<string, mixed> $user
      */
     private function createSession(array $user): void
     {
@@ -569,6 +577,9 @@ class AuthManager
     }
 
     /**
+     * Checks whether a user row belongs to the active tenant context.
+     *
+     * Responsibility: Checks whether a user row belongs to the active tenant context.
      * @param array<string, mixed> $user
      */
     private function tenantMatches(array $user): bool

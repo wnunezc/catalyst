@@ -42,10 +42,10 @@ use Catalyst\Framework\Traits\SingletonTrait;
 use Throwable;
 
 /**
- * Defines the Audit Log Manager class contract.
+ * Captures sanitized audit entries for models and framework events.
  *
  * @package Catalyst\Framework\Audit
- * Responsibility: Coordinates the audit log manager behavior within its module boundary.
+ * Responsibility: Build audit context, sanitize payloads and persist tenant-aware audit records.
  */
 final class AuditLogManager
 {
@@ -59,7 +59,9 @@ final class AuditLogManager
     private bool $writeWarningEmitted = false;
 
     /**
-     * Handles the remember model state workflow.
+     * Stores the original model attributes before a pending update or delete is saved.
+     *
+     * Responsibility: Stores the original model attributes before a pending update or delete is saved.
      */
     public function rememberModelState(Model $model, string $action): void
     {
@@ -74,7 +76,9 @@ final class AuditLogManager
     }
 
     /**
-     * Handles the record created workflow.
+     * Records a newly created model with its current attributes as the after payload.
+     *
+     * Responsibility: Records a newly created model with its current attributes as the after payload.
      */
     public function recordCreated(Model $model): void
     {
@@ -98,7 +102,9 @@ final class AuditLogManager
     }
 
     /**
-     * Handles the record pending mutation workflow.
+     * Records a model mutation using a remembered before snapshot when available.
+     *
+     * Responsibility: Records a model mutation using a remembered before snapshot when available.
      */
     public function recordPendingMutation(Model $model, string $fallbackAction): void
     {
@@ -134,6 +140,9 @@ final class AuditLogManager
     }
 
     /**
+     * Persists a sanitized audit operation with actor, tenant and request context.
+     *
+     * Responsibility: Persists a sanitized audit operation with actor, tenant and request context.
      * @param array<string, mixed>|null $before
      * @param array<string, mixed>|null $after
      * @param array<string, mixed> $metadata
@@ -190,7 +199,9 @@ final class AuditLogManager
     }
 
     /**
-     * Handles the record framework event workflow.
+     * Converts a framework event envelope into an audit operation.
+     *
+     * Responsibility: Converts a framework event envelope into an audit operation.
      */
     public function recordFrameworkEvent(EventEnvelope $event): void
     {
@@ -219,6 +230,9 @@ final class AuditLogManager
     }
 
     /**
+     * Builds the actor, tenant and request metadata attached to each audit row.
+     *
+     * Responsibility: Builds the actor, tenant and request metadata attached to each audit row.
      * @return array<string, mixed>
      */
     private function contextSnapshot(): array
@@ -266,6 +280,9 @@ final class AuditLogManager
     }
 
     /**
+     * Extracts the model original attributes snapshot when the model exposes one.
+     *
+     * Responsibility: Extracts the model original attributes snapshot when the model exposes one.
      * @return array<string, mixed>|null
      */
     private function snapshotOriginal(Model $model): ?array
@@ -284,6 +301,9 @@ final class AuditLogManager
     }
 
     /**
+     * Returns the current model attributes in audit-safe scalar array form.
+     *
+     * Responsibility: Returns the current model attributes in audit-safe scalar array form.
      * @return array<string, mixed>
      */
     private function snapshotAttributes(Model $model): array
@@ -292,6 +312,9 @@ final class AuditLogManager
     }
 
     /**
+     * Lists field names whose values differ between before and after snapshots.
+     *
+     * Responsibility: Lists field names whose values differ between before and after snapshots.
      * @param array<string, mixed>|null $before
      * @param array<string, mixed>|null $after
      * @return string[]
@@ -315,6 +338,9 @@ final class AuditLogManager
     }
 
     /**
+     * Refines the recorded action name from the mutation payload.
+     *
+     * Responsibility: Refines the recorded action name from the mutation payload.
      * @param array<string, mixed>|null $before
      * @param array<string, mixed>|null $after
      */
@@ -328,7 +354,9 @@ final class AuditLogManager
     }
 
     /**
-     * Handles the resource label workflow.
+     * Chooses a human-readable model label from common identifying attributes.
+     *
+     * Responsibility: Chooses a human-readable model label from common identifying attributes.
      */
     private function resourceLabel(Model $model): ?string
     {
@@ -347,7 +375,9 @@ final class AuditLogManager
     }
 
     /**
-     * Normalizes the provided value.
+     * Converts empty resource identifiers to null while preserving real keys.
+     *
+     * Responsibility: Converts empty resource identifiers to null while preserving real keys.
      */
     private function normalizeResourceId(int|string|null $value): int|string|null
     {
@@ -359,7 +389,9 @@ final class AuditLogManager
     }
 
     /**
-     * Handles the event action workflow.
+     * Maps known framework event names to audit action labels.
+     *
+     * Responsibility: Maps known framework event names to audit action labels.
      */
     private function eventAction(string $eventName): string
     {
@@ -375,6 +407,9 @@ final class AuditLogManager
     }
 
     /**
+     * Converts nested arrays, date objects and array-like objects into audit payload values.
+     *
+     * Responsibility: Converts nested arrays, date objects and array-like objects into audit payload values.
      * @param array<string, mixed> $values
      * @return array<string, mixed>
      */

@@ -35,15 +35,17 @@ use Catalyst\Framework\Authorization\PermissionRegistry;
 use Catalyst\Framework\Http\FormRequest;
 
 /**
- * Defines the Feature Flag Override Request class contract.
+ * Validates subject-specific feature-flag override input.
  *
  * @package Catalyst\Repository\Operations\Requests
- * Responsibility: Coordinates the feature flag override request behavior within its module boundary.
+ * Responsibility: Authorizes and constrains feature-flag override mutations.
  */
 final class FeatureFlagOverrideRequest extends FormRequest
 {
     /**
-     * Handles the authorize workflow.
+     * Returns whether the current user may manage feature flags.
+     *
+     * Responsibility: Returns whether the current user may manage feature flags.
      */
     public function authorize(): bool
     {
@@ -55,6 +57,9 @@ final class FeatureFlagOverrideRequest extends FormRequest
     }
 
     /**
+     * Returns the feature-flag override fields accepted from the request.
+     *
+     * Responsibility: Returns the feature-flag override fields accepted from the request.
      * @return string[]
      */
     public function only(): array
@@ -63,6 +68,9 @@ final class FeatureFlagOverrideRequest extends FormRequest
     }
 
     /**
+     * Returns validation rules for a feature-flag override.
+     *
+     * Responsibility: Returns validation rules for a feature-flag override.
      * @return array<string, string|array<int, string>>
      */
     public function rules(): array

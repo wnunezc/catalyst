@@ -35,17 +35,19 @@ use Catalyst\Framework\Tenancy\TenancyManager;
 use Catalyst\Framework\Traits\SingletonTrait;
 
 /**
- * Defines the Idempotency Repository class contract.
+ * Persists tenant-scoped idempotency records.
  *
  * @package Catalyst\Framework\Idempotency
- * Responsibility: Coordinates the idempotency repository behavior within its module boundary.
+ * Responsibility: Finds, creates and completes idempotency keys for the current tenant.
  */
 final class IdempotencyRepository
 {
     use SingletonTrait;
 
     /**
-     * Finds the requested record.
+     * Finds a tenant-scoped idempotency record by scope and key.
+     *
+     * Responsibility: Finds a tenant-scoped idempotency record by scope and key.
      */
     public function find(string $scopeKey, string $idempotencyKey): ?IdempotencyKey
     {
@@ -57,6 +59,9 @@ final class IdempotencyRepository
     }
 
     /**
+     * Creates a tenant-scoped pending idempotency record.
+     *
+     * Responsibility: Creates a tenant-scoped pending idempotency record.
      * @param array<string, mixed> $attributes
      */
     public function create(array $attributes): IdempotencyKey
@@ -73,6 +78,9 @@ final class IdempotencyRepository
     }
 
     /**
+     * Marks an idempotency record complete with the stored outcome.
+     *
+     * Responsibility: Marks an idempotency record complete with the stored outcome.
      * @param array<string, mixed> $outcome
      */
     public function complete(IdempotencyKey $record, string $status, array $outcome): IdempotencyKey
@@ -88,7 +96,9 @@ final class IdempotencyRepository
     }
 
     /**
-     * Handles the current tenant id workflow.
+     * Returns the active tenant identifier required for idempotency records.
+     *
+     * Responsibility: Returns the active tenant identifier required for idempotency records.
      */
     private function currentTenantId(): int
     {

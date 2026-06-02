@@ -37,10 +37,10 @@ use DateTimeImmutable;
 use DateTimeZone;
 
 /**
- * Defines the Timeline Manager class contract.
+ * Records timeline events and summarizes resource lifecycles.
  *
  * @package Catalyst\Framework\Timeline
- * Responsibility: Coordinates the timeline manager behavior within its module boundary.
+ * Responsibility: Orchestrates lifecycle events, elapsed-time summaries and timeline notifications.
  */
 final class TimelineManager
 {
@@ -55,6 +55,8 @@ final class TimelineManager
 
     /**
      * Initializes the Timeline Manager instance.
+     *
+     * Responsibility: Initializes the Timeline Manager instance.
      */
     protected function __construct()
     {
@@ -63,7 +65,9 @@ final class TimelineManager
     }
 
     /**
-     * Handles the start workflow.
+     * Records a lifecycle start event.
+     *
+     * Responsibility: Records a lifecycle start event.
      */
     public function start(string $resourceKey, int $recordId, string $eventKey = 'started', string $label = 'Started', ?string $occurredAt = null, array $metadata = []): array
     {
@@ -71,7 +75,9 @@ final class TimelineManager
     }
 
     /**
-     * Handles the milestone workflow.
+     * Records a lifecycle milestone event.
+     *
+     * Responsibility: Records a lifecycle milestone event.
      */
     public function milestone(string $resourceKey, int $recordId, string $eventKey, string $label, ?string $occurredAt = null, array $metadata = []): array
     {
@@ -79,7 +85,9 @@ final class TimelineManager
     }
 
     /**
-     * Handles the stop workflow.
+     * Records a lifecycle stop event.
+     *
+     * Responsibility: Records a lifecycle stop event.
      */
     public function stop(string $resourceKey, int $recordId, string $eventKey = 'stopped', string $label = 'Stopped', ?string $occurredAt = null, array $metadata = []): array
     {
@@ -87,6 +95,9 @@ final class TimelineManager
     }
 
     /**
+     * Builds the ordered lifecycle summary for a resource record.
+     *
+     * Responsibility: Builds the ordered lifecycle summary for a resource record.
      * @return array<string, mixed>
      */
     public function timelineFor(string $resourceKey, int $recordId): array
@@ -139,6 +150,9 @@ final class TimelineManager
     }
 
     /**
+     * Records a workflow-transition milestone from an event payload.
+     *
+     * Responsibility: Records a workflow-transition milestone from an event payload.
      * @param array<string, mixed> $payload
      * @return array<string, mixed>|null
      */
@@ -169,7 +183,9 @@ final class TimelineManager
     }
 
     /**
-     * Handles the elapsed seconds workflow.
+     * Calculates elapsed seconds between two timestamps.
+     *
+     * Responsibility: Calculates elapsed seconds between two timestamps.
      */
     private function elapsedSeconds(?string $startedAt, ?string $endedAt): int
     {
@@ -187,6 +203,9 @@ final class TimelineManager
     }
 
     /**
+     * Persists and dispatches a timeline event.
+     *
+     * Responsibility: Persists and dispatches a timeline event.
      * @return array<string, mixed>
      */
     private function record(string $type, string $resourceKey, int $recordId, string $eventKey, string $label, ?string $occurredAt, array $metadata): array
@@ -213,7 +232,9 @@ final class TimelineManager
     }
 
     /**
-     * Handles the iso duration workflow.
+     * Formats an elapsed duration as an ISO 8601 interval.
+     *
+     * Responsibility: Formats an elapsed duration as an ISO 8601 interval.
      */
     private function isoDuration(int $seconds): string
     {

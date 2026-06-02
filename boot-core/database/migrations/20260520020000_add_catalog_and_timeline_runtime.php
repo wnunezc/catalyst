@@ -4,13 +4,29 @@ declare(strict_types=1);
 
 use Catalyst\Framework\Database\Migration;
 
+/**
+ * Adds catalog and timeline persistence to the shared runtime.
+ *
+ * @package Catalyst\BootCore\Database\Migrations
+ * Responsibility: Provision catalog definitions, catalog items, timeline events, and catalog-backed metadata fields.
+ */
 return new class extends Migration
 {
+    /**
+     * Returns the migration version identifier.
+     *
+     * Responsibility: Returns the migration version identifier.
+     */
     public function getVersion(): string
     {
         return '20260520020000';
     }
 
+    /**
+     * Creates catalog and timeline structures and extends metadata definitions.
+     *
+     * Responsibility: Creates catalog and timeline structures and extends metadata definitions.
+     */
     public function up(): void
     {
         $this->createCatalogDefinitions();
@@ -19,6 +35,11 @@ return new class extends Migration
         $this->extendMetadataDefinitions();
     }
 
+    /**
+     * Removes catalog and timeline structures and the metadata catalog reference.
+     *
+     * Responsibility: Removes catalog and timeline structures and the metadata catalog reference.
+     */
     public function down(): void
     {
         if ($this->tableExists('timeline_events')) {
@@ -38,6 +59,11 @@ return new class extends Migration
         }
     }
 
+    /**
+     * Creates the table that describes tenant-scoped catalogs.
+     *
+     * Responsibility: Creates the table that describes tenant-scoped catalogs.
+     */
     private function createCatalogDefinitions(): void
     {
         if ($this->tableExists('catalog_definitions')) {
@@ -63,6 +89,11 @@ return new class extends Migration
         );
     }
 
+    /**
+     * Creates the table that stores entries for each catalog.
+     *
+     * Responsibility: Creates the table that stores entries for each catalog.
+     */
     private function createCatalogItems(): void
     {
         if ($this->tableExists('catalog_items')) {
@@ -98,6 +129,11 @@ return new class extends Migration
         );
     }
 
+    /**
+     * Creates the table that records resource timeline events.
+     *
+     * Responsibility: Creates the table that records resource timeline events.
+     */
     private function createTimelineEvents(): void
     {
         if ($this->tableExists('timeline_events')) {
@@ -122,6 +158,11 @@ return new class extends Migration
         );
     }
 
+    /**
+     * Adds a catalog reference to metadata field definitions.
+     *
+     * Responsibility: Adds a catalog reference to metadata field definitions.
+     */
     private function extendMetadataDefinitions(): void
     {
         if (!$this->tableExists('metadata_field_definitions') || $this->columnExists('metadata_field_definitions', 'catalog_key')) {
@@ -138,6 +179,11 @@ return new class extends Migration
         );
     }
 
+    /**
+     * Determines whether a column exists in a table.
+     *
+     * Responsibility: Determines whether a column exists in a table.
+     */
     private function columnExists(string $table, string $column): bool
     {
         $row = $this->selectOne(

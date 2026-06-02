@@ -40,14 +40,16 @@ use Exception;
  * Service for handling file output operations
  *
  * @package Catalyst\Helpers\IO;
+ * Responsibility: Resolves CLI output targets and writes sanitized command output to files.
  */
 class FileOutput
 {
     use SingletonTrait;
 
     /**
-     * Check if file output has been requested via command line argument
+     * Check if file output has been requested via command line argument.
      *
+     * Responsibility: Check if file output has been requested via command line argument.
      * @return bool True if file output is requested
      */
     public function isFileOutputRequested(): bool
@@ -57,8 +59,9 @@ class FileOutput
     }
 
     /**
-     * Get the requested output filename
+     * Get the requested output filename.
      *
+     * Responsibility: Exposes the normalized output filename requested by CLI file output handling.
      * @return string|null Filename or null if not specified
      */
     public function getOutputFilename(): ?string
@@ -68,8 +71,9 @@ class FileOutput
     }
 
     /**
-     * Write content to a file with proper exception handling
+     * Write content to a file with proper exception handling.
      *
+     * Responsibility: Write content to a file with proper exception handling.
      * @param string $filename Filename to write to
      * @param string $content Content to write
      * @return bool True if successful
@@ -116,8 +120,9 @@ class FileOutput
     }
 
     /**
-     * Remove ANSI color codes from string
+     * Remove ANSI color codes from string.
      *
+     * Responsibility: Remove ANSI color codes from string.
      * @param string $text Text with ANSI codes
      * @return string Text without ANSI codes
      */
@@ -128,8 +133,9 @@ class FileOutput
     }
 
     /**
-     * Handle file output for content
+     * Handle file output for content.
      *
+     * Responsibility: Handle file output for content.
      * @param string $content Content to write to file
      * @return array{success: bool, filename: string, message: string} Result information
      * @throws Exception

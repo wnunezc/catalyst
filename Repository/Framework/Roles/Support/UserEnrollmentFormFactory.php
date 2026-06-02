@@ -34,14 +34,17 @@ use Catalyst\Framework\Admin\Form\FormBuilder;
 use Catalyst\Framework\Authorization\RoleRepository;
 
 /**
- * Defines the User Enrollment Form Factory class contract.
+ * Builds the reusable administrative user-enrollment form definition.
  *
  * @package Catalyst\Repository\Roles\Support
- * Responsibility: Coordinates the user enrollment form factory behavior within its module boundary.
+ * Responsibility: Resolves selectable roles and assembles the form schema consumed by the admin surface.
  */
 final class UserEnrollmentFormFactory
 {
     /**
+     * Builds the enrollment form schema with current role options.
+     *
+     * Responsibility: Builds the enrollment form schema with current role options.
      * @return array<string, mixed>
      */
     public function build(RoleRepository $roles): array

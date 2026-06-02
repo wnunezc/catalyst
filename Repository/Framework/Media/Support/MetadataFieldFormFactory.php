@@ -33,14 +33,17 @@ namespace Catalyst\Repository\Media\Support;
 use Catalyst\Framework\Admin\Form\FormBuilder;
 
 /**
- * Defines the Metadata Field Form Factory class contract.
+ * Builds the administrative metadata field form schema.
  *
  * @package Catalyst\Repository\Media\Support
- * Responsibility: Coordinates the metadata field form factory behavior within its module boundary.
+ * Responsibility: Configure metadata field sections, values, dynamic controls and form actions.
  */
 final class MetadataFieldFormFactory
 {
     /**
+     * Builds the form schema for a new or existing metadata field definition.
+     *
+     * Responsibility: Builds the form schema for a new or existing metadata field definition.
      * @param array<string, mixed>|null $field
      * @param array<string, mixed> $defaults
      * @param array<string, mixed> $fields

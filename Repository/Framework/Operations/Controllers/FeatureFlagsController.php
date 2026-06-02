@@ -40,15 +40,17 @@ use Catalyst\Repository\Operations\Requests\FeatureFlagOverrideRequest;
 use Catalyst\Repository\Operations\Requests\FeatureFlagDefaultRequest;
 
 /**
- * Defines the Feature Flags Controller class contract.
+ * Manages platform feature-flag defaults and subject-specific overrides.
  *
  * @package Catalyst\Repository\Operations\Controllers
- * Responsibility: Coordinates the feature flags controller behavior within its module boundary.
+ * Responsibility: Presents flag administration state and persists approved mutations.
  */
 final class FeatureFlagsController extends AbstractOperationsController
 {
     /**
-     * Handles the feature flags workflow.
+     * Renders the feature-flag catalog, override form and override grid.
+     *
+     * Responsibility: Renders the feature-flag catalog, override form and override grid.
      */
     public function featureFlags(Request $request): Response
     {
@@ -227,6 +229,8 @@ final class FeatureFlagsController extends AbstractOperationsController
 
     /**
      * Updates the feature flag default value.
+     *
+     * Responsibility: Updates the feature flag default value.
      */
     public function setFeatureFlagDefault(Request $request, string $flagKey): Response
     {
@@ -256,7 +260,9 @@ final class FeatureFlagsController extends AbstractOperationsController
     }
 
     /**
-     * Handles the persistence workflow.
+     * Creates or updates a subject-specific feature-flag override.
+     *
+     * Responsibility: Creates or updates a subject-specific feature-flag override.
      */
     public function storeFeatureFlagOverride(FeatureFlagOverrideRequest $request): Response
     {
@@ -292,7 +298,9 @@ final class FeatureFlagsController extends AbstractOperationsController
     }
 
     /**
-     * Handles the delete workflow.
+     * Deletes a subject-specific feature-flag override.
+     *
+     * Responsibility: Deletes a subject-specific feature-flag override.
      */
     public function deleteFeatureFlagOverride(Request $request, string $id): Response
     {

@@ -34,15 +34,17 @@ use Catalyst\Framework\Sensitivity\SensitiveDataPolicy;
 use Closure;
 
 /**
- * Defines the Data Grid Row Normalizer class contract.
+ * Normalizes provider rows for DataGrid templates and exports.
  *
  * @package Catalyst\Framework\Admin\Grid
- * Responsibility: Coordinates the data grid row normalizer behavior within its module boundary.
+ * Responsibility: Maps raw provider rows into cells, row keys, row actions, and sanitized export values.
  */
 final class DataGridRowNormalizer
 {
     /**
-     * Initializes the Data Grid Row Normalizer instance.
+     * Receives the row action normalizer used to attach per-row action metadata.
+     *
+     * Responsibility: Receives the row action normalizer used to attach per-row action metadata.
      */
     public function __construct(
         private readonly DataGridRowActionNormalizer $rowActionNormalizer
@@ -50,8 +52,9 @@ final class DataGridRowNormalizer
     }
 
     /**
-     * Normalize provider rows into render-ready grid rows.
+     * Converts provider rows into render-ready rows with cell values, actions, and selection metadata.
      *
+     * Responsibility: Converts provider rows into render-ready rows with cell values, actions, and selection metadata.
      * @param array<int, array<string, mixed>> $rows
      * @param array<string, mixed> $state
      * @param array<string, mixed> $config
@@ -95,8 +98,9 @@ final class DataGridRowNormalizer
     }
 
     /**
-     * Resolve the raw value for a grid cell.
+     * Resolves a cell value from a configured closure or the row field keyed by the column.
      *
+     * Responsibility: Resolves a cell value from a configured closure or the row field keyed by the column.
      * @param array<string, mixed> $row
      * @param array<string, mixed> $state
      * @param array<string, mixed> $column
@@ -115,8 +119,9 @@ final class DataGridRowNormalizer
     }
 
     /**
-     * Convert structured cell values into plain text for exports.
+     * Converts structured display values into plain text suitable for CSV and XLS exports.
      *
+     * Responsibility: Converts structured display values into plain text suitable for CSV and XLS exports.
      * @param array<string, mixed> $value
      */
     public function stringifyStructuredValue(array $value): string
@@ -145,8 +150,9 @@ final class DataGridRowNormalizer
     }
 
     /**
-     * Apply sensitive-data policy before exporting rows.
+     * Applies the resource sensitive-data policy before a row is written to an export.
      *
+     * Responsibility: Applies the resource sensitive-data policy before a row is written to an export.
      * @param array<string, mixed> $row
      * @param array<string, mixed> $config
      * @return array<string, mixed>

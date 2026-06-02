@@ -43,14 +43,20 @@ use RuntimeException;
 use Throwable;
 
 /**
- * Defines the Tenancy Smoke Command class contract.
+ * tenancy:smoke CLI command.
+ *
+ * Responsibility: Runs the tenancy:smoke command to Exercise canonical shared-db tenant boundaries with DB-backed read/write and audit checks.
  *
  * @package Catalyst\Framework\Cli\Commands
- * Responsibility: Coordinates the tenancy smoke command behavior within its module boundary.
  */
 final class TenancySmokeCommand extends AbstractCommand
 {
-    /** @return Option[] */
+    /**
+     * Defines the accepted option schema for this command.
+     *
+     * Responsibility: Defines the accepted option schema for this command.
+     * @return Option[]
+     */
     public function getOptions(): array
     {
         return [
@@ -61,7 +67,9 @@ final class TenancySmokeCommand extends AbstractCommand
     }
 
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -69,7 +77,9 @@ final class TenancySmokeCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
@@ -77,7 +87,9 @@ final class TenancySmokeCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {

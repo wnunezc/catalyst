@@ -33,10 +33,10 @@ namespace Catalyst\Framework\Metadata;
 use Catalyst\Framework\Traits\SingletonTrait;
 
 /**
- * Defines the Metadata Resource Registry class contract.
+ * Registry of resources that support dynamic metadata fields.
  *
  * @package Catalyst\Framework\Metadata
- * Responsibility: Coordinates the metadata resource registry behavior within its module boundary.
+ * Responsibility: Register and resolve metadata-enabled resource definitions.
  */
 final class MetadataResourceRegistry
 {
@@ -60,6 +60,9 @@ final class MetadataResourceRegistry
     private array $resources = self::BASE_RESOURCES;
 
     /**
+     * Return all registered metadata resources sorted by key.
+     *
+     * Responsibility: Return all registered metadata resources sorted by key.
      * @return array<string, array<string, string>>
      */
     public function all(): array
@@ -70,6 +73,9 @@ final class MetadataResourceRegistry
     }
 
     /**
+     * Return resource option labels keyed by resource key.
+     *
+     * Responsibility: Return resource option labels keyed by resource key.
      * @return array<string, string>
      */
     public function options(): array
@@ -84,6 +90,9 @@ final class MetadataResourceRegistry
     }
 
     /**
+     * Register or replace one metadata resource definition.
+     *
+     * Responsibility: Register or replace one metadata resource definition.
      * @param array<string, string> $definition
      */
     public function register(string $key, array $definition): void
@@ -103,6 +112,9 @@ final class MetadataResourceRegistry
     }
 
     /**
+     * Resolve one registered resource definition with translated labels.
+     *
+     * Responsibility: Resolve one registered resource definition with translated labels.
      * @return array<string, string>|null
      */
     public function find(string $key): ?array
@@ -122,7 +134,9 @@ final class MetadataResourceRegistry
     }
 
     /**
-     * Handles the exists workflow.
+     * Determine whether a metadata resource key is registered.
+     *
+     * Responsibility: Determine whether a metadata resource key is registered.
      */
     public function exists(string $key): bool
     {
@@ -130,7 +144,9 @@ final class MetadataResourceRegistry
     }
 
     /**
-     * Normalizes the provided value.
+     * Normalize a metadata resource key.
+     *
+     * Responsibility: Normalize a metadata resource key.
      */
     private function normalizeKey(string $key): string
     {
@@ -138,7 +154,9 @@ final class MetadataResourceRegistry
     }
 
     /**
-     * Resolves the requested value.
+     * Resolve a translated definition field with fallback.
+     *
+     * Responsibility: Resolve a translated definition field with fallback.
      */
     private function resolveDefinitionValue(array $definition, string $field, string $fallback = ''): string
     {

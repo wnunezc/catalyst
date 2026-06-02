@@ -41,14 +41,17 @@ use Catalyst\Framework\Route\Route;
 use Catalyst\Framework\Route\Router;
 
 /**
- * Defines the Module Inspector class contract.
+ * Inspects runtime module declarations and owned routes.
  *
  * @package Catalyst\Framework\Module
- * Responsibility: Coordinates the module inspector behavior within its module boundary.
+ * Responsibility: Produces module reports combining discovery, routing, permissions, navigation, and asset state.
  */
 final class ModuleInspector
 {
     /**
+     * Builds the complete runtime module inspection report.
+     *
+     * Responsibility: Builds the complete runtime module inspection report.
      * @return array<string, mixed>
      */
     public function inspect(): array
@@ -141,6 +144,9 @@ final class ModuleInspector
     }
 
     /**
+     * Finds one inspected module by key, slug, name, or legacy alias.
+     *
+     * Responsibility: Finds one inspected module by key, slug, name, or legacy alias.
      * @return array<string, mixed>|null
      */
     public function inspectModule(string $identifier): ?array
@@ -161,7 +167,9 @@ final class ModuleInspector
     }
 
     /**
-     * Handles the ensure routes loaded workflow.
+     * Ensures CLI route definitions are loaded before inspection.
+     *
+     * Responsibility: Ensures CLI route definitions are loaded before inspection.
      */
     private function ensureRoutesLoaded(): void
     {
@@ -171,6 +179,9 @@ final class ModuleInspector
     }
 
     /**
+     * Extracts routes whose handlers belong to the given module.
+     *
+     * Responsibility: Extracts routes whose handlers belong to the given module.
      * @param Route[] $routes
      * @param array<string, mixed> $module
      * @return array<int, array<string, mixed>>
@@ -214,6 +225,9 @@ final class ModuleInspector
     }
 
     /**
+     * Resolves repository scope and module name from a route handler.
+     *
+     * Responsibility: Resolves repository scope and module name from a route handler.
      * @return array{scope: string, module: string}|null
      */
     private function resolveRouteOwner(Route $route): ?array
@@ -265,6 +279,9 @@ final class ModuleInspector
     }
 
     /**
+     * Converts route middleware definitions into class or type names.
+     *
+     * Responsibility: Converts route middleware definitions into class or type names.
      * @return string[]
      */
     private function stringifyMiddleware(Route $route): array
@@ -286,6 +303,9 @@ final class ModuleInspector
     }
 
     /**
+     * Returns unique middleware classes attached to a route.
+     *
+     * Responsibility: Returns unique middleware classes attached to a route.
      * @return string[]
      */
     private function middlewareClasses(Route $route): array
@@ -294,6 +314,9 @@ final class ModuleInspector
     }
 
     /**
+     * Returns feature flags attached through route middleware.
+     *
+     * Responsibility: Returns feature flags attached through route middleware.
      * @return string[]
      */
     private function routeFeatureFlags(Route $route): array
@@ -310,6 +333,9 @@ final class ModuleInspector
     }
 
     /**
+     * Returns role requirements attached through route middleware.
+     *
+     * Responsibility: Returns role requirements attached through route middleware.
      * @return string[]
      */
     private function requiredRoles(Route $route): array
@@ -326,6 +352,9 @@ final class ModuleInspector
     }
 
     /**
+     * Returns permission requirements attached through route middleware.
+     *
+     * Responsibility: Returns permission requirements attached through route middleware.
      * @return string[]
      */
     private function requiredPermissions(Route $route): array
@@ -347,7 +376,9 @@ final class ModuleInspector
     }
 
     /**
-     * Handles the stringify handler workflow.
+     * Converts a route handler definition into a readable identifier.
+     *
+     * Responsibility: Converts a route handler definition into a readable identifier.
      */
     private function stringifyHandler(mixed $handler, ?string $namespace): string
     {
@@ -377,6 +408,9 @@ final class ModuleInspector
     }
 
     /**
+     * Determines whether a module matches an inspection identifier.
+     *
+     * Responsibility: Determines whether a module matches an inspection identifier.
      * @param array<string, mixed> $module
      */
     private function matchesIdentifier(array $module, string $identifier): bool
@@ -394,7 +428,9 @@ final class ModuleInspector
     }
 
     /**
-     * Handles the legacy app identifier for module workflow.
+     * Converts a surface module key into its legacy application alias.
+     *
+     * Responsibility: Converts a surface module key into its legacy application alias.
      */
     private function legacyAppIdentifierForModule(string $moduleKey): ?string
     {

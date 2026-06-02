@@ -34,10 +34,10 @@ use Catalyst\Helpers\Path\ProjectPath;
 use RuntimeException;
 
 /**
- * Defines the Migration Runner class contract.
+ * Runner for applying and rolling back database migrations.
  *
  * @package Catalyst\Framework\Database
- * Responsibility: Coordinates the migration runner behavior within its module boundary.
+ * Responsibility: Discovers migration files, tracks applied versions, executes batches, and maintains migration history.
  */
 class MigrationRunner
 {
@@ -46,7 +46,9 @@ class MigrationRunner
     private string $migrationPath;
 
     /**
-     * Initializes the Migration Runner instance.
+     * Initializes the runner with a database connection and migration directory.
+     *
+     * Responsibility: Initializes the runner with a database connection and migration directory.
      */
     public function __construct(
         private readonly Connection $connection,
@@ -56,6 +58,9 @@ class MigrationRunner
     }
 
     /**
+     * Coordinates the run pending method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the run pending method responsibility within its owning class.
      * @return array<int, array{version:string,name:string,batch:int}>
      */
     public function runPending(): array
@@ -90,6 +95,9 @@ class MigrationRunner
     }
 
     /**
+     * Coordinates the rollback last batch method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the rollback last batch method responsibility within its owning class.
      * @return array<int, array{version:string,name:string,batch:int}>
      */
     public function rollbackLastBatch(): array
@@ -137,6 +145,9 @@ class MigrationRunner
     }
 
     /**
+     * Coordinates the status method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the status method responsibility within its owning class.
      * @return array{repository_exists:bool,migrations:array<int, array{version:string,name:string,status:string,batch:?int,ran_at:?string}>}
      */
     public function status(): array
@@ -166,7 +177,9 @@ class MigrationRunner
     }
 
     /**
-     * Returns the migration path value.
+     * Returns the filesystem path where migration files are discovered.
+     *
+     * Responsibility: Returns the filesystem path where migration files are discovered.
      */
     public function getMigrationPath(): string
     {
@@ -174,7 +187,9 @@ class MigrationRunner
     }
 
     /**
-     * Handles the ensure migrations table workflow.
+     * Creates the migrations tracking table when it is missing.
+     *
+     * Responsibility: Creates the migrations tracking table when it is missing.
      */
     private function ensureMigrationsTable(): void
     {
@@ -192,7 +207,9 @@ class MigrationRunner
     }
 
     /**
-     * Handles the migrations table exists workflow.
+     * Determines whether the migrations tracking table exists.
+     *
+     * Responsibility: Determines whether the migrations tracking table exists.
      */
     private function migrationsTableExists(): bool
     {
@@ -209,6 +226,9 @@ class MigrationRunner
     }
 
     /**
+     * Coordinates the discover migrations method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the discover migrations method responsibility within its owning class.
      * @return array<string, array{migration:Migration,name:string,file:string}>
      */
     private function discoverMigrations(): array
@@ -254,6 +274,9 @@ class MigrationRunner
     }
 
     /**
+     * Coordinates the get applied versions method responsibility within its owning class.
+     *
+     * Responsibility: Coordinates the get applied versions method responsibility within its owning class.
      * @return array<string, array{batch:int,ran_at:?string,name:string}>
      */
     private function getAppliedVersions(): array
@@ -281,7 +304,9 @@ class MigrationRunner
     }
 
     /**
-     * Handles the next batch number workflow.
+     * Calculates the next migration batch number.
+     *
+     * Responsibility: Calculates the next migration batch number.
      */
     private function nextBatchNumber(): int
     {
@@ -292,7 +317,9 @@ class MigrationRunner
     }
 
     /**
-     * Handles the last batch number workflow.
+     * Resolves the latest applied migration batch number.
+     *
+     * Responsibility: Resolves the latest applied migration batch number.
      */
     private function lastBatchNumber(): ?int
     {
@@ -306,7 +333,9 @@ class MigrationRunner
     }
 
     /**
-     * Handles the record applied migration workflow.
+     * Records a successfully applied migration version and batch.
+     *
+     * Responsibility: Records a successfully applied migration version and batch.
      */
     private function recordAppliedMigration(string $version, string $name, int $batch): void
     {
@@ -321,7 +350,9 @@ class MigrationRunner
     }
 
     /**
-     * Handles the remove applied migration workflow.
+     * Removes a migration version from the applied migration history.
+     *
+     * Responsibility: Removes a migration version from the applied migration history.
      */
     private function removeAppliedMigration(string $version): void
     {

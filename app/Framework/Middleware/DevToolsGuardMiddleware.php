@@ -50,6 +50,9 @@ use Closure;
  * - Development without login: standard auth behavior (401 JSON or redirect)
  * - Development with authenticated non-admin/non-authorized user: 403
  * - Development with admin or explicit permission: pass through
+ *
+ * @package Catalyst\Framework\Middleware
+ * Responsibility: Restricts developer tooling routes to authorized users in development environments.
  */
 class DevToolsGuardMiddleware extends CoreMiddleware
 {
@@ -62,6 +65,8 @@ class DevToolsGuardMiddleware extends CoreMiddleware
 
     /**
      * Initializes the Dev Tools Guard Middleware instance.
+     *
+     * Responsibility: Initializes the Dev Tools Guard Middleware instance.
      */
     public function __construct(string|array|null $permissions = null)
     {
@@ -75,7 +80,9 @@ class DevToolsGuardMiddleware extends CoreMiddleware
     }
 
     /**
-     * Processes the current workflow.
+     * Allows authorized development requests and rejects every other DevTools access.
+     *
+     * Responsibility: Allows authorized development requests and rejects every other DevTools access.
      */
     public function process(Request $request, Closure $next): Response
     {
@@ -136,6 +143,9 @@ class DevToolsGuardMiddleware extends CoreMiddleware
     }
 
     /**
+     * Returns permissions that authorize DevTools access in addition to the admin role.
+     *
+     * Responsibility: Returns permissions that authorize DevTools access in addition to the admin role.
      * @return string[]
      */
     public function getRequiredPermissions(): array
@@ -147,7 +157,9 @@ class DevToolsGuardMiddleware extends CoreMiddleware
     }
 
     /**
-     * Handles the forbidden response workflow.
+     * Builds the appropriate forbidden response for HTML or JSON requests.
+     *
+     * Responsibility: Builds the appropriate forbidden response for HTML or JSON requests.
      */
     private function forbiddenResponse(Request $request, string $message): Response
     {

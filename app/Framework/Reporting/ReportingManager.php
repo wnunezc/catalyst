@@ -42,10 +42,10 @@ use RuntimeException;
 use Throwable;
 
 /**
- * Defines the Reporting Manager class contract.
+ * Queues and generates exportable framework reports.
  *
  * @package Catalyst\Framework\Reporting
- * Responsibility: Coordinates the reporting manager behavior within its module boundary.
+ * Responsibility: Persists report runs, builds report rows, stores generated exports, and optionally attaches outputs to resources.
  */
 final class ReportingManager
 {
@@ -57,6 +57,8 @@ final class ReportingManager
 
     /**
      * Initializes the Reporting Manager instance.
+     *
+     * Responsibility: Initializes the Reporting Manager instance.
      */
     protected function __construct()
     {
@@ -66,6 +68,9 @@ final class ReportingManager
     }
 
     /**
+     * Creates a pending report run and dispatches its generation job.
+     *
+     * Responsibility: Creates a pending report run and dispatches its generation job.
      * @param array<string, mixed> $criteria
      * @param array<string, mixed>|null $attachTo
      */
@@ -97,7 +102,9 @@ final class ReportingManager
     }
 
     /**
-     * Processes the current workflow.
+     * Generates the requested report output and records its final state.
+     *
+     * Responsibility: Generates the requested report output and records its final state.
      */
     public function process(int $reportRunId): ReportRun
     {
@@ -194,6 +201,9 @@ final class ReportingManager
     }
 
     /**
+     * Resolves report rows for a registered report definition.
+     *
+     * Responsibility: Resolves report rows for a registered report definition.
      * @param array<string, mixed> $criteria
      * @return array<int, array<string, mixed>>
      */
@@ -206,6 +216,9 @@ final class ReportingManager
     }
 
     /**
+     * Loads attachment rows for the resource-attachment report.
+     *
+     * Responsibility: Loads attachment rows for the resource-attachment report.
      * @param array<string, mixed> $criteria
      * @return array<int, array<string, mixed>>
      */
@@ -222,6 +235,9 @@ final class ReportingManager
     }
 
     /**
+     * Returns the registered definition for a report key.
+     *
+     * Responsibility: Returns the registered definition for a report key.
      * @return array<string, mixed>
      */
     private function definition(string $reportKey): array

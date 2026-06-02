@@ -41,10 +41,10 @@ use Catalyst\Helpers\Exceptions\ValidationException;
 use Catalyst\Helpers\Validation\Validator;
 
 /**
- * Defines the Catalog Item Request class contract.
+ * Validates catalog item create and update payloads.
  *
  * @package Catalyst\Repository\Catalogs\Requests
- * Responsibility: Coordinates the catalog item request behavior within its module boundary.
+ * Responsibility: Authorize item mutations and enforce key, temporal and metadata constraints within a catalog.
  */
 final class CatalogItemRequest extends FormRequest
 {
@@ -54,7 +54,9 @@ final class CatalogItemRequest extends FormRequest
     private ?array $resolvedData = null;
 
     /**
-     * Handles the authorize workflow.
+     * Authorizes creation or update according to the routed catalog item identifier.
+     *
+     * Responsibility: Authorizes creation or update according to the routed catalog item identifier.
      */
     public function authorize(): bool
     {
@@ -66,6 +68,9 @@ final class CatalogItemRequest extends FormRequest
     }
 
     /**
+     * Returns the catalog item fields accepted from input.
+     *
+     * Responsibility: Returns the catalog item fields accepted from input.
      * @return string[]
      */
     public function only(): array
@@ -83,6 +88,9 @@ final class CatalogItemRequest extends FormRequest
     }
 
     /**
+     * Declares validation rules for catalog item input.
+     *
+     * Responsibility: Declares validation rules for catalog item input.
      * @return array<string, string>
      */
     public function rules(): array
@@ -100,6 +108,9 @@ final class CatalogItemRequest extends FormRequest
     }
 
     /**
+     * Returns translated labels for catalog item validation errors.
+     *
+     * Responsibility: Returns translated labels for catalog item validation errors.
      * @return array<string, string>
      */
     public function labels(): array
@@ -117,7 +128,9 @@ final class CatalogItemRequest extends FormRequest
     }
 
     /**
-     * Handles the sensitive resource key workflow.
+     * Identifies catalogs as the sensitivity policy resource for item mutations.
+     *
+     * Responsibility: Identifies catalogs as the sensitivity policy resource for item mutations.
      */
     protected function sensitiveResourceKey(): ?string
     {
@@ -125,6 +138,9 @@ final class CatalogItemRequest extends FormRequest
     }
 
     /**
+     * Returns the validated catalog item payload, resolving it lazily.
+     *
+     * Responsibility: Returns the validated catalog item payload, resolving it lazily.
      * @return array<string, mixed>
      */
     public function validated(): array
@@ -137,6 +153,9 @@ final class CatalogItemRequest extends FormRequest
     }
 
     /**
+     * Authorizes and validates the complete catalog item payload.
+     *
+     * Responsibility: Authorizes and validates the complete catalog item payload.
      * @throws ValidationException
      * @throws ForbiddenException
      */
@@ -164,6 +183,9 @@ final class CatalogItemRequest extends FormRequest
     }
 
     /**
+     * Validates parent existence, item key uniqueness, effective dates and metadata JSON.
+     *
+     * Responsibility: Validates parent existence, item key uniqueness, effective dates and metadata JSON.
      * @param array<string, mixed> $data
      * @return array<string, string[]>
      */

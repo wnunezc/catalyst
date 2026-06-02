@@ -33,16 +33,17 @@ namespace Catalyst\Framework\Admin\Grid;
 use RuntimeException;
 
 /**
- * Defines the Data Grid Csv Exporter class contract.
+ * Serializes grid export data into CSV text.
  *
  * @package Catalyst\Framework\Admin\Grid
- * Responsibility: Coordinates the data grid csv exporter behavior within its module boundary.
+ * Responsibility: Writes headers and rows through PHP CSV handling so exported values are escaped consistently.
  */
 final class DataGridCsvExporter
 {
     /**
-     * Builds CSV contents using an in-memory temporary stream.
+     * Builds CSV contents from headers and row values using an in-memory temporary stream.
      *
+     * Responsibility: Builds CSV contents from headers and row values using an in-memory temporary stream.
      * @param array<int, string> $headers
      * @param array<int, array<int, string>> $rows
      */

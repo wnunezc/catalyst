@@ -39,10 +39,10 @@ use Catalyst\Helpers\Log\Logger;
 use Exception;
 
 /**
- * Defines the Media Repository class contract.
+ * Query repository for the media library.
  *
  * @package Catalyst\Framework\Media
- * Responsibility: Coordinates the media repository behavior within its module boundary.
+ * Responsibility: Read tenant-scoped media rows with metadata-aware filters and lookups.
  */
 final class MediaRepository
 {
@@ -53,7 +53,9 @@ final class MediaRepository
     private MetadataValueRepository $values;
 
     /**
-     * Initializes the Media Repository instance.
+     * Resolve database, metadata value and logging collaborators.
+     *
+     * Responsibility: Resolve database, metadata value and logging collaborators.
      */
     protected function __construct()
     {
@@ -63,6 +65,9 @@ final class MediaRepository
     }
 
     /**
+     * Search tenant media rows with text, disk, MIME and metadata filters.
+     *
+     * Responsibility: Search tenant media rows with text, disk, MIME and metadata filters.
      * @param array<string, mixed> $criteria
      * @param array<int, array<string, mixed>> $definitions
      * @return array{rows: array<int, array<string, mixed>>, total: int}
@@ -164,6 +169,9 @@ final class MediaRepository
     }
 
     /**
+     * Find one tenant media row and attach resolved metadata values.
+     *
+     * Responsibility: Find one tenant media row and attach resolved metadata values.
      * @return array<string, mixed>|null
      */
     public function find(int $id, array $definitions = []): ?array
@@ -197,7 +205,9 @@ final class MediaRepository
     }
 
     /**
-     * Finds the requested record.
+     * Find one media ORM model by identifier.
+     *
+     * Responsibility: Find one media ORM model by identifier.
      */
     public function findModel(int $id): ?MediaItem
     {
@@ -205,6 +215,9 @@ final class MediaRepository
     }
 
     /**
+     * Return MIME type groups currently present in the tenant media library.
+     *
+     * Responsibility: Return MIME type groups currently present in the tenant media library.
      * @return string[]
      */
     public function distinctMimeGroups(): array
@@ -232,6 +245,9 @@ final class MediaRepository
     }
 
     /**
+     * Build an SQL EXISTS clause for one metadata filter.
+     *
+     * Responsibility: Build an SQL EXISTS clause for one metadata filter.
      * @param array<string, mixed> $definition
      * @return array{0: string, 1: array<int, mixed>}
      */
@@ -319,7 +335,9 @@ final class MediaRepository
     }
 
     /**
-     * Resolves the requested value.
+     * Resolve an allowed media sort column.
+     *
+     * Responsibility: Resolve an allowed media sort column.
      */
     private function resolveSortColumn(string $sort): string
     {
@@ -335,7 +353,9 @@ final class MediaRepository
     }
 
     /**
-     * Resolves the requested value.
+     * Resolve a normalized SQL sort direction.
+     *
+     * Responsibility: Resolve a normalized SQL sort direction.
      */
     private function resolveSortDirection(string $direction): string
     {
@@ -343,7 +363,9 @@ final class MediaRepository
     }
 
     /**
-     * Handles the current tenant id workflow.
+     * Return the current required tenant identifier.
+     *
+     * Responsibility: Return the current required tenant identifier.
      */
     private function currentTenantId(): int
     {

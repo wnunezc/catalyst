@@ -37,15 +37,17 @@ use Catalyst\Framework\Route\CanonicalPathRedirector;
 use Closure;
 
 /**
- * Defines the Canonical Path Redirect Middleware class contract.
+ * Redirects requests that do not use their canonical path.
  *
  * @package Catalyst\Framework\Middleware
- * Responsibility: Coordinates the canonical path redirect middleware behavior within its module boundary.
+ * Responsibility: Resolves canonical targets and emits permanent redirects before route execution.
  */
 final class CanonicalPathRedirectMiddleware extends CoreMiddleware
 {
     /**
-     * Processes the current workflow.
+     * Redirects non-canonical requests or passes canonical requests onward.
+     *
+     * Responsibility: Redirects non-canonical requests or passes canonical requests onward.
      */
     public function process(Request $request, Closure $next): Response
     {

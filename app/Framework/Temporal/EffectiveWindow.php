@@ -35,10 +35,10 @@ use DateTimeImmutable;
 use DateTimeZone;
 
 /**
- * Defines the Effective Window class contract.
+ * Evaluates effective-date windows for time-bound records.
  *
  * @package Catalyst\Framework\Temporal
- * Responsibility: Coordinates the effective window behavior within its module boundary.
+ * Responsibility: Normalizes date values and derives active, scheduled or expired state.
  */
 final class EffectiveWindow
 {
@@ -49,7 +49,9 @@ final class EffectiveWindow
     public const STATE_EXPIRED = 'expired';
 
     /**
-     * Normalizes the provided value.
+     * Normalizes a date value to a UTC database timestamp.
+     *
+     * Responsibility: Normalizes a date value to a UTC database timestamp.
      */
     public function normalize(?string $value): ?string
     {
@@ -64,7 +66,9 @@ final class EffectiveWindow
     }
 
     /**
-     * Handles the state workflow.
+     * Resolves the temporal state for a validity window.
+     *
+     * Responsibility: Resolves the temporal state for a validity window.
      */
     public function state(?string $validFrom, ?string $validTo, ?DateTimeImmutable $now = null): string
     {
@@ -84,7 +88,9 @@ final class EffectiveWindow
     }
 
     /**
-     * Determines whether is Active.
+     * Determines whether a validity window is currently active.
+     *
+     * Responsibility: Determines whether a validity window is currently active.
      */
     public function isActive(?string $validFrom, ?string $validTo, ?DateTimeImmutable $now = null): bool
     {
@@ -92,7 +98,9 @@ final class EffectiveWindow
     }
 
     /**
-     * Handles the sql for state workflow.
+     * Builds an SQL predicate for a requested temporal state.
+     *
+     * Responsibility: Builds an SQL predicate for a requested temporal state.
      */
     public function sqlForState(string $state, string $fromColumn = 'valid_from', string $toColumn = 'valid_to'): string
     {
@@ -113,6 +121,9 @@ final class EffectiveWindow
     }
 
     /**
+     * Adds the resolved temporal state to a record row.
+     *
+     * Responsibility: Adds the resolved temporal state to a record row.
      * @param array<string, mixed> $row
      * @return array<string, mixed>
      */
@@ -127,7 +138,9 @@ final class EffectiveWindow
     }
 
     /**
-     * Handles the date time workflow.
+     * Parses an optional date value as an immutable UTC timestamp.
+     *
+     * Responsibility: Parses an optional date value as an immutable UTC timestamp.
      */
     private function dateTime(?string $value): ?DateTimeImmutable
     {
@@ -144,7 +157,9 @@ final class EffectiveWindow
     }
 
     /**
-     * Handles the quote workflow.
+     * Quotes a dotted SQL identifier safely.
+     *
+     * Responsibility: Quotes a dotted SQL identifier safely.
      */
     private function quote(string $identifier): string
     {

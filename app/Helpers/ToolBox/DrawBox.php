@@ -38,6 +38,7 @@ use Exception;
  * DrawBox class for creating formatted text boxes in terminal or HTML
  *
  * @package Catalyst\Helpers\ToolBox;
+ * Responsibility: Selects CLI or HTML rendering and optionally appends file-output status.
  */
 class DrawBox
 {
@@ -67,7 +68,9 @@ class DrawBox
     private DrawBoxFileOutputDecorator $fileOutputDecorator;
 
     /**
-     * DrawBox constructor
+     * DrawBox constructor.
+     *
+     * Responsibility: Prepares the box renderer configuration used to compose CLI or HTML diagnostic output.
      */
     protected function __construct()
     {
@@ -80,8 +83,9 @@ class DrawBox
     }
 
     /**
-     * Draw a box around the given content
+     * Draw a box around the given content.
      *
+     * Responsibility: Draw a box around the given content.
      * @param array|string $content Content to place inside the box
      * @param array $options Box options and styling
      * @return string Formatted box as string
@@ -109,6 +113,9 @@ class DrawBox
     }
 
     /**
+     * Merges caller options with draw-box defaults.
+     *
+     * Responsibility: Merges caller options with draw-box defaults.
      * @param array<string, mixed> $options
      * @return array<string, mixed>
      */
@@ -127,6 +134,9 @@ class DrawBox
     }
 
     /**
+     * Normalizes scalar or line-array content into renderable lines.
+     *
+     * Responsibility: Normalizes scalar or line-array content into renderable lines.
      * @return string[]
      */
     private function normalizeContent(array|string $content): array
@@ -135,8 +145,9 @@ class DrawBox
     }
 
     /**
-     * Check if running in the CLI environment
+     * Check if running in the CLI environment.
      *
+     * Responsibility: Check if running in the CLI environment.
      * @return bool True if in CLI
      */
     private function isCli(): bool

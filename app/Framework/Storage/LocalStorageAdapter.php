@@ -34,15 +34,17 @@ use Catalyst\Framework\Http\UploadedFile;
 use RuntimeException;
 
 /**
- * Defines the Local Storage Adapter class contract.
+ * Stores objects beneath a configured local filesystem root.
  *
  * @package Catalyst\Framework\Storage
- * Responsibility: Coordinates the local storage adapter behavior within its module boundary.
+ * Responsibility: Provides normalized local file persistence and optional public URLs.
  */
 final class LocalStorageAdapter implements StorageAdapterInterface
 {
     /**
      * Initializes the Local Storage Adapter instance.
+     *
+     * Responsibility: Initializes the Local Storage Adapter instance.
      */
     public function __construct(
         private readonly string $rootPath,
@@ -52,7 +54,9 @@ final class LocalStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Returns the driver name value.
+     * Returns the local storage driver name.
+     *
+     * Responsibility: Returns the local storage driver name.
      */
     public function getDriverName(): string
     {
@@ -60,7 +64,9 @@ final class LocalStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Handles the put workflow.
+     * Writes string contents to a local object path.
+     *
+     * Responsibility: Writes string contents to a local object path.
      */
     public function put(string $path, string $contents): string
     {
@@ -80,7 +86,9 @@ final class LocalStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Handles the put file workflow.
+     * Moves an uploaded file to a local object path.
+     *
+     * Responsibility: Moves an uploaded file to a local object path.
      */
     public function putFile(UploadedFile $file, string $path): string
     {
@@ -93,7 +101,9 @@ final class LocalStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Returns the runtime value.
+     * Reads contents from a local object path.
+     *
+     * Responsibility: Reads contents from a local object path.
      */
     public function get(string $path): string
     {
@@ -112,7 +122,9 @@ final class LocalStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Handles the delete workflow.
+     * Deletes a local object when present.
+     *
+     * Responsibility: Deletes a local object when present.
      */
     public function delete(string $path): bool
     {
@@ -122,7 +134,9 @@ final class LocalStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Handles the exists workflow.
+     * Determines whether a local object exists.
+     *
+     * Responsibility: Determines whether a local object exists.
      */
     public function exists(string $path): bool
     {
@@ -130,7 +144,9 @@ final class LocalStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Handles the url workflow.
+     * Returns a public URL when this disk is exposed.
+     *
+     * Responsibility: Returns a public URL when this disk is exposed.
      */
     public function url(string $path): string
     {
@@ -145,7 +161,9 @@ final class LocalStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Handles the absolute path workflow.
+     * Resolves a normalized object path beneath the storage root.
+     *
+     * Responsibility: Resolves a normalized object path beneath the storage root.
      */
     private function absolutePath(string $normalizedPath): string
     {
@@ -154,7 +172,9 @@ final class LocalStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Normalizes the provided value.
+     * Normalizes an object path and rejects traversal segments.
+     *
+     * Responsibility: Normalizes an object path and rejects traversal segments.
      */
     private function normalizePath(string $path): string
     {

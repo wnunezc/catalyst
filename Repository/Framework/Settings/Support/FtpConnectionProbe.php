@@ -33,14 +33,17 @@ namespace Catalyst\Repository\Settings\Support;
 use RuntimeException;
 
 /**
- * Defines the Ftp Connection Probe class contract.
+ * Verifies remote transfer connectivity by uploading and removing a temporary payload.
  *
  * @package Catalyst\Repository\Settings\Support
- * Responsibility: Coordinates the ftp connection probe behavior within its module boundary.
+ * Responsibility: Runs FTP, FTPS or SFTP upload-cleanup pretests and reports cleanup warnings.
  */
 final class FtpConnectionProbe
 {
     /**
+     * Dispatches a transfer pretest to the configured protocol.
+     *
+     * Responsibility: Dispatches a transfer pretest to the configured protocol.
      * @param array<string, mixed> $config
      * @return array<string, mixed>
      */
@@ -56,6 +59,9 @@ final class FtpConnectionProbe
     }
 
     /**
+     * Uploads and removes a temporary file over FTP or FTPS.
+     *
+     * Responsibility: Uploads and removes a temporary file over FTP or FTPS.
      * @param array<string, mixed> $config
      * @return array<string, mixed>
      */
@@ -127,6 +133,9 @@ final class FtpConnectionProbe
     }
 
     /**
+     * Uploads and removes a temporary file over SFTP.
+     *
+     * Responsibility: Uploads and removes a temporary file over SFTP.
      * @param array<string, mixed> $config
      * @return array<string, mixed>
      */
@@ -214,7 +223,9 @@ final class FtpConnectionProbe
     }
 
     /**
-     * Handles the delete workflow.
+     * Attempts to remove an uploaded SFTP pretest file.
+     *
+     * Responsibility: Attempts to remove an uploaded SFTP pretest file.
      */
     private function deleteSftpFile(
         string $host,
@@ -257,7 +268,9 @@ final class FtpConnectionProbe
     }
 
     /**
-     * Normalizes the provided value.
+     * Normalizes a remote root as an absolute slash-delimited path.
+     *
+     * Responsibility: Normalizes a remote root as an absolute slash-delimited path.
      */
     private function normalizeRoot(string $root): string
     {
@@ -273,7 +286,9 @@ final class FtpConnectionProbe
     }
 
     /**
-     * Builds the requested structure.
+     * Builds a unique remote path for the temporary pretest file.
+     *
+     * Responsibility: Builds a unique remote path for the temporary pretest file.
      */
     private function buildRemotePath(string $root): string
     {
@@ -285,7 +300,9 @@ final class FtpConnectionProbe
     }
 
     /**
-     * Handles the create workflow.
+     * Creates a local temporary payload for a transfer pretest.
+     *
+     * Responsibility: Creates a local temporary payload for a transfer pretest.
      */
     private function createTempPayload(string $protocol): string
     {
@@ -310,7 +327,9 @@ final class FtpConnectionProbe
     }
 
     /**
-     * Handles the encode remote path workflow.
+     * Encodes each segment of a remote path for use in an SFTP URL.
+     *
+     * Responsibility: Encodes each segment of a remote path for use in an SFTP URL.
      */
     private function encodeRemotePath(string $path): string
     {

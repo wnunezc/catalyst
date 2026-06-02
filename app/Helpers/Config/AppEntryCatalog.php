@@ -31,10 +31,10 @@ declare(strict_types=1);
 namespace Catalyst\Helpers\Config;
 
 /**
- * Defines the App Entry Catalog class contract.
+ * Catalogs the application entry points exposed by setup configuration.
  *
  * @package Catalyst\Helpers\Config
- * Responsibility: Coordinates the app entry catalog behavior within its module boundary.
+ * Responsibility: Supplies selectable entry labels, keys and route paths for configured surfaces.
  */
 final class AppEntryCatalog
 {
@@ -87,6 +87,8 @@ final class AppEntryCatalog
     ];
 
     /**
+     * Returns labels accepted as primary application entries.
+     *
      * @return array<string, string>
      */
     public static function primaryLabels(bool $includeDevelopmentEntries): array
@@ -95,6 +97,8 @@ final class AppEntryCatalog
     }
 
     /**
+     * Returns labels accepted as secondary application entries.
+     *
      * @return array<string, string>
      */
     public static function secondaryLabels(bool $includeDevelopmentEntries): array
@@ -103,6 +107,8 @@ final class AppEntryCatalog
     }
 
     /**
+     * Returns keys accepted as primary application entries.
+     *
      * @return string[]
      */
     public static function primaryKeys(bool $includeDevelopmentEntries): array
@@ -111,6 +117,8 @@ final class AppEntryCatalog
     }
 
     /**
+     * Returns keys accepted as secondary application entries.
+     *
      * @return string[]
      */
     public static function secondaryKeys(bool $includeDevelopmentEntries): array
@@ -119,7 +127,7 @@ final class AppEntryCatalog
     }
 
     /**
-     * Determines whether requires Secondary.
+     * Determines whether the primary entry requires a secondary selection.
      */
     public static function requiresSecondary(string $primary): bool
     {
@@ -127,7 +135,7 @@ final class AppEntryCatalog
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves the route path assigned to an entry key.
      */
     public static function resolvePath(string $entry): ?string
     {
@@ -135,6 +143,8 @@ final class AppEntryCatalog
     }
 
     /**
+     * Filters catalog labels by visibility and secondary-entry rules.
+     *
      * @return array<string, string>
      */
     private static function labels(bool $includeDevelopmentEntries, bool $includeUserAccess): array

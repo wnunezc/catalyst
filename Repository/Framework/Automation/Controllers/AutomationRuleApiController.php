@@ -46,15 +46,17 @@ use Catalyst\Repository\Automation\Requests\AutomationRunContextRequest;
 use RuntimeException;
 
 /**
- * Defines the Automation Rule Api Controller class contract.
+ * Exposes read and execution endpoints for automation rules.
  *
  * @package Catalyst\Repository\Automation\Controllers
- * Responsibility: Coordinates the automation rule api controller behavior within its module boundary.
+ * Responsibility: Authorize API requests and serialize automation rule listings, details and run outcomes.
  */
 final class AutomationRuleApiController extends Controller
 {
     /**
      * Initializes the Automation Rule Api Controller instance.
+     *
+     * Responsibility: Initializes the Automation Rule Api Controller instance.
      */
     public function __construct(
         private readonly AutomationRuleRepository $repository,
@@ -66,7 +68,9 @@ final class AutomationRuleApiController extends Controller
     }
 
     /**
-     * Handles the api index workflow.
+     * Returns a paginated API listing of automation rules.
+     *
+     * Responsibility: Returns a paginated API listing of automation rules.
      */
     public function apiIndex(AutomationRuleIndexRequest $request): Response
     {
@@ -82,7 +86,9 @@ final class AutomationRuleApiController extends Controller
     }
 
     /**
-     * Handles the api show workflow.
+     * Returns one automation rule with logs, versions and available transitions.
+     *
+     * Responsibility: Returns one automation rule with logs, versions and available transitions.
      */
     public function apiShow(Request $request, string $id): Response
     {
@@ -107,7 +113,9 @@ final class AutomationRuleApiController extends Controller
     }
 
     /**
-     * Handles the api run workflow.
+     * Executes one automation rule through the idempotent API flow.
+     *
+     * Responsibility: Executes one automation rule through the idempotent API flow.
      */
     public function apiRun(AutomationRunContextRequest $request, string $id): Response
     {

@@ -37,7 +37,7 @@ use Catalyst\Helpers\Security\CspNonce;
 use Closure;
 use Exception;
 
-/**************************************************************************************
+/**
  * Middleware to add security headers to HTTP responses.
  *
  * This middleware processes incoming HTTP requests and adds various security-related headers
@@ -46,12 +46,7 @@ use Exception;
  * also includes Cross-Origin Resource Sharing (CORS) headers for better compatibility.
  *
  * @package Catalyst\Framework\Middleware
- */
-/**
- * Defines the Security Headers Middleware class contract.
- *
- * @package Catalyst\Framework\Middleware
- * Responsibility: Coordinates the security headers middleware behavior within its module boundary.
+ * Responsibility: Adds security headers and content security policy appropriate to the response profile.
  */
 class SecurityHeadersMiddleware extends CoreMiddleware
 {
@@ -69,8 +64,9 @@ class SecurityHeadersMiddleware extends CoreMiddleware
     ];
 
     /**
-     * Process the request and add security headers to the response
+     * Process the request and add security headers to the response.
      *
+     * Responsibility: Process the request and add security headers to the response.
      * @param Request $request The request object
      * @param Closure $next The next middleware handler
      * @return Response The response with security headers
@@ -136,8 +132,9 @@ class SecurityHeadersMiddleware extends CoreMiddleware
     }
 
     /**
-     * Determine if the request is for a static resource
+     * Determine if the request is for a static resource.
      *
+     * Responsibility: Determine if the request is for a static resource.
      * @param Request $request The request to check
      * @return bool True if the request is for a static resource
      */
@@ -150,7 +147,9 @@ class SecurityHeadersMiddleware extends CoreMiddleware
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves the canonical application URL from configuration or environment fallback.
+     *
+     * Responsibility: Resolves the canonical application URL from configuration or environment fallback.
      */
     private function resolveAppUrl(): string
     {
@@ -169,7 +168,9 @@ class SecurityHeadersMiddleware extends CoreMiddleware
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves the browser WebSocket source allowed by content security policy.
+     *
+     * Responsibility: Resolves the browser WebSocket source allowed by content security policy.
      */
     private function resolveBrowserWebSocketSource(string $appUrl): string
     {
@@ -203,7 +204,9 @@ class SecurityHeadersMiddleware extends CoreMiddleware
     }
 
     /**
-     * Builds the requested structure.
+     * Builds the content security policy for the selected response profile.
+     *
+     * Responsibility: Builds the content security policy for the selected response profile.
      */
     private function buildContentSecurityPolicy(Response $response, string $nonce, string $appUrl): string
     {
@@ -244,7 +247,9 @@ class SecurityHeadersMiddleware extends CoreMiddleware
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves the supported CSP profile requested by the response.
+     *
+     * Responsibility: Resolves the supported CSP profile requested by the response.
      */
     private function resolveCspProfile(Response $response): string
     {

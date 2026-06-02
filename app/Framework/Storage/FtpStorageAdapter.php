@@ -34,14 +34,17 @@ use Catalyst\Framework\Http\UploadedFile;
 use RuntimeException;
 
 /**
- * Defines the Ftp Storage Adapter class contract.
+ * Transfers storage objects through FTP, FTPS or SFTP.
  *
  * @package Catalyst\Framework\Storage
- * Responsibility: Coordinates the ftp storage adapter behavior within its module boundary.
+ * Responsibility: Implements remote object storage operations from validated transfer configuration.
  */
 final class FtpStorageAdapter implements StorageAdapterInterface
 {
     /**
+     * Creates a remote adapter from transfer configuration.
+     *
+     * Responsibility: Creates a remote adapter from transfer configuration.
      * @param array<string, mixed> $config
      */
     public function __construct(
@@ -50,7 +53,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Returns the driver name value.
+     * Returns the configured remote storage driver name.
+     *
+     * Responsibility: Returns the configured remote storage driver name.
      */
     public function getDriverName(): string
     {
@@ -58,7 +63,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Handles the put workflow.
+     * Uploads string contents through a temporary local file.
+     *
+     * Responsibility: Uploads string contents through a temporary local file.
      */
     public function put(string $path, string $contents): string
     {
@@ -79,7 +86,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Handles the put file workflow.
+     * Uploads a validated framework file.
+     *
+     * Responsibility: Uploads a validated framework file.
      */
     public function putFile(UploadedFile $file, string $path): string
     {
@@ -91,7 +100,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Returns the runtime value.
+     * Downloads remote object contents.
+     *
+     * Responsibility: Downloads remote object contents.
      */
     public function get(string $path): string
     {
@@ -102,7 +113,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Handles the delete workflow.
+     * Deletes a remote object.
+     *
+     * Responsibility: Deletes a remote object.
      */
     public function delete(string $path): bool
     {
@@ -113,7 +126,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Handles the exists workflow.
+     * Determines whether a remote object exists.
+     *
+     * Responsibility: Determines whether a remote object exists.
      */
     public function exists(string $path): bool
     {
@@ -124,7 +139,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Handles the url workflow.
+     * Builds the remote URL for an object.
+     *
+     * Responsibility: Builds the remote URL for an object.
      */
     public function url(string $path): string
     {
@@ -138,7 +155,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Handles the upload local path workflow.
+     * Dispatches a local-file upload to the configured protocol.
+     *
+     * Responsibility: Dispatches a local-file upload to the configured protocol.
      */
     private function uploadLocalPath(string $localPath, string $path): string
     {
@@ -153,7 +172,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Handles the upload ftp workflow.
+     * Uploads a local file over FTP or FTPS.
+     *
+     * Responsibility: Uploads a local file over FTP or FTPS.
      */
     private function uploadFtp(string $localPath, string $path): string
     {
@@ -199,7 +220,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Handles the upload sftp workflow.
+     * Uploads a local file over SFTP.
+     *
+     * Responsibility: Uploads a local file over SFTP.
      */
     private function uploadSftp(string $localPath, string $path): string
     {
@@ -256,7 +279,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Handles the download ftp workflow.
+     * Downloads an object over FTP or FTPS.
+     *
+     * Responsibility: Downloads an object over FTP or FTPS.
      */
     private function downloadFtp(string $path): string
     {
@@ -312,7 +337,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Handles the download sftp workflow.
+     * Downloads an object over SFTP.
+     *
+     * Responsibility: Downloads an object over SFTP.
      */
     private function downloadSftp(string $path): string
     {
@@ -353,7 +380,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Handles the delete workflow.
+     * Deletes an object over FTP or FTPS.
+     *
+     * Responsibility: Deletes an object over FTP or FTPS.
      */
     private function deleteFtp(string $path): bool
     {
@@ -390,7 +419,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Handles the delete workflow.
+     * Deletes an object over SFTP.
+     *
+     * Responsibility: Deletes an object over SFTP.
      */
     private function deleteSftp(string $path): bool
     {
@@ -431,7 +462,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Handles the exists ftp workflow.
+     * Determines whether an FTP or FTPS object exists.
+     *
+     * Responsibility: Determines whether an FTP or FTPS object exists.
      */
     private function existsFtp(string $path): bool
     {
@@ -468,7 +501,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Handles the exists sftp workflow.
+     * Determines whether an SFTP object exists.
+     *
+     * Responsibility: Determines whether an SFTP object exists.
      */
     private function existsSftp(string $path): bool
     {
@@ -506,7 +541,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Handles the ensure ftp directory workflow.
+     * Creates missing FTP directory segments.
+     *
+     * Responsibility: Creates missing FTP directory segments.
      */
     private function ensureFtpDirectory(mixed $connection, string $directory): void
     {
@@ -532,7 +569,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Handles the ensure sftp directory workflow.
+     * Requests creation of missing SFTP directory segments.
+     *
+     * Responsibility: Requests creation of missing SFTP directory segments.
      */
     private function ensureSftpDirectory(string $directory): void
     {
@@ -579,7 +618,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Handles the protocol workflow.
+     * Returns the validated transfer protocol.
+     *
+     * Responsibility: Returns the validated transfer protocol.
      */
     private function protocol(): string
     {
@@ -593,7 +634,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Handles the port workflow.
+     * Returns the configured or protocol-default port.
+     *
+     * Responsibility: Returns the configured or protocol-default port.
      */
     private function port(): int
     {
@@ -601,7 +644,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Handles the timeout workflow.
+     * Returns the configured transfer timeout.
+     *
+     * Responsibility: Returns the configured transfer timeout.
      */
     private function timeout(): int
     {
@@ -609,7 +654,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Handles the remote path workflow.
+     * Resolves an object path beneath the configured remote root.
+     *
+     * Responsibility: Resolves an object path beneath the configured remote root.
      */
     private function remotePath(string $path): string
     {
@@ -622,7 +669,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Normalizes the provided value.
+     * Normalizes an object path and rejects traversal segments.
+     *
+     * Responsibility: Normalizes an object path and rejects traversal segments.
      */
     private function normalizePath(string $path): string
     {
@@ -643,7 +692,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Normalizes the provided value.
+     * Normalizes the configured remote root.
+     *
+     * Responsibility: Normalizes the configured remote root.
      */
     private function normalizeRoot(string $root): string
     {
@@ -659,7 +710,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Handles the encode remote path workflow.
+     * Encodes a remote path for transport in an SFTP URL.
+     *
+     * Responsibility: Encodes a remote path for transport in an SFTP URL.
      */
     private function encodeRemotePath(string $path): string
     {
@@ -673,7 +726,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * Handles the required string workflow.
+     * Returns a required string configuration value or fails explicitly.
+     *
+     * Responsibility: Returns a required string configuration value or fails explicitly.
      */
     private function requiredString(string $key): string
     {

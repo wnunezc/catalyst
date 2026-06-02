@@ -31,15 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Helpers\Log;
 
 /**
- * Defines the Logger Configurator class contract.
+ * Applies runtime options to mutable logger settings.
  *
  * @package Catalyst\Helpers\Log
- * Responsibility: Coordinates the logger configurator behavior within its module boundary.
+ * Responsibility: Creates log directories and validates configurable channel, level and rotation limits.
  */
 final class LoggerConfigurator
 {
     /**
-     * Handles the ensure log directory workflow.
+     * Creates the configured log directory when missing.
+     *
+     * Responsibility: Creates the configured log directory when missing.
      */
     public function ensureLogDirectory(string $directory): void
     {
@@ -49,7 +51,9 @@ final class LoggerConfigurator
     }
 
     /**
-     * Handles the apply runtime options workflow.
+     * Applies logger options that may change during a request.
+     *
+     * Responsibility: Applies logger options that may change during a request.
      */
     public function applyRuntimeOptions(LoggerSettings $settings, array $config): void
     {
@@ -59,7 +63,9 @@ final class LoggerConfigurator
     }
 
     /**
-     * Handles the apply initial options workflow.
+     * Applies validated logger options that initialize destination behavior.
+     *
+     * Responsibility: Applies validated logger options that initialize destination behavior.
      */
     public function applyInitialOptions(LoggerSettings $settings, array $config): void
     {

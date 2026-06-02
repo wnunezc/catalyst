@@ -4,13 +4,29 @@ declare(strict_types=1);
 
 use Catalyst\Framework\Database\Migration;
 
+/**
+ * Adds retention, attachment, and reporting persistence to the shared runtime.
+ *
+ * @package Catalyst\BootCore\Database\Migrations
+ * Responsibility: Provision archival columns and the tables required for resource attachments and report runs.
+ */
 return new class extends Migration
 {
+    /**
+     * Returns the timestamp identifier used by the migration runner to order and track this migration.
+     *
+     * Responsibility: Returns the timestamp identifier used by the migration runner to order and track this migration.
+     */
     public function getVersion(): string
     {
         return '20260520010000';
     }
 
+    /**
+     * Applies the schema changes required for retention, attachments, and report run history.
+     *
+     * Responsibility: Applies the schema changes required for retention, attachments, and report run history.
+     */
     public function up(): void
     {
         $this->ensureMediaRetentionColumns();
@@ -19,12 +35,22 @@ return new class extends Migration
         $this->ensureReportRunsTable();
     }
 
+    /**
+     * Preserves forward-only runtime history when rollback is requested for this migration.
+     *
+     * Responsibility: Preserves forward-only runtime history when rollback is requested for this migration.
+     */
     public function down(): void
     {
         // Forward-only hardening step. Rolling back would drop attachment and
         // reporting history already linked to live runtime records.
     }
 
+    /**
+     * Adds media archival columns and indexes used by retention-aware library queries.
+     *
+     * Responsibility: Adds media archival columns and indexes used by retention-aware library queries.
+     */
     private function ensureMediaRetentionColumns(): void
     {
         if (!$this->tableExists('media_library')) {
@@ -53,6 +79,11 @@ return new class extends Migration
         }
     }
 
+    /**
+     * Adds document artifact archival columns and indexes used by retention-aware queries.
+     *
+     * Responsibility: Adds document artifact archival columns and indexes used by retention-aware queries.
+     */
     private function ensureDocumentArtifactRetentionColumns(): void
     {
         if (!$this->tableExists('document_artifacts')) {
@@ -81,6 +112,11 @@ return new class extends Migration
         }
     }
 
+    /**
+     * Creates the attachment table that connects domain records to media items or document artifacts.
+     *
+     * Responsibility: Creates the attachment table that connects domain records to media items or document artifacts.
+     */
     private function ensureResourceAttachmentsTable(): void
     {
         if ($this->tableExists('resource_attachments')) {
@@ -118,6 +154,11 @@ return new class extends Migration
         );
     }
 
+    /**
+     * Creates the report run table used to track generated exports and their output artifacts.
+     *
+     * Responsibility: Creates the report run table used to track generated exports and their output artifacts.
+     */
     private function ensureReportRunsTable(): void
     {
         if ($this->tableExists('report_runs')) {
@@ -159,6 +200,11 @@ return new class extends Migration
         );
     }
 
+    /**
+     * Checks information_schema so schema changes remain idempotent for an existing column.
+     *
+     * Responsibility: Checks information_schema so schema changes remain idempotent for an existing column.
+     */
     private function columnExists(string $table, string $column): bool
     {
         $row = $this->selectOne(
@@ -177,6 +223,11 @@ return new class extends Migration
         return $row !== null;
     }
 
+    /**
+     * Checks information_schema so schema changes remain idempotent for an existing index.
+     *
+     * Responsibility: Checks information_schema so schema changes remain idempotent for an existing index.
+     */
     private function indexExists(string $table, string $index): bool
     {
         $row = $this->selectOne(

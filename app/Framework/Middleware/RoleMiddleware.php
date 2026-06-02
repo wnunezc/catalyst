@@ -40,7 +40,7 @@ use Catalyst\Framework\Http\Response;
 use Catalyst\Helpers\Exceptions\ForbiddenException;
 use Closure;
 
-/**************************************************************************************
+/**
  * RoleMiddleware — RBAC route guard
  *
  * Enforces role and/or permission checks on protected routes.
@@ -70,12 +70,7 @@ use Closure;
  *   - Authenticated but not authorized: throws ForbiddenException → 403
  *
  * @package Catalyst\Framework\Middleware
- */
-/**
- * Defines the Role Middleware class contract.
- *
- * @package Catalyst\Framework\Middleware
- * Responsibility: Coordinates the role middleware behavior within its module boundary.
+ * Responsibility: Requires authentication and enforces configured RBAC role and permission requirements.
  */
 class RoleMiddleware extends CoreMiddleware
 {
@@ -83,6 +78,9 @@ class RoleMiddleware extends CoreMiddleware
     private array $permissions;
 
     /**
+     * Initializes the guard with required roles and permissions.
+     *
+     * Responsibility: Initializes the guard with required roles and permissions.
      * @param string|string[]|null $roles       Required role slug(s) — OR logic
      * @param string|string[]|null $permissions Required permission slug(s) — OR logic
      */
@@ -95,7 +93,9 @@ class RoleMiddleware extends CoreMiddleware
     }
 
     /**
-     * Processes the current workflow.
+     * Verifies authentication, roles, and permissions before forwarding the request.
+     *
+     * Responsibility: Verifies authentication, roles, and permissions before forwarding the request.
      */
     public function process(Request $request, Closure $next): Response
     {
@@ -151,6 +151,9 @@ class RoleMiddleware extends CoreMiddleware
     }
 
     /**
+     * Returns the role slugs required by this guard.
+     *
+     * Responsibility: Returns the role slugs required by this guard.
      * @return string[]
      */
     public function getRequiredRoles(): array
@@ -159,6 +162,9 @@ class RoleMiddleware extends CoreMiddleware
     }
 
     /**
+     * Returns the permission slugs required by this guard.
+     *
+     * Responsibility: Returns the permission slugs required by this guard.
      * @return string[]
      */
     public function getRequiredPermissions(): array

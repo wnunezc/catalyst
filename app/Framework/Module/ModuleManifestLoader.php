@@ -33,14 +33,17 @@ namespace Catalyst\Framework\Module;
 use Catalyst\Helpers\I18n\Translator;
 
 /**
- * Defines the Module Manifest Loader class contract.
+ * Loads optional module manifests from disk.
  *
  * @package Catalyst\Framework\Module
- * Responsibility: Coordinates the module manifest loader behavior within its module boundary.
+ * Responsibility: Requires module manifests safely, reports validation errors, and registers localization paths.
  */
 final class ModuleManifestLoader
 {
     /**
+     * Loads a module declaration and returns its validation errors.
+     *
+     * Responsibility: Loads a module declaration and returns its validation errors.
      * @return array{0: array<string, mixed>, 1: string[]}
      */
     public function loadDeclaration(string $manifestFile): array
@@ -68,6 +71,9 @@ final class ModuleManifestLoader
     }
 
     /**
+     * Registers the localization directory exposed by a module.
+     *
+     * Responsibility: Registers the localization directory exposed by a module.
      * @param array<string, mixed> $module
      */
     public function registerLangPath(array $module): void

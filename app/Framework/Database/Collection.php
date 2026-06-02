@@ -48,11 +48,14 @@ use Traversable;
  * json_encode() or a JsonResponse without an extra ->all() conversion.
  *
  * @package Catalyst\Framework\Database
+ * Responsibility: Provides iterable, serializable transformation helpers for query results.
  */
 class Collection implements Countable, IteratorAggregate, JsonSerializable
 {
     /**
      * Initializes the Collection instance.
+     *
+     * Responsibility: Initializes the Collection instance.
      */
     public function __construct(protected array $items = []) {}
 
@@ -60,15 +63,20 @@ class Collection implements Countable, IteratorAggregate, JsonSerializable
     // Basic accessors
     // -------------------------------------------------------------------------
 
-    /** Return the underlying array. */
+    /**
+     * Returns the underlying item array.
+     *
+     * Responsibility: Returns the underlying item array.
+     */
     public function all(): array
     {
         return $this->items;
     }
 
     /**
-     * Convert items to plain arrays.
-     * Model instances are serialized via toArray(); other values are cast.
+     * Convert items to plain arrays. Model instances are serialized via toArray(); other values are cast.
+     *
+     * Responsibility: Convert items to plain arrays. Model instances are serialized via toArray(); other values are cast.
      */
     public function toArray(): array
     {
@@ -81,7 +89,9 @@ class Collection implements Countable, IteratorAggregate, JsonSerializable
     }
 
     /**
-     * Handles the to json workflow.
+     * Encodes the collection items as JSON.
+     *
+     * Responsibility: Encodes the collection items as JSON.
      */
     public function toJson(int $flags = 0): string
     {
@@ -89,10 +99,9 @@ class Collection implements Countable, IteratorAggregate, JsonSerializable
     }
 
     /**
-     * JsonSerializable — allows json_encode($collection) to produce a clean
-     * JSON array directly, without a ->toArray() or ->all() call at the
-     * call site. pluck(), where(), map(), etc. all return Collection, so
-     * they can be passed directly to a JsonResponse data array.
+     * JsonSerializable — allows json_encode($collection) to produce a clean JSON array directly, without a ->toArray() or ->all() call at the call site. pluck(), where(), map(), etc. all return Collection, so they can be passed directly to a JsonResponse data array.
+     *
+     * Responsibility: JsonSerializable — allows json_encode($collection) to produce a clean JSON array directly, without a ->toArray() or ->all() call at the call site. pluck(), where(), map(), etc. all return Collection, so they can be passed directly to a JsonResponse data array.
      */
     public function jsonSerialize(): array
     {
@@ -104,7 +113,9 @@ class Collection implements Countable, IteratorAggregate, JsonSerializable
     // -------------------------------------------------------------------------
 
     /**
-     * Handles the map workflow.
+     * Applies a callback to every collection item and returns a new collection.
+     *
+     * Responsibility: Applies a callback to every collection item and returns a new collection.
      */
     public function map(callable $callback): self
     {
@@ -112,7 +123,9 @@ class Collection implements Countable, IteratorAggregate, JsonSerializable
     }
 
     /**
-     * Handles the filter workflow.
+     * Filters collection items with an optional predicate and returns a new collection.
+     *
+     * Responsibility: Filters collection items with an optional predicate and returns a new collection.
      */
     public function filter(callable $callback): self
     {
@@ -121,6 +134,8 @@ class Collection implements Countable, IteratorAggregate, JsonSerializable
 
     /**
      * Return first item, optionally matching a predicate.
+     *
+     * Responsibility: Return first item, optionally matching a predicate.
      */
     public function first(?callable $callback = null): mixed
     {
@@ -139,6 +154,8 @@ class Collection implements Countable, IteratorAggregate, JsonSerializable
 
     /**
      * Return last item, optionally matching a predicate.
+     *
+     * Responsibility: Return last item, optionally matching a predicate.
      */
     public function last(?callable $callback = null): mixed
     {
@@ -153,6 +170,7 @@ class Collection implements Countable, IteratorAggregate, JsonSerializable
     /**
      * Pluck a single field from each item.
      *
+     * Responsibility: Pluck a single field from each item.
      * @param string      $key   Field to extract as value.
      * @param string|null $keyBy Optional field to use as array key.
      */
@@ -175,6 +193,8 @@ class Collection implements Countable, IteratorAggregate, JsonSerializable
 
     /**
      * Re-index the collection by the value of a field.
+     *
+     * Responsibility: Re-index the collection by the value of a field.
      */
     public function keyBy(string $key): self
     {
@@ -191,8 +211,9 @@ class Collection implements Countable, IteratorAggregate, JsonSerializable
     }
 
     /**
-     * Split the collection into chunks of the given size.
-     * Returns a Collection of arrays (not a Collection of Collections).
+     * Split the collection into chunks of the given size. Returns a Collection of arrays (not a Collection of Collections).
+     *
+     * Responsibility: Split the collection into chunks of the given size. Returns a Collection of arrays (not a Collection of Collections).
      */
     public function chunk(int $size): self
     {
@@ -201,6 +222,8 @@ class Collection implements Countable, IteratorAggregate, JsonSerializable
 
     /**
      * Merge another collection into this one.
+     *
+     * Responsibility: Merge another collection into this one.
      */
     public function merge(self $other): self
     {
@@ -209,6 +232,8 @@ class Collection implements Countable, IteratorAggregate, JsonSerializable
 
     /**
      * Filter items by a field value.
+     *
+     * Responsibility: Filter items by a field value.
      */
     public function where(string $key, mixed $value): self
     {
@@ -222,8 +247,9 @@ class Collection implements Countable, IteratorAggregate, JsonSerializable
     // -------------------------------------------------------------------------
 
     /**
-     * Execute a callback for each item.
-     * Return false from the callback to break the loop.
+     * Execute a callback for each item. Return false from the callback to break the loop.
+     *
+     * Responsibility: Execute a callback for each item. Return false from the callback to break the loop.
      */
     public function each(callable $callback): self
     {
@@ -241,11 +267,9 @@ class Collection implements Countable, IteratorAggregate, JsonSerializable
     // -------------------------------------------------------------------------
 
     /**
-     * Check if any item matches.
+     * Check if any item matches. Usage: $collection->contains(fn($u) => $u->email === 'x@x.com') $collection->contains('email', 'x@x.com').
      *
-     * Usage:
-     *   $collection->contains(fn($u) => $u->email === 'x@x.com')
-     *   $collection->contains('email', 'x@x.com')
+     * Responsibility: Check if any item matches. Usage: $collection->contains(fn($u) => $u->email === 'x@x.com') $collection->contains('email', 'x@x.com').
      */
     public function contains(callable|string $key, mixed $value = null): bool
     {
@@ -263,7 +287,9 @@ class Collection implements Countable, IteratorAggregate, JsonSerializable
     // -------------------------------------------------------------------------
 
     /**
-     * Handles the count workflow.
+     * Counts the collection items.
+     *
+     * Responsibility: Counts the collection items.
      */
     public function count(): int
     {
@@ -271,7 +297,9 @@ class Collection implements Countable, IteratorAggregate, JsonSerializable
     }
 
     /**
-     * Determines whether is Empty.
+     * Determines whether the collection has no items.
+     *
+     * Responsibility: Determines whether the collection has no items.
      */
     public function isEmpty(): bool
     {
@@ -279,7 +307,9 @@ class Collection implements Countable, IteratorAggregate, JsonSerializable
     }
 
     /**
-     * Determines whether is Not Empty.
+     * Determines whether the collection contains at least one item.
+     *
+     * Responsibility: Determines whether the collection contains at least one item.
      */
     public function isNotEmpty(): bool
     {
@@ -287,7 +317,9 @@ class Collection implements Countable, IteratorAggregate, JsonSerializable
     }
 
     /**
-     * Returns the iterator value.
+     * Returns an iterator over the collection items.
+     *
+     * Responsibility: Returns an iterator over the collection items.
      */
     public function getIterator(): Traversable
     {
@@ -300,6 +332,8 @@ class Collection implements Countable, IteratorAggregate, JsonSerializable
 
     /**
      * Read a field from either an array or an object (Model magic getter).
+     *
+     * Responsibility: Read a field from either an array or an object (Model magic getter).
      */
     private function resolveField(mixed $item, string $key): mixed
     {

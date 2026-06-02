@@ -37,10 +37,10 @@ use ReflectionNamedType;
 use RuntimeException;
 
 /**
- * Defines the Container class contract.
+ * Dependency injection container for framework services.
  *
  * @package Catalyst\Framework\Container
- * Responsibility: Coordinates the container behavior within its module boundary.
+ * Responsibility: Registers bindings, shared instances, and resolves class dependencies through reflection.
  */
 class Container
 {
@@ -62,7 +62,9 @@ class Container
     private array $resolving = [];
 
     /**
-     * Handles the bind workflow.
+     * Registers a concrete factory or class for an abstract service key.
+     *
+     * Responsibility: Registers a concrete factory or class for an abstract service key.
      */
     public function bind(string $abstract, Closure|string $concrete, bool $shared = false): self
     {
@@ -79,7 +81,9 @@ class Container
     }
 
     /**
-     * Handles the singleton workflow.
+     * Registers a shared singleton binding.
+     *
+     * Responsibility: Registers a shared singleton binding.
      */
     public function singleton(string $abstract, Closure|string|null $concrete = null): self
     {
@@ -87,7 +91,9 @@ class Container
     }
 
     /**
-     * Handles the instance workflow.
+     * Stores an already-created instance for an abstract service key.
+     *
+     * Responsibility: Stores an already-created instance for an abstract service key.
      */
     public function instance(string $abstract, mixed $instance): self
     {
@@ -97,7 +103,9 @@ class Container
     }
 
     /**
-     * Handles the has workflow.
+     * Determines whether a service key has a binding or instance.
+     *
+     * Responsibility: Determines whether a service key has a binding or instance.
      */
     public function has(string $abstract): bool
     {
@@ -105,7 +113,9 @@ class Container
     }
 
     /**
-     * Creates the requested object.
+     * Resolves a service or class from the container.
+     *
+     * Responsibility: Resolves a service or class from the container.
      */
     public function make(string $abstract): mixed
     {
@@ -131,6 +141,9 @@ class Container
     }
 
     /**
+     * Resolves a registered binding and caches it when shared.
+     *
+     * Responsibility: Resolves a registered binding and caches it when shared.
      * @param array{concrete: Closure|string, shared: bool} $binding
      */
     private function resolveBinding(string $abstract, array $binding): mixed
@@ -148,7 +161,9 @@ class Container
     }
 
     /**
-     * Builds the requested structure.
+     * Builds an unbound class by resolving constructor dependencies.
+     *
+     * Responsibility: Builds an unbound class by resolving constructor dependencies.
      */
     private function build(string $concrete): mixed
     {
@@ -198,7 +213,9 @@ class Container
     }
 
     /**
-     * Handles the supports singleton accessor workflow.
+     * Determines whether a class exposes a public static no-argument singleton accessor.
+     *
+     * Responsibility: Determines whether a class exposes a public static no-argument singleton accessor.
      */
     private function supportsSingletonAccessor(string $concrete): bool
     {

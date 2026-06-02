@@ -37,15 +37,17 @@ use Catalyst\Framework\Http\Response;
 use Catalyst\Repository\Operations\Requests\AppearanceUpdateRequest;
 
 /**
- * Defines the Appearance Controller class contract.
+ * Manages platform appearance settings and branding assets.
  *
  * @package Catalyst\Repository\Operations\Controllers
- * Responsibility: Coordinates the appearance controller behavior within its module boundary.
+ * Responsibility: Renders and persists administrator-controlled appearance configuration.
  */
 final class AppearanceController extends Controller
 {
     /**
-     * Handles the index workflow.
+     * Renders the platform appearance configuration workspace.
+     *
+     * Responsibility: Renders the platform appearance configuration workspace.
      */
     public function index(Request $request): Response
     {
@@ -66,7 +68,9 @@ final class AppearanceController extends Controller
     }
 
     /**
-     * Handles the update workflow.
+     * Validates and persists platform appearance settings and uploaded assets.
+     *
+     * Responsibility: Validates and persists platform appearance settings and uploaded assets.
      */
     public function update(Request $request): Response
     {
@@ -197,6 +201,9 @@ final class AppearanceController extends Controller
     }
 
     /**
+     * Returns the first validation message from a validator error map.
+     *
+     * Responsibility: Returns the first validation message from a validator error map.
      * @param array<string, string[]|string> $errors
      */
     private function firstValidationError(array $errors): string

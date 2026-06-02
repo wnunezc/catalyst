@@ -33,19 +33,14 @@ namespace Catalyst\Framework\Route;
 use Catalyst\Framework\Middleware\MiddlewareInterface;
 use Catalyst\Framework\Security\SignedSerializedPayload;
 
-/**************************************************************************************
+/**
  * Route class for defining individual routes
  *
  * Represents a single route definition with its pattern, allowed methods,
  * handler, and additional attributes like name and middleware.
  *
  * @package Catalyst\Framework\Route
- */
-/**
- * Defines the Route class contract.
- *
- * @package Catalyst\Framework\Route
- * Responsibility: Coordinates the route behavior within its module boundary.
+ * Responsibility: Stores one route definition, matches URIs, restores cached middleware, and generates route URLs.
  */
 class Route
 {
@@ -122,7 +117,9 @@ class Route
     private array $attributes = [];
 
     /**
-     * Route constructor
+     * Initializes the route with allowed methods, URI pattern and dispatch handler.
+     *
+     * Responsibility: Normalizes the route pattern and stores the handler contract used by matching and dispatch.
      *
      * @param array $methods HTTP methods this route responds to
      * @param string $pattern URL pattern for this route
@@ -136,12 +133,9 @@ class Route
     }
 
     /**
-     * Normalize middleware for route cache serialization.
+     * Normalize middleware for route cache serialization. Converts any object instances in the middleware list to their class-name strings so that var_export() produces cacheable output. MiddlewareStack::resolveMiddleware() instantiates class-name strings at dispatch time, so no runtime behaviour changes.
      *
-     * Converts any object instances in the middleware list to their class-name
-     * strings so that var_export() produces cacheable output.
-     * MiddlewareStack::resolveMiddleware() instantiates class-name strings at
-     * dispatch time, so no runtime behaviour changes.
+     * Responsibility: Normalize middleware for route cache serialization. Converts any object instances in the middleware list to their class-name strings so that var_export() produces cacheable output. MiddlewareStack::resolveMiddleware() instantiates class-name strings at dispatch time, so no runtime behaviour changes.
      */
     public function normalizeMiddlewareForCache(): void
     {
@@ -179,8 +173,9 @@ class Route
     }
 
     /**
-     * Normalize the route pattern
+     * Normalize the route pattern.
      *
+     * Responsibility: Normalize the route pattern.
      * @param string $pattern Route pattern to normalize
      * @return string Normalized pattern
      */
@@ -200,7 +195,9 @@ class Route
     }
 
     /**
-     * Set the route name
+     * Assigns the route name used for reverse URL generation.
+     *
+     * Responsibility: Stores the named-route key while preserving fluent route definition chaining.
      *
      * @param string $name Route name
      * @return self For method chaining
@@ -212,13 +209,9 @@ class Route
     }
 
     /**
-     * Add middleware to the route.
+     * Add middleware to the route. Runtime route definitions must preserve configured middleware instances such as `new RoleMiddleware(permissions: 'manage-users')` so the dispatcher, inspectors and lint tooling can read their effective requirements. Route cache export still normalizes objects later via normalizeMiddlewareForCache().
      *
-     * Runtime route definitions must preserve configured middleware instances
-     * such as `new RoleMiddleware(permissions: 'manage-users')` so the dispatcher,
-     * inspectors and lint tooling can read their effective requirements. Route
-     * cache export still normalizes objects later via normalizeMiddlewareForCache().
-     *
+     * Responsibility: Add middleware to the route. Runtime route definitions must preserve configured middleware instances such as `new RoleMiddleware(permissions: 'manage-users')` so the dispatcher, inspectors and lint tooling can read their effective requirements. Route cache export still normalizes objects later via normalizeMiddlewareForCache().
      * @param string|array|callable|MiddlewareInterface $middleware Middleware to add
      * @return self For method chaining
      */
@@ -236,7 +229,9 @@ class Route
     }
 
     /**
-     * Serializes the provided value.
+     * Converts middleware objects into signed descriptors for route-cache export.
+     *
+     * Responsibility: Converts middleware objects into signed descriptors for route-cache export.
      */
     private function serializeMiddlewareForCache(mixed $middleware): mixed
     {
@@ -250,7 +245,9 @@ class Route
     }
 
     /**
-     * Handles the restore cached middleware workflow.
+     * Restores signed middleware descriptors loaded from the route cache.
+     *
+     * Responsibility: Restores signed middleware descriptors loaded from the route cache.
      */
     private function restoreCachedMiddleware(mixed $middleware): mixed
     {
@@ -274,8 +271,9 @@ class Route
     }
 
     /**
-     * Add a constraint to a route parameter
+     * Add a constraint to a route parameter.
      *
+     * Responsibility: Add a constraint to a route parameter.
      * @param string $parameter Parameter name
      * @param string $regex Regular expression constraint
      * @return self For method chaining
@@ -288,8 +286,9 @@ class Route
     }
 
     /**
-     * Add multiple constraints at once
+     * Add multiple constraints at once.
      *
+     * Responsibility: Add multiple constraints at once.
      * @param array $constraints Array of parameter => regex constraints
      * @return self For method chaining
      */
@@ -314,8 +313,9 @@ class Route
     }
 
     /**
-     * Set an attribute on the route
+     * Set an attribute on the route.
      *
+     * Responsibility: Set an attribute on the route.
      * @param string $key Attribute key
      * @param mixed $value Attribute value
      * @return self For method chaining
@@ -329,6 +329,7 @@ class Route
     /**
      * Attach a throttle profile or custom throttle config to the route.
      *
+     * Responsibility: Attach a throttle profile or custom throttle config to the route.
      * @param string|array<string, mixed> $profile
      */
     public function throttle(string|array $profile): self
@@ -337,8 +338,9 @@ class Route
     }
 
     /**
-     * Get a route attribute
+     * Get a route attribute.
      *
+     * Responsibility: Get a route attribute.
      * @param string $key Attribute key
      * @param mixed $default Default value if attribute doesn't exist
      * @return mixed Attribute value or default
@@ -349,7 +351,9 @@ class Route
     }
 
     /**
-     * Get the route name
+     * Returns the route name used by reverse routing lookups.
+     *
+     * Responsibility: Exposes the optional named-route key without mutating route state.
      *
      * @return string|null Route name
      */
@@ -359,8 +363,9 @@ class Route
     }
 
     /**
-     * Get allowed HTTP methods
+     * Get allowed HTTP methods.
      *
+     * Responsibility: Get allowed HTTP methods.
      * @return array HTTP methods
      */
     public function getMethods(): array
@@ -369,8 +374,9 @@ class Route
     }
 
     /**
-     * Get the route pattern
+     * Get the route pattern.
      *
+     * Responsibility: Exposes the normalized URI pattern used by matching and URL generation.
      * @return string Route pattern
      */
     public function getPattern(): string
@@ -379,8 +385,9 @@ class Route
     }
 
     /**
-     * Get the route handler
+     * Get the route handler.
      *
+     * Responsibility: Exposes the controller, callable or handler payload used by dispatch.
      * @return mixed Route handler
      */
     public function getHandler(): mixed
@@ -389,8 +396,9 @@ class Route
     }
 
     /**
-     * Get route middleware
+     * Get route middleware.
      *
+     * Responsibility: Get route middleware.
      * @return array Middleware
      */
     public function getMiddleware(): array
@@ -399,8 +407,9 @@ class Route
     }
 
     /**
-     * Get parameter constraints
+     * Get parameter constraints.
      *
+     * Responsibility: Get parameter constraints.
      * @return array Constraints
      */
     public function getConstraints(): array
@@ -409,8 +418,9 @@ class Route
     }
 
     /**
-     * Get controller namespace
+     * Get controller namespace.
      *
+     * Responsibility: Get controller namespace.
      * @return string|null Namespace
      */
     public function getNamespace(): ?string
@@ -419,8 +429,9 @@ class Route
     }
 
     /**
-     * Check if the route responds to a specific HTTP method
+     * Check if the route responds to a specific HTTP method.
      *
+     * Responsibility: Check if the route responds to a specific HTTP method.
      * @param string $method HTTP method to check
      * @return bool True if route responds to method
      */
@@ -430,8 +441,9 @@ class Route
     }
 
     /**
-     * Check if the route pattern matches a given URI
+     * Check if the route pattern matches a given URI.
      *
+     * Responsibility: Check if the route pattern matches a given URI.
      * @param string $uri URI to match against
      * @param array &$matches Parameter matches (passed by reference)
      * @return bool True if route matches URI
@@ -456,8 +468,9 @@ class Route
     }
 
     /**
-     * Compile the route pattern into a regex pattern
+     * Compile the route pattern into a regex pattern.
      *
+     * Responsibility: Compile the route pattern into a regex pattern.
      * @return void
      */
     private function compile(): void
@@ -480,8 +493,9 @@ class Route
     }
 
     /**
-     * Get parameter names from the route pattern
+     * Get parameter names from the route pattern.
      *
+     * Responsibility: Get parameter names from the route pattern.
      * @return array Parameter names
      */
     public function getParameterNames(): array
@@ -493,8 +507,9 @@ class Route
     }
 
     /**
-     * Get a generated URL for this route with parameters
+     * Get a generated URL for this route with parameters.
      *
+     * Responsibility: Get a generated URL for this route with parameters.
      * @param array $parameters Parameters to substitute
      * @param bool $absolute Whether to generate absolute URL
      * @return string Generated URL

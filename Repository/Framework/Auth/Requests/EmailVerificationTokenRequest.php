@@ -36,10 +36,10 @@ use Catalyst\Helpers\Exceptions\ValidationException;
 use Catalyst\Helpers\Validation\Validator;
 
 /**
- * Defines the Email Verification Token Request class contract.
+ * Validates manually submitted email verification tokens.
  *
  * @package Catalyst\Repository\Auth\Requests
- * Responsibility: Coordinates the email verification token request behavior within its module boundary.
+ * Responsibility: Normalizes token input and rejects values that cannot match a 64-character verification token.
  */
 final class EmailVerificationTokenRequest extends FormRequest
 {
@@ -49,6 +49,9 @@ final class EmailVerificationTokenRequest extends FormRequest
     private ?array $resolvedData = null;
 
     /**
+     * Limits validation data to the pasted verification token.
+     *
+     * Responsibility: Limits validation data to the pasted verification token.
      * @return string[]
      */
     public function only(): array
@@ -57,6 +60,9 @@ final class EmailVerificationTokenRequest extends FormRequest
     }
 
     /**
+     * Requires the verification token field and constrains its accepted length.
+     *
+     * Responsibility: Requires the verification token field and constrains its accepted length.
      * @return array<string, string>
      */
     public function rules(): array
@@ -67,6 +73,9 @@ final class EmailVerificationTokenRequest extends FormRequest
     }
 
     /**
+     * Provides the translated field label used in validation feedback.
+     *
+     * Responsibility: Provides the translated field label used in validation feedback.
      * @return array<string, string>
      */
     public function labels(): array
@@ -77,7 +86,9 @@ final class EmailVerificationTokenRequest extends FormRequest
     }
 
     /**
-     * Handles the validation message workflow.
+     * Returns the generic message displayed when verification token validation fails.
+     *
+     * Responsibility: Returns the generic message displayed when verification token validation fails.
      */
     public function validationMessage(): string
     {
@@ -85,6 +96,9 @@ final class EmailVerificationTokenRequest extends FormRequest
     }
 
     /**
+     * Returns normalized data, resolving validation once when needed.
+     *
+     * Responsibility: Returns normalized data, resolving validation once when needed.
      * @return array<string, mixed>
      */
     public function validated(): array
@@ -97,6 +111,9 @@ final class EmailVerificationTokenRequest extends FormRequest
     }
 
     /**
+     * Authorizes and validates the request, then stores the normalized token payload.
+     *
+     * Responsibility: Authorizes and validates the request, then stores the normalized token payload.
      * @throws ValidationException
      * @throws ForbiddenException
      */
@@ -127,6 +144,9 @@ final class EmailVerificationTokenRequest extends FormRequest
     }
 
     /**
+     * Builds validation data from the request using the trimmed token value.
+     *
+     * Responsibility: Builds validation data from the request using the trimmed token value.
      * @return array<string, mixed>
      */
     protected function validationData(): array
@@ -137,6 +157,9 @@ final class EmailVerificationTokenRequest extends FormRequest
     }
 
     /**
+     * Adds token format errors after the base validator confirms a value is present.
+     *
+     * Responsibility: Adds token format errors after the base validator confirms a value is present.
      * @param array<string, mixed> $data
      * @return array<string, string[]>
      */
@@ -158,7 +181,7 @@ final class EmailVerificationTokenRequest extends FormRequest
     }
 
     /**
-     * Determines whether is Well Formed Token.
+     * Checks that the token is exactly 64 hexadecimal characters.
      */
     public static function isWellFormedToken(string $token): bool
     {
@@ -166,7 +189,9 @@ final class EmailVerificationTokenRequest extends FormRequest
     }
 
     /**
-     * Normalizes the provided value.
+     * Trims surrounding whitespace from a submitted verification token.
+     *
+     * Responsibility: Trims surrounding whitespace from a submitted verification token.
      */
     private function normalizeToken(string $token): string
     {

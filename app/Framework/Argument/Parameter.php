@@ -31,47 +31,47 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Argument;
 
 /**
- * Represents a positional CLI parameter
- *
- * Parameters are non-flag arguments (e.g., file paths, commands)
+ * Represents a positional command-line parameter.
  *
  * @package Catalyst\Framework\Argument
+ * Responsibility: Stores parameter position, current/default value, required metadata, name, and description.
  */
 class Parameter
 {
     /**
-     * Position index of the parameter
+     * Stores the numeric position assigned during parsing.
      */
     private int $position;
 
     /**
-     * Value of the parameter
+     * Stores the current parsed or default parameter value.
      */
     private mixed $value = null;
 
     /**
-     * Whether this parameter is required
+     * Indicates whether validation requires this parameter to have a value.
      */
     private bool $required = false;
 
     /**
-     * Default value if parameter is not provided
+     * Stores the fallback value used when no explicit value is provided.
      */
     private mixed $default = null;
 
     /**
-     * Name/description of the parameter
+     * Stores the parameter name used in validation messages and help text.
      */
     private string $name = '';
 
     /**
-     * Description of the parameter
+     * Stores the human-readable parameter description.
      */
     private string $description = '';
 
     /**
-     * Constructor
+     * Creates a positional parameter with parsed value, validation metadata, and fallback value.
      *
+     * Responsibility: Creates a positional parameter with parsed value, validation metadata, and fallback value.
      * @param int $position Position index
      * @param mixed $value Value of the parameter
      * @param bool $required Whether parameter is required
@@ -96,8 +96,9 @@ class Parameter
     }
 
     /**
-     * Get position
+     * Returns the positional index assigned to this parameter.
      *
+     * Responsibility: Returns the positional index assigned to this parameter.
      * @return int
      */
     public function getPosition(): int
@@ -106,8 +107,9 @@ class Parameter
     }
 
     /**
-     * Set value
+     * Updates the current value stored for this parameter.
      *
+     * Responsibility: Updates the current value stored for this parameter.
      * @param mixed $value
      * @return self
      */
@@ -118,8 +120,9 @@ class Parameter
     }
 
     /**
-     * Get value
+     * Returns the current parsed or default parameter value.
      *
+     * Responsibility: Returns the current parsed or default parameter value.
      * @return mixed
      */
     public function getValue(): mixed
@@ -128,8 +131,9 @@ class Parameter
     }
 
     /**
-     * Check if parameter is required
+     * Reports whether validation requires this parameter.
      *
+     * Responsibility: Reports whether validation requires this parameter.
      * @return bool
      */
     public function isRequired(): bool
@@ -138,8 +142,9 @@ class Parameter
     }
 
     /**
-     * Get default value
+     * Returns the fallback value assigned to this parameter.
      *
+     * Responsibility: Returns the fallback value assigned to this parameter.
      * @return mixed
      */
     public function getDefault(): mixed
@@ -148,8 +153,9 @@ class Parameter
     }
 
     /**
-     * Get name
+     * Returns the parameter name used for identification and validation messages.
      *
+     * Responsibility: Returns the parameter name used for identification and validation messages.
      * @return string
      */
     public function getName(): string
@@ -158,8 +164,9 @@ class Parameter
     }
 
     /**
-     * Get description
+     * Returns the human-readable parameter description.
      *
+     * Responsibility: Returns the human-readable parameter description.
      * @return string
      */
     public function getDescription(): string
@@ -168,7 +175,7 @@ class Parameter
     }
 
     /**
-     * Check if parameter has been set
+     * Reports whether the parameter carries a non-default value.
      *
      * @return bool
      */
@@ -178,8 +185,9 @@ class Parameter
     }
 
     /**
-     * Check if parameter has a value
+     * Reports whether the parameter currently stores any value.
      *
+     * Responsibility: Reports whether the parameter currently stores any value.
      * @return bool
      */
     public function hasValue(): bool

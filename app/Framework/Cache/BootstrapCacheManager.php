@@ -31,15 +31,15 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Cache;
 
 /**
- * Defines the Bootstrap Cache Manager class contract.
+ * Manages generated configuration and discovery cache files.
  *
  * @package Catalyst\Framework\Cache
- * Responsibility: Coordinates the bootstrap cache manager behavior within its module boundary.
+ * Responsibility: Loads, writes and clears bootstrap cache artifacts atomically.
  */
 final class BootstrapCacheManager
 {
     /**
-     * Loads the requested data.
+     * Loads the generated configuration cache when enabled.
      */
     public static function loadConfigCache(): ?array
     {
@@ -51,7 +51,7 @@ final class BootstrapCacheManager
     }
 
     /**
-     * Handles the sync config cache workflow.
+     * Builds or removes the configuration cache according to settings.
      */
     public static function syncConfigCache(array $config): void
     {
@@ -66,7 +66,7 @@ final class BootstrapCacheManager
     }
 
     /**
-     * Builds the requested structure.
+     * Writes the generated configuration cache file.
      */
     public static function buildConfigCache(array $config): bool
     {
@@ -74,7 +74,7 @@ final class BootstrapCacheManager
     }
 
     /**
-     * Handles the clear config cache workflow.
+     * Removes the generated configuration cache file.
      */
     public static function clearConfigCache(): bool
     {
@@ -82,6 +82,8 @@ final class BootstrapCacheManager
     }
 
     /**
+     * Loads existing discovery paths from the generated cache.
+     *
      * @return string[]|null
      */
     public static function loadDiscoveryCache(): ?array
@@ -107,6 +109,8 @@ final class BootstrapCacheManager
     }
 
     /**
+     * Builds or removes the discovery cache according to settings.
+     *
      * @param string[] $files
      */
     public static function syncDiscoveryCache(array $files): void
@@ -122,6 +126,8 @@ final class BootstrapCacheManager
     }
 
     /**
+     * Writes the generated discovery cache file.
+     *
      * @param string[] $files
      */
     public static function buildDiscoveryCache(array $files): bool
@@ -130,7 +136,7 @@ final class BootstrapCacheManager
     }
 
     /**
-     * Handles the clear discovery cache workflow.
+     * Removes the generated discovery cache file.
      */
     public static function clearDiscoveryCache(): bool
     {
@@ -138,7 +144,7 @@ final class BootstrapCacheManager
     }
 
     /**
-     * Handles the clear all workflow.
+     * Removes all generated bootstrap cache files.
      */
     public static function clearAll(): bool
     {
@@ -146,7 +152,7 @@ final class BootstrapCacheManager
     }
 
     /**
-     * Handles the config cache file workflow.
+     * Returns the configuration cache artifact path.
      */
     public static function configCacheFile(): string
     {
@@ -154,7 +160,7 @@ final class BootstrapCacheManager
     }
 
     /**
-     * Handles the discovery cache file workflow.
+     * Returns the discovery cache artifact path.
      */
     public static function discoveryCacheFile(): string
     {
@@ -162,7 +168,7 @@ final class BootstrapCacheManager
     }
 
     /**
-     * Bootstraps the runtime workflow.
+     * Returns the bootstrap cache directory.
      */
     private static function bootstrapDirectory(): string
     {
@@ -170,6 +176,8 @@ final class BootstrapCacheManager
     }
 
     /**
+     * Loads an array from a generated PHP cache file.
+     *
      * @return array<string, mixed>|null
      */
     private static function loadPhpArrayFile(string $file): ?array
@@ -184,6 +192,8 @@ final class BootstrapCacheManager
     }
 
     /**
+     * Atomically writes an array to a generated PHP cache file.
+     *
      * @param array<string, mixed>|string[] $payload
      */
     private static function writePhpArrayFile(string $file, array $payload): bool
@@ -210,11 +220,10 @@ final class BootstrapCacheManager
     }
 
     /**
-     * Handles the clear file workflow.
+     * Removes a generated cache file when present.
      */
     private static function clearFile(string $file): bool
     {
         return !is_file($file) || @unlink($file);
     }
 }
-

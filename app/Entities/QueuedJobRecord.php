@@ -31,14 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Entities;
 
 /**
- * Defines the Queued Job Record class contract.
+ * Value object for persisted queue job rows.
  *
  * @package Catalyst\Entities
- * Responsibility: Coordinates the queued job record behavior within its module boundary.
+ * Responsibility: Carries queue metadata, decoded payload, retry state, reservation state, and creation timestamps.
  */
 final class QueuedJobRecord
 {
     /**
+     * Initializes an immutable queue job record projection.
+     *
+     * Responsibility: Initializes an immutable queue job record projection.
      * @param array<string, mixed> $payload
      */
     public function __construct(
@@ -57,6 +60,8 @@ final class QueuedJobRecord
     }
 
     /**
+     * Builds a queue job record from a database row.
+     *
      * @param array<string, mixed> $row
      */
     public static function fromRow(array $row): self

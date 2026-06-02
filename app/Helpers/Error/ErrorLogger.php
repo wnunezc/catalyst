@@ -37,6 +37,7 @@ use Exception;
  * Class to handle logging of errors caught by BugCatcher
  *
  * @package Catalyst\Helpers\Error;
+ * Responsibility: Maps captured errors to logger levels and writes structured error context.
  */
 class ErrorLogger
 {

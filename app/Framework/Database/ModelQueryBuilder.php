@@ -47,6 +47,7 @@ use Catalyst\Helpers\Exceptions\ModelNotFoundException;
  * - findOrFail() throwing ModelNotFoundException
  *
  * @package Catalyst\Framework\Database
+ * Responsibility: Hydrates query results into models and applies ORM scopes, eager loading and pagination.
  */
 class ModelQueryBuilder extends QueryBuilder
 {
@@ -72,6 +73,8 @@ class ModelQueryBuilder extends QueryBuilder
 
     /**
      * Initializes the Model Query Builder instance.
+     *
+     * Responsibility: Initializes the Model Query Builder instance.
      */
     public function __construct(
         Connection $connection,
@@ -89,15 +92,9 @@ class ModelQueryBuilder extends QueryBuilder
     // -------------------------------------------------------------------------
 
     /**
-     * Specify relations to eager-load with this query.
+     * Specify relations to eager-load with this query. Prevents N+1 — each named relation is resolved in at most 2 extra queries regardless of how many parent models the query returns. Example: User::query()->with('posts', 'profile')->get(); User::query()->with('roles')->paginate(20);.
      *
-     * Prevents N+1 — each named relation is resolved in at most 2 extra queries
-     * regardless of how many parent models the query returns.
-     *
-     * Example:
-     *   User::query()->with('posts', 'profile')->get();
-     *   User::query()->with('roles')->paginate(20);
-     *
+     * Responsibility: Specify relations to eager-load with this query. Prevents N+1 — each named relation is resolved in at most 2 extra queries regardless of how many parent models the query returns. Example: User::query()->with('posts', 'profile')->get(); User::query()->with('roles')->paginate(20);.
      * @param string ...$relations Relation method names defined on the model class.
      * @return static
      */
@@ -115,9 +112,9 @@ class ModelQueryBuilder extends QueryBuilder
     // -------------------------------------------------------------------------
 
     /**
-     * Execute and return a Collection of Model instances.
-     * If with() was called, eager-loads all specified relations.
+     * Execute and return a Collection of Model instances. If with() was called, eager-loads all specified relations.
      *
+     * Responsibility: Execute and return a Collection of Model instances. If with() was called, eager-loads all specified relations.
      * @return Collection<Model>
      */
     public function get(array $columns = ['*']): Collection
@@ -140,6 +137,8 @@ class ModelQueryBuilder extends QueryBuilder
 
     /**
      * Execute and return the first matching Model, or null.
+     *
+     * Responsibility: Execute and return the first matching Model, or null.
      */
     public function first(array $columns = ['*']): ?Model
     {
@@ -153,6 +152,7 @@ class ModelQueryBuilder extends QueryBuilder
     /**
      * Like first() but throws ModelNotFoundException when no record is found.
      *
+     * Responsibility: Like first() but throws ModelNotFoundException when no record is found.
      * @throws ModelNotFoundException
      */
     public function firstOrFail(array $columns = ['*']): Model
@@ -168,6 +168,8 @@ class ModelQueryBuilder extends QueryBuilder
 
     /**
      * Find by primary key, returning null when not found.
+     *
+     * Responsibility: Find by primary key, returning null when not found.
      */
     public function find(int|string $id): ?Model
     {
@@ -180,6 +182,7 @@ class ModelQueryBuilder extends QueryBuilder
     /**
      * Find by primary key or throw ModelNotFoundException.
      *
+     * Responsibility: Find by primary key or throw ModelNotFoundException.
      * @throws ModelNotFoundException
      */
     public function findOrFail(int|string $id): Model
@@ -198,10 +201,9 @@ class ModelQueryBuilder extends QueryBuilder
     // -------------------------------------------------------------------------
 
     /**
-     * Paginate results.
+     * Paginate results. Reads the current page from $_GET['page'] when $page is null.
      *
-     * Reads the current page from $_GET['page'] when $page is null.
-     *
+     * Responsibility: Paginate results. Reads the current page from $_GET['page'] when $page is null.
      * @param int      $perPage Records per page (default 15).
      * @param int|null $page    Override the current page number.
      */
@@ -238,6 +240,8 @@ class ModelQueryBuilder extends QueryBuilder
 
     /**
      * Include soft-deleted rows in the query results.
+     *
+     * Responsibility: Include soft-deleted rows in the query results.
      */
     public function withTrashed(): static
     {
@@ -263,6 +267,8 @@ class ModelQueryBuilder extends QueryBuilder
 
     /**
      * Return only soft-deleted rows.
+     *
+     * Responsibility: Return only soft-deleted rows.
      */
     public function onlyTrashed(): static
     {
@@ -278,14 +284,9 @@ class ModelQueryBuilder extends QueryBuilder
     // -------------------------------------------------------------------------
 
     /**
-     * Resolve each eager relation and batch-load results into all parent models.
+     * Resolve each eager relation and batch-load results into all parent models. A "template" instance of the model class is created with no attributes so we can call the relation factory method and obtain a configured Relation object (with the correct FK / local-key column names). The template's own attribute values are irrelevant — matchEager() only uses the column names stored on the Relation object and the $models array it receives.
      *
-     * A "template" instance of the model class is created with no attributes so
-     * we can call the relation factory method and obtain a configured Relation
-     * object (with the correct FK / local-key column names). The template's own
-     * attribute values are irrelevant — matchEager() only uses the column names
-     * stored on the Relation object and the $models array it receives.
-     *
+     * Responsibility: Resolve each eager relation and batch-load results into all parent models. A "template" instance of the model class is created with no attributes so we can call the relation factory method and obtain a configured Relation object (with the correct FK / local-key column names). The template's own attribute values are irrelevant — matchEager() only uses the column names stored on the Relation object and the $models array it receives.
      * @param Model[] $models Hydrated parent models to distribute results into.
      */
     protected function eagerLoadRelations(array $models): void
@@ -314,6 +315,8 @@ class ModelQueryBuilder extends QueryBuilder
 
     /**
      * Automatically add WHERE deleted_at IS NULL when model uses HasSoftDeletesTrait.
+     *
+     * Responsibility: Automatically add WHERE deleted_at IS NULL when model uses HasSoftDeletesTrait.
      */
     protected function applySoftDeleteScope(): void
     {
@@ -326,7 +329,9 @@ class ModelQueryBuilder extends QueryBuilder
     }
 
     /**
-     * Handles the apply tenant scope workflow.
+     * Applies tenant filtering to model queries when the model uses tenant scoping.
+     *
+     * Responsibility: Applies tenant filtering to model queries when the model uses tenant scoping.
      */
     protected function applyTenantScope(): void
     {
@@ -344,6 +349,8 @@ class ModelQueryBuilder extends QueryBuilder
 
     /**
      * Check whether the bound model class declares soft-delete support.
+     *
+     * Responsibility: Check whether the bound model class declares soft-delete support.
      */
     protected function hasSoftDeletes(): bool
     {
@@ -351,7 +358,9 @@ class ModelQueryBuilder extends QueryBuilder
     }
 
     /**
-     * Determines whether has Tenant Scope.
+     * Determines whether the model class participates in tenant-scoped queries.
+     *
+     * Responsibility: Determines whether the model class participates in tenant-scoped queries.
      */
     protected function hasTenantScope(): bool
     {
@@ -360,6 +369,8 @@ class ModelQueryBuilder extends QueryBuilder
 
     /**
      * Resolve the soft-delete timestamp column name.
+     *
+     * Responsibility: Resolve the soft-delete timestamp column name.
      */
     protected function getSoftDeleteColumn(): string
     {
@@ -369,7 +380,9 @@ class ModelQueryBuilder extends QueryBuilder
     }
 
     /**
-     * Returns the tenant column value.
+     * Returns the tenant column used by the model query scope.
+     *
+     * Responsibility: Returns the tenant column used by the model query scope.
      */
     protected function getTenantColumn(): string
     {
@@ -379,11 +392,9 @@ class ModelQueryBuilder extends QueryBuilder
     }
 
     /**
-     * Override aggregate() to bypass model hydration.
+     * Override aggregate() to bypass model hydration. QueryBuilder::aggregate() calls $this->get() and then does $results[0], which fails when get() returns a Collection instead of a raw array. Here we query the connection directly so the result is always a plain array.
      *
-     * QueryBuilder::aggregate() calls $this->get() and then does $results[0],
-     * which fails when get() returns a Collection instead of a raw array.
-     * Here we query the connection directly so the result is always a plain array.
+     * Responsibility: Override aggregate() to bypass model hydration. QueryBuilder::aggregate() calls $this->get() and then does $results[0], which fails when get() returns a Collection instead of a raw array. Here we query the connection directly so the result is always a plain array.
      */
     protected function aggregate(string $function, string $column = '*'): ?array
     {
@@ -400,6 +411,7 @@ class ModelQueryBuilder extends QueryBuilder
     /**
      * Hydrate an array of raw DB rows into Model instances.
      *
+     * Responsibility: Hydrate an array of raw DB rows into Model instances.
      * @return Collection<Model>
      */
     protected function hydrateModels(array $rows): Collection

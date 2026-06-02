@@ -39,13 +39,15 @@ use Throwable;
  * This exception is thrown when a route matching the requested URI is not found
  * or when a named route doesn't exist.
  *
- * @package Catalyst\Framework\Exceptions;
+ * @package Catalyst\Helpers\Exceptions
+ * Responsibility: Represents URI or named-route lookup failures with HTTP 404 semantics.
  */
 class RouteNotFoundException extends RuntimeException
 {
     /**
-     * Create a new route not found exception
+     * Create a new route not found exception.
      *
+     * Responsibility: Create a new route not found exception.
      * @param string $message Exception message
      * @param int $code Exception code
      * @param Throwable|null $previous Previous exception

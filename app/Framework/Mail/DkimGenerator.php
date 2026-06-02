@@ -33,24 +33,14 @@ namespace Catalyst\Framework\Mail;
 use Catalyst\Framework\Traits\SingletonTrait;
 use RuntimeException;
 
-/**************************************************************************************
- * DkimGenerator — RSA DKIM key pair generator for mail authentication.
- *
- * Generates 2048-bit RSA key pairs suitable for DKIM signing and stores them
- * under boot-core/config/dkim/{domain}/{connectionId}/.
- *
- * Usage:
- *   $result = DkimGenerator::getInstance()->generateKeys('example.com', 'mail', 'mail1');
- *   // $result['dnsRecord'] → TXT record to add to DNS
- *   // $result['privateKeyPath'] → path for PHPMailer DKIM config
- *
- * @package Catalyst\Framework\Mail
- **************************************************************************************/
 /**
- * Defines the Dkim Generator class contract.
+ * RSA DKIM key-pair generator for mail authentication.
+ *
+ * Generates and persists DKIM private/public keys and returns the DNS TXT
+ * record payload needed by the configured mail connection.
  *
  * @package Catalyst\Framework\Mail
- * Responsibility: Coordinates the dkim generator behavior within its module boundary.
+ * Responsibility: Generate DKIM key material and DNS records for mail signing.
  */
 class DkimGenerator
 {
@@ -67,19 +57,13 @@ class DkimGenerator
     // -------------------------------------------------------------------------
 
     /**
-     * Generate an RSA 2048-bit key pair and persist it to disk.
+     * Generate an RSA key pair, persist it and return DKIM configuration data. selector: string, domain: string, privateKeyPath: string, publicKeyPath: string, dnsRecord: string, storageDir: string }.
      *
-     * @param string $domain       Domain name (e.g. "example.com")
-     * @param string $selector     DKIM selector (e.g. "mail", "dkim2025")
-     * @param string $connectionId Mail connection identifier (e.g. "mail1")
+     * Responsibility: Generate an RSA key pair, persist it and return DKIM configuration data. selector: string, domain: string, privateKeyPath: string, publicKeyPath: string, dnsRecord: string, storageDir: string }.
+     * @param string $domain       Domain name for the DKIM identity
+     * @param string $selector     DKIM selector for the key pair
+     * @param string $connectionId Mail connection identifier
      * @return array{
-     *     selector: string,
-     *     domain: string,
-     *     privateKeyPath: string,
-     *     publicKeyPath: string,
-     *     dnsRecord: string,
-     *     storageDir: string
-     * }
      * @throws RuntimeException when OpenSSL is unavailable or key generation fails
      */
     public function generateKeys(string $domain, string $selector, string $connectionId = 'mail1'): array
@@ -107,7 +91,9 @@ class DkimGenerator
     // -------------------------------------------------------------------------
 
     /**
-     * Resolve the absolute storage path for this domain/connection pair.
+     * Resolve the DKIM storage directory for a domain and connection.
+     *
+     * Responsibility: Resolve the DKIM storage directory for a domain and connection.
      */
     private function resolveStorageDir(string $domain, string $connectionId): string
     {
@@ -122,8 +108,9 @@ class DkimGenerator
     }
 
     /**
-     * Create the storage directory recursively if it does not exist.
+     * Ensure the DKIM storage directory exists.
      *
+     * Responsibility: Ensure the DKIM storage directory exists.
      * @throws RuntimeException on failure
      */
     private function ensureDirectory(string $path): void
@@ -134,8 +121,9 @@ class DkimGenerator
     }
 
     /**
-     * Generate RSA 2048-bit key pair using OpenSSL.
+     * Generate the in-memory RSA key pair through OpenSSL.
      *
+     * Responsibility: Generate the in-memory RSA key pair through OpenSSL.
      * @throws RuntimeException when OpenSSL extension is absent or generation fails
      */
     private function generateRsaKeyPair(): void
@@ -177,8 +165,9 @@ class DkimGenerator
     }
 
     /**
-     * Write private.pem and public.pem to the storage directory.
+     * Persist generated private and public keys to disk.
      *
+     * Responsibility: Persist generated private and public keys to disk.
      * @throws RuntimeException on write failure
      */
     private function persistKeys(): void
@@ -201,9 +190,9 @@ class DkimGenerator
     }
 
     /**
-     * Build the DNS TXT record string for this key pair.
+     * Build the DNS TXT record string for the generated public key.
      *
-     * Format: {selector}._domainkey.{domain} IN TXT "v=DKIM1; k=rsa; p={base64pubkey}"
+     * Responsibility: Build the DNS TXT record string for the generated public key.
      */
     private function buildDnsRecord(): string
     {

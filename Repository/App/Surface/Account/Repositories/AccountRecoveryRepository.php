@@ -36,10 +36,10 @@ use Catalyst\Helpers\Log\Logger;
 use Throwable;
 
 /**
- * Defines the Account Recovery Repository class contract.
+ * Persists account recovery requests, tokens and audit events.
  *
  * @package App\Surface\Account\Repositories
- * Responsibility: Coordinates the account recovery repository behavior within its module boundary.
+ * Responsibility: Encapsulates tenant-scoped storage access for account recovery workflows.
  */
 final class AccountRecoveryRepository
 {
@@ -50,6 +50,9 @@ final class AccountRecoveryRepository
     ];
 
     /**
+     * Creates a tenant-scoped account recovery request from normalized form data.
+     *
+     * Responsibility: Creates a tenant-scoped account recovery request from normalized form data.
      * @param array<string, mixed> $data
      */
     public function createRequest(array $data): int
@@ -70,7 +73,9 @@ final class AccountRecoveryRepository
     }
 
     /**
-     * Handles the create workflow.
+     * Creates a single-use recovery token and returns its raw value for delivery.
+     *
+     * Responsibility: Creates a single-use recovery token and returns its raw value for delivery.
      */
     public function createToken(int $requestId, int $userId, string $purpose, int $ttlSeconds = 1800): string
     {
@@ -91,7 +96,12 @@ final class AccountRecoveryRepository
         return $raw;
     }
 
-    /** @return array<string, mixed>|null */
+    /**
+     * Consumes an active, unexpired recovery token for the requested purpose.
+     *
+     * Responsibility: Consumes an active, unexpired recovery token for the requested purpose.
+     * @return array<string, mixed>|null
+     */
     public function consumeToken(string $rawToken, string $purpose): ?array
     {
         try {
@@ -128,7 +138,9 @@ final class AccountRecoveryRepository
     }
 
     /**
-     * Handles the update workflow.
+     * Updates the status and completion timestamp for a recovery request.
+     *
+     * Responsibility: Updates the status and completion timestamp for a recovery request.
      */
     public function updateRequestStatus(int $requestId, string $status): void
     {
@@ -149,7 +161,12 @@ final class AccountRecoveryRepository
         }
     }
 
-    /** @param array<string, mixed> $payload */
+    /**
+     * Records an audit event for a recovery request or user.
+     *
+     * Responsibility: Records an audit event for a recovery request or user.
+     * @param array<string, mixed> $payload
+     */
     public function logEvent(?int $requestId, ?int $userId, string $eventType, array $payload = []): void
     {
         try {
@@ -170,7 +187,12 @@ final class AccountRecoveryRepository
     }
 
 
-    /** @return list<array<string, mixed>> */
+    /**
+     * Returns the most recent recovery requests for the current tenant.
+     *
+     * Responsibility: Returns the most recent recovery requests for the current tenant.
+     * @return list<array<string, mixed>>
+     */
     public function latestRequests(int $limit = 50): array
     {
         try {
@@ -191,7 +213,12 @@ final class AccountRecoveryRepository
         }
     }
 
-    /** @return array<string, mixed>|null */
+    /**
+     * Finds one recovery request in the current tenant.
+     *
+     * Responsibility: Finds one recovery request in the current tenant.
+     * @return array<string, mixed>|null
+     */
     public function findRequest(int $requestId): ?array
     {
         if ($requestId <= 0) {
@@ -217,7 +244,9 @@ final class AccountRecoveryRepository
     }
 
     /**
-     * Handles the mark reviewed workflow.
+     * Records an admin approval or rejection for a recovery request.
+     *
+     * Responsibility: Records an admin approval or rejection for a recovery request.
      */
     public function markReviewed(int $requestId, string $status, int $reviewerId): bool
     {
@@ -255,7 +284,9 @@ final class AccountRecoveryRepository
     }
 
     /**
-     * Handles the count open requests for user workflow.
+     * Counts open recovery requests for a user in the current tenant.
+     *
+     * Responsibility: Counts open recovery requests for a user in the current tenant.
      */
     public function countOpenRequestsForUser(int $userId): int
     {
@@ -280,7 +311,12 @@ final class AccountRecoveryRepository
         }
     }
 
-    /** @return list<array<string, string>> */
+    /**
+     * Returns recent recovery audit events for a user, falling back to a synthetic dashboard event.
+     *
+     * Responsibility: Returns recent recovery audit events for a user, falling back to a synthetic dashboard event.
+     * @return list<array<string, string>>
+     */
     public function recentEventsForUser(int $userId, int $limit = 10): array
     {
         if ($userId <= 0) {
@@ -315,7 +351,12 @@ final class AccountRecoveryRepository
         }
     }
 
-    /** @return list<array<string, string>> */
+    /**
+     * Builds the fallback activity event shown when no stored recovery events exist.
+     *
+     * Responsibility: Builds the fallback activity event shown when no stored recovery events exist.
+     * @return list<array<string, string>>
+     */
     private function fallbackEvents(): array
     {
         return [
@@ -328,7 +369,9 @@ final class AccountRecoveryRepository
     }
 
     /**
-     * Handles the tenant id workflow.
+     * Resolves the active tenant id and falls back to the default tenant for recovery storage.
+     *
+     * Responsibility: Resolves the active tenant id and falls back to the default tenant for recovery storage.
      */
     private function tenantId(): int
     {
@@ -340,7 +383,9 @@ final class AccountRecoveryRepository
     }
 
     /**
-     * Handles the hash nullable workflow.
+     * Hashes a non-empty request metadata value, preserving empty values as empty strings.
+     *
+     * Responsibility: Hashes a non-empty request metadata value, preserving empty values as empty strings.
      */
     private function hashNullable(string $value): string
     {

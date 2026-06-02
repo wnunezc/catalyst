@@ -40,10 +40,10 @@ use Catalyst\Helpers\Log\Logger;
 use Exception;
 
 /**
- * Defines the Metadata Value Repository class contract.
+ * Query and persistence repository for metadata field values.
  *
  * @package Catalyst\Framework\Metadata
- * Responsibility: Coordinates the metadata value repository behavior within its module boundary.
+ * Responsibility: Resolve, display and sync tenant-scoped metadata values.
  */
 final class MetadataValueRepository
 {
@@ -53,7 +53,9 @@ final class MetadataValueRepository
     private Logger $logger;
 
     /**
-     * Initializes the Metadata Value Repository instance.
+     * Resolve database and logging collaborators.
+     *
+     * Responsibility: Resolve database and logging collaborators.
      */
     protected function __construct()
     {
@@ -62,6 +64,9 @@ final class MetadataValueRepository
     }
 
     /**
+     * Return resolved metadata values for a single record.
+     *
+     * Responsibility: Return resolved metadata values for a single record.
      * @param array<int, array<string, mixed>> $definitions
      * @return array<string, mixed>
      */
@@ -73,6 +78,9 @@ final class MetadataValueRepository
     }
 
     /**
+     * Return resolved metadata values for multiple records keyed by record id.
+     *
+     * Responsibility: Return resolved metadata values for multiple records keyed by record id.
      * @param int[] $recordIds
      * @param array<int, array<string, mixed>> $definitions
      * @return array<int, array<string, mixed>>
@@ -140,6 +148,9 @@ final class MetadataValueRepository
     }
 
     /**
+     * Synchronize stored metadata values from submitted payload data.
+     *
+     * Responsibility: Synchronize stored metadata values from submitted payload data.
      * @param array<int, array<string, mixed>> $definitions
      * @param array<string, mixed> $payload
      */
@@ -188,6 +199,9 @@ final class MetadataValueRepository
     }
 
     /**
+     * Extract the typed raw value from a metadata value row.
+     *
+     * Responsibility: Extract the typed raw value from a metadata value row.
      * @param array<string, mixed> $definition
      * @param array<string, mixed> $row
      */
@@ -204,6 +218,9 @@ final class MetadataValueRepository
     }
 
     /**
+     * Convert a raw metadata value into its display string.
+     *
+     * Responsibility: Convert a raw metadata value into its display string.
      * @param array<string, mixed> $definition
      * @param array<string, mixed> $row
      */
@@ -224,6 +241,9 @@ final class MetadataValueRepository
     }
 
     /**
+     * Normalize one submitted metadata value for storage columns.
+     *
+     * Responsibility: Normalize one submitted metadata value for storage columns.
      * @param array<string, mixed> $definition
      * @return array{empty: bool, value_text: ?string, value_number: ?float, value_boolean: ?bool, value_date: ?string, value_datetime: ?string, media_item_id: ?int}
      */
@@ -252,6 +272,9 @@ final class MetadataValueRepository
     }
 
     /**
+     * Normalize text-like metadata values for storage.
+     *
+     * Responsibility: Normalize text-like metadata values for storage.
      * @param array{empty: bool, value_text: ?string, value_number: ?float, value_boolean: ?bool, value_date: ?string, value_datetime: ?string, media_item_id: ?int} $normalized
      * @return array{empty: bool, value_text: ?string, value_number: ?float, value_boolean: ?bool, value_date: ?string, value_datetime: ?string, media_item_id: ?int}
      */
@@ -265,6 +288,9 @@ final class MetadataValueRepository
     }
 
     /**
+     * Normalize numeric metadata values for storage.
+     *
+     * Responsibility: Normalize numeric metadata values for storage.
      * @param array{empty: bool, value_text: ?string, value_number: ?float, value_boolean: ?bool, value_date: ?string, value_datetime: ?string, media_item_id: ?int} $normalized
      * @return array{empty: bool, value_text: ?string, value_number: ?float, value_boolean: ?bool, value_date: ?string, value_datetime: ?string, media_item_id: ?int}
      */
@@ -283,6 +309,9 @@ final class MetadataValueRepository
     }
 
     /**
+     * Normalize boolean metadata values for storage.
+     *
+     * Responsibility: Normalize boolean metadata values for storage.
      * @param array{empty: bool, value_text: ?string, value_number: ?float, value_boolean: ?bool, value_date: ?string, value_datetime: ?string, media_item_id: ?int} $normalized
      * @return array{empty: bool, value_text: ?string, value_number: ?float, value_boolean: ?bool, value_date: ?string, value_datetime: ?string, media_item_id: ?int}
      */
@@ -295,6 +324,9 @@ final class MetadataValueRepository
     }
 
     /**
+     * Normalize date metadata values for storage.
+     *
+     * Responsibility: Normalize date metadata values for storage.
      * @param array{empty: bool, value_text: ?string, value_number: ?float, value_boolean: ?bool, value_date: ?string, value_datetime: ?string, media_item_id: ?int} $normalized
      * @return array{empty: bool, value_text: ?string, value_number: ?float, value_boolean: ?bool, value_date: ?string, value_datetime: ?string, media_item_id: ?int}
      */
@@ -320,6 +352,9 @@ final class MetadataValueRepository
     }
 
     /**
+     * Normalize datetime metadata values for storage.
+     *
+     * Responsibility: Normalize datetime metadata values for storage.
      * @param array{empty: bool, value_text: ?string, value_number: ?float, value_boolean: ?bool, value_date: ?string, value_datetime: ?string, media_item_id: ?int} $normalized
      * @return array{empty: bool, value_text: ?string, value_number: ?float, value_boolean: ?bool, value_date: ?string, value_datetime: ?string, media_item_id: ?int}
      */
@@ -345,6 +380,9 @@ final class MetadataValueRepository
     }
 
     /**
+     * Normalize media-reference metadata values for storage.
+     *
+     * Responsibility: Normalize media-reference metadata values for storage.
      * @param array{empty: bool, value_text: ?string, value_number: ?float, value_boolean: ?bool, value_date: ?string, value_datetime: ?string, media_item_id: ?int} $normalized
      * @return array{empty: bool, value_text: ?string, value_number: ?float, value_boolean: ?bool, value_date: ?string, value_datetime: ?string, media_item_id: ?int}
      */
@@ -366,6 +404,9 @@ final class MetadataValueRepository
     }
 
     /**
+     * Resolve the display label for a select metadata value.
+     *
+     * Responsibility: Resolve the display label for a select metadata value.
      * @param array<string, mixed> $definition
      */
     private function selectLabel(array $definition, string $value): string
@@ -380,6 +421,9 @@ final class MetadataValueRepository
     }
 
     /**
+     * Resolve the display label for a catalog metadata value.
+     *
+     * Responsibility: Resolve the display label for a catalog metadata value.
      * @param array<string, mixed> $definition
      */
     private function catalogLabel(array $definition, string $value): string
@@ -397,7 +441,9 @@ final class MetadataValueRepository
     }
 
     /**
-     * Handles the current tenant id workflow.
+     * Return the current required tenant identifier.
+     *
+     * Responsibility: Return the current required tenant identifier.
      */
     private function currentTenantId(): int
     {

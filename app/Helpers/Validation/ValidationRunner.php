@@ -47,12 +47,14 @@ use Catalyst\Helpers\Validation\Rules\{
  * via __() i18n helpers.
  *
  * @package Catalyst\Helpers\Validation
+ * Responsibility: Applies parsed validation rules to input fields and collects localized errors.
  */
 class ValidationRunner
 {
     /**
      * Run all rules against the data and return field-level errors.
      *
+     * Responsibility: Run all rules against the data and return field-level errors.
      * @param array<string, mixed>                        $data        Input data
      * @param array<string, array<array{0:string,1:string[]}>> $ruleMap Parsed rules per field
      * @param array<string, string>                       $labels      Optional field labels
@@ -89,6 +91,7 @@ class ValidationRunner
     /**
      * Dispatch a single rule and return the error message, or null on pass.
      *
+     * Responsibility: Dispatch a single rule and return the error message, or null on pass.
      * @param string               $rule   Rule name
      * @param string               $field  Field key
      * @param string               $label  Human-readable label
@@ -235,9 +238,9 @@ class ValidationRunner
     }
 
     /**
-     * Retrieve a value from a nested array using dot notation.
-     * E.g. 'address.city' → $data['address']['city']
+     * Retrieve a value from a nested array using dot notation. E.g. 'address.city' → $data['address']['city'].
      *
+     * Responsibility: Retrieve a value from a nested array using dot notation. E.g. 'address.city' → $data['address']['city'].
      * @param array<string, mixed> $data
      * @param string               $key  Dot-notation key
      * @return mixed
@@ -264,6 +267,7 @@ class ValidationRunner
     /**
      * Check whether a specific rule name is present in the parsed rules list.
      *
+     * Responsibility: Check whether a specific rule name is present in the parsed rules list.
      * @param string                          $ruleName
      * @param array<array{0:string,1:string[]}> $parsedRules
      * @return bool
@@ -282,6 +286,7 @@ class ValidationRunner
     /**
      * Determine whether a value is considered empty.
      *
+     * Responsibility: Determine whether a value is considered empty.
      * @param mixed $value
      * @return bool
      */

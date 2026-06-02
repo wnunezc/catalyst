@@ -31,14 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Document;
 
 /**
- * Defines the Template String Renderer class contract.
+ * Renderer for simple variable-based document templates.
  *
  * @package Catalyst\Framework\Document
- * Responsibility: Coordinates the template string renderer behavior within its module boundary.
+ * Responsibility: Resolves dotted payload paths, conditional blocks, and scalar replacements inside template strings.
  */
 final class TemplateStringRenderer
 {
     /**
+     * Renders conditional blocks and variable placeholders from payload data.
+     *
+     * Responsibility: Renders conditional blocks and variable placeholders from payload data.
      * @param array<string, mixed> $payload
      */
     public function render(string $template, array $payload): string
@@ -67,6 +70,9 @@ final class TemplateStringRenderer
     }
 
     /**
+     * Resolves a dotted path from nested payload arrays.
+     *
+     * Responsibility: Resolves a dotted path from nested payload arrays.
      * @param array<string, mixed> $payload
      */
     public function resolvePath(array $payload, string $path): mixed
@@ -87,7 +93,9 @@ final class TemplateStringRenderer
     }
 
     /**
-     * Handles the stringify workflow.
+     * Converts resolved template values into renderable string output.
+     *
+     * Responsibility: Converts resolved template values into renderable string output.
      */
     private function stringify(mixed $value): string
     {
@@ -107,7 +115,9 @@ final class TemplateStringRenderer
     }
 
     /**
-     * Determines whether is Truthy.
+     * Determines whether a resolved value should render a conditional block.
+     *
+     * Responsibility: Determines whether a resolved value should render a conditional block.
      */
     private function isTruthy(mixed $value): bool
     {

@@ -44,10 +44,10 @@ use Catalyst\Repository\Roles\Requests\RoleBulkSelectionRequest;
 use Catalyst\Repository\Roles\Requests\RolePermissionSyncRequest;
 
 /**
- * Defines the Roles Controller class contract.
+ * Manages the administrative role catalog and role-permission assignments.
  *
  * @package Catalyst\Repository\Roles\Controllers
- * Responsibility: Coordinates the roles controller behavior within its module boundary.
+ * Responsibility: Lists and mutates roles, renders role forms and synchronizes permission assignments with record-claim protection.
  */
 class RolesController extends Controller
 {
@@ -55,6 +55,8 @@ class RolesController extends Controller
 
     /**
      * Initializes the Roles Controller instance.
+     *
+     * Responsibility: Initializes the Roles Controller instance.
      */
     public function __construct(
         private readonly RoleRepository $repo
@@ -63,7 +65,9 @@ class RolesController extends Controller
     }
 
     /**
-     * Handles the index workflow.
+     * Displays the searchable role catalog and handles exports.
+     *
+     * Responsibility: Displays the searchable role catalog and handles exports.
      */
     public function index(Request $request): Response
     {
@@ -188,7 +192,9 @@ class RolesController extends Controller
     }
 
     /**
-     * Handles the create workflow.
+     * Displays the form for creating a role.
+     *
+     * Responsibility: Displays the form for creating a role.
      */
     public function create(Request $request): Response
     {
@@ -197,7 +203,9 @@ class RolesController extends Controller
     }
 
     /**
-     * Handles the persistence workflow.
+     * Creates a role from the validated request payload.
+     *
+     * Responsibility: Creates a role from the validated request payload.
      */
     public function store(RolePayloadRequest $request): Response
     {
@@ -214,7 +222,9 @@ class RolesController extends Controller
     }
 
     /**
-     * Handles the edit workflow.
+     * Acquires a record claim and displays the role edit form.
+     *
+     * Responsibility: Acquires a record claim and displays the role edit form.
      */
     public function edit(Request $request, string $id): Response
     {
@@ -240,7 +250,9 @@ class RolesController extends Controller
     }
 
     /**
-     * Handles the update workflow.
+     * Updates a role while enforcing its active record claim.
+     *
+     * Responsibility: Updates a role while enforcing its active record claim.
      */
     public function update(RolePayloadRequest $request, string $id): Response
     {
@@ -274,7 +286,9 @@ class RolesController extends Controller
     }
 
     /**
-     * Handles the destroy workflow.
+     * Deletes a role when no competing record claim blocks the operation.
+     *
+     * Responsibility: Deletes a role when no competing record claim blocks the operation.
      */
     public function destroy(Request $request, string $id): Response
     {
@@ -297,7 +311,9 @@ class RolesController extends Controller
     }
 
     /**
-     * Handles the bulk destroy workflow.
+     * Deletes the selected roles after validating concurrency claims.
+     *
+     * Responsibility: Deletes the selected roles after validating concurrency claims.
      */
     public function bulkDestroy(Request $request): Response
     {
@@ -319,7 +335,9 @@ class RolesController extends Controller
     }
 
     /**
-     * Handles the permissions workflow.
+     * Displays the permission assignment surface for a role.
+     *
+     * Responsibility: Displays the permission assignment surface for a role.
      */
     public function permissions(Request $request, string $id): Response
     {
@@ -350,7 +368,9 @@ class RolesController extends Controller
     }
 
     /**
-     * Handles the sync permissions workflow.
+     * Synchronizes the selected permissions for a role.
+     *
+     * Responsibility: Synchronizes the selected permissions for a role.
      */
     public function syncPermissions(Request $request, string $id): Response
     {
@@ -386,7 +406,9 @@ class RolesController extends Controller
     }
 
     /**
-     * Renders the current view state.
+     * Builds and renders the role create or edit form.
+     *
+     * Responsibility: Builds and renders the role create or edit form.
      */
     private function renderForm(string $title, ?array $role, ?array $claim = null): Response
     {
@@ -463,7 +485,9 @@ class RolesController extends Controller
     }
 
     /**
-     * Normalizes the provided value.
+     * Trims an optional description and converts an empty value to null.
+     *
+     * Responsibility: Trims an optional description and converts an empty value to null.
      */
     private function normalizeDescription(mixed $description): ?string
     {

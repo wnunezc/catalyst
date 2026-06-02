@@ -36,7 +36,7 @@ use Catalyst\Framework\Http\Response;
 use Catalyst\Framework\Http\JsonResponse;
 use Closure;
 
-/**************************************************************************************
+/**
  * Login Throttle Middleware
  *
  * Protects POST /login and POST /register from brute-force attacks.
@@ -50,12 +50,7 @@ use Closure;
  * Key: SHA-256 of client IP (never stores raw IPs)
  *
  * @package Catalyst\Framework\Middleware
- */
-/**
- * Defines the Login Throttle Middleware class contract.
- *
- * @package Catalyst\Framework\Middleware
- * Responsibility: Coordinates the login throttle middleware behavior within its module boundary.
+ * Responsibility: Limits repeated login and registration attempts per client IP outside development.
  */
 class LoginThrottleMiddleware extends CoreMiddleware
 {
@@ -67,6 +62,8 @@ class LoginThrottleMiddleware extends CoreMiddleware
 
     /**
      * Initializes the Login Throttle Middleware instance.
+     *
+     * Responsibility: Initializes the Login Throttle Middleware instance.
      */
     public function __construct()
     {
@@ -80,7 +77,9 @@ class LoginThrottleMiddleware extends CoreMiddleware
     }
 
     /**
-     * Processes the current workflow.
+     * Applies login throttling before forwarding an allowed request.
+     *
+     * Responsibility: Applies login throttling before forwarding an allowed request.
      */
     public function process(Request $request, Closure $next): Response
     {
@@ -134,7 +133,9 @@ class LoginThrottleMiddleware extends CoreMiddleware
     // -- Private helpers -------------------------------------------------------
 
     /**
-     * Handles the too many attempts response workflow.
+     * Builds the HTML or JSON response returned during lockout.
+     *
+     * Responsibility: Builds the HTML or JSON response returned during lockout.
      */
     private function tooManyAttemptsResponse(int $minutesRemaining): Response
     {
@@ -158,7 +159,9 @@ class LoginThrottleMiddleware extends CoreMiddleware
 
 
     /**
-     * Loads the requested data.
+     * Loads persisted throttle counters from storage.
+     *
+     * Responsibility: Loads persisted throttle counters from storage.
      */
     private function loadData(): array
     {
@@ -175,7 +178,9 @@ class LoginThrottleMiddleware extends CoreMiddleware
     }
 
     /**
-     * Persists the current state.
+     * Prunes expired counters and persists the throttle state.
+     *
+     * Responsibility: Prunes expired counters and persists the throttle state.
      */
     private function saveData(array $data): void
     {

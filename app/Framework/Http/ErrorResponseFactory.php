@@ -34,14 +34,16 @@ use Catalyst\Framework\View\View;
 use Throwable;
 
 /**
- * Defines the Error Response Factory class contract.
+ * Creates framework error responses with HTML fallback rendering.
  *
  * @package Catalyst\Framework\Http
- * Responsibility: Coordinates the error response factory behavior within its module boundary.
+ * Responsibility: Renders localized error surfaces and falls back to escaped inline HTML when the view layer is unavailable.
  */
 final class ErrorResponseFactory
 {
     /**
+     * Renders an error response for the provided status and message.
+     *
      * @param array<string, string|array<string>> $headers
      */
     public static function render(int $status, string $title, string $message, array $headers = [], ?string $ticket = null): Response
@@ -70,7 +72,11 @@ final class ErrorResponseFactory
         }
     }
 
-    /** @param array<string, string|array<string>> $headers */
+    /**
+     * Renders a forbidden response.
+     *
+     * @param array<string, string|array<string>> $headers
+     */
     public static function forbidden(string $message = '', array $headers = []): Response
     {
         return self::render(
@@ -81,7 +87,11 @@ final class ErrorResponseFactory
         );
     }
 
-    /** @param array<string, string|array<string>> $headers */
+    /**
+     * Renders an unauthorized response.
+     *
+     * @param array<string, string|array<string>> $headers
+     */
     public static function unauthorized(string $message = '', array $headers = []): Response
     {
         return self::render(
@@ -92,7 +102,11 @@ final class ErrorResponseFactory
         );
     }
 
-    /** @param array<string, string|array<string>> $headers */
+    /**
+     * Renders a throttling response with an optional retry header.
+     *
+     * @param array<string, string|array<string>> $headers
+     */
     public static function tooManyRequests(string $message = '', int $retryAfter = 0, array $headers = []): Response
     {
         if ($retryAfter > 0) {
@@ -108,7 +122,7 @@ final class ErrorResponseFactory
     }
 
     /**
-     * Handles the fallback html workflow.
+     * Builds escaped fallback HTML for error responses when views cannot render.
      */
     private static function fallbackHtml(int $status, string $title, string $message, ?string $ticket): string
     {

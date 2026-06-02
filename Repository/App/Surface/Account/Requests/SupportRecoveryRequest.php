@@ -34,10 +34,10 @@ use Catalyst\Framework\Http\Request;
 use Catalyst\Helpers\Validation\Validator;
 
 /**
- * Defines the Support Recovery Request class contract.
+ * Validates account recovery support form input.
  *
  * @package App\Surface\Account\Requests
- * Responsibility: Coordinates the support recovery request behavior within its module boundary.
+ * Responsibility: Normalizes request type, known email, alternate email and user message for support review.
  */
 final class SupportRecoveryRequest
 {
@@ -47,7 +47,12 @@ final class SupportRecoveryRequest
         'compromised_account',
     ];
 
-    /** @return array{data: array<string, string>, errors: array<string, string[]>} */
+    /**
+     * Validates support recovery input, optionally forcing the compromised-account request type.
+     *
+     * Responsibility: Validates support recovery input, optionally forcing the compromised-account request type.
+     * @return array{data: array<string, string>, errors: array<string, string[]>}
+     */
     public function validate(Request $request, ?string $forcedType = null): array
     {
         $type = $forcedType ?? trim((string) $request->input('request_type', ''));

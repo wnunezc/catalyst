@@ -39,10 +39,10 @@ use Catalyst\Helpers\Log\Logger;
 use Throwable;
 
 /**
- * Defines the Document Template Mutation Service class contract.
+ * Applies claim-protected mutations to document templates.
  *
  * @package Catalyst\Repository\Documents\Actions
- * Responsibility: Coordinates the document template mutation service behavior within its module boundary.
+ * Responsibility: Update, delete, export, transition and restore templates while enforcing record claims.
  */
 final class DocumentTemplateMutationService
 {
@@ -50,6 +50,8 @@ final class DocumentTemplateMutationService
 
     /**
      * Initializes the Document Template Mutation Service instance.
+     *
+     * Responsibility: Initializes the Document Template Mutation Service instance.
      */
     public function __construct(
         private readonly DocumentTemplateManager $manager,
@@ -59,6 +61,9 @@ final class DocumentTemplateMutationService
     }
 
     /**
+     * Updates a document template and releases its record claim after persistence.
+     *
+     * Responsibility: Updates a document template and releases its record claim after persistence.
      * @param array<string, mixed> $payload
      */
     public function update(DocumentTemplate $template, Request $request, array $payload): void
@@ -75,7 +80,9 @@ final class DocumentTemplateMutationService
     }
 
     /**
-     * Handles the delete workflow.
+     * Deletes a document template and releases its record claim.
+     *
+     * Responsibility: Deletes a document template and releases its record claim.
      */
     public function delete(DocumentTemplate $template, Request $request): void
     {
@@ -86,6 +93,9 @@ final class DocumentTemplateMutationService
     }
 
     /**
+     * Exports an artifact from a document template after claim validation.
+     *
+     * Responsibility: Exports an artifact from a document template after claim validation.
      * @param array<string, mixed> $payload
      */
     public function export(DocumentTemplate $template, Request $request, array $payload): void
@@ -95,7 +105,9 @@ final class DocumentTemplateMutationService
     }
 
     /**
-     * Handles the transition workflow.
+     * Applies a workflow transition to a document template after claim validation.
+     *
+     * Responsibility: Applies a workflow transition to a document template after claim validation.
      */
     public function transition(DocumentTemplate $template, Request $request, string $transition, ?string $notes): void
     {
@@ -104,7 +116,9 @@ final class DocumentTemplateMutationService
     }
 
     /**
-     * Handles the restore version workflow.
+     * Restores a captured document template version after claim validation.
+     *
+     * Responsibility: Restores a captured document template version after claim validation.
      */
     public function restoreVersion(DocumentTemplate $template, Request $request, int $versionId): void
     {
@@ -121,7 +135,9 @@ final class DocumentTemplateMutationService
     }
 
     /**
-     * Handles the assert claim workflow.
+     * Verifies that the request holds an available claim for the document template.
+     *
+     * Responsibility: Verifies that the request holds an available claim for the document template.
      */
     private function assertClaim(int $templateId, Request $request): void
     {
@@ -135,7 +151,9 @@ final class DocumentTemplateMutationService
     }
 
     /**
-     * Handles the release claim workflow.
+     * Releases the request claim after a successful mutation without masking persistence success.
+     *
+     * Responsibility: Releases the request claim after a successful mutation without masking persistence success.
      */
     private function releaseClaim(int $templateId, Request $request, ?string $reason = null): void
     {

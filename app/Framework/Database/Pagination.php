@@ -37,11 +37,14 @@ namespace Catalyst\Framework\Database;
  * Contains the current page's items plus metadata for building pagination UI.
  *
  * @package Catalyst\Framework\Database
+ * Responsibility: Carries page items and pagination metadata for APIs and views.
  */
 class Pagination
 {
     /**
      * Initializes the Pagination instance.
+     *
+     * Responsibility: Initializes the Pagination instance.
      */
     public function __construct(
         /** Hydrated items for the current page. */
@@ -65,7 +68,9 @@ class Pagination
     // -------------------------------------------------------------------------
 
     /**
-     * Determines whether has More Pages.
+     * Determines whether another page exists after the current page.
+     *
+     * Responsibility: Determines whether another page exists after the current page.
      */
     public function hasMorePages(): bool
     {
@@ -73,7 +78,9 @@ class Pagination
     }
 
     /**
-     * Handles the on first page workflow.
+     * Determines whether the paginator is positioned on the first page.
+     *
+     * Responsibility: Determines whether the paginator is positioned on the first page.
      */
     public function onFirstPage(): bool
     {
@@ -81,7 +88,9 @@ class Pagination
     }
 
     /**
-     * Handles the on last page workflow.
+     * Determines whether the paginator is positioned on the last page.
+     *
+     * Responsibility: Determines whether the paginator is positioned on the last page.
      */
     public function onLastPage(): bool
     {
@@ -93,13 +102,9 @@ class Pagination
     // -------------------------------------------------------------------------
 
     /**
-     * Serialize to array — suitable for JSON API responses.
+     * Serialize to array — suitable for JSON API responses. Example response envelope: { "data": [...], "meta": { "total": 100, "per_page": 15, ... } }.
      *
-     * Example response envelope:
-     *   {
-     *     "data": [...],
-     *     "meta": { "total": 100, "per_page": 15, ... }
-     *   }
+     * Responsibility: Serialize to array — suitable for JSON API responses. Example response envelope: { "data": [...], "meta": { "total": 100, "per_page": 15, ... } }.
      */
     public function toArray(): array
     {
@@ -118,7 +123,9 @@ class Pagination
     }
 
     /**
-     * Handles the to json workflow.
+     * Encodes the paginator payload as JSON.
+     *
+     * Responsibility: Encodes the paginator payload as JSON.
      */
     public function toJson(int $flags = 0): string
     {

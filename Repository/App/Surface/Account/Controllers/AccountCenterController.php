@@ -42,15 +42,17 @@ use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
 
 /**
- * Defines the Account Center Controller class contract.
+ * Serves authenticated account center pages and account recovery entry points.
  *
  * @package App\Surface\Account\Controllers
- * Responsibility: Coordinates the account center controller behavior within its module boundary.
+ * Responsibility: Renders account profile, MFA, recovery support and activity screens for signed-in users.
  */
 final class AccountCenterController extends Controller
 {
     /**
-     * Handles the profile workflow.
+     * Renders the current user's profile summary.
+     *
+     * Responsibility: Renders the current user's profile summary.
      */
     public function profile(): Response
     {
@@ -60,7 +62,9 @@ final class AccountCenterController extends Controller
     }
 
     /**
-     * Handles the security workflow.
+     * Redirects the legacy account security entry point to the MFA management screen.
+     *
+     * Responsibility: Redirects the legacy account security entry point to the MFA management screen.
      */
     public function security(): RedirectResponse
     {
@@ -68,7 +72,9 @@ final class AccountCenterController extends Controller
     }
 
     /**
-     * Handles the mfa workflow.
+     * Renders the MFA status and management entry screen.
+     *
+     * Responsibility: Renders the MFA status and management entry screen.
      */
     public function mfa(): Response
     {
@@ -78,7 +84,9 @@ final class AccountCenterController extends Controller
     }
 
     /**
-     * Handles the mfa recovery workflow.
+     * Renders the authenticated MFA recovery request form.
+     *
+     * Responsibility: Renders the authenticated MFA recovery request form.
      */
     public function mfaRecovery(): Response
     {
@@ -88,7 +96,9 @@ final class AccountCenterController extends Controller
     }
 
     /**
-     * Handles the request mfa recovery workflow.
+     * Validates the authenticated MFA recovery request and sends a reset email when accepted.
+     *
+     * Responsibility: Validates the authenticated MFA recovery request and sends a reset email when accepted.
      */
     public function requestMfaRecovery(Request $request): Response
     {
@@ -107,7 +117,9 @@ final class AccountCenterController extends Controller
     }
 
     /**
-     * Handles the recovery workflow.
+     * Redirects the account recovery landing route to the support flow.
+     *
+     * Responsibility: Redirects the account recovery landing route to the support flow.
      */
     public function recovery(): RedirectResponse
     {
@@ -115,7 +127,9 @@ final class AccountCenterController extends Controller
     }
 
     /**
-     * Handles the support workflow.
+     * Renders the authenticated support recovery request form.
+     *
+     * Responsibility: Renders the authenticated support recovery request form.
      */
     public function support(): Response
     {
@@ -128,7 +142,9 @@ final class AccountCenterController extends Controller
     }
 
     /**
-     * Handles the submit support workflow.
+     * Submits a general authenticated support recovery request.
+     *
+     * Responsibility: Submits a general authenticated support recovery request.
      */
     public function submitSupport(Request $request): Response
     {
@@ -136,7 +152,9 @@ final class AccountCenterController extends Controller
     }
 
     /**
-     * Handles the compromised workflow.
+     * Renders the authenticated compromised-account recovery form.
+     *
+     * Responsibility: Renders the authenticated compromised-account recovery form.
      */
     public function compromised(): Response
     {
@@ -149,7 +167,9 @@ final class AccountCenterController extends Controller
     }
 
     /**
-     * Handles the submit compromised workflow.
+     * Submits an authenticated compromised-account recovery request.
+     *
+     * Responsibility: Submits an authenticated compromised-account recovery request.
      */
     public function submitCompromised(Request $request): Response
     {
@@ -157,7 +177,9 @@ final class AccountCenterController extends Controller
     }
 
     /**
-     * Handles the activity workflow.
+     * Renders the account recovery and security activity timeline.
+     *
+     * Responsibility: Renders the account recovery and security activity timeline.
      */
     public function activity(): Response
     {
@@ -167,7 +189,9 @@ final class AccountCenterController extends Controller
     }
 
     /**
-     * Handles the request workflow.
+     * Validates and stores an authenticated support recovery request.
+     *
+     * Responsibility: Validates and stores an authenticated support recovery request.
      */
     private function handleSupport(Request $request, ?string $forcedType, string $fallback): Response
     {
@@ -185,7 +209,12 @@ final class AccountCenterController extends Controller
         return $this->redirect($fallback);
     }
 
-    /** @param array<string, mixed> $data */
+    /**
+     * Renders an authenticated account view with the shared account shell scope.
+     *
+     * Responsibility: Renders an authenticated account view with the shared account shell scope.
+     * @param array<string, mixed> $data
+     */
     private function render(string $view, string $title, array $data = []): Response
     {
         $shell = new AccountShellViewModel();

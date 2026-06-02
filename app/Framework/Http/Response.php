@@ -32,26 +32,16 @@ namespace Catalyst\Framework\Http;
 
 use InvalidArgumentException;
 
-/**************************************************************************************
- * Response class representing an HTTP response
- *
- * Handles the response body, status code, and headers for HTTP responses
- * returned from the application.
- *
- * @package Catalyst\Framework\Http
- */
 /**
- * Defines the Response class contract.
+ * Represents a framework HTTP response.
  *
  * @package Catalyst\Framework\Http
- * Responsibility: Coordinates the response behavior within its module boundary.
+ * Responsibility: Stores response content, status, headers and internal attributes, then sends headers and body to the client.
  */
 class Response
 {
     /**
-     * HTTP status codes and their text representations
-     *
-     * @var array<int, string>
+     * @var array<int, string> HTTP status codes and their text labels.
      */
     protected static array $statusTexts = [
         100 => 'Continue',
@@ -119,37 +109,27 @@ class Response
     ];
 
     /**
-     * Response content
-     *
-     * @var string
+     * @var string Response body content.
      */
     protected string $content;
 
     /**
-     * HTTP status code
-     *
-     * @var int
+     * @var int HTTP status code.
      */
     protected int $statusCode;
 
     /**
-     * Response headers
-     *
-     * @var array<string, string|array<string>>
+     * @var array<string, string|array<string>> Response headers.
      */
     protected array $headers;
 
     /**
-     * Response charset
-     *
-     * @var string
+     * @var string Response charset.
      */
     protected string $charset;
 
     /**
-     * Flag indicating if the response has been sent
-     *
-     * @var bool
+     * @var bool Whether the response was already sent.
      */
     protected bool $sent = false;
 
@@ -163,12 +143,9 @@ class Response
     protected array $attributes = [];
 
     /**
-     * Create a new response instance
+     * Creates a response with body, status, headers and charset.
      *
-     * @param string $content Response content
-     * @param int $statusCode HTTP status code
-     * @param array $headers Response headers
-     * @param string $charset Response charset
+     * Responsibility: Creates a response with body, status, headers and charset.
      */
     public function __construct(
         string $content = '',
@@ -184,10 +161,9 @@ class Response
     }
 
     /**
-     * Set the response content
+     * Replaces the response body content.
      *
-     * @param string $content Response content
-     * @return self For method chaining
+     * Responsibility: Replaces the response body content.
      */
     public function setContent(string $content): self
     {
@@ -196,9 +172,9 @@ class Response
     }
 
     /**
-     * Get the response content
+     * Returns the response body content.
      *
-     * @return string Response content
+     * Responsibility: Returns the response body content.
      */
     public function getContent(): string
     {
@@ -206,11 +182,10 @@ class Response
     }
 
     /**
-     * Set HTTP status code
+     * Updates the HTTP status code.
      *
-     * @param int $statusCode HTTP status code
-     * @return self For method chaining
-     * @throws InvalidArgumentException If status code is invalid
+     * Responsibility: Updates the HTTP status code.
+     * @throws InvalidArgumentException
      */
     public function setStatusCode(int $statusCode): self
     {
@@ -223,9 +198,9 @@ class Response
     }
 
     /**
-     * Get the HTTP status code
+     * Returns the HTTP status code.
      *
-     * @return int HTTP status code
+     * Responsibility: Returns the HTTP status code.
      */
     public function getStatusCode(): int
     {
@@ -233,9 +208,9 @@ class Response
     }
 
     /**
-     * Get the status text for the current status code
+     * Returns the status text for the current status code.
      *
-     * @return string Status text
+     * Responsibility: Returns the status text for the current status code.
      */
     public function getStatusText(): string
     {
@@ -243,12 +218,9 @@ class Response
     }
 
     /**
-     * Set a response header
+     * Sets or appends a response header.
      *
-     * @param string $name Header name
-     * @param string|array $value Header value
-     * @param bool $replace Whether to replace existing headers with same name
-     * @return self For method chaining
+     * Responsibility: Sets or appends a response header.
      */
     public function setHeader(string $name, string|array $value, bool $replace = true): self
     {
@@ -272,9 +244,9 @@ class Response
     }
 
     /**
-     * Get all response headers
+     * Returns all response headers.
      *
-     * @return array Response headers
+     * Responsibility: Returns all response headers.
      */
     public function getHeaders(): array
     {
@@ -282,11 +254,9 @@ class Response
     }
 
     /**
-     * Set an internal response attribute.
+     * Stores an internal response attribute.
      *
-     * @param string $name Attribute name
-     * @param mixed $value Attribute value
-     * @return self
+     * Responsibility: Stores an internal response attribute.
      */
     public function setAttribute(string $name, mixed $value): self
     {
@@ -296,11 +266,9 @@ class Response
     }
 
     /**
-     * Get an internal response attribute.
+     * Returns an internal response attribute.
      *
-     * @param string $name Attribute name
-     * @param mixed $default Default value when the attribute is missing
-     * @return mixed
+     * Responsibility: Returns an internal response attribute.
      */
     public function getAttribute(string $name, mixed $default = null): mixed
     {
@@ -308,10 +276,9 @@ class Response
     }
 
     /**
-     * Check if an internal response attribute exists.
+     * Checks whether an internal response attribute exists.
      *
-     * @param string $name Attribute name
-     * @return bool
+     * Responsibility: Checks whether an internal response attribute exists.
      */
     public function hasAttribute(string $name): bool
     {
@@ -319,10 +286,9 @@ class Response
     }
 
     /**
-     * Set the response charset
+     * Updates the response charset.
      *
-     * @param string $charset Character set
-     * @return self For method chaining
+     * Responsibility: Updates the response charset.
      */
     public function setCharset(string $charset): self
     {
@@ -331,9 +297,9 @@ class Response
     }
 
     /**
-     * Get the response charset
+     * Returns the response charset.
      *
-     * @return string Character set
+     * Responsibility: Returns the response charset.
      */
     public function getCharset(): string
     {
@@ -341,9 +307,9 @@ class Response
     }
 
     /**
-     * Send the response to the client
+     * Sends response headers and body to the client.
      *
-     * @return self For method chaining
+     * Responsibility: Sends response headers and body to the client.
      */
     public function send(): self
     {
@@ -366,9 +332,9 @@ class Response
     }
 
     /**
-     * Check if the response has been sent
+     * Checks whether the response was already sent.
      *
-     * @return bool True if the response has been sent
+     * Responsibility: Checks whether the response was already sent.
      */
     public function isSent(): bool
     {
@@ -376,9 +342,9 @@ class Response
     }
 
     /**
-     * Send the response headers
+     * Sends the HTTP status and headers when running outside CLI.
      *
-     * @return self For method chaining
+     * Responsibility: Sends the HTTP status and headers when running outside CLI.
      */
     protected function sendHeaders(): self
     {
@@ -405,9 +371,9 @@ class Response
     }
 
     /**
-     * Send the response content
+     * Writes the response body content.
      *
-     * @return self For method chaining
+     * Responsibility: Writes the response body content.
      */
     protected function sendContent(): self
     {
@@ -416,9 +382,9 @@ class Response
     }
 
     /**
-     * Flush all response buffers
+     * Flushes output buffers after sending the response.
      *
-     * @return self For method chaining
+     * Responsibility: Flushes output buffers after sending the response.
      */
     protected function flushBuffers(): self
     {
@@ -432,10 +398,9 @@ class Response
     }
 
     /**
-     * Normalize header name (e.g., "content-type" to "Content-Type")
+     * Normalizes a header name to title-case segments.
      *
-     * @param string $name Header name
-     * @return string Normalized header name
+     * Responsibility: Normalizes a header name to title-case segments.
      */
     protected function normalizeHeaderName(string $name): string
     {
@@ -443,11 +408,7 @@ class Response
     }
 
     /**
-     * Create a new success response
-     *
-     * @param string $content Response content
-     * @param array $headers Response headers
-     * @return static New response instance
+     * Creates a 200 OK response.
      */
     public static function success(string $content = '', array $headers = []): static
     {
@@ -455,11 +416,7 @@ class Response
     }
 
     /**
-     * Create a new created response
-     *
-     * @param string $content Response content
-     * @param array $headers Response headers
-     * @return static New response instance
+     * Creates a 201 Created response.
      */
     public static function created(string $content = '', array $headers = []): static
     {
@@ -467,11 +424,7 @@ class Response
     }
 
     /**
-     * Create a new accepted response
-     *
-     * @param string $content Response content
-     * @param array $headers Response headers
-     * @return static New response instance
+     * Creates a 202 Accepted response.
      */
     public static function accepted(string $content = '', array $headers = []): static
     {
@@ -479,10 +432,7 @@ class Response
     }
 
     /**
-     * Create a new no content response
-     *
-     * @param array $headers Response headers
-     * @return static New response instance
+     * Creates a 204 No Content response.
      */
     public static function noContent(array $headers = []): static
     {
@@ -490,11 +440,7 @@ class Response
     }
 
     /**
-     * Create a not found response
-     *
-     * @param string $content Response content
-     * @param array $headers Response headers
-     * @return static New response instance
+     * Creates a 404 Not Found response.
      */
     public static function notFound(string $content = 'Not Found', array $headers = []): static
     {
@@ -502,11 +448,7 @@ class Response
     }
 
     /**
-     * Create a bad request response
-     *
-     * @param string $content Response content
-     * @param array $headers Response headers
-     * @return static New response instance
+     * Creates a 400 Bad Request response.
      */
     public static function badRequest(string $content = 'Bad Request', array $headers = []): static
     {
@@ -514,11 +456,7 @@ class Response
     }
 
     /**
-     * Create an unauthorized response
-     *
-     * @param string $content Response content
-     * @param array $headers Response headers
-     * @return static New response instance
+     * Creates a 401 Unauthorized response.
      */
     public static function unauthorized(string $content = 'Unauthorized', array $headers = []): static
     {
@@ -526,11 +464,7 @@ class Response
     }
 
     /**
-     * Create a forbidden response
-     *
-     * @param string $content Response content
-     * @param array $headers Response headers
-     * @return static New response instance
+     * Creates a 403 Forbidden response.
      */
     public static function forbidden(string $content = 'Forbidden', array $headers = []): static
     {
@@ -538,12 +472,7 @@ class Response
     }
 
     /**
-     * Create a method not allowed response
-     *
-     * @param array $allowedMethods Allowed HTTP methods
-     * @param string $content Response content
-     * @param array $headers Response headers
-     * @return static New response instance
+     * Creates a 405 Method Not Allowed response with an Allow header.
      */
     public static function methodNotAllowed(
         array  $allowedMethods,
@@ -556,11 +485,7 @@ class Response
     }
 
     /**
-     * Create an internal server error response
-     *
-     * @param string $content Response content
-     * @param array $headers Response headers
-     * @return static New response instance
+     * Creates a 500 Internal Server Error response.
      */
     public static function serverError(
         string $content = 'Internal Server Error',
@@ -571,13 +496,7 @@ class Response
     }
 
     /**
-     * Create a JSON response
-     *
-     * @param mixed $data Data to encode as JSON
-     * @param int $statusCode HTTP status code
-     * @param array $headers Response headers
-     * @param int $options JSON encoding options
-     * @return JsonResponse New JSON response instance
+     * Creates a JSON response.
      */
     public static function json(
         mixed $data,
@@ -590,12 +509,7 @@ class Response
     }
 
     /**
-     * Create a redirect response
-     *
-     * @param string $url URL to redirect to
-     * @param int $statusCode HTTP status code (301, 302, 303, 307, 308)
-     * @param array $headers Additional headers
-     * @return RedirectResponse New redirect response instance
+     * Creates a redirect response.
      */
     public static function redirect(
         string $url,

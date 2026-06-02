@@ -31,14 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Catalog;
 
 /**
- * Defines the Catalog Option Map Builder class contract.
+ * Builds select-option maps from catalog definitions and item rows.
  *
  * @package Catalyst\Framework\Catalog
- * Responsibility: Coordinates the catalog option map builder behavior within its module boundary.
+ * Responsibility: Filters catalog rows and formats stable key-to-label option maps.
  */
 final class CatalogOptionMapBuilder
 {
     /**
+     * Builds selectable item options while preserving currently selected inactive values.
+     *
+     * Responsibility: Builds selectable item options while preserving currently selected inactive values.
      * @param array<string, mixed> $definition
      * @param array<int, array<string, mixed>> $rows
      * @param string[] $selectedKeys
@@ -73,6 +76,9 @@ final class CatalogOptionMapBuilder
     }
 
     /**
+     * Builds catalog-definition options with optional workflow-state labels.
+     *
+     * Responsibility: Builds catalog-definition options with optional workflow-state labels.
      * @param array<int, array<string, mixed>> $rows
      * @return array<string, string>
      */

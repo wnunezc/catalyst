@@ -38,15 +38,18 @@ use Catalyst\Framework\Route\Route;
 use Catalyst\Framework\Route\Router;
 
 /**
- * Defines the Route List Command class contract.
+ * route:list CLI command.
+ *
+ * Responsibility: Runs the route:list command to List registered routes with method, URI, name, handler and middleware.
  *
  * @package Catalyst\Framework\Cli\Commands
- * Responsibility: Coordinates the route list command behavior within its module boundary.
  */
 class RouteListCommand extends AbstractCommand
 {
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -54,14 +57,21 @@ class RouteListCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
         return 'List registered routes with method, URI, name, handler and middleware';
     }
 
-    /** @return Option[] */
+    /**
+     * Defines the accepted option schema for this command.
+     *
+     * Responsibility: Defines the accepted option schema for this command.
+     * @return Option[]
+     */
     public function getOptions(): array
     {
         return [
@@ -71,7 +81,9 @@ class RouteListCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {
@@ -135,7 +147,9 @@ class RouteListCommand extends AbstractCommand
     }
 
     /**
-     * @return array{methods:string[],uri:string,name:string,handler:string,middleware:string}
+     * Describes the map route helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the map route helper workflow used by this CLI component.
      */
     private function mapRoute(Route $route): array
     {
@@ -164,7 +178,9 @@ class RouteListCommand extends AbstractCommand
     }
 
     /**
-     * Handles the stringify handler workflow.
+     * Describes the stringify handler helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the stringify handler helper workflow used by this CLI component.
      */
     private function stringifyHandler(mixed $handler, ?string $namespace): string
     {

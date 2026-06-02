@@ -37,15 +37,17 @@ use Catalyst\Framework\Route\Router;
 use Catalyst\Framework\Route\RouteCollection;
 
 /**
- * Defines the Infra Test Controller class contract.
+ * Exposes development diagnostics for shared HTTP and infrastructure helpers.
  *
  * @package Catalyst\Repository\DevTools\Controllers
- * Responsibility: Coordinates the infra test controller behavior within its module boundary.
+ * Responsibility: Exercises response envelopes, escaping, logging, CORS and route caching.
  */
 class InfraTestController extends Controller
 {
     /**
-     * Handles the index workflow.
+     * Redirects the infrastructure diagnostic entry point to the DevTools harness.
+     *
+     * Responsibility: Redirects the infrastructure diagnostic entry point to the DevTools harness.
      */
     public function index(): Response
     {
@@ -53,7 +55,9 @@ class InfraTestController extends Controller
     }
 
     /**
-     * Handles the test escape helper workflow.
+     * Returns representative escaped values produced by the HTML helper.
+     *
+     * Responsibility: Returns representative escaped values produced by the HTML helper.
      */
     public function testEscapeHelper(): JsonResponse
     {
@@ -67,7 +71,9 @@ class InfraTestController extends Controller
     }
 
     /**
-     * Handles the test layout workflow.
+     * Renders the layout smoke-test page with escaping tokens.
+     *
+     * Responsibility: Renders the layout smoke-test page with escaping tokens.
      */
     public function testLayout(): Response
     {
@@ -80,7 +86,9 @@ class InfraTestController extends Controller
     }
 
     /**
-     * Handles the ui showcase workflow.
+     * Renders the shared UI showcase page.
+     *
+     * Responsibility: Renders the shared UI showcase page.
      */
     public function uiShowcase(): Response
     {
@@ -91,7 +99,9 @@ class InfraTestController extends Controller
     }
 
     /**
-     * Handles the test json workflow.
+     * Returns a raw JSON response envelope.
+     *
+     * Responsibility: Returns a raw JSON response envelope.
      */
     public function testJson(): JsonResponse
     {
@@ -99,7 +109,9 @@ class InfraTestController extends Controller
     }
 
     /**
-     * Handles the test json success workflow.
+     * Returns a successful JSON response envelope.
+     *
+     * Responsibility: Returns a successful JSON response envelope.
      */
     public function testJsonSuccess(): JsonResponse
     {
@@ -107,7 +119,9 @@ class InfraTestController extends Controller
     }
 
     /**
-     * Handles the test json error workflow.
+     * Returns an error JSON response envelope.
+     *
+     * Responsibility: Returns an error JSON response envelope.
      */
     public function testJsonError(): JsonResponse
     {
@@ -115,7 +129,9 @@ class InfraTestController extends Controller
     }
 
     /**
-     * Handles the test validation error workflow.
+     * Returns a validation-error JSON response envelope.
+     *
+     * Responsibility: Returns a validation-error JSON response envelope.
      */
     public function testValidationError(): JsonResponse
     {
@@ -129,7 +145,9 @@ class InfraTestController extends Controller
     }
 
     /**
-     * Handles the test api response workflow.
+     * Returns a legacy API response envelope with pagination metadata.
+     *
+     * Responsibility: Returns a legacy API response envelope with pagination metadata.
      */
     public function testApiResponse(): JsonResponse
     {
@@ -137,7 +155,9 @@ class InfraTestController extends Controller
     }
 
     /**
-     * Handles the test logger email workflow.
+     * Writes an email audit entry and returns its expected log path.
+     *
+     * Responsibility: Writes an email audit entry and returns its expected log path.
      */
     public function testLoggerEmail(): JsonResponse
     {
@@ -153,7 +173,9 @@ class InfraTestController extends Controller
     }
 
     /**
-     * Handles the test cors headers workflow.
+     * Returns normalized CORS configuration diagnostics.
+     *
+     * Responsibility: Returns normalized CORS configuration diagnostics.
      */
     public function testCorsHeaders(): JsonResponse
     {
@@ -180,7 +202,9 @@ class InfraTestController extends Controller
     }
 
     /**
-     * Handles the test route cache workflow.
+     * Builds, loads and clears a route cache to validate the cache lifecycle.
+     *
+     * Responsibility: Builds, loads and clears a route cache to validate the cache lifecycle.
      */
     public function testRouteCache(): JsonResponse
     {

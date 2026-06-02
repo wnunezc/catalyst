@@ -36,15 +36,17 @@ use Catalyst\Framework\Metadata\MetadataManager;
 use Catalyst\Framework\Storage\StorageManager;
 
 /**
- * Defines the Media Library Form Factory class contract.
+ * Builds the administrative media upload and edit form schema.
  *
  * @package Catalyst\Repository\Media\Support
- * Responsibility: Coordinates the media library form factory behavior within its module boundary.
+ * Responsibility: Combine storage options and dynamic metadata definitions into the media asset form.
  */
 final class MediaLibraryFormFactory
 {
     /**
      * Initializes the Media Library Form Factory instance.
+     *
+     * Responsibility: Initializes the Media Library Form Factory instance.
      */
     public function __construct(
         private readonly MetadataManager $metadata
@@ -52,6 +54,9 @@ final class MediaLibraryFormFactory
     }
 
     /**
+     * Builds the form schema for a new or existing media asset.
+     *
+     * Responsibility: Builds the form schema for a new or existing media asset.
      * @param array<string, mixed>|null $media
      * @param array<string, mixed> $hiddenFields
      * @return array<string, mixed>

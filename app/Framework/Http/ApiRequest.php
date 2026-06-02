@@ -30,31 +30,16 @@ declare(strict_types=1);
 
 namespace Catalyst\Framework\Http;
 
-/**************************************************************************************
- * API Request Handler
- *
- * This class provides utilities for working with API requests in the Catalyst framework.
- * It helps identify API requests and extract data from different request formats,
- * supporting JSON, form-urlencoded and multipart form data content types.
- *
- * The class provides a standardized way to handle different types of API requests
- * regardless of their source or format, simplifying API development within the framework.
- *
- * @package Catalyst\Framework\Http
- */
 /**
- * Defines the Api Request class contract.
+ * Extracts API payloads and detects JSON-oriented HTTP requests.
  *
  * @package Catalyst\Framework\Http
- * Responsibility: Coordinates the api request behavior within its module boundary.
+ * Responsibility: Normalizes request data from JSON, form-url-encoded and multipart bodies and identifies API/AJAX request intent.
  */
 class ApiRequest
 {
     /**
-     * Procesa una petición API, extrayendo datos según el formato
-     *
-     * @param Request $request La petición original
-     * @return array Los datos de la petición
+     * Extracts request data according to the submitted content type.
      */
     public static function getData(Request $request): array
     {
@@ -76,10 +61,7 @@ class ApiRequest
     }
 
     /**
-     * Determina si la petición es una API request
-     *
-     * @param Request $request La petición
-     * @return bool True si es API request
+     * Determines whether the request expects API-style JSON handling.
      */
     public static function isApiRequest(Request $request): bool
     {

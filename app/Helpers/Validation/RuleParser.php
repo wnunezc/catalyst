@@ -40,12 +40,14 @@ namespace Catalyst\Helpers\Validation;
  *   [['required', []], ['min', ['3']], ['unique', ['users', 'email']]]
  *
  * @package Catalyst\Helpers\Validation
+ * Responsibility: Normalizes string or array validation definitions into rule-and-parameter tuples.
  */
 class RuleParser
 {
     /**
      * Parse a rule definition into normalized tuples.
      *
+     * Responsibility: Parse a rule definition into normalized tuples.
      * @param string|array<int, string> $rules Rule definition (string or array)
      * @return array<int, array{0: string, 1: string[]}> Normalized rule tuples
      */

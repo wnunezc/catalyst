@@ -31,14 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Repository\Settings\Requests;
 
 /**
- * Defines the Dev Tools Config Request class contract.
+ * Resolves developer-tool compatibility settings from the setup surface.
  *
  * @package Catalyst\Repository\Settings\Requests
- * Responsibility: Coordinates the dev tools config request behavior within its module boundary.
+ * Responsibility: Converts submitted debug and log-display flags into normalized configuration values.
  */
 final class DevToolsConfigRequest extends AbstractSettingsRequest
 {
     /**
+     * Returns validation rules for developer-tool settings.
+     *
+     * Responsibility: Returns validation rules for developer-tool settings.
      * @return array<string, string>
      */
     public function rules(): array
@@ -47,6 +50,9 @@ final class DevToolsConfigRequest extends AbstractSettingsRequest
     }
 
     /**
+     * Builds normalized developer-tool input for validation.
+     *
+     * Responsibility: Builds normalized developer-tool input for validation.
      * @return array<string, mixed>
      */
     protected function validationData(): array

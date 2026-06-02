@@ -42,10 +42,10 @@ use Catalyst\Framework\Tenancy\TenancyManager;
 use Catalyst\Framework\Traits\SingletonTrait;
 
 /**
- * Defines the Retention Manager class contract.
+ * Applies archive and purge policies to framework runtime records.
  *
  * @package Catalyst\Framework\Retention
- * Responsibility: Coordinates the retention manager behavior within its module boundary.
+ * Responsibility: Selects eligible tenant records, applies retention actions, and writes operational audit entries.
  */
 final class RetentionManager
 {
@@ -57,6 +57,8 @@ final class RetentionManager
 
     /**
      * Initializes the Retention Manager instance.
+     *
+     * Responsibility: Initializes the Retention Manager instance.
      */
     protected function __construct()
     {
@@ -66,6 +68,9 @@ final class RetentionManager
     }
 
     /**
+     * Returns the canonical retention policies for managed resources.
+     *
+     * Responsibility: Returns the canonical retention policies for managed resources.
      * @return array<string, array<string, mixed>>
      */
     public function policies(): array
@@ -103,6 +108,9 @@ final class RetentionManager
     }
 
     /**
+     * Evaluates eligible records and optionally applies their retention actions.
+     *
+     * Responsibility: Evaluates eligible records and optionally applies their retention actions.
      * @return array{success:bool,dry_run:bool,policies:array<string,array<string,mixed>>,steps:array<int,array<string,mixed>>}
      */
     public function run(?string $resourceKey = null, bool $dryRun = false, int $limit = 100, array $onlyRecordIds = []): array
@@ -138,6 +146,9 @@ final class RetentionManager
     }
 
     /**
+     * Collects retention candidates for one resource group or all groups.
+     *
+     * Responsibility: Collects retention candidates for one resource group or all groups.
      * @return array<int, array<string, mixed>>
      */
     private function candidateSets(?string $resourceKey, int $limit): array
@@ -162,6 +173,9 @@ final class RetentionManager
     }
 
     /**
+     * Selects orphaned media records eligible for archive or purge.
+     *
+     * Responsibility: Selects orphaned media records eligible for archive or purge.
      * @return array<int, array<string, mixed>>
      */
     private function mediaCandidates(int $limit): array
@@ -214,6 +228,9 @@ final class RetentionManager
     }
 
     /**
+     * Selects orphaned document artifacts eligible for archive or purge.
+     *
+     * Responsibility: Selects orphaned document artifacts eligible for archive or purge.
      * @return array<int, array<string, mixed>>
      */
     private function artifactCandidates(int $limit): array
@@ -266,6 +283,9 @@ final class RetentionManager
     }
 
     /**
+     * Selects detached resource attachments eligible for purge.
+     *
+     * Responsibility: Selects detached resource attachments eligible for purge.
      * @return array<int, array<string, mixed>>
      */
     private function attachmentCandidates(int $limit): array
@@ -294,6 +314,9 @@ final class RetentionManager
     }
 
     /**
+     * Selects audit records outside the retention window.
+     *
+     * Responsibility: Selects audit records outside the retention window.
      * @return array<int, array<string, mixed>>
      */
     private function auditCandidates(int $limit): array
@@ -321,6 +344,9 @@ final class RetentionManager
     }
 
     /**
+     * Applies one archive or purge action to its target record.
+     *
+     * Responsibility: Applies one archive or purge action to its target record.
      * @param array<string, mixed> $candidate
      */
     private function applyCandidate(array $candidate): void
@@ -386,7 +412,9 @@ final class RetentionManager
     }
 
     /**
-     * Handles the audit workflow.
+     * Records an audit entry for an applied retention action.
+     *
+     * Responsibility: Records an audit entry for an applied retention action.
      */
     private function audit(string $resourceKey, int $recordId, string $action, string $label): void
     {
@@ -404,7 +432,9 @@ final class RetentionManager
     }
 
     /**
-     * Handles the current tenant id workflow.
+     * Returns the active tenant required for retention queries.
+     *
+     * Responsibility: Returns the active tenant required for retention queries.
      */
     private function currentTenantId(): int
     {

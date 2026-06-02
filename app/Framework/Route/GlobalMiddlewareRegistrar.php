@@ -39,14 +39,17 @@ use Catalyst\Framework\Middleware\TenancyContextMiddleware;
 use Catalyst\Framework\Middleware\WebSocketBootMiddleware;
 
 /**
- * Defines the Global Middleware Registrar class contract.
+ * Registers the framework middleware applied to every routed request.
  *
  * @package Catalyst\Framework\Route
- * Responsibility: Coordinates the global middleware registrar behavior within its module boundary.
+ * Responsibility: Defines the global middleware order and adds that stack to the router.
  */
 final class GlobalMiddlewareRegistrar
 {
     /**
+     * Returns global middleware classes in execution order.
+     *
+     * Responsibility: Returns global middleware classes in execution order.
      * @return list<class-string>
      */
     public function middleware(): array
@@ -63,7 +66,9 @@ final class GlobalMiddlewareRegistrar
     }
 
     /**
-     * Registers the requested definition.
+     * Adds every global middleware class to the router.
+     *
+     * Responsibility: Adds every global middleware class to the router.
      */
     public function register(Router $router): void
     {

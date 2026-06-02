@@ -61,6 +61,7 @@ use Exception;
  *
  * @package   Catalyst
  * @subpackage Core
+ * Responsibility: Bootstraps runtime services, loads routes and dispatches HTTP requests.
  * @version   1.0.0
  * @since     1.0.0
  */
@@ -86,10 +87,9 @@ class Kernel
     protected bool $debugEnabled = false;
 
     /**
-     * Bootstrap the framework
+     * Bootstrap the framework Initializes all core components and prepares the application to run.
      *
-     * Initializes all core components and prepares the application to run
-     *
+     * Responsibility: Bootstrap the framework Initializes all core components and prepares the application to run.
      * @return self
      * @throws Exception
      */
@@ -152,10 +152,9 @@ class Kernel
     }
 
     /**
-     * Run the application
+     * Run the application Process the request and generate a response.
      *
-     * Process the request and generate a response
-     *
+     * Responsibility: Run the application Process the request and generate a response.
      * @return void
      * @throws Exception If the application hasn't been bootstrapped
      */
@@ -180,9 +179,9 @@ class Kernel
     }
 
     /**
-     * Dispatch the request and handle routing errors internally,
-     * so all responses (including 404/405/500) flow through middleware.
+     * Dispatch the request and handle routing errors internally, so all responses (including 404/405/500) flow through middleware.
      *
+     * Responsibility: Dispatch the request and handle routing errors internally, so all responses (including 404/405/500) flow through middleware.
      * @param Request $request
      * @return Response
      * @throws Exception Only in development for unhandled exceptions
@@ -231,8 +230,9 @@ class Kernel
     }
 
     /**
-     * Build a 404 Not Found response
+     * Build a 404 Not Found response.
      *
+     * Responsibility: Build a 404 Not Found response.
      * @param RouteNotFoundException $e
      * @return Response
      */
@@ -247,8 +247,9 @@ class Kernel
 
 
     /**
-     * Build a 405 Method Not Allowed response
+     * Build a 405 Method Not Allowed response.
      *
+     * Responsibility: Build a 405 Method Not Allowed response.
      * @param MethodNotAllowedException $e
      * @return Response
      */
@@ -264,8 +265,9 @@ class Kernel
 
 
     /**
-     * Build a 500 Server Error response
+     * Build a 500 Server Error response.
      *
+     * Responsibility: Build a 500 Server Error response.
      * @param string $ticket Correlated error ticket (matches log entry)
      * @return Response
      */
@@ -281,7 +283,9 @@ class Kernel
     }
 
     /**
-     * Builds the requested structure.
+     * Builds the HTTP 403 response returned for denied requests.
+     *
+     * Responsibility: Builds the HTTP 403 response returned for denied requests.
      */
     protected function buildForbiddenResponse(ForbiddenException $e): Response
     {
@@ -289,17 +293,9 @@ class Kernel
     }
 
     /**
-     * Load application routes
+     * Load application routes Loading order: 1. boot-core/routes/global-routes.php — canonical redirects + core actions 2. boot-core/routes/api.php — global API routes (if present) 3. Repository/Framework/{Module}/routes.php — framework module routes (glob) 4. Repository/App/Surface/{Module}/routes.php — application module routes (glob) Global middleware and module view paths are registered before the cache branch so cold and cached bootstraps receive the same transversal setup.
      *
-     * Loading order:
-     *   1. boot-core/routes/global-routes.php        — canonical redirects + core actions
-     *   2. boot-core/routes/api.php                  — global API routes (if present)
-     *   3. Repository/Framework/{Module}/routes.php  — framework module routes (glob)
-     *   4. Repository/App/Surface/{Module}/routes.php        — application module routes (glob)
-     *
-     * Global middleware and module view paths are registered before the cache
-     * branch so cold and cached bootstraps receive the same transversal setup.
-     *
+     * Responsibility: Load application routes Loading order: 1. boot-core/routes/global-routes.php — canonical redirects + core actions 2. boot-core/routes/api.php — global API routes (if present) 3. Repository/Framework/{Module}/routes.php — framework module routes (glob) 4. Repository/App/Surface/{Module}/routes.php — application module routes (glob) Global middleware and module view paths are registered before the cache branch so cold and cached bootstraps receive the same transversal setup.
      * @return void
      */
     protected function loadRoutes(): void
@@ -338,8 +334,9 @@ class Kernel
     }
 
     /**
-     * Display welcome page
+     * Display welcome page.
      *
+     * Responsibility: Display welcome page.
      * @return void
      * @throws Exception
      */
@@ -356,9 +353,9 @@ class Kernel
     }
 
     /**
-     * Get generic error content for production environment.
-     * The $ticket matches the entry written to the error log (G13).
+     * Get generic error content for production environment. The $ticket matches the entry written to the error log (G13).
      *
+     * Responsibility: Get generic error content for production environment. The $ticket matches the entry written to the error log (G13).
      * @param string $title  Error title
      * @param string|null $ticket Correlated log ticket
      * @return string HTML content
@@ -374,7 +371,9 @@ class Kernel
 
 
     /**
-     * Handles the apply runtime configuration workflow.
+     * Applies logging, debug and timezone settings from the runtime configuration.
+     *
+     * Responsibility: Applies logging, debug and timezone settings from the runtime configuration.
      */
     protected function applyRuntimeConfiguration(): void
     {

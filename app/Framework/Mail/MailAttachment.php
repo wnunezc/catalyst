@@ -31,22 +31,25 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Mail;
 
 /**
- * Residual mail attachment DTO kept for compatibility
+ * Compatibility DTO for mail attachment metadata.
  *
- * The live mail pipeline uses MailMessage::attach()/attachInline() plus the
- * internal attachment arrays consumed by MailManager. This DTO is currently not
- * hydrated or consumed by that runtime flow.
+ * Carries file, MIME and inline content-id metadata for legacy attachment
+ * contracts outside the active message builder arrays.
  *
  * @package Catalyst\Framework\Mail
+ * Responsibility: Preserve typed attachment metadata for compatibility callers.
  */
 class MailAttachment
 {
     /**
+     * Initializes the object with the collaborators or state required for its responsibility.
+     *
+     * Responsibility: Initializes the object with the collaborators or state required for its responsibility.
      * @param string      $path     Absolute path to the file
-     * @param string|null $name     Display filename (null = basename of $path)
-     * @param string      $mimeType MIME type (empty = auto-detect by PHPMailer)
-     * @param bool        $inline   True for inline/embedded image (CID attachment)
-     * @param string|null $cid      Content-ID for inline attachments (e.g. "logo@example.com")
+     * @param string|null $name     Display filename
+     * @param string      $mimeType MIME type
+     * @param bool        $inline   Whether the attachment is inline
+     * @param string|null $cid      Content-ID for inline attachments
      */
     public function __construct(
         public readonly string $path,

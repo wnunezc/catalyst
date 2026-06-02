@@ -37,26 +37,18 @@ use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
 use Catalyst\Repository\Auth\Requests\EmailVerificationTokenRequest;
 
-/**************************************************************************************
- * EmailVerificationController — activates an account via a one-time token link.
- *
- * Routes:
- *   GET  /verify-email          → showManualForm()
- *   POST /verify-email          → manualVerify()
- *   GET  /verify-email/{token}  → verify()
- *
- * @package Catalyst\Repository\Auth\Controllers
- */
 /**
- * Defines the Email Verification Controller class contract.
+ * Handles manual and link-based account email verification.
  *
  * @package Catalyst\Repository\Auth\Controllers
- * Responsibility: Coordinates the email verification controller behavior within its module boundary.
+ * Responsibility: Validates verification tokens, consumes active token records, and marks matching users as verified.
  */
 class EmailVerificationController extends Controller
 {
     /**
-     * Handles the detail display workflow.
+     * Renders the guest form where users can paste a verification token manually.
+     *
+     * Responsibility: Renders the guest form where users can paste a verification token manually.
      */
     public function showManualForm(): Response
     {
@@ -66,7 +58,9 @@ class EmailVerificationController extends Controller
     }
 
     /**
-     * Handles the manual verify workflow.
+     * Validates the submitted manual verification token before consuming it.
+     *
+     * Responsibility: Validates the submitted manual verification token before consuming it.
      */
     public function manualVerify(Request $request): Response
     {
@@ -76,8 +70,9 @@ class EmailVerificationController extends Controller
     }
 
     /**
-     * Consume the verification token and activate the account.
+     * Validates a URL verification token and activates the matching account.
      *
+     * Responsibility: Validates a URL verification token and activates the matching account.
      * @param Request $request
      * @param string  $token  Raw token from URL parameter
      * @return Response
@@ -95,7 +90,9 @@ class EmailVerificationController extends Controller
     }
 
     /**
-     * Handles the consume token workflow.
+     * Consumes a valid verification token, marks the account as verified, and redirects to login.
+     *
+     * Responsibility: Consumes a valid verification token, marks the account as verified, and redirects to login.
      */
     private function consumeToken(string $token): Response
     {

@@ -33,10 +33,10 @@ namespace Catalyst\Framework\Sensitivity;
 use Catalyst\Framework\Traits\SingletonTrait;
 
 /**
- * Defines the Data Classification Registry class contract.
+ * Registers field-level disclosure policies for sensitive framework resources.
  *
  * @package Catalyst\Framework\Sensitivity
- * Responsibility: Coordinates the data classification registry behavior within its module boundary.
+ * Responsibility: Resolves the sanitization policy for a resource field and output channel.
  */
 final class DataClassificationRegistry
 {
@@ -99,7 +99,9 @@ final class DataClassificationRegistry
     ];
 
     /**
-     * Handles the policy for workflow.
+     * Resolves the configured policy for a resource field and channel.
+     *
+     * Responsibility: Resolves the configured policy for a resource field and channel.
      */
     public function policyFor(?string $resourceKey, string $field, string $channel): ?string
     {
@@ -119,7 +121,9 @@ final class DataClassificationRegistry
     }
 
     /**
-     * Normalizes the provided value.
+     * Normalizes a resource key to the registry naming convention.
+     *
+     * Responsibility: Normalizes a resource key to the registry naming convention.
      */
     private function normalizeResourceKey(?string $value): string
     {
@@ -127,7 +131,9 @@ final class DataClassificationRegistry
     }
 
     /**
-     * Normalizes the provided value.
+     * Normalizes a field name before registry lookup.
+     *
+     * Responsibility: Normalizes a field name before registry lookup.
      */
     private function normalizeField(?string $value): string
     {

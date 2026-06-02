@@ -39,15 +39,17 @@ use Catalyst\Framework\Http\Response;
 use Catalyst\Repository\Operations\Requests\DeploymentRunRequest;
 
 /**
- * Defines the Deployments Controller class contract.
+ * Presents deployment profiles and executes requested deployment runs.
  *
  * @package Catalyst\Repository\Operations\Controllers
- * Responsibility: Coordinates the deployments controller behavior within its module boundary.
+ * Responsibility: Connects deployment administration forms and grids to deployment services.
  */
 final class DeploymentsController extends AbstractOperationsController
 {
     /**
-     * Handles the deployments workflow.
+     * Renders deployment profiles, the run form and recent deployment history.
+     *
+     * Responsibility: Renders deployment profiles, the run form and recent deployment history.
      */
     public function deployments(Request $request): Response
     {
@@ -177,7 +179,9 @@ final class DeploymentsController extends AbstractOperationsController
     }
 
     /**
-     * Executes the command workflow.
+     * Validates and executes a deployment run request.
+     *
+     * Responsibility: Validates and executes a deployment run request.
      */
     public function runDeployment(DeploymentRunRequest $request): Response
     {

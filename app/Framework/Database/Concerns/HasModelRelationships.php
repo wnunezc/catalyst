@@ -38,15 +38,17 @@ use Catalyst\Framework\Database\Relations\HasOne;
 use Catalyst\Framework\Database\Relations\Relation;
 
 /**
- * Defines the Has Model Relationships trait contract.
+ * Splits relation factories, relation cache access, and model magic accessors out of Model.
  *
  * @package Catalyst\Framework\Database\Concerns
- * Responsibility: Coordinates the has model relationships behavior within its module boundary.
+ * Responsibility: Build ORM relationship objects, cache loaded relations, and route property access to attributes or relations.
  */
 trait HasModelRelationships
 {
     /**
-     * Updates the relation value.
+     * Stores a loaded relation value in the model relation cache.
+     *
+     * Responsibility: Stores a loaded relation value in the model relation cache.
      */
     public function setRelation(string $name, mixed $value): static
     {
@@ -55,7 +57,9 @@ trait HasModelRelationships
     }
 
     /**
-     * Returns the relation value.
+     * Returns a cached relation value or null when it has not been loaded.
+     *
+     * Responsibility: Returns a cached relation value or null when it has not been loaded.
      */
     public function getRelation(string $name): mixed
     {
@@ -63,7 +67,9 @@ trait HasModelRelationships
     }
 
     /**
-     * Handles the relation loaded workflow.
+     * Reports whether a relation key exists in the model relation cache.
+     *
+     * Responsibility: Reports whether a relation key exists in the model relation cache.
      */
     public function relationLoaded(string $name): bool
     {
@@ -71,7 +77,9 @@ trait HasModelRelationships
     }
 
     /**
-     * Determines whether has One.
+     * Creates a HasOne relation from this model to a single related model.
+     *
+     * Responsibility: Creates a HasOne relation from this model to a single related model.
      */
     protected function hasOne(
         string $related,
@@ -83,7 +91,9 @@ trait HasModelRelationships
     }
 
     /**
-     * Determines whether has Many.
+     * Creates a HasMany relation from this model to a related model collection.
+     *
+     * Responsibility: Creates a HasMany relation from this model to a related model collection.
      */
     protected function hasMany(
         string $related,
@@ -95,7 +105,9 @@ trait HasModelRelationships
     }
 
     /**
-     * Handles the belongs to workflow.
+     * Creates a BelongsTo relation where this model stores the foreign key.
+     *
+     * Responsibility: Creates a BelongsTo relation where this model stores the foreign key.
      */
     protected function belongsTo(
         string $related,
@@ -107,7 +119,9 @@ trait HasModelRelationships
     }
 
     /**
-     * Handles the belongs to many workflow.
+     * Creates a BelongsToMany relation through a pivot table.
+     *
+     * Responsibility: Creates a BelongsToMany relation through a pivot table.
      */
     protected function belongsToMany(
         string $related,
@@ -129,7 +143,9 @@ trait HasModelRelationships
     }
 
     /**
-     * Handles the get workflow.
+     * Reads attributes, cached relations, or lazily loads relation methods as properties.
+     *
+     * Responsibility: Reads attributes, cached relations, or lazily loads relation methods as properties.
      */
     public function __get(string $key): mixed
     {
@@ -154,7 +170,9 @@ trait HasModelRelationships
     }
 
     /**
-     * Handles the set workflow.
+     * Writes dynamic property assignments into model attributes.
+     *
+     * Responsibility: Writes dynamic property assignments into model attributes.
      */
     public function __set(string $key, mixed $value): void
     {
@@ -162,7 +180,9 @@ trait HasModelRelationships
     }
 
     /**
-     * Handles the isset workflow.
+     * Checks dynamic property existence across attributes and cached relations.
+     *
+     * Responsibility: Checks dynamic property existence across attributes and cached relations.
      */
     public function __isset(string $key): bool
     {
@@ -170,7 +190,9 @@ trait HasModelRelationships
     }
 
     /**
-     * Handles the unset workflow.
+     * Removes a dynamic property from model attributes.
+     *
+     * Responsibility: Removes a dynamic property from model attributes.
      */
     public function __unset(string $key): void
     {
@@ -178,7 +200,7 @@ trait HasModelRelationships
     }
 
     /**
-     * Handles the derive key workflow.
+     * Derives a conventional snake_case foreign key name from a model class name.
      */
     private static function deriveKey(string $class): string
     {

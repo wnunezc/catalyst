@@ -38,15 +38,18 @@ use Catalyst\Helpers\Path\ProjectPath;
 use Throwable;
 
 /**
- * Defines the Migrate Status Command class contract.
+ * migrate:status CLI command.
+ *
+ * Responsibility: Runs the migrate:status command to List discovered migrations and their execution status.
  *
  * @package Catalyst\Framework\Cli\Commands
- * Responsibility: Coordinates the migrate status command behavior within its module boundary.
  */
 class MigrateStatusCommand extends AbstractCommand
 {
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -54,7 +57,9 @@ class MigrateStatusCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
@@ -62,7 +67,9 @@ class MigrateStatusCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {

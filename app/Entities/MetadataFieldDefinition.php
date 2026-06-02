@@ -37,10 +37,10 @@ use Catalyst\Framework\Traits\HasOptimisticLockingTrait;
 use Catalyst\Framework\Traits\HasTimestampsTrait;
 
 /**
- * Defines the Metadata Field Definition class contract.
+ * ORM entity for configurable metadata field definitions.
  *
  * @package Catalyst\Entities
- * Responsibility: Coordinates the metadata field definition behavior within its module boundary.
+ * Responsibility: Maps resource field schema, validation flags, catalog options, display settings, and lock state.
  */
 final class MetadataFieldDefinition extends Model
 {

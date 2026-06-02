@@ -31,18 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Admin\Grid;
 
 /**
- * Defines the Data Grid Url Builder class contract.
+ * Builds URLs and query arrays for DataGrid controls.
  *
  * @package Catalyst\Framework\Admin\Grid
- * Responsibility: Coordinates the data grid url builder behavior within its module boundary.
+ * Responsibility: Applies query overrides and generates links for pagination, sorting, exports, and actions.
  */
 final class DataGridUrlBuilder
 {
     /**
-     * Merge an existing query array with overrides.
+     * Merges query overrides into the current query and removes keys explicitly cleared by callers. A null or empty-string override removes the query key.
      *
-     * A null or empty-string override removes the query key.
-     *
+     * Responsibility: Merges query overrides into the current query and removes keys explicitly cleared by callers. A null or empty-string override removes the query key.
      * @param array<string, mixed> $query
      * @param array<string, mixed> $overrides
      * @return array<string, mixed>
@@ -62,8 +61,9 @@ final class DataGridUrlBuilder
     }
 
     /**
-     * Build a URL from a base URL and query array.
+     * Builds the final URL for a grid control from a base path and query array.
      *
+     * Responsibility: Builds the final URL for a grid control from a base path and query array.
      * @param array<string, mixed> $query
      */
     public function build(string $baseUrl, array $query): string

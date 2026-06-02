@@ -31,22 +31,22 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Argument;
 
 /**
- * Validator for CLI arguments
- *
- * Validates options and parameters against requirements
+ * Validates parsed CLI options and positional parameters.
  *
  * @package Catalyst\Framework\Argument
+ * Responsibility: Tracks validation errors, checks required inputs, validates scalar types, and casts option values.
  */
 class Validator
 {
     /**
-     * Validation errors
+     * Stores validation messages collected during the latest validation pass.
      */
     private array $errors = [];
 
     /**
-     * Validate an option
+     * Validates required and value-bearing constraints for a single option.
      *
+     * Responsibility: Validates required and value-bearing constraints for a single option.
      * @param Option $option Option to validate
      * @return bool True if valid
      */
@@ -54,14 +54,14 @@ class Validator
     {
         $this->errors = [];
 
-        // Check if required option is set
+        // Required options must differ from their default value.
         if ($option->isRequired() && !$option->isSet()) {
             $name = $option->getPrimaryName();
             $this->errors[] = "Required option '{$name}' is missing";
             return false;
         }
 
-        // Check if option that accepts value has a valid value
+        // Value-bearing options cannot be set to an empty value.
         if ($option->acceptsValue() && $option->isSet()) {
             $value = $option->getValue();
             if ($value === null || $value === '') {
@@ -75,8 +75,9 @@ class Validator
     }
 
     /**
-     * Validate a parameter
+     * Validates required value presence for a positional parameter.
      *
+     * Responsibility: Validates required value presence for a positional parameter.
      * @param Parameter $parameter Parameter to validate
      * @return bool True if valid
      */
@@ -84,7 +85,7 @@ class Validator
     {
         $this->errors = [];
 
-        // Check if required parameter is set
+        // Required parameters must contain a parsed or default value.
         if ($parameter->isRequired() && !$parameter->hasValue()) {
             $name = $parameter->getName() ?: "Parameter at position {$parameter->getPosition()}";
             $this->errors[] = "Required parameter '{$name}' is missing";
@@ -95,8 +96,9 @@ class Validator
     }
 
     /**
-     * Validate all options in an ArgumentBag
+     * Validates required option definitions and all parameters stored in an argument bag.
      *
+     * Responsibility: Validates required option definitions and all parameters stored in an argument bag.
      * @param ArgumentBag $bag Argument bag to validate
      * @param array<Option> $requiredOptions Array of required options
      * @return bool True if all valid
@@ -106,7 +108,7 @@ class Validator
         $this->errors = [];
         $valid = true;
 
-        // Validate required options
+        // Required schema options must be present in the parsed bag.
         foreach ($requiredOptions as $requiredOption) {
             $name = $requiredOption->getPrimaryName();
             if (!$bag->hasOption($name)) {
@@ -120,7 +122,7 @@ class Validator
             }
         }
 
-        // Validate all parameters
+        // Parameters validate their required value metadata individually.
         foreach ($bag->getAllParameters() as $parameter) {
             if (!$this->validateParameter($parameter)) {
                 $valid = false;
@@ -131,8 +133,9 @@ class Validator
     }
 
     /**
-     * Get validation errors
+     * Returns validation error messages collected by the latest validation pass.
      *
+     * Responsibility: Returns validation error messages collected by the latest validation pass.
      * @return array
      */
     public function getErrors(): array
@@ -141,8 +144,9 @@ class Validator
     }
 
     /**
-     * Check if there are validation errors
+     * Reports whether any validation error messages are currently stored.
      *
+     * Responsibility: Reports whether any validation error messages are currently stored.
      * @return bool
      */
     public function hasErrors(): bool
@@ -151,8 +155,9 @@ class Validator
     }
 
     /**
-     * Get validation errors as a formatted string
+     * Joins validation error messages using the requested separator.
      *
+     * Responsibility: Joins validation error messages using the requested separator.
      * @param string $separator Line separator
      * @return string
      */
@@ -162,8 +167,9 @@ class Validator
     }
 
     /**
-     * Clear validation errors
+     * Clears all stored validation error messages.
      *
+     * Responsibility: Clears all stored validation error messages.
      * @return void
      */
     public function clearErrors(): void
@@ -172,8 +178,9 @@ class Validator
     }
 
     /**
-     * Validate option value type
+     * Checks whether a value is compatible with a supported scalar or array type name.
      *
+     * Responsibility: Checks whether a value is compatible with a supported scalar or array type name.
      * @param mixed $value Value to validate
      * @param string $expectedType Expected type (string, int, float, bool, array)
      * @return bool
@@ -191,8 +198,9 @@ class Validator
     }
 
     /**
-     * Cast value to specified type
+     * Casts a value into a supported scalar or array type for downstream CLI consumers.
      *
+     * Responsibility: Casts a value into a supported scalar or array type for downstream CLI consumers.
      * @param mixed $value Value to cast
      * @param string $type Target type
      * @return mixed Casted value

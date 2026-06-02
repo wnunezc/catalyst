@@ -31,15 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Authorization;
 
 /**
- * Defines the Resource Policy class contract.
+ * Maps generic resource abilities to permission registry checks.
  *
  * @package Catalyst\Framework\Authorization
- * Responsibility: Coordinates the resource policy behavior within its module boundary.
+ * Responsibility: Authorizes AbilitySubject instances through resource permission definitions.
  */
 final class ResourcePolicy extends Policy
 {
     /**
-     * Determines whether can View Any.
+     * Checks whether the user can view a resource collection.
+     *
+     * Responsibility: Checks whether the user can view a resource collection.
      */
     public function canViewAny(array $user, AbilitySubject $subject): bool
     {
@@ -47,7 +49,9 @@ final class ResourcePolicy extends Policy
     }
 
     /**
-     * Determines whether can View.
+     * Checks whether the user can view a resource record.
+     *
+     * Responsibility: Checks whether the user can view a resource record.
      */
     public function canView(array $user, AbilitySubject $subject): bool
     {
@@ -55,7 +59,9 @@ final class ResourcePolicy extends Policy
     }
 
     /**
-     * Determines whether can Create.
+     * Checks whether the user can create a resource record.
+     *
+     * Responsibility: Checks whether the user can create a resource record.
      */
     public function canCreate(array $user, AbilitySubject $subject): bool
     {
@@ -63,7 +69,9 @@ final class ResourcePolicy extends Policy
     }
 
     /**
-     * Determines whether can Update.
+     * Checks whether the user can update a resource record.
+     *
+     * Responsibility: Checks whether the user can update a resource record.
      */
     public function canUpdate(array $user, AbilitySubject $subject): bool
     {
@@ -71,7 +79,9 @@ final class ResourcePolicy extends Policy
     }
 
     /**
-     * Determines whether can Delete.
+     * Checks whether the user can delete a resource record.
+     *
+     * Responsibility: Checks whether the user can delete a resource record.
      */
     public function canDelete(array $user, AbilitySubject $subject): bool
     {
@@ -79,7 +89,9 @@ final class ResourcePolicy extends Policy
     }
 
     /**
-     * Determines whether can Restore.
+     * Checks whether the user can restore a resource record.
+     *
+     * Responsibility: Checks whether the user can restore a resource record.
      */
     public function canRestore(array $user, AbilitySubject $subject): bool
     {
@@ -87,7 +99,9 @@ final class ResourcePolicy extends Policy
     }
 
     /**
-     * Determines whether can Export.
+     * Checks whether the user can export resource data.
+     *
+     * Responsibility: Checks whether the user can export resource data.
      */
     public function canExport(array $user, AbilitySubject $subject): bool
     {
@@ -95,7 +109,9 @@ final class ResourcePolicy extends Policy
     }
 
     /**
-     * Determines whether can Run.
+     * Checks whether the user can run a resource operation.
+     *
+     * Responsibility: Checks whether the user can run a resource operation.
      */
     public function canRun(array $user, AbilitySubject $subject): bool
     {
@@ -103,7 +119,9 @@ final class ResourcePolicy extends Policy
     }
 
     /**
-     * Determines whether can Revoke.
+     * Checks whether the user can revoke a resource credential or grant.
+     *
+     * Responsibility: Checks whether the user can revoke a resource credential or grant.
      */
     public function canRevoke(array $user, AbilitySubject $subject): bool
     {
@@ -111,7 +129,9 @@ final class ResourcePolicy extends Policy
     }
 
     /**
-     * Determines whether can Bulk Delete.
+     * Checks whether the user can bulk delete resource records.
+     *
+     * Responsibility: Checks whether the user can bulk delete resource records.
      */
     public function canBulkDelete(array $user, AbilitySubject $subject): bool
     {
@@ -119,7 +139,9 @@ final class ResourcePolicy extends Policy
     }
 
     /**
-     * Determines whether can Bulk Restore.
+     * Checks whether the user can bulk restore resource records.
+     *
+     * Responsibility: Checks whether the user can bulk restore resource records.
      */
     public function canBulkRestore(array $user, AbilitySubject $subject): bool
     {
@@ -127,7 +149,9 @@ final class ResourcePolicy extends Policy
     }
 
     /**
-     * Determines whether can Assign.
+     * Checks whether the user can assign a resource relationship.
+     *
+     * Responsibility: Checks whether the user can assign a resource relationship.
      */
     public function canAssign(array $user, AbilitySubject $subject): bool
     {
@@ -135,7 +159,9 @@ final class ResourcePolicy extends Policy
     }
 
     /**
-     * Determines whether can Sync.
+     * Checks whether the user can synchronize resource data.
+     *
+     * Responsibility: Checks whether the user can synchronize resource data.
      */
     public function canSync(array $user, AbilitySubject $subject): bool
     {
@@ -143,7 +169,9 @@ final class ResourcePolicy extends Policy
     }
 
     /**
-     * Determines whether can Manage.
+     * Checks whether the user can manage a resource.
+     *
+     * Responsibility: Checks whether the user can manage a resource.
      */
     public function canManage(array $user, AbilitySubject $subject): bool
     {
@@ -151,7 +179,9 @@ final class ResourcePolicy extends Policy
     }
 
     /**
-     * Handles the allows workflow.
+     * Delegates a resource ability decision to the permission registry.
+     *
+     * Responsibility: Delegates a resource ability decision to the permission registry.
      */
     private function allows(array $user, string $ability, AbilitySubject $subject): bool
     {

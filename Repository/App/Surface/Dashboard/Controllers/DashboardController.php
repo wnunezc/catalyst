@@ -40,15 +40,17 @@ use Catalyst\Framework\Http\RedirectResponse;
 use Catalyst\Framework\Http\Response;
 
 /**
- * Defines the Dashboard Controller class contract.
+ * Serves the public account dashboard entry point and its companion API payload.
  *
  * @package App\Surface\Dashboard\Controllers
- * Responsibility: Coordinates the dashboard controller behavior within its module boundary.
+ * Responsibility: Renders the authenticated account shell, presents a guest gateway for anonymous users, and exposes dashboard demo data.
  */
 final class DashboardController extends Controller
 {
     /**
-     * Handles the index workflow.
+     * Renders the dashboard page, switching between the guest gateway and authenticated account dashboard by session state.
+     *
+     * Responsibility: Renders the dashboard page, switching between the guest gateway and authenticated account dashboard by session state.
      */
     public function index(): Response
     {
@@ -79,7 +81,9 @@ final class DashboardController extends Controller
     }
 
     /**
-     * Handles the api workflow.
+     * Returns the authenticated dashboard companion payload for public surface consumers.
+     *
+     * Responsibility: Returns the authenticated dashboard companion payload for public surface consumers.
      */
     public function api(): JsonResponse
     {
@@ -89,7 +93,9 @@ final class DashboardController extends Controller
     }
 
     /**
-     * Handles the redirect legacy workflow.
+     * Permanently redirects legacy dashboard aliases to the canonical dashboard route.
+     *
+     * Responsibility: Permanently redirects legacy dashboard aliases to the canonical dashboard route.
      */
     public function redirectLegacy(): RedirectResponse
     {

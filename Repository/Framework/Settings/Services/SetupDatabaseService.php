@@ -13,33 +13,35 @@ use RuntimeException;
 use Throwable;
 
 /**
- * Defines the Setup Database Service class contract.
+ * Opens and bootstraps the database required by the setup wizard.
  *
  * @package Catalyst\Repository\Settings\Services
- * Responsibility: Coordinates the setup database service behavior within its module boundary.
+ * Responsibility: Verifies config files, creates the database when absent and ensures the minimal authentication schema exists.
  */
 final class SetupDatabaseService
 {
     /**
- * Initializes the Setup Database Service instance.
- */
+     * Initializes the Setup Database Service instance.
+     *
+     * Responsibility: Initializes the Setup Database Service instance.
+     */
 public function __construct(
         private readonly ConfigManager $config
     ) {
     }
 
     /**
- * Creates the requested object.
- */
+     * Creates a setup database service with the shared configuration manager.
+     */
 public static function make(): self
     {
         return new self(ConfigManager::getInstance());
     }
 
     /**
-     * Opens the setup database, creates it if it is missing and ensures the
-     * minimal auth schema required by the setup wizard exists.
+     * Opens the setup database, creates it if it is missing and ensures the minimal auth schema required by the setup wizard exists. Verifies that application and database configuration files exist.
      *
+     * Responsibility: Opens the setup database, creates it if it is missing and ensures the minimal auth schema required by the setup wizard exists. Verifies that application and database configuration files exist.
      * @throws SetupDatabaseException
      */
     public function open(): PDO
@@ -77,6 +79,9 @@ public static function make(): self
     }
 
     /**
+     * Verifies that application and database configuration files exist.
+     *
+     * Responsibility: Verifies that application and database configuration files exist.
      * @throws SetupDatabaseException
      */
     private function assertConfigFilesExist(): void
@@ -95,8 +100,10 @@ public static function make(): self
     }
 
     /**
- * Handles the resolve env workflow.
- */
+     * Resolves the active configuration environment from runtime constants.
+     *
+     * Responsibility: Resolves the active configuration environment from runtime constants.
+     */
 private function resolveEnv(): string
     {
         if (defined('IS_DEVELOPMENT') && IS_DEVELOPMENT) {
@@ -115,8 +122,10 @@ private function resolveEnv(): string
     }
 
     /**
-     * @param array<string, mixed> $dbCfg
+     * Connects to the configured database or creates it when missing.
      *
+     * Responsibility: Connects to the configured database or creates it when missing.
+     * @param array<string, mixed> $dbCfg
      * @throws PDOException|RuntimeException
      */
     private function connectOrCreateDatabase(array $dbCfg): PDO
@@ -155,6 +164,9 @@ private function resolveEnv(): string
     }
 
     /**
+     * Ensures the minimal setup schema exists, running the SQL migration when needed.
+     *
+     * Responsibility: Ensures the minimal setup schema exists, running the SQL migration when needed.
      * @throws RuntimeException
      */
     private function ensureSetupSchema(PDO $pdo): void
@@ -184,8 +196,10 @@ private function resolveEnv(): string
     }
 
     /**
- * Determines whether the table exists.
- */
+     * Determines whether a table exists in the active database.
+     *
+     * Responsibility: Determines whether a table exists in the active database.
+     */
 private function tableExists(PDO $pdo, string $table): bool
     {
         try {
@@ -202,6 +216,9 @@ private function tableExists(PDO $pdo, string $table): bool
     }
 
     /**
+     * Executes setup-safe statements from the framework SQL migration.
+     *
+     * Responsibility: Executes setup-safe statements from the framework SQL migration.
      * @throws RuntimeException
      */
     private function runMigrationSql(PDO $pdo): void
@@ -245,8 +262,10 @@ private function tableExists(PDO $pdo, string $table): bool
     }
 
     /**
- * Determines whether should skip statement.
- */
+     * Determines whether a migration statement must be skipped during setup bootstrap.
+     *
+     * Responsibility: Determines whether a migration statement must be skipped during setup bootstrap.
+     */
 private function shouldSkipStatement(string $stmt): bool
     {
         $head = ltrim($stmt);

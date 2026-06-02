@@ -35,29 +35,18 @@ use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
 use Psr\Http\Message\ResponseInterface;
 
-/**************************************************************************************
- * GoogleProvider — Google OAuth2 integration via league/oauth2-client
- *
- * Extends AbstractProvider to add Google-specific endpoints and scope.
- * Returns OAuthUser as the resource owner.
- *
- * Required env vars (in .env):
- *   GOOGLE_CLIENT_ID
- *   GOOGLE_CLIENT_SECRET
- *   GOOGLE_REDIRECT_URI
- *
- * @package Catalyst\Framework\Auth\OAuth
- */
 /**
- * Defines the Google Provider class contract.
+ * Implements the Google OAuth2 provider contract.
  *
  * @package Catalyst\Framework\Auth\OAuth
- * Responsibility: Coordinates the google provider behavior within its module boundary.
+ * Responsibility: Supply Google endpoints, scopes, error handling and normalized OAuth users.
  */
 class GoogleProvider extends AbstractProvider
 {
     /**
-     * @inheritDoc
+     * Returns the Google authorization endpoint.
+     *
+     * Responsibility: Returns the Google authorization endpoint.
      */
     public function getBaseAuthorizationUrl(): string
     {
@@ -65,7 +54,9 @@ class GoogleProvider extends AbstractProvider
     }
 
     /**
-     * @inheritDoc
+     * Returns the Google token exchange endpoint.
+     *
+     * Responsibility: Returns the Google token exchange endpoint.
      */
     public function getBaseAccessTokenUrl(array $params): string
     {
@@ -73,7 +64,9 @@ class GoogleProvider extends AbstractProvider
     }
 
     /**
-     * @inheritDoc
+     * Returns the Google user-info endpoint.
+     *
+     * Responsibility: Returns the Google user-info endpoint.
      */
     public function getResourceOwnerDetailsUrl(AccessToken $token): string
     {
@@ -81,7 +74,9 @@ class GoogleProvider extends AbstractProvider
     }
 
     /**
-     * @inheritDoc
+     * Provides the default Google scopes required for identity and email.
+     *
+     * Responsibility: Provides the default Google scopes required for identity and email.
      */
     protected function getDefaultScopes(): array
     {
@@ -89,7 +84,9 @@ class GoogleProvider extends AbstractProvider
     }
 
     /**
-     * @inheritDoc
+     * Uses the Google-required space separator for OAuth scopes.
+     *
+     * Responsibility: Uses the Google-required space separator for OAuth scopes.
      */
     protected function getScopeSeparator(): string
     {
@@ -97,7 +94,9 @@ class GoogleProvider extends AbstractProvider
     }
 
     /**
-     * @inheritDoc
+     * Converts Google error payloads into identity-provider exceptions.
+     *
+     * Responsibility: Converts Google error payloads into identity-provider exceptions.
      */
     protected function checkResponse(ResponseInterface $response, $data): void
     {
@@ -109,7 +108,9 @@ class GoogleProvider extends AbstractProvider
     }
 
     /**
-     * @inheritDoc
+     * Wraps the Google resource-owner response in the framework OAuth user type.
+     *
+     * Responsibility: Wraps the Google resource-owner response in the framework OAuth user type.
      */
     protected function createResourceOwner(array $response, AccessToken $token): OAuthUser
     {

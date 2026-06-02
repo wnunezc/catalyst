@@ -35,10 +35,10 @@ use DOMElement;
 use DOMNode;
 
 /**
- * Defines the Html Allowlist Sanitizer class contract.
+ * Sanitizes HTML fragments against a narrow element and attribute allowlist.
  *
  * @package Catalyst\Framework\View
- * Responsibility: Coordinates the html allowlist sanitizer behavior within its module boundary.
+ * Responsibility: Removes unsafe markup, attributes and URLs before trusted rendering.
  */
 final class HtmlAllowlistSanitizer
 {
@@ -117,7 +117,9 @@ final class HtmlAllowlistSanitizer
     ];
 
     /**
-     * Sanitizes the provided value.
+     * Sanitizes an HTML fragment and returns allowed markup only.
+     *
+     * Responsibility: Sanitizes an HTML fragment and returns allowed markup only.
      */
     public function sanitize(string $html): string
     {
@@ -150,7 +152,9 @@ final class HtmlAllowlistSanitizer
     }
 
     /**
-     * Sanitizes the provided value.
+     * Sanitizes descendant elements recursively.
+     *
+     * Responsibility: Sanitizes descendant elements recursively.
      */
     private function sanitizeChildren(DOMNode $parent): void
     {
@@ -187,7 +191,9 @@ final class HtmlAllowlistSanitizer
     }
 
     /**
-     * Sanitizes the provided value.
+     * Removes disallowed attributes from an allowed element.
+     *
+     * Responsibility: Removes disallowed attributes from an allowed element.
      */
     private function sanitizeAttributes(DOMElement $element, string $tag): void
     {
@@ -220,7 +226,9 @@ final class HtmlAllowlistSanitizer
     }
 
     /**
-     * Determines whether is Safe Url.
+     * Determines whether a URL uses an allowed target form or scheme.
+     *
+     * Responsibility: Determines whether a URL uses an allowed target form or scheme.
      */
     private function isSafeUrl(string $url): bool
     {

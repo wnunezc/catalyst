@@ -34,15 +34,17 @@ use Catalyst\Entities\DocumentTemplate;
 use Catalyst\Framework\Document\DocumentTemplateManager;
 
 /**
- * Defines the Document Template Preview Service class contract.
+ * Renders non-persistent previews from document templates.
  *
  * @package Catalyst\Repository\Documents\Actions
- * Responsibility: Coordinates the document template preview service behavior within its module boundary.
+ * Responsibility: Delegate document preview rendering to the document template manager.
  */
 final class DocumentTemplatePreviewService
 {
     /**
      * Initializes the Document Template Preview Service instance.
+     *
+     * Responsibility: Initializes the Document Template Preview Service instance.
      */
     public function __construct(
         private readonly DocumentTemplateManager $manager
@@ -50,6 +52,9 @@ final class DocumentTemplatePreviewService
     }
 
     /**
+     * Renders a preview of the template with the supplied payload.
+     *
+     * Responsibility: Renders a preview of the template with the supplied payload.
      * @param array<string, mixed> $payload
      * @return array<string, mixed>
      */

@@ -33,26 +33,19 @@ namespace Catalyst\Framework\Admin\Grid;
 use Catalyst\Framework\Http\Request;
 
 /**
- * Defines the Data Grid State Resolver class contract.
+ * Resolves DataGrid state from an HTTP request.
  *
  * @package Catalyst\Framework\Admin\Grid
- * Responsibility: Coordinates the data grid state resolver behavior within its module boundary.
+ * Responsibility: Extracts and validates pagination, sorting, search, filter, and raw query state for providers.
  */
 final class DataGridStateResolver
 {
     /**
-     * Resolve the grid state from the current HTTP request and grid config.
+     * Resolves the provider-facing grid state from request query parameters and grid defaults. page:int, per_page:int, sort:string, direction:string, search:string, filters:array<string, mixed>, query:array<string, mixed> }.
      *
+     * Responsibility: Resolves the provider-facing grid state from request query parameters and grid defaults. page:int, per_page:int, sort:string, direction:string, search:string, filters:array<string, mixed>, query:array<string, mixed> }.
      * @param array<string, mixed> $config
      * @return array{
-     *     page:int,
-     *     per_page:int,
-     *     sort:string,
-     *     direction:string,
-     *     search:string,
-     *     filters:array<string, mixed>,
-     *     query:array<string, mixed>
-     * }
      */
     public function resolve(Request $request, array $config): array
     {
@@ -123,6 +116,9 @@ final class DataGridStateResolver
     }
 
     /**
+     * Collects the configured column keys that are allowed to be used for sorting.
+     *
+     * Responsibility: Collects the configured column keys that are allowed to be used for sorting.
      * @param array<int, array<string, mixed>> $columns
      * @return array<int, string>
      */
@@ -140,6 +136,9 @@ final class DataGridStateResolver
     }
 
     /**
+     * Resolves filter values from the request while falling back to configured defaults.
+     *
+     * Responsibility: Resolves filter values from the request while falling back to configured defaults.
      * @param array<int, array<string, mixed>> $filters
      * @return array<string, mixed>
      */

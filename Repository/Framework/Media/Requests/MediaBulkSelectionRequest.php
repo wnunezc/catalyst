@@ -33,15 +33,17 @@ namespace Catalyst\Repository\Media\Requests;
 use Catalyst\Framework\Http\Request;
 
 /**
- * Defines the Media Bulk Selection Request class contract.
+ * Extracts selected media identifiers from a bulk action request.
  *
  * @package Catalyst\Repository\Media\Requests
- * Responsibility: Coordinates the media bulk selection request behavior within its module boundary.
+ * Responsibility: Normalize submitted selections into a positive, ordered identifier list.
  */
 final class MediaBulkSelectionRequest
 {
     /**
      * Initializes the Media Bulk Selection Request instance.
+     *
+     * Responsibility: Initializes the Media Bulk Selection Request instance.
      */
     public function __construct(
         private readonly Request $request
@@ -49,6 +51,9 @@ final class MediaBulkSelectionRequest
     }
 
     /**
+     * Returns positive media identifiers selected by the operator.
+     *
+     * Responsibility: Returns positive media identifiers selected by the operator.
      * @return int[]
      */
     public function ids(): array

@@ -36,10 +36,10 @@ use Catalyst\Framework\Traits\SingletonTrait;
 use InvalidArgumentException;
 
 /**
- * Defines the Api Token Manager class contract.
+ * Issues, revokes, and resolves API tokens for authenticated users.
  *
  * @package Catalyst\Framework\Api
- * Responsibility: Coordinates the api token manager behavior within its module boundary.
+ * Responsibility: Enforces user existence, generates plain-text secrets, persists hashed token records, and updates token usage state.
  */
 final class ApiTokenManager
 {
@@ -49,7 +49,9 @@ final class ApiTokenManager
     private UserProvider $users;
 
     /**
-     * Initializes the Api Token Manager instance.
+     * Initializes token persistence and user lookup services for API token workflows.
+     *
+     * Responsibility: Initializes token persistence and user lookup services for API token workflows.
      */
     protected function __construct()
     {
@@ -58,6 +60,9 @@ final class ApiTokenManager
     }
 
     /**
+     * Creates a new active API token for an existing user and returns the one-time plain-text secret.
+     *
+     * Responsibility: Creates a new active API token for an existing user and returns the one-time plain-text secret.
      * @param string[] $abilities
      * @return array{token: ApiToken, plain_text: string}
      */
@@ -86,7 +91,9 @@ final class ApiTokenManager
     }
 
     /**
-     * Handles the revoke workflow.
+     * Marks an API token as revoked and persists the revocation timestamp.
+     *
+     * Responsibility: Marks an API token as revoked and persists the revocation timestamp.
      */
     public function revoke(ApiToken $token): ApiToken
     {
@@ -99,6 +106,9 @@ final class ApiTokenManager
     }
 
     /**
+     * Resolves a plain-text token into its active token record and owner, revoking orphaned tokens.
+     *
+     * Responsibility: Resolves a plain-text token into its active token record and owner, revoking orphaned tokens.
      * @return array{token: array<string, mixed>, user: array<string, mixed>}|null
      */
     public function resolveActiveToken(string $plainText): ?array

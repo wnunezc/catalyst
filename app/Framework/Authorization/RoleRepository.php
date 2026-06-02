@@ -38,26 +38,11 @@ use Catalyst\Framework\Traits\SingletonTrait;
 use Catalyst\Helpers\Log\Logger;
 use Exception;
 
-/**************************************************************************************
- * RoleRepository
- *
- * Handles all database queries related to roles, permissions, and their assignments
- * to users. Results are cached per-request in static properties to avoid repeated
- * queries within the same HTTP lifecycle.
- *
- * Tables:
- *   - roles              — available roles in the system
- *   - permissions        — granular permission slugs
- *   - role_permissions   — pivot: which permissions each role has
- *   - user_roles         — pivot: which roles each user has
- *
- * @package Catalyst\Framework\Authorization
- */
 /**
- * Defines the Role Repository class contract.
+ * Manages tenant-scoped roles, permissions, assignments, RBAC cache, and audit entries.
  *
  * @package Catalyst\Framework\Authorization
- * Responsibility: Coordinates the role repository behavior within its module boundary.
+ * Responsibility: Provides the database boundary for role and permission reads and mutations.
  */
 class RoleRepository
 {
@@ -76,7 +61,9 @@ class RoleRepository
     private RbacSortResolver $sortResolver;
 
     /**
-     * Initializes the Role Repository instance.
+     * Initializes database, logging, cache invalidation, audit, and sort collaborators.
+     *
+     * Responsibility: Initializes database, logging, cache invalidation, audit, and sort collaborators.
      */
     protected function __construct()
     {
@@ -90,7 +77,9 @@ class RoleRepository
     // -- Private helper --------------------------------------------------------
 
     /**
-     * Handles the conn workflow.
+     * Returns the active database connection used by RBAC queries.
+     *
+     * Responsibility: Returns the active database connection used by RBAC queries.
      */
     private function conn(): Connection
     {
@@ -100,8 +89,9 @@ class RoleRepository
     // -- Read-only queries -----------------------------------------------------
 
     /**
-     * Get all roles assigned to a user.
+     * Returns tenant-scoped roles assigned to a user with request and persistent caching.
      *
+     * Responsibility: Returns tenant-scoped roles assigned to a user with request and persistent caching.
      * @return array<int, array{id: int, name: string, slug: string}>
      */
     public function getUserRoles(int $userId): array
@@ -141,8 +131,9 @@ class RoleRepository
     }
 
     /**
-     * Get all permissions (via roles) assigned to a user.
+     * Returns tenant-scoped permissions inherited through a user's roles.
      *
+     * Responsibility: Returns tenant-scoped permissions inherited through a user's roles.
      * @return array<int, array{id: int, name: string, slug: string}>
      */
     public function getUserPermissions(int $userId): array
@@ -183,7 +174,9 @@ class RoleRepository
     }
 
     /**
-     * Check if a user has a specific role by slug.
+     * Checks whether a user has a specific role slug.
+     *
+     * Responsibility: Checks whether a user has a specific role slug.
      */
     public function userHasRole(int $userId, string $slug): bool
     {
@@ -197,8 +190,9 @@ class RoleRepository
     }
 
     /**
-     * Check if a user has any of the given roles (OR logic).
+     * Checks whether a user has at least one role slug.
      *
+     * Responsibility: Checks whether a user has at least one role slug.
      * @param string|string[] $slugs
      */
     public function userHasAnyRole(int $userId, string|array $slugs): bool
@@ -215,7 +209,9 @@ class RoleRepository
     }
 
     /**
-     * Check if a user has a specific permission by slug.
+     * Checks whether a user has a specific permission slug.
+     *
+     * Responsibility: Checks whether a user has a specific permission slug.
      */
     public function userHasPermission(int $userId, string $slug): bool
     {
@@ -229,8 +225,9 @@ class RoleRepository
     }
 
     /**
-     * Check if a user has any of the given permissions (OR logic).
+     * Checks whether a user has at least one permission slug.
      *
+     * Responsibility: Checks whether a user has at least one permission slug.
      * @param string|string[] $slugs
      */
     public function userHasAnyPermission(int $userId, string|array $slugs): bool
@@ -248,7 +245,12 @@ class RoleRepository
 
     // -- CRUD: Roles -----------------------------------------------------------
 
-    /** @return array<int, array{id: int, name: string, slug: string, description: string|null}> */
+    /**
+     * Returns all roles for the current tenant.
+     *
+     * Responsibility: Returns all roles for the current tenant.
+     * @return array<int, array{id: int, name: string, slug: string, description: string|null}>
+     */
     public function allRoles(): array
     {
         try {
@@ -266,7 +268,9 @@ class RoleRepository
     }
 
     /**
-     * Create a new role. Returns the new role ID.
+     * Creates a role for the current tenant and records the mutation.
+     *
+     * Responsibility: Creates a role for the current tenant and records the mutation.
      */
     public function createRole(string $name, string $slug, ?string $description = null): int
     {
@@ -298,7 +302,9 @@ class RoleRepository
     }
 
     /**
-     * Handles the update workflow.
+     * Updates a role for the current tenant and records before and after state.
+     *
+     * Responsibility: Updates a role for the current tenant and records before and after state.
      */
     public function updateRole(int $id, string $name, string $slug, ?string $description): void
     {
@@ -331,7 +337,9 @@ class RoleRepository
     }
 
     /**
-     * Handles the delete workflow.
+     * Deletes a role from the current tenant and records the removed state.
+     *
+     * Responsibility: Deletes a role from the current tenant and records the removed state.
      */
     public function deleteRole(int $id): void
     {
@@ -355,7 +363,9 @@ class RoleRepository
     }
 
     /**
-     * Finds the requested record.
+     * Finds a role by ID within the current tenant.
+     *
+     * Responsibility: Finds a role by ID within the current tenant.
      */
     public function findRole(int $id): ?array
     {
@@ -373,8 +383,9 @@ class RoleRepository
     }
 
     /**
-     * Find a role by its tenant-scoped slug.
+     * Finds a role by slug within the current tenant.
      *
+     * Responsibility: Finds a role by slug within the current tenant.
      * @return array{id:int,name:string,slug:string,description:string|null}|null
      */
     public function findRoleBySlug(string $slug): ?array
@@ -404,6 +415,9 @@ class RoleRepository
     }
 
     /**
+     * Searches current-tenant roles using filters, pagination, and safe sorting.
+     *
+     * Responsibility: Searches current-tenant roles using filters, pagination, and safe sorting.
      * @param array<string, mixed> $criteria
      * @return array{rows: array<int, array<string, mixed>>, total: int}
      */
@@ -470,7 +484,12 @@ class RoleRepository
 
     // -- CRUD: Permissions -----------------------------------------------------
 
-    /** @return array<int, array{id: int, name: string, slug: string, description: string|null}> */
+    /**
+     * Returns all permissions for the current tenant.
+     *
+     * Responsibility: Returns all permissions for the current tenant.
+     * @return array<int, array{id: int, name: string, slug: string, description: string|null}>
+     */
     public function allPermissions(): array
     {
         try {
@@ -488,7 +507,9 @@ class RoleRepository
     }
 
     /**
-     * Handles the create workflow.
+     * Creates a permission for the current tenant and records the mutation.
+     *
+     * Responsibility: Creates a permission for the current tenant and records the mutation.
      */
     public function createPermission(string $name, string $slug, ?string $description = null): int
     {
@@ -520,7 +541,9 @@ class RoleRepository
     }
 
     /**
-     * Handles the update workflow.
+     * Updates a permission for the current tenant and records before and after state.
+     *
+     * Responsibility: Updates a permission for the current tenant and records before and after state.
      */
     public function updatePermission(int $id, string $name, string $slug, ?string $description): void
     {
@@ -553,7 +576,9 @@ class RoleRepository
     }
 
     /**
-     * Handles the delete workflow.
+     * Deletes a permission from the current tenant and records the removed state.
+     *
+     * Responsibility: Deletes a permission from the current tenant and records the removed state.
      */
     public function deletePermission(int $id): void
     {
@@ -577,7 +602,9 @@ class RoleRepository
     }
 
     /**
-     * Finds the requested record.
+     * Finds a permission by ID within the current tenant.
+     *
+     * Responsibility: Finds a permission by ID within the current tenant.
      */
     public function findPermission(int $id): ?array
     {
@@ -595,6 +622,9 @@ class RoleRepository
     }
 
     /**
+     * Searches current-tenant permissions using filters, pagination, and safe sorting.
+     *
+     * Responsibility: Searches current-tenant permissions using filters, pagination, and safe sorting.
      * @param array<string, mixed> $criteria
      * @return array{rows: array<int, array<string, mixed>>, total: int}
      */
@@ -660,6 +690,9 @@ class RoleRepository
     }
 
     /**
+     * Returns unique permission slug prefixes available in the current tenant.
+     *
+     * Responsibility: Returns unique permission slug prefixes available in the current tenant.
      * @return array<int, string>
      */
     public function permissionPrefixes(): array
@@ -689,8 +722,9 @@ class RoleRepository
     // -- Role → Permission assignments -----------------------------------------
 
     /**
-     * Get permissions assigned to a specific role.
+     * Returns permissions assigned to a role within the current tenant.
      *
+     * Responsibility: Returns permissions assigned to a role within the current tenant.
      * @return array<int, array{id: int, name: string, slug: string}>
      */
     public function getRolePermissions(int $roleId): array
@@ -712,7 +746,9 @@ class RoleRepository
     }
 
     /**
-     * Handles the assign permission to role workflow.
+     * Assigns a permission to a role and records the assignment.
+     *
+     * Responsibility: Assigns a permission to a role and records the assignment.
      */
     public function assignPermissionToRole(int $roleId, int $permissionId): void
     {
@@ -747,7 +783,9 @@ class RoleRepository
     }
 
     /**
-     * Handles the remove permission from role workflow.
+     * Removes a permission from a role and records the removed assignment.
+     *
+     * Responsibility: Removes a permission from a role and records the removed assignment.
      */
     public function removePermissionFromRole(int $roleId, int $permissionId): void
     {
@@ -783,7 +821,9 @@ class RoleRepository
     // -- User → Role assignments -----------------------------------------------
 
     /**
-     * Handles the assign role to user workflow.
+     * Assigns a role to a user and clears that user's RBAC cache.
+     *
+     * Responsibility: Assigns a role to a user and clears that user's RBAC cache.
      */
     public function assignRoleToUser(int $userId, int $roleId): void
     {
@@ -816,7 +856,9 @@ class RoleRepository
     }
 
     /**
-     * Handles the assign role slug to user workflow.
+     * Resolves a role slug and assigns the matching role to a user.
+     *
+     * Responsibility: Resolves a role slug and assigns the matching role to a user.
      */
     public function assignRoleSlugToUser(int $userId, string $slug): bool
     {
@@ -832,7 +874,9 @@ class RoleRepository
     }
 
     /**
-     * Handles the remove role from user workflow.
+     * Removes a role from a user and clears that user's RBAC cache.
+     *
+     * Responsibility: Removes a role from a user and clears that user's RBAC cache.
      */
     public function removeRoleFromUser(int $userId, int $roleId): void
     {
@@ -866,7 +910,9 @@ class RoleRepository
     // -- Cache management ------------------------------------------------------
 
     /**
-     * Handles the clear cache workflow.
+     * Clears all in-memory and persistent RBAC assignment caches.
+     *
+     * Responsibility: Clears all in-memory and persistent RBAC assignment caches.
      */
     public function clearCache(): void
     {
@@ -874,7 +920,9 @@ class RoleRepository
     }
 
     /**
-     * Handles the clear user cache workflow.
+     * Clears in-memory and persistent RBAC assignment caches for one user.
+     *
+     * Responsibility: Clears in-memory and persistent RBAC assignment caches for one user.
      */
     public function clearUserCache(int $userId): void
     {
@@ -888,7 +936,9 @@ class RoleRepository
     }
 
     /**
-     * Handles the persistent cache key workflow.
+     * Builds a tenant-scoped persistent cache key for user RBAC assignments.
+     *
+     * Responsibility: Builds a tenant-scoped persistent cache key for user RBAC assignments.
      */
     private function persistentCacheKey(string $segment, int $userId): string
     {
@@ -896,7 +946,9 @@ class RoleRepository
     }
 
     /**
-     * Handles the persistent cache version workflow.
+     * Returns the persistent RBAC cache version, initializing it when absent.
+     *
+     * Responsibility: Returns the persistent RBAC cache version, initializing it when absent.
      */
     private function persistentCacheVersion(): string
     {
@@ -912,7 +964,9 @@ class RoleRepository
     }
 
     /**
-     * Handles the memory cache key workflow.
+     * Builds a tenant-scoped request-memory cache key for user RBAC assignments.
+     *
+     * Responsibility: Builds a tenant-scoped request-memory cache key for user RBAC assignments.
      */
     private function memoryCacheKey(string $segment, int $userId): string
     {
@@ -920,7 +974,9 @@ class RoleRepository
     }
 
     /**
-     * Handles the current tenant id workflow.
+     * Returns the active tenant ID required for RBAC queries.
+     *
+     * Responsibility: Returns the active tenant ID required for RBAC queries.
      */
     private function currentTenantId(): int
     {

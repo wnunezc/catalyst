@@ -31,15 +31,15 @@ declare(strict_types=1);
 namespace Catalyst\Repository\Roles\Support;
 
 /**
- * Defines the Rbac Label Presenter class contract.
+ * Translates known RBAC labels while preserving custom catalog values.
  *
  * @package Catalyst\Repository\Roles\Support
- * Responsibility: Coordinates the rbac label presenter behavior within its module boundary.
+ * Responsibility: Presents role and permission names, descriptions and lists with stable normalized lookup keys.
  */
 final class RbacLabelPresenter
 {
     /**
-     * Handles the role name workflow.
+     * Returns a translated label for a known role or the supplied name.
      */
     public static function roleName(string $name, ?string $slug = null): string
     {
@@ -52,7 +52,7 @@ final class RbacLabelPresenter
     }
 
     /**
-     * Handles the permission name workflow.
+     * Returns a translated label for a known permission or the supplied name.
      */
     public static function permissionName(string $name, ?string $slug = null): string
     {
@@ -66,7 +66,7 @@ final class RbacLabelPresenter
     }
 
     /**
-     * Handles the permission description workflow.
+     * Returns a translated description for a known permission or the supplied description.
      */
     public static function permissionDescription(?string $description, ?string $slug = null): ?string
     {
@@ -84,7 +84,7 @@ final class RbacLabelPresenter
     }
 
     /**
-     * Handles the role list workflow.
+     * Presents a comma-separated role list using translated labels when available.
      */
     public static function roleList(string $csv): string
     {
@@ -104,7 +104,7 @@ final class RbacLabelPresenter
     }
 
     /**
-     * Normalizes the provided value.
+     * Normalizes a role or permission lookup key.
      */
     private static function normalizeKey(string $value): string
     {

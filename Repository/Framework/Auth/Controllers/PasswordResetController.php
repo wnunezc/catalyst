@@ -41,28 +41,18 @@ use Catalyst\Framework\Mail\MailManager;
 use Catalyst\Helpers\Config\ConfigManager;
 use Exception;
 
-/**************************************************************************************
- * PasswordResetController — forgot-password flow via email link.
- *
- * Routes:
- *   GET  /forgot-password           → showRequestForm()
- *   POST /forgot-password           → sendResetLink()
- *   GET  /reset-password/{token}    → showResetForm()
- *   POST /reset-password/{token}    → reset()
- *
- * @package Catalyst\Repository\Auth\Controllers
- */
 /**
- * Defines the Password Reset Controller class contract.
+ * Handles forgot-password and reset-token credential replacement.
  *
  * @package Catalyst\Repository\Auth\Controllers
- * Responsibility: Coordinates the password reset controller behavior within its module boundary.
+ * Responsibility: Issues password reset emails without account enumeration and updates credentials after token validation.
  */
 class PasswordResetController extends Controller
 {
     /**
      * Show the forgot-password form.
      *
+     * Responsibility: Show the forgot-password form.
      * @param Request $request
      * @return Response
      */
@@ -74,9 +64,9 @@ class PasswordResetController extends Controller
     }
 
     /**
-     * Send a password-reset link to the given email address.
-     * Always returns a success message to prevent user enumeration.
+     * Send a password-reset link to the given email address. Always returns a success message to prevent user enumeration.
      *
+     * Responsibility: Send a password-reset link to the given email address. Always returns a success message to prevent user enumeration.
      * @param Request $request
      * @return Response
      */
@@ -120,6 +110,7 @@ class PasswordResetController extends Controller
     /**
      * Show the password-reset form for a given token.
      *
+     * Responsibility: Show the password-reset form for a given token.
      * @param Request $request
      * @param string  $token
      * @return Response
@@ -136,6 +127,7 @@ class PasswordResetController extends Controller
     /**
      * Apply the new password if the token is valid.
      *
+     * Responsibility: Apply the new password if the token is valid.
      * @param Request $request
      * @param string  $token
      * @return Response
@@ -196,6 +188,7 @@ class PasswordResetController extends Controller
     /**
      * Send the password-reset email.
      *
+     * Responsibility: Send the password-reset email.
      * @param string $email
      * @param string $name
      * @param string $rawToken
@@ -225,7 +218,9 @@ class PasswordResetController extends Controller
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves the public application URL used to build password-reset links.
+     *
+     * Responsibility: Resolves the public application URL used to build password-reset links.
      */
     private function resolveAppUrl(): string
     {

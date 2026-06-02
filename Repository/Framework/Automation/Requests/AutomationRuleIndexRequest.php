@@ -33,14 +33,17 @@ namespace Catalyst\Repository\Automation\Requests;
 use Catalyst\Framework\Http\FormRequest;
 
 /**
- * Defines the Automation Rule Index Request class contract.
+ * Normalizes automation rule listing filters.
  *
  * @package Catalyst\Repository\Automation\Requests
- * Responsibility: Coordinates the automation rule index request behavior within its module boundary.
+ * Responsibility: Expose the allowed listing inputs and convert them into bounded repository criteria.
  */
 final class AutomationRuleIndexRequest extends FormRequest
 {
     /**
+     * Returns the listing inputs accepted from the request.
+     *
+     * Responsibility: Returns the listing inputs accepted from the request.
      * @return string[]
      */
     public function only(): array
@@ -49,6 +52,9 @@ final class AutomationRuleIndexRequest extends FormRequest
     }
 
     /**
+     * Declares listing validation rules.
+     *
+     * Responsibility: Declares listing validation rules.
      * @return array<string, string>
      */
     public function rules(): array
@@ -57,6 +63,9 @@ final class AutomationRuleIndexRequest extends FormRequest
     }
 
     /**
+     * Normalizes pagination and filter values for repository search.
+     *
+     * Responsibility: Normalizes pagination and filter values for repository search.
      * @return array<string, mixed>
      */
     public function criteria(): array

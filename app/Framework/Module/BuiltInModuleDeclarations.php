@@ -31,14 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Module;
 
 /**
- * Defines the Built In Module Declarations class contract.
+ * Exposes the built-in module declarations.
  *
  * @package Catalyst\Framework\Module
- * Responsibility: Coordinates the built in module declarations behavior within its module boundary.
+ * Responsibility: Provides the static framework module declaration catalog to runtime registries.
  */
 final class BuiltInModuleDeclarations
 {
     /**
+     * Returns every built-in module declaration.
+     *
+     * Responsibility: Returns every built-in module declaration.
      * @return array<string, array<string, mixed>>
      */
     public function all(): array

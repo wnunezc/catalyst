@@ -37,12 +37,14 @@ namespace Catalyst\Framework\Traits;
  * Shared by ErrorHandler and ShutdownHandler to avoid duplication.
  *
  * @package Catalyst\Framework\Traits
+ * Responsibility: Maps PHP error-level constants to readable labels.
  */
 trait ErrorTypeTrait
 {
     /**
      * Map PHP error level to text description.
      *
+     * Responsibility: Map PHP error level to text description.
      * @param int $errorLevel PHP error level constant.
      * @return string Human-readable error type label.
      */

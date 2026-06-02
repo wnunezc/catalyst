@@ -4,13 +4,29 @@ declare(strict_types=1);
 
 use Catalyst\Framework\Database\Migration;
 
+/**
+ * Creates the table that stores extended user profile data.
+ *
+ * @package Catalyst\BootCore\Database\Migrations
+ * Responsibility: Provision and remove tenant-scoped user profile persistence.
+ */
 return new class extends Migration
 {
+    /**
+     * Returns the migration version identifier.
+     *
+     * Responsibility: Returns the migration version identifier.
+     */
     public function getVersion(): string
     {
         return '20260520030000';
     }
 
+    /**
+     * Creates the user profiles table when it is absent.
+     *
+     * Responsibility: Creates the user profiles table when it is absent.
+     */
     public function up(): void
     {
         if ($this->tableExists('user_profiles')) {
@@ -43,6 +59,11 @@ return new class extends Migration
         );
     }
 
+    /**
+     * Removes the user profiles table when it exists.
+     *
+     * Responsibility: Removes the user profiles table when it exists.
+     */
     public function down(): void
     {
         if ($this->tableExists('user_profiles')) {

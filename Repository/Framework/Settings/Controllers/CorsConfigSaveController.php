@@ -39,17 +39,20 @@ use Catalyst\Helpers\Config\ConfigManager;
  * CorsConfigSaveController — persists CORS feature configuration.
  *
  * Route:
- *   POST /setup/cors → saveCors()
+ *   POST /configuration/environment-setup/cors → saveCors()
  *
  * Accepts comma-separated strings for list fields (origins, methods, headers)
  * and writes them as arrays to cors.json via ConfigManager.
  *
  * @package Catalyst\Repository\Settings\Controllers
+ * Responsibility: Validates and persists CORS policy values submitted by the setup surface.
  */
 class CorsConfigSaveController extends Controller
 {
     /**
-     * Persists the current state.
+     * Normalizes, validates and saves CORS settings.
+     *
+     * Responsibility: Normalizes, validates and saves CORS settings.
      */
     public function saveCors(Request $request): Response
     {
@@ -97,7 +100,9 @@ class CorsConfigSaveController extends Controller
     }
 
     /**
-     * Handles the boolean flag workflow.
+     * Reads a checkbox-like request value as a boolean.
+     *
+     * Responsibility: Reads a checkbox-like request value as a boolean.
      */
     private function booleanFlag(Request $request, string $key, bool $default = false): bool
     {

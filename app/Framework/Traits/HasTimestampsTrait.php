@@ -57,6 +57,7 @@ use Catalyst\Framework\Database\Model;
  *   const UPDATED_AT = 'updated_at';
  *
  * @package Catalyst\Framework\Traits
+ * Responsibility: Maintains creation and update timestamps through model lifecycle hooks.
  */
 trait HasTimestampsTrait
 {
@@ -91,8 +92,9 @@ trait HasTimestampsTrait
     // -------------------------------------------------------------------------
 
     /**
-     * Set created_at only if not already present.
-     * Allows explicit creation timestamps to be preserved.
+     * Set created_at only if not already present. Allows explicit creation timestamps to be preserved.
+     *
+     * Responsibility: Set created_at only if not already present. Allows explicit creation timestamps to be preserved.
      */
     public function setCreatedAt(): void
     {
@@ -105,6 +107,8 @@ trait HasTimestampsTrait
 
     /**
      * Always refresh updated_at on every update.
+     *
+     * Responsibility: Always refresh updated_at on every update.
      */
     public function setUpdatedAt(): void
     {
@@ -113,6 +117,8 @@ trait HasTimestampsTrait
 
     /**
      * Return the current timestamp string in the format expected by the DB.
+     *
+     * Responsibility: Return the current timestamp string in the format expected by the DB.
      */
     public function freshTimestamp(): string
     {
@@ -121,6 +127,8 @@ trait HasTimestampsTrait
 
     /**
      * Convenience: update updated_at and save.
+     *
+     * Responsibility: Convenience: update updated_at and save.
      */
     public function touch(): bool
     {

@@ -34,15 +34,17 @@ use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\JsonResponse;
 
 /**
- * Defines the Validator Test Controller class contract.
+ * Exposes development endpoints for validator rule diagnostics.
  *
  * @package Catalyst\Repository\DevTools\Controllers
- * Responsibility: Coordinates the validator test controller behavior within its module boundary.
+ * Responsibility: Returns deterministic validation and uniqueness-check responses.
  */
 class ValidatorTestController extends Controller
 {
     /**
-     * Handles the validator test workflow.
+     * Validates representative form fields or a forced invalid payload.
+     *
+     * Responsibility: Validates representative form fields or a forced invalid payload.
      */
     public function validatorTest(): JsonResponse
     {
@@ -80,7 +82,9 @@ class ValidatorTestController extends Controller
     }
 
     /**
-     * Handles the validator unique test workflow.
+     * Verifies uniqueness validation for a submitted demo email address.
+     *
+     * Responsibility: Verifies uniqueness validation for a submitted demo email address.
      */
     public function validatorUniqueTest(): JsonResponse
     {

@@ -33,15 +33,17 @@ namespace Catalyst\Framework\Cache;
 use Catalyst\Framework\Security\SignedSerializedPayload;
 
 /**
- * Defines the File Cache Store class contract.
+ * Persists signed cache entries as PHP files.
  *
  * @package Catalyst\Framework\Cache
- * Responsibility: Coordinates the file cache store behavior within its module boundary.
+ * Responsibility: Reads, writes and evicts namespaced filesystem cache entries.
  */
 final class FileCacheStore implements CacheStoreInterface
 {
     /**
      * Initializes the File Cache Store instance.
+     *
+     * Responsibility: Initializes the File Cache Store instance.
      */
     public function __construct(
         private readonly string $baseDirectory,
@@ -50,7 +52,9 @@ final class FileCacheStore implements CacheStoreInterface
     }
 
     /**
-     * Returns the runtime value.
+     * Returns a verified filesystem cache value or the supplied default.
+     *
+     * Responsibility: Returns a verified filesystem cache value or the supplied default.
      */
     public function get(string $key, mixed $default = null): mixed
     {
@@ -60,7 +64,9 @@ final class FileCacheStore implements CacheStoreInterface
     }
 
     /**
-     * Handles the put workflow.
+     * Atomically stores a signed filesystem cache value.
+     *
+     * Responsibility: Atomically stores a signed filesystem cache value.
      */
     public function put(string $key, mixed $value, int $ttlSeconds = 0): bool
     {
@@ -93,7 +99,9 @@ final class FileCacheStore implements CacheStoreInterface
     }
 
     /**
-     * Handles the forever workflow.
+     * Stores a filesystem cache value without expiration.
+     *
+     * Responsibility: Stores a filesystem cache value without expiration.
      */
     public function forever(string $key, mixed $value): bool
     {
@@ -101,7 +109,9 @@ final class FileCacheStore implements CacheStoreInterface
     }
 
     /**
-     * Handles the has workflow.
+     * Determines whether a verified filesystem cache entry exists.
+     *
+     * Responsibility: Determines whether a verified filesystem cache entry exists.
      */
     public function has(string $key): bool
     {
@@ -109,7 +119,9 @@ final class FileCacheStore implements CacheStoreInterface
     }
 
     /**
-     * Handles the forget workflow.
+     * Removes one filesystem cache entry.
+     *
+     * Responsibility: Removes one filesystem cache entry.
      */
     public function forget(string $key): bool
     {
@@ -119,7 +131,9 @@ final class FileCacheStore implements CacheStoreInterface
     }
 
     /**
-     * Handles the clear workflow.
+     * Removes every PHP cache file in the configured namespace.
+     *
+     * Responsibility: Removes every PHP cache file in the configured namespace.
      */
     public function clear(): bool
     {
@@ -140,7 +154,9 @@ final class FileCacheStore implements CacheStoreInterface
     }
 
     /**
-     * Handles the remember workflow.
+     * Returns a cached value or stores the resolver result.
+     *
+     * Responsibility: Returns a cached value or stores the resolver result.
      */
     public function remember(string $key, callable $resolver, int $ttlSeconds = 0): mixed
     {
@@ -156,7 +172,9 @@ final class FileCacheStore implements CacheStoreInterface
     }
 
     /**
-     * Returns the driver name value.
+     * Returns the file driver name.
+     *
+     * Responsibility: Returns the file driver name.
      */
     public function getDriverName(): string
     {
@@ -164,6 +182,9 @@ final class FileCacheStore implements CacheStoreInterface
     }
 
     /**
+     * Reads and validates a signed filesystem cache payload.
+     *
+     * Responsibility: Reads and validates a signed filesystem cache payload.
      * @return array{hit:bool,value:mixed}
      */
     private function readPayload(string $key): array
@@ -198,7 +219,9 @@ final class FileCacheStore implements CacheStoreInterface
     }
 
     /**
-     * Handles the namespace directory workflow.
+     * Returns the sanitized cache namespace directory.
+     *
+     * Responsibility: Returns the sanitized cache namespace directory.
      */
     private function namespaceDirectory(): string
     {
@@ -208,7 +231,9 @@ final class FileCacheStore implements CacheStoreInterface
     }
 
     /**
-     * Handles the path for key workflow.
+     * Builds the cache file path for a logical key.
+     *
+     * Responsibility: Builds the cache file path for a logical key.
      */
     private function pathForKey(string $key): string
     {

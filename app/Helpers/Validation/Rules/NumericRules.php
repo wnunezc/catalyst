@@ -36,6 +36,7 @@ namespace Catalyst\Helpers\Validation\Rules;
  * Rules: numeric, integer, minValue, maxValue, between
  *
  * @package Catalyst\Helpers\Validation\Rules
+ * Responsibility: Validates numeric types and configured numeric ranges.
  */
 class NumericRules
 {

@@ -34,15 +34,17 @@ use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
 
 /**
- * Defines the Flash Controller class contract.
+ * Controller for flash message interactions.
  *
  * @package Catalyst\Framework\Controllers
- * Responsibility: Coordinates the flash controller behavior within its module boundary.
+ * Responsibility: Handles client requests that dismiss flash messages from the active session.
  */
 class FlashController extends Controller
 {
     /**
-     * Handles the dismiss workflow.
+     * Dismisses a flash message by id and returns a JSON response.
+     *
+     * Responsibility: Dismisses a flash message by id and returns a JSON response.
      */
     public function dismiss(Request $request): Response
     {

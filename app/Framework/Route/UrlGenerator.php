@@ -32,19 +32,14 @@ namespace Catalyst\Framework\Route;
 
 use Catalyst\Helpers\Exceptions\RouteNotFoundException;
 
-/**************************************************************************************
+/**
  * UrlGenerator class for creating URLs from routes
  *
  * Responsible for generating URLs for named routes with parameters
  * and supporting both relative and absolute URLs.
  *
  * @package Catalyst\Framework\Route
- */
-/**
- * Defines the Url Generator class contract.
- *
- * @package Catalyst\Framework\Route
- * Responsibility: Coordinates the url generator behavior within its module boundary.
+ * Responsibility: Generates relative and absolute URLs from named routes, arbitrary paths, and asset paths.
  */
 class UrlGenerator
 {
@@ -63,8 +58,9 @@ class UrlGenerator
     protected ?string $baseUrl = null;
 
     /**
-     * Create a new URL generator
+     * Create a new URL generator.
      *
+     * Responsibility: Create a new URL generator.
      * @param RouteCollection $routes Collection of routes
      */
     public function __construct(RouteCollection $routes)
@@ -73,8 +69,9 @@ class UrlGenerator
     }
 
     /**
-     * Set the base URL for absolute URL generation
+     * Set the base URL for absolute URL generation.
      *
+     * Responsibility: Stores the URL root used when named routes are rendered as absolute URLs.
      * @param string|null $baseUrl Base URL
      * @return self For method chaining
      */
@@ -85,7 +82,9 @@ class UrlGenerator
     }
 
     /**
-     * Get the base URL
+     * Resolves the configured or request-derived base URL for absolute link generation.
+     *
+     * Responsibility: Provides the URL root used when named routes are rendered as absolute URLs.
      *
      * @return string Base URL
      */
@@ -111,8 +110,9 @@ class UrlGenerator
     }
 
     /**
-     * Generate a URL for a named route
+     * Generate a URL for a named route.
      *
+     * Responsibility: Generate a URL for a named route.
      * @param string $name Route name
      * @param array $parameters Parameters to substitute in the route pattern
      * @param bool $absolute Whether to generate an absolute URL
@@ -136,8 +136,9 @@ class UrlGenerator
     }
 
     /**
-     * Generate a URL to a path
+     * Generate a URL to a path.
      *
+     * Responsibility: Generate a URL to a path.
      * @param string $path The path to generate a URL for
      * @param array $query Query parameters to append
      * @param bool $absolute Whether to generate an absolute URL
@@ -164,8 +165,9 @@ class UrlGenerator
     }
 
     /**
-     * Generate an absolute URL
+     * Generate an absolute URL.
      *
+     * Responsibility: Generate an absolute URL.
      * @param string $path The path
      * @param array $query Query parameters
      * @return string Absolute URL

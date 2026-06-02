@@ -40,28 +40,11 @@ use Catalyst\Framework\Session\SessionManager;
 use Catalyst\Helpers\Config\ConfigManager;
 use Catalyst\Repository\Auth\Requests\MfaCodeRequest;
 
-/**************************************************************************************
- * MfaController -- TOTP Multi-Factor Authentication flows.
- *
- * Routes:
- *   GET  /mfa/setup       -> setup()     -- QR provisioning
- *   POST /mfa/enable      -> enable()    -- confirm first code and activate MFA
- *   POST /mfa/disable     -> disable()   -- deactivate MFA after password confirmation
- *   GET  /mfa/challenge   -> challenge() -- code entry during pending login
- *   POST /mfa/verify      -> verify()    -- validate code and complete login session
- *
- * Access rules:
- *   setup()  / enable()  -- authenticated user  OR  pending-setup flow (forced first-time)
- *   disable()            -- authenticated user only
- *   challenge() / verify() -- pending-MFA state (hasMfaPending)
- *
- * @package Catalyst\Repository\Auth\Controllers
- */
 /**
- * Defines the Mfa Controller class contract.
+ * Handles MFA setup, recovery-code use, and login challenge completion.
  *
  * @package Catalyst\Repository\Auth\Controllers
- * Responsibility: Coordinates the mfa controller behavior within its module boundary.
+ * Responsibility: Enforces MFA access rules, provisions TOTP secrets, persists backup-code state, and completes pending logins.
  */
 class MfaController extends Controller
 {
@@ -70,13 +53,9 @@ class MfaController extends Controller
     // -------------------------------------------------------------------------
 
     /**
-     * Show the MFA setup page with a QR code to scan.
+     * Show the MFA setup page with a QR code to scan. Accessible in two modes: - Normal: user is already authenticated and wants to enable MFA. - Forced: MFA is globally required; user arrived here via login with no MFA configured yet (hasMfaSetupPending = true, no auth session).
      *
-     * Accessible in two modes:
-     *   - Normal: user is already authenticated and wants to enable MFA.
-     *   - Forced: MFA is globally required; user arrived here via login with
-     *     no MFA configured yet (hasMfaSetupPending = true, no auth session).
-     *
+     * Responsibility: Show the MFA setup page with a QR code to scan. Accessible in two modes: - Normal: user is already authenticated and wants to enable MFA. - Forced: MFA is globally required; user arrived here via login with no MFA configured yet (hasMfaSetupPending = true, no auth session).
      * @param Request $request
      * @return Response
      */
@@ -124,11 +103,9 @@ class MfaController extends Controller
     }
 
     /**
-     * Confirm the first TOTP code and permanently activate MFA.
+     * Confirm the first TOTP code and permanently activate MFA. If the user arrived via the forced-setup flow (hasMfaSetupPending), the full login session is created here after successful activation.
      *
-     * If the user arrived via the forced-setup flow (hasMfaSetupPending),
-     * the full login session is created here after successful activation.
-     *
+     * Responsibility: Confirm the first TOTP code and permanently activate MFA. If the user arrived via the forced-setup flow (hasMfaSetupPending), the full login session is created here after successful activation.
      * @param Request $request
      * @return Response
      */
@@ -200,6 +177,7 @@ class MfaController extends Controller
     /**
      * Disable MFA after verifying the user's current password.
      *
+     * Responsibility: Disable MFA after verifying the user's current password.
      * @param Request $request
      * @return Response
      */
@@ -241,6 +219,7 @@ class MfaController extends Controller
     /**
      * Show the MFA challenge form during a pending login.
      *
+     * Responsibility: Show the MFA challenge form during a pending login.
      * @param Request $request
      * @return Response
      */
@@ -264,6 +243,7 @@ class MfaController extends Controller
     /**
      * Verify TOTP code (or backup code) and complete the pending login session.
      *
+     * Responsibility: Verify TOTP code (or backup code) and complete the pending login session.
      * @param Request $request
      * @return Response
      */
@@ -350,6 +330,7 @@ class MfaController extends Controller
     /**
      * Resolve the user row from either the active session or the forced-setup pending state.
      *
+     * Responsibility: Resolve the user row from either the active session or the forced-setup pending state.
      * @param AuthManager $auth
      * @param bool        $setupPending
      * @return array|null
@@ -369,6 +350,7 @@ class MfaController extends Controller
     /**
      * Resolve the application name for the otpauth:// URI issuer field.
      *
+     * Responsibility: Resolve the application name for the otpauth:// URI issuer field.
      * @return string
      */
     private function resolveIssuer(): string

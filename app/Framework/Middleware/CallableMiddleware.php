@@ -34,18 +34,13 @@ use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
 use Closure;
 
-/**************************************************************************************
+/**
  * CallableMiddleware adapter class
  *
  * Wraps callable functions to make them compatible with the middleware interface.
  *
  * @package Catalyst\Framework\Middleware
- */
-/**
- * Defines the Callable Middleware class contract.
- *
- * @package Catalyst\Framework\Middleware
- * Responsibility: Coordinates the callable middleware behavior within its module boundary.
+ * Responsibility: Adapts a callable so it can participate in the middleware pipeline.
  */
 class CallableMiddleware implements MiddlewareInterface
 {
@@ -57,8 +52,9 @@ class CallableMiddleware implements MiddlewareInterface
     private $callable;
 
     /**
-     * Create a new callable middleware
+     * Create a new callable middleware.
      *
+     * Responsibility: Create a new callable middleware.
      * @param callable $callable The callable to wrap
      */
     public function __construct(callable $callable)
@@ -67,8 +63,9 @@ class CallableMiddleware implements MiddlewareInterface
     }
 
     /**
-     * Process an incoming server request
+     * Process an incoming server request.
      *
+     * Responsibility: Process an incoming server request.
      * @param Request $request The request object
      * @param Closure $next The next middleware handler
      * @return Response The response object

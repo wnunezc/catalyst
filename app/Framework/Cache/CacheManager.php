@@ -33,10 +33,10 @@ namespace Catalyst\Framework\Cache;
 use Catalyst\Framework\Traits\SingletonTrait;
 
 /**
- * Defines the Cache Manager class contract.
+ * Selects and exposes the configured runtime cache store.
  *
  * @package Catalyst\Framework\Cache
- * Responsibility: Coordinates the cache manager behavior within its module boundary.
+ * Responsibility: Resolves cache drivers from runtime settings and forwards cache operations.
  */
 final class CacheManager
 {
@@ -48,6 +48,8 @@ final class CacheManager
 
     /**
      * Initializes the Cache Manager instance.
+     *
+     * Responsibility: Initializes the Cache Manager instance.
      */
     protected function __construct()
     {
@@ -55,7 +57,9 @@ final class CacheManager
     }
 
     /**
-     * Handles the persistence workflow.
+     * Returns the configured cache store, rebuilding it when settings change.
+     *
+     * Responsibility: Returns the configured cache store, rebuilding it when settings change.
      */
     public function store(): CacheStoreInterface
     {
@@ -77,7 +81,9 @@ final class CacheManager
     }
 
     /**
-     * Returns the runtime value.
+     * Returns a cached value or the supplied default.
+     *
+     * Responsibility: Returns a cached value or the supplied default.
      */
     public function get(string $key, mixed $default = null): mixed
     {
@@ -85,7 +91,9 @@ final class CacheManager
     }
 
     /**
-     * Handles the put workflow.
+     * Stores a value with an optional time-to-live.
+     *
+     * Responsibility: Stores a value with an optional time-to-live.
      */
     public function put(string $key, mixed $value, int $ttlSeconds = 0): bool
     {
@@ -93,7 +101,9 @@ final class CacheManager
     }
 
     /**
-     * Handles the forever workflow.
+     * Stores a value without expiration.
+     *
+     * Responsibility: Stores a value without expiration.
      */
     public function forever(string $key, mixed $value): bool
     {
@@ -101,7 +111,9 @@ final class CacheManager
     }
 
     /**
-     * Handles the has workflow.
+     * Determines whether a usable cache entry exists.
+     *
+     * Responsibility: Determines whether a usable cache entry exists.
      */
     public function has(string $key): bool
     {
@@ -109,7 +121,9 @@ final class CacheManager
     }
 
     /**
-     * Handles the forget workflow.
+     * Removes one cache entry.
+     *
+     * Responsibility: Removes one cache entry.
      */
     public function forget(string $key): bool
     {
@@ -117,7 +131,9 @@ final class CacheManager
     }
 
     /**
-     * Handles the clear workflow.
+     * Removes every entry from the active store.
+     *
+     * Responsibility: Removes every entry from the active store.
      */
     public function clear(): bool
     {
@@ -125,7 +141,9 @@ final class CacheManager
     }
 
     /**
-     * Handles the remember workflow.
+     * Returns a cached value or stores the resolver result.
+     *
+     * Responsibility: Returns a cached value or stores the resolver result.
      */
     public function remember(string $key, callable $resolver, int $ttlSeconds = 0): mixed
     {
@@ -133,7 +151,9 @@ final class CacheManager
     }
 
     /**
-     * Handles the refresh workflow.
+     * Invalidates the resolved driver so it is rebuilt on next use.
+     *
+     * Responsibility: Invalidates the resolved driver so it is rebuilt on next use.
      */
     public function refresh(): void
     {
@@ -142,6 +162,9 @@ final class CacheManager
     }
 
     /**
+     * Returns a diagnostic summary of cache configuration and driver state.
+     *
+     * Responsibility: Returns a diagnostic summary of cache configuration and driver state.
      * @return array<string, mixed>
      */
     public function summary(): array
@@ -163,6 +186,9 @@ final class CacheManager
     }
 
     /**
+     * Resolves the configured runtime cache driver.
+     *
+     * Responsibility: Resolves the configured runtime cache driver.
      * @param array<string, mixed> $config
      */
     private function resolveStore(array $config): CacheStoreInterface
@@ -178,4 +204,3 @@ final class CacheManager
         };
     }
 }
-

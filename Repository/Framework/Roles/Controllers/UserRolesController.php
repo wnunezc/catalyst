@@ -38,10 +38,10 @@ use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
 
 /**
- * Defines the User Roles Controller class contract.
+ * Manages role assignments for an individual user.
  *
  * @package Catalyst\Repository\Roles\Controllers
- * Responsibility: Coordinates the user roles controller behavior within its module boundary.
+ * Responsibility: Displays assignable roles and applies role additions or removals for active users.
  */
 class UserRolesController extends Controller
 {
@@ -50,6 +50,8 @@ class UserRolesController extends Controller
 
     /**
      * Initializes the User Roles Controller instance.
+     *
+     * Responsibility: Initializes the User Roles Controller instance.
      */
     public function __construct(RoleRepository $repo, UserDirectoryRepository $users)
     {
@@ -59,7 +61,9 @@ class UserRolesController extends Controller
     }
 
     /**
-     * Handles the index workflow.
+     * Displays the searchable role-assignment grid for an active user.
+     *
+     * Responsibility: Displays the searchable role-assignment grid for an active user.
      */
     public function index(Request $request, string $userId): Response
     {
@@ -164,7 +168,9 @@ class UserRolesController extends Controller
     }
 
     /**
-     * Handles the assign workflow.
+     * Assigns a role to an active user.
+     *
+     * Responsibility: Assigns a role to an active user.
      */
     public function assign(Request $request, string $userId, string $roleId): Response
     {
@@ -181,7 +187,9 @@ class UserRolesController extends Controller
     }
 
     /**
-     * Handles the remove workflow.
+     * Removes a role from an active user.
+     *
+     * Responsibility: Removes a role from an active user.
      */
     public function remove(Request $request, string $userId, string $roleId): Response
     {
@@ -198,7 +206,9 @@ class UserRolesController extends Controller
     }
 
     /**
-     * Finds the requested record.
+     * Finds the active user summary or returns null when unavailable.
+     *
+     * Responsibility: Finds the active user summary or returns null when unavailable.
      */
     private function findUser(int $id): ?array
     {
@@ -210,6 +220,9 @@ class UserRolesController extends Controller
     }
 
     /**
+     * Filters, sorts and paginates role assignments for the selected user.
+     *
+     * Responsibility: Filters, sorts and paginates role assignments for the selected user.
      * @param array<string, mixed> $state
      * @return array{rows: array<int, array<string, mixed>>, total: int}
      */

@@ -31,10 +31,10 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Admin\Form;
 
 /**
- * Defines the Form Builder class contract.
+ * Fluent builder for admin form view models.
  *
  * @package Catalyst\Framework\Admin\Form
- * Responsibility: Coordinates the form builder behavior within its module boundary.
+ * Responsibility: Normalizes form configuration, fields, sections, actions, model values, and HTML attributes for templates.
  */
 final class FormBuilder
 {
@@ -60,7 +60,7 @@ final class FormBuilder
     ];
 
     /**
-     * Creates the requested object.
+     * Creates a new form builder instance.
      */
     public static function make(): self
     {
@@ -68,7 +68,9 @@ final class FormBuilder
     }
 
     /**
-     * Handles the action workflow.
+     * Sets the form submission action URL.
+     *
+     * Responsibility: Sets the form submission action URL.
      */
     public function action(string $action): self
     {
@@ -78,7 +80,9 @@ final class FormBuilder
     }
 
     /**
-     * Handles the method workflow.
+     * Sets the intended form HTTP method.
+     *
+     * Responsibility: Sets the intended form HTTP method.
      */
     public function method(string $method): self
     {
@@ -88,6 +92,9 @@ final class FormBuilder
     }
 
     /**
+     * Sets additional form tag attributes.
+     *
+     * Responsibility: Sets additional form tag attributes.
      * @param array<string, scalar|array<int, scalar>> $attributes
      */
     public function attributes(array $attributes): self
@@ -98,6 +105,9 @@ final class FormBuilder
     }
 
     /**
+     * Sets the field definitions to render.
+     *
+     * Responsibility: Sets the field definitions to render.
      * @param array<int|string, array<string, mixed>> $fields
      */
     public function fields(array $fields): self
@@ -108,6 +118,9 @@ final class FormBuilder
     }
 
     /**
+     * Sets optional section definitions for grouping fields.
+     *
+     * Responsibility: Sets optional section definitions for grouping fields.
      * @param array<int|string, array<string, mixed>> $sections
      */
     public function sections(array $sections): self
@@ -118,6 +131,9 @@ final class FormBuilder
     }
 
     /**
+     * Sets action button/link definitions for the form footer.
+     *
+     * Responsibility: Sets action button/link definitions for the form footer.
      * @param array<int, array<string, mixed>> $actions
      */
     public function actions(array $actions): self
@@ -128,6 +144,9 @@ final class FormBuilder
     }
 
     /**
+     * Sets the model values used to prefill fields.
+     *
+     * Responsibility: Sets the model values used to prefill fields.
      * @param array<string, mixed>|object|null $model
      */
     public function model(array|object|null $model): self
@@ -138,6 +157,9 @@ final class FormBuilder
     }
 
     /**
+     * Sets fallback default values for fields without model or old input values.
+     *
+     * Responsibility: Sets fallback default values for fields without model or old input values.
      * @param array<string, mixed> $defaults
      */
     public function defaults(array $defaults): self
@@ -148,7 +170,9 @@ final class FormBuilder
     }
 
     /**
-     * Handles the error bag workflow.
+     * Sets the validation error bag used by field normalization.
+     *
+     * Responsibility: Sets the validation error bag used by field normalization.
      */
     public function errorBag(string $errorBag): self
     {
@@ -158,7 +182,9 @@ final class FormBuilder
     }
 
     /**
-     * Handles the multipart workflow.
+     * Enables or disables multipart form encoding.
+     *
+     * Responsibility: Enables or disables multipart form encoding.
      */
     public function multipart(bool $multipart = true): self
     {
@@ -168,7 +194,9 @@ final class FormBuilder
     }
 
     /**
-     * Handles the wrapper class workflow.
+     * Sets the CSS class used by the form field wrapper.
+     *
+     * Responsibility: Sets the CSS class used by the form field wrapper.
      */
     public function wrapperClass(string $wrapperClass): self
     {
@@ -178,7 +206,9 @@ final class FormBuilder
     }
 
     /**
-     * Handles the autosave workflow.
+     * Configures client-side autosave metadata for the form.
+     *
+     * Responsibility: Configures client-side autosave metadata for the form.
      */
     public function autosave(bool $enabled = true, ?string $key = null): self
     {
@@ -191,6 +221,9 @@ final class FormBuilder
     }
 
     /**
+     * Produces the normalized form view model.
+     *
+     * Responsibility: Produces the normalized form view model.
      * @return array<string, mixed>
      */
     public function toArray(): array
@@ -228,6 +261,9 @@ final class FormBuilder
     }
 
     /**
+     * Converts arrays or objects into model value arrays.
+     *
+     * Responsibility: Converts arrays or objects into model value arrays.
      * @param array<string, mixed>|object|null $model
      * @return array<string, mixed>
      */
@@ -251,6 +287,9 @@ final class FormBuilder
     }
 
     /**
+     * Normalizes a single field definition for template rendering.
+     *
+     * Responsibility: Normalizes a single field definition for template rendering.
      * @param array<string, mixed> $field
      * @return array<string, mixed>
      */
@@ -313,6 +352,9 @@ final class FormBuilder
     }
 
     /**
+     * Normalizes configured form actions for template rendering.
+     *
+     * Responsibility: Normalizes configured form actions for template rendering.
      * @param array<int, array<string, mixed>> $actions
      * @return array<int, array<string, mixed>>
      */
@@ -338,6 +380,9 @@ final class FormBuilder
     }
 
     /**
+     * Resolves the displayed field value from old input, model data, defaults, or field configuration.
+     *
+     * Responsibility: Resolves the displayed field value from old input, model data, defaults, or field configuration.
      * @param array<string, mixed> $field
      */
     private function resolveValue(string $fieldName, string $type, array $field): mixed
@@ -361,6 +406,9 @@ final class FormBuilder
     }
 
     /**
+     * Normalizes nested field definitions used by repeater controls.
+     *
+     * Responsibility: Normalizes nested field definitions used by repeater controls.
      * @param array<int|string, array<string, mixed>> $fields
      * @return array<int, array<string, mixed>>
      */
@@ -398,6 +446,9 @@ final class FormBuilder
     }
 
     /**
+     * Normalizes existing repeater item values and ensures the minimum item count.
+     *
+     * Responsibility: Normalizes existing repeater item values and ensures the minimum item count.
      * @param mixed $items
      * @return array<int, array<string, mixed>>
      */
@@ -419,6 +470,9 @@ final class FormBuilder
     }
 
     /**
+     * Groups normalized fields into declared form sections.
+     *
+     * Responsibility: Groups normalized fields into declared form sections.
      * @param array<int, array<string, mixed>> $fields
      * @return array<int, array<string, mixed>>
      */
@@ -490,6 +544,9 @@ final class FormBuilder
     }
 
     /**
+     * Normalizes autosave configuration and derives a stable key when needed.
+     *
+     * Responsibility: Normalizes autosave configuration and derives a stable key when needed.
      * @return array<string, mixed>
      */
     private function normalizeAutosave(): array
@@ -510,6 +567,9 @@ final class FormBuilder
     }
 
     /**
+     * Normalizes select/radio option definitions into value-label pairs.
+     *
+     * Responsibility: Normalizes select/radio option definitions into value-label pairs.
      * @param array<int|string, mixed> $options
      * @return array<int, array<string, string>>
      */
@@ -537,6 +597,9 @@ final class FormBuilder
     }
 
     /**
+     * Removes invalid empty attribute names from an attribute map.
+     *
+     * Responsibility: Removes invalid empty attribute names from an attribute map.
      * @param array<string, scalar|array<int, scalar>> $attributes
      * @return array<string, scalar|array<int, scalar>>
      */
@@ -558,6 +621,9 @@ final class FormBuilder
     }
 
     /**
+     * Converts normalized attributes into escaped HTML attribute text.
+     *
+     * Responsibility: Converts normalized attributes into escaped HTML attribute text.
      * @param array<string, scalar|array<int, scalar>> $attributes
      */
     private function stringifyAttributes(array $attributes): string
@@ -584,7 +650,9 @@ final class FormBuilder
     }
 
     /**
-     * Handles the humanize workflow.
+     * Converts an identifier into a human-readable label.
+     *
+     * Responsibility: Converts an identifier into a human-readable label.
      */
     private function humanize(string $value): string
     {

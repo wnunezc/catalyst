@@ -36,17 +36,19 @@ use DateTimeImmutable;
 use DateTimeZone;
 
 /**
- * Defines the Queue Manager class contract.
+ * Dispatches queueable jobs for asynchronous processing.
  *
  * @package Catalyst\Framework\Queue
- * Responsibility: Coordinates the queue manager behavior within its module boundary.
+ * Responsibility: Resolves queue routing, persists new jobs, and emits dispatch events.
  */
 final class QueueManager
 {
     use SingletonTrait;
 
     /**
-     * Dispatches the requested operation.
+     * Persists a job in its target queue and returns the generated identifier.
+     *
+     * Responsibility: Persists a job in its target queue and returns the generated identifier.
      */
     public function dispatch(
         QueueableJobInterface $job,

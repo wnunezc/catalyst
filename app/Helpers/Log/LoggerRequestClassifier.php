@@ -31,15 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Helpers\Log;
 
 /**
- * Defines the Logger Request Classifier class contract.
+ * Classifies the active request for logging decisions.
  *
  * @package Catalyst\Helpers\Log
- * Responsibility: Coordinates the logger request classifier behavior within its module boundary.
+ * Responsibility: Distinguishes CLI, API, asset, bot, AJAX and page requests.
  */
 final class LoggerRequestClassifier
 {
     /**
-     * Handles the classify workflow.
+     * Returns the category of the active request.
+     *
+     * Responsibility: Returns the category of the active request.
      */
     public function classify(): string
     {

@@ -38,15 +38,17 @@ use Catalyst\Framework\Http\RedirectResponse;
 use Catalyst\Framework\Http\Response;
 
 /**
- * Defines the Home Controller class contract.
+ * Serves the canonical public home surface and root entry resolution.
  *
  * @package App\Surface\Home\Controllers
- * Responsibility: Coordinates the home controller behavior within its module boundary.
+ * Responsibility: Resolves the application root target, renders the home demo page, and exposes its companion payload.
  */
 class HomeController extends PublicPageController
 {
     /**
-     * Handles the root workflow.
+     * Resolves the root URL to an application entry target or falls back to the public home page.
+     *
+     * Responsibility: Resolves the root URL to an application entry target or falls back to the public home page.
      */
     public function root(): Response
     {
@@ -59,7 +61,9 @@ class HomeController extends PublicPageController
     }
 
     /**
-     * Handles the index workflow.
+     * Renders the public home surface using the shared demo catalog payload.
+     *
+     * Responsibility: Renders the public home surface using the shared demo catalog payload.
      */
     public function index(): Response
     {
@@ -67,7 +71,9 @@ class HomeController extends PublicPageController
     }
 
     /**
-     * Handles the api workflow.
+     * Returns the home companion payload for public surface consumers.
+     *
+     * Responsibility: Returns the home companion payload for public surface consumers.
      */
     public function api(): JsonResponse
     {
@@ -77,7 +83,9 @@ class HomeController extends PublicPageController
     }
 
     /**
-     * Handles the redirect legacy workflow.
+     * Redirects legacy home aliases to the canonical root route.
+     *
+     * Responsibility: Redirects legacy home aliases to the canonical root route.
      */
     public function redirectLegacy(): RedirectResponse
     {

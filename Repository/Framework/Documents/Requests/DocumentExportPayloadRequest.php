@@ -31,10 +31,10 @@ declare(strict_types=1);
 namespace Catalyst\Repository\Documents\Requests;
 
 /**
- * Defines the Document Export Payload Request class contract.
+ * Reuses document preview payload validation for artifact export requests.
  *
  * @package Catalyst\Repository\Documents\Requests
- * Responsibility: Coordinates the document export payload request behavior within its module boundary.
+ * Responsibility: Provide the normalized render payload required to export a document artifact.
  */
 final class DocumentExportPayloadRequest extends DocumentPreviewPayloadRequest
 {

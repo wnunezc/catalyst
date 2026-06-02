@@ -31,15 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Repository\Settings\Support;
 
 /**
- * Defines the Settings Card Factory class contract.
+ * Builds settings overview cards and their executive groups.
  *
  * @package Catalyst\Repository\Settings\Support
- * Responsibility: Coordinates the settings card factory behavior within its module boundary.
+ * Responsibility: Maps current configuration into read-only cards and groups them for the setup overview.
  */
 final class SettingsCardFactory
 {
     /**
      * Initializes the Settings Card Factory instance.
+     *
+     * Responsibility: Initializes the Settings Card Factory instance.
      */
     public function __construct(
         private readonly SettingsDisplayFactory $display
@@ -47,6 +49,9 @@ final class SettingsCardFactory
     }
 
     /**
+     * Builds read-only overview cards for every supported configuration section.
+     *
+     * Responsibility: Builds read-only overview cards for every supported configuration section.
      * @return array<int, array<string, mixed>>
      */
     public function build(SettingsPageViewContext $context): array
@@ -289,6 +294,7 @@ final class SettingsCardFactory
     /**
      * Builds compact executive groups for the settings overview.
      *
+     * Responsibility: Builds compact executive groups for the settings overview.
      * @return array<int, array<string, mixed>>
      */
     public function buildGroups(SettingsPageViewContext $context): array
@@ -333,6 +339,9 @@ final class SettingsCardFactory
     }
 
     /**
+     * Selects overview cards for a named executive group.
+     *
+     * Responsibility: Selects overview cards for a named executive group.
      * @param array<int, array<string, mixed>> $cards
      * @param array<int, int> $indexes
      * @return array<string, mixed>

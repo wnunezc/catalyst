@@ -35,14 +35,18 @@ use Catalyst\Framework\Cli\AbstractCommand;
 use Catalyst\Framework\Cli\CommandRegistry;
 
 /**
- * Lists all registered CLI commands with their descriptions
+ * Displays the registered CLI command catalog.
+ *
+ * Responsibility: Lists registered CLI commands and their short descriptions for terminal discovery.
  *
  * @package Catalyst\Framework\Cli\Commands
  */
 class HelpCommand extends AbstractCommand
 {
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -50,7 +54,9 @@ class HelpCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
@@ -58,7 +64,9 @@ class HelpCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {

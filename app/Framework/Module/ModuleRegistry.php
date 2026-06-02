@@ -34,10 +34,10 @@ use Catalyst\Framework\Middleware\DevToolsGuardMiddleware;
 use Catalyst\Framework\Traits\SingletonTrait;
 
 /**
- * Defines the Module Registry class contract.
+ * Registers discovered modules and their runtime metadata.
  *
  * @package Catalyst\Framework\Module
- * Responsibility: Coordinates the module registry behavior within its module boundary.
+ * Responsibility: Combines discovery, declarations, manifests, localization, runtime state, and route ownership.
  */
 final class ModuleRegistry
 {
@@ -199,7 +199,9 @@ final class ModuleRegistry
     private ModuleRouteOwnershipResolver $routeOwnership;
 
     /**
-     * Initializes the Module Registry instance.
+     * Initializes module metadata collaborators.
+     *
+     * Responsibility: Initializes module metadata collaborators.
      */
     protected function __construct()
     {
@@ -212,6 +214,8 @@ final class ModuleRegistry
     }
 
     /**
+     * Returns built-in module declarations.
+     *
      * @return array<string, array<string, mixed>>
      */
     public static function builtInDeclarations(): array
@@ -220,6 +224,9 @@ final class ModuleRegistry
     }
 
     /**
+     * Returns every discovered module with effective runtime metadata.
+     *
+     * Responsibility: Returns every discovered module with effective runtime metadata.
      * @return array<int, array<string, mixed>>
      */
     public function all(): array
@@ -255,6 +262,9 @@ final class ModuleRegistry
     }
 
     /**
+     * Returns modules currently enabled at runtime.
+     *
+     * Responsibility: Returns modules currently enabled at runtime.
      * @return array<int, array<string, mixed>>
      */
     public function active(): array
@@ -266,7 +276,9 @@ final class ModuleRegistry
     }
 
     /**
-     * Handles the flush cache workflow.
+     * Clears cached module metadata.
+     *
+     * Responsibility: Clears cached module metadata.
      */
     public function flushCache(): void
     {
@@ -274,6 +286,9 @@ final class ModuleRegistry
     }
 
     /**
+     * Returns modules belonging to one repository scope.
+     *
+     * Responsibility: Returns modules belonging to one repository scope.
      * @return array<int, array<string, mixed>>
      */
     public function forScope(string $scope): array
@@ -285,6 +300,9 @@ final class ModuleRegistry
     }
 
     /**
+     * Finds a module by normalized runtime key.
+     *
+     * Responsibility: Finds a module by normalized runtime key.
      * @return array<string, mixed>|null
      */
     public function findByKey(string $key): ?array
@@ -301,6 +319,9 @@ final class ModuleRegistry
     }
 
     /**
+     * Finds the most specific module owning a request path.
+     *
+     * Responsibility: Finds the most specific module owning a request path.
      * @return array<string, mixed>|null
      */
     public function findByPath(string $path): ?array
@@ -327,6 +348,9 @@ final class ModuleRegistry
     }
 
     /**
+     * Returns permission declarations contributed by all modules.
+     *
+     * Responsibility: Returns permission declarations contributed by all modules.
      * @return array<int, array<string, mixed>>
      */
     public function permissionDefinitions(): array
@@ -355,6 +379,8 @@ final class ModuleRegistry
     }
 
     /**
+     * Determines whether a path matches an exact, parameterized, or prefix pattern.
+     *
      * @param string $path
      * @param string $pattern
      */
@@ -386,7 +412,7 @@ final class ModuleRegistry
     }
 
     /**
-     * Normalizes the provided value.
+     * Normalizes a path for module ownership comparisons.
      */
     private static function normalizePath(string $path): string
     {
@@ -405,7 +431,9 @@ final class ModuleRegistry
     }
 
     /**
-     * Normalizes the provided value.
+     * Normalizes legacy application lookup keys into surface module keys.
+     *
+     * Responsibility: Normalizes legacy application lookup keys into surface module keys.
      */
     private function normalizeLookupKey(string $key): string
     {

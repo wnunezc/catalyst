@@ -38,15 +38,17 @@ use Catalyst\Repository\Settings\Support\FtpConnectionProbe;
 use Throwable;
 
 /**
- * Defines the Ftp Config Controller class contract.
+ * Manages FTP, FTPS and SFTP settings for the setup surface.
  *
  * @package Catalyst\Repository\Settings\Controllers
- * Responsibility: Coordinates the ftp config controller behavior within its module boundary.
+ * Responsibility: Validates transfer settings, preserves stored credentials and runs upload-cleanup connectivity pretests.
  */
 final class FtpConfigController extends Controller
 {
     /**
      * Initializes the Ftp Config Controller instance.
+     *
+     * Responsibility: Initializes the Ftp Config Controller instance.
      */
     public function __construct(
         private readonly FtpConnectionProbe $probe = new FtpConnectionProbe()
@@ -55,7 +57,9 @@ final class FtpConfigController extends Controller
     }
 
     /**
-     * Persists the current state.
+     * Validates and saves transfer settings.
+     *
+     * Responsibility: Validates and saves transfer settings.
      */
     public function saveFtp(Request $request): Response
     {
@@ -76,7 +80,9 @@ final class FtpConfigController extends Controller
     }
 
     /**
-     * Handles the pretest workflow.
+     * Runs an upload-cleanup pretest without persisting the submitted settings.
+     *
+     * Responsibility: Runs an upload-cleanup pretest without persisting the submitted settings.
      */
     public function pretest(Request $request): Response
     {
@@ -104,6 +110,9 @@ final class FtpConfigController extends Controller
     }
 
     /**
+     * Builds normalized transfer input and its validator.
+     *
+     * Responsibility: Builds normalized transfer input and its validator.
      * @return array{0: array<string, mixed>, 1: mixed}
      */
     private function validatePayload(Request $request): array
@@ -130,6 +139,9 @@ final class FtpConfigController extends Controller
     }
 
     /**
+     * Builds the persisted transfer payload while retaining an unchanged password.
+     *
+     * Responsibility: Builds the persisted transfer payload while retaining an unchanged password.
      * @param array<string, mixed> $data
      * @param array<string, mixed> $existing
      * @return array<string, mixed>
@@ -154,7 +166,9 @@ final class FtpConfigController extends Controller
     }
 
     /**
-     * Handles the boolean flag workflow.
+     * Reads a checkbox-like request value as a boolean.
+     *
+     * Responsibility: Reads a checkbox-like request value as a boolean.
      */
     private function booleanFlag(Request $request, string $key, bool $default = false): bool
     {
@@ -162,7 +176,9 @@ final class FtpConfigController extends Controller
     }
 
     /**
-     * Normalizes the provided value.
+     * Normalizes a transfer root as an absolute slash-delimited path.
+     *
+     * Responsibility: Normalizes a transfer root as an absolute slash-delimited path.
      */
     private function normalizeRoot(string $root): string
     {

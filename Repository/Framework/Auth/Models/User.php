@@ -46,6 +46,7 @@ use Catalyst\Framework\Traits\HasAuditLogTrait;
  * PHP casts on read still provide DateTimeImmutable instances via $casts.
  *
  * @package Catalyst\Repository\Auth\Models
+ * Responsibility: Represents authenticated application users for ORM reads and writes while hiding credential data.
  */
 class User extends Model
 {

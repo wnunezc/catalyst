@@ -36,15 +36,17 @@ use Catalyst\Framework\Http\Response;
 use Catalyst\Framework\View\TrustedHtml;
 
 /**
- * Defines the Modal Test Controller class contract.
+ * Exposes partial HTML and submission responses for modal UI diagnostics.
  *
  * @package Catalyst\Repository\DevTools\Controllers
- * Responsibility: Coordinates the modal test controller behavior within its module boundary.
+ * Responsibility: Supplies modal content and validates the modal form harness.
  */
 class ModalTestController extends Controller
 {
     /**
-     * Handles the modal sample content workflow.
+     * Returns trusted sample HTML for a dynamically loaded modal.
+     *
+     * Responsibility: Returns trusted sample HTML for a dynamically loaded modal.
      */
     public function modalSampleContent(): Response
     {
@@ -68,7 +70,9 @@ class ModalTestController extends Controller
     }
 
     /**
-     * Handles the modal form content workflow.
+     * Returns trusted HTML for the modal form partial.
+     *
+     * Responsibility: Returns trusted HTML for the modal form partial.
      */
     public function modalFormContent(): Response
     {
@@ -78,7 +82,9 @@ class ModalTestController extends Controller
     }
 
     /**
-     * Handles the modal form submit workflow.
+     * Validates modal form fields and returns the submission result.
+     *
+     * Responsibility: Validates modal form fields and returns the submission result.
      */
     public function modalFormSubmit(): JsonResponse
     {

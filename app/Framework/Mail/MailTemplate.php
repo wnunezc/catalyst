@@ -35,16 +35,13 @@ use RuntimeException;
 use Throwable;
 
 /**
- * Email template processor
+ * Email template renderer for framework mail bodies.
  *
- * Loads and renders PHP-based email templates with variable extraction.
- * Templates are looked up under bootstrap/template/email/ by default.
- *
- * Naming convention:
- *   {name}.html.phtml  — HTML version
- *   {name}.text.txt  — Plain text version
+ * Resolves named or direct email templates and returns HTML/text payloads
+ * with plain-text fallback generation.
  *
  * @package Catalyst\Framework\Mail
+ * Responsibility: Render mail templates from the configured email template root.
  */
 class MailTemplate
 {
@@ -54,6 +51,9 @@ class MailTemplate
     protected string $basePath;
 
     /**
+     * Initializes the object with the collaborators or state required for its responsibility.
+     *
+     * Responsibility: Initializes the object with the collaborators or state required for its responsibility.
      * @param string|null $basePath Base path for template files (null = bootstrap/template/email/)
      */
     public function __construct(?string $basePath = null)
@@ -62,11 +62,9 @@ class MailTemplate
     }
 
     /**
-     * Load and render a template by name
+     * Render a named template into HTML and/or text mail bodies.
      *
-     * Looks for {name}.html.phtml (HTML) and {name}.text.txt (plain text).
-     * If only the HTML version exists, a plain-text fallback is generated via strip_tags().
-     *
+     * Responsibility: Render a named template into HTML and/or text mail bodies.
      * @param string $name      Template name (without extension)
      * @param array  $variables Variables extracted into template scope
      * @return array{html?: string, text?: string}
@@ -99,8 +97,9 @@ class MailTemplate
     }
 
     /**
-     * Render a template from a direct file path
+     * Render a template file from an explicit filesystem path.
      *
+     * Responsibility: Render a template file from an explicit filesystem path.
      * @param string $path      Absolute path to the template file
      * @param array  $variables Variables extracted into template scope
      * @return array{html?: string, text?: string}
@@ -128,8 +127,9 @@ class MailTemplate
     }
 
     /**
-     * Set a custom base path for templates
+     * Replace the base directory used to resolve named templates.
      *
+     * Responsibility: Replace the base directory used to resolve named templates.
      * @param string $path Absolute base path
      * @return self
      */
@@ -140,8 +140,9 @@ class MailTemplate
     }
 
     /**
-     * Process a template file with variable substitution via output buffering
+     * Include a template file with extracted variables and capture its output.
      *
+     * Responsibility: Include a template file with extracted variables and capture its output.
      * @param string $path      Absolute path to the template file
      * @param array  $variables Variables to extract into template scope
      * @return string Rendered content
@@ -167,12 +168,9 @@ class MailTemplate
     }
 
     /**
-     * Resolve the full filesystem path for a named template
+     * Resolve the preferred filesystem path for a named template variant.
      *
-     * Tries {name}.{type}.phtml (html) or {name}.{type}.txt (text) first,
-     * then falls back to {name}.phtml / {name}.txt, with backwards-compatible
-     * fallback to the historical .php HTML variants.
-     *
+     * Responsibility: Resolve the preferred filesystem path for a named template variant.
      * @param string $name Template name
      * @param string $type 'html' or 'text'
      * @return string Resolved path (may or may not exist)

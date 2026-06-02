@@ -36,14 +36,20 @@ use Catalyst\Framework\Cli\AbstractCommand;
 use Catalyst\Framework\Tenancy\TenancyManager;
 
 /**
- * Defines the Tenancy Status Command class contract.
+ * tenancy:status CLI command.
+ *
+ * Responsibility: Runs the tenancy:status command to Show the formal tenancy baseline and current resolver output.
  *
  * @package Catalyst\Framework\Cli\Commands
- * Responsibility: Coordinates the tenancy status command behavior within its module boundary.
  */
 final class TenancyStatusCommand extends AbstractCommand
 {
-    /** @return Option[] */
+    /**
+     * Defines the accepted option schema for this command.
+     *
+     * Responsibility: Defines the accepted option schema for this command.
+     * @return Option[]
+     */
     public function getOptions(): array
     {
         return [
@@ -52,7 +58,9 @@ final class TenancyStatusCommand extends AbstractCommand
     }
 
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -60,7 +68,9 @@ final class TenancyStatusCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
@@ -68,7 +78,9 @@ final class TenancyStatusCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {

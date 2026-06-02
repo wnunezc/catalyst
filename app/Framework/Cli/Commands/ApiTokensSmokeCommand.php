@@ -40,14 +40,20 @@ use RuntimeException;
 use Throwable;
 
 /**
- * Defines the Api Tokens Smoke Command class contract.
+ * api-tokens:smoke CLI command.
+ *
+ * Responsibility: Runs the api-tokens:smoke command to Exercise API token ownership, revocation and FK enforcement on the live schema.
  *
  * @package Catalyst\Framework\Cli\Commands
- * Responsibility: Coordinates the api tokens smoke command behavior within its module boundary.
  */
 final class ApiTokensSmokeCommand extends AbstractCommand
 {
-    /** @return Option[] */
+    /**
+     * Defines the accepted option schema for this command.
+     *
+     * Responsibility: Defines the accepted option schema for this command.
+     * @return Option[]
+     */
     public function getOptions(): array
     {
         return [
@@ -57,7 +63,9 @@ final class ApiTokensSmokeCommand extends AbstractCommand
     }
 
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -65,7 +73,9 @@ final class ApiTokensSmokeCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
@@ -73,7 +83,9 @@ final class ApiTokensSmokeCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {
@@ -208,7 +220,9 @@ final class ApiTokensSmokeCommand extends AbstractCommand
     }
 
     /**
-     * Resolves the requested value.
+     * Describes the resolve user id helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the resolve user id helper workflow used by this CLI component.
      */
     private function resolveUserId($db, int $tenantId, mixed $requestedUser): int
     {

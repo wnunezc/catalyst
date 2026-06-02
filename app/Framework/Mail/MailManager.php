@@ -38,12 +38,13 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception as PHPMailerException;
 
 /**
- * Mail manager — singleton gateway to PHPMailer.
+ * Singleton SMTP gateway for framework mail delivery.
  *
- * Reads SMTP configuration from the effective runtime config
- * (mail.json → .env fallback) and exposes a fluent message factory.
+ * Loads effective mail configuration, creates message builders and sends
+ * prepared messages through PHPMailer.
  *
  * @package  Catalyst\Framework\Mail
+ * Responsibility: Configure PHPMailer and deliver framework mail messages.
  * @since    1.0.0
  *
  * @uses     PHPMailer
@@ -87,10 +88,9 @@ class MailManager
     protected bool $initialized = false;
 
     /**
-     * Load SMTP configuration from GET_ENV_VAR and validate it
+     * Load and validate SMTP configuration once for the manager.
      *
-     * Calling init() a second time is a no-op (idempotent).
-     *
+     * Responsibility: Load and validate SMTP configuration once for the manager.
      * @param array $override Optional array to override individual config keys
      * @return self
      * @throws MailException If host or username are missing after loading
@@ -144,8 +144,9 @@ class MailManager
     }
 
     /**
-     * Create a new MailMessage bound to this manager
+     * Create a new message builder bound to this manager.
      *
+     * Responsibility: Create a new message builder bound to this manager.
      * @return MailMessage
      * @throws MailException If the manager has not been initialized
      */
@@ -156,8 +157,9 @@ class MailManager
     }
 
     /**
-     * Send a prepared MailMessage via PHPMailer
+     * Send a prepared message through a configured PHPMailer instance.
      *
+     * Responsibility: Send a prepared message through a configured PHPMailer instance.
      * @param MailMessage $message Validated message to send
      * @return bool True on success
      * @throws MailException On configuration error or SMTP failure
@@ -286,8 +288,9 @@ class MailManager
     }
 
     /**
-     * Test the SMTP connection by sending a probe email
+     * Send a probe message and report whether SMTP delivery succeeds.
      *
+     * Responsibility: Send a probe message and report whether SMTP delivery succeeds.
      * @param string $testRecipient Address to receive the test email
      * @return array{success: bool, message: string}
      */
@@ -311,8 +314,9 @@ class MailManager
     }
 
     /**
-     * Return the resolved configuration array (passwords redacted)
+     * Return resolved mail configuration with sensitive values redacted.
      *
+     * Responsibility: Return resolved mail configuration with sensitive values redacted.
      * @return array
      */
     public function getConfig(): array
@@ -323,10 +327,9 @@ class MailManager
     }
 
     /**
-     * Convert an HTML body to a plain-text alternative (AltBody)
+     * Convert HTML mail content into a plain-text alternative.
      *
-     * Strips style/script blocks, HTML tags, decodes entities, and collapses whitespace.
-     *
+     * Responsibility: Convert HTML mail content into a plain-text alternative.
      * @param string $html
      * @return string
      */
@@ -342,8 +345,9 @@ class MailManager
     }
 
     /**
-     * Create a bare PHPMailer instance with exceptions enabled
+     * Create a PHPMailer instance with exceptions enabled.
      *
+     * Responsibility: Create a PHPMailer instance with exceptions enabled.
      * @return PHPMailer
      */
     protected function createMailer(): PHPMailer
@@ -352,8 +356,9 @@ class MailManager
     }
 
     /**
-     * Apply SMTP settings to a PHPMailer instance
+     * Apply resolved SMTP, transport and sender settings to PHPMailer.
      *
+     * Responsibility: Apply resolved SMTP, transport and sender settings to PHPMailer.
      * @param PHPMailer $mailer
      * @throws PHPMailerException
      */
@@ -392,10 +397,9 @@ class MailManager
     }
 
     /**
-     * Configure DKIM signing when DKIM_ENABLED=true and the key file exists
+     * Apply DKIM signing settings when enabled and the key is readable.
      *
-     * Failures are silently skipped — the email is still sent without DKIM.
-     *
+     * Responsibility: Apply DKIM signing settings when enabled and the key is readable.
      * @param PHPMailer $mailer
      */
     protected function configureDkim(PHPMailer $mailer): void
@@ -424,8 +428,9 @@ class MailManager
     }
 
     /**
-     * Trigger auto-initialization if init() has not been called yet
+     * Initialize the manager on first use.
      *
+     * Responsibility: Initialize the manager on first use.
      * @throws MailException
      */
     protected function ensureInitialized(): void

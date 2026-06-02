@@ -4,13 +4,29 @@ declare(strict_types=1);
 
 use Catalyst\Framework\Database\Migration;
 
+/**
+ * Creates the table that coordinates temporary record claims.
+ *
+ * @package Catalyst\BootCore\Database\Migrations
+ * Responsibility: Provision and remove persistence for record claim ownership and release history.
+ */
 return new class extends Migration
 {
+    /**
+     * Returns the timestamp identifier used by the migration runner to order and track this migration.
+     *
+     * Responsibility: Returns the timestamp identifier used by the migration runner to order and track this migration.
+     */
     public function getVersion(): string
     {
         return '20260519170000';
     }
 
+    /**
+     * Creates the record claims table when it is absent.
+     *
+     * Responsibility: Creates the record claims table when it is absent.
+     */
     public function up(): void
     {
         if ($this->tableExists('record_claims')) {
@@ -44,6 +60,11 @@ return new class extends Migration
         );
     }
 
+    /**
+     * Removes the record claims table when it exists.
+     *
+     * Responsibility: Removes the record claims table when it exists.
+     */
     public function down(): void
     {
         if ($this->tableExists('record_claims')) {

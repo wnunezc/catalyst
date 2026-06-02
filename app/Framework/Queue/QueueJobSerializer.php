@@ -33,14 +33,16 @@ namespace Catalyst\Framework\Queue;
 use RuntimeException;
 
 /**
- * Defines the Queue Job Serializer class contract.
+ * Serializes queue jobs into persistence descriptors and restores them safely.
  *
  * @package Catalyst\Framework\Queue
- * Responsibility: Coordinates the queue job serializer behavior within its module boundary.
+ * Responsibility: Converts queueable jobs between runtime objects and repository payloads while enforcing their contract.
  */
 final class QueueJobSerializer
 {
     /**
+     * Encodes a queueable job into the fields stored by the queue repository.
+     *
      * @return array{job_class:string,display_name:string,payload:array<string, mixed>,max_attempts:int}
      */
     public static function encode(QueueableJobInterface $job): array
@@ -54,6 +56,8 @@ final class QueueJobSerializer
     }
 
     /**
+     * Restores a queueable job after validating its persisted class.
+     *
      * @param array<string, mixed> $payload
      */
     public static function decode(string $jobClass, array $payload): QueueableJobInterface

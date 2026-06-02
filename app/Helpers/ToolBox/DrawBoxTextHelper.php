@@ -33,22 +33,26 @@ namespace Catalyst\Helpers\ToolBox;
 use Catalyst\Helpers\IO\FileOutput;
 
 /**
- * Defines the Draw Box Text Helper class contract.
+ * Measures and splits decorated text for box rendering.
  *
  * @package Catalyst\Helpers\ToolBox
- * Responsibility: Coordinates the draw box text helper behavior within its module boundary.
+ * Responsibility: Preserves ANSI decoration while fitting visible text into constrained widths.
  */
 final class DrawBoxTextHelper
 {
     /**
      * Initializes the Draw Box Text Helper instance.
+     *
+     * Responsibility: Initializes the Draw Box Text Helper instance.
      */
     public function __construct(private readonly FileOutput $fileOutput)
     {
     }
 
     /**
-     * Handles the visible length workflow.
+     * Returns text length excluding ANSI sequences.
+     *
+     * Responsibility: Returns text length excluding ANSI sequences.
      */
     public function visibleLength(string $string): int
     {
@@ -56,6 +60,9 @@ final class DrawBoxTextHelper
     }
 
     /**
+     * Splits a line while preserving readable key-value alignment.
+     *
+     * Responsibility: Splits a line while preserving readable key-value alignment.
      * @return string[]
      */
     public function splitLineToFit(string $line, int $maxWidth): array
@@ -97,6 +104,9 @@ final class DrawBoxTextHelper
     }
 
     /**
+     * Splits text into visible-width chunks while restoring ANSI decoration.
+     *
+     * Responsibility: Splits text into visible-width chunks while restoring ANSI decoration.
      * @return string[]
      */
     public function splitTextToChunks(string $text, int $maxWidth): array
@@ -131,6 +141,9 @@ final class DrawBoxTextHelper
     }
 
     /**
+     * Extracts the first ANSI style and final reset sequence.
+     *
+     * Responsibility: Extracts the first ANSI style and final reset sequence.
      * @return array{start: ?string, reset: ?string}
      */
     private function extractAnsiCodes(string $string): array

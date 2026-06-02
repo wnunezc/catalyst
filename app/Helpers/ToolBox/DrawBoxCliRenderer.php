@@ -33,14 +33,17 @@ namespace Catalyst\Helpers\ToolBox;
 use Catalyst\Helpers\IO\FileOutput;
 
 /**
- * Defines the Draw Box Cli Renderer class contract.
+ * Renders draw-box content for terminal output.
  *
  * @package Catalyst\Helpers\ToolBox
- * Responsibility: Coordinates the draw box cli renderer behavior within its module boundary.
+ * Responsibility: Calculates terminal dimensions, wraps content and assembles styled CLI boxes.
  */
 final class DrawBoxCliRenderer
 {
     /**
+     * Initializes the object with the collaborators or state required for its responsibility.
+     *
+     * Responsibility: Initializes the object with the collaborators or state required for its responsibility.
      * @param array<string, string> $boxChars
      */
     public function __construct(
@@ -52,6 +55,9 @@ final class DrawBoxCliRenderer
     }
 
     /**
+     * Renders content lines into a terminal box or a width warning.
+     *
+     * Responsibility: Renders content lines into a terminal box or a width warning.
      * @param string[] $content
      * @param array<string, mixed> $options
      */
@@ -70,6 +76,9 @@ final class DrawBoxCliRenderer
     }
 
     /**
+     * Builds the complete terminal box around prepared content.
+     *
+     * Responsibility: Builds the complete terminal box around prepared content.
      * @param string[] $content
      * @param array<string, mixed> $options
      * @param array{r: string, c: string} $colorScheme
@@ -99,6 +108,9 @@ final class DrawBoxCliRenderer
     }
 
     /**
+     * Appends header, body and footer lines to a terminal box buffer.
+     *
+     * Responsibility: Appends header, body and footer lines to a terminal box buffer.
      * @param string[] $content
      * @param string[] $lines
      * @param array{hf: string, reset: string} $cliColors
@@ -175,6 +187,9 @@ final class DrawBoxCliRenderer
     }
 
     /**
+     * Returns the widest visible content line.
+     *
+     * Responsibility: Returns the widest visible content line.
      * @param string[] $content
      */
     private function getMaxContentWidth(array $content): int
@@ -187,7 +202,9 @@ final class DrawBoxCliRenderer
     }
 
     /**
-     * Handles the calculate box width workflow.
+     * Selects the requested terminal box width.
+     *
+     * Responsibility: Selects the requested terminal box width.
      */
     private function calculateBoxWidth(int $contentWidth, int $maxWidth, int $termWidth): int
     {
@@ -199,7 +216,9 @@ final class DrawBoxCliRenderer
     }
 
     /**
-     * Determines whether is Terminal Wide Enough.
+     * Determines whether the terminal can display the selected box width.
+     *
+     * Responsibility: Determines whether the terminal can display the selected box width.
      */
     private function isTerminalWideEnough(int $boxWidth, int $termWidth): bool
     {
@@ -207,7 +226,9 @@ final class DrawBoxCliRenderer
     }
 
     /**
-     * Handles the generate terminal too narrow message workflow.
+     * Renders the fallback message for terminals that cannot fit the box.
+     *
+     * Responsibility: Renders the fallback message for terminals that cannot fit the box.
      */
     private function generateTerminalTooNarrowMessage(int $required, int $actual): string
     {
@@ -233,7 +254,9 @@ final class DrawBoxCliRenderer
     }
 
     /**
-     * Returns the terminal width value.
+     * Returns the configured terminal width or its default.
+     *
+     * Responsibility: Returns the configured terminal width or its default.
      */
     private function getTerminalWidth(): int
     {

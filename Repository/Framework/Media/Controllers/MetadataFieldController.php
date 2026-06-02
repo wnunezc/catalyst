@@ -45,10 +45,10 @@ use Catalyst\Repository\Media\Support\MetadataFieldFormFactory;
 use RuntimeException;
 
 /**
- * Defines the Metadata Field Controller class contract.
+ * Serves the administrative dynamic metadata field workflow.
  *
  * @package Catalyst\Repository\Media\Controllers
- * Responsibility: Coordinates the metadata field controller behavior within its module boundary.
+ * Responsibility: Render metadata field screens and coordinate authorized CRUD and export actions.
  */
 final class MetadataFieldController extends Controller
 {
@@ -56,6 +56,8 @@ final class MetadataFieldController extends Controller
 
     /**
      * Initializes the Metadata Field Controller instance.
+     *
+     * Responsibility: Initializes the Metadata Field Controller instance.
      */
     public function __construct(
         private readonly MetadataFieldRepository $repository,
@@ -68,7 +70,9 @@ final class MetadataFieldController extends Controller
     }
 
     /**
-     * Handles the index workflow.
+     * Renders or exports the searchable metadata field listing.
+     *
+     * Responsibility: Renders or exports the searchable metadata field listing.
      */
     public function index(Request $request): Response
     {
@@ -198,7 +202,9 @@ final class MetadataFieldController extends Controller
     }
 
     /**
-     * Handles the create workflow.
+     * Renders the metadata field creation form.
+     *
+     * Responsibility: Renders the metadata field creation form.
      */
     public function create(Request $request): Response
     {
@@ -208,7 +214,9 @@ final class MetadataFieldController extends Controller
     }
 
     /**
-     * Handles the persistence workflow.
+     * Normalizes and persists a validated metadata field definition.
+     *
+     * Responsibility: Normalizes and persists a validated metadata field definition.
      */
     public function store(MetadataFieldDefinitionRequest $request): Response
     {
@@ -219,7 +227,9 @@ final class MetadataFieldController extends Controller
     }
 
     /**
-     * Handles the edit workflow.
+     * Acquires a record claim and renders the metadata field edit form.
+     *
+     * Responsibility: Acquires a record claim and renders the metadata field edit form.
      */
     public function edit(Request $request, string $id): Response
     {
@@ -247,7 +257,9 @@ final class MetadataFieldController extends Controller
     }
 
     /**
-     * Handles the update workflow.
+     * Updates a metadata field definition while handling concurrency conflicts.
+     *
+     * Responsibility: Updates a metadata field definition while handling concurrency conflicts.
      */
     public function update(MetadataFieldDefinitionRequest $request, string $id): Response
     {
@@ -275,7 +287,9 @@ final class MetadataFieldController extends Controller
     }
 
     /**
-     * Handles the destroy workflow.
+     * Deletes one metadata field definition after claim validation.
+     *
+     * Responsibility: Deletes one metadata field definition after claim validation.
      */
     public function destroy(Request $request, string $id): Response
     {
@@ -298,6 +312,9 @@ final class MetadataFieldController extends Controller
     }
 
     /**
+     * Builds and renders the create or edit form for a metadata field definition.
+     *
+     * Responsibility: Builds and renders the create or edit form for a metadata field definition.
      * @param array<string, mixed>|null $field
      */
     private function renderForm(string $title, ?array $field, ?array $claim = null): Response

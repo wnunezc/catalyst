@@ -31,19 +31,19 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Cli;
 
 /**
- * Base class for CLI commands
+ * Base class for framework CLI commands.
  *
- * Provides colored output helpers and interactive input methods.
- * Concrete commands extend this class and implement execute().
+ * Responsibility: Provides shared option defaults, terminal output helpers and interactive prompts for concrete commands.
  *
  * @package Catalyst\Framework\Cli
  */
 abstract class AbstractCommand implements CommandInterface
 {
     /**
-     * Default empty options — override in concrete command if needed
+     * Defines the accepted option schema for this command.
      *
-     * @return array
+     * Responsibility: Defines the accepted option schema for this command.
+     * @return Option[]
      */
     public function getOptions(): array
     {
@@ -51,9 +51,10 @@ abstract class AbstractCommand implements CommandInterface
     }
 
     /**
-     * Default empty parameters — override in concrete command if needed
+     * Defines the accepted positional parameter schema for this command.
      *
-     * @return array
+     * Responsibility: Defines the accepted positional parameter schema for this command.
+     * @return Parameter[]
      */
     public function getParameters(): array
     {
@@ -65,7 +66,9 @@ abstract class AbstractCommand implements CommandInterface
     // -------------------------------------------------------------------------
 
     /**
-     * Plain output line
+     * Writes a plain terminal line.
+     *
+     * Responsibility: Writes a plain terminal line.
      */
     protected function line(string $text): void
     {
@@ -73,7 +76,9 @@ abstract class AbstractCommand implements CommandInterface
     }
 
     /**
-     * Green success line
+     * Writes a success terminal line.
+     *
+     * Responsibility: Writes a success terminal line.
      */
     protected function success(string $text): void
     {
@@ -81,7 +86,9 @@ abstract class AbstractCommand implements CommandInterface
     }
 
     /**
-     * Red error line
+     * Writes an error terminal line.
+     *
+     * Responsibility: Writes an error terminal line.
      */
     protected function error(string $text): void
     {
@@ -89,7 +96,9 @@ abstract class AbstractCommand implements CommandInterface
     }
 
     /**
-     * Cyan info line
+     * Writes an informational terminal line.
+     *
+     * Responsibility: Writes an informational terminal line.
      */
     protected function info(string $text): void
     {
@@ -97,7 +106,9 @@ abstract class AbstractCommand implements CommandInterface
     }
 
     /**
-     * Yellow warning line
+     * Writes a warning terminal line.
+     *
+     * Responsibility: Writes a warning terminal line.
      */
     protected function warn(string $text): void
     {
@@ -109,11 +120,9 @@ abstract class AbstractCommand implements CommandInterface
     // -------------------------------------------------------------------------
 
     /**
-     * Prompt user for text input
+     * Prompts for text input and applies the default when input is empty.
      *
-     * @param string      $question Question to display
-     * @param string|null $default  Default value shown in brackets
-     * @return string User input (or default if empty input)
+     * Responsibility: Prompts for text input and applies the default when input is empty.
      */
     protected function ask(string $question, ?string $default = null): string
     {
@@ -129,11 +138,9 @@ abstract class AbstractCommand implements CommandInterface
     }
 
     /**
-     * Prompt user for yes/no confirmation
+     * Prompts for yes/no input and applies the configured default.
      *
-     * @param string $question Question to display
-     * @param bool   $default  Default answer (true = yes)
-     * @return bool
+     * Responsibility: Prompts for yes/no input and applies the configured default.
      */
     protected function confirm(string $question, bool $default = false): bool
     {

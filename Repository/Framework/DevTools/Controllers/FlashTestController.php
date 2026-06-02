@@ -34,17 +34,19 @@ use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\Response;
 
 /**
- * Defines the Flash Test Controller class contract.
+ * Exposes development endpoints for exercising flash-message behavior.
  *
  * @package Catalyst\Repository\DevTools\Controllers
- * Responsibility: Coordinates the flash test controller behavior within its module boundary.
+ * Responsibility: Creates, persists and clears test flash messages.
  */
 class FlashTestController extends Controller
 {
     private const array VALID_TYPES = ['success', 'error', 'warning', 'info'];
 
     /**
-     * Handles the trigger flash workflow.
+     * Adds a one-time flash message of the requested supported type.
+     *
+     * Responsibility: Adds a one-time flash message of the requested supported type.
      */
     public function triggerFlash(string $type): Response
     {
@@ -54,7 +56,9 @@ class FlashTestController extends Controller
     }
 
     /**
-     * Handles the trigger flash persistent workflow.
+     * Adds a persistent flash message of the requested supported type.
+     *
+     * Responsibility: Adds a persistent flash message of the requested supported type.
      */
     public function triggerFlashPersistent(string $type): Response
     {
@@ -64,7 +68,9 @@ class FlashTestController extends Controller
     }
 
     /**
-     * Handles the clear flash workflow.
+     * Clears all queued flash messages.
+     *
+     * Responsibility: Clears all queued flash messages.
      */
     public function clearFlash(): Response
     {

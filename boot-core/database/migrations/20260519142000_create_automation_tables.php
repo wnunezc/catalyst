@@ -4,13 +4,29 @@ declare(strict_types=1);
 
 use Catalyst\Framework\Database\Migration;
 
+/**
+ * Creates the tables that persist automation rules and execution logs.
+ *
+ * @package Catalyst\BootCore\Database\Migrations
+ * Responsibility: Provision and remove automation configuration and execution history persistence.
+ */
 return new class extends Migration
 {
+    /**
+     * Returns the timestamp identifier used by the migration runner to order and track this migration.
+     *
+     * Responsibility: Returns the timestamp identifier used by the migration runner to order and track this migration.
+     */
     public function getVersion(): string
     {
         return '20260519142000';
     }
 
+    /**
+     * Creates automation rules and execution log tables when absent.
+     *
+     * Responsibility: Creates automation rules and execution log tables when absent.
+     */
     public function up(): void
     {
         if (!$this->tableExists('automation_rules')) {
@@ -67,6 +83,11 @@ return new class extends Migration
         );
     }
 
+    /**
+     * Removes automation log and rule tables in dependency-safe order.
+     *
+     * Responsibility: Removes automation log and rule tables in dependency-safe order.
+     */
     public function down(): void
     {
         if ($this->tableExists('automation_execution_logs')) {

@@ -42,6 +42,7 @@ use Catalyst\Helpers\Debug\Formatters\ObjectFormatter;
  * It delegates the formatting of different types to specialized formatters.
  *
  * @package Catalyst\Helpers\Debug;
+ * Responsibility: Selects the specialized formatter that represents each inspected PHP value.
  */
 class MainFormatter
 {
@@ -81,8 +82,9 @@ class MainFormatter
     private ObjectFormatter $objectFormatter;
 
     /**
-     * Constructor
+     * Initializes the object with the collaborators or state required for its responsibility.
      *
+     * Responsibility: Initializes the object with the collaborators or state required for its responsibility.
      * @param DumperConfig $config Configuration instance
      * @param DumperColorizer $colorizer Colorizer instance
      * @param DumperCollapsible $collapsible Collapsible instance
@@ -106,8 +108,9 @@ class MainFormatter
     }
 
     /**
-     * Format and output the variable
+     * Format and output the variable.
      *
+     * Responsibility: Format and output the variable.
      * @param mixed $var Variable to dump
      * @param string $label Variable label
      * @param bool $isHtml Whether to format for HTML output

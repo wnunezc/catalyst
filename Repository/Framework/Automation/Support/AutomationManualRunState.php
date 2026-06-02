@@ -33,16 +33,19 @@ namespace Catalyst\Repository\Automation\Support;
 use Catalyst\Framework\Session\SessionManager;
 
 /**
- * Defines the Automation Manual Run State class contract.
+ * Stores the most recent manual automation run result in the session.
  *
  * @package Catalyst\Repository\Automation\Support
- * Responsibility: Coordinates the automation manual run state behavior within its module boundary.
+ * Responsibility: Carry one automation run result and its context across the redirect to the detail view.
  */
 final class AutomationManualRunState
 {
     private const string SESSION_KEY = '_automation_manual_run_state';
 
     /**
+     * Stores a manual run result for the selected automation rule.
+     *
+     * Responsibility: Stores a manual run result for the selected automation rule.
      * @param array<string, mixed>|null $result
      */
     public function stash(int $ruleId, ?array $result, string $contextJson): void
@@ -55,6 +58,9 @@ final class AutomationManualRunState
     }
 
     /**
+     * Consumes the pending run result when it belongs to the selected automation rule.
+     *
+     * Responsibility: Consumes the pending run result when it belongs to the selected automation rule.
      * @return array{result: array<string, mixed>|null, context_json: string}|null
      */
     public function consume(int $ruleId): ?array

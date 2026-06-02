@@ -37,10 +37,10 @@ use SessionHandlerInterface;
 use Throwable;
 
 /**
- * Defines the Database Session Handler class contract.
+ * Stores PHP session payloads in the configured database table.
  *
  * @package Catalyst\Framework\Session
- * Responsibility: Coordinates the database session handler behavior within its module boundary.
+ * Responsibility: Implements database-backed session reads, writes, cleanup and table bootstrap.
  */
 final class DatabaseSessionHandler implements SessionHandlerInterface
 {
@@ -48,6 +48,8 @@ final class DatabaseSessionHandler implements SessionHandlerInterface
 
     /**
      * Initializes the Database Session Handler instance.
+     *
+     * Responsibility: Initializes the Database Session Handler instance.
      */
     public function __construct(
         private readonly string $connectionName,
@@ -56,7 +58,9 @@ final class DatabaseSessionHandler implements SessionHandlerInterface
     }
 
     /**
-     * Handles the open workflow.
+     * Prepares the database table when PHP opens the session handler.
+     *
+     * Responsibility: Prepares the database table when PHP opens the session handler.
      */
     public function open(string $savePath, string $sessionName): bool
     {
@@ -64,7 +68,9 @@ final class DatabaseSessionHandler implements SessionHandlerInterface
     }
 
     /**
-     * Handles the close workflow.
+     * Completes a database-backed session handling cycle.
+     *
+     * Responsibility: Completes a database-backed session handling cycle.
      */
     public function close(): bool
     {
@@ -73,6 +79,8 @@ final class DatabaseSessionHandler implements SessionHandlerInterface
 
     /**
      * Reads the requested value.
+     *
+     * Responsibility: Reads the requested value.
      */
     public function read(string $id): string|false
     {
@@ -100,6 +108,8 @@ final class DatabaseSessionHandler implements SessionHandlerInterface
 
     /**
      * Writes the requested value.
+     *
+     * Responsibility: Writes the requested value.
      */
     public function write(string $id, string $data): bool
     {
@@ -139,7 +149,9 @@ final class DatabaseSessionHandler implements SessionHandlerInterface
     }
 
     /**
-     * Handles the destroy workflow.
+     * Deletes a persisted session payload.
+     *
+     * Responsibility: Deletes a persisted session payload.
      */
     public function destroy(string $id): bool
     {
@@ -164,7 +176,9 @@ final class DatabaseSessionHandler implements SessionHandlerInterface
     }
 
     /**
-     * Handles the gc workflow.
+     * Deletes sessions older than the configured lifetime.
+     *
+     * Responsibility: Deletes sessions older than the configured lifetime.
      */
     public function gc(int $max_lifetime): int|false
     {
@@ -192,7 +206,9 @@ final class DatabaseSessionHandler implements SessionHandlerInterface
     }
 
     /**
-     * Handles the ensure table workflow.
+     * Creates the session table on demand and reports whether it is ready.
+     *
+     * Responsibility: Creates the session table on demand and reports whether it is ready.
      */
     private function ensureTable(): bool
     {
@@ -227,7 +243,9 @@ final class DatabaseSessionHandler implements SessionHandlerInterface
     }
 
     /**
-     * Handles the pdo workflow.
+     * Returns the configured PDO connection.
+     *
+     * Responsibility: Returns the configured PDO connection.
      */
     private function pdo(): PDO
     {
@@ -235,7 +253,9 @@ final class DatabaseSessionHandler implements SessionHandlerInterface
     }
 
     /**
-     * Handles the client ip workflow.
+     * Resolves the client IP address stored with a session.
+     *
+     * Responsibility: Resolves the client IP address stored with a session.
      */
     private function clientIp(): ?string
     {
@@ -254,7 +274,9 @@ final class DatabaseSessionHandler implements SessionHandlerInterface
     }
 
     /**
-     * Handles the user agent workflow.
+     * Resolves the bounded user-agent value stored with a session.
+     *
+     * Responsibility: Resolves the bounded user-agent value stored with a session.
      */
     private function userAgent(): ?string
     {

@@ -36,15 +36,17 @@ use Catalyst\Framework\Http\Response;
 use Catalyst\Framework\Plugin\PluginManager;
 
 /**
- * Defines the Plugins Controller class contract.
+ * Presents installed plugins and applies plugin enablement changes.
  *
  * @package Catalyst\Repository\Operations\Controllers
- * Responsibility: Coordinates the plugins controller behavior within its module boundary.
+ * Responsibility: Connects plugin administration pages to the plugin manager.
  */
 final class PluginsController extends AbstractOperationsController
 {
     /**
-     * Handles the plugins workflow.
+     * Renders the searchable plugin administration grid.
+     *
+     * Responsibility: Renders the searchable plugin administration grid.
      */
     public function plugins(Request $request): Response
     {
@@ -189,7 +191,9 @@ final class PluginsController extends AbstractOperationsController
     }
 
     /**
-     * Handles the toggle plugin workflow.
+     * Toggles an optional plugin between enabled and disabled states.
+     *
+     * Responsibility: Toggles an optional plugin between enabled and disabled states.
      */
     public function togglePlugin(Request $request, string $pluginKey): Response
     {

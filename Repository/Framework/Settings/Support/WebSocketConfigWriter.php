@@ -33,14 +33,17 @@ namespace Catalyst\Repository\Settings\Support;
 use Catalyst\Helpers\Config\ConfigManager;
 
 /**
- * Defines the Web Socket Config Writer class contract.
+ * Writes WebSocket server and publisher settings.
  *
  * @package Catalyst\Repository\Settings\Support
- * Responsibility: Coordinates the web socket config writer behavior within its module boundary.
+ * Responsibility: Persists activation, bind address, ports and publisher URL for the WebSocket runtime.
  */
 final class WebSocketConfigWriter
 {
     /**
+     * Saves normalized WebSocket settings.
+     *
+     * Responsibility: Saves normalized WebSocket settings.
      * @param array<string, mixed> $data
      */
     public function save(array $data): void

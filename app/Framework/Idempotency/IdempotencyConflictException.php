@@ -33,10 +33,10 @@ namespace Catalyst\Framework\Idempotency;
 use RuntimeException;
 
 /**
- * Defines the Idempotency Conflict Exception class contract.
+ * Signals an idempotency key conflict.
  *
  * @package Catalyst\Framework\Idempotency
- * Responsibility: Coordinates the idempotency conflict exception behavior within its module boundary.
+ * Responsibility: Represents requests whose idempotency key is missing required scope data or is bound to a different fingerprint.
  */
 final class IdempotencyConflictException extends RuntimeException
 {

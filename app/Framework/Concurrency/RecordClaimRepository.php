@@ -38,10 +38,10 @@ use Catalyst\Helpers\Log\Logger;
 use DateTimeImmutable;
 
 /**
- * Defines the Record Claim Repository class contract.
+ * Repository for tenant-scoped record claim rows.
  *
  * @package Catalyst\Framework\Concurrency
- * Responsibility: Coordinates the record claim repository behavior within its module boundary.
+ * Responsibility: Reads, locks, searches, and decorates record claims for concurrency workflows.
  */
 final class RecordClaimRepository
 {
@@ -51,7 +51,9 @@ final class RecordClaimRepository
     private Logger $logger;
 
     /**
-     * Initializes the Record Claim Repository instance.
+     * Initializes database and logging collaborators for claim persistence.
+     *
+     * Responsibility: Initializes database and logging collaborators for claim persistence.
      */
     protected function __construct()
     {
@@ -60,7 +62,9 @@ final class RecordClaimRepository
     }
 
     /**
-     * Finds the requested record.
+     * Finds the claim for a tenant resource record.
+     *
+     * Responsibility: Finds the claim for a tenant resource record.
      */
     public function findByResource(string $resourceKey, int $recordId): ?RecordClaim
     {
@@ -83,7 +87,9 @@ final class RecordClaimRepository
     }
 
     /**
-     * Handles the lock by resource workflow.
+     * Locks and returns the claim row for a resource inside an active transaction.
+     *
+     * Responsibility: Locks and returns the claim row for a resource inside an active transaction.
      */
     public function lockByResource(string $resourceKey, int $recordId): ?RecordClaim
     {
@@ -100,6 +106,9 @@ final class RecordClaimRepository
     }
 
     /**
+     * Searches claim rows using tenant, resource, record, actor, and active filters.
+     *
+     * Responsibility: Searches claim rows using tenant, resource, record, actor, and active filters.
      * @param array<string, mixed> $filters
      * @return array<int, array<string, mixed>>
      */
@@ -155,6 +164,9 @@ final class RecordClaimRepository
     }
 
     /**
+     * Adds status and expiry metadata to a raw claim row.
+     *
+     * Responsibility: Adds status and expiry metadata to a raw claim row.
      * @param array<string, mixed> $row
      * @return array<string, mixed>
      */
@@ -181,7 +193,9 @@ final class RecordClaimRepository
     }
 
     /**
-     * Handles the parse date time workflow.
+     * Parses a database datetime string into an immutable timestamp.
+     *
+     * Responsibility: Parses a database datetime string into an immutable timestamp.
      */
     private function parseDateTime(mixed $value): ?DateTimeImmutable
     {
@@ -193,7 +207,9 @@ final class RecordClaimRepository
     }
 
     /**
-     * Handles the now workflow.
+     * Returns the current timestamp for claim status decoration.
+     *
+     * Responsibility: Returns the current timestamp for claim status decoration.
      */
     private function now(): DateTimeImmutable
     {
@@ -201,7 +217,9 @@ final class RecordClaimRepository
     }
 
     /**
-     * Handles the current tenant id workflow.
+     * Resolves the active tenant id for all claim queries.
+     *
+     * Responsibility: Resolves the active tenant id for all claim queries.
      */
     private function currentTenantId(): int
     {

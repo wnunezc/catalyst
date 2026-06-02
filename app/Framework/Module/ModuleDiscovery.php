@@ -33,14 +33,17 @@ namespace Catalyst\Framework\Module;
 use Catalyst\Helpers\Config\AppEntryCatalog;
 
 /**
- * Defines the Module Discovery class contract.
+ * Discovers repository modules from framework and application roots.
  *
  * @package Catalyst\Framework\Module
- * Responsibility: Coordinates the module discovery behavior within its module boundary.
+ * Responsibility: Builds the baseline runtime metadata for modules found on disk.
  */
 final class ModuleDiscovery
 {
     /**
+     * Discovers repository modules and returns their baseline metadata.
+     *
+     * Responsibility: Discovers repository modules and returns their baseline metadata.
      * @return array<int, array<string, mixed>>
      */
     public function discover(): array

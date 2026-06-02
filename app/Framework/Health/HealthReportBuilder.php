@@ -49,10 +49,10 @@ use Catalyst\Helpers\Path\ProjectPath;
 use Catalyst\Helpers\Security\SensitiveValueRedactor;
 
 /**
- * Defines the Health Report Builder class contract.
+ * Builds the platform health and readiness report.
  *
  * @package Catalyst\Framework\Health
- * Responsibility: Coordinates the health report builder behavior within its module boundary.
+ * Responsibility: Aggregates runtime, configuration, cache, queue, scheduler, storage, secret and route contract checks into a status payload.
  */
 final class HealthReportBuilder
 {
@@ -64,31 +64,10 @@ final class HealthReportBuilder
     ];
 
     /**
+     * Builds the full health report payload. ok: bool, live: bool, ready: bool, configured: bool, environment: string, generated_at: string, summary: array{checks:int,warnings:int,failures:int,route_issues:int}, core: array<int, array{label:string,status:string,detail?:string}>, runtime: array<int, array{label:string,status:string,detail?:string}>, platform: array<int, array{label:string,status:string,detail?:string}>, session: array<int, array{label:string,status:string,detail?:string}>, cache: array<int, array{label:string,status:string,detail?:string}>, queue: array<int, array{label:string,status:string,detail?:string}>, scheduler: array<int, array{label:string,status:string,detail?:string}>, storage: array<int, array{label:string,status:string,detail?:string}>, secrets: array<int, array{label:string,status:string,detail?:string}>, throttling: array<int, array{label:string,status:string,detail?:string}>, route_contract: array{ ok: bool, issue_count: int, checks: array<string, array<string, int|bool>>, issues: array<int, array<string, string>> } }.
+     *
+     * Responsibility: Builds the full health report payload. ok: bool, live: bool, ready: bool, configured: bool, environment: string, generated_at: string, summary: array{checks:int,warnings:int,failures:int,route_issues:int}, core: array<int, array{label:string,status:string,detail?:string}>, runtime: array<int, array{label:string,status:string,detail?:string}>, platform: array<int, array{label:string,status:string,detail?:string}>, session: array<int, array{label:string,status:string,detail?:string}>, cache: array<int, array{label:string,status:string,detail?:string}>, queue: array<int, array{label:string,status:string,detail?:string}>, scheduler: array<int, array{label:string,status:string,detail?:string}>, storage: array<int, array{label:string,status:string,detail?:string}>, secrets: array<int, array{label:string,status:string,detail?:string}>, throttling: array<int, array{label:string,status:string,detail?:string}>, route_contract: array{ ok: bool, issue_count: int, checks: array<string, array<string, int|bool>>, issues: array<int, array<string, string>> } }.
      * @return array{
-     *   ok: bool,
-     *   live: bool,
-     *   ready: bool,
-     *   configured: bool,
-     *   environment: string,
-     *   generated_at: string,
-     *   summary: array{checks:int,warnings:int,failures:int,route_issues:int},
-     *   core: array<int, array{label:string,status:string,detail?:string}>,
-     *   runtime: array<int, array{label:string,status:string,detail?:string}>,
-     *   platform: array<int, array{label:string,status:string,detail?:string}>,
-     *   session: array<int, array{label:string,status:string,detail?:string}>,
-     *   cache: array<int, array{label:string,status:string,detail?:string}>,
-     *   queue: array<int, array{label:string,status:string,detail?:string}>,
-     *   scheduler: array<int, array{label:string,status:string,detail?:string}>,
-     *   storage: array<int, array{label:string,status:string,detail?:string}>,
-     *   secrets: array<int, array{label:string,status:string,detail?:string}>,
-     *   throttling: array<int, array{label:string,status:string,detail?:string}>,
-     *   route_contract: array{
-     *     ok: bool,
-     *     issue_count: int,
-     *     checks: array<string, array<string, int|bool>>,
-     *     issues: array<int, array<string, string>>
-     *   }
-     * }
      */
     public function build(): array
     {
@@ -151,6 +130,9 @@ final class HealthReportBuilder
     }
 
     /**
+     * Checks PHP runtime, required extensions and bootstrap files.
+     *
+     * Responsibility: Checks PHP runtime, required extensions and bootstrap files.
      * @return array<int, array{label:string,status:string,detail?:string}>
      */
     private function coreChecks(): array
@@ -188,6 +170,9 @@ final class HealthReportBuilder
     }
 
     /**
+     * Checks runtime environment and project configuration readiness.
+     *
+     * Responsibility: Checks runtime environment and project configuration readiness.
      * @return array<int, array{label:string,status:string,detail?:string}>
      */
     private function runtimeChecks(ConfigManager $config): array
@@ -216,6 +201,9 @@ final class HealthReportBuilder
     }
 
     /**
+     * Checks feature flags, plugins, deployment profiles and tenancy state.
+     *
+     * Responsibility: Checks feature flags, plugins, deployment profiles and tenancy state.
      * @return array<int, array{label:string,status:string,detail?:string}>
      */
     private function platformChecks(): array
@@ -269,6 +257,9 @@ final class HealthReportBuilder
     }
 
     /**
+     * Checks session configuration, backend reachability and cookie policy.
+     *
+     * Responsibility: Checks session configuration, backend reachability and cookie policy.
      * @return array<int, array{label:string,status:string,detail?:string}>
      */
     private function sessionChecks(ConfigManager $config): array
@@ -323,6 +314,9 @@ final class HealthReportBuilder
     }
 
     /**
+     * Checks cache activation and generated cache artifacts.
+     *
+     * Responsibility: Checks cache activation and generated cache artifacts.
      * @return array<int, array{label:string,status:string,detail?:string}>
      */
     private function cacheChecks(ConfigManager $config): array
@@ -378,6 +372,9 @@ final class HealthReportBuilder
     }
 
     /**
+     * Checks storage manager configuration and upload/remote storage readiness.
+     *
+     * Responsibility: Checks storage manager configuration and upload/remote storage readiness.
      * @return array<int, array{label:string,status:string,detail?:string}>
      */
     private function storageChecks(): array
@@ -427,6 +424,9 @@ final class HealthReportBuilder
     }
 
     /**
+     * Checks queue backend and queued job summary state.
+     *
+     * Responsibility: Checks queue backend and queued job summary state.
      * @return array<int, array{label:string,status:string,detail?:string}>
      */
     private function queueChecks(): array
@@ -464,6 +464,9 @@ final class HealthReportBuilder
     }
 
     /**
+     * Checks schedule registry and scheduler history availability.
+     *
+     * Responsibility: Checks schedule registry and scheduler history availability.
      * @return array<int, array{label:string,status:string,detail?:string}>
      */
     private function schedulerChecks(): array
@@ -502,6 +505,9 @@ final class HealthReportBuilder
     }
 
     /**
+     * Checks redaction boundaries, secret storage and configured credentials.
+     *
+     * Responsibility: Checks redaction boundaries, secret storage and configured credentials.
      * @return array<int, array{label:string,status:string,detail?:string}>
      */
     private function secretChecks(ConfigManager $config): array
@@ -610,6 +616,9 @@ final class HealthReportBuilder
     }
 
     /**
+     * Checks login and request throttling posture for the current environment.
+     *
+     * Responsibility: Checks login and request throttling posture for the current environment.
      * @return array<int, array{label:string,status:string,detail?:string}>
      */
     private function throttlingChecks(ConfigManager $config): array
@@ -635,7 +644,9 @@ final class HealthReportBuilder
     }
 
     /**
-     * Handles the translate same site workflow.
+     * Maps SameSite cookie configuration values to localized labels.
+     *
+     * Responsibility: Maps SameSite cookie configuration values to localized labels.
      */
     private function translateSameSite(string $sameSite): string
     {

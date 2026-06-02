@@ -34,14 +34,17 @@ use Catalyst\Framework\Queue\QueueJobSerializer;
 use Catalyst\Framework\Queue\QueueableJobInterface;
 
 /**
- * Defines the Scheduled Task class contract.
+ * Value object for scheduled queue task definitions.
  *
  * @package Catalyst\Entities
- * Responsibility: Coordinates the scheduled task behavior within its module boundary.
+ * Responsibility: Carries cron expression, queue target, serialized job payload, and human-readable task metadata.
  */
 final class ScheduledTask
 {
     /**
+     * Initializes an immutable scheduled task definition.
+     *
+     * Responsibility: Initializes an immutable scheduled task definition.
      * @param array<string, mixed> $jobPayload
      */
     public function __construct(
@@ -55,7 +58,7 @@ final class ScheduledTask
     }
 
     /**
-     * Handles the queued job workflow.
+     * Creates a scheduled task from a queueable job instance.
      */
     public static function queuedJob(
         string $name,
@@ -76,7 +79,9 @@ final class ScheduledTask
     }
 
     /**
-     * Creates the requested object.
+     * Rehydrates the queueable job represented by this scheduled task.
+     *
+     * Responsibility: Rehydrates the queueable job represented by this scheduled task.
      */
     public function makeJob(): QueueableJobInterface
     {

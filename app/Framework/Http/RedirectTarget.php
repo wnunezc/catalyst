@@ -31,10 +31,10 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Http;
 
 /**
- * Defines the Redirect Target class contract.
+ * Sanitizes internal redirect targets.
  *
  * @package Catalyst\Framework\Http
- * Responsibility: Coordinates the redirect target behavior within its module boundary.
+ * Responsibility: Rejects unsafe redirect destinations and builds login redirect URLs for protected surfaces.
  */
 final class RedirectTarget
 {
@@ -50,7 +50,7 @@ final class RedirectTarget
     ];
 
     /**
-     * Handles the clean workflow.
+     * Returns a safe internal redirect path or the fallback path.
      */
     public static function clean(mixed $target, string $fallback = '/'): string
     {
@@ -78,7 +78,7 @@ final class RedirectTarget
     }
 
     /**
-     * Handles the login url workflow.
+     * Builds the login URL with a safe redirect target.
      */
     public static function loginUrl(mixed $target, string $fallback = '/'): string
     {
@@ -93,7 +93,7 @@ final class RedirectTarget
     }
 
     /**
-     * Handles the fallback path workflow.
+     * Normalizes fallback paths to an internal absolute path.
      */
     private static function fallbackPath(string $fallback): string
     {

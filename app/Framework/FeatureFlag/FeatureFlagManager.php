@@ -45,10 +45,10 @@ use Catalyst\Helpers\Config\ConfigManager;
 use RuntimeException;
 
 /**
- * Defines the Feature Flag Manager class contract.
+ * Manages runtime feature flag catalog, defaults and actor-specific resolution.
  *
  * @package Catalyst\Framework\FeatureFlag
- * Responsibility: Coordinates the feature flag manager behavior within its module boundary.
+ * Responsibility: Merges configured, plugin and system-owned flags, persists editable definitions and refreshes route discovery after changes.
  */
 final class FeatureFlagManager
 {
@@ -63,7 +63,7 @@ final class FeatureFlagManager
     private ?array $catalogCache = null;
 
     /**
-     * Handles the module flag key workflow.
+     * Builds the canonical flag key for a module.
      */
     public static function moduleFlagKey(string $moduleKey): string
     {
@@ -71,6 +71,9 @@ final class FeatureFlagManager
     }
 
     /**
+     * Returns the localized feature flag catalog.
+     *
+     * Responsibility: Returns the localized feature flag catalog.
      * @return array<string, array<string, mixed>>
      */
     public function catalog(): array
@@ -103,6 +106,9 @@ final class FeatureFlagManager
     }
 
     /**
+     * Returns one feature flag definition from the catalog.
+     *
+     * Responsibility: Returns one feature flag definition from the catalog.
      * @return array<string, mixed>|null
      */
     public function definition(string $flagKey): ?array
@@ -113,7 +119,9 @@ final class FeatureFlagManager
     }
 
     /**
-     * Determines whether is Runtime Enabled.
+     * Resolves whether a flag is enabled for the provided actor context.
+     *
+     * Responsibility: Resolves whether a flag is enabled for the provided actor context.
      */
     public function isRuntimeEnabled(string $flagKey, ?int $userId = null, ?array $roleSlugs = null): bool
     {
@@ -140,7 +148,9 @@ final class FeatureFlagManager
     }
 
     /**
-     * Determines whether is Enabled For Current User.
+     * Resolves whether a flag is enabled for the authenticated user.
+     *
+     * Responsibility: Resolves whether a flag is enabled for the authenticated user.
      */
     public function isEnabledForCurrentUser(string $flagKey): bool
     {
@@ -158,6 +168,9 @@ final class FeatureFlagManager
     }
 
     /**
+     * Returns aggregate counts for the current flag catalog.
+     *
+     * Responsibility: Returns aggregate counts for the current flag catalog.
      * @return array<string, mixed>
      */
     public function summary(): array
@@ -188,6 +201,9 @@ final class FeatureFlagManager
     }
 
     /**
+     * Persists the editable feature flag catalog into configuration storage.
+     *
+     * Responsibility: Persists the editable feature flag catalog into configuration storage.
      * @param array<string, array<string, mixed>> $catalog
      */
     public function persistCatalog(array $catalog): void
@@ -222,7 +238,9 @@ final class FeatureFlagManager
     }
 
     /**
-     * Updates the default state value.
+     * Persists the editable default state and optional metadata for a flag.
+     *
+     * Responsibility: Persists the editable default state and optional metadata for a flag.
      */
     public function setDefaultState(string $flagKey, bool $enabled, ?string $label = null, ?string $description = null): void
     {
@@ -248,6 +266,9 @@ final class FeatureFlagManager
     }
 
     /**
+     * Returns editable feature flag definitions from configuration storage.
+     *
+     * Responsibility: Returns editable feature flag definitions from configuration storage.
      * @return array<string, array<string, mixed>>
      */
     public function configCatalog(): array
@@ -259,7 +280,9 @@ final class FeatureFlagManager
     }
 
     /**
-     * Handles the refresh route discovery workflow.
+     * Clears discovery, permission and route caches after flag changes.
+     *
+     * Responsibility: Clears discovery, permission and route caches after flag changes.
      */
     private function refreshRouteDiscovery(): void
     {
@@ -271,6 +294,9 @@ final class FeatureFlagManager
     }
 
     /**
+     * Resolves persisted overrides for the provided user and role actor context.
+     *
+     * Responsibility: Resolves persisted overrides for the provided user and role actor context.
      * @return array<string, bool>
      */
     private function actorOverrides(?int $userId, ?array $roleSlugs): array
@@ -286,6 +312,9 @@ final class FeatureFlagManager
     }
 
     /**
+     * Builds read-only feature flags derived from runtime configuration.
+     *
+     * Responsibility: Builds read-only feature flags derived from runtime configuration.
      * @return array<string, array<string, mixed>>
      */
     private function configBackedFlags(): array
@@ -343,7 +372,9 @@ final class FeatureFlagManager
     }
 
     /**
-     * Determines whether is Config Backed Flag.
+     * Checks whether a flag is owned by runtime configuration.
+     *
+     * Responsibility: Checks whether a flag is owned by runtime configuration.
      */
     private function isConfigBackedFlag(string $flagKey): bool
     {
@@ -351,7 +382,9 @@ final class FeatureFlagManager
     }
 
     /**
-     * Resolves the requested value.
+     * Reads the enabled state for a runtime configuration-backed flag.
+     *
+     * Responsibility: Reads the enabled state for a runtime configuration-backed flag.
      */
     private function resolveConfigBackedFlag(string $flagKey): bool
     {
@@ -359,6 +392,9 @@ final class FeatureFlagManager
     }
 
     /**
+     * Applies localized label and description values to one catalog entry.
+     *
+     * Responsibility: Applies localized label and description values to one catalog entry.
      * @param array<string, mixed> $definition
      * @return array<string, mixed>
      */
@@ -387,6 +423,9 @@ final class FeatureFlagManager
     }
 
     /**
+     * Applies localization to each valid feature flag catalog entry.
+     *
+     * Responsibility: Applies localization to each valid feature flag catalog entry.
      * @param array<string, array<string, mixed>> $catalog
      * @return array<string, array<string, mixed>>
      */
@@ -406,7 +445,9 @@ final class FeatureFlagManager
     }
 
     /**
-     * Handles the translate workflow.
+     * Returns a translated value or the provided default.
+     *
+     * Responsibility: Returns a translated value or the provided default.
      */
     private function translate(string $key, string $default = ''): string
     {

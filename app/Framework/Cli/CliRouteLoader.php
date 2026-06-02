@@ -35,15 +35,16 @@ use Catalyst\Framework\Module\ModuleRegistry;
 use Catalyst\Helpers\Config\ConfigManager;
 
 /**
- * Defines the Cli Route Loader class contract.
+ * Route loader used by CLI commands.
+ *
+ * Responsibility: Loads global, API, framework and application route files in kernel-compatible order.
  *
  * @package Catalyst\Framework\Cli
- * Responsibility: Coordinates the cli route loader behavior within its module boundary.
  */
 final class CliRouteLoader
 {
     /**
-     * Loads the requested data.
+     * Requires every route file in kernel-compatible order.
      */
     public static function loadAll(): void
     {
@@ -53,6 +54,8 @@ final class CliRouteLoader
     }
 
     /**
+     * Returns route files from fresh discovery or production cache.
+     *
      * @return string[]
      */
     public static function routeFiles(): array
@@ -70,6 +73,8 @@ final class CliRouteLoader
     }
 
     /**
+     * Discovers route files from global boot routes and active modules.
+     *
      * @return string[]
      */
     public static function discoverFreshRouteFiles(): array
@@ -102,6 +107,8 @@ final class CliRouteLoader
     }
 
     /**
+     * Orders route files by global, API, framework, application and fallback groups.
+     *
      * @param string[] $files
      * @return string[]
      */

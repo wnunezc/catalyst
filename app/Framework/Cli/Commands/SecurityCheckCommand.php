@@ -37,10 +37,11 @@ use RecursiveIteratorIterator;
 use SplFileInfo;
 
 /**
- * Defines the Security Check Command class contract.
+ * security:check CLI command.
+ *
+ * Responsibility: Runs the security:check command to Scan CSP/frontend hotspots and other low-hanging security regressions.
  *
  * @package Catalyst\Framework\Cli\Commands
- * Responsibility: Coordinates the security check command behavior within its module boundary.
  */
 class SecurityCheckCommand extends AbstractCommand
 {
@@ -60,7 +61,9 @@ class SecurityCheckCommand extends AbstractCommand
     ];
 
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -68,7 +71,9 @@ class SecurityCheckCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
@@ -76,7 +81,9 @@ class SecurityCheckCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {
@@ -128,7 +135,9 @@ class SecurityCheckCommand extends AbstractCommand
     }
 
     /**
-     * @return SplFileInfo[]
+     * Describes the target files helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the target files helper workflow used by this CLI component.
      */
     private function targetFiles(): array
     {
@@ -168,8 +177,9 @@ class SecurityCheckCommand extends AbstractCommand
     }
 
     /**
-     * @param array<int, array<string, int|string>> $failures
-     * @param array<int, array<string, int|string>> $warnings
+     * Describes the scan file helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the scan file helper workflow used by this CLI component.
      */
     private function scanFile(SplFileInfo $file, array &$failures, array &$warnings): void
     {
@@ -230,7 +240,9 @@ class SecurityCheckCommand extends AbstractCommand
     }
 
     /**
-     * Determines whether is Ignorable Line.
+     * Describes the is ignorable line helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the is ignorable line helper workflow used by this CLI component.
      */
     private function isIgnorableLine(string $line): bool
     {
@@ -250,7 +262,9 @@ class SecurityCheckCommand extends AbstractCommand
     }
 
     /**
-     * Determines whether is Escaped Demo Line.
+     * Describes the is escaped demo line helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the is escaped demo line helper workflow used by this CLI component.
      */
     private function isEscapedDemoLine(string $line): bool
     {
@@ -270,7 +284,9 @@ class SecurityCheckCommand extends AbstractCommand
     }
 
     /**
-     * Determines whether has Inline Script Without Nonce.
+     * Describes the has inline script without nonce helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the has inline script without nonce helper workflow used by this CLI component.
      */
     private function hasInlineScriptWithoutNonce(string $line): bool
     {
@@ -307,7 +323,9 @@ class SecurityCheckCommand extends AbstractCommand
     }
 
     /**
-     * Determines whether has Inline Style Block Without Nonce.
+     * Describes the has inline style block without nonce helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the has inline style block without nonce helper workflow used by this CLI component.
      */
     private function hasInlineStyleBlockWithoutNonce(string $line): bool
     {
@@ -335,7 +353,9 @@ class SecurityCheckCommand extends AbstractCommand
     }
 
     /**
-     * Handles the relative path workflow.
+     * Describes the relative path helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the relative path helper workflow used by this CLI component.
      */
     private function relativePath(string $path): string
     {

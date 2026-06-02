@@ -34,17 +34,17 @@ use Catalyst\Framework\Database\DatabaseManager;
 use PDO;
 
 /**
- * Defines the Queue Schema Manager class contract.
+ * Ensures the queue storage tables exist before repository operations run.
  *
  * @package Catalyst\Framework\Queue
- * Responsibility: Coordinates the queue schema manager behavior within its module boundary.
+ * Responsibility: Creates pending and failed queue tables once per request using the configured database connection.
  */
 final class QueueSchemaManager
 {
     private static bool $ready = false;
 
     /**
-     * Handles the ensure workflow.
+     * Creates the queue tables when they have not been initialized yet.
      */
     public static function ensure(): void
     {
@@ -96,7 +96,7 @@ final class QueueSchemaManager
     }
 
     /**
-     * Handles the quote workflow.
+     * Quotes a queue table identifier for schema statements.
      */
     private static function quote(string $identifier): string
     {

@@ -66,21 +66,14 @@ use ReflectionClass;
  *            public/assets/css/work/{slug}/style.css
  *
  * @package Catalyst\Framework\Traits
+ * Responsibility: Publishes module-scoped frontend assets and exposes their module slug to views.
  */
 trait FrontResourceTrait
 {
     /**
-     * Derive a lowercase slug from the module segment of the class namespace.
+     * Derive a lowercase slug from the module segment of the class namespace. Namespace convention: …\{Module}\Controllers\{ClassName} The segment immediately before "Controllers" is used as the slug. Examples: Catalyst\Repository\DevTools\Controllers\Foo → "devtools" App\Invoices\Controllers\Bar → "invoices" Falls back to the lowercased class basename when the convention is not met.
      *
-     * Namespace convention: …\{Module}\Controllers\{ClassName}
-     * The segment immediately before "Controllers" is used as the slug.
-     *
-     * Examples:
-     *   Catalyst\Repository\DevTools\Controllers\Foo  →  "devtools"
-     *   App\Invoices\Controllers\Bar                  →  "invoices"
-     *
-     * Falls back to the lowercased class basename when the convention is not met.
-     *
+     * Responsibility: Derive a lowercase slug from the module segment of the class namespace. Namespace convention: …\{Module}\Controllers\{ClassName} The segment immediately before "Controllers" is used as the slug. Examples: Catalyst\Repository\DevTools\Controllers\Foo → "devtools" App\Invoices\Controllers\Bar → "invoices" Falls back to the lowercased class basename when the convention is not met.
      * @return string Lowercase module slug
      */
     protected function resolveSlug(): string
@@ -96,12 +89,9 @@ trait FrontResourceTrait
     }
 
     /**
-     * Copy front/script.js and front/style.css to their public destinations
-     * if the source filesize differs from the currently published file.
+     * Copy front/script.js and front/style.css to their public destinations if the source filesize differs from the currently published file. Also shares the resolved slug as $moduleSlug with the View layer so that _catalyst-init.phtml can conditionally load the published assets.
      *
-     * Also shares the resolved slug as $moduleSlug with the View layer so that
-     * _catalyst-init.phtml can conditionally load the published assets.
-     *
+     * Responsibility: Copy front/script.js and front/style.css to their public destinations if the source filesize differs from the currently published file. Also shares the resolved slug as $moduleSlug with the View layer so that _catalyst-init.phtml can conditionally load the published assets.
      * @return void
      */
     protected function deployFrontAssets(): void

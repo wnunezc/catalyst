@@ -45,10 +45,10 @@ use Catalyst\Repository\Media\Support\MediaLibraryFormFactory;
 use RuntimeException;
 
 /**
- * Defines the Media Library Controller class contract.
+ * Serves the administrative media library workflow.
  *
  * @package Catalyst\Repository\Media\Controllers
- * Responsibility: Coordinates the media library controller behavior within its module boundary.
+ * Responsibility: Render media screens and coordinate authorized upload, edit, deletion, bulk and export actions.
  */
 final class MediaLibraryController extends Controller
 {
@@ -56,6 +56,8 @@ final class MediaLibraryController extends Controller
 
     /**
      * Initializes the Media Library Controller instance.
+     *
+     * Responsibility: Initializes the Media Library Controller instance.
      */
     public function __construct(
         private readonly MediaRepository $repository,
@@ -67,7 +69,9 @@ final class MediaLibraryController extends Controller
     }
 
     /**
-     * Handles the index workflow.
+     * Renders or exports the searchable media library listing.
+     *
+     * Responsibility: Renders or exports the searchable media library listing.
      */
     public function index(Request $request): Response
     {
@@ -219,7 +223,9 @@ final class MediaLibraryController extends Controller
     }
 
     /**
-     * Handles the create workflow.
+     * Renders the media upload form.
+     *
+     * Responsibility: Renders the media upload form.
      */
     public function create(Request $request): Response
     {
@@ -229,7 +235,9 @@ final class MediaLibraryController extends Controller
     }
 
     /**
-     * Handles the persistence workflow.
+     * Persists a validated media asset upload.
+     *
+     * Responsibility: Persists a validated media asset upload.
      */
     public function store(MediaItemRequest $request): Response
     {
@@ -245,7 +253,9 @@ final class MediaLibraryController extends Controller
     }
 
     /**
-     * Handles the edit workflow.
+     * Acquires a record claim and renders the media asset edit form.
+     *
+     * Responsibility: Acquires a record claim and renders the media asset edit form.
      */
     public function edit(Request $request, string $id): Response
     {
@@ -274,7 +284,9 @@ final class MediaLibraryController extends Controller
     }
 
     /**
-     * Handles the update workflow.
+     * Updates a media asset while handling concurrency conflicts.
+     *
+     * Responsibility: Updates a media asset while handling concurrency conflicts.
      */
     public function update(MediaItemRequest $request, string $id): Response
     {
@@ -302,7 +314,9 @@ final class MediaLibraryController extends Controller
     }
 
     /**
-     * Handles the destroy workflow.
+     * Deletes one media asset after claim validation.
+     *
+     * Responsibility: Deletes one media asset after claim validation.
      */
     public function destroy(Request $request, string $id): Response
     {
@@ -326,7 +340,9 @@ final class MediaLibraryController extends Controller
     }
 
     /**
-     * Handles the bulk destroy workflow.
+     * Deletes the selected media assets after claim validation.
+     *
+     * Responsibility: Deletes the selected media assets after claim validation.
      */
     public function bulkDestroy(Request $request): Response
     {
@@ -351,6 +367,9 @@ final class MediaLibraryController extends Controller
     }
 
     /**
+     * Builds and renders the upload or edit form for a media asset.
+     *
+     * Responsibility: Builds and renders the upload or edit form for a media asset.
      * @param array<string, mixed>|null $media
      */
     private function renderForm(string $title, ?array $media, ?array $claim = null): Response
@@ -373,7 +392,9 @@ final class MediaLibraryController extends Controller
     }
 
     /**
-     * Handles the format bytes workflow.
+     * Formats a byte count for display in the media listing.
+     *
+     * Responsibility: Formats a byte count for display in the media listing.
      */
     private function formatBytes(int $bytes): string
     {

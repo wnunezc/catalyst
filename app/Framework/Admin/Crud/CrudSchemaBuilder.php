@@ -31,14 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Admin\Crud;
 
 /**
- * Defines the Crud Schema Builder class contract.
+ * Builder for generated CRUD schema metadata.
  *
  * @package Catalyst\Framework\Admin\Crud
- * Responsibility: Coordinates the crud schema builder behavior within its module boundary.
+ * Responsibility: Converts parsed field definitions into form, grid, validation, migration, and search metadata.
  */
 final class CrudSchemaBuilder
 {
     /**
+     * Builds all schema fragments needed by CRUD scaffold templates.
+     *
+     * Responsibility: Builds all schema fragments needed by CRUD scaffold templates.
      * @param array<int, array<string, mixed>> $fields
      * @return array<string, mixed>
      */
@@ -74,6 +77,9 @@ final class CrudSchemaBuilder
     }
 
     /**
+     * Builds form field definitions from parsed CRUD fields.
+     *
+     * Responsibility: Builds form field definitions from parsed CRUD fields.
      * @param array<int, array<string, mixed>> $fields
      * @return array<int, array<string, mixed>>
      */
@@ -117,6 +123,9 @@ final class CrudSchemaBuilder
     }
 
     /**
+     * Builds form sections for generated CRUD forms.
+     *
+     * Responsibility: Builds form sections for generated CRUD forms.
      * @param array<int, array<string, mixed>> $fields
      * @return array<int, array<string, string>>
      */
@@ -140,6 +149,9 @@ final class CrudSchemaBuilder
     }
 
     /**
+     * Builds grid column definitions for generated CRUD lists.
+     *
+     * Responsibility: Builds grid column definitions for generated CRUD lists.
      * @param array<int, array<string, mixed>> $fields
      * @return array<int, array<string, mixed>>
      */
@@ -167,6 +179,9 @@ final class CrudSchemaBuilder
     }
 
     /**
+     * Builds filter definitions for generated CRUD lists.
+     *
+     * Responsibility: Builds filter definitions for generated CRUD lists.
      * @param array<int, array<string, mixed>> $fields
      * @return array<int, array<string, mixed>>
      */
@@ -203,6 +218,9 @@ final class CrudSchemaBuilder
     }
 
     /**
+     * Resolves generated form fields that require file upload handling.
+     *
+     * Responsibility: Resolves generated form fields that require file upload handling.
      * @param array<int, array<string, mixed>> $fields
      * @return array<int, string>
      */
@@ -215,6 +233,9 @@ final class CrudSchemaBuilder
     }
 
     /**
+     * Builds validation rules for the generated request class.
+     *
+     * Responsibility: Builds validation rules for the generated request class.
      * @param array<int, array<string, mixed>> $fields
      * @return array<string, string>
      */
@@ -252,6 +273,9 @@ final class CrudSchemaBuilder
     }
 
     /**
+     * Builds validation labels for the generated request class.
+     *
+     * Responsibility: Builds validation labels for the generated request class.
      * @param array<int, array<string, mixed>> $fields
      * @return array<string, string>
      */
@@ -267,6 +291,9 @@ final class CrudSchemaBuilder
     }
 
     /**
+     * Builds SQL column declarations for the generated migration.
+     *
+     * Responsibility: Builds SQL column declarations for the generated migration.
      * @param array<int, array<string, mixed>> $fields
      */
     private function buildMigrationColumns(array $fields): string
@@ -301,6 +328,9 @@ final class CrudSchemaBuilder
     }
 
     /**
+     * Resolves the default search field for generated grids.
+     *
+     * Responsibility: Resolves the default search field for generated grids.
      * @param array<int, array<string, mixed>> $fields
      */
     private function resolveSearchField(array $fields): string
@@ -315,6 +345,9 @@ final class CrudSchemaBuilder
     }
 
     /**
+     * Resolves the default sort field for generated grids.
+     *
+     * Responsibility: Resolves the default sort field for generated grids.
      * @param array<int, array<string, mixed>> $fields
      */
     private function resolveDefaultSort(array $fields): string

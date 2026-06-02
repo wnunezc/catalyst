@@ -39,10 +39,10 @@ use Closure;
 use RuntimeException;
 
 /**
- * Defines the Event Bus class contract.
+ * Runtime event dispatcher for framework and module events.
  *
  * @package Catalyst\Framework\Event
- * Responsibility: Coordinates the event bus behavior within its module boundary.
+ * Responsibility: Registers listeners, dispatches event envelopes, queues eligible listeners, and invokes synchronous handlers.
  */
 final class EventBus
 {
@@ -54,7 +54,9 @@ final class EventBus
     private Logger $logger;
 
     /**
-     * Initializes the Event Bus instance.
+     * Initializes logging and registers built-in framework listeners.
+     *
+     * Responsibility: Initializes logging and registers built-in framework listeners.
      */
     protected function __construct()
     {
@@ -63,7 +65,9 @@ final class EventBus
     }
 
     /**
-     * Handles the listen workflow.
+     * Registers a listener for a named event or wildcard stream.
+     *
+     * Responsibility: Registers a listener for a named event or wildcard stream.
      */
     public function listen(
         string $eventName,
@@ -78,6 +82,9 @@ final class EventBus
     }
 
     /**
+     * Dispatches an event envelope or event name with payload and metadata.
+     *
+     * Responsibility: Dispatches an event envelope or event name with payload and metadata.
      * @param array<string, mixed> $payload
      * @param array<string, mixed> $meta
      */
@@ -123,6 +130,9 @@ final class EventBus
     }
 
     /**
+     * Returns registered listeners grouped by event name.
+     *
+     * Responsibility: Returns registered listeners grouped by event name.
      * @return array<string, array<int, EventListenerDefinition>>
      */
     public function listeners(): array
@@ -131,7 +141,9 @@ final class EventBus
     }
 
     /**
-     * Determines whether should Skip Queued Wildcard Listener.
+     * Prevents wildcard automation listeners from re-queuing queue lifecycle events.
+     *
+     * Responsibility: Prevents wildcard automation listeners from re-queuing queue lifecycle events.
      */
     private function shouldSkipQueuedWildcardListener(EventListenerDefinition $definition, string $eventName): bool
     {
@@ -147,7 +159,9 @@ final class EventBus
     }
 
     /**
-     * Handles the invoke workflow.
+     * Invokes a callable, invokable object, or listener class for an event.
+     *
+     * Responsibility: Invokes a callable, invokable object, or listener class for an event.
      */
     private function invoke(callable|string $listener, EventEnvelope $event): void
     {

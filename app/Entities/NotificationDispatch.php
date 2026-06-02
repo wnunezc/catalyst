@@ -31,14 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Entities;
 
 /**
- * Defines the Notification Dispatch class contract.
+ * Value object for queued user notification payloads.
  *
  * @package Catalyst\Entities
- * Responsibility: Coordinates the notification dispatch behavior within its module boundary.
+ * Responsibility: Carries notification recipient, type, title, body, and metadata through dispatch workflows.
  */
 final class NotificationDispatch
 {
     /**
+     * Initializes an immutable notification dispatch payload.
+     *
+     * Responsibility: Initializes an immutable notification dispatch payload.
      * @param array<string, mixed> $meta
      */
     public function __construct(
@@ -51,13 +54,10 @@ final class NotificationDispatch
     }
 
     /**
+     * Serializes the notification dispatch into queue-safe array data. user_id:int, type:string, title:string, body:?string, meta:array<string, mixed> }.
+     *
+     * Responsibility: Serializes the notification dispatch into queue-safe array data. user_id:int, type:string, title:string, body:?string, meta:array<string, mixed> }.
      * @return array{
-     *   user_id:int,
-     *   type:string,
-     *   title:string,
-     *   body:?string,
-     *   meta:array<string, mixed>
-     * }
      */
     public function toArray(): array
     {
@@ -71,6 +71,8 @@ final class NotificationDispatch
     }
 
     /**
+     * Rehydrates a notification dispatch from array data.
+     *
      * @param array{
      *   user_id?:int|string,
      *   type?:string,

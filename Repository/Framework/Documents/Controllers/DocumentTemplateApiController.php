@@ -45,15 +45,17 @@ use Catalyst\Repository\Documents\Requests\DocumentTemplateIndexRequest;
 use RuntimeException;
 
 /**
- * Defines the Document Template Api Controller class contract.
+ * Exposes read, preview and export endpoints for document templates.
  *
  * @package Catalyst\Repository\Documents\Controllers
- * Responsibility: Coordinates the document template api controller behavior within its module boundary.
+ * Responsibility: Authorize API requests and serialize template listings, details, previews and artifacts.
  */
 final class DocumentTemplateApiController extends Controller
 {
     /**
      * Initializes the Document Template Api Controller instance.
+     *
+     * Responsibility: Initializes the Document Template Api Controller instance.
      */
     public function __construct(
         private readonly DocumentTemplateRepository $repository,
@@ -66,7 +68,9 @@ final class DocumentTemplateApiController extends Controller
     }
 
     /**
-     * Handles the api index workflow.
+     * Returns a paginated API listing of document templates.
+     *
+     * Responsibility: Returns a paginated API listing of document templates.
      */
     public function apiIndex(DocumentTemplateIndexRequest $request): Response
     {
@@ -82,7 +86,9 @@ final class DocumentTemplateApiController extends Controller
     }
 
     /**
-     * Handles the api show workflow.
+     * Returns one document template with artifacts, versions and available transitions.
+     *
+     * Responsibility: Returns one document template with artifacts, versions and available transitions.
      */
     public function apiShow(Request $request, string $id): Response
     {
@@ -107,7 +113,9 @@ final class DocumentTemplateApiController extends Controller
     }
 
     /**
-     * Handles the api preview workflow.
+     * Returns a rendered preview for one document template.
+     *
+     * Responsibility: Returns a rendered preview for one document template.
      */
     public function apiPreview(DocumentPreviewPayloadRequest $request, string $id): Response
     {
@@ -128,7 +136,9 @@ final class DocumentTemplateApiController extends Controller
     }
 
     /**
-     * Handles the api export workflow.
+     * Exports and returns a persisted artifact for one document template.
+     *
+     * Responsibility: Exports and returns a persisted artifact for one document template.
      */
     public function apiExport(DocumentExportPayloadRequest $request, string $id): Response
     {

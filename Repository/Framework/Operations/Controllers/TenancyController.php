@@ -35,15 +35,17 @@ use Catalyst\Framework\Http\Response;
 use Catalyst\Framework\Tenancy\TenancyManager;
 
 /**
- * Defines the Tenancy Controller class contract.
+ * Presents the active tenancy strategy and current tenant resolution.
  *
  * @package Catalyst\Repository\Operations\Controllers
- * Responsibility: Coordinates the tenancy controller behavior within its module boundary.
+ * Responsibility: Exposes tenancy diagnostics to platform administrators.
  */
 final class TenancyController extends AbstractOperationsController
 {
     /**
-     * Handles the tenancy workflow.
+     * Renders tenancy summary and current tenant resolution details.
+     *
+     * Responsibility: Renders tenancy summary and current tenant resolution details.
      */
     public function tenancy(Request $request): Response
     {

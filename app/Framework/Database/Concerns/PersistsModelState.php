@@ -36,15 +36,17 @@ use Catalyst\Framework\Tenancy\TenancyManager;
 use Catalyst\Helpers\Exceptions\OptimisticLockException;
 
 /**
- * Defines the Persists Model State trait contract.
+ * Splits model insert, update, delete, refresh, and connection persistence behavior out of Model.
  *
  * @package Catalyst\Framework\Database\Concerns
- * Responsibility: Coordinates the persists model state behavior within its module boundary.
+ * Responsibility: Persist ORM model state with lifecycle hooks, tenant filters, and optimistic locking safeguards.
  */
 trait PersistsModelState
 {
     /**
-     * Persists the current state.
+     * Persists a new model or dirty existing model through insert or update operations.
+     *
+     * Responsibility: Persists a new model or dirty existing model through insert or update operations.
      */
     public function save(): bool
     {
@@ -60,7 +62,9 @@ trait PersistsModelState
     }
 
     /**
-     * Handles the update workflow.
+     * Mass-assigns attributes and persists the resulting model state.
+     *
+     * Responsibility: Mass-assigns attributes and persists the resulting model state.
      */
     public function update(array $attributes): bool
     {
@@ -69,7 +73,9 @@ trait PersistsModelState
     }
 
     /**
-     * Handles the delete workflow.
+     * Deletes an existing model row using primary key and tenant scope constraints.
+     *
+     * Responsibility: Deletes an existing model row using primary key and tenant scope constraints.
      */
     public function delete(): bool
     {
@@ -99,7 +105,9 @@ trait PersistsModelState
     }
 
     /**
-     * Handles the fresh workflow.
+     * Returns a newly queried copy of the current model or null when it is not persisted.
+     *
+     * Responsibility: Returns a newly queried copy of the current model or null when it is not persisted.
      */
     public function fresh(): ?static
     {
@@ -111,7 +119,9 @@ trait PersistsModelState
     }
 
     /**
-     * Handles the refresh workflow.
+     * Replaces current attributes and original state with a freshly queried copy.
+     *
+     * Responsibility: Replaces current attributes and original state with a freshly queried copy.
      */
     public function refresh(): static
     {
@@ -126,7 +136,9 @@ trait PersistsModelState
     }
 
     /**
-     * Handles the exists workflow.
+     * Reports whether the model currently represents a persisted row.
+     *
+     * Responsibility: Reports whether the model currently represents a persisted row.
      */
     public function exists(): bool
     {
@@ -134,7 +146,7 @@ trait PersistsModelState
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves the database connection configured for the concrete model.
      */
     public static function resolveConnection(): Connection
     {
@@ -142,7 +154,9 @@ trait PersistsModelState
     }
 
     /**
-     * Handles the perform insert workflow.
+     * Inserts the current attributes, initializes optimistic lock state, and marks the model as persisted.
+     *
+     * Responsibility: Inserts the current attributes, initializes optimistic lock state, and marks the model as persisted.
      */
     protected function performInsert(): bool
     {
@@ -178,7 +192,9 @@ trait PersistsModelState
     }
 
     /**
-     * Handles the perform update workflow.
+     * Updates dirty attributes with tenant scope and optimistic lock constraints when enabled.
+     *
+     * Responsibility: Updates dirty attributes with tenant scope and optimistic lock constraints when enabled.
      */
     protected function performUpdate(): bool
     {
@@ -248,7 +264,7 @@ trait PersistsModelState
     }
 
     /**
-     * Returns the connection instance value.
+     * Returns the DatabaseManager connection selected by the concrete model configuration.
      */
     protected static function getConnectionInstance(): Connection
     {
@@ -256,7 +272,9 @@ trait PersistsModelState
     }
 
     /**
-     * Handles the uses optimistic locking workflow.
+     * Reports whether the concrete model opted into optimistic locking.
+     *
+     * Responsibility: Reports whether the concrete model opted into optimistic locking.
      */
     protected function usesOptimisticLocking(): bool
     {
@@ -264,7 +282,9 @@ trait PersistsModelState
     }
 
     /**
-     * Handles the optimistic lock column workflow.
+     * Returns the optimistic lock column configured by the concrete model.
+     *
+     * Responsibility: Returns the optimistic lock column configured by the concrete model.
      */
     protected function optimisticLockColumn(): string
     {
@@ -272,7 +292,9 @@ trait PersistsModelState
     }
 
     /**
-     * Handles the uses tenant scoping workflow.
+     * Reports whether the concrete model requires tenant-scoped persistence queries.
+     *
+     * Responsibility: Reports whether the concrete model requires tenant-scoped persistence queries.
      */
     protected function usesTenantScoping(): bool
     {
@@ -280,7 +302,9 @@ trait PersistsModelState
     }
 
     /**
-     * Handles the tenant scope column workflow.
+     * Returns the tenant scope column configured by the concrete model.
+     *
+     * Responsibility: Returns the tenant scope column configured by the concrete model.
      */
     protected function tenantScopeColumn(): string
     {
@@ -288,7 +312,9 @@ trait PersistsModelState
     }
 
     /**
-     * Handles the expected lock version workflow.
+     * Reads the expected optimistic lock version from current or original attributes.
+     *
+     * Responsibility: Reads the expected optimistic lock version from current or original attributes.
      */
     protected function expectedLockVersion(string $column): ?int
     {
@@ -302,7 +328,9 @@ trait PersistsModelState
     }
 
     /**
-     * Handles the current persisted lock version workflow.
+     * Queries the currently persisted optimistic lock version for conflict reporting.
+     *
+     * Responsibility: Queries the currently persisted optimistic lock version for conflict reporting.
      */
     protected function currentPersistedLockVersion(string $column): ?int
     {

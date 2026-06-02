@@ -35,15 +35,17 @@ use Catalyst\Framework\Audit\AuditLogManager;
 use Catalyst\Framework\Event\EventListenerInterface;
 
 /**
- * Defines the Capture Audit Event Listener class contract.
+ * Listener for capturing audit event envelopes.
  *
  * @package Catalyst\Framework\Event\Listeners
- * Responsibility: Coordinates the capture audit event listener behavior within its module boundary.
+ * Responsibility: Writes audit log entries from structured event envelope payloads.
  */
 final class CaptureAuditEventListener implements EventListenerInterface
 {
     /**
-     * Handles the request workflow.
+     * Handles an event envelope.
+     *
+     * Responsibility: Handles an event envelope.
      */
     public function handle(EventEnvelope $event): void
     {

@@ -37,15 +37,17 @@ use InvalidArgumentException;
 use RuntimeException;
 
 /**
- * Defines the Crud Blueprint Factory class contract.
+ * Factory for CRUD scaffold blueprints.
  *
  * @package Catalyst\Framework\Admin\Crud
- * Responsibility: Coordinates the crud blueprint factory behavior within its module boundary.
+ * Responsibility: Validates scaffold input and composes module, entity, route, schema, migration, and file metadata.
  */
 final class CrudBlueprintFactory
 {
     /**
-     * Initializes the Crud Blueprint Factory instance.
+     * Initializes collaborators required to build a CRUD scaffold blueprint.
+     *
+     * Responsibility: Initializes collaborators required to build a CRUD scaffold blueprint.
      */
     public function __construct(
         private readonly ScaffoldManager $manager,
@@ -57,6 +59,9 @@ final class CrudBlueprintFactory
     }
 
     /**
+     * Builds a complete CRUD scaffold blueprint from CLI or service input.
+     *
+     * Responsibility: Builds a complete CRUD scaffold blueprint from CLI or service input.
      * @param array<string, mixed> $input
      * @return array<string, mixed>
      */
@@ -135,7 +140,9 @@ final class CrudBlueprintFactory
     }
 
     /**
-     * Normalizes the provided value.
+     * Validates and normalizes an explicit database table name.
+     *
+     * Responsibility: Validates and normalizes an explicit database table name.
      */
     private function normalizeTableName(string $value): string
     {

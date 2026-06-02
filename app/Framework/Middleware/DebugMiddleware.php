@@ -35,7 +35,7 @@ use Catalyst\Framework\Http\Response;
 use Closure;
 use Exception;
 
-/**************************************************************************************
+/**
  * Middleware that provides request and response debugging capabilities.
  *
  * This class logs request and response metadata around the next middleware.
@@ -47,16 +47,14 @@ use Exception;
  *
  * @package Catalyst\Framework\Middleware
  * @since 1.0.0
- */
-/**
- * Defines the Debug Middleware class contract.
- *
- * @package Catalyst\Framework\Middleware
- * Responsibility: Coordinates the debug middleware behavior within its module boundary.
+ * Responsibility: Logs request and response metadata around downstream middleware execution.
  */
 class DebugMiddleware extends CoreMiddleware
 {
     /**
+     * Logs request and response metadata around the downstream handler.
+     *
+     * Responsibility: Logs request and response metadata around the downstream handler.
      * @throws Exception
      */
     public function process(Request $request, Closure $next): Response

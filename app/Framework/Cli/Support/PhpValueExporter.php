@@ -31,15 +31,18 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Cli\Support;
 
 /**
- * Defines the Php Value Exporter class contract.
+ * Exporter for PHP literal values.
+ *
+ * Responsibility: Serializes scalar, list and associative values into deterministic PHP code fragments.
  *
  * @package Catalyst\Framework\Cli\Support
- * Responsibility: Coordinates the php value exporter behavior within its module boundary.
  */
 final class PhpValueExporter
 {
     /**
-     * Handles the export workflow.
+     * Exports a PHP value as deterministic literal code.
+     *
+     * Responsibility: Exports a PHP value as deterministic literal code.
      */
     public function export(mixed $value, int $level = 0): string
     {

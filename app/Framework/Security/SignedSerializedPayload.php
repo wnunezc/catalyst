@@ -33,14 +33,16 @@ namespace Catalyst\Framework\Security;
 use Catalyst\Helpers\Config\ConfigManager;
 
 /**
- * Defines the Signed Serialized Payload class contract.
+ * Signs serialized payloads and restores only descriptors that pass integrity checks.
  *
  * @package Catalyst\Framework\Security
- * Responsibility: Coordinates the signed serialized payload behavior within its module boundary.
+ * Responsibility: Protects cached serialized values with an HMAC signature and an explicit allowed-class list.
  */
 final class SignedSerializedPayload
 {
     /**
+     * Serializes a value and returns its signed transport descriptor.
+     *
      * @return array{payload:string,signature:string,allowed_classes:string[]}
      */
     public static function pack(mixed $value): array
@@ -55,6 +57,8 @@ final class SignedSerializedPayload
     }
 
     /**
+     * Validates a signed descriptor and restores its serialized value.
+     *
      * @param array<string, mixed> $descriptor
      * @return array{valid:bool,value:mixed}
      */
@@ -92,6 +96,8 @@ final class SignedSerializedPayload
     }
 
     /**
+     * Collects object classes that may be restored from the serialized value.
+     *
      * @return string[]
      */
     private static function collectAllowedClasses(mixed $value): array
@@ -107,6 +113,8 @@ final class SignedSerializedPayload
     }
 
     /**
+     * Traverses nested values to collect classes without revisiting objects.
+     *
      * @param array<string, bool> $classes
      * @param array<int, bool> $seen
      */
@@ -138,7 +146,7 @@ final class SignedSerializedPayload
     }
 
     /**
-     * Handles the key workflow.
+     * Resolves the application key used to sign serialized payloads.
      */
     private static function key(): string
     {

@@ -35,10 +35,10 @@ use Catalyst\Framework\Traits\HasAuditLogTrait;
 use Catalyst\Framework\Traits\HasTimestampsTrait;
 
 /**
- * Defines the Feature Flag Override class contract.
+ * ORM entity for subject-specific feature flag overrides.
  *
  * @package Catalyst\Entities
- * Responsibility: Coordinates the feature flag override behavior within its module boundary.
+ * Responsibility: Maps flag keys, target subjects, enabled state, notes, and audit metadata.
  */
 final class FeatureFlagOverride extends Model
 {

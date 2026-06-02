@@ -36,15 +36,17 @@ use Catalyst\Repository\Settings\Requests\WebSocketConfigRequest;
 use Catalyst\Repository\Settings\Support\WebSocketConfigWriter;
 
 /**
- * Defines the Web Socket Config Save Controller class contract.
+ * Persists WebSocket settings submitted by the setup surface.
  *
  * @package Catalyst\Repository\Settings\Controllers
- * Responsibility: Coordinates the web socket config save controller behavior within its module boundary.
+ * Responsibility: Delegates validated WebSocket configuration writes and returns the setup AJAX response.
  */
 final class WebSocketConfigSaveController extends Controller
 {
     /**
      * Initializes the Web Socket Config Save Controller instance.
+     *
+     * Responsibility: Initializes the Web Socket Config Save Controller instance.
      */
     public function __construct(
         private readonly WebSocketConfigWriter $writer = new WebSocketConfigWriter()
@@ -53,7 +55,9 @@ final class WebSocketConfigSaveController extends Controller
     }
 
     /**
-     * Persists the current state.
+     * Saves validated WebSocket settings.
+     *
+     * Responsibility: Saves validated WebSocket settings.
      */
     public function saveWebSocket(WebSocketConfigRequest $request): Response
     {

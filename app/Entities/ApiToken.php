@@ -36,10 +36,10 @@ use Catalyst\Framework\Traits\HasAuditLogTrait;
 use Catalyst\Framework\Traits\HasTimestampsTrait;
 
 /**
- * Defines the Api Token class contract.
+ * ORM entity for API access tokens.
  *
  * @package Catalyst\Entities
- * Responsibility: Coordinates the api token behavior within its module boundary.
+ * Responsibility: Maps token metadata, scopes, expiration, revocation, and hidden token hashes for tenant users.
  */
 final class ApiToken extends Model
 {

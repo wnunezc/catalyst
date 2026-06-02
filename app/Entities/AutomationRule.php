@@ -37,10 +37,10 @@ use Catalyst\Framework\Traits\HasOptimisticLockingTrait;
 use Catalyst\Framework\Traits\HasTimestampsTrait;
 
 /**
- * Defines the Automation Rule class contract.
+ * ORM entity for tenant automation rules.
  *
  * @package Catalyst\Entities
- * Responsibility: Coordinates the automation rule behavior within its module boundary.
+ * Responsibility: Maps rule triggers, conditions, actions, schedules, effective windows, and audit metadata.
  */
 final class AutomationRule extends Model
 {

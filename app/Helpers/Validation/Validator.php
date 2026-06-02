@@ -33,21 +33,8 @@ namespace Catalyst\Helpers\Validation;
 /**
  * Validator — public API for the Catalyst validation system.
  *
- * Usage:
- *   $v = new Validator($data, $rules);
- *   if ($v->fails()) {
- *       return $this->jsonValidationError($v->errors());
- *   }
- *
- * Or via Controller helper:
- *   $v = $this->validate($data, $rules);
- *   $this->validateOrFail($data, $rules);  // throws ValidationException
- *
- * Rule string format:
- *   'field' => 'required|min:3|max:50|email'
- *   'field' => ['required', 'min:3', 'unique:users,email']
- *
  * @package Catalyst\Helpers\Validation
+ * Responsibility: Exposes lazy validation results and field-level error collections to callers.
  */
 class Validator
 {
@@ -67,6 +54,9 @@ class Validator
     private bool $ran = false;
 
     /**
+     * Initializes the object with the collaborators or state required for its responsibility.
+     *
+     * Responsibility: Initializes the object with the collaborators or state required for its responsibility.
      * @param array<string, mixed>                    $data   Input data to validate
      * @param array<string, string|array<int,string>> $rules  Rules per field
      * @param array<string, string>                   $labels Optional human-readable labels
@@ -79,10 +69,9 @@ class Validator
     }
 
     /**
-     * Determine whether validation fails.
+     * Determine whether validation fails. Runs validation on first call; subsequent calls use the cached result.
      *
-     * Runs validation on first call; subsequent calls use the cached result.
-     *
+     * Responsibility: Determine whether validation fails. Runs validation on first call; subsequent calls use the cached result.
      * @return bool
      */
     public function fails(): bool
@@ -94,6 +83,7 @@ class Validator
     /**
      * Determine whether validation passes.
      *
+     * Responsibility: Determine whether validation passes.
      * @return bool
      */
     public function passes(): bool
@@ -104,6 +94,7 @@ class Validator
     /**
      * Get all field-level errors.
      *
+     * Responsibility: Get all field-level errors.
      * @return array<string, string[]>
      */
     public function errors(): array
@@ -115,6 +106,7 @@ class Validator
     /**
      * Get the first error message per field.
      *
+     * Responsibility: Exposes the first validation message for each field so forms can show concise feedback.
      * @return array<string, string>
      */
     public function firstErrors(): array
@@ -133,6 +125,7 @@ class Validator
     /**
      * Alias for errors() — compatible with jsonValidationError() format.
      *
+     * Responsibility: Alias for errors() — compatible with jsonValidationError() format.
      * @return array<string, string[]>
      */
     public function getErrorsForJson(): array
@@ -143,6 +136,7 @@ class Validator
     /**
      * Run validation exactly once; cache the result.
      *
+     * Responsibility: Run validation exactly once; cache the result.
      * @return void
      */
     private function runOnce(): void

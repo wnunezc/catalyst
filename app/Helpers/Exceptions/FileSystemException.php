@@ -33,11 +33,12 @@ namespace Catalyst\Helpers\Exceptions;
 use RuntimeException;
 
 /**
- * Exception class for filed system-related errors
+ * Exception class for file system-related errors.
  *
  * Provides factory methods for common file system error scenarios
  *
- * @package Catalyst\Framework\Exceptions
+ * @package Catalyst\Helpers\Exceptions
+ * Responsibility: Provides exceptions for common file read, write and existence failures.
  */
 class FileSystemException extends RuntimeException
 {

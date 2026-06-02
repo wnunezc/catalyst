@@ -43,10 +43,10 @@ use Catalyst\Framework\Traits\SingletonTrait;
 use RuntimeException;
 
 /**
- * Defines the Workflow Manager class contract.
+ * Executes resource workflow initialization and transitions.
  *
  * @package Catalyst\Framework\Workflow
- * Responsibility: Coordinates the workflow manager behavior within its module boundary.
+ * Responsibility: Enforces transition permissions and guards while persisting and dispatching lifecycle events.
  */
 final class WorkflowManager
 {
@@ -58,6 +58,8 @@ final class WorkflowManager
 
     /**
      * Initializes the Workflow Manager instance.
+     *
+     * Responsibility: Initializes the Workflow Manager instance.
      */
     protected function __construct()
     {
@@ -67,6 +69,9 @@ final class WorkflowManager
     }
 
     /**
+     * Returns or initializes the workflow instance for a resource record.
+     *
+     * Responsibility: Returns or initializes the workflow instance for a resource record.
      * @param array<string, mixed> $context
      * @return array<string, mixed>
      */
@@ -102,6 +107,9 @@ final class WorkflowManager
     }
 
     /**
+     * Applies an allowed transition to a resource workflow instance.
+     *
+     * Responsibility: Applies an allowed transition to a resource workflow instance.
      * @param array<string, mixed> $context
      * @return array<string, mixed>
      */
@@ -213,6 +221,9 @@ final class WorkflowManager
     }
 
     /**
+     * Lists transitions visible to the current actor for a resource.
+     *
+     * Responsibility: Lists transitions visible to the current actor for a resource.
      * @param array<string, mixed>|null $actor
      * @return array<int, array<string, mixed>>
      */
@@ -243,6 +254,9 @@ final class WorkflowManager
     }
 
     /**
+     * Applies a workflow transition requested by an event envelope.
+     *
+     * Responsibility: Applies a workflow transition requested by an event envelope.
      * @param array<string, mixed> $eventPayload
      */
     public function transitionFromEvent(EventEnvelope $event, array $eventPayload): ?array
@@ -271,7 +285,9 @@ final class WorkflowManager
     }
 
     /**
-     * Handles the definition workflow.
+     * Returns a registered workflow definition or fails explicitly.
+     *
+     * Responsibility: Returns a registered workflow definition or fails explicitly.
      */
     private function definition(string $definitionKey): WorkflowDefinition
     {
@@ -284,7 +300,9 @@ final class WorkflowManager
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves the model associated with a workflow resource.
+     *
+     * Responsibility: Resolves the model associated with a workflow resource.
      */
     private function resolveRecord(string $resourceKey, int $recordId): mixed
     {

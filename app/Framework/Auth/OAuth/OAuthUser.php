@@ -32,19 +32,11 @@ namespace Catalyst\Framework\Auth\OAuth;
 
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 
-/**************************************************************************************
- * OAuthUser — normalized resource owner for any OAuth2 provider
- *
- * Wraps the raw response from a provider into a consistent interface.
- * Each provider's createResourceOwner() maps its fields to this class.
- *
- * @package Catalyst\Framework\Auth\OAuth
- */
 /**
- * Defines the OAuth User class contract.
+ * Normalizes OAuth provider resource-owner payloads.
  *
  * @package Catalyst\Framework\Auth\OAuth
- * Responsibility: Coordinates the o auth user behavior within its module boundary.
+ * Responsibility: Expose provider identity, display name, email and raw payload through one resource-owner interface.
  */
 class OAuthUser implements ResourceOwnerInterface
 {
@@ -59,6 +51,9 @@ class OAuthUser implements ResourceOwnerInterface
     private string $provider;
 
     /**
+     * Initializes the object with the collaborators or state required for its responsibility.
+     *
+     * Responsibility: Initializes the object with the collaborators or state required for its responsibility.
      * @param array  $data     Raw API response
      * @param string $provider Provider identifier
      */
@@ -71,6 +66,7 @@ class OAuthUser implements ResourceOwnerInterface
     /**
      * Returns the provider's unique user ID.
      *
+     * Responsibility: Returns the provider's unique user ID.
      * @return string
      */
     public function getId(): string
@@ -81,6 +77,7 @@ class OAuthUser implements ResourceOwnerInterface
     /**
      * Returns the user's email address.
      *
+     * Responsibility: Returns the user's email address.
      * @return string|null
      */
     public function getEmail(): ?string
@@ -91,6 +88,7 @@ class OAuthUser implements ResourceOwnerInterface
     /**
      * Returns the user's display name.
      *
+     * Responsibility: Returns the user's display name.
      * @return string|null
      */
     public function getName(): ?string
@@ -102,6 +100,7 @@ class OAuthUser implements ResourceOwnerInterface
     /**
      * Returns the provider identifier.
      *
+     * Responsibility: Returns the provider identifier.
      * @return string
      */
     public function getProvider(): string
@@ -110,9 +109,10 @@ class OAuthUser implements ResourceOwnerInterface
     }
 
     /**
-     * Returns all raw response data.
+     * Returns the complete raw provider response payload.
      *
-     * @return array
+     * Responsibility: Returns the complete raw provider response payload.
+     * @return array<string, mixed>
      */
     public function toArray(): array
     {

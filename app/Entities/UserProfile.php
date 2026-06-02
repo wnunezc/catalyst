@@ -39,10 +39,10 @@ use Catalyst\Framework\Traits\HasTimestampsTrait;
 use Catalyst\Repository\Auth\Models\User;
 
 /**
- * Defines the User Profile class contract.
+ * ORM entity for tenant user profile details.
  *
  * @package Catalyst\Entities
- * Responsibility: Coordinates the user profile behavior within its module boundary.
+ * Responsibility: Maps extended user identity, contact, organization, audit, and optimistic locking fields.
  */
 final class UserProfile extends Model
 {
@@ -79,7 +79,9 @@ final class UserProfile extends Model
     ];
 
     /**
-     * Handles the user workflow.
+     * Defines the owning authentication user relationship.
+     *
+     * Responsibility: Defines the owning authentication user relationship.
      */
     public function user(): BelongsTo
     {

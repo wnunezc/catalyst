@@ -37,7 +37,8 @@ use RuntimeException;
  *
  * Thrown when a database connection error occurs.
  *
- * @package Catalyst\Framework\Exceptions
+ * @package Catalyst\Helpers\Exceptions
+ * Responsibility: Represents failures while establishing database connections.
  */
 class ConnectionException extends RuntimeException
 {

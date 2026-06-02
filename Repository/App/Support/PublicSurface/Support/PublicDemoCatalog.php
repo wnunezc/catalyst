@@ -31,14 +31,17 @@ declare(strict_types=1);
 namespace App\Support\PublicSurface\Support;
 
 /**
- * Defines the Public Demo Catalog class contract.
+ * Catalog of public demo page payloads.
  *
  * @package App\Support\PublicSurface\Support
- * Responsibility: Coordinates the public demo catalog behavior within its module boundary.
+ * Responsibility: Supplies localized content arrays for home, landing, store, and dashboard surfaces.
  */
 final class PublicDemoCatalog
 {
     /**
+     * Provides the home surface content model.
+     *
+     * Responsibility: Provides the home surface content model.
      * @return array<string, mixed>
      */
     public function home(): array
@@ -74,6 +77,9 @@ final class PublicDemoCatalog
     }
 
     /**
+     * Provides the landing surface content model.
+     *
+     * Responsibility: Provides the landing surface content model.
      * @return array<string, mixed>
      */
     public function landing(): array
@@ -111,6 +117,9 @@ final class PublicDemoCatalog
     }
 
     /**
+     * Provides the store surface content model.
+     *
+     * Responsibility: Provides the store surface content model.
      * @return array<string, mixed>
      */
     public function store(): array
@@ -153,6 +162,9 @@ final class PublicDemoCatalog
     }
 
     /**
+     * Provides the dashboard surface content model.
+     *
+     * Responsibility: Provides the dashboard surface content model.
      * @return array<string, mixed>
      */
     public function dashboard(): array

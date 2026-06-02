@@ -34,24 +34,28 @@ use Catalyst\Framework\Http\Request;
 use Catalyst\Repository\Operations\Requests\Concerns\NormalizesCheckboxValues;
 
 /**
- * Defines the Appearance Update Request class contract.
+ * Reads platform appearance settings and uploaded branding assets from a request.
  *
  * @package Catalyst\Repository\Operations\Requests
- * Responsibility: Coordinates the appearance update request behavior within its module boundary.
+ * Responsibility: Provides normalized appearance input to the operations controller.
  */
 final class AppearanceUpdateRequest
 {
     use NormalizesCheckboxValues;
 
     /**
-     * Initializes the Appearance Update Request instance.
+     * Wraps the incoming HTTP request used to read appearance fields.
+     *
+     * Responsibility: Wraps the incoming HTTP request used to read appearance fields.
      */
     public function __construct(private readonly Request $request)
     {
     }
 
     /**
-     * Handles the admin customizer enabled workflow.
+     * Returns whether the administrator customizer is enabled.
+     *
+     * Responsibility: Returns whether the administrator customizer is enabled.
      */
     public function adminCustomizerEnabled(): bool
     {
@@ -59,7 +63,9 @@ final class AppearanceUpdateRequest
     }
 
     /**
-     * Handles the pdf watermark enabled workflow.
+     * Returns whether generated PDFs should include a watermark.
+     *
+     * Responsibility: Returns whether generated PDFs should include a watermark.
      */
     public function pdfWatermarkEnabled(): bool
     {
@@ -67,6 +73,9 @@ final class AppearanceUpdateRequest
     }
 
     /**
+     * Returns normalized platform shell theme selections.
+     *
+     * Responsibility: Returns normalized platform shell theme selections.
      * @return array<string, string>
      */
     public function platformTheme(): array
@@ -80,6 +89,9 @@ final class AppearanceUpdateRequest
     }
 
     /**
+     * Returns normalized branding and PDF watermark settings.
+     *
+     * Responsibility: Returns normalized branding and PDF watermark settings.
      * @return array<string, string>
      */
     public function branding(): array
@@ -100,6 +112,9 @@ final class AppearanceUpdateRequest
     }
 
     /**
+     * Returns uploaded branding assets keyed by form field.
+     *
+     * Responsibility: Returns uploaded branding assets keyed by form field.
      * @return array<string, mixed>
      */
     public function files(): array
@@ -112,7 +127,9 @@ final class AppearanceUpdateRequest
     }
 
     /**
-     * Handles the reset requested workflow.
+     * Returns whether the specified branding asset should be reset.
+     *
+     * Responsibility: Returns whether the specified branding asset should be reset.
      */
     public function resetRequested(string $asset): bool
     {

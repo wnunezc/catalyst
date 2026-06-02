@@ -35,53 +35,35 @@ use Catalyst\Framework\View\TrustedHtml;
 use InvalidArgumentException;
 use JsonException;
 
-/**************************************************************************************
- * JsonResponse class for JSON API responses
- *
- * Specializes the base Response class for JSON content with appropriate
- * content-type headers and JSON encoding.
- *
- * @package Catalyst\Framework\Http
- */
 /**
- * Defines the Json Response class contract.
+ * Represents an HTTP response encoded as JSON.
  *
  * @package Catalyst\Framework\Http
- * Responsibility: Coordinates the json response behavior within its module boundary.
+ * Responsibility: Encodes payloads, attaches notification metadata and exposes API response helpers for JSON clients.
  */
 class JsonResponse extends Response
 {
     public const string HTML_POLICY_TRUSTED = 'trusted-html';
 
     /**
-     * JSON encoding options
-     *
-     * @var int
+     * @var int JSON encoding flags used for response payloads.
      */
     protected int $encodingOptions;
 
     /**
-     * Original data before JSON encoding
-     *
-     * @var mixed
+     * @var mixed Original response data before JSON encoding.
      */
     protected mixed $data;
 
     /**
-     * Notification bag for this response
-     *
-     * @var NotificationBag|null
+     * @var NotificationBag|null Notification bag attached to the payload.
      */
     protected ?NotificationBag $notifications = null;
 
     /**
-     * Create a new JSON response
+     * Creates a JSON response from raw data or a pre-encoded JSON string.
      *
-     * @param mixed $data The data to encode as JSON
-     * @param int $status The HTTP status code
-     * @param array $headers Array of HTTP headers
-     * @param int $options JSON encoding options
-     * @param bool $json Whether the data is already JSON encoded
+     * Responsibility: Creates a JSON response from raw data or a pre-encoded JSON string.
      * @throws InvalidArgumentException
      */
     public function __construct(
@@ -109,9 +91,9 @@ class JsonResponse extends Response
     }
 
     /**
-     * Get the original data
+     * Returns the original response data.
      *
-     * @return mixed Original data
+     * Responsibility: Returns the original response data.
      */
     public function getData(): mixed
     {
@@ -119,10 +101,9 @@ class JsonResponse extends Response
     }
 
     /**
-     * Set the data and encode it as JSON
+     * Replaces the response data and re-encodes the body.
      *
-     * @param mixed $data The data to encode
-     * @return self For method chaining
+     * Responsibility: Replaces the response data and re-encodes the body.
      */
     public function setData(mixed $data): self
     {
@@ -133,10 +114,9 @@ class JsonResponse extends Response
     }
 
     /**
-     * Set JSON encoding options
+     * Updates JSON encoding options and re-encodes the body.
      *
-     * @param int $options JSON encoding options
-     * @return self For method chaining
+     * Responsibility: Updates JSON encoding options and re-encodes the body.
      */
     public function setEncodingOptions(int $options): self
     {
@@ -147,10 +127,9 @@ class JsonResponse extends Response
     }
 
     /**
-     * Add notifications to this response
+     * Adds notification metadata to the JSON payload.
      *
-     * @param NotificationBag $bag Notification bag
-     * @return self For method chaining
+     * Responsibility: Adds notification metadata to the JSON payload.
      */
     public function withNotification(NotificationBag $bag): self
     {
@@ -161,9 +140,9 @@ class JsonResponse extends Response
     }
 
     /**
-     * Get the notification bag
+     * Returns the notification bag attached to the response.
      *
-     * @return NotificationBag|null
+     * Responsibility: Returns the notification bag attached to the response.
      */
     public function getNotifications(): ?NotificationBag
     {
@@ -171,9 +150,9 @@ class JsonResponse extends Response
     }
 
     /**
-     * Update the data array to include notifications
+     * Merges notification data into the encoded payload.
      *
-     * @return void
+     * Responsibility: Merges notification data into the encoded payload.
      */
     protected function updateDataWithNotifications(): void
     {
@@ -193,9 +172,9 @@ class JsonResponse extends Response
     }
 
     /**
-     * Get current JSON encoding options
+     * Returns the active JSON encoding options.
      *
-     * @return int JSON encoding options
+     * Responsibility: Returns the active JSON encoding options.
      */
     public function getEncodingOptions(): int
     {
@@ -203,11 +182,10 @@ class JsonResponse extends Response
     }
 
     /**
-     * Encode the given data as JSON
+     * Encodes a value into the response JSON string.
      *
-     * @param mixed $data Data to encode
-     * @return string JSON encoded string
-     * @throws InvalidArgumentException If encoding fails
+     * Responsibility: Encodes a value into the response JSON string.
+     * @throws InvalidArgumentException
      */
     protected function encodeData(mixed $data): string
     {
@@ -233,17 +211,7 @@ class JsonResponse extends Response
     }
 
     /**
-     * Create a JSON response for an API result
-     *
-     * @param mixed $data The data payload
-     * @param bool $success Whether the API call was successful
-     * @param string|null $message Optional message
-     * @param int $status HTTP status code
-     * @param array $meta Additional metadata
-     * @param array $headers HTTP headers
-     * @param bool $noFlash Whether to suppress flash messages
-     * @param NotificationBag|null $notifications Optional notifications to include
-     * @return self New JsonResponse instance
+     * Creates a structured API JSON response.
      */
     public static function api(
         mixed            $data = null,
@@ -280,13 +248,7 @@ class JsonResponse extends Response
     }
 
     /**
-     * Create a JSON error response
-     *
-     * @param string $message Error message
-     * @param mixed $errors Detailed error information
-     * @param int $status HTTP status code
-     * @param array $headers HTTP headers
-     * @return self New JsonResponse instance
+     * Creates a structured API error response.
      */
     public static function error(
         string $message,
@@ -308,13 +270,7 @@ class JsonResponse extends Response
     }
 
     /**
-     * Create a JSON validation error response
-     *
-     * @param array $errors Validation errors
-     * @param string $message Error message
-     * @param int $status HTTP status code
-     * @param array $headers HTTP headers
-     * @return self New JsonResponse instance
+     * Creates a structured validation error response.
      */
     public static function validation(
         array  $errors,
@@ -327,14 +283,9 @@ class JsonResponse extends Response
     }
 
     /**
-     * Add a client-side redirect instruction to the response.
+     * Adds a client-side redirect instruction to the payload.
      *
-     * The JS FormHandler will navigate to this URL after processing notifications.
-     * Use $delay to let toaster notifications appear before navigating.
-     *
-     * @param string $url   URL to redirect to
-     * @param int    $delay Delay in milliseconds before redirect (default: 300)
-     * @return self For method chaining
+     * Responsibility: Adds a client-side redirect instruction to the payload.
      */
     public function withRedirect(string $url, int $delay = 300): self
     {
@@ -352,13 +303,9 @@ class JsonResponse extends Response
     }
 
     /**
-     * Add a page refresh instruction to the response.
+     * Adds a client-side page refresh instruction to the payload.
      *
-     * The JS FormHandler will reload the current page after processing notifications.
-     * Use $delay to let toaster notifications appear before reloading.
-     *
-     * @param int $delay Delay in milliseconds before refresh (default: 300)
-     * @return self For method chaining
+     * Responsibility: Adds a client-side page refresh instruction to the payload.
      */
     public function withRefresh(int $delay = 300): self
     {
@@ -376,14 +323,9 @@ class JsonResponse extends Response
     }
 
     /**
-     * Add a partial DOM replacement instruction to the response.
+     * Adds a trusted partial DOM replacement instruction to the payload.
      *
-     * The shared JS client replaces the content of the target selector using
-     * the provided HTML fragment when the response is processed.
-     *
-     * @param string $selector CSS selector to target
-     * @param TrustedHtml $html Replacement HTML fragment
-     * @return self For method chaining
+     * Responsibility: Adds a trusted partial DOM replacement instruction to the payload.
      */
     public function withHtml(string $selector, TrustedHtml $html): self
     {

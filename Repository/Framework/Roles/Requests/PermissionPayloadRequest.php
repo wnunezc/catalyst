@@ -35,15 +35,17 @@ use Catalyst\Framework\Authorization\PermissionRegistry;
 use Catalyst\Framework\Http\FormRequest;
 
 /**
- * Defines the Permission Payload Request class contract.
+ * Validates permission create and update payloads.
  *
  * @package Catalyst\Repository\Roles\Requests
- * Responsibility: Coordinates the permission payload request behavior within its module boundary.
+ * Responsibility: Authorizes permission mutations and defines accepted fields, validation rules and labels.
  */
 class PermissionPayloadRequest extends FormRequest
 {
     /**
-     * Handles the authorize workflow.
+     * Determines whether the current user may create or update a permission.
+     *
+     * Responsibility: Determines whether the current user may create or update a permission.
      */
     public function authorize(): bool
     {
@@ -55,6 +57,9 @@ class PermissionPayloadRequest extends FormRequest
     }
 
     /**
+     * Returns the accepted permission payload fields.
+     *
+     * Responsibility: Returns the accepted permission payload fields.
      * @return string[]
      */
     public function only(): array
@@ -63,6 +68,9 @@ class PermissionPayloadRequest extends FormRequest
     }
 
     /**
+     * Returns permission validation rules, excluding the edited record from uniqueness checks.
+     *
+     * Responsibility: Returns permission validation rules, excluding the edited record from uniqueness checks.
      * @return array<string, string|array<int, string>>
      */
     public function rules(): array
@@ -84,6 +92,9 @@ class PermissionPayloadRequest extends FormRequest
     }
 
     /**
+     * Returns translated labels for permission validation errors.
+     *
+     * Responsibility: Returns translated labels for permission validation errors.
      * @return array<string, string>
      */
     public function labels(): array

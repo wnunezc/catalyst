@@ -35,7 +35,7 @@ use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
 use Closure;
 
-/**************************************************************************************
+/**
  * SetupMiddleware — first-run configuration guard (global scope).
  *
  * Intercepts every request before routing. If ConfigManager::isConfigured()
@@ -55,19 +55,16 @@ use Closure;
  * bootstraps receive the same pipeline.
  *
  * @package Catalyst\Framework\Middleware
- **************************************************************************************/
-/**
- * Defines the Setup Middleware class contract.
- *
- * @package Catalyst\Framework\Middleware
- * Responsibility: Coordinates the setup middleware behavior within its module boundary.
+ * Responsibility: Redirects unconfigured application requests to setup while preserving required bypass routes.
  */
 class SetupMiddleware extends CoreMiddleware
 {
     use SetupAccessTrait;
 
     /**
-     * @inheritDoc
+     * Redirects unconfigured requests to setup unless the URI is explicitly allowed.
+     *
+     * Responsibility: Redirects unconfigured requests to setup unless the URI is explicitly allowed.
      */
     public function process(Request $request, Closure $next): Response
     {

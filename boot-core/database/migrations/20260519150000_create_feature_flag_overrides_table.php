@@ -4,13 +4,29 @@ declare(strict_types=1);
 
 use Catalyst\Framework\Database\Migration;
 
+/**
+ * Creates the table that stores feature flag overrides.
+ *
+ * @package Catalyst\BootCore\Database\Migrations
+ * Responsibility: Provision and remove subject-specific feature flag override persistence.
+ */
 return new class extends Migration
 {
+    /**
+     * Returns the timestamp identifier used by the migration runner to order and track this migration.
+     *
+     * Responsibility: Returns the timestamp identifier used by the migration runner to order and track this migration.
+     */
     public function getVersion(): string
     {
         return '20260519150000';
     }
 
+    /**
+     * Creates the feature flag overrides table when it is absent.
+     *
+     * Responsibility: Creates the feature flag overrides table when it is absent.
+     */
     public function up(): void
     {
         if ($this->tableExists('feature_flag_overrides')) {
@@ -37,6 +53,11 @@ return new class extends Migration
         );
     }
 
+    /**
+     * Removes the feature flag overrides table when it exists.
+     *
+     * Responsibility: Removes the feature flag overrides table when it exists.
+     */
     public function down(): void
     {
         if ($this->tableExists('feature_flag_overrides')) {

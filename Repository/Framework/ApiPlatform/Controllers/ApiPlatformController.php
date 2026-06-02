@@ -43,15 +43,18 @@ use Catalyst\Repository\ApiPlatform\Requests\ApiTokenRequest;
 use Throwable;
 
 /**
- * Defines the Api Platform Controller class contract.
+ * Admin controller for API token lifecycle and API catalog exposure.
  *
  * @package Catalyst\Repository\ApiPlatform\Controllers
- * Responsibility: Coordinates the api platform controller behavior within its module boundary.
+ * Responsibility: Renders the API Platform admin surface, creates and revokes bearer tokens,
+ * and publishes the authenticated API route catalog.
  */
 final class ApiPlatformController extends Controller
 {
     /**
-     * Initializes the Api Platform Controller instance.
+     * Receives token and user repositories required by the API Platform admin workflows.
+     *
+     * Responsibility: Receives token and user repositories required by the API Platform admin workflows.
      */
     public function __construct(
         private readonly ApiTokenManager $tokens,
@@ -62,7 +65,9 @@ final class ApiPlatformController extends Controller
     }
 
     /**
-     * Handles the index workflow.
+     * Authorizes API Platform access and displays the token management dashboard.
+     *
+     * Responsibility: Authorizes API Platform access and displays the token management dashboard.
      */
     public function index(Request $request): Response
     {
@@ -72,7 +77,9 @@ final class ApiPlatformController extends Controller
     }
 
     /**
-     * Handles the persistence workflow.
+     * Validates token input, creates a bearer token, and stores the one-time plain text value.
+     *
+     * Responsibility: Validates token input, creates a bearer token, and stores the one-time plain text value.
      */
     public function storeToken(ApiTokenRequest $request): Response
     {
@@ -98,7 +105,9 @@ final class ApiPlatformController extends Controller
     }
 
     /**
-     * Handles the revoke token workflow.
+     * Revokes an existing API token after verifying the token exists and the actor may revoke it.
+     *
+     * Responsibility: Revokes an existing API token after verifying the token exists and the actor may revoke it.
      */
     public function revokeToken(Request $request, string $id): Response
     {
@@ -114,7 +123,9 @@ final class ApiPlatformController extends Controller
     }
 
     /**
-     * Handles the api catalog workflow.
+     * Returns the authenticated API catalog with bearer token usage metadata.
+     *
+     * Responsibility: Returns the authenticated API catalog with bearer token usage metadata.
      */
     public function apiCatalog(Request $request): Response
     {
@@ -132,7 +143,9 @@ final class ApiPlatformController extends Controller
     }
 
     /**
-     * Renders the current view state.
+     * Builds token form, catalog, and token list state for the admin index view.
+     *
+     * Responsibility: Builds token form, catalog, and token list state for the admin index view.
      */
     private function renderIndex(?string $plainText = null, ?array $createdToken = null): Response
     {
@@ -202,7 +215,9 @@ final class ApiPlatformController extends Controller
     }
 
     /**
-     * Handles the stash created token workflow.
+     * Stores the newly created plain text token in session for one subsequent render.
+     *
+     * Responsibility: Stores the newly created plain text token in session for one subsequent render.
      */
     private function stashCreatedToken(string $plainText): void
     {
@@ -210,7 +225,9 @@ final class ApiPlatformController extends Controller
     }
 
     /**
-     * Handles the consume created token workflow.
+     * Reads and removes the one-time plain text token from session state.
+     *
+     * Responsibility: Reads and removes the one-time plain text token from session state.
      */
     private function consumeCreatedToken(): ?string
     {
@@ -227,6 +244,9 @@ final class ApiPlatformController extends Controller
     }
 
     /**
+     * Provides active user choices for the token ownership selector.
+     *
+     * Responsibility: Provides active user choices for the token ownership selector.
      * @return array<int, array{value:string,label:string}>
      */
     private function userOptions(): array

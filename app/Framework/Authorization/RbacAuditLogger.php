@@ -33,14 +33,17 @@ namespace Catalyst\Framework\Authorization;
 use Catalyst\Framework\Audit\AuditLogManager;
 
 /**
- * Defines the Rbac Audit Logger class contract.
+ * Writes RBAC mutation entries to the framework audit log.
  *
  * @package Catalyst\Framework\Authorization
- * Responsibility: Coordinates the rbac audit logger behavior within its module boundary.
+ * Responsibility: Normalizes role and permission changes into audit operations.
  */
 final class RbacAuditLogger
 {
     /**
+     * Records a role, permission, or assignment mutation with before and after state.
+     *
+     * Responsibility: Records a role, permission, or assignment mutation with before and after state.
      * @param array<string, mixed>|null $before
      * @param array<string, mixed>|null $after
      * @param array<string, mixed> $metadata

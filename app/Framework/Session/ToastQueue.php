@@ -47,6 +47,7 @@ use Catalyst\Framework\Traits\SingletonTrait;
  * calls, and the queue is cleared in the same call.
  *
  * @package Catalyst\Framework\Session
+ * Responsibility: Buffers one-shot toast notifications and drains them on the next read.
  */
 class ToastQueue
 {
@@ -65,7 +66,9 @@ class ToastQueue
     protected SessionManager $session;
 
     /**
-     * Constructor.
+     * Initializes the object with the collaborators or state required for its responsibility.
+     *
+     * Responsibility: Initializes the object with the collaborators or state required for its responsibility.
      */
     protected function __construct()
     {
@@ -79,6 +82,7 @@ class ToastQueue
     /**
      * Queue a toast notification for the next page load.
      *
+     * Responsibility: Queue a toast notification for the next page load.
      * @param string $type    success | error | warning | info
      * @param string $message Notification text
      * @return self
@@ -94,6 +98,7 @@ class ToastQueue
     /**
      * Consume all pending toasts (clears the queue).
      *
+     * Responsibility: Consume all pending toasts (clears the queue).
      * @return array<int, array{type: string, message: string}>
      */
     public function all(): array
@@ -106,6 +111,7 @@ class ToastQueue
     /**
      * Clear the queue without consuming.
      *
+     * Responsibility: Clear the queue without consuming.
      * @return self
      */
     public function clear(): self

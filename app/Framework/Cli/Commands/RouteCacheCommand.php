@@ -37,23 +37,18 @@ use Catalyst\Framework\Cli\CliRouteLoader;
 use Catalyst\Framework\Route\Router;
 
 /**
- * Loads all routes and writes the route cache file
+ * route:cache CLI command.
  *
- * Route files are loaded in the same order as Kernel::loadRoutes():
- *   1. boot-core/routes/global-routes.php
- *   2. boot-core/routes/api.php  (if present)
- *   3. Repository/Framework/{Module}/routes.php
- *   4. Repository/App/Surface/{Module}/routes.php
- *
- * Routes with Closure handlers cannot be serialised — the Router will
- * return false in that case and the command reports accordingly.
+ * Responsibility: Runs the route:cache command to Cache all registered routes to file.
  *
  * @package Catalyst\Framework\Cli\Commands
  */
 class RouteCacheCommand extends AbstractCommand
 {
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -61,7 +56,9 @@ class RouteCacheCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
@@ -69,7 +66,9 @@ class RouteCacheCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {

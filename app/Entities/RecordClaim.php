@@ -37,10 +37,10 @@ use Catalyst\Framework\Traits\HasOptimisticLockingTrait;
 use Catalyst\Framework\Traits\HasTimestampsTrait;
 
 /**
- * Defines the Record Claim class contract.
+ * ORM entity for record ownership claims.
  *
  * @package Catalyst\Entities
- * Responsibility: Coordinates the record claim behavior within its module boundary.
+ * Responsibility: Maps claim tokens, claim owners, expiration, release state, metadata, and lock state.
  */
 final class RecordClaim extends Model
 {

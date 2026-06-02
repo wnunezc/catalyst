@@ -31,16 +31,18 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Testing;
 
 /**
- * Defines the Auth Fixture Catalog class contract.
+ * Declares reusable authentication fixture profiles for development.
  *
  * @package Catalyst\Framework\Testing
- * Responsibility: Coordinates the auth fixture catalog behavior within its module boundary.
+ * Responsibility: Supplies fixture users, roles and permissions by profile key.
  */
 final class AuthFixtureCatalog
 {
     public const string DEFAULT_PROFILE = 'development';
 
     /**
+     * Returns all configured fixture profiles.
+     *
      * @return array<string, array<string, mixed>>
      */
     public static function profiles(): array
@@ -186,6 +188,8 @@ final class AuthFixtureCatalog
     }
 
     /**
+     * Returns a fixture profile by key.
+     *
      * @return array<string, mixed>
      */
     public static function profile(string $profile = self::DEFAULT_PROFILE): array
@@ -200,6 +204,8 @@ final class AuthFixtureCatalog
     }
 
     /**
+     * Returns fixture users indexed by key.
+     *
      * @return array<string, array<string, mixed>>
      */
     public static function users(string $profile = self::DEFAULT_PROFILE): array
@@ -219,6 +225,8 @@ final class AuthFixtureCatalog
     }
 
     /**
+     * Returns a fixture user by key.
+     *
      * @return array<string, mixed>
      */
     public static function user(string $key, string $profile = self::DEFAULT_PROFILE): array

@@ -37,10 +37,10 @@ use Catalyst\Framework\Traits\HasOptimisticLockingTrait;
 use Catalyst\Framework\Traits\HasTimestampsTrait;
 
 /**
- * Defines the Catalog Item class contract.
+ * ORM entity for tenant catalog items.
  *
  * @package Catalyst\Entities
- * Responsibility: Coordinates the catalog item behavior within its module boundary.
+ * Responsibility: Maps catalog item labels, ordering, availability windows, metadata, and audit state.
  */
 final class CatalogItem extends Model
 {

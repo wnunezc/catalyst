@@ -37,10 +37,10 @@ use Catalyst\Framework\Traits\HasOptimisticLockingTrait;
 use Catalyst\Framework\Traits\HasTimestampsTrait;
 
 /**
- * Defines the Document Template class contract.
+ * ORM entity for reusable document templates.
  *
  * @package Catalyst\Entities
- * Responsibility: Coordinates the document template behavior within its module boundary.
+ * Responsibility: Maps template identity, format, variable schema, sample payload, body content, and lock state.
  */
 final class DocumentTemplate extends Model
 {

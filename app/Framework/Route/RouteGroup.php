@@ -30,19 +30,14 @@ declare(strict_types=1);
 
 namespace Catalyst\Framework\Route;
 
-/**************************************************************************************
+/**
  * RouteGroup class for handling route grouping functionality
  *
  * Manages grouping of routes with shared attributes like prefixes, middleware,
  * and namespaces.
  *
  * @package Catalyst\Framework\Route
- */
-/**
- * Defines the Route Group class contract.
- *
- * @package Catalyst\Framework\Route
- * Responsibility: Coordinates the route group behavior within its module boundary.
+ * Responsibility: Merges nested route-group metadata and exposes normalized group attributes.
  */
 class RouteGroup
 {

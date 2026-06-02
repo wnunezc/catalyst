@@ -34,15 +34,17 @@ use Catalyst\Framework\Cli\ScaffoldManager;
 use Catalyst\Framework\Module\ModuleScaffoldService;
 
 /**
- * Defines the Crud Scaffold Service class contract.
+ * Service for creating CRUD scaffold artifacts.
  *
  * @package Catalyst\Framework\Admin\Crud
- * Responsibility: Coordinates the crud scaffold service behavior within its module boundary.
+ * Responsibility: Builds a CRUD blueprint, writes generated files, publishes work assets, and returns creation metadata.
  */
 final class CrudScaffoldService
 {
     /**
-     * Initializes the Crud Scaffold Service instance.
+     * Initializes optional collaborators used during CRUD scaffold creation.
+     *
+     * Responsibility: Initializes optional collaborators used during CRUD scaffold creation.
      */
     public function __construct(
         private readonly ?ScaffoldManager $manager = null,
@@ -53,6 +55,9 @@ final class CrudScaffoldService
     }
 
     /**
+     * Creates a CRUD scaffold and returns generated file metadata.
+     *
+     * Responsibility: Creates a CRUD scaffold and returns generated file metadata.
      * @param array<string, mixed> $input
      * @return array<string, mixed>
      */
@@ -90,7 +95,9 @@ final class CrudScaffoldService
     }
 
     /**
-     * Handles the scaffold manager workflow.
+     * Returns the scaffold manager used for file writes and stub rendering.
+     *
+     * Responsibility: Returns the scaffold manager used for file writes and stub rendering.
      */
     private function scaffoldManager(): ScaffoldManager
     {
@@ -98,7 +105,9 @@ final class CrudScaffoldService
     }
 
     /**
-     * Handles the module scaffold service workflow.
+     * Returns the module scaffold service used to preview module structure.
+     *
+     * Responsibility: Returns the module scaffold service used to preview module structure.
      */
     private function moduleScaffoldService(): ModuleScaffoldService
     {
@@ -106,7 +115,9 @@ final class CrudScaffoldService
     }
 
     /**
-     * Handles the blueprint factory workflow.
+     * Returns the blueprint factory used to compose CRUD scaffold metadata.
+     *
+     * Responsibility: Returns the blueprint factory used to compose CRUD scaffold metadata.
      */
     private function blueprintFactory(): CrudBlueprintFactory
     {
@@ -126,7 +137,9 @@ final class CrudScaffoldService
     }
 
     /**
-     * Handles the asset publisher workflow.
+     * Returns the asset publisher used to copy generated work assets.
+     *
+     * Responsibility: Returns the asset publisher used to copy generated work assets.
      */
     private function assetPublisher(): CrudAssetPublisher
     {

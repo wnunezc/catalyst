@@ -39,7 +39,7 @@ use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
 use Closure;
 
-/**************************************************************************************
+/**
  * SetupGuardMiddleware — dual-state access control for environment setup routes.
  *
  * SRP: this middleware is attached only to environment setup routes (Settings module).
@@ -57,19 +57,16 @@ use Closure;
  *   → Authenticated but non-admin → 403 JSON / 403 HTML.
  *
  * @package Catalyst\Framework\Middleware
- **************************************************************************************/
-/**
- * Defines the Setup Guard Middleware class contract.
- *
- * @package Catalyst\Framework\Middleware
- * Responsibility: Coordinates the setup guard middleware behavior within its module boundary.
+ * Responsibility: Keeps first-run setup reachable while requiring an authenticated admin after configuration.
  */
 class SetupGuardMiddleware extends CoreMiddleware
 {
     use SetupAccessTrait;
 
     /**
-     * @inheritDoc
+     * Allows first-run setup or requires an authenticated admin after configuration.
+     *
+     * Responsibility: Allows first-run setup or requires an authenticated admin after configuration.
      */
     public function process(Request $request, Closure $next): Response
     {

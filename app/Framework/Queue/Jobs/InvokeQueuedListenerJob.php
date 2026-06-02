@@ -36,15 +36,17 @@ use Catalyst\Framework\Queue\QueueableJobInterface;
 use RuntimeException;
 
 /**
- * Defines the Invoke Queued Listener Job class contract.
+ * Invokes an event listener asynchronously through the queue.
  *
  * @package Catalyst\Framework\Queue\Jobs
- * Responsibility: Coordinates the invoke queued listener job behavior within its module boundary.
+ * Responsibility: Carries an event and listener identity across the queue boundary and dispatches the restored listener.
  */
 final class InvokeQueuedListenerJob implements QueueableJobInterface
 {
     /**
      * Initializes the Invoke Queued Listener Job instance.
+     *
+     * Responsibility: Initializes the Invoke Queued Listener Job instance.
      */
     public function __construct(
         private readonly string $listenerClass,
@@ -54,7 +56,9 @@ final class InvokeQueuedListenerJob implements QueueableJobInterface
     }
 
     /**
-     * Handles the request workflow.
+     * Resolves and invokes the queued listener for the stored event.
+     *
+     * Responsibility: Resolves and invokes the queued listener for the stored event.
      */
     public function handle(): void
     {
@@ -83,7 +87,9 @@ final class InvokeQueuedListenerJob implements QueueableJobInterface
     }
 
     /**
-     * Handles the display name workflow.
+     * Returns a diagnostic label containing the listener class.
+     *
+     * Responsibility: Returns a diagnostic label containing the listener class.
      */
     public function displayName(): string
     {
@@ -91,7 +97,9 @@ final class InvokeQueuedListenerJob implements QueueableJobInterface
     }
 
     /**
-     * Handles the queue name workflow.
+     * Returns the queue selected for asynchronous listeners.
+     *
+     * Responsibility: Returns the queue selected for asynchronous listeners.
      */
     public function queueName(): string
     {
@@ -99,7 +107,9 @@ final class InvokeQueuedListenerJob implements QueueableJobInterface
     }
 
     /**
-     * Handles the max attempts workflow.
+     * Returns the allowed listener-attempt count.
+     *
+     * Responsibility: Returns the allowed listener-attempt count.
      */
     public function maxAttempts(): int
     {
@@ -107,7 +117,9 @@ final class InvokeQueuedListenerJob implements QueueableJobInterface
     }
 
     /**
-     * Handles the backoff seconds workflow.
+     * Returns the retry delay for a failed listener invocation.
+     *
+     * Responsibility: Returns the retry delay for a failed listener invocation.
      */
     public function backoffSeconds(): int
     {
@@ -115,6 +127,9 @@ final class InvokeQueuedListenerJob implements QueueableJobInterface
     }
 
     /**
+     * Exports listener and event state for queue persistence.
+     *
+     * Responsibility: Exports listener and event state for queue persistence.
      * @return array<string, mixed>
      */
     public function toPayload(): array
@@ -127,6 +142,8 @@ final class InvokeQueuedListenerJob implements QueueableJobInterface
     }
 
     /**
+     * Restores a listener job from persisted state.
+     *
      * @param array<string, mixed> $payload
      */
     public static function fromPayload(array $payload): static

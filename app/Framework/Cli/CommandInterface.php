@@ -35,41 +35,48 @@ use Catalyst\Framework\Argument\Option;
 use Catalyst\Framework\Argument\Parameter;
 
 /**
- * Contract for all CLI commands
+ * Contract implemented by CLI commands.
+ *
+ * Responsibility: Defines command identity, help metadata, argument schema and execution entrypoint.
  *
  * @package Catalyst\Framework\Cli
  */
 interface CommandInterface
 {
     /**
-     * Command identifier (e.g. "make:controller")
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string;
 
     /**
-     * One-line description shown in help listing
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string;
 
     /**
-     * Option DTOs that define the accepted flags for this command
+     * Defines the accepted option schema for this command.
      *
+     * Responsibility: Defines the accepted option schema for this command.
      * @return Option[]
      */
     public function getOptions(): array;
 
     /**
-     * Parameter DTOs that define the accepted positional args
+     * Defines the accepted positional parameter schema for this command.
      *
+     * Responsibility: Defines the accepted positional parameter schema for this command.
      * @return Parameter[]
      */
     public function getParameters(): array;
 
     /**
-     * Run the command
+     * Runs the command workflow using parsed CLI arguments.
      *
-     * @param ArgumentBag $args Parsed arguments
-     * @return int Exit code (0 = success, 1 = error)
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int;
 }

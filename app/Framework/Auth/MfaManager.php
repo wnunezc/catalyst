@@ -32,21 +32,11 @@ namespace Catalyst\Framework\Auth;
 
 use Catalyst\Framework\Traits\SingletonTrait;
 
-/**************************************************************************************
- * MfaManager — TOTP secret generation, QR URI, code verification, backup codes.
- *
- * No external libraries. Uses only:
- *   - random_bytes()  — cryptographically secure secret generation
- *   - hash_hmac()     — HMAC-SHA1 per RFC 4226
- *   - hash_equals()   — timing-safe comparison for backup codes
- *
- * @package Catalyst\Framework\Auth
- */
 /**
- * Defines the Mfa Manager class contract.
+ * Provides TOTP secrets, verification and one-time backup code handling.
  *
  * @package Catalyst\Framework\Auth
- * Responsibility: Coordinates the mfa manager behavior within its module boundary.
+ * Responsibility: Generate MFA credentials, verify submitted codes and hash backup codes for persistence.
  */
 class MfaManager
 {
@@ -63,9 +53,9 @@ class MfaManager
     // -------------------------------------------------------------------------
 
     /**
-     * Generate a cryptographically random base32 TOTP secret.
-     * 20 bytes of entropy → 32-character base32 string.
+     * Generate a cryptographically random base32 TOTP secret. 20 bytes of entropy → 32-character base32 string.
      *
+     * Responsibility: Generate a cryptographically random base32 TOTP secret. 20 bytes of entropy → 32-character base32 string.
      * @return string
      */
     public function generateSecret(): string
@@ -80,6 +70,7 @@ class MfaManager
     /**
      * Build the otpauth:// URI used by authenticator apps (Google Authenticator, Aegis, etc.).
      *
+     * Responsibility: Build the otpauth:// URI used by authenticator apps (Google Authenticator, Aegis, etc.).
      * @param string $secret  Base32 secret
      * @param string $email   User email (account label)
      * @param string $issuer  App / issuer name shown in the authenticator
@@ -103,11 +94,9 @@ class MfaManager
     // -------------------------------------------------------------------------
 
     /**
-     * Verify a 6-digit TOTP code with a ±window step tolerance.
+     * Verify a 6-digit TOTP code with a ±window step tolerance. Default window=1 allows codes from the previous and next 30-second windows, accommodating minor clock drift between client and server.
      *
-     * Default window=1 allows codes from the previous and next 30-second windows,
-     * accommodating minor clock drift between client and server.
-     *
+     * Responsibility: Verify a 6-digit TOTP code with a ±window step tolerance. Default window=1 allows codes from the previous and next 30-second windows, accommodating minor clock drift between client and server.
      * @param string $secret  Base32 TOTP secret
      * @param string $code    6-digit code supplied by the user
      * @param int    $window  Time-step tolerance in each direction (default 1)
@@ -133,7 +122,9 @@ class MfaManager
     }
 
     /**
-     * Normalizes the provided value.
+     * Removes formatting and accepts only fixed-width numeric TOTP codes.
+     *
+     * Responsibility: Removes formatting and accepts only fixed-width numeric TOTP codes.
      */
     public function normalizeTotpCode(string $code): ?string
     {
@@ -147,7 +138,9 @@ class MfaManager
     }
 
     /**
-     * Normalizes the provided value.
+     * Removes separators and uppercases a backup code for hashing or comparison.
+     *
+     * Responsibility: Removes separators and uppercases a backup code for hashing or comparison.
      */
     public function normalizeBackupCode(string $code): string
     {
@@ -159,9 +152,9 @@ class MfaManager
     // -------------------------------------------------------------------------
 
     /**
-     * Generate $count one-time backup codes.
-     * Format: XXXX-XXXX (4 uppercase hex + dash + 4 uppercase hex).
+     * Generate $count one-time backup codes. Format: XXXX-XXXX (4 uppercase hex + dash + 4 uppercase hex).
      *
+     * Responsibility: Generate $count one-time backup codes. Format: XXXX-XXXX (4 uppercase hex + dash + 4 uppercase hex).
      * @param int $count Number of codes to generate (default 8)
      * @return string[]
      */
@@ -178,6 +171,7 @@ class MfaManager
     /**
      * Hash backup codes before persistence so DB rows never store them in clear text.
      *
+     * Responsibility: Hash backup codes before persistence so DB rows never store them in clear text.
      * @param string[] $codes
      * @return string[]
      */
@@ -193,11 +187,9 @@ class MfaManager
     }
 
     /**
-     * Verify a backup code against the stored list.
-     * Removes the matching code on success (one-time use).
+     * Verify a backup code against the stored list. Removes the matching code on success (one-time use). The $codes array is modified in-place; the caller must persist the updated list.
      *
-     * The $codes array is modified in-place; the caller must persist the updated list.
-     *
+     * Responsibility: Verify a backup code against the stored list. Removes the matching code on success (one-time use). The $codes array is modified in-place; the caller must persist the updated list.
      * @param string   $code   Code supplied by the user (dashes optional, case-insensitive)
      * @param string[] &$codes Remaining backup codes (modified on success)
      * @return bool
@@ -231,14 +223,9 @@ class MfaManager
     // -------------------------------------------------------------------------
 
     /**
-     * Compute the TOTP code for a given binary key and counter value.
+     * Compute the TOTP code for a given binary key and counter value. Algorithm: 1. Pack counter as 8-byte big-endian unsigned integer 2. HMAC-SHA1(key, counter_bytes) 3. Dynamic truncation → 31-bit integer 4. Modulo 10^DIGITS → zero-pad to DIGITS.
      *
-     * Algorithm:
-     *   1. Pack counter as 8-byte big-endian unsigned integer
-     *   2. HMAC-SHA1(key, counter_bytes)
-     *   3. Dynamic truncation → 31-bit integer
-     *   4. Modulo 10^DIGITS → zero-pad to DIGITS
-     *
+     * Responsibility: Compute the TOTP code for a given binary key and counter value. Algorithm: 1. Pack counter as 8-byte big-endian unsigned integer 2. HMAC-SHA1(key, counter_bytes) 3. Dynamic truncation → 31-bit integer 4. Modulo 10^DIGITS → zero-pad to DIGITS.
      * @param string $key     Raw binary TOTP key
      * @param int    $counter Time step counter
      * @return string         Zero-padded DIGITS-character numeric string
@@ -268,6 +255,7 @@ class MfaManager
     /**
      * Encode a binary string to base32 (RFC 4648, no padding).
      *
+     * Responsibility: Encode a binary string to base32 (RFC 4648, no padding).
      * @param string $data Raw binary input
      * @return string      Uppercase base32 string
      */
@@ -295,9 +283,9 @@ class MfaManager
     }
 
     /**
-     * Decode a base32 string to binary.
-     * Silently skips invalid characters and strips '=' padding.
+     * Decode a base32 string to binary. Silently skips invalid characters and strips '=' padding.
      *
+     * Responsibility: Decode a base32 string to binary. Silently skips invalid characters and strips '=' padding.
      * @param string $data Base32 encoded string
      * @return string      Raw binary output
      */
@@ -326,7 +314,9 @@ class MfaManager
     }
 
     /**
-     * Handles the hash backup code workflow.
+     * Hashes a normalized backup code for database storage.
+     *
+     * Responsibility: Hashes a normalized backup code for database storage.
      */
     private function hashBackupCode(string $code): string
     {
@@ -334,7 +324,9 @@ class MfaManager
     }
 
     /**
-     * Determines whether is Hashed Backup Code.
+     * Checks whether a stored backup-code value is already a SHA-256 hash.
+     *
+     * Responsibility: Checks whether a stored backup-code value is already a SHA-256 hash.
      */
     private function isHashedBackupCode(string $value): bool
     {

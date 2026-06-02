@@ -31,14 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Framework\View;
 
 /**
- * Defines the Module View Path Registrar class contract.
+ * Registers discovered module view directories with the view service.
  *
  * @package Catalyst\Framework\View
- * Responsibility: Coordinates the module view path registrar behavior within its module boundary.
+ * Responsibility: Adds valid module view namespaces without exposing missing directories.
  */
 final class ModuleViewPathRegistrar
 {
     /**
+     * Registers view paths declared by discovered modules.
+     *
+     * Responsibility: Registers view paths declared by discovered modules.
      * @param array<int, array<string, mixed>> $modules
      */
     public function register(View $view, array $modules): void

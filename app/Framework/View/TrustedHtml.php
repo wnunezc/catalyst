@@ -31,15 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Framework\View;
 
 /**
- * Defines the Trusted Html class contract.
+ * Wraps HTML that has been explicitly approved for raw rendering.
  *
  * @package Catalyst\Framework\View
- * Responsibility: Coordinates the trusted html behavior within its module boundary.
+ * Responsibility: Marks trusted HTML fragments so renderers can distinguish them from escaped values.
  */
 final readonly class TrustedHtml
 {
     /**
      * Initializes the Trusted Html instance.
+     *
+     * Responsibility: Initializes the Trusted Html instance.
      */
     public function __construct(
         private string $html
@@ -47,7 +49,7 @@ final readonly class TrustedHtml
     }
 
     /**
-     * Handles the from string workflow.
+     * Creates a trusted HTML wrapper from a string.
      */
     public static function fromString(string $html): self
     {
@@ -55,7 +57,9 @@ final readonly class TrustedHtml
     }
 
     /**
-     * Handles the to html workflow.
+     * Returns the wrapped HTML fragment.
+     *
+     * Responsibility: Returns the wrapped HTML fragment.
      */
     public function toHtml(): string
     {
@@ -63,7 +67,9 @@ final readonly class TrustedHtml
     }
 
     /**
-     * Handles the to string workflow.
+     * Returns the wrapped HTML fragment when cast to string.
+     *
+     * Responsibility: Returns the wrapped HTML fragment when cast to string.
      */
     public function __toString(): string
     {

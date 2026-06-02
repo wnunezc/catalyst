@@ -36,10 +36,10 @@ use Catalyst\Framework\Event\Listeners\DeliverNotificationListener;
 use Catalyst\Framework\Event\Listeners\ProcessAutomationEventListener;
 
 /**
- * Defines the Framework Event Catalog class contract.
+ * Catalog of built-in framework event listener registrations.
  *
  * @package Catalyst\Framework\Event
- * Responsibility: Coordinates the framework event catalog behavior within its module boundary.
+ * Responsibility: Registers default audit, timeline, notification, and automation event listeners on the event bus.
  */
 final class FrameworkEventCatalog
 {

@@ -33,14 +33,17 @@ namespace Catalyst\Repository\Settings\Support;
 use Catalyst\Helpers\Config\ConfigManager;
 
 /**
- * Defines the Security Config Writer class contract.
+ * Writes framework security settings.
  *
  * @package Catalyst\Repository\Settings\Support
- * Responsibility: Coordinates the security config writer behavior within its module boundary.
+ * Responsibility: Persists password hashing cost and framework-wide MFA activation.
  */
 final class SecurityConfigWriter
 {
     /**
+     * Saves normalized security settings.
+     *
+     * Responsibility: Saves normalized security settings.
      * @param array<string, mixed> $data
      */
     public function save(array $data): void

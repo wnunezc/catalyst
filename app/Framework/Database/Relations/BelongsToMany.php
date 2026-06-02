@@ -34,49 +34,24 @@ use Catalyst\Framework\Database\Collection;
 use Catalyst\Framework\Database\Model;
 
 /**
- * BelongsToMany — many-to-many relationship via a pivot (junction) table.
- *
- * Example:
- *   class User extends Model {
- *       public function roles(): BelongsToMany {
- *           return $this->belongsToMany(
- *               Role::class,    // related model
- *               'user_roles',   // pivot table
- *               'user_id',      // FK in pivot → parent (user)
- *               'role_id',      // FK in pivot → related (role)
- *               'id',           // parent local key (users.id)
- *               'id'            // related local key (roles.id)
- *           );
- *       }
- *   }
- *
- *   $user->roles                         // Collection<Role> — lazy loaded
- *   User::query()->with('roles')->get()  // eager loaded — 2 queries total
- *
- * SQL (lazy, 2 queries):
- *   SELECT role_id FROM user_roles WHERE user_id = :userId
- *   SELECT * FROM roles WHERE id IN (:rid1, :rid2, …)
- *
- * SQL (eager, 2 queries):
- *   SELECT user_id, role_id FROM user_roles WHERE user_id IN (…)
- *   SELECT * FROM roles WHERE id IN (all collected role_ids)
- *
- * The two-query strategy is used instead of a JOIN to avoid column
- * name collisions (both tables may share column names like 'id',
- * 'created_at', etc.) and to keep the soft-delete scope unambiguous.
+ * Resolves a many-to-many ORM relation through a pivot table.
  *
  * @package Catalyst\Framework\Database\Relations
+ * Responsibility: Load pivot rows, query related models, and distribute related collections to parent model relation caches.
  */
 class BelongsToMany extends Relation
 {
     /**
+     * Captures parent, related model, pivot table, and key metadata for the relation.
+     *
+     * Responsibility: Captures parent, related model, pivot table, and key metadata for the relation.
      * @param Model  $parent
-     * @param string $related          class-string<Model> for the related side
-     * @param string $pivotTable       junction / pivot table name
-     * @param string $foreignKey       pivot column pointing to parent (e.g. 'user_id')
-     * @param string $relatedKey       pivot column pointing to related (e.g. 'role_id')
-     * @param string $localKey         parent PK column (default 'id')
-     * @param string $relatedLocalKey  related PK column (default 'id')
+     * @param string $related         class-string<Model> for the related side
+     * @param string $pivotTable      Pivot table name.
+     * @param string $foreignKey      Pivot column pointing to the parent model.
+     * @param string $relatedKey      Pivot column pointing to the related model.
+     * @param string $localKey        Parent key column.
+     * @param string $relatedLocalKey Related key column.
      */
     public function __construct(
         Model $parent,
@@ -95,8 +70,9 @@ class BelongsToMany extends Relation
     // -------------------------------------------------------------------------
 
     /**
-     * Return all related models for the current parent via a 2-step query.
+     * Loads all related models for the current parent through pivot keys.
      *
+     * Responsibility: Loads all related models for the current parent through pivot keys.
      * @return Collection<Model>
      */
     public function getResults(): Collection
@@ -130,9 +106,9 @@ class BelongsToMany extends Relation
     // -------------------------------------------------------------------------
 
     /**
-     * Batch-load all pivot + related data for a set of parent models.
-     * Uses 2 queries regardless of parent count — no N+1.
+     * Batch-loads pivot and related records, then stores related collections on each parent model.
      *
+     * Responsibility: Batch-loads pivot and related records, then stores related collections on each parent model.
      * @param Model[] $models
      */
     public function matchEager(array $models, string $relation): void

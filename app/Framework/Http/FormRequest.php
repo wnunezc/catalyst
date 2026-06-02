@@ -36,10 +36,10 @@ use Catalyst\Helpers\Exceptions\ValidationException;
 use Catalyst\Helpers\Validation\Validator;
 
 /**
- * Defines the Form Request class contract.
+ * Base request object for authorization and validation of form input.
  *
  * @package Catalyst\Framework\Http
- * Responsibility: Coordinates the form request behavior within its module boundary.
+ * Responsibility: Filters request payloads, runs validation rules, exposes validated data and prepares safe old input for failed submissions.
  */
 abstract class FormRequest
 {
@@ -56,7 +56,9 @@ abstract class FormRequest
     private ?array $validatedData = null;
 
     /**
-     * Initializes the Form Request instance.
+     * Wraps the current HTTP request for validation.
+     *
+     * Responsibility: Wraps the current HTTP request for validation.
      */
     public function __construct(?Request $request = null)
     {
@@ -64,7 +66,9 @@ abstract class FormRequest
     }
 
     /**
-     * Handles the authorize workflow.
+     * Determines whether the request is authorized.
+     *
+     * Responsibility: Determines whether the request is authorized.
      */
     public function authorize(): bool
     {
@@ -72,6 +76,9 @@ abstract class FormRequest
     }
 
     /**
+     * Returns the input keys allowed for validation.
+     *
+     * Responsibility: Returns the input keys allowed for validation.
      * @return string[]
      */
     public function only(): array
@@ -80,6 +87,9 @@ abstract class FormRequest
     }
 
     /**
+     * Returns the input keys excluded from validation.
+     *
+     * Responsibility: Returns the input keys excluded from validation.
      * @return string[]
      */
     public function except(): array
@@ -88,11 +98,17 @@ abstract class FormRequest
     }
 
     /**
+     * Returns validation rules for the request payload.
+     *
+     * Responsibility: Returns validation rules for the request payload.
      * @return array<string, string|array<int, string>>
      */
     abstract public function rules(): array;
 
     /**
+     * Returns human-readable labels for validation fields.
+     *
+     * Responsibility: Returns human-readable labels for validation fields.
      * @return array<string, string>
      */
     public function labels(): array
@@ -101,7 +117,9 @@ abstract class FormRequest
     }
 
     /**
-     * Handles the validation message workflow.
+     * Returns the message used when validation fails.
+     *
+     * Responsibility: Returns the message used when validation fails.
      */
     public function validationMessage(): string
     {
@@ -109,14 +127,18 @@ abstract class FormRequest
     }
 
     /**
-     * Handles the prepare for validation workflow.
+     * Allows subclasses to normalize input before validation.
+     *
+     * Responsibility: Allows subclasses to normalize input before validation.
      */
     public function prepareForValidation(): void
     {
     }
 
     /**
-     * Handles the sensitive resource key workflow.
+     * Returns the sensitivity policy key used to sanitize old input.
+     *
+     * Responsibility: Returns the sensitivity policy key used to sanitize old input.
      */
     protected function sensitiveResourceKey(): ?string
     {
@@ -124,7 +146,9 @@ abstract class FormRequest
     }
 
     /**
-     * Updates the route parameters value.
+     * Stores route parameters for later request validation.
+     *
+     * Responsibility: Stores route parameters for later request validation.
      */
     public function setRouteParameters(array $routeParameters): static
     {
@@ -134,7 +158,9 @@ abstract class FormRequest
     }
 
     /**
-     * Handles the route workflow.
+     * Returns a route parameter value.
+     *
+     * Responsibility: Returns a route parameter value.
      */
     public function route(string $key, mixed $default = null): mixed
     {
@@ -142,6 +168,9 @@ abstract class FormRequest
     }
 
     /**
+     * Returns input and uploaded files merged into one payload.
+     *
+     * Responsibility: Returns input and uploaded files merged into one payload.
      * @return array<string, mixed>
      */
     public function all(): array
@@ -150,7 +179,9 @@ abstract class FormRequest
     }
 
     /**
-     * Handles the input workflow.
+     * Returns a scalar input value from the wrapped request.
+     *
+     * Responsibility: Returns a scalar input value from the wrapped request.
      */
     public function input(string $key, mixed $default = null): mixed
     {
@@ -158,7 +189,9 @@ abstract class FormRequest
     }
 
     /**
-     * Handles the has workflow.
+     * Checks whether an input key exists.
+     *
+     * Responsibility: Checks whether an input key exists.
      */
     public function has(string $key): bool
     {
@@ -166,7 +199,9 @@ abstract class FormRequest
     }
 
     /**
-     * Handles the filled workflow.
+     * Checks whether an input key exists and is not empty.
+     *
+     * Responsibility: Checks whether an input key exists and is not empty.
      */
     public function filled(string $key): bool
     {
@@ -174,7 +209,9 @@ abstract class FormRequest
     }
 
     /**
-     * Handles the file workflow.
+     * Returns a normalized uploaded file by input key.
+     *
+     * Responsibility: Returns a normalized uploaded file by input key.
      */
     public function file(string $key): ?UploadedFile
     {
@@ -182,6 +219,9 @@ abstract class FormRequest
     }
 
     /**
+     * Returns all normalized uploaded files.
+     *
+     * Responsibility: Returns all normalized uploaded files.
      * @return array<string, UploadedFile>
      */
     public function files(): array
@@ -190,7 +230,9 @@ abstract class FormRequest
     }
 
     /**
-     * Handles the request workflow.
+     * Returns the wrapped HTTP request.
+     *
+     * Responsibility: Returns the wrapped HTTP request.
      */
     public function request(): Request
     {
@@ -198,6 +240,9 @@ abstract class FormRequest
     }
 
     /**
+     * Returns validated data, running validation if needed.
+     *
+     * Responsibility: Returns validated data, running validation if needed.
      * @return array<string, mixed>
      * @throws ValidationException
      * @throws ForbiddenException
@@ -212,6 +257,9 @@ abstract class FormRequest
     }
 
     /**
+     * Authorizes and validates the request payload.
+     *
+     * Responsibility: Authorizes and validates the request payload.
      * @throws ValidationException
      * @throws ForbiddenException
      */
@@ -238,6 +286,9 @@ abstract class FormRequest
     }
 
     /**
+     * Builds the payload used by the validator.
+     *
+     * Responsibility: Builds the payload used by the validator.
      * @return array<string, mixed>
      */
     protected function validationData(): array
@@ -256,6 +307,9 @@ abstract class FormRequest
     }
 
     /**
+     * Removes sensitive values from old input before flashing validation errors.
+     *
+     * Responsibility: Removes sensitive values from old input before flashing validation errors.
      * @param array<string, mixed> $data
      * @return array<string, mixed>
      */

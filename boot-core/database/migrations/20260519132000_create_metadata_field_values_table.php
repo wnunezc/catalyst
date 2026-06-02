@@ -4,13 +4,29 @@ declare(strict_types=1);
 
 use Catalyst\Framework\Database\Migration;
 
+/**
+ * Creates the table that stores metadata field values.
+ *
+ * @package Catalyst\BootCore\Database\Migrations
+ * Responsibility: Provision and remove typed metadata values attached to runtime resources.
+ */
 return new class extends Migration
 {
+    /**
+     * Returns the timestamp identifier used by the migration runner to order and track this migration.
+     *
+     * Responsibility: Returns the timestamp identifier used by the migration runner to order and track this migration.
+     */
     public function getVersion(): string
     {
         return '20260519132000';
     }
 
+    /**
+     * Creates the metadata field values table when it is absent.
+     *
+     * Responsibility: Creates the metadata field values table when it is absent.
+     */
     public function up(): void
     {
         if ($this->tableExists('metadata_field_values')) {
@@ -48,6 +64,11 @@ return new class extends Migration
         );
     }
 
+    /**
+     * Removes the metadata field values table when it exists.
+     *
+     * Responsibility: Removes the metadata field values table when it exists.
+     */
     public function down(): void
     {
         if (!$this->tableExists('metadata_field_values')) {

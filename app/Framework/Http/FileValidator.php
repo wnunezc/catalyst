@@ -31,10 +31,10 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Http;
 
 /**
- * Defines the File Validator class contract.
+ * Validates uploaded files against type, extension and size constraints.
  *
  * @package Catalyst\Framework\Http
- * Responsibility: Coordinates the file validator behavior within its module boundary.
+ * Responsibility: Confirms upload validity and enforces allowed MIME, extension and maximum-size rules for form validation.
  */
 class FileValidator
 {
@@ -55,7 +55,9 @@ class FileValidator
     ];
 
     /**
-     * Determines whether is File.
+     * Checks whether the value is a valid uploaded file instance.
+     *
+     * Responsibility: Checks whether the value is a valid uploaded file instance.
      */
     public function isFile(mixed $value): bool
     {
@@ -63,7 +65,9 @@ class FileValidator
     }
 
     /**
-     * Determines whether has Allowed Mime Types.
+     * Checks whether the detected MIME type is in the allowed list.
+     *
+     * Responsibility: Checks whether the detected MIME type is in the allowed list.
      */
     public function hasAllowedMimeTypes(UploadedFile $file, array $allowedMimeTypes): bool
     {
@@ -74,7 +78,9 @@ class FileValidator
     }
 
     /**
-     * Determines whether has Allowed Extensions.
+     * Checks whether the extension is allowed and matches an approved MIME type.
+     *
+     * Responsibility: Checks whether the extension is allowed and matches an approved MIME type.
      */
     public function hasAllowedExtensions(UploadedFile $file, array $allowedExtensions): bool
     {
@@ -103,7 +109,9 @@ class FileValidator
     }
 
     /**
-     * Determines whether has Max Size.
+     * Checks whether the file size is within the kilobyte limit.
+     *
+     * Responsibility: Checks whether the file size is within the kilobyte limit.
      */
     public function hasMaxSize(UploadedFile $file, int $maxKilobytes): bool
     {

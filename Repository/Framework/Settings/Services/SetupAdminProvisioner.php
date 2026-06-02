@@ -11,32 +11,36 @@ use RuntimeException;
 use Throwable;
 
 /**
- * Defines the Setup Admin Provisioner class contract.
+ * Provisions the initial administrator required by environment setup.
  *
  * @package Catalyst\Repository\Settings\Services
- * Responsibility: Coordinates the setup admin provisioner behavior within its module boundary.
+ * Responsibility: Detects active administrators, ensures the admin role and creates the first privileged account.
  */
 final class SetupAdminProvisioner
 {
     /**
- * Initializes the Setup Admin Provisioner instance.
- */
+     * Initializes the Setup Admin Provisioner instance.
+     *
+     * Responsibility: Initializes the Setup Admin Provisioner instance.
+     */
 public function __construct(
         private readonly Logger $logger
     ) {
     }
 
     /**
- * Creates the requested object.
- */
+     * Creates a provisioner with the framework logger.
+     */
 public static function make(): self
     {
         return new self(Logger::getInstance());
     }
 
     /**
- * Determines whether an administrator exists.
- */
+     * Determines whether an administrator exists.
+     *
+     * Responsibility: Determines whether an administrator exists.
+     */
 public function adminExists(PDO $pdo): bool
     {
         try {
@@ -54,8 +58,10 @@ public function adminExists(PDO $pdo): bool
     }
 
     /**
- * Determines whether a user exists for the email address.
- */
+     * Determines whether a user exists for the email address.
+     *
+     * Responsibility: Determines whether a user exists for the email address.
+     */
 public function userExistsByEmail(PDO $pdo, string $email): bool
     {
         try {
@@ -69,8 +75,10 @@ public function userExistsByEmail(PDO $pdo, string $email): bool
     }
 
     /**
- * Ensures the administrator role exists.
- */
+     * Ensures the administrator role exists.
+     *
+     * Responsibility: Ensures the administrator role exists.
+     */
 public function ensureAdminRole(PDO $pdo): void
     {
         try {
@@ -94,8 +102,10 @@ public function ensureAdminRole(PDO $pdo): void
     }
 
     /**
- * Creates the administrator account.
- */
+     * Creates the administrator account.
+     *
+     * Responsibility: Creates the administrator account.
+     */
 public function createAdmin(string $name, string $email, string $password): void
     {
         try {

@@ -35,15 +35,17 @@ use Catalyst\Framework\Automation\AutomationManager;
 use Catalyst\Framework\Event\EventListenerInterface;
 
 /**
- * Defines the Process Automation Event Listener class contract.
+ * Listener for forwarding events into automation processing.
  *
  * @package Catalyst\Framework\Event\Listeners
- * Responsibility: Coordinates the process automation event listener behavior within its module boundary.
+ * Responsibility: Invokes automation rule execution when framework events are dispatched.
  */
 final class ProcessAutomationEventListener implements EventListenerInterface
 {
     /**
-     * Handles the request workflow.
+     * Handles an event envelope.
+     *
+     * Responsibility: Handles an event envelope.
      */
     public function handle(EventEnvelope $event): void
     {

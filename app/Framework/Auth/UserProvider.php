@@ -39,19 +39,11 @@ use Catalyst\Helpers\Config\ConfigManager;
 use Catalyst\Helpers\Log\Logger;
 use Exception;
 
-/**************************************************************************************
- * UserProvider — resolves users from the database for authentication
- *
- * Queries the `users` table via the existing DatabaseManager/QueryBuilder.
- * Only returns active, email-verified users for login purposes.
- *
- * @package Catalyst\Framework\Auth
- */
 /**
- * Defines the User Provider class contract.
+ * Provides user lookup and mutation operations used by authentication flows.
  *
  * @package Catalyst\Framework\Auth
- * Responsibility: Coordinates the user provider behavior within its module boundary.
+ * Responsibility: Resolve users, manage credentials, link OAuth accounts and persist MFA state.
  */
 class UserProvider
 {
@@ -68,7 +60,9 @@ class UserProvider
     private Logger $logger;
 
     /**
-     * Constructor
+     * Initializes database and logging collaborators for user auth storage.
+     *
+     * Responsibility: Initializes database and logging collaborators for user auth storage.
      */
     protected function __construct()
     {
@@ -83,6 +77,7 @@ class UserProvider
     /**
      * Find an active, email-verified user by email address.
      *
+     * Responsibility: Find an active, email-verified user by email address.
      * @param string $email
      * @return array|null User row or null if not found / inactive
      */
@@ -105,6 +100,7 @@ class UserProvider
     /**
      * Find an active user by ID (does not require email_verified).
      *
+     * Responsibility: Find an active user by ID (does not require email_verified).
      * @param int $id
      * @return array|null
      */
@@ -126,6 +122,7 @@ class UserProvider
     /**
      * Find a user by email regardless of verified/active status (used during registration).
      *
+     * Responsibility: Find a user by email regardless of verified/active status (used during registration).
      * @param string $email
      * @return array|null
      */
@@ -148,8 +145,9 @@ class UserProvider
     // -------------------------------------------------------------------------
 
     /**
-     * Read bcrypt cost from security.json (primary) or default to 12.
-     * Clamped to PHP's supported range (4–31); practical minimum is 10.
+     * Read bcrypt cost from security.json (primary) or default to 12. Clamped to PHP's supported range (4–31); practical minimum is 10.
+     *
+     * Responsibility: Read bcrypt cost from security.json (primary) or default to 12. Clamped to PHP's supported range (4–31); practical minimum is 10.
      */
     private function bcryptCost(): int
     {
@@ -167,6 +165,7 @@ class UserProvider
     /**
      * Verify a plain-text password against a stored bcrypt hash.
      *
+     * Responsibility: Verify a plain-text password against a stored bcrypt hash.
      * @param string $plain
      * @param string $hash
      * @return bool
@@ -183,6 +182,7 @@ class UserProvider
     /**
      * Update last_login timestamp for the given user.
      *
+     * Responsibility: Update last_login timestamp for the given user.
      * @param int $userId
      * @return void
      */
@@ -204,6 +204,7 @@ class UserProvider
     /**
      * Create a new user and return their ID.
      *
+     * Responsibility: Create a new user and return their ID.
      * @param string $name
      * @param string $email
      * @param string $password  Plain-text password (will be hashed here)
@@ -252,6 +253,7 @@ class UserProvider
     /**
      * Update password for a user.
      *
+     * Responsibility: Update password for a user.
      * @param int    $userId
      * @param string $plain  Plain-text new password
      * @return void
@@ -270,6 +272,7 @@ class UserProvider
     /**
      * Mark a user as email-verified.
      *
+     * Responsibility: Mark a user as email-verified.
      * @param int $userId
      * @return void
      */
@@ -285,9 +288,9 @@ class UserProvider
     }
 
     /**
-     * Link a social provider account to an existing user.
-     * Uses active=1; never physically deletes rows.
+     * Link a social provider account to an existing user. Uses active=1; never physically deletes rows.
      *
+     * Responsibility: Link a social provider account to an existing user. Uses active=1; never physically deletes rows.
      * @param int    $userId
      * @param string $provider         'google' | 'github'
      * @param string $providerUserId
@@ -327,6 +330,7 @@ class UserProvider
     /**
      * Find a user by social provider account (active only).
      *
+     * Responsibility: Find a user by social provider account (active only).
      * @param string $provider
      * @param string $providerUserId
      * @return array|null User row or null
@@ -357,9 +361,9 @@ class UserProvider
     // -------------------------------------------------------------------------
 
     /**
-     * Return the MFA fields for a user (mfa_secret, mfa_enabled, mfa_backup_codes).
-     * Returns null if the user doesn't exist.
+     * Return the MFA fields for a user (mfa_secret, mfa_enabled, mfa_backup_codes). Returns null if the user doesn't exist.
      *
+     * Responsibility: Return the MFA fields for a user (mfa_secret, mfa_enabled, mfa_backup_codes). Returns null if the user doesn't exist.
      * @param int $userId
      * @return array<string,mixed>|null
      */
@@ -381,6 +385,7 @@ class UserProvider
     /**
      * Activate MFA for a user: store the confirmed secret and backup codes.
      *
+     * Responsibility: Activate MFA for a user: store the confirmed secret and backup codes.
      * @param int    $userId
      * @param string $secret      Base32 TOTP secret
      * @param array  $backupCodes Plain backup code strings
@@ -409,6 +414,7 @@ class UserProvider
     /**
      * Deactivate MFA for a user: clear secret and backup codes.
      *
+     * Responsibility: Deactivate MFA for a user: clear secret and backup codes.
      * @param int $userId
      * @return void
      */
@@ -434,6 +440,7 @@ class UserProvider
     /**
      * Persist an updated backup-codes list after one has been consumed.
      *
+     * Responsibility: Persist an updated backup-codes list after one has been consumed.
      * @param int   $userId
      * @param array $codes  Remaining backup codes
      * @return void
@@ -457,7 +464,9 @@ class UserProvider
     }
 
     /**
-     * Handles the current tenant id workflow.
+     * Resolves the required tenant identifier for user authentication queries.
+     *
+     * Responsibility: Resolves the required tenant identifier for user authentication queries.
      */
     private function currentTenantId(): int
     {

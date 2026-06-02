@@ -37,10 +37,11 @@ use Catalyst\Framework\Testing\AuthFixtureManager;
 use Throwable;
 
 /**
- * Defines the Export Development Overlay Command class contract.
+ * dev:export-overlay CLI command.
+ *
+ * Responsibility: Runs the dev:export-overlay command to Export the live auth/RBAC development snapshot to boot-core/database/create-catalyst-db.development.sql.
  *
  * @package Catalyst\Framework\Cli\Commands
- * Responsibility: Coordinates the export development overlay command behavior within its module boundary.
  */
 class ExportDevelopmentOverlayCommand extends AbstractCommand
 {
@@ -49,7 +50,9 @@ class ExportDevelopmentOverlayCommand extends AbstractCommand
     private AuthFixtureManager $fixtures;
 
     /**
-     * Initializes the Export Development Overlay Command instance.
+     * Initializes dependencies required by this CLI component.
+     *
+     * Responsibility: Initializes dependencies required by this CLI component.
      */
     public function __construct()
     {
@@ -57,7 +60,9 @@ class ExportDevelopmentOverlayCommand extends AbstractCommand
     }
 
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -65,14 +70,21 @@ class ExportDevelopmentOverlayCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
         return 'Export the live auth/RBAC development snapshot to boot-core/database/create-catalyst-db.development.sql';
     }
 
-    /** @return Option[] */
+    /**
+     * Defines the accepted option schema for this command.
+     *
+     * Responsibility: Defines the accepted option schema for this command.
+     * @return Option[]
+     */
     public function getOptions(): array
     {
         return [
@@ -83,7 +95,9 @@ class ExportDevelopmentOverlayCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {
@@ -131,17 +145,9 @@ class ExportDevelopmentOverlayCommand extends AbstractCommand
     }
 
     /**
-     * @return array{
-     *   0: array{
-     *   permissions: array<int, array<string, mixed>>,
-     *   roles: array<int, array<string, mixed>>,
-     *   role_permissions: array<int, array<string, mixed>>,
-     *   users: array<int, array<string, mixed>>,
-     *   user_roles: array<int, array<string, mixed>>,
-     *   user_social_accounts: array<int, array<string, mixed>>
-     *   },
-     *   1: string
-     * }
+     * Describes the build overlay helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the build overlay helper workflow used by this CLI component.
      */
     private function buildOverlay(): array
     {
@@ -170,7 +176,9 @@ class ExportDevelopmentOverlayCommand extends AbstractCommand
     }
 
     /**
-     * Writes the requested value.
+     * Describes the write overlay helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the write overlay helper workflow used by this CLI component.
      */
     private function writeOverlay(string $path, string $sql): void
     {
@@ -186,7 +194,9 @@ class ExportDevelopmentOverlayCommand extends AbstractCommand
     }
 
     /**
-     * Renders the current view state.
+     * Describes the render overlay from web container helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the render overlay from web container helper workflow used by this CLI component.
      */
     private function renderOverlayFromWebContainer(): string
     {
@@ -224,7 +234,9 @@ class ExportDevelopmentOverlayCommand extends AbstractCommand
     }
 
     /**
-     * Resolves the requested value.
+     * Describes the resolve web container name helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the resolve web container name helper workflow used by this CLI component.
      */
     private function resolveWebContainerName(): string
     {

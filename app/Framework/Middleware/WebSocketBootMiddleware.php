@@ -48,6 +48,7 @@ use Closure;
  * Launches via `nohup php boot-core/bin/websocket-server.php` if exec() is available.
  *
  * @package Catalyst\Framework\Middleware
+ * Responsibility: Performs throttled WebSocket liveness checks and launches the local server when required.
  */
 class WebSocketBootMiddleware extends CoreMiddleware implements FeatureFlagInterface
 {
@@ -68,6 +69,8 @@ class WebSocketBootMiddleware extends CoreMiddleware implements FeatureFlagInter
 
     /**
      * Process the request: ensure the WebSocket server is running, then continue.
+     *
+     * Responsibility: Process the request: ensure the WebSocket server is running, then continue.
      */
     public function process(Request $request, Closure $next): Response
     {
@@ -85,9 +88,11 @@ class WebSocketBootMiddleware extends CoreMiddleware implements FeatureFlagInter
     }
 
     /**
- * Determines whether is enabled.
- */
-public function isEnabled(): bool
+     * Determines whether WebSocket auto-start is enabled.
+     *
+     * Responsibility: Determines whether WebSocket auto-start is enabled.
+     */
+    public function isEnabled(): bool
     {
         return (bool)($this->readWsConfig()['enabled'] ?? true);
     }
@@ -96,6 +101,8 @@ public function isEnabled(): bool
 
     /**
      * Check if the URI points to a static asset (no WebSocket boot needed).
+     *
+     * Responsibility: Check if the URI points to a static asset (no WebSocket boot needed).
      */
     private function isStaticUri(Request $request): bool
     {
@@ -105,6 +112,8 @@ public function isEnabled(): bool
 
     /**
      * Ensure the WebSocket server is running, checking at most every CHECK_INTERVAL seconds.
+     *
+     * Responsibility: Ensure the WebSocket server is running, checking at most every CHECK_INTERVAL seconds.
      */
     private function ensureRunning(array $config): void
     {
@@ -130,6 +139,7 @@ public function isEnabled(): bool
     /**
      * Read the effective websocket runtime config (JSON → .env fallback).
      *
+     * Responsibility: Read the effective websocket runtime config (JSON → .env fallback).
      * @return array{enabled: bool, ws_port: int, ws_host: string, ws_internal_port: int, ws_publisher_url: string}
      */
     private function readWsConfig(): array
@@ -144,8 +154,9 @@ public function isEnabled(): bool
     }
 
     /**
-     * Check whether something is already listening on host:port.
-     * Uses a short timeout (0.5 s) so it never blocks the request noticeably.
+     * Check whether something is already listening on host:port. Uses a short timeout (0.5 s) so it never blocks the request noticeably.
+     *
+     * Responsibility: Check whether something is already listening on host:port. Uses a short timeout (0.5 s) so it never blocks the request noticeably.
      */
     private function isPortListening(string $host, int $port): bool
     {
@@ -158,8 +169,9 @@ public function isEnabled(): bool
     }
 
     /**
-     * Launch the WebSocket server as a background daemon.
-     * Silently skips if exec() is disabled (common on restrictive shared hosting).
+     * Launch the WebSocket server as a background daemon. Silently skips if exec() is disabled (common on restrictive shared hosting).
+     *
+     * Responsibility: Launch the WebSocket server as a background daemon. Silently skips if exec() is disabled (common on restrictive shared hosting).
      */
     private function launch(array $config): void
     {
@@ -206,9 +218,11 @@ public function isEnabled(): bool
     }
 
     /**
- * Rotates the log when configured thresholds are exceeded.
- */
-private function rotateLogIfNeeded(string $logFile, string $logDir): void
+     * Rotates the server log when configured thresholds are exceeded.
+     *
+     * Responsibility: Rotates the server log when configured thresholds are exceeded.
+     */
+    private function rotateLogIfNeeded(string $logFile, string $logDir): void
     {
         $logging = ConfigManager::getInstance()->entry('logging', 'logging');
         $maxFileSizeMb = (int) ($logging['log_max_file_size_mb'] ?? 2);

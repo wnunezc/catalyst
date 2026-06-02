@@ -42,10 +42,10 @@ use RuntimeException;
 use ZipArchive;
 
 /**
- * Defines the Deployment Manager class contract.
+ * Manager for deployment profile execution.
  *
  * @package Catalyst\Framework\Deployment
- * Responsibility: Coordinates the deployment manager behavior within its module boundary.
+ * Responsibility: Builds release staging folders, optional ZIP artifacts, remote publishes, preflight summaries, and run records.
  */
 final class DeploymentManager
 {
@@ -63,6 +63,9 @@ final class DeploymentManager
     ];
 
     /**
+     * Returns configured deployment profiles.
+     *
+     * Responsibility: Returns configured deployment profiles.
      * @return array<string, array<string, mixed>>
      */
     public function profiles(): array
@@ -74,6 +77,9 @@ final class DeploymentManager
     }
 
     /**
+     * Returns a deployment overview for status screens.
+     *
+     * Responsibility: Returns a deployment overview for status screens.
      * @return array<string, mixed>
      */
     public function summary(): array
@@ -86,6 +92,9 @@ final class DeploymentManager
     }
 
     /**
+     * Executes a deployment profile and records its outcome.
+     *
+     * Responsibility: Executes a deployment profile and records its outcome.
      * @return array<string, mixed>
      */
     public function run(string $profileKey, bool $dryRun = false): array
@@ -186,7 +195,9 @@ final class DeploymentManager
     }
 
     /**
-     * Handles the release root workflow.
+     * Returns the root directory used for generated releases.
+     *
+     * Responsibility: Returns the root directory used for generated releases.
      */
     private function releaseRoot(): string
     {
@@ -194,7 +205,9 @@ final class DeploymentManager
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves the authenticated actor id when a deployment is started from a user session.
+     *
+     * Responsibility: Resolves the authenticated actor id when a deployment is started from a user session.
      */
     private function resolveActorId(): ?int
     {
@@ -206,6 +219,9 @@ final class DeploymentManager
     }
 
     /**
+     * Copies workspace files into a release staging directory while honoring excludes.
+     *
+     * Responsibility: Copies workspace files into a release staging directory while honoring excludes.
      * @param string[] $extraExcludes
      */
     private function copyWorkspace(string $targetRoot, array $extraExcludes): int
@@ -254,6 +270,9 @@ final class DeploymentManager
     }
 
     /**
+     * Determines whether a relative path matches deployment exclude rules.
+     *
+     * Responsibility: Determines whether a relative path matches deployment exclude rules.
      * @param string[] $excludes
      */
     private function isExcluded(string $relativePath, array $excludes): bool
@@ -273,7 +292,9 @@ final class DeploymentManager
     }
 
     /**
-     * Builds the requested structure.
+     * Builds a ZIP archive from the staged release directory when ZipArchive is available.
+     *
+     * Responsibility: Builds a ZIP archive from the staged release directory when ZipArchive is available.
      */
     private function buildZip(string $sourceDir, string $zipPath): ?string
     {
@@ -306,6 +327,9 @@ final class DeploymentManager
     }
 
     /**
+     * Publishes a deployment artifact payload to a configured remote storage disk.
+     *
+     * Responsibility: Publishes a deployment artifact payload to a configured remote storage disk.
      * @param array<string, mixed> $profile
      */
     private function publishRemote(array $profile, string $artifactPath, string $releaseId): ?string

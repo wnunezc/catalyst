@@ -34,15 +34,17 @@ use Catalyst\Framework\Automation\AutomationManager;
 use Catalyst\Framework\Queue\QueueableJobInterface;
 
 /**
- * Defines the Run Scheduled Automation Rules Job class contract.
+ * Queue job that executes automation rules due on their schedules.
  *
  * @package Catalyst\Framework\Automation\Jobs
- * Responsibility: Coordinates the run scheduled automation rules job behavior within its module boundary.
+ * Responsibility: Delegates scheduled automation execution to the automation manager.
  */
 final class RunScheduledAutomationRulesJob implements QueueableJobInterface
 {
     /**
-     * Handles the request workflow.
+     * Executes the due scheduled automation rules.
+     *
+     * Responsibility: Executes the due scheduled automation rules.
      */
     public function handle(): void
     {
@@ -50,7 +52,9 @@ final class RunScheduledAutomationRulesJob implements QueueableJobInterface
     }
 
     /**
-     * Handles the display name workflow.
+     * Returns the human-readable queue job name.
+     *
+     * Responsibility: Returns the human-readable queue job name.
      */
     public function displayName(): string
     {
@@ -58,7 +62,9 @@ final class RunScheduledAutomationRulesJob implements QueueableJobInterface
     }
 
     /**
-     * Handles the queue name workflow.
+     * Selects the automation queue.
+     *
+     * Responsibility: Selects the automation queue.
      */
     public function queueName(): string
     {
@@ -66,7 +72,9 @@ final class RunScheduledAutomationRulesJob implements QueueableJobInterface
     }
 
     /**
-     * Handles the max attempts workflow.
+     * Returns the maximum delivery attempts.
+     *
+     * Responsibility: Returns the maximum delivery attempts.
      */
     public function maxAttempts(): int
     {
@@ -74,7 +82,9 @@ final class RunScheduledAutomationRulesJob implements QueueableJobInterface
     }
 
     /**
-     * Handles the backoff seconds workflow.
+     * Returns the retry delay in seconds.
+     *
+     * Responsibility: Returns the retry delay in seconds.
      */
     public function backoffSeconds(): int
     {
@@ -82,6 +92,9 @@ final class RunScheduledAutomationRulesJob implements QueueableJobInterface
     }
 
     /**
+     * Serializes the stateless job payload.
+     *
+     * Responsibility: Serializes the stateless job payload.
      * @return array<string, mixed>
      */
     public function toPayload(): array
@@ -90,6 +103,8 @@ final class RunScheduledAutomationRulesJob implements QueueableJobInterface
     }
 
     /**
+     * Recreates the stateless job from its queue payload.
+     *
      * @param array<string, mixed> $payload
      */
     public static function fromPayload(array $payload): static

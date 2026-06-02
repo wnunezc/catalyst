@@ -33,14 +33,17 @@ namespace Catalyst\Framework\Admin\Crud;
 use InvalidArgumentException;
 
 /**
- * Defines the Crud Field Definition Parser class contract.
+ * Parser for compact CRUD field definition strings.
  *
  * @package Catalyst\Framework\Admin\Crud
- * Responsibility: Coordinates the crud field definition parser behavior within its module boundary.
+ * Responsibility: Converts user-provided field specs into normalized field metadata for scaffold generation.
  */
 final class CrudFieldDefinitionParser
 {
     /**
+     * Parses field declarations into typed CRUD field definitions.
+     *
+     * Responsibility: Parses field declarations into typed CRUD field definitions.
      * @return array<int, array<string, mixed>>
      */
     public function parse(string $fields): array
@@ -87,7 +90,9 @@ final class CrudFieldDefinitionParser
     }
 
     /**
-     * Normalizes the provided value.
+     * Validates and normalizes a database-safe field name.
+     *
+     * Responsibility: Validates and normalizes a database-safe field name.
      */
     private function normalizeFieldName(string $value): string
     {
@@ -101,7 +106,9 @@ final class CrudFieldDefinitionParser
     }
 
     /**
-     * Handles the humanize workflow.
+     * Converts a field identifier into a display label.
+     *
+     * Responsibility: Converts a field identifier into a display label.
      */
     private function humanize(string $value): string
     {

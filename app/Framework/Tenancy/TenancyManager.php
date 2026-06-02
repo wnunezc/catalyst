@@ -36,21 +36,26 @@ use Catalyst\Helpers\Config\ConfigManager;
 use RuntimeException;
 
 /**
- * Defines the Tenancy Manager class contract.
+ * Resolves and applies the active tenant context for the current runtime.
  *
  * @package Catalyst\Framework\Tenancy
- * Responsibility: Coordinates the tenancy manager behavior within its module boundary.
+ * Responsibility: Exposes tenant configuration, host resolution and request-scoped context overrides.
  */
 final class TenancyManager
 {
     use SingletonTrait;
 
     /**
+     * Returns the tenancy configuration section.
+     *
      * @var array<string, mixed>|null
      */
     private ?array $runtimeOverride = null;
 
     /**
+     * Returns the tenancy configuration section.
+     *
+     * Responsibility: Returns the tenancy configuration section.
      * @return array<string, mixed>
      */
     public function configuration(): array
@@ -62,6 +67,9 @@ final class TenancyManager
     }
 
     /**
+     * Builds the configured tenant catalog with a stable fallback.
+     *
+     * Responsibility: Builds the configured tenant catalog with a stable fallback.
      * @return array<string, array<string, mixed>>
      */
     public function catalog(): array
@@ -110,6 +118,9 @@ final class TenancyManager
     }
 
     /**
+     * Returns a runtime summary of the configured tenancy strategy.
+     *
+     * Responsibility: Returns a runtime summary of the configured tenancy strategy.
      * @return array<string, mixed>
      */
     public function summary(): array
@@ -131,6 +142,9 @@ final class TenancyManager
     }
 
     /**
+     * Resolves the active tenant context from overrides, hosts or fallback configuration.
+     *
+     * Responsibility: Resolves the active tenant context from overrides, hosts or fallback configuration.
      * @return array<string, mixed>
      */
     public function resolveCurrentTenant(): array
@@ -171,6 +185,9 @@ final class TenancyManager
     }
 
     /**
+     * Returns the active tenant context.
+     *
+     * Responsibility: Returns the active tenant context.
      * @return array<string, mixed>
      */
     public function currentContext(): array
@@ -179,7 +196,9 @@ final class TenancyManager
     }
 
     /**
-     * Handles the current tenant id workflow.
+     * Returns the active tenant identifier.
+     *
+     * Responsibility: Returns the active tenant identifier.
      */
     public function currentTenantId(): int
     {
@@ -187,7 +206,9 @@ final class TenancyManager
     }
 
     /**
-     * Handles the require current tenant id workflow.
+     * Returns the active tenant identifier or fails when none is available.
+     *
+     * Responsibility: Returns the active tenant identifier or fails when none is available.
      */
     public function requireCurrentTenantId(): int
     {
@@ -201,7 +222,9 @@ final class TenancyManager
     }
 
     /**
-     * Handles the current tenant key workflow.
+     * Returns the active tenant key.
+     *
+     * Responsibility: Returns the active tenant key.
      */
     public function currentTenantKey(): string
     {
@@ -209,7 +232,9 @@ final class TenancyManager
     }
 
     /**
-     * Determines whether is Isolation Active.
+     * Determines whether tenant data isolation is enabled.
+     *
+     * Responsibility: Determines whether tenant data isolation is enabled.
      */
     public function isIsolationActive(): bool
     {
@@ -217,6 +242,9 @@ final class TenancyManager
     }
 
     /**
+     * Adds tenant labels and identifiers to a user payload.
+     *
+     * Responsibility: Adds tenant labels and identifiers to a user payload.
      * @param array<string, mixed> $user
      * @return array<string, mixed>
      */
@@ -242,6 +270,9 @@ final class TenancyManager
     }
 
     /**
+     * Attaches the active tenant context to a request.
+     *
+     * Responsibility: Attaches the active tenant context to a request.
      * @return array<string, mixed>
      */
     public function applyRequestContext(Request $request): array
@@ -257,6 +288,9 @@ final class TenancyManager
     }
 
     /**
+     * Overrides or clears tenant resolution for the current runtime.
+     *
+     * Responsibility: Overrides or clears tenant resolution for the current runtime.
      * @param array<string, mixed>|string|null $context
      */
     public function overrideContext(array|string|null $context): void
@@ -282,7 +316,9 @@ final class TenancyManager
     }
 
     /**
-     * Handles the clear override context workflow.
+     * Clears the runtime tenant override.
+     *
+     * Responsibility: Clears the runtime tenant override.
      */
     public function clearOverrideContext(): void
     {
@@ -290,6 +326,9 @@ final class TenancyManager
     }
 
     /**
+     * Builds the normalized host-to-tenant lookup map.
+     *
+     * Responsibility: Builds the normalized host-to-tenant lookup map.
      * @return array<string, string>
      */
     private function hostMap(): array
@@ -319,6 +358,9 @@ final class TenancyManager
     }
 
     /**
+     * Normalizes an overridden tenant context.
+     *
+     * Responsibility: Normalizes an overridden tenant context.
      * @param array<string, mixed> $context
      * @return array<string, mixed>
      */

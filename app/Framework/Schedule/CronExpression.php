@@ -33,15 +33,15 @@ namespace Catalyst\Framework\Schedule;
 use DateTimeImmutable;
 
 /**
- * Defines the Cron Expression class contract.
+ * Evaluates five-part cron expressions against UTC scheduler slots.
  *
  * @package Catalyst\Framework\Schedule
- * Responsibility: Coordinates the cron expression behavior within its module boundary.
+ * Responsibility: Determines whether a scheduled task is due by matching cron segments, ranges, lists, and steps.
  */
 final class CronExpression
 {
     /**
-     * Determines whether is Due.
+     * Determines whether a cron expression matches the supplied time.
      */
     public static function isDue(string $expression, DateTimeImmutable $time): bool
     {
@@ -61,7 +61,7 @@ final class CronExpression
     }
 
     /**
-     * Handles the matches part workflow.
+     * Determines whether one cron segment accepts the supplied numeric value.
      */
     private static function matchesPart(
         string $expression,
@@ -100,6 +100,8 @@ final class CronExpression
     }
 
     /**
+     * Parses a single cron value or range into normalized bounds.
+     *
      * @return array{0:int,1:int}|null
      */
     private static function parseRange(string $segment, int $min, int $max, bool $weekday): ?array
@@ -130,7 +132,7 @@ final class CronExpression
     }
 
     /**
-     * Normalizes the provided value.
+     * Normalizes weekday seven to Sunday zero when required.
      */
     private static function normalizeValue(int $value, bool $weekday): int
     {

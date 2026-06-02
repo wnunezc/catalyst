@@ -37,14 +37,20 @@ use Catalyst\Framework\Plugin\PluginManager;
 use RuntimeException;
 
 /**
- * Defines the Plugin Toggle Command class contract.
+ * plugin:toggle CLI command.
+ *
+ * Responsibility: Runs the plugin:toggle command to Enable or disable a plugin manifest at runtime.
  *
  * @package Catalyst\Framework\Cli\Commands
- * Responsibility: Coordinates the plugin toggle command behavior within its module boundary.
  */
 final class PluginToggleCommand extends AbstractCommand
 {
-    /** @return Option[] */
+    /**
+     * Defines the accepted option schema for this command.
+     *
+     * Responsibility: Defines the accepted option schema for this command.
+     * @return Option[]
+     */
     public function getOptions(): array
     {
         return [
@@ -54,7 +60,9 @@ final class PluginToggleCommand extends AbstractCommand
     }
 
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -62,7 +70,9 @@ final class PluginToggleCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
@@ -70,7 +80,9 @@ final class PluginToggleCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {
@@ -97,7 +109,9 @@ final class PluginToggleCommand extends AbstractCommand
     }
 
     /**
-     * Normalizes the provided value.
+     * Describes the normalize boolean helper responsibility inside the CLI component.
+     *
+     * Responsibility: Supports the normalize boolean helper workflow used by this CLI component.
      */
     private function normalizeBoolean(mixed $value): bool
     {

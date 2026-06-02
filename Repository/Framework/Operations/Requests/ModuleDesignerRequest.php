@@ -33,21 +33,26 @@ namespace Catalyst\Repository\Operations\Requests;
 use Catalyst\Framework\Http\Request;
 
 /**
- * Defines the Module Designer Request class contract.
+ * Reads module scaffold designer input from an HTTP request.
  *
  * @package Catalyst\Repository\Operations\Requests
- * Responsibility: Coordinates the module designer request behavior within its module boundary.
+ * Responsibility: Provides the normalized designer form state consumed by scaffolding.
  */
 final class ModuleDesignerRequest
 {
     /**
-     * Initializes the Module Designer Request instance.
+     * Wraps the incoming HTTP request used to read designer fields.
+     *
+     * Responsibility: Wraps the incoming HTTP request used to read designer fields.
      */
     public function __construct(private readonly Request $request)
     {
     }
 
     /**
+     * Returns the module-designer fields as scaffold form state.
+     *
+     * Responsibility: Returns the module-designer fields as scaffold form state.
      * @return array<string, mixed>
      */
     public function formState(): array

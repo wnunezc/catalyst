@@ -41,6 +41,7 @@ use Catalyst\Helpers\Exceptions\ViewException;
  * Handles loading and rendering of view templates with data binding.
  *
  * @package Catalyst\Framework\View
+ * Responsibility: Resolves templates, prepares rendering scope and delegates constrained token rendering.
  */
 class View
 {
@@ -68,7 +69,9 @@ class View
     protected ViewTokenRenderer $tokenRenderer;
 
     /**
-     * Constructor - Initialize default paths
+     * Initializes the default framework view paths and token renderer.
+     *
+     * Responsibility: Prepares the view resolver state used to locate templates and render tokenized output.
      */
     protected function __construct()
     {
@@ -79,7 +82,9 @@ class View
     }
 
     /**
-     * Add a view path
+     * Registers a named directory as a view lookup path.
+     *
+     * Responsibility: Extends the view namespace map used to resolve templates and partials.
      *
      * @param string $name Path identifier
      * @param string $path Absolute path to views directory
@@ -92,6 +97,9 @@ class View
     }
 
     /**
+     * Returns registered view search paths.
+     *
+     * Responsibility: Returns registered view search paths.
      * @return array<string, string>
      */
     public function getPaths(): array
@@ -100,8 +108,9 @@ class View
     }
 
     /**
-     * Share data with all views
+     * Share data with all views.
      *
+     * Responsibility: Share data with all views.
      * @param string $key Variable name
      * @param mixed $value Variable value
      * @return self
@@ -113,21 +122,9 @@ class View
     }
 
     /**
-     * Render a view template, optionally wrapped in a layout.
+     * Render a view template, optionally wrapped in a layout. Template naming convention: - "pages.welcome" → looks for "pages/welcome.phtml" then "pages/welcome.php" - "error.404" → looks for "errors/404.phtml" then "errors/404.php" `.phtml` is the canonical declarative template format and is rendered through the token pipeline without allowing inline PHP. `.php` remains available as the backwards-compatible executable template fallback while the framework completes migration. Layout convention: - "base" → looks for "boot-core/template/layouts/base.phtml" then "base.php" - Layout receives merged $data + $content (rendered template output).
      *
-     * Template naming convention:
-     * - "pages.welcome" → looks for "pages/welcome.phtml" then "pages/welcome.php"
-     * - "error.404" → looks for "errors/404.phtml" then "errors/404.php"
-     *
-     * `.phtml` is the canonical declarative template format and is rendered
-     * through the token pipeline without allowing inline PHP.
-     * `.php` remains available as the backwards-compatible executable template
-     * fallback while the framework completes migration.
-     *
-     * Layout convention:
-     * - "base" → looks for "boot-core/template/layouts/base.phtml" then "base.php"
-     * - Layout receives merged $data + $content (rendered template output)
-     *
+     * Responsibility: Render a view template, optionally wrapped in a layout. Template naming convention: - "pages.welcome" → looks for "pages/welcome.phtml" then "pages/welcome.php" - "error.404" → looks for "errors/404.phtml" then "errors/404.php" `.phtml` is the canonical declarative template format and is rendered through the token pipeline without allowing inline PHP. `.php` remains available as the backwards-compatible executable template fallback while the framework completes migration. Layout convention: - "base" → looks for "boot-core/template/layouts/base.phtml" then "base.php" - Layout receives merged $data + $content (rendered template output).
      * @param string      $template Template name using dot notation
      * @param array       $data     Data to pass to the template
      * @param int         $status   HTTP status code
@@ -160,11 +157,9 @@ class View
     }
 
     /**
-     * Find template file in registered paths
+     * Find template file in registered paths Searches module paths registered via addPath() first and keeps the framework template path as the final fallback.
      *
-     * Searches module paths registered via addPath() first and keeps the
-     * framework template path as the final fallback.
-     *
+     * Responsibility: Find template file in registered paths Searches module paths registered via addPath() first and keeps the framework template path as the final fallback.
      * @param string $template Template name (dot notation)
      * @return string|null Full path to template or null if not found
      */
@@ -218,11 +213,9 @@ class View
     }
 
     /**
-     * Find layout file in the layouts directory.
+     * Find layout file in the layouts directory. Layouts are located in: boot-core/template/layouts/{name}.phtml with backwards-compatible fallback to .php.
      *
-     * Layouts are located in: boot-core/template/layouts/{name}.phtml
-     * with backwards-compatible fallback to .php
-     *
+     * Responsibility: Find layout file in the layouts directory. Layouts are located in: boot-core/template/layouts/{name}.phtml with backwards-compatible fallback to .php.
      * @param string $layout Layout name (without template extension)
      * @return string|null Full path to layout file, or null if not found
      */
@@ -234,8 +227,9 @@ class View
     }
 
     /**
-     * Render template file with data
+     * Render template file with data.
      *
+     * Responsibility: Render template file with data.
      * @param string $templatePath Full path to template
      * @param array $data Data to extract into template scope
      * @return string Rendered content
@@ -273,8 +267,9 @@ class View
     }
 
     /**
-     * Check if a template exists
+     * Check if a template exists.
      *
+     * Responsibility: Check if a template exists.
      * @param string $template Template name (dot notation)
      * @return bool
      */
@@ -284,6 +279,9 @@ class View
     }
 
     /**
+     * Consumes stored form input and validation state for rendering.
+     *
+     * Responsibility: Consumes stored form input and validation state for rendering.
      * @return array{__old: array<string, mixed>, __validationErrors: array<string, array<string, string[]>>}
      */
     private function consumeFormState(): array
@@ -305,6 +303,9 @@ class View
     }
 
     /**
+     * Renders an arbitrary constrained token fragment.
+     *
+     * Responsibility: Renders an arbitrary constrained token fragment.
      * @param array<string, mixed> $scope
      */
     public function renderTokenFragment(string $fragment, array $scope, ?string $templatePath = null): string
@@ -315,6 +316,9 @@ class View
     }
 
     /**
+     * Renders a partial template referenced by a token template.
+     *
+     * Responsibility: Renders a partial template referenced by a token template.
      * @param array<string, mixed> $scope
      */
     public function renderPartial(string $reference, array $scope, ?string $fromTemplatePath = null): string
@@ -328,7 +332,9 @@ class View
     }
 
     /**
-     * Determines whether is Token Template.
+     * Determines whether a template uses constrained token rendering.
+     *
+     * Responsibility: Determines whether a template uses constrained token rendering.
      */
     private function isTokenTemplate(string $templatePath): bool
     {
@@ -336,7 +342,9 @@ class View
     }
 
     /**
-     * Finds the requested record.
+     * Finds the first existing template file for a path without extension.
+     *
+     * Responsibility: Finds the first existing template file for a path without extension.
      */
     private function findTemplateFile(string $basePathWithoutExtension): ?string
     {
@@ -351,6 +359,9 @@ class View
     }
 
     /**
+     * Renders a constrained token template file.
+     *
+     * Responsibility: Renders a constrained token template file.
      * @param array<string, mixed> $scope
      */
     private function renderTokenTemplate(string $templatePath, array $scope): string
@@ -372,6 +383,9 @@ class View
     }
 
     /**
+     * Removes reserved keys from a token-template scope.
+     *
+     * Responsibility: Removes reserved keys from a token-template scope.
      * @param array<string, mixed> $scope
      * @return array<string, mixed>
      */
@@ -391,6 +405,9 @@ class View
     }
 
     /**
+     * Applies the optional PHP companion for a token template.
+     *
+     * Responsibility: Applies the optional PHP companion for a token template.
      * @param array<string, mixed> $scope
      * @return array<string, mixed>
      */
@@ -419,7 +436,9 @@ class View
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves the optional PHP companion for a token template.
+     *
+     * Responsibility: Resolves the optional PHP companion for a token template.
      */
     private function resolveTokenTemplateCompanionPath(string $templatePath): ?string
     {
@@ -454,7 +473,9 @@ class View
     }
 
     /**
-     * Resolves the requested value.
+     * Resolves a partial template reference relative to its caller when possible.
+     *
+     * Responsibility: Resolves a partial template reference relative to its caller when possible.
      */
     private function resolvePartialTemplatePath(string $reference, ?string $fromTemplatePath): ?string
     {
@@ -483,7 +504,9 @@ class View
     }
 
     /**
-     * Determines whether is Quoted Literal.
+     * Determines whether a partial reference is a quoted literal.
+     *
+     * Responsibility: Determines whether a partial reference is a quoted literal.
      */
     private function isQuotedLiteral(string $value): bool
     {
@@ -492,6 +515,9 @@ class View
     }
 
     /**
+     * Builds candidate template paths for a registered base.
+     *
+     * Responsibility: Builds candidate template paths for a registered base.
      * @return list<string>
      */
     private function buildTemplateCandidates(string $basePath, string $relativePath, bool $isFramework): array
@@ -514,6 +540,9 @@ class View
     }
 
     /**
+     * Builds candidate paths for a module template.
+     *
+     * Responsibility: Builds candidate paths for a module template.
      * @param list<string> $segments
      * @return list<string>
      */
@@ -530,6 +559,9 @@ class View
     }
 
     /**
+     * Builds candidate paths for a framework template.
+     *
+     * Responsibility: Builds candidate paths for a framework template.
      * @param list<string> $segments
      * @return list<string>
      */
@@ -552,6 +584,9 @@ class View
     }
 
     /**
+     * Returns normalized registered view bases and allowed directories.
+     *
+     * Responsibility: Returns normalized registered view bases and allowed directories.
      * @return array<string, list<string>>
      */
     private function registeredViewBases(): array
@@ -571,7 +606,9 @@ class View
     }
 
     /**
-     * Handles the relative template path workflow.
+     * Returns a template path relative to a registered view base.
+     *
+     * Responsibility: Returns a template path relative to a registered view base.
      */
     private function relativeTemplatePath(string $templatePath, string $basePath): ?string
     {

@@ -35,14 +35,17 @@ use Catalyst\Framework\Plugin\PluginManager;
 use Catalyst\Framework\Plugin\PluginRegistry;
 
 /**
- * Defines the Module Runtime State Decorator class contract.
+ * Adds effective runtime state to module metadata.
  *
  * @package Catalyst\Framework\Module
- * Responsibility: Coordinates the module runtime state decorator behavior within its module boundary.
+ * Responsibility: Combines plugin and feature-flag state into module enablement metadata.
  */
 final class ModuleRuntimeStateDecorator
 {
     /**
+     * Annotates a module with plugin and feature-flag runtime state.
+     *
+     * Responsibility: Annotates a module with plugin and feature-flag runtime state.
      * @param array<string, mixed> $module
      * @return array<string, mixed>
      */

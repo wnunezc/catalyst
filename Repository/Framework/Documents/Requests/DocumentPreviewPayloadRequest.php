@@ -36,10 +36,10 @@ use Catalyst\Helpers\Exceptions\ValidationException;
 use Catalyst\Helpers\Validation\Validator;
 
 /**
- * Defines the Document Preview Payload Request class contract.
+ * Validates render payloads submitted for document previews and exports.
  *
  * @package Catalyst\Repository\Documents\Requests
- * Responsibility: Coordinates the document preview payload request behavior within its module boundary.
+ * Responsibility: Decode document payload JSON and expose a normalized render context.
  */
 class DocumentPreviewPayloadRequest extends FormRequest
 {
@@ -49,6 +49,9 @@ class DocumentPreviewPayloadRequest extends FormRequest
     private ?array $resolvedData = null;
 
     /**
+     * Declares validation rules for the render payload wrapper.
+     *
+     * Responsibility: Declares validation rules for the render payload wrapper.
      * @return array<string, string>
      */
     public function rules(): array
@@ -57,7 +60,9 @@ class DocumentPreviewPayloadRequest extends FormRequest
     }
 
     /**
-     * Handles the validation message workflow.
+     * Returns the message used for malformed document payload JSON.
+     *
+     * Responsibility: Returns the message used for malformed document payload JSON.
      */
     public function validationMessage(): string
     {
@@ -65,6 +70,9 @@ class DocumentPreviewPayloadRequest extends FormRequest
     }
 
     /**
+     * Returns the normalized render payload wrapper, resolving it lazily.
+     *
+     * Responsibility: Returns the normalized render payload wrapper, resolving it lazily.
      * @return array<string, mixed>
      */
     public function validated(): array
@@ -77,6 +85,9 @@ class DocumentPreviewPayloadRequest extends FormRequest
     }
 
     /**
+     * Returns the decoded document render payload.
+     *
+     * Responsibility: Returns the decoded document render payload.
      * @return array<string, mixed>
      */
     public function payload(): array
@@ -85,7 +96,9 @@ class DocumentPreviewPayloadRequest extends FormRequest
     }
 
     /**
-     * Handles the payload json workflow.
+     * Returns the normalized JSON representation of the render payload.
+     *
+     * Responsibility: Returns the normalized JSON representation of the render payload.
      */
     public function payloadJson(): string
     {
@@ -93,6 +106,9 @@ class DocumentPreviewPayloadRequest extends FormRequest
     }
 
     /**
+     * Authorizes the request and resolves a valid array render payload.
+     *
+     * Responsibility: Authorizes the request and resolves a valid array render payload.
      * @throws ValidationException
      * @throws ForbiddenException
      */

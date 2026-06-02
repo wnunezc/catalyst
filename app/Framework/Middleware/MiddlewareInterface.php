@@ -34,28 +34,21 @@ use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
 use Closure;
 
-/**************************************************************************************
+/**
  * Interface for defining middleware components in the framework
  *
  * Middleware provides a mechanism for filtering HTTP requests entering
  * the application or modifying responses before they're returned to the client.
  *
  * @package Catalyst\Framework\Middleware
- */
-/**
- * Defines the Middleware Interface interface contract.
- *
- * @package Catalyst\Framework\Middleware
- * Responsibility: Coordinates the middleware interface behavior within its module boundary.
+ * Responsibility: Defines how middleware processes a request and delegates to the next handler.
  */
 interface MiddlewareInterface
 {
     /**
-     * Process an incoming server request
+     * Process an incoming server request Process an incoming server request and return a response, passing along the request to the next middleware in the stack if needed.
      *
-     * Process an incoming server request and return a response, passing along the
-     * request to the next middleware in the stack if needed.
-     *
+     * Responsibility: Process an incoming server request Process an incoming server request and return a response, passing along the request to the next middleware in the stack if needed.
      * @param Request $request The request object
      * @param Closure $next The next middleware handler
      * @return Response The response object

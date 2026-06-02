@@ -35,15 +35,17 @@ use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\Response;
 
 /**
- * Defines the Test Features Controller class contract.
+ * Presents the development feature-test harness.
  *
  * @package Catalyst\Repository\DevTools\Controllers
- * Responsibility: Coordinates the test features controller behavior within its module boundary.
+ * Responsibility: Supplies authentication and navigation state to the DevTools workspace.
  */
 class TestFeaturesController extends Controller
 {
     /**
-     * Handles the index workflow.
+     * Renders the DevTools harness with current authentication state.
+     *
+     * Responsibility: Renders the DevTools harness with current authentication state.
      */
     public function index(): Response
     {

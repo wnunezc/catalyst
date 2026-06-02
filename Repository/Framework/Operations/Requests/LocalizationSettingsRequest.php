@@ -33,22 +33,26 @@ namespace Catalyst\Repository\Operations\Requests;
 use Catalyst\Framework\Http\Request;
 
 /**
- * Defines the Localization Settings Request class contract.
+ * Reads runtime localization settings from an HTTP request.
  *
  * @package Catalyst\Repository\Operations\Requests
- * Responsibility: Coordinates the localization settings request behavior within its module boundary.
+ * Responsibility: Supplies normalized locale settings to the localization controller.
  */
 final class LocalizationSettingsRequest
 {
     /**
-     * Initializes the Localization Settings Request instance.
+     * Wraps the incoming HTTP request used to read localization settings.
+     *
+     * Responsibility: Wraps the incoming HTTP request used to read localization settings.
      */
     public function __construct(private readonly Request $request)
     {
     }
 
     /**
-     * Handles the default locale workflow.
+     * Returns the normalized default locale code.
+     *
+     * Responsibility: Returns the normalized default locale code.
      */
     public function defaultLocale(): string
     {
@@ -56,7 +60,9 @@ final class LocalizationSettingsRequest
     }
 
     /**
-     * Handles the labels json workflow.
+     * Returns the submitted locale-label JSON document.
+     *
+     * Responsibility: Returns the submitted locale-label JSON document.
      */
     public function labelsJson(): string
     {

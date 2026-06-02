@@ -31,14 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Repository\Settings\Requests;
 
 /**
- * Defines the Logging Config Request class contract.
+ * Validates logging settings from the setup surface.
  *
  * @package Catalyst\Repository\Settings\Requests
- * Responsibility: Coordinates the logging config request behavior within its module boundary.
+ * Responsibility: Defines logging channel, level and rotation constraints and normalizes submitted values.
  */
 final class LoggingConfigRequest extends AbstractSettingsRequest
 {
     /**
+     * Returns validation rules for logging settings.
+     *
+     * Responsibility: Returns validation rules for logging settings.
      * @return array<string, string>
      */
     public function rules(): array
@@ -52,6 +55,9 @@ final class LoggingConfigRequest extends AbstractSettingsRequest
     }
 
     /**
+     * Builds normalized logging input for validation.
+     *
+     * Responsibility: Builds normalized logging input for validation.
      * @return array<string, mixed>
      */
     protected function validationData(): array

@@ -34,15 +34,17 @@ use Catalyst\Framework\Cli\ScaffoldManager;
 use RuntimeException;
 
 /**
- * Defines the Module Scaffold Service class contract.
+ * Coordinates module scaffolding operations.
  *
  * @package Catalyst\Framework\Module
- * Responsibility: Coordinates the module scaffold service behavior within its module boundary.
+ * Responsibility: Previews blueprints, writes generated module files, and publishes generated assets.
  */
 final class ModuleScaffoldService
 {
     /**
-     * Initializes the Module Scaffold Service instance.
+     * Initializes optional scaffold collaborators.
+     *
+     * Responsibility: Initializes optional scaffold collaborators.
      */
     public function __construct(
         private readonly ?ScaffoldManager $manager = null,
@@ -52,6 +54,9 @@ final class ModuleScaffoldService
     }
 
     /**
+     * Builds a module blueprint without writing files.
+     *
+     * Responsibility: Builds a module blueprint without writing files.
      * @param array<string, mixed> $input
      * @return array<string, mixed>
      */
@@ -61,6 +66,9 @@ final class ModuleScaffoldService
     }
 
     /**
+     * Creates a module from its validated blueprint.
+     *
+     * Responsibility: Creates a module from its validated blueprint.
      * @param array<string, mixed> $input
      * @return array<string, mixed>
      */
@@ -89,7 +97,9 @@ final class ModuleScaffoldService
     }
 
     /**
-     * Handles the scaffold manager workflow.
+     * Resolves the scaffold manager used for filesystem writes.
+     *
+     * Responsibility: Resolves the scaffold manager used for filesystem writes.
      */
     private function scaffoldManager(): ScaffoldManager
     {
@@ -97,7 +107,9 @@ final class ModuleScaffoldService
     }
 
     /**
-     * Handles the blueprint factory workflow.
+     * Resolves the blueprint factory and its collaborators.
+     *
+     * Responsibility: Resolves the blueprint factory and its collaborators.
      */
     private function blueprintFactory(): ModuleBlueprintFactory
     {
@@ -116,7 +128,9 @@ final class ModuleScaffoldService
     }
 
     /**
-     * Handles the asset publisher workflow.
+     * Resolves the publisher used for generated module assets.
+     *
+     * Responsibility: Resolves the publisher used for generated module assets.
      */
     private function assetPublisher(): ModuleAssetPublisher
     {

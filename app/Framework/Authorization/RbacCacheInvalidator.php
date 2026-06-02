@@ -33,14 +33,17 @@ namespace Catalyst\Framework\Authorization;
 use Catalyst\Framework\Cache\CacheManager;
 
 /**
- * Defines the Rbac Cache Invalidator class contract.
+ * Invalidates in-memory and persistent RBAC assignment caches.
  *
  * @package Catalyst\Framework\Authorization
- * Responsibility: Coordinates the rbac cache invalidator behavior within its module boundary.
+ * Responsibility: Clears user-scoped and global cache entries after RBAC mutations.
  */
 final class RbacCacheInvalidator
 {
     /**
+     * Clears all request-local RBAC cache entries and advances the persistent cache version.
+     *
+     * Responsibility: Clears all request-local RBAC cache entries and advances the persistent cache version.
      * @param array<string, array<int, array<string, mixed>>> $memoryCache
      */
     public function flushAll(array &$memoryCache): void
@@ -50,6 +53,9 @@ final class RbacCacheInvalidator
     }
 
     /**
+     * Clears request-local and persistent RBAC cache entries for a single user.
+     *
+     * Responsibility: Clears request-local and persistent RBAC cache entries for a single user.
      * @param array<string, array<int, array<string, mixed>>> $memoryCache
      */
     public function flushUser(array &$memoryCache, string $rolesKey, string $permissionsKey, string $persistentRolesKey, string $persistentPermissionsKey): void

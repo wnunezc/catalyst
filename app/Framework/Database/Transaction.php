@@ -42,6 +42,7 @@ use Exception;
  * where manual transaction control is needed.
  *
  * @package Catalyst\Framework\Database
+ * Responsibility: Provides explicit begin, commit and rollback operations over one connection.
  */
 class Transaction
 {
@@ -51,6 +52,8 @@ class Transaction
 
     /**
      * Initializes the Transaction instance.
+     *
+     * Responsibility: Initializes the Transaction instance.
      */
     public function __construct(Connection $connection)
     {
@@ -61,6 +64,7 @@ class Transaction
     /**
      * Begin a new transaction.
      *
+     * Responsibility: Begin a new transaction.
      * @throws QueryException
      */
     public function begin(): self
@@ -77,6 +81,7 @@ class Transaction
     /**
      * Commit the active transaction.
      *
+     * Responsibility: Commit the active transaction.
      * @throws QueryException
      */
     public function commit(): self
@@ -93,6 +98,7 @@ class Transaction
     /**
      * Roll back the active transaction (no-op if none is active).
      *
+     * Responsibility: Roll back the active transaction (no-op if none is active).
      * @throws QueryException
      */
     public function rollback(): self

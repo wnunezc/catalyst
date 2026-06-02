@@ -34,14 +34,17 @@ use Catalyst\Framework\Event\EventBus;
 use Throwable;
 
 /**
- * Defines the Queue Worker class contract.
+ * Processes the next available queue job and applies its retry policy.
  *
  * @package Catalyst\Framework\Queue
- * Responsibility: Coordinates the queue worker behavior within its module boundary.
+ * Responsibility: Reserves jobs, executes them, persists their outcome, and emits queue lifecycle events.
  */
 final class QueueWorker
 {
     /**
+     * Processes one available job and returns its resulting worker status.
+     *
+     * Responsibility: Processes one available job and returns its resulting worker status.
      * @return array{status:string,job_id?:int,display_name?:string,failed_job_id?:int,message?:string}
      */
     public function processNext(?string $queueName = null): array

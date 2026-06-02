@@ -35,17 +35,19 @@ use JsonSerializable;
 use RuntimeException;
 
 /**
- * Defines the Uploaded File class contract.
+ * Represents a normalized uploaded file.
  *
  * @package Catalyst\Framework\Http
- * Responsibility: Coordinates the uploaded file behavior within its module boundary.
+ * Responsibility: Exposes upload metadata, validates transfer state, detects MIME type and moves or stores uploaded files.
  */
 class UploadedFile implements JsonSerializable
 {
     private ?string $detectedMimeType = null;
 
     /**
-     * Initializes the Uploaded File instance.
+     * Stores raw upload metadata captured from the request.
+     *
+     * Responsibility: Stores raw upload metadata captured from the request.
      */
     public function __construct(
         private readonly string $path,
@@ -57,7 +59,9 @@ class UploadedFile implements JsonSerializable
     }
 
     /**
-     * Returns the path value.
+     * Returns the temporary uploaded file path.
+     *
+     * Responsibility: Returns the temporary uploaded file path.
      */
     public function getPath(): string
     {
@@ -65,7 +69,9 @@ class UploadedFile implements JsonSerializable
     }
 
     /**
-     * Returns the name value.
+     * Returns the original client filename.
+     *
+     * Responsibility: Returns the original client filename.
      */
     public function getName(): string
     {
@@ -73,7 +79,9 @@ class UploadedFile implements JsonSerializable
     }
 
     /**
-     * Returns the client mime type value.
+     * Returns the MIME type reported by the client.
+     *
+     * Responsibility: Returns the MIME type reported by the client.
      */
     public function getClientMimeType(): string
     {
@@ -81,7 +89,9 @@ class UploadedFile implements JsonSerializable
     }
 
     /**
-     * Returns the mime type value.
+     * Returns the detected MIME type, falling back to the client value.
+     *
+     * Responsibility: Returns the detected MIME type, falling back to the client value.
      */
     public function getMimeType(): string
     {
@@ -112,7 +122,9 @@ class UploadedFile implements JsonSerializable
     }
 
     /**
-     * Returns the size value.
+     * Returns the uploaded file size in bytes.
+     *
+     * Responsibility: Returns the uploaded file size in bytes.
      */
     public function getSize(): int
     {
@@ -120,7 +132,9 @@ class UploadedFile implements JsonSerializable
     }
 
     /**
-     * Returns the extension value.
+     * Returns the lowercase extension from the client filename.
+     *
+     * Responsibility: Returns the lowercase extension from the client filename.
      */
     public function getExtension(): string
     {
@@ -128,7 +142,9 @@ class UploadedFile implements JsonSerializable
     }
 
     /**
-     * Returns the error value.
+     * Returns the PHP upload error code.
+     *
+     * Responsibility: Returns the PHP upload error code.
      */
     public function getError(): int
     {
@@ -136,7 +152,9 @@ class UploadedFile implements JsonSerializable
     }
 
     /**
-     * Determines whether has Error.
+     * Checks whether PHP reported an upload error.
+     *
+     * Responsibility: Checks whether PHP reported an upload error.
      */
     public function hasError(): bool
     {
@@ -144,7 +162,9 @@ class UploadedFile implements JsonSerializable
     }
 
     /**
-     * Determines whether is Valid.
+     * Checks whether the upload completed successfully and is a valid uploaded file.
+     *
+     * Responsibility: Checks whether the upload completed successfully and is a valid uploaded file.
      */
     public function isValid(): bool
     {
@@ -152,7 +172,9 @@ class UploadedFile implements JsonSerializable
     }
 
     /**
-     * Returns the error message value.
+     * Returns the human-readable message for the upload error code.
+     *
+     * Responsibility: Returns the human-readable message for the upload error code.
      */
     public function getErrorMessage(): string
     {
@@ -170,7 +192,9 @@ class UploadedFile implements JsonSerializable
     }
 
     /**
-     * Handles the move to workflow.
+     * Moves the uploaded file to an absolute target path.
+     *
+     * Responsibility: Moves the uploaded file to an absolute target path.
      */
     public function moveTo(string $targetPath): void
     {
@@ -190,7 +214,9 @@ class UploadedFile implements JsonSerializable
     }
 
     /**
-     * Handles the persistence workflow.
+     * Stores the uploaded file through the configured storage manager.
+     *
+     * Responsibility: Stores the uploaded file through the configured storage manager.
      */
     public function store(string $category = 'default', string $disk = 'local'): string
     {
@@ -212,7 +238,9 @@ class UploadedFile implements JsonSerializable
     }
 
     /**
-     * Handles the json serialize workflow.
+     * Serializes public upload metadata for JSON output.
+     *
+     * Responsibility: Serializes public upload metadata for JSON output.
      */
     public function jsonSerialize(): array
     {
@@ -226,7 +254,9 @@ class UploadedFile implements JsonSerializable
     }
 
     /**
-     * Sanitizes the provided value.
+     * Normalizes a storage category into safe path segments.
+     *
+     * Responsibility: Normalizes a storage category into safe path segments.
      */
     private function sanitizeCategory(string $category): string
     {

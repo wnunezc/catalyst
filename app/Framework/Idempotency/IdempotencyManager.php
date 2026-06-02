@@ -34,10 +34,10 @@ use Catalyst\Framework\Traits\SingletonTrait;
 use Throwable;
 
 /**
- * Defines the Idempotency Manager class contract.
+ * Coordinates idempotent operation execution.
  *
  * @package Catalyst\Framework\Idempotency
- * Responsibility: Coordinates the idempotency manager behavior within its module boundary.
+ * Responsibility: Generates keys, fingerprints requests, records operation outcomes and replays completed results for matching keys.
  */
 final class IdempotencyManager
 {
@@ -46,7 +46,9 @@ final class IdempotencyManager
     private IdempotencyRepository $repository;
 
     /**
-     * Initializes the Idempotency Manager instance.
+     * Initializes repository access for idempotency records.
+     *
+     * Responsibility: Initializes repository access for idempotency records.
      */
     protected function __construct()
     {
@@ -54,7 +56,9 @@ final class IdempotencyManager
     }
 
     /**
-     * Handles the generate key workflow.
+     * Generates a random idempotency key.
+     *
+     * Responsibility: Generates a random idempotency key.
      */
     public function generateKey(): string
     {
@@ -62,6 +66,9 @@ final class IdempotencyManager
     }
 
     /**
+     * Executes or replays an operation under an idempotency scope and key.
+     *
+     * Responsibility: Executes or replays an operation under an idempotency scope and key.
      * @param array<string, mixed> $fingerprint
      * @param callable(): array<string, mixed> $callback
      * @param callable(Throwable): array<string, mixed>|null $failureMapper
@@ -134,6 +141,9 @@ final class IdempotencyManager
     }
 
     /**
+     * Resolves a previously recorded idempotency result.
+     *
+     * Responsibility: Resolves a previously recorded idempotency result.
      * @param array<string, mixed> $payload
      * @return array{replayed:bool,outcome:array<string, mixed>}
      */

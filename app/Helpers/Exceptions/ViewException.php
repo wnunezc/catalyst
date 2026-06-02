@@ -36,6 +36,7 @@ use RuntimeException;
  * ViewException - Thrown for view rendering failures
  *
  * @package Catalyst\Helpers\Exceptions
+ * Responsibility: Provides exceptions for missing layouts, missing templates and executable token templates.
  */
 class ViewException extends RuntimeException
 {

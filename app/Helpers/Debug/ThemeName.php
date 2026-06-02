@@ -34,6 +34,9 @@ namespace Catalyst\Helpers\Debug;
  * ThemeName - Enum for available theme names
  *
  * This enum defines all available theme names for the Dumper component.
+ *
+ * @package Catalyst\Helpers\Debug;
+ * Responsibility: Enumerates the supported dumper theme identifiers and validates theme-name input.
  */
 enum ThemeName: string
 {

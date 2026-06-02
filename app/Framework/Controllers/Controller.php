@@ -52,12 +52,10 @@ use Catalyst\Framework\Authorization\AbilitySubject;
 use Catalyst\Framework\Traits\FrontResourceTrait;
 
 /**
- * Controller - Base controller class
- *
- * Abstract base class that all controllers should extend.
- * Provides helper methods for common controller operations.
+ * Base controller for HTTP request handlers.
  *
  * @package Catalyst\Framework\Controllers
+ * Responsibility: Provides shared response, view, validation, authorization, notification, and redirect helpers.
  */
 abstract class Controller
 {
@@ -84,7 +82,9 @@ abstract class Controller
     protected View $viewEngine;
 
     /**
-     * Controller constructor
+     * Initializes request, logger, and view engine collaborators.
+     *
+     * Responsibility: Initializes request, logger, and view engine collaborators.
      */
     public function __construct()
     {
@@ -96,6 +96,7 @@ abstract class Controller
     /**
      * Render a view template, optionally wrapped in a layout.
      *
+     * Responsibility: Render a view template, optionally wrapped in a layout.
      * @param string      $template Template name (dot notation: "pages.welcome")
      * @param array       $data     Data to pass to the template
      * @param int         $status   HTTP status code
@@ -110,8 +111,9 @@ abstract class Controller
     }
 
     /**
-     * Return a JSON response
+     * Return a JSON response.
      *
+     * Responsibility: Return a JSON response.
      * @param array $data Data to encode as JSON
      * @param int $status HTTP status code
      * @return JsonResponse
@@ -122,7 +124,9 @@ abstract class Controller
     }
 
     /**
-     * Handles the trusted html response workflow.
+     * Builds an HTML response explicitly marked as trusted fragment content.
+     *
+     * Responsibility: Builds an HTML response explicitly marked as trusted fragment content.
      */
     protected function trustedHtmlResponse(TrustedHtml|string $html, int $status = 200): Response
     {
@@ -135,8 +139,9 @@ abstract class Controller
     }
 
     /**
-     * Return a successful JSON API response
+     * Return a successful JSON API response.
      *
+     * Responsibility: Return a successful JSON API response.
      * @param mixed $data Response data
      * @param string $message Success message
      * @param int $status HTTP status code
@@ -148,8 +153,9 @@ abstract class Controller
     }
 
     /**
-     * Return an error JSON API response
+     * Return an error JSON API response.
      *
+     * Responsibility: Return an error JSON API response.
      * @param string $message Error message
      * @param int $status HTTP status code
      * @param mixed $data Additional error data
@@ -161,8 +167,9 @@ abstract class Controller
     }
 
     /**
-     * Return a redirect response
+     * Return a redirect response.
      *
+     * Responsibility: Return a redirect response.
      * @param string $url URL to redirect to
      * @param int $status HTTP status code (301 or 302)
      * @return RedirectResponse
@@ -173,8 +180,9 @@ abstract class Controller
     }
 
     /**
-     * Check if the request is an AJAX request
+     * Check if the request is an AJAX request.
      *
+     * Responsibility: Check if the request is an AJAX request.
      * @return bool
      */
     protected function isAjax(): bool
@@ -183,8 +191,9 @@ abstract class Controller
     }
 
     /**
-     * Check if the request expects a JSON response
+     * Check if the request expects a JSON response.
      *
+     * Responsibility: Check if the request expects a JSON response.
      * @return bool
      */
     protected function expectsJson(): bool
@@ -193,8 +202,9 @@ abstract class Controller
     }
 
     /**
-     * Log an info message
+     * Log an info message.
      *
+     * Responsibility: Log an info message.
      * @param string $message Log message
      * @param array $context Additional context
      * @return void
@@ -205,8 +215,9 @@ abstract class Controller
     }
 
     /**
-     * Log an error message
+     * Log an error message.
      *
+     * Responsibility: Log an error message.
      * @param string $message Log message
      * @param array $context Additional context
      * @return void
@@ -217,8 +228,9 @@ abstract class Controller
     }
 
     /**
-     * Log a debug message
+     * Log a debug message.
      *
+     * Responsibility: Log a debug message.
      * @param string $message Log message
      * @param array $context Additional context
      * @return void
@@ -229,8 +241,9 @@ abstract class Controller
     }
 
     /**
-     * Log a warning message
+     * Log a warning message.
      *
+     * Responsibility: Log a warning message.
      * @param string $message Log message
      * @param array $context Additional context
      * @return void
@@ -241,8 +254,9 @@ abstract class Controller
     }
 
     /**
-     * Return a JSON response for validation errors
+     * Return a JSON response for validation errors.
      *
+     * Responsibility: Return a JSON response for validation errors.
      * @param array  $errors  Validation errors (field => messages)
      * @param string $message General error message
      * @param int    $status  HTTP status code
@@ -254,10 +268,9 @@ abstract class Controller
     }
 
     /**
-     * Run validation and return the Validator instance.
+     * Run validation and return the Validator instance. The caller is responsible for checking $v->fails() and handling errors.
      *
-     * The caller is responsible for checking $v->fails() and handling errors.
-     *
+     * Responsibility: Run validation and return the Validator instance. The caller is responsible for checking $v->fails() and handling errors.
      * @param array<string, mixed>                    $data   Input data
      * @param array<string, string|array<int,string>> $rules  Validation rules
      * @param array<string, string>                   $labels Optional field labels
@@ -269,10 +282,9 @@ abstract class Controller
     }
 
     /**
-     * Run validation and throw ValidationException if it fails.
+     * Run validation and throw ValidationException if it fails. The ExceptionHandler converts ValidationException to a 422 JSON response.
      *
-     * The ExceptionHandler converts ValidationException to a 422 JSON response.
-     *
+     * Responsibility: Run validation and throw ValidationException if it fails. The ExceptionHandler converts ValidationException to a 422 JSON response.
      * @param array<string, mixed>                    $data    Input data
      * @param array<string, string|array<int,string>> $rules   Validation rules
      * @param array<string, string>                   $labels  Optional field labels
@@ -294,9 +306,9 @@ abstract class Controller
     }
 
     /**
-     * Assert the current user passes the given ability via Gate or Policy.
-     * Throws ForbiddenException (→ 403) if the check fails.
+     * Assert the current user passes the given ability via Gate or Policy. Throws ForbiddenException (→ 403) if the check fails.
      *
+     * Responsibility: Assert the current user passes the given ability via Gate or Policy. Throws ForbiddenException (→ 403) if the check fails.
      * @param string $ability  Gate name or Policy ability (e.g. 'edit', 'edit-post')
      * @param mixed  ...$args  Optional model or extra arguments for the gate/policy
      * @throws ForbiddenException
@@ -309,6 +321,7 @@ abstract class Controller
     /**
      * Check if the current user passes the given ability (non-throwing).
      *
+     * Responsibility: Check if the current user passes the given ability (non-throwing).
      * @param string $ability  Gate name or Policy ability
      * @param mixed  ...$args  Optional model or extra arguments
      */
@@ -318,6 +331,9 @@ abstract class Controller
     }
 
     /**
+     * Authorizes an ability against a resource-specific subject wrapper.
+     *
+     * Responsibility: Authorizes an ability against a resource-specific subject wrapper.
      * @param array<string, mixed> $context
      */
     protected function authorizeResource(string $ability, string $resource, mixed $record = null, array $context = []): void
@@ -326,6 +342,9 @@ abstract class Controller
     }
 
     /**
+     * Checks a resource-specific ability without throwing an authorization exception.
+     *
+     * Responsibility: Checks a resource-specific ability without throwing an authorization exception.
      * @param array<string, mixed> $context
      */
     protected function canResource(string $ability, string $resource, mixed $record = null, array $context = []): bool
@@ -334,8 +353,9 @@ abstract class Controller
     }
 
     /**
-     * Return a standardized API response
+     * Return a standardized API response.
      *
+     * Responsibility: Return a standardized API response.
      * @param bool $success Whether the operation was successful
      * @param string $message Response message
      * @param mixed $data Response data
@@ -349,7 +369,9 @@ abstract class Controller
     }
 
     /**
-     * Handles the resource json success workflow.
+     * Returns a JSON success response with sensitive fields sanitized for a resource key.
+     *
+     * Responsibility: Returns a JSON success response with sensitive fields sanitized for a resource key.
      */
     protected function resourceJsonSuccess(
         string $resourceKey,
@@ -368,7 +390,9 @@ abstract class Controller
     }
 
     /**
-     * Sanitizes the provided value.
+     * Sanitizes arrays or model payloads according to the resource sensitivity policy.
+     *
+     * Responsibility: Sanitizes arrays or model payloads according to the resource sensitivity policy.
      */
     protected function sanitizeResourcePayload(string $resourceKey, mixed $data): mixed
     {
@@ -395,6 +419,9 @@ abstract class Controller
     }
 
     /**
+     * Sanitizes version snapshots and diffs before exposing them through API responses.
+     *
+     * Responsibility: Sanitizes version snapshots and diffs before exposing them through API responses.
      * @param array<int, array<string, mixed>> $versions
      * @return array<int, array<string, mixed>>
      */
@@ -429,8 +456,9 @@ abstract class Controller
     }
 
     /**
-     * Redirect to a named route
+     * Redirect to a named route.
      *
+     * Responsibility: Redirect to a named route.
      * @param string $routeName Name of the route
      * @param array $parameters Route parameters
      * @param int $status HTTP status code (301, 302, 303, 307, 308)
@@ -443,8 +471,9 @@ abstract class Controller
     }
 
     /**
-     * Get the flash message instance
+     * Get the flash message instance.
      *
+     * Responsibility: Provides the flash message bag used by controllers to enqueue one-shot feedback.
      * @return FlashMessage
      */
     protected function flash(): FlashMessage
@@ -453,12 +482,9 @@ abstract class Controller
     }
 
     /**
-     * Queue an ephemeral toast notification for the next page load.
+     * Queue an ephemeral toast notification for the next page load. Use for confirmations that don't require the user to re-render a form (logout, save, copy). For validation errors or blocking issues that must stay until re-render, use flash()->error(...) instead.
      *
-     * Use for confirmations that don't require the user to re-render a form
-     * (logout, save, copy). For validation errors or blocking issues that
-     * must stay until re-render, use flash()->error(...) instead.
-     *
+     * Responsibility: Queue an ephemeral toast notification for the next page load. Use for confirmations that don't require the user to re-render a form (logout, save, copy). For validation errors or blocking issues that must stay until re-render, use flash()->error(...) instead.
      * @param string $type    success | error | warning | info
      * @param string $message Notification text
      * @return ToastQueue For chaining additional toasts on the same queue
@@ -469,8 +495,9 @@ abstract class Controller
     }
 
     /**
-     * Add a success flash message and optionally redirect
+     * Add a success flash message and optionally redirect.
      *
+     * Responsibility: Add a success flash message and optionally redirect.
      * @param string $message The success message
      * @param string|null $redirectUrl Optional URL to redirect to
      * @return RedirectResponse|null
@@ -487,8 +514,9 @@ abstract class Controller
     }
 
     /**
-     * Add an error flash message and optionally redirect
+     * Add an error flash message and optionally redirect.
      *
+     * Responsibility: Add an error flash message and optionally redirect.
      * @param string $message The error message
      * @param string|null $redirectUrl Optional URL to redirect to
      * @return RedirectResponse|null
@@ -505,6 +533,9 @@ abstract class Controller
     }
 
     /**
+     * Stores non-sensitive old input and validation errors in the session.
+     *
+     * Responsibility: Stores non-sensitive old input and validation errors in the session.
      * @param array<string, mixed>           $input
      * @param array<string, string[]|string> $errors
      */
@@ -528,8 +559,9 @@ abstract class Controller
     }
 
     /**
-     * Get a request input value
+     * Get a request input value.
      *
+     * Responsibility: Get a request input value.
      * @param string $key Input key
      * @param mixed $default Default value if not found
      * @return mixed
@@ -540,8 +572,9 @@ abstract class Controller
     }
 
     /**
-     * Get all request input
+     * Get all request input.
      *
+     * Responsibility: Get all request input.
      * @return array
      */
     protected function all(): array
@@ -550,8 +583,9 @@ abstract class Controller
     }
 
     /**
-     * Get only specific input keys
+     * Get only specific input keys.
      *
+     * Responsibility: Get only specific input keys.
      * @param array $keys Keys to retrieve
      * @return array
      */
@@ -561,8 +595,9 @@ abstract class Controller
     }
 
     /**
-     * Get all input except specific keys
+     * Get all input except specific keys.
      *
+     * Responsibility: Get all input except specific keys.
      * @param array $keys Keys to exclude
      * @return array
      */
@@ -572,8 +607,9 @@ abstract class Controller
     }
 
     /**
-     * Create a new notification bag
+     * Create a new notification bag.
      *
+     * Responsibility: Create a new notification bag.
      * @return NotificationBag
      */
     protected function notify(): NotificationBag
@@ -582,8 +618,9 @@ abstract class Controller
     }
 
     /**
-     * Create a notification bag with a toaster
+     * Create a notification bag with a toaster.
      *
+     * Responsibility: Create a notification bag with a toaster.
      * @param string $type Notification type (success, error, warning, info)
      * @param string $message Message content
      * @param array $options Additional options (title, duration, icon, etc.)
@@ -595,8 +632,9 @@ abstract class Controller
     }
 
     /**
-     * Create a notification bag with a modal
+     * Create a notification bag with a modal.
      *
+     * Responsibility: Create a notification bag with a modal.
      * @param string $url URL to load modal content from
      * @param array $options Modal options (title, size, backdrop, etc.)
      * @return NotificationBag
@@ -607,8 +645,9 @@ abstract class Controller
     }
 
     /**
-     * Return a JSON success response with a success toaster
+     * Return a JSON success response with a success toaster.
      *
+     * Responsibility: Return a JSON success response with a success toaster.
      * @param mixed $data Response data
      * @param string $message Success message
      * @param int $status HTTP status code
@@ -627,8 +666,9 @@ abstract class Controller
     }
 
     /**
-     * Return a JSON error response with an error toaster
+     * Return a JSON error response with an error toaster.
      *
+     * Responsibility: Return a JSON error response with an error toaster.
      * @param string $message Error message
      * @param int $status HTTP status code
      * @param mixed $data Additional error data
@@ -647,7 +687,9 @@ abstract class Controller
     }
 
     /**
-     * Handles the post action success redirect workflow.
+     * Builds a success response for post-action redirects across HTML and JSON flows.
+     *
+     * Responsibility: Builds a success response for post-action redirects across HTML and JSON flows.
      */
     protected function postActionSuccessRedirect(
         string $url,
@@ -660,7 +702,9 @@ abstract class Controller
     }
 
     /**
-     * Handles the post action error redirect workflow.
+     * Builds an error response for post-action redirects across HTML and JSON flows.
+     *
+     * Responsibility: Builds an error response for post-action redirects across HTML and JSON flows.
      */
     protected function postActionErrorRedirect(
         string $url,
@@ -673,6 +717,9 @@ abstract class Controller
     }
 
     /**
+     * Determines whether an array uses sequential numeric keys.
+     *
+     * Responsibility: Determines whether an array uses sequential numeric keys.
      * @param array<int|string, mixed> $value
      */
     private function isSequentialArray(array $value): bool
@@ -681,7 +728,9 @@ abstract class Controller
     }
 
     /**
-     * Handles the post action redirect workflow.
+     * Applies toast or flash state and returns the appropriate redirect response shape.
+     *
+     * Responsibility: Applies toast or flash state and returns the appropriate redirect response shape.
      */
     private function postActionRedirect(
         string $url,

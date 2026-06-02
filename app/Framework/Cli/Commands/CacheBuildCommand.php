@@ -40,15 +40,18 @@ use Catalyst\Framework\Route\Router;
 use Catalyst\Helpers\Config\ConfigManager;
 
 /**
- * Defines the Cache Build Command class contract.
+ * cache:build CLI command.
+ *
+ * Responsibility: Runs the cache:build command to Build configured cache artifacts without changing activation flags.
  *
  * @package Catalyst\Framework\Cli\Commands
- * Responsibility: Coordinates the cache build command behavior within its module boundary.
  */
 class CacheBuildCommand extends AbstractCommand
 {
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -56,7 +59,9 @@ class CacheBuildCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
@@ -64,7 +69,9 @@ class CacheBuildCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {

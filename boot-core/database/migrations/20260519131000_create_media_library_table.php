@@ -4,13 +4,29 @@ declare(strict_types=1);
 
 use Catalyst\Framework\Database\Migration;
 
+/**
+ * Creates the table that stores media library items.
+ *
+ * @package Catalyst\BootCore\Database\Migrations
+ * Responsibility: Provision and remove metadata persistence for stored media files.
+ */
 return new class extends Migration
 {
+    /**
+     * Returns the timestamp identifier used by the migration runner to order and track this migration.
+     *
+     * Responsibility: Returns the timestamp identifier used by the migration runner to order and track this migration.
+     */
     public function getVersion(): string
     {
         return '20260519131000';
     }
 
+    /**
+     * Creates the media library table when it is absent.
+     *
+     * Responsibility: Creates the media library table when it is absent.
+     */
     public function up(): void
     {
         if ($this->tableExists('media_library')) {
@@ -41,6 +57,11 @@ return new class extends Migration
         );
     }
 
+    /**
+     * Removes the media library table when it exists.
+     *
+     * Responsibility: Removes the media library table when it exists.
+     */
     public function down(): void
     {
         if (!$this->tableExists('media_library')) {

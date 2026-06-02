@@ -31,14 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Repository\Settings\Requests;
 
 /**
- * Defines the Db Config Request class contract.
+ * Validates database settings from the setup surface.
  *
  * @package Catalyst\Repository\Settings\Requests
- * Responsibility: Coordinates the db config request behavior within its module boundary.
+ * Responsibility: Defines database connection rules and builds normalized connection input.
  */
 final class DbConfigRequest extends AbstractSettingsRequest
 {
     /**
+     * Returns validation rules for database settings.
+     *
+     * Responsibility: Returns validation rules for database settings.
      * @return array<string, string>
      */
     public function rules(): array
@@ -52,6 +55,9 @@ final class DbConfigRequest extends AbstractSettingsRequest
     }
 
     /**
+     * Builds normalized database input for validation.
+     *
+     * Responsibility: Builds normalized database input for validation.
      * @return array<string, mixed>
      */
     protected function validationData(): array

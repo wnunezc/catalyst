@@ -33,10 +33,10 @@ namespace Catalyst\Framework\Catalog;
 use Catalyst\Framework\Temporal\EffectiveWindow;
 
 /**
- * Defines the Catalog Item Availability Decorator class contract.
+ * Enriches catalog-item rows with temporal availability metadata.
  *
  * @package Catalyst\Framework\Catalog
- * Responsibility: Coordinates the catalog item availability decorator behavior within its module boundary.
+ * Responsibility: Normalizes item rows and derives whether each item is currently selectable.
  */
 final class CatalogItemAvailabilityDecorator
 {
@@ -44,6 +44,8 @@ final class CatalogItemAvailabilityDecorator
 
     /**
      * Initializes the Catalog Item Availability Decorator instance.
+     *
+     * Responsibility: Initializes the Catalog Item Availability Decorator instance.
      */
     public function __construct()
     {
@@ -51,6 +53,9 @@ final class CatalogItemAvailabilityDecorator
     }
 
     /**
+     * Normalizes a catalog-item row and computes its availability state.
+     *
+     * Responsibility: Normalizes a catalog-item row and computes its availability state.
      * @param array<string, mixed> $row
      * @return array<string, mixed>
      */

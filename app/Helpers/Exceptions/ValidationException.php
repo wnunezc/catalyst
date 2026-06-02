@@ -39,6 +39,7 @@ use RuntimeException;
  * to the ExceptionHandler, which converts them to a 422 JSON response.
  *
  * @package Catalyst\Helpers\Exceptions
+ * Responsibility: Carries field errors, safe old input and response metadata for failed validation.
  */
 class ValidationException extends RuntimeException
 {
@@ -67,6 +68,7 @@ class ValidationException extends RuntimeException
     /**
      * Private constructor — use factory methods.
      *
+     * Responsibility: Private constructor — use factory methods.
      * @param array<string, string[]> $errors     Field-level errors
      * @param string                  $message    General error message
      * @param int                     $statusCode HTTP status code
@@ -104,6 +106,7 @@ class ValidationException extends RuntimeException
     /**
      * Get field-level validation errors.
      *
+     * Responsibility: Get field-level validation errors.
      * @return array<string, string[]>
      */
     public function getErrors(): array
@@ -114,6 +117,7 @@ class ValidationException extends RuntimeException
     /**
      * Get the HTTP status code.
      *
+     * Responsibility: Exposes the response status associated with the validation failure.
      * @return int
      */
     public function getStatusCode(): int
@@ -122,6 +126,9 @@ class ValidationException extends RuntimeException
     }
 
     /**
+     * Returns sanitized input for HTML form repopulation.
+     *
+     * Responsibility: Returns sanitized input for HTML form repopulation.
      * @return array<string, mixed>
      */
     public function getOldInput(): array
@@ -130,7 +137,9 @@ class ValidationException extends RuntimeException
     }
 
     /**
-     * Returns the error bag value.
+     * Returns the validation error bag name.
+     *
+     * Responsibility: Returns the validation error bag name.
      */
     public function getErrorBag(): string
     {

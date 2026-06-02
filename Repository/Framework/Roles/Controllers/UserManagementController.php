@@ -44,10 +44,10 @@ use Catalyst\Repository\Roles\Support\UserEnrollmentFormFactory;
 use Exception;
 
 /**
- * Defines the User Management Controller class contract.
+ * Provides the administrative user directory and enrollment workflow.
  *
  * @package Catalyst\Repository\Roles\Controllers
- * Responsibility: Coordinates the user management controller behavior within its module boundary.
+ * Responsibility: Lists users, handles exports and enrolls new accounts with validated role assignment.
  */
 class UserManagementController extends Controller
 {
@@ -57,6 +57,8 @@ class UserManagementController extends Controller
 
     /**
      * Initializes the User Management Controller instance.
+     *
+     * Responsibility: Initializes the User Management Controller instance.
      */
     public function __construct(
         RoleRepository $roles,
@@ -72,7 +74,9 @@ class UserManagementController extends Controller
     }
 
     /**
-     * Handles the index workflow.
+     * Displays the searchable administrative user directory and handles exports.
+     *
+     * Responsibility: Displays the searchable administrative user directory and handles exports.
      */
     public function index(Request $request): Response
     {
@@ -215,7 +219,9 @@ class UserManagementController extends Controller
     }
 
     /**
-     * Handles the create workflow.
+     * Displays the user enrollment form.
+     *
+     * Responsibility: Displays the user enrollment form.
      */
     public function create(Request $request): Response
     {
@@ -229,7 +235,9 @@ class UserManagementController extends Controller
     }
 
     /**
-     * Handles the persistence workflow.
+     * Validates and creates a new user account with its initial role.
+     *
+     * Responsibility: Validates and creates a new user account with its initial role.
      */
     public function store(Request $request): Response
     {
@@ -295,7 +303,9 @@ class UserManagementController extends Controller
     }
 
     /**
-     * Normalizes the provided value.
+     * Resolves the selected role slug against the current role catalog.
+     *
+     * Responsibility: Resolves the selected role slug against the current role catalog.
      */
     private function normalizeRoleSlug(string $selectedSlug): string
     {
@@ -311,6 +321,9 @@ class UserManagementController extends Controller
     }
 
     /**
+     * Searches the administrative user directory using the grid state.
+     *
+     * Responsibility: Searches the administrative user directory using the grid state.
      * @param array<string, mixed> $state
      * @return array{rows: array<int, array<string, mixed>>, total: int}
      */

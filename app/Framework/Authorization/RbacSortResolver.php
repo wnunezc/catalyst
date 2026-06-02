@@ -31,14 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Authorization;
 
 /**
- * Defines the Rbac Sort Resolver class contract.
+ * Resolves safe sort columns and directions for RBAC listing queries.
  *
  * @package Catalyst\Framework\Authorization
- * Responsibility: Coordinates the rbac sort resolver behavior within its module boundary.
+ * Responsibility: Constrains user-provided sort options to repository-approved SQL fragments.
  */
 final class RbacSortResolver
 {
     /**
+     * Resolves the requested sort key to an allowed SQL column.
+     *
+     * Responsibility: Resolves the requested sort key to an allowed SQL column.
      * @param array<string, string> $allowed
      */
     public function column(string $sort, array $allowed, string $default): string
@@ -47,7 +50,9 @@ final class RbacSortResolver
     }
 
     /**
-     * Handles the direction workflow.
+     * Normalizes the requested sort direction to ASC or DESC.
+     *
+     * Responsibility: Normalizes the requested sort direction to ASC or DESC.
      */
     public function direction(string $direction): string
     {

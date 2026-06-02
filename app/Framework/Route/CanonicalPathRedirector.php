@@ -31,10 +31,10 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Route;
 
 /**
- * Defines the Canonical Path Redirector class contract.
+ * Resolves legacy paths to their canonical public routes.
  *
  * @package Catalyst\Framework\Route
- * Responsibility: Coordinates the canonical path redirector behavior within its module boundary.
+ * Responsibility: Normalizes incoming paths and returns redirects only when a legacy route prefix maps to a different canonical path.
  */
 final class CanonicalPathRedirector
 {
@@ -67,7 +67,9 @@ final class CanonicalPathRedirector
     ];
 
     /**
-     * Handles the redirect target workflow.
+     * Returns the canonical redirect target for a legacy URI when required.
+     *
+     * Responsibility: Returns the canonical redirect target for a legacy URI when required.
      */
     public function redirectTarget(string $uri): ?string
     {
@@ -96,6 +98,9 @@ final class CanonicalPathRedirector
     }
 
     /**
+     * Returns only prefix mappings that redirect legacy routes.
+     *
+     * Responsibility: Returns only prefix mappings that redirect legacy routes.
      * @return array<string, string>
      */
     public function legacyPrefixes(): array
@@ -108,6 +113,9 @@ final class CanonicalPathRedirector
     }
 
     /**
+     * Returns all prefix mappings ordered from most specific to least specific.
+     *
+     * Responsibility: Returns all prefix mappings ordered from most specific to least specific.
      * @return array<string, string>
      */
     private function prefixMap(): array
@@ -122,7 +130,9 @@ final class CanonicalPathRedirector
     }
 
     /**
-     * Handles the matches prefix workflow.
+     * Determines whether a path equals or descends from a mapped prefix.
+     *
+     * Responsibility: Determines whether a path equals or descends from a mapped prefix.
      */
     private function matchesPrefix(string $path, string $prefix): bool
     {
@@ -131,7 +141,9 @@ final class CanonicalPathRedirector
     }
 
     /**
-     * Normalizes the provided value.
+     * Normalizes a path to a rooted form without a trailing slash.
+     *
+     * Responsibility: Normalizes a path to a rooted form without a trailing slash.
      */
     private function normalizePath(string $path): string
     {

@@ -36,15 +36,17 @@ use Catalyst\Repository\Settings\Requests\SecurityConfigRequest;
 use Catalyst\Repository\Settings\Support\SecurityConfigWriter;
 
 /**
- * Defines the Security Config Save Controller class contract.
+ * Persists security settings submitted by the setup surface.
  *
  * @package Catalyst\Repository\Settings\Controllers
- * Responsibility: Coordinates the security config save controller behavior within its module boundary.
+ * Responsibility: Delegates validated security configuration writes and returns the setup AJAX response.
  */
 final class SecurityConfigSaveController extends Controller
 {
     /**
      * Initializes the Security Config Save Controller instance.
+     *
+     * Responsibility: Initializes the Security Config Save Controller instance.
      */
     public function __construct(
         private readonly SecurityConfigWriter $writer = new SecurityConfigWriter()
@@ -53,7 +55,9 @@ final class SecurityConfigSaveController extends Controller
     }
 
     /**
-     * Persists the current state.
+     * Saves validated security settings.
+     *
+     * Responsibility: Saves validated security settings.
      */
     public function saveSecurity(SecurityConfigRequest $request): Response
     {

@@ -36,10 +36,10 @@ use Catalyst\Framework\Traits\HasAuditLogTrait;
 use Catalyst\Framework\Traits\HasTimestampsTrait;
 
 /**
- * Defines the Workflow Instance class contract.
+ * ORM entity for active workflow instances.
  *
  * @package Catalyst\Entities
- * Responsibility: Coordinates the workflow instance behavior within its module boundary.
+ * Responsibility: Maps workflow definition, target resource, current state, context payload, and audit metadata.
  */
 final class WorkflowInstance extends Model
 {

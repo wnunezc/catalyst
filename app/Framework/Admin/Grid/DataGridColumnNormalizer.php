@@ -31,15 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Admin\Grid;
 
 /**
- * Defines the Data Grid Column Normalizer class contract.
+ * Normalizes DataGrid column configuration for table headers and cells.
  *
  * @package Catalyst\Framework\Admin\Grid
- * Responsibility: Coordinates the data grid column normalizer behavior within its module boundary.
+ * Responsibility: Builds render-ready column metadata, including labels, alignment classes, and sort links.
  */
 final class DataGridColumnNormalizer
 {
     /**
-     * Initializes the Data Grid Column Normalizer instance.
+     * Receives collaborators for sort URL generation and fallback column labels.
+     *
+     * Responsibility: Receives collaborators for sort URL generation and fallback column labels.
      */
     public function __construct(
         private readonly DataGridUrlBuilder $urlBuilder,
@@ -48,8 +50,9 @@ final class DataGridColumnNormalizer
     }
 
     /**
-     * Normalize configured columns into render-ready definitions.
+     * Converts configured columns into table metadata with sorting and presentation attributes.
      *
+     * Responsibility: Converts configured columns into table metadata with sorting and presentation attributes.
      * @param array<int, array<string, mixed>> $columns
      * @param array<string, mixed> $state
      * @param array<string, mixed> $config
@@ -103,6 +106,9 @@ final class DataGridColumnNormalizer
     }
 
     /**
+     * Builds the CSS class list for a column header from alignment and custom header settings.
+     *
+     * Responsibility: Builds the CSS class list for a column header from alignment and custom header settings.
      * @param array<string, mixed> $column
      */
     private function headerClass(array $column): string
@@ -127,6 +133,9 @@ final class DataGridColumnNormalizer
     }
 
     /**
+     * Builds the CSS class list for a column cell from alignment and custom cell settings.
+     *
+     * Responsibility: Builds the CSS class list for a column cell from alignment and custom cell settings.
      * @param array<string, mixed> $column
      */
     private function cellClass(array $column): string
@@ -151,7 +160,9 @@ final class DataGridColumnNormalizer
     }
 
     /**
-     * Handles the sort icon class workflow.
+     * Selects the Font Awesome sort icon class for the current column state.
+     *
+     * Responsibility: Selects the Font Awesome sort icon class for the current column state.
      */
     private function sortIconClass(bool $sortActive, string $direction): string
     {

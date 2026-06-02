@@ -31,15 +31,17 @@ declare(strict_types=1);
 namespace Catalyst\Repository\Settings\Support;
 
 /**
- * Defines the Settings Modal Factory class contract.
+ * Builds editable modal descriptors for all setup configuration sections.
  *
  * @package Catalyst\Repository\Settings\Support
- * Responsibility: Coordinates the settings modal factory behavior within its module boundary.
+ * Responsibility: Maps current configuration values into the modal forms rendered by the setup surface.
  */
 final class SettingsModalFactory
 {
     /**
      * Initializes the Settings Modal Factory instance.
+     *
+     * Responsibility: Initializes the Settings Modal Factory instance.
      */
     public function __construct(
         private readonly SettingsDisplayFactory $display
@@ -47,6 +49,9 @@ final class SettingsModalFactory
     }
 
     /**
+     * Builds editable modals for every supported configuration section.
+     *
+     * Responsibility: Builds editable modals for every supported configuration section.
      * @return array<int, array<string, mixed>>
      */
     public function build(SettingsPageViewContext $context): array

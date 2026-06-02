@@ -36,15 +36,17 @@ use Catalyst\Framework\Storage\StorageManager;
 use Throwable;
 
 /**
- * Defines the Upload Test Controller class contract.
+ * Exposes a development endpoint for validating file uploads.
  *
  * @package Catalyst\Repository\DevTools\Controllers
- * Responsibility: Coordinates the upload test controller behavior within its module boundary.
+ * Responsibility: Validates, stores and reports uploaded DevTools attachments.
  */
 class UploadTestController extends Controller
 {
     /**
-     * Handles the upload workflow.
+     * Validates and stores an uploaded attachment for the harness.
+     *
+     * Responsibility: Validates and stores an uploaded attachment for the harness.
      */
     public function upload(): JsonResponse
     {

@@ -36,10 +36,10 @@ use Catalyst\Helpers\Config\ConfigManager;
 use RuntimeException;
 
 /**
- * Defines the Storage Manager class contract.
+ * Resolves configured storage disks and delegates object operations.
  *
  * @package Catalyst\Framework\Storage
- * Responsibility: Coordinates the storage manager behavior within its module boundary.
+ * Responsibility: Provides a stable facade over local, runtime and remote storage adapters.
  */
 final class StorageManager
 {
@@ -51,7 +51,9 @@ final class StorageManager
     private string $fingerprint = '';
 
     /**
-     * Handles the disk workflow.
+     * Returns a configured storage disk by name.
+     *
+     * Responsibility: Returns a configured storage disk by name.
      */
     public function disk(string $name = 'local'): StorageAdapterInterface
     {
@@ -65,7 +67,9 @@ final class StorageManager
     }
 
     /**
-     * Handles the put workflow.
+     * Stores string contents on a selected disk.
+     *
+     * Responsibility: Stores string contents on a selected disk.
      */
     public function put(string $path, string $contents, string $disk = 'local'): string
     {
@@ -73,7 +77,9 @@ final class StorageManager
     }
 
     /**
-     * Handles the put uploaded file workflow.
+     * Stores an uploaded file on a selected disk.
+     *
+     * Responsibility: Stores an uploaded file on a selected disk.
      */
     public function putUploadedFile(UploadedFile $file, string $path, string $disk = 'local'): string
     {
@@ -81,7 +87,9 @@ final class StorageManager
     }
 
     /**
-     * Returns the runtime value.
+     * Reads object contents from a selected disk.
+     *
+     * Responsibility: Reads object contents from a selected disk.
      */
     public function get(string $path, string $disk = 'local'): string
     {
@@ -89,7 +97,9 @@ final class StorageManager
     }
 
     /**
-     * Handles the delete workflow.
+     * Deletes an object from a selected disk.
+     *
+     * Responsibility: Deletes an object from a selected disk.
      */
     public function delete(string $path, string $disk = 'local'): bool
     {
@@ -97,7 +107,9 @@ final class StorageManager
     }
 
     /**
-     * Handles the exists workflow.
+     * Determines whether an object exists on a selected disk.
+     *
+     * Responsibility: Determines whether an object exists on a selected disk.
      */
     public function exists(string $path, string $disk = 'local'): bool
     {
@@ -105,7 +117,9 @@ final class StorageManager
     }
 
     /**
-     * Handles the url workflow.
+     * Returns the public or remote URL for an object.
+     *
+     * Responsibility: Returns the public or remote URL for an object.
      */
     public function url(string $path, string $disk = 'local'): string
     {
@@ -113,7 +127,9 @@ final class StorageManager
     }
 
     /**
-     * Handles the refresh workflow.
+     * Clears cached storage adapters so configuration is reloaded.
+     *
+     * Responsibility: Clears cached storage adapters so configuration is reloaded.
      */
     public function refresh(): void
     {
@@ -122,6 +138,9 @@ final class StorageManager
     }
 
     /**
+     * Builds the configured disk map when configuration changes.
+     *
+     * Responsibility: Builds the configured disk map when configuration changes.
      * @return array<string, mixed>
      */
     public function summary(): array
@@ -145,6 +164,9 @@ final class StorageManager
     }
 
     /**
+     * Builds and caches configured disk adapters.
+     *
+     * Responsibility: Builds and caches configured disk adapters.
      * @return array<string, StorageAdapterInterface>
      */
     private function disks(): array

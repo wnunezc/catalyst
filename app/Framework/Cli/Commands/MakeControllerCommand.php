@@ -39,21 +39,18 @@ use InvalidArgumentException;
 use RuntimeException;
 
 /**
- * Scaffolds a new Controller in Repository/App/Surface/{Module}/Controllers/
+ * make:controller CLI command.
  *
- * Usage:
- *   php cli.php make:controller <ClassName> --module=<Module>
- *
- * Examples:
- *   php cli.php make:controller ProductController --module=Catalog
- *   php cli.php make:controller OrderController  --module=Shop
+ * Responsibility: Runs the make:controller command to Scaffold a new Controller in Repository/App/Surface/{Module}/Controllers/.
  *
  * @package Catalyst\Framework\Cli\Commands
  */
 class MakeControllerCommand extends AbstractCommand
 {
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -61,14 +58,21 @@ class MakeControllerCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
         return 'Scaffold a new Controller in Repository/App/Surface/{Module}/Controllers/';
     }
 
-    /** @return Option[] */
+    /**
+     * Defines the accepted option schema for this command.
+     *
+     * Responsibility: Defines the accepted option schema for this command.
+     * @return Option[]
+     */
     public function getOptions(): array
     {
         return [
@@ -83,7 +87,12 @@ class MakeControllerCommand extends AbstractCommand
         ];
     }
 
-    /** @return Parameter[] */
+    /**
+     * Defines the accepted positional parameter schema for this command.
+     *
+     * Responsibility: Defines the accepted positional parameter schema for this command.
+     * @return Parameter[]
+     */
     public function getParameters(): array
     {
         return [
@@ -99,7 +108,9 @@ class MakeControllerCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {

@@ -35,15 +35,17 @@ use Catalyst\Framework\Timeline\TimelineManager;
 use DateTimeZone;
 
 /**
- * Defines the Capture Timeline Milestone Listener class contract.
+ * Listener for capturing timeline milestone events.
  *
  * @package Catalyst\Framework\Event\Listeners
- * Responsibility: Coordinates the capture timeline milestone listener behavior within its module boundary.
+ * Responsibility: Records configured timeline events from event envelope payloads.
  */
 final class CaptureTimelineMilestoneListener implements EventListenerInterface
 {
     /**
-     * Handles the request workflow.
+     * Handles an event envelope.
+     *
+     * Responsibility: Handles an event envelope.
      */
     public function handle(EventEnvelope $event): void
     {

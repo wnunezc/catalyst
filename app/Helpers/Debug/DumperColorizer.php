@@ -38,6 +38,7 @@ namespace Catalyst\Helpers\Debug;
  * for both HTML and CLI output.
  *
  * @package Catalyst\Helpers\Debug;
+ * Responsibility: Resolves theme colors and applies them to dumper output for HTML or CLI rendering.
  */
 class DumperColorizer
 {
@@ -54,8 +55,9 @@ class DumperColorizer
     private ?array $themes = null;
 
     /**
-     * Constructor
+     * Initializes the object with the collaborators or state required for its responsibility.
      *
+     * Responsibility: Initializes the object with the collaborators or state required for its responsibility.
      * @param string $theme Initial color theme to use
      */
     public function __construct(string $theme = 'default')
@@ -66,8 +68,9 @@ class DumperColorizer
     }
 
     /**
-     * Lazy load themes when needed
+     * Lazy load themes when needed.
      *
+     * Responsibility: Lazy load themes when needed.
      * @return array<string, array<string, array<string, string>>>
      */
     private function getThemes(): array
@@ -83,8 +86,9 @@ class DumperColorizer
     }
     
     /**
-     * Validate the current theme and set to default if invalid
-     * 
+     * Validate the current theme and set to default if invalid.
+     *
+     * Responsibility: Validate the current theme and set to default if invalid.
      * @return void
      */
     private function validateTheme(): void
@@ -96,8 +100,9 @@ class DumperColorizer
     }
 
     /**
-     * Set the current color theme
+     * Set the current color theme.
      *
+     * Responsibility: Stores the active dumper theme after validating it against available palettes.
      * @param string $theme Theme name
      * @return self
      */
@@ -115,8 +120,9 @@ class DumperColorizer
     }
 
     /**
-     * Get the current theme name
+     * Get the current theme name.
      *
+     * Responsibility: Exposes the active dumper theme key used by color resolution.
      * @return string
      */
     public function getTheme(): string
@@ -125,8 +131,9 @@ class DumperColorizer
     }
 
     /**
-     * Get all available theme names
+     * Get all available theme names.
      *
+     * Responsibility: Get all available theme names.
      * @return array<string> List of available theme names
      */
     public function getAvailableThemes(): array
@@ -137,8 +144,9 @@ class DumperColorizer
     }
 
     /**
-     * Get the color for a specific type in the current theme
+     * Get the color for a specific type in the current theme.
      *
+     * Responsibility: Resolves the configured color value for a dumper type in the active theme.
      * @param string $type Color type (string, number, boolean, etc.)
      * @param bool $isHtml Whether to return HTML or CLI color
      * @return string Color value
@@ -155,8 +163,9 @@ class DumperColorizer
     }
 
     /**
-     * Get background color for the current theme
+     * Get background color for the current theme.
      *
+     * Responsibility: Get background color for the current theme.
      * @return string HTML color code
      */
     public function getBackgroundColor(): string
@@ -166,8 +175,9 @@ class DumperColorizer
     }
 
     /**
-     * Get text color for the current theme
+     * Get text color for the current theme.
      *
+     * Responsibility: Get text color for the current theme.
      * @return string HTML color code
      */
     public function getTextColor(): string
@@ -179,6 +189,7 @@ class DumperColorizer
     /**
      * Get all HTML colors for the current theme keyed by logical color type.
      *
+     * Responsibility: Get all HTML colors for the current theme keyed by logical color type.
      * @return array<string, string>
      */
     public function getHtmlColors(): array
@@ -195,8 +206,9 @@ class DumperColorizer
     }
 
     /**
-     * Get header background color for the current theme
+     * Get header background color for the current theme.
      *
+     * Responsibility: Get header background color for the current theme.
      * @return string HTML color code
      */
     public function getHeaderColor(): string
@@ -206,8 +218,9 @@ class DumperColorizer
     }
 
     /**
-     * Apply color to text based on type
+     * Apply color to text based on type.
      *
+     * Responsibility: Apply color to text based on type.
      * @param string $text Text to colorize
      * @param string $type Color type (string, number, boolean, etc.)
      * @param bool $isHtml Whether to format for HTML or CLI
@@ -226,8 +239,9 @@ class DumperColorizer
     }
 
     /**
-     * Get the type color based on the variable type
+     * Get the type color based on the variable type.
      *
+     * Responsibility: Maps a PHP runtime value to the dumper color configured for its detected type.
      * @param string $type Variable type
      * @param bool $isHtml Whether to format for HTML
      * @return string Type name for colorizing

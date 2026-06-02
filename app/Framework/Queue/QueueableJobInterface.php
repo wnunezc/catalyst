@@ -31,44 +31,59 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Queue;
 
 /**
- * Defines the Queueable Job Interface interface contract.
+ * Defines the contract required for jobs executed by the framework queue.
  *
  * @package Catalyst\Framework\Queue
- * Responsibility: Coordinates the queueable job interface behavior within its module boundary.
+ * Responsibility: Standardizes execution, queue routing, retry policy, and payload serialization for queued work.
  */
 interface QueueableJobInterface
 {
     /**
-     * Handles the request workflow.
+     * Executes the queued work.
+     *
+     * Responsibility: Executes the queued work.
      */
     public function handle(): void;
 
     /**
-     * Handles the display name workflow.
+     * Returns the diagnostic label shown for the queued job.
+     *
+     * Responsibility: Returns the diagnostic label shown for the queued job.
      */
     public function displayName(): string;
 
     /**
-     * Handles the queue name workflow.
+     * Returns the queue where the job should be dispatched.
+     *
+     * Responsibility: Returns the queue where the job should be dispatched.
      */
     public function queueName(): string;
 
     /**
-     * Handles the max attempts workflow.
+     * Returns the maximum number of processing attempts.
+     *
+     * Responsibility: Returns the maximum number of processing attempts.
      */
     public function maxAttempts(): int;
 
     /**
-     * Handles the backoff seconds workflow.
+     * Returns the retry delay in seconds after a failed attempt.
+     *
+     * Responsibility: Returns the retry delay in seconds after a failed attempt.
      */
     public function backoffSeconds(): int;
 
     /**
+     * Exports the job state required to reconstruct it later.
+     *
+     * Responsibility: Exports the job state required to reconstruct it later.
      * @return array<string, mixed>
      */
     public function toPayload(): array;
 
     /**
+     * Reconstructs a job from its persisted payload.
+     *
      * @param array<string, mixed> $payload
      */
     public static function fromPayload(array $payload): static;

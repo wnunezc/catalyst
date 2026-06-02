@@ -39,10 +39,10 @@ use Catalyst\Helpers\Log\Logger;
 use Exception;
 
 /**
- * Defines the Metadata Field Repository class contract.
+ * Query and persistence repository for metadata field definitions.
  *
  * @package Catalyst\Framework\Metadata
- * Responsibility: Coordinates the metadata field repository behavior within its module boundary.
+ * Responsibility: Read, persist and delete tenant-scoped metadata field definitions.
  */
 final class MetadataFieldRepository
 {
@@ -52,7 +52,9 @@ final class MetadataFieldRepository
     private Logger $logger;
 
     /**
-     * Initializes the Metadata Field Repository instance.
+     * Resolve database and logging collaborators.
+     *
+     * Responsibility: Resolve database and logging collaborators.
      */
     protected function __construct()
     {
@@ -61,6 +63,9 @@ final class MetadataFieldRepository
     }
 
     /**
+     * Search tenant metadata field definitions with pagination and filters.
+     *
+     * Responsibility: Search tenant metadata field definitions with pagination and filters.
      * @param array<string, mixed> $criteria
      * @return array{rows: array<int, array<string, mixed>>, total: int}
      */
@@ -125,6 +130,9 @@ final class MetadataFieldRepository
     }
 
     /**
+     * Return active field definitions for one resource key.
+     *
+     * Responsibility: Return active field definitions for one resource key.
      * @return array<int, array<string, mixed>>
      */
     public function activeForResource(string $resourceKey): array
@@ -151,6 +159,9 @@ final class MetadataFieldRepository
     }
 
     /**
+     * Find one tenant field definition and hydrate persisted option data.
+     *
+     * Responsibility: Find one tenant field definition and hydrate persisted option data.
      * @return array<string, mixed>|null
      */
     public function find(int $id): ?array
@@ -176,7 +187,9 @@ final class MetadataFieldRepository
     }
 
     /**
-     * Finds the requested record.
+     * Find one metadata field definition ORM model by identifier.
+     *
+     * Responsibility: Find one metadata field definition ORM model by identifier.
      */
     public function findModel(int $id): ?MetadataFieldDefinition
     {
@@ -184,7 +197,9 @@ final class MetadataFieldRepository
     }
 
     /**
-     * Handles the exists field key workflow.
+     * Determine whether a field key is already used on a resource.
+     *
+     * Responsibility: Determine whether a field key is already used on a resource.
      */
     public function existsFieldKey(string $resourceKey, string $fieldKey, ?int $ignoreId = null): bool
     {
@@ -212,6 +227,9 @@ final class MetadataFieldRepository
     }
 
     /**
+     * Persist a metadata field definition from normalized payload data.
+     *
+     * Responsibility: Persist a metadata field definition from normalized payload data.
      * @param array<string, mixed> $payload
      */
     public function persist(array $payload, ?MetadataFieldDefinition $definition = null): MetadataFieldDefinition
@@ -224,7 +242,9 @@ final class MetadataFieldRepository
     }
 
     /**
-     * Handles the delete workflow.
+     * Delete a metadata field definition and its stored values.
+     *
+     * Responsibility: Delete a metadata field definition and its stored values.
      */
     public function delete(MetadataFieldDefinition $definition): void
     {
@@ -242,6 +262,9 @@ final class MetadataFieldRepository
     }
 
     /**
+     * Hydrate a database row into normalized definition data.
+     *
+     * Responsibility: Hydrate a database row into normalized definition data.
      * @param array<string, mixed> $row
      * @return array<string, mixed>
      */
@@ -273,7 +296,9 @@ final class MetadataFieldRepository
     }
 
     /**
-     * Resolves the requested value.
+     * Resolve an allowed metadata definition sort column.
+     *
+     * Responsibility: Resolve an allowed metadata definition sort column.
      */
     private function resolveSortColumn(string $sort): string
     {
@@ -284,7 +309,9 @@ final class MetadataFieldRepository
     }
 
     /**
-     * Resolves the requested value.
+     * Resolve a normalized SQL sort direction.
+     *
+     * Responsibility: Resolve a normalized SQL sort direction.
      */
     private function resolveSortDirection(string $direction): string
     {
@@ -292,7 +319,9 @@ final class MetadataFieldRepository
     }
 
     /**
-     * Handles the nullable lower string workflow.
+     * Normalize an optional lowercase string value.
+     *
+     * Responsibility: Normalize an optional lowercase string value.
      */
     private function nullableLowerString(mixed $value): ?string
     {
@@ -302,7 +331,9 @@ final class MetadataFieldRepository
     }
 
     /**
-     * Handles the current tenant id workflow.
+     * Return the current required tenant identifier.
+     *
+     * Responsibility: Return the current required tenant identifier.
      */
     private function currentTenantId(): int
     {

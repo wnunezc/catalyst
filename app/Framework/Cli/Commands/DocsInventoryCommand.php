@@ -37,17 +37,20 @@ use Catalyst\Framework\Documentation\RuntimeInventoryGenerator;
 use RuntimeException;
 
 /**
- * Defines the Docs Inventory Command class contract.
+ * docs:inventory CLI command.
+ *
+ * Responsibility: Runs the docs:inventory command to Generate the symbol, template and script inventory used by the documentation contract.
  *
  * @package Catalyst\Framework\Cli\Commands
- * Responsibility: Coordinates the docs inventory command behavior within its module boundary.
  */
 final class DocsInventoryCommand extends AbstractCommand
 {
     private const string DEFAULT_OUTPUT = PD . DS . 'docs' . DS . 'runtime-inventory.md';
 
     /**
-     * Returns the name value.
+     * Returns the command name registered in the CLI registry.
+     *
+     * Responsibility: Returns the command name registered in the CLI registry.
      */
     public function getName(): string
     {
@@ -55,14 +58,21 @@ final class DocsInventoryCommand extends AbstractCommand
     }
 
     /**
-     * Returns the description value.
+     * Returns the short help text shown for this command.
+     *
+     * Responsibility: Returns the short help text shown for this command.
      */
     public function getDescription(): string
     {
         return 'Generate the symbol, template and script inventory used by the documentation contract';
     }
 
-    /** @return Option[] */
+    /**
+     * Defines the accepted option schema for this command.
+     *
+     * Responsibility: Defines the accepted option schema for this command.
+     * @return Option[]
+     */
     public function getOptions(): array
     {
         return [
@@ -73,7 +83,9 @@ final class DocsInventoryCommand extends AbstractCommand
     }
 
     /**
-     * Executes the service workflow.
+     * Runs the command workflow using parsed CLI arguments.
+     *
+     * Responsibility: Runs the command workflow using parsed CLI arguments.
      */
     public function execute(ArgumentBag $args): int
     {

@@ -34,12 +34,13 @@ use Catalyst\Helpers\Exceptions\MailException;
 use InvalidArgumentException;
 
 /**
- * Email message with a fluent builder interface
+ * Fluent builder for one outgoing email message.
  *
- * Represents a single outgoing email. Configure it with chained calls and
- * dispatch via send() or pass it directly to MailManager::send().
+ * Collects sender, recipients, body, attachments and headers before delegating
+ * delivery to the bound mail manager.
  *
  * @package Catalyst\Framework\Mail
+ * Responsibility: Hold and validate per-message mail state for PHPMailer delivery.
  */
 class MailMessage
 {
@@ -104,6 +105,9 @@ class MailMessage
     protected bool $isBulk = false;
 
     /**
+     * Initializes the object with the collaborators or state required for its responsibility.
+     *
+     * Responsibility: Initializes the object with the collaborators or state required for its responsibility.
      * @param MailManager $mailManager Manager that will send this message
      */
     public function __construct(MailManager $mailManager)
@@ -112,10 +116,9 @@ class MailMessage
     }
 
     /**
-     * Override the sender address for this message
+     * Override the sender identity for this message.
      *
-     * If not called the MailManager's configured from_address/from_name are used.
-     *
+     * Responsibility: Override the sender identity for this message.
      * @param string      $address Sender email address
      * @param string|null $name    Sender display name
      * @return self
@@ -132,12 +135,9 @@ class MailMessage
     }
 
     /**
-     * Set primary recipient(s)
+     * Add primary recipients to the message.
      *
-     * Accepts a single address string, or an array in two forms:
-     *   - Indexed: ['user@example.com', ...]
-     *   - Associative: ['user@example.com' => 'Display Name', ...]
-     *
+     * Responsibility: Add primary recipients to the message.
      * @param array|string $address Email address or array of recipients
      * @param string|null  $name    Display name (only used when $address is a string)
      * @return self
@@ -164,8 +164,9 @@ class MailMessage
     }
 
     /**
-     * Set CC recipient(s)
+     * Add carbon-copy recipients to the message.
      *
+     * Responsibility: Add carbon-copy recipients to the message.
      * @param array|string $address Email address or array of recipients
      * @param string|null  $name    Display name
      * @return self
@@ -189,8 +190,9 @@ class MailMessage
     }
 
     /**
-     * Set BCC recipient(s)
+     * Add blind-carbon-copy recipients to the message.
      *
+     * Responsibility: Add blind-carbon-copy recipients to the message.
      * @param array|string $address Email address or array of recipients
      * @param string|null  $name    Display name
      * @return self
@@ -214,8 +216,9 @@ class MailMessage
     }
 
     /**
-     * Set the reply-to address
+     * Set the reply-to identity for the message.
      *
+     * Responsibility: Stores the reply-to address and display name used by the outgoing message.
      * @param string      $address Email address
      * @param string|null $name    Display name
      * @return self
@@ -232,8 +235,9 @@ class MailMessage
     }
 
     /**
-     * Set the message subject
+     * Set the message subject line.
      *
+     * Responsibility: Stores the subject line used when the mail message is sent.
      * @param string $subject Subject text
      * @return self
      */
@@ -244,8 +248,9 @@ class MailMessage
     }
 
     /**
-     * Set the HTML body directly
+     * Set the HTML body directly.
      *
+     * Responsibility: Stores trusted HTML body content supplied directly to the message builder.
      * @param string $html HTML content
      * @return self
      */
@@ -256,8 +261,9 @@ class MailMessage
     }
 
     /**
-     * Set the plain text body directly
+     * Set the plain-text body directly.
      *
+     * Responsibility: Stores plain-text body content supplied directly to the message builder.
      * @param string $text Plain text content
      * @return self
      */
@@ -268,11 +274,9 @@ class MailMessage
     }
 
     /**
-     * Set body content — auto-detects HTML vs plain text
+     * Set body content and derive text fallback when HTML is detected.
      *
-     * If the content contains HTML tags it is stored as HTML and a plain-text
-     * fallback is generated via strip_tags(). Otherwise it is stored as text.
-     *
+     * Responsibility: Set body content and derive text fallback when HTML is detected.
      * @param string $content Message body
      * @return self
      */
@@ -291,10 +295,9 @@ class MailMessage
     }
 
     /**
-     * Populate the body from a named email template
+     * Populate the message body from a named template or explicit template path.
      *
-     * Templates live under bootstrap/template/email/ by default.
-     *
+     * Responsibility: Populate the message body from a named template or explicit template path.
      * @param string $template Template name or file path
      * @param array  $variables Variables passed to the template
      * @param bool   $isPath   True if $template is an absolute file path
@@ -316,8 +319,9 @@ class MailMessage
     }
 
     /**
-     * Attach a file
+     * Attach a regular file to the message.
      *
+     * Responsibility: Attach a regular file to the message.
      * @param string      $path     Absolute path to the file
      * @param string|null $name     Display filename (null = basename)
      * @param string      $mimeType MIME type (empty = auto-detect)
@@ -343,14 +347,13 @@ class MailMessage
     }
 
     /**
-     * Attach an inline (embedded) image
+     * Attach an inline file with a content ID.
      *
-     * Reference it in HTML as <img src="cid:{$cid}">.
-     *
+     * Responsibility: Attach an inline file with a content ID.
      * @param string      $path     Absolute path to the image file
-     * @param string      $cid      Content-ID (e.g. "logo@catalyst")
-     * @param string|null $name     Display filename (null = basename)
-     * @param string      $mimeType MIME type (empty = auto-detect)
+     * @param string      $cid      Content-ID for the embedded file
+     * @param string|null $name     Display filename
+     * @param string      $mimeType MIME type
      * @return self
      * @throws MailException If the file does not exist
      */
@@ -373,11 +376,9 @@ class MailMessage
     }
 
     /**
-     * Mark this message as bulk/marketing email
+     * Mark the message for bulk-mail headers during delivery.
      *
-     * Bulk emails get Precedence: bulk and List-Unsubscribe headers.
-     * Transactional emails (default) get X-Priority and Importance headers instead.
-     *
+     * Responsibility: Mark the message for bulk-mail headers during delivery.
      * @return self
      */
     public function bulk(): self
@@ -387,8 +388,9 @@ class MailMessage
     }
 
     /**
-     * Add a custom mail header
+     * Add a custom mail header to the message.
      *
+     * Responsibility: Add a custom mail header to the message.
      * @param string $name  Header name
      * @param string $value Header value
      * @return self
@@ -400,8 +402,9 @@ class MailMessage
     }
 
     /**
-     * Dispatch the message via the bound MailManager
+     * Validate and dispatch the message through the bound manager.
      *
+     * Responsibility: Validate and dispatch the message through the bound manager.
      * @return bool True on success
      * @throws MailException If validation fails or sending fails
      */
@@ -414,7 +417,9 @@ class MailMessage
     // --- Getters (used by MailManager) ---------------------------------------
 
     /**
-     * Returns the from value.
+     * Return the message sender override.
+     *
+     * Responsibility: Return the message sender override.
      */
     public function getFrom(): ?array
     {
@@ -422,7 +427,9 @@ class MailMessage
     }
 
     /**
-     * Returns the to value.
+     * Return primary recipients.
+     *
+     * Responsibility: Return primary recipients.
      */
     public function getTo(): array
     {
@@ -430,7 +437,9 @@ class MailMessage
     }
 
     /**
-     * Returns the cc value.
+     * Return carbon-copy recipients.
+     *
+     * Responsibility: Return carbon-copy recipients.
      */
     public function getCc(): array
     {
@@ -438,7 +447,9 @@ class MailMessage
     }
 
     /**
-     * Returns the bcc value.
+     * Return blind-carbon-copy recipients.
+     *
+     * Responsibility: Return blind-carbon-copy recipients.
      */
     public function getBcc(): array
     {
@@ -446,7 +457,9 @@ class MailMessage
     }
 
     /**
-     * Returns the reply to value.
+     * Return the reply-to identity.
+     *
+     * Responsibility: Return the reply-to identity.
      */
     public function getReplyTo(): ?array
     {
@@ -454,7 +467,9 @@ class MailMessage
     }
 
     /**
-     * Returns the subject value.
+     * Return the subject line.
+     *
+     * Responsibility: Return the subject line.
      */
     public function getSubject(): string
     {
@@ -462,7 +477,9 @@ class MailMessage
     }
 
     /**
-     * Returns the html body value.
+     * Return the HTML body.
+     *
+     * Responsibility: Return the HTML body.
      */
     public function getHtmlBody(): ?string
     {
@@ -470,7 +487,9 @@ class MailMessage
     }
 
     /**
-     * Returns the text body value.
+     * Return the plain-text body.
+     *
+     * Responsibility: Return the plain-text body.
      */
     public function getTextBody(): ?string
     {
@@ -478,7 +497,9 @@ class MailMessage
     }
 
     /**
-     * Returns the attachments value.
+     * Return regular and inline attachments.
+     *
+     * Responsibility: Return regular and inline attachments.
      */
     public function getAttachments(): array
     {
@@ -486,7 +507,9 @@ class MailMessage
     }
 
     /**
-     * Returns the headers value.
+     * Return custom message headers.
+     *
+     * Responsibility: Return custom message headers.
      */
     public function getHeaders(): array
     {
@@ -494,7 +517,9 @@ class MailMessage
     }
 
     /**
-     * Determines whether is Html.
+     * Determine whether the message has an HTML body.
+     *
+     * Responsibility: Determine whether the message has an HTML body.
      */
     public function isHtml(): bool
     {
@@ -502,7 +527,9 @@ class MailMessage
     }
 
     /**
-     * Determines whether is Bulk.
+     * Determine whether the message should use bulk-mail headers.
+     *
+     * Responsibility: Determine whether the message should use bulk-mail headers.
      */
     public function isBulk(): bool
     {
@@ -512,8 +539,9 @@ class MailMessage
     // --- Internal helpers ----------------------------------------------------
 
     /**
-     * Validate message completeness before sending
+     * Validate required recipients, subject and body before sending.
      *
+     * Responsibility: Validate required recipients, subject and body before sending.
      * @throws MailException If recipients, subject, or body are missing
      */
     protected function validate(): void
@@ -532,8 +560,9 @@ class MailMessage
     }
 
     /**
-     * Validate email format and reject known non-deliverable domains
+     * Validate address syntax and block known non-deliverable domains.
      *
+     * Responsibility: Validate address syntax and block known non-deliverable domains.
      * @param string $email Email address to validate
      * @throws InvalidArgumentException If format is invalid or domain is blocked
      */
@@ -552,8 +581,9 @@ class MailMessage
     }
 
     /**
-     * Append a validated recipient to a list
+     * Append a validated recipient entry to one recipient list.
      *
+     * Responsibility: Append a validated recipient entry to one recipient list.
      * @param array       &$list Recipient list (to, cc, or bcc)
      * @param string       $email Email address
      * @param string|null  $name  Display name

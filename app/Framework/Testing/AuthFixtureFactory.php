@@ -34,14 +34,17 @@ use InvalidArgumentException;
 use JsonException;
 
 /**
- * Defines the Auth Fixture Factory class contract.
+ * Builds normalized database payloads for authentication fixtures.
  *
  * @package Catalyst\Framework\Testing
- * Responsibility: Coordinates the auth fixture factory behavior within its module boundary.
+ * Responsibility: Converts fixture definitions into persistence-ready user and MFA payloads.
  */
 final class AuthFixtureFactory
 {
     /**
+     * Builds a user insert payload from fixture data.
+     *
+     * Responsibility: Builds a user insert payload from fixture data.
      * @param array<string, mixed> $user
      * @return array<string, mixed>
      */
@@ -66,6 +69,9 @@ final class AuthFixtureFactory
     }
 
     /**
+     * Builds an MFA mutation payload for a fixture user.
+     *
+     * Responsibility: Builds an MFA mutation payload for a fixture user.
      * @param array<string, mixed> $fixture
      * @return array<string, mixed>
      */

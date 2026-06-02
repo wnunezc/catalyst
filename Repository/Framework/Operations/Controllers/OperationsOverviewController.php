@@ -41,15 +41,17 @@ use Catalyst\Framework\Plugin\PluginManager;
 use Catalyst\Framework\Tenancy\TenancyManager;
 
 /**
- * Defines the Operations Overview Controller class contract.
+ * Presents a consolidated overview of platform operations state.
  *
  * @package Catalyst\Repository\Operations\Controllers
- * Responsibility: Coordinates the operations overview controller behavior within its module boundary.
+ * Responsibility: Aggregates operational summaries for the administration dashboard.
  */
 final class OperationsOverviewController extends AbstractOperationsController
 {
     /**
-     * Handles the index workflow.
+     * Renders the operations dashboard with platform summary metrics.
+     *
+     * Responsibility: Renders the operations dashboard with platform summary metrics.
      */
     public function index(Request $request): Response
     {

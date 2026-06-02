@@ -34,10 +34,10 @@ use DateTimeImmutable;
 use DateTimeZone;
 
 /**
- * Defines the Event Envelope class contract.
+ * Immutable payload container for framework events.
  *
  * @package Catalyst\Entities
- * Responsibility: Coordinates the event envelope behavior within its module boundary.
+ * Responsibility: Carries event name, payload, metadata, identifier, and occurrence timestamp across dispatch boundaries.
  */
 final class EventEnvelope
 {
@@ -45,6 +45,9 @@ final class EventEnvelope
     public readonly DateTimeImmutable $occurredAt;
 
     /**
+     * Initializes an event envelope with generated identity and UTC timestamp defaults.
+     *
+     * Responsibility: Initializes an event envelope with generated identity and UTC timestamp defaults.
      * @param array<string, mixed> $payload
      * @param array<string, mixed> $meta
      */
@@ -60,6 +63,8 @@ final class EventEnvelope
     }
 
     /**
+     * Creates a named event envelope from payload and metadata arrays.
+     *
      * @param array<string, mixed> $payload
      * @param array<string, mixed> $meta
      */
@@ -69,13 +74,10 @@ final class EventEnvelope
     }
 
     /**
+     * Serializes the event envelope for persistence or queue transport. id:string, name:string, payload:array<string, mixed>, meta:array<string, mixed>, occurred_at:string }.
+     *
+     * Responsibility: Serializes the event envelope for persistence or queue transport. id:string, name:string, payload:array<string, mixed>, meta:array<string, mixed>, occurred_at:string }.
      * @return array{
-     *   id:string,
-     *   name:string,
-     *   payload:array<string, mixed>,
-     *   meta:array<string, mixed>,
-     *   occurred_at:string
-     * }
      */
     public function toArray(): array
     {
@@ -89,6 +91,8 @@ final class EventEnvelope
     }
 
     /**
+     * Rehydrates an event envelope from serialized event data.
+     *
      * @param array{
      *   id?:string,
      *   name:string,

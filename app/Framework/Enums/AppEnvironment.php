@@ -33,11 +33,6 @@ namespace Catalyst\Framework\Enums;
 /**
  * Defines the valid application environments accepted by Catalyst.
  *
- * Usage in application/framework code (after Composer autoload):
- *
- *   if (AppEnvironment::current() === AppEnvironment::PRODUCTION) { ... }
- *   if (AppEnvironment::current()->allowsDebug()) { ... }
- *
  * For bootstrap-phase checks (before autoload), use the PHP constants
  * defined in env-constant.php: IS_DEVELOPMENT, IS_STAGING, IS_TESTING, IS_PRODUCTION.
  *
@@ -48,6 +43,7 @@ namespace Catalyst\Framework\Enums;
  *   production   — live environment; no debug, no dumps, errors logged only
  *
  * @package Catalyst\Framework\Enums
+ * Responsibility: Normalizes environment names and exposes environment capability checks.
  */
 enum AppEnvironment: string
 {
@@ -90,6 +86,8 @@ enum AppEnvironment: string
 
     /**
      * Whether this environment enables debug output and error display.
+     *
+     * Responsibility: Whether this environment enables debug output and error display.
      */
     public function allowsDebug(): bool
     {
@@ -98,6 +96,8 @@ enum AppEnvironment: string
 
     /**
      * Whether this environment runs in production-like mode (no debug tools).
+     *
+     * Responsibility: Whether this environment runs in production-like mode (no debug tools).
      */
     public function isProductionLike(): bool
     {

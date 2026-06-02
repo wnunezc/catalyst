@@ -36,6 +36,7 @@ namespace Catalyst\Helpers\Validation\Rules;
  * Rules: email, url, date, boolean
  *
  * @package Catalyst\Helpers\Validation\Rules
+ * Responsibility: Validates common scalar formats such as email, URL, date and boolean values.
  */
 class FormatRules
 {

@@ -34,10 +34,10 @@ use Catalyst\Framework\Localization\LocalizationManager;
 use Catalyst\Helpers\Config\AppEntryCatalog;
 
 /**
- * Defines the Settings Page View Context class contract.
+ * Provides normalized configuration values and labels to settings view factories.
  *
  * @package Catalyst\Repository\Settings\Support
- * Responsibility: Coordinates the settings page view context behavior within its module boundary.
+ * Responsibility: Exposes setup sections, translated notices and option maps without leaking view assembly concerns.
  */
 final class SettingsPageViewContext
 {
@@ -98,6 +98,8 @@ final class SettingsPageViewContext
 
     /**
      * Initializes the Settings Page View Context instance.
+     *
+     * Responsibility: Initializes the Settings Page View Context instance.
      */
     public function __construct(array $scope)
     {
@@ -115,7 +117,9 @@ final class SettingsPageViewContext
     }
 
     /**
-     * Handles the t workflow.
+     * Translates a settings label with optional replacements.
+     *
+     * Responsibility: Translates a settings label with optional replacements.
      */
     public function t(string $key, array $replace = []): string
     {
@@ -123,6 +127,9 @@ final class SettingsPageViewContext
     }
 
     /**
+     * Returns application settings.
+     *
+     * Responsibility: Returns application settings.
      * @return array<string, mixed>
      */
     public function app(): array
@@ -131,6 +138,9 @@ final class SettingsPageViewContext
     }
 
     /**
+     * Returns database settings.
+     *
+     * Responsibility: Returns database settings.
      * @return array<string, mixed>
      */
     public function db(): array
@@ -139,6 +149,9 @@ final class SettingsPageViewContext
     }
 
     /**
+     * Returns mail settings.
+     *
+     * Responsibility: Returns mail settings.
      * @return array<string, mixed>
      */
     public function mail(): array
@@ -147,6 +160,9 @@ final class SettingsPageViewContext
     }
 
     /**
+     * Returns transfer settings.
+     *
+     * Responsibility: Returns transfer settings.
      * @return array<string, mixed>
      */
     public function ftp(): array
@@ -155,6 +171,9 @@ final class SettingsPageViewContext
     }
 
     /**
+     * Returns session settings.
+     *
+     * Responsibility: Returns session settings.
      * @return array<string, mixed>
      */
     public function session(): array
@@ -163,6 +182,9 @@ final class SettingsPageViewContext
     }
 
     /**
+     * Returns cache settings.
+     *
+     * Responsibility: Returns cache settings.
      * @return array<string, mixed>
      */
     public function cache(): array
@@ -171,6 +193,9 @@ final class SettingsPageViewContext
     }
 
     /**
+     * Returns logging settings.
+     *
+     * Responsibility: Returns logging settings.
      * @return array<string, mixed>
      */
     public function logging(): array
@@ -179,6 +204,9 @@ final class SettingsPageViewContext
     }
 
     /**
+     * Returns security settings.
+     *
+     * Responsibility: Returns security settings.
      * @return array<string, mixed>
      */
     public function security(): array
@@ -187,6 +215,9 @@ final class SettingsPageViewContext
     }
 
     /**
+     * Returns WebSocket settings.
+     *
+     * Responsibility: Returns WebSocket settings.
      * @return array<string, mixed>
      */
     public function websocket(): array
@@ -195,6 +226,9 @@ final class SettingsPageViewContext
     }
 
     /**
+     * Returns developer-tool compatibility settings.
+     *
+     * Responsibility: Returns developer-tool compatibility settings.
      * @return array<string, mixed>
      */
     public function devtools(): array
@@ -203,6 +237,9 @@ final class SettingsPageViewContext
     }
 
     /**
+     * Returns CORS settings.
+     *
+     * Responsibility: Returns CORS settings.
      * @return array<string, mixed>
      */
     public function cors(): array
@@ -211,7 +248,9 @@ final class SettingsPageViewContext
     }
 
     /**
-     * Determines whether is Development Entry Env.
+     * Determines whether development-only entry points may be selected.
+     *
+     * Responsibility: Determines whether development-only entry points may be selected.
      */
     public function isDevelopmentEntryEnv(): bool
     {
@@ -219,7 +258,9 @@ final class SettingsPageViewContext
     }
 
     /**
-     * Determines whether is Production Runtime Env.
+     * Determines whether production-only runtime options may be configured.
+     *
+     * Responsibility: Determines whether production-only runtime options may be configured.
      */
     public function isProductionRuntimeEnv(): bool
     {
@@ -227,6 +268,9 @@ final class SettingsPageViewContext
     }
 
     /**
+     * Returns translated environment options.
+     *
+     * Responsibility: Returns translated environment options.
      * @return array<string, string>
      */
     public function envMap(): array
@@ -240,6 +284,9 @@ final class SettingsPageViewContext
     }
 
     /**
+     * Returns available locale labels.
+     *
+     * Responsibility: Returns available locale labels.
      * @return array<string, string>
      */
     public function langMap(): array
@@ -248,6 +295,9 @@ final class SettingsPageViewContext
     }
 
     /**
+     * Returns mail encryption options.
+     *
+     * Responsibility: Returns mail encryption options.
      * @return array<string, string>
      */
     public function encMap(): array
@@ -261,6 +311,9 @@ final class SettingsPageViewContext
     }
 
     /**
+     * Returns session SameSite options.
+     *
+     * Responsibility: Returns session SameSite options.
      * @return array<string, string>
      */
     public function siteMap(): array
@@ -273,6 +326,9 @@ final class SettingsPageViewContext
     }
 
     /**
+     * Returns cache driver options.
+     *
+     * Responsibility: Returns cache driver options.
      * @return array<string, string>
      */
     public function drvMap(): array
@@ -285,6 +341,9 @@ final class SettingsPageViewContext
     }
 
     /**
+     * Returns logging channel options.
+     *
+     * Responsibility: Returns logging channel options.
      * @return array<string, string>
      */
     public function chanMap(): array
@@ -297,6 +356,9 @@ final class SettingsPageViewContext
     }
 
     /**
+     * Returns logging severity options.
+     *
+     * Responsibility: Returns logging severity options.
      * @return array<string, string>
      */
     public function lvlMap(): array
@@ -314,6 +376,9 @@ final class SettingsPageViewContext
     }
 
     /**
+     * Returns allowed primary application entry points.
+     *
+     * Responsibility: Returns allowed primary application entry points.
      * @return array<string, string>
      */
     public function entryMap(): array
@@ -322,6 +387,9 @@ final class SettingsPageViewContext
     }
 
     /**
+     * Returns allowed secondary application entry points.
+     *
+     * Responsibility: Returns allowed secondary application entry points.
      * @return array<string, string>
      */
     public function entrySecondaryMap(): array
@@ -331,7 +399,9 @@ final class SettingsPageViewContext
     }
 
     /**
-     * Handles the ftp notice workflow.
+     * Returns the transfer-configuration notice.
+     *
+     * Responsibility: Returns the transfer-configuration notice.
      */
     public function ftpNotice(): string
     {
@@ -339,7 +409,9 @@ final class SettingsPageViewContext
     }
 
     /**
-     * Handles the cache notice workflow.
+     * Returns the cache notice appropriate for the runtime environment.
+     *
+     * Responsibility: Returns the cache notice appropriate for the runtime environment.
      */
     public function cacheNotice(): string
     {
@@ -349,7 +421,9 @@ final class SettingsPageViewContext
     }
 
     /**
-     * Handles the devtools notice workflow.
+     * Returns the developer-tools compatibility notice.
+     *
+     * Responsibility: Returns the developer-tools compatibility notice.
      */
     public function devtoolsNotice(): string
     {
@@ -357,7 +431,9 @@ final class SettingsPageViewContext
     }
 
     /**
-     * Handles the app key preview workflow.
+     * Returns a masked application-key preview.
+     *
+     * Responsibility: Returns a masked application-key preview.
      */
     public function appKeyPreview(): string
     {
@@ -367,7 +443,9 @@ final class SettingsPageViewContext
     }
 
     /**
-     * Handles the cors origins workflow.
+     * Returns configured CORS origins as a comma-separated string.
+     *
+     * Responsibility: Returns configured CORS origins as a comma-separated string.
      */
     public function corsOrigins(): string
     {

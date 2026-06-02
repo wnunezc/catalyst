@@ -30,19 +30,14 @@ declare(strict_types=1);
 
 namespace Catalyst\Framework\Route;
 
-/**************************************************************************************
+/**
  * RouteCompiler class for compiling route patterns into regular expressions
  *
  * Responsible for parsing route patterns with parameters and generating
  * efficient regular expressions for matching URIs against routes.
  *
  * @package Catalyst\Framework\Route
- */
-/**
- * Defines the Route Compiler class contract.
- *
- * @package Catalyst\Framework\Route
- * Responsibility: Coordinates the route compiler behavior within its module boundary.
+ * Responsibility: Compiles route templates, optional segments, and parameter constraints into URI-matching regular expressions.
  */
 class RouteCompiler
 {

@@ -41,6 +41,7 @@ use RuntimeException;
  * code should never need to catch this exception.
  *
  * @package Catalyst\Helpers\Exceptions
+ * Responsibility: Provides bootstrap exceptions for missing, unreadable or invalid environment files.
  */
 class EnvironmentException extends RuntimeException
 {

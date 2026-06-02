@@ -42,10 +42,10 @@ use Catalyst\Helpers\Exceptions\ValidationException;
 use Catalyst\Helpers\Validation\Validator;
 
 /**
- * Defines the Automation Rule Request class contract.
+ * Validates automation rule create and update payloads.
  *
  * @package Catalyst\Repository\Automation\Requests
- * Responsibility: Coordinates the automation rule request behavior within its module boundary.
+ * Responsibility: Authorize automation mutations and enforce rule, JSON, temporal and action constraints.
  */
 final class AutomationRuleRequest extends FormRequest
 {
@@ -55,7 +55,9 @@ final class AutomationRuleRequest extends FormRequest
     private ?array $resolvedData = null;
 
     /**
-     * Handles the authorize workflow.
+     * Authorizes creation or update according to the routed automation rule identifier.
+     *
+     * Responsibility: Authorizes creation or update according to the routed automation rule identifier.
      */
     public function authorize(): bool
     {
@@ -67,6 +69,9 @@ final class AutomationRuleRequest extends FormRequest
     }
 
     /**
+     * Returns the automation rule fields accepted from input.
+     *
+     * Responsibility: Returns the automation rule fields accepted from input.
      * @return string[]
      */
     public function only(): array
@@ -87,6 +92,9 @@ final class AutomationRuleRequest extends FormRequest
     }
 
     /**
+     * Declares validation rules for automation rule input.
+     *
+     * Responsibility: Declares validation rules for automation rule input.
      * @return array<string, string>
      */
     public function rules(): array
@@ -107,6 +115,9 @@ final class AutomationRuleRequest extends FormRequest
     }
 
     /**
+     * Returns translated labels for automation rule validation errors.
+     *
+     * Responsibility: Returns translated labels for automation rule validation errors.
      * @return array<string, string>
      */
     public function labels(): array
@@ -127,7 +138,9 @@ final class AutomationRuleRequest extends FormRequest
     }
 
     /**
-     * Handles the sensitive resource key workflow.
+     * Identifies automation rules as the sensitivity policy resource.
+     *
+     * Responsibility: Identifies automation rules as the sensitivity policy resource.
      */
     protected function sensitiveResourceKey(): ?string
     {
@@ -135,6 +148,9 @@ final class AutomationRuleRequest extends FormRequest
     }
 
     /**
+     * Returns the validated automation rule payload, resolving it lazily.
+     *
+     * Responsibility: Returns the validated automation rule payload, resolving it lazily.
      * @return array<string, mixed>
      */
     public function validated(): array
@@ -147,6 +163,9 @@ final class AutomationRuleRequest extends FormRequest
     }
 
     /**
+     * Authorizes and validates the complete automation rule payload.
+     *
+     * Responsibility: Authorizes and validates the complete automation rule payload.
      * @throws ValidationException
      * @throws ForbiddenException
      */
@@ -174,6 +193,9 @@ final class AutomationRuleRequest extends FormRequest
     }
 
     /**
+     * Validates rule uniqueness, JSON payloads, timing and action-specific requirements.
+     *
+     * Responsibility: Validates rule uniqueness, JSON payloads, timing and action-specific requirements.
      * @param array<string, mixed> $data
      * @return array<string, string[]>
      */

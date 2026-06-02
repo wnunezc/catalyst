@@ -35,14 +35,19 @@ use Catalyst\Framework\Auth\AuthManager;
 use Catalyst\Framework\Auth\UserProvider;
 
 /**
- * Defines the Account Security Service class contract.
+ * Builds account security status view models.
  *
  * @package App\Surface\Account\Services
- * Responsibility: Coordinates the account security service behavior within its module boundary.
+ * Responsibility: Reports MFA state, open recovery request counts and recent recovery activity.
  */
 final class AccountSecurityService
 {
-    /** @return array<string, mixed> */
+    /**
+     * Returns MFA enablement and open recovery request counts for the signed-in user.
+     *
+     * Responsibility: Returns MFA enablement and open recovery request counts for the signed-in user.
+     * @return array<string, mixed>
+     */
     public function overview(): array
     {
         $user = AuthManager::getInstance()->user() ?? [];
@@ -57,7 +62,12 @@ final class AccountSecurityService
         ];
     }
 
-    /** @return array<string, mixed> */
+    /**
+     * Returns the signed-in user's recovery activity timeline data.
+     *
+     * Responsibility: Returns the signed-in user's recovery activity timeline data.
+     * @return array<string, mixed>
+     */
     public function activity(): array
     {
         $userId = (int) (AuthManager::getInstance()->id() ?? 0);

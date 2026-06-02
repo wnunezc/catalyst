@@ -40,10 +40,10 @@ use Catalyst\Framework\Traits\SingletonTrait;
 use RuntimeException;
 
 /**
- * Defines the Version Manager class contract.
+ * Captures and restores versioned framework resource snapshots.
  *
  * @package Catalyst\Framework\Versioning
- * Responsibility: Coordinates the version manager behavior within its module boundary.
+ * Responsibility: Computes snapshot differences and delegates restoration to resource owners.
  */
 final class VersionManager
 {
@@ -53,6 +53,8 @@ final class VersionManager
 
     /**
      * Initializes the Version Manager instance.
+     *
+     * Responsibility: Initializes the Version Manager instance.
      */
     protected function __construct()
     {
@@ -60,6 +62,9 @@ final class VersionManager
     }
 
     /**
+     * Captures a new resource snapshot and its difference from the previous version.
+     *
+     * Responsibility: Captures a new resource snapshot and its difference from the previous version.
      * @param array<string, mixed> $snapshot
      */
     public function capture(string $resourceKey, int $recordId, array $snapshot, ?string $summary = null): ContentVersion
@@ -81,6 +86,9 @@ final class VersionManager
     }
 
     /**
+     * Restores the resource represented by a captured version.
+     *
+     * Responsibility: Restores the resource represented by a captured version.
      * @return array<string, mixed>
      */
     public function restore(int $versionId): array
@@ -117,6 +125,9 @@ final class VersionManager
     }
 
     /**
+     * Computes changed keys between two snapshots.
+     *
+     * Responsibility: Computes changed keys between two snapshots.
      * @param array<string, mixed> $before
      * @param array<string, mixed> $after
      * @return array<string, array{before:mixed, after:mixed}>
@@ -143,6 +154,9 @@ final class VersionManager
     }
 
     /**
+     * Restores a document-template model from its snapshot.
+     *
+     * Responsibility: Restores a document-template model from its snapshot.
      * @param array<string, mixed> $snapshot
      */
     private function restoreDocumentTemplate(int $recordId, array $snapshot): void
@@ -158,6 +172,9 @@ final class VersionManager
     }
 
     /**
+     * Restores an automation-rule model from its snapshot.
+     *
+     * Responsibility: Restores an automation-rule model from its snapshot.
      * @param array<string, mixed> $snapshot
      */
     private function restoreAutomationRule(int $recordId, array $snapshot): void
@@ -173,6 +190,9 @@ final class VersionManager
     }
 
     /**
+     * Delegates catalog restoration to the catalog manager.
+     *
+     * Responsibility: Delegates catalog restoration to the catalog manager.
      * @param array<string, mixed> $snapshot
      */
     private function restoreCatalog(int $recordId, array $snapshot): void
