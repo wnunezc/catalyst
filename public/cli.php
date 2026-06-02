@@ -58,6 +58,7 @@ use Catalyst\Framework\Cli\Commands\MediaMvcRegressionCommand;
 use Catalyst\Framework\Cli\Commands\ModuleLocalizationRegressionCommand;
 use Catalyst\Framework\Cli\Commands\OperationsRequestsRegressionCommand;
 use Catalyst\Framework\Cli\Commands\RolesMvcRegressionCommand;
+use Catalyst\Framework\Cli\Commands\DocsInventoryCommand;
 use Catalyst\Framework\Cli\Commands\DocsSyncRuntimeCommand;
 use Catalyst\Framework\Cli\Commands\FixturesAuthCommand;
 use Catalyst\Framework\Cli\Commands\FeatureFlagsListCommand;
@@ -147,6 +148,7 @@ $registry
     ->register(new ModuleLocalizationRegressionCommand())
     ->register(new OperationsRequestsRegressionCommand())
     ->register(new RolesMvcRegressionCommand())
+    ->register(new DocsInventoryCommand())
     ->register(new FeatureFlagsListCommand())
     ->register(new FeatureFlagsSetCommand())
     ->register(new ExportDevelopmentOverlayCommand())

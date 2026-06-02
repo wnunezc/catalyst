@@ -356,14 +356,16 @@ Aplicar durante toda modificacion de codigo:
 - [x] **Task 6C.7: Normalizar contrato i18n de manifests**
   - Retirar correcciones posicionales fragiles para manifests activos y
     normalizar strings visibles App; mantener DevTools diferido.
-  - Estado: implementado y verificado / pendiente de revision del usuario y
-    consolidacion en commit.
+  - Estado: consolidado en `00487f6`.
   - Evidencia:
     `docs/audits/architecture-first/2026-06-02-6c4-6c7-runtime-normalization.md`.
 
-- [ ] **Task 6D.1: Cerrar contrato documental**
+- [x] **Task 6D.1: Cerrar contrato documental**
   - Definir indice hot/warm/cold, inventario verificable e inline docs por
     frontera de riesgo sin convertir `STRUCTURE.md` en catalogo exhaustivo.
+  - Estado: implementado y verificado.
+  - Evidencia:
+    `docs/audits/architecture-first/2026-06-02-6d1-documentation-contract.md`.
 
 - [ ] **Task 6D.2: Documentar contratos JS canonicos**
   - Cubrir inicializacion, DOM, eventos, payloads y supuestos CSP de scripts

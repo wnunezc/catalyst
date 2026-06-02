@@ -27,6 +27,7 @@ Este archivo enruta la documentacion de `catalyst` para que el contexto caliente
 - `docs/architecture.md` - mapa arquitectonico del framework
 - `docs/runtime-model.md` - entrada amplia al modelo runtime; enruta a `architecture.md`, `entry-points.md` y `kernel.md`
 - `docs/security-conventions.md` - CSP, vistas, JS, nonce, patrones `data-*`
+- `docs/documentation-contract.md` - contrato hot/warm/cold e inventarios generados
 - `docs/deployment.md` - checklist de seguridad previa a despliegue y empaquetado limpio
 - `docs/auth.md` - indice amplio de auth; enruta a `framework-auth.md` y `repository-auth.md`
 - `docs/database.md` - indice amplio de DB/ORM; enruta a `framework-database.md`
@@ -48,6 +49,7 @@ Este archivo enruta la documentacion de `catalyst` para que el contexto caliente
 - `docs/testing.md` - indice amplio de la superficie de verificacion vigente
 - `docs/quality-gate.md` - checks locales pre-commit/pre-push, bloqueantes y warnings aceptables
 - `docs/runtime-module-catalog.md` - catalogo vivo generado desde runtime/registries para modulos, guards, assets, settings y permisos
+- `docs/runtime-inventory.md` - inventario vivo generado de simbolos, templates y scripts
 - `docs/framework-auth.md` - Auth core
 - `docs/runtime-module-catalog.md` - catalogo vivo suficiente para leer surfaces, guards, permisos, assets y representative routes sin depender del snapshot histórico `222`
 - `docs/framework-geo.md` - Geo reusable primitive
@@ -93,7 +95,8 @@ Este archivo enruta la documentacion de `catalyst` para que el contexto caliente
 | quality gate, pre-commit/pre-push, checks CLI | `docs/quality-gate.md`, `TERMINAL.md`, `public/cli.php` |
 | bootstrap, routing, kernel, entry points | `docs/architecture.md`, `docs/entry-points.md`, `docs/kernel.md` |
 | setup/config | `docs/checklists/setup-completion-e2e.md`, `docs/helpers-config.md` |
-| clases existentes o nuevas | `STRUCTURE.md` |
+| clases existentes o nuevas | `STRUCTURE.md`, `docs/runtime-inventory.md` |
+| contrato documental, inventarios, hot/warm/cold | `docs/documentation-contract.md`, `docs/runtime-inventory.md`, `docs/runtime-module-catalog.md` |
 | API rapida de subsistemas | `API.md` |
 | historial tecnico | `docs/update-log.md` |
 | trazabilidad cerrada o historial de sesiones | `Knowledge/Obsidian-Vault/07-Summaries/`, `Knowledge/Obsidian-Vault/99-Archive/ai-context-heavy/` |
