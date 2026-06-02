@@ -47,7 +47,7 @@
    - Regla confirmada: `shell` describe layouts/composicion visual; no asumir que
      representa un modulo faltante.
 
-7. **Flujo futuro sin zips directos** — Activa.
+7. **Flujo futuro sin zips directos** — Completada por confirmacion explicita del usuario.
    - Checklist para revisar zips/parches en carpeta temporal.
    - Setup de primer arranque para otro desarrollador.
    - Instalacion reproducible como base para otros proyectos.
@@ -441,3 +441,10 @@ confiable para otros proyectos.
   - Estado: implementado y verificado.
   - Evidencia:
     `docs/audits/architecture-first/2026-06-02-7a-future-workflow.md`.
+
+### Phase 7 Closeout
+
+- [x] **Cerrar Phase 7 por suficiencia documental**
+  - Estado: completada por confirmacion explicita del usuario.
+  - Evidencia:
+    `docs/audits/architecture-first/2026-06-02-phase-7-closeout.md`.
