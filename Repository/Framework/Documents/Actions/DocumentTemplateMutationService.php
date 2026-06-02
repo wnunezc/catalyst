@@ -17,7 +17,8 @@ final class DocumentTemplateMutationService
     private Logger $logger;
 
     public function __construct(
-        private readonly DocumentTemplateManager $manager
+        private readonly DocumentTemplateManager $manager,
+        private readonly DocumentTemplateExportService $exportService
     ) {
         $this->logger = Logger::getInstance();
     }
@@ -52,7 +53,7 @@ final class DocumentTemplateMutationService
     public function export(DocumentTemplate $template, Request $request, array $payload): void
     {
         $this->assertClaim((int) $template->getKey(), $request);
-        $this->manager->export($template, $payload);
+        $this->exportService->export($template, $payload);
     }
 
     public function transition(DocumentTemplate $template, Request $request, string $transition, ?string $notes): void

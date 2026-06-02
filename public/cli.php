@@ -53,6 +53,7 @@ use Catalyst\Framework\Cli\Commands\AttachmentsListCommand;
 use Catalyst\Framework\Cli\Commands\AttachmentsSmokeCommand;
 use Catalyst\Framework\Cli\Commands\ApiTokensSmokeCommand;
 use Catalyst\Framework\Cli\Commands\AutomationMvcRegressionCommand;
+use Catalyst\Framework\Cli\Commands\DocumentsMvcRegressionCommand;
 use Catalyst\Framework\Cli\Commands\DocsSyncRuntimeCommand;
 use Catalyst\Framework\Cli\Commands\FixturesAuthCommand;
 use Catalyst\Framework\Cli\Commands\FeatureFlagsListCommand;
@@ -137,6 +138,7 @@ $registry
     ->register(new AttachmentsSmokeCommand())
     ->register(new ApiTokensSmokeCommand())
     ->register(new AutomationMvcRegressionCommand())
+    ->register(new DocumentsMvcRegressionCommand())
     ->register(new FeatureFlagsListCommand())
     ->register(new FeatureFlagsSetCommand())
     ->register(new ExportDevelopmentOverlayCommand())

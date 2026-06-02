@@ -9,7 +9,7 @@ use Catalyst\Helpers\Exceptions\ForbiddenException;
 use Catalyst\Helpers\Exceptions\ValidationException;
 use Catalyst\Helpers\Validation\Validator;
 
-final class DocumentPreviewPayloadRequest extends FormRequest
+class DocumentPreviewPayloadRequest extends FormRequest
 {
     /**
      * @var array<string, mixed>|null

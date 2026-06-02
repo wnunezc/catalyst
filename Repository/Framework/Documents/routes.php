@@ -7,6 +7,7 @@ use Catalyst\Framework\Middleware\RoleMiddleware;
 use Catalyst\Framework\Route\Router;
 use Catalyst\Framework\View\View;
 use Catalyst\Helpers\I18n\Translator;
+use Catalyst\Repository\Documents\Controllers\DocumentTemplateApiController;
 use Catalyst\Repository\Documents\Controllers\DocumentTemplateController;
 
 $router = Router::getInstance();
@@ -27,7 +28,7 @@ $router->post('/workspaces/document-templates/{id}/transition', [DocumentTemplat
 $router->post('/workspaces/document-templates/{id}/versions/{versionId}/restore', [DocumentTemplateController::class, 'restoreVersion'])->middleware($documentMiddleware)->throttle('admin_mutation');
 
 $apiMiddleware = [\Catalyst\Framework\Middleware\ApiTokenMiddleware::class];
-$router->get('/api/v1/document-templates', [DocumentTemplateController::class, 'apiIndex'])->middleware($apiMiddleware);
-$router->get('/api/v1/document-templates/{id}', [DocumentTemplateController::class, 'apiShow'])->middleware($apiMiddleware);
-$router->post('/api/v1/document-templates/{id}/preview', [DocumentTemplateController::class, 'apiPreview'])->middleware($apiMiddleware)->throttle('api_mutation');
-$router->post('/api/v1/document-templates/{id}/export', [DocumentTemplateController::class, 'apiExport'])->middleware($apiMiddleware)->throttle('api_mutation');
+$router->get('/api/v1/document-templates', [DocumentTemplateApiController::class, 'apiIndex'])->middleware($apiMiddleware);
+$router->get('/api/v1/document-templates/{id}', [DocumentTemplateApiController::class, 'apiShow'])->middleware($apiMiddleware);
+$router->post('/api/v1/document-templates/{id}/preview', [DocumentTemplateApiController::class, 'apiPreview'])->middleware($apiMiddleware)->throttle('api_mutation');
+$router->post('/api/v1/document-templates/{id}/export', [DocumentTemplateApiController::class, 'apiExport'])->middleware($apiMiddleware)->throttle('api_mutation');

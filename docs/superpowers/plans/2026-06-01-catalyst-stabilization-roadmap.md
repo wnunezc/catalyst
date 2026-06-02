@@ -321,8 +321,12 @@ Aplicar durante toda modificacion de codigo:
   - Evidencia:
     `docs/audits/architecture-first/2026-06-02-6c1-automation-mvc-refactor.md`.
 
-- [ ] **Task 6C.2: Refactor MVC de Documents**
+- [x] **Task 6C.2: Refactor MVC de Documents**
   - Aplicar TDD y separar web, API, preview/export, servicios y persistencia.
+  - Estado: implementado y verificado / pendiente de revision del usuario y
+    consolidacion en commit.
+  - Evidencia:
+    `docs/audits/architecture-first/2026-06-02-6c2-documents-mvc-refactor.md`.
 
 - [ ] **Task 6C.3: Planificar lotes restantes segun evidencia 6A**
   - Priorizar superficies por riesgo real antes de tocar codigo.
