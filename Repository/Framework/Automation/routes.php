@@ -8,6 +8,7 @@ use Catalyst\Framework\Middleware\RoleMiddleware;
 use Catalyst\Framework\Route\Router;
 use Catalyst\Framework\View\View;
 use Catalyst\Helpers\I18n\Translator;
+use Catalyst\Repository\Automation\Controllers\AutomationRuleApiController;
 use Catalyst\Repository\Automation\Controllers\AutomationRuleController;
 
 $router = Router::getInstance();
@@ -61,12 +62,12 @@ $router->post('/automation-rules/{id}/versions/{versionId}/restore', [Automation
 
 $apiMiddleware = [ApiTokenMiddleware::class];
 
-$router->get('/api/v1/automation-rules', [AutomationRuleController::class, 'apiIndex'])
+$router->get('/api/v1/automation-rules', [AutomationRuleApiController::class, 'apiIndex'])
     ->middleware($apiMiddleware);
 
-$router->get('/api/v1/automation-rules/{id}', [AutomationRuleController::class, 'apiShow'])
+$router->get('/api/v1/automation-rules/{id}', [AutomationRuleApiController::class, 'apiShow'])
     ->middleware($apiMiddleware);
 
-$router->post('/api/v1/automation-rules/{id}/run', [AutomationRuleController::class, 'apiRun'])
+$router->post('/api/v1/automation-rules/{id}/run', [AutomationRuleApiController::class, 'apiRun'])
     ->middleware($apiMiddleware)
     ->throttle('api_mutation');

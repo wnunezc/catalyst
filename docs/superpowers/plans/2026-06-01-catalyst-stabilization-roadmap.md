@@ -314,8 +314,12 @@ Aplicar durante toda modificacion de codigo:
   - Estado: implementado y verificado / pendiente de revision del usuario y
     consolidacion en commit.
 
-- [ ] **Task 6C.1: Refactor MVC de Automation**
+- [x] **Task 6C.1: Refactor MVC de Automation**
   - Aplicar TDD y separar web, API, servicios, Requests y persistencia.
+  - Estado: implementado y verificado / pendiente de revision del usuario y
+    consolidacion en commit.
+  - Evidencia:
+    `docs/audits/architecture-first/2026-06-02-6c1-automation-mvc-refactor.md`.
 
 - [ ] **Task 6C.2: Refactor MVC de Documents**
   - Aplicar TDD y separar web, API, preview/export, servicios y persistencia.
