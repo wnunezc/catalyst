@@ -2,8 +2,40 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Http;
 
+/**
+ * Defines the Redirect Target class contract.
+ *
+ * @package Catalyst\Framework\Http
+ * Responsibility: Coordinates the redirect target behavior within its module boundary.
+ */
 final class RedirectTarget
 {
     /**
@@ -17,6 +49,9 @@ final class RedirectTarget
         '/verify-email',
     ];
 
+    /**
+     * Handles the clean workflow.
+     */
     public static function clean(mixed $target, string $fallback = '/'): string
     {
         $fallback = self::fallbackPath($fallback);
@@ -42,6 +77,9 @@ final class RedirectTarget
             : $path;
     }
 
+    /**
+     * Handles the login url workflow.
+     */
     public static function loginUrl(mixed $target, string $fallback = '/'): string
     {
         $safeTarget = self::clean($target, $fallback);
@@ -54,6 +92,9 @@ final class RedirectTarget
         return '/login?redirect=' . str_replace('%2F', '/', rawurlencode($safeTarget));
     }
 
+    /**
+     * Handles the fallback path workflow.
+     */
     private static function fallbackPath(string $fallback): string
     {
         $fallback = trim($fallback);

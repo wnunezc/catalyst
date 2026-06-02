@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Repository\Roles\Controllers;
 
 use Catalyst\Framework\Admin\Grid\DataGrid;
@@ -11,11 +37,20 @@ use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
 
+/**
+ * Defines the User Roles Controller class contract.
+ *
+ * @package Catalyst\Repository\Roles\Controllers
+ * Responsibility: Coordinates the user roles controller behavior within its module boundary.
+ */
 class UserRolesController extends Controller
 {
     private RoleRepository $repo;
     private UserDirectoryRepository $users;
 
+    /**
+     * Initializes the User Roles Controller instance.
+     */
     public function __construct(RoleRepository $repo, UserDirectoryRepository $users)
     {
         parent::__construct();
@@ -23,6 +58,9 @@ class UserRolesController extends Controller
         $this->users = $users;
     }
 
+    /**
+     * Handles the index workflow.
+     */
     public function index(Request $request, string $userId): Response
     {
         $uid  = (int) $userId;
@@ -125,6 +163,9 @@ class UserRolesController extends Controller
         ], 200, 'admin');
     }
 
+    /**
+     * Handles the assign workflow.
+     */
     public function assign(Request $request, string $userId, string $roleId): Response
     {
         $user = $this->findUser((int) $userId);
@@ -139,6 +180,9 @@ class UserRolesController extends Controller
         return $this->postActionSuccessRedirect('/users/' . (int) $userId . '/roles', __('roles.user_roles.messages.assigned'));
     }
 
+    /**
+     * Handles the remove workflow.
+     */
     public function remove(Request $request, string $userId, string $roleId): Response
     {
         $user = $this->findUser((int) $userId);
@@ -153,6 +197,9 @@ class UserRolesController extends Controller
         return $this->postActionSuccessRedirect('/users/' . (int) $userId . '/roles', __('roles.user_roles.messages.removed'));
     }
 
+    /**
+     * Finds the requested record.
+     */
     private function findUser(int $id): ?array
     {
         try {

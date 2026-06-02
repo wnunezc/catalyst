@@ -2,10 +2,42 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Authorization;
 
 use Catalyst\Framework\Traits\SingletonTrait;
 use Catalyst\Framework\Module\ModuleRegistry;
+/**
+ * Defines the Permission Registry class contract.
+ *
+ * @package Catalyst\Framework\Authorization
+ * Responsibility: Coordinates the permission registry behavior within its module boundary.
+ */
 final class PermissionRegistry
 {
     use SingletonTrait;
@@ -27,6 +59,9 @@ final class PermissionRegistry
         return $this->definitions = ModuleRegistry::getInstance()->permissionDefinitions();
     }
 
+    /**
+     * Handles the flush cache workflow.
+     */
     public function flushCache(): void
     {
         $this->definitions = null;
@@ -57,6 +92,9 @@ final class PermissionRegistry
         return null;
     }
 
+    /**
+     * Registers the requested definition.
+     */
     public function registerGateDefinitions(Gate $gate): void
     {
         $gate->define('admin-area', fn (array $user): bool => $this->userHasRole($user, 'admin'));
@@ -75,6 +113,9 @@ final class PermissionRegistry
         }
     }
 
+    /**
+     * Handles the user has role workflow.
+     */
     public function userHasRole(?array $user, string $roleSlug): bool
     {
         $userId = $this->resolveUserId($user);
@@ -98,6 +139,9 @@ final class PermissionRegistry
         return RoleRepository::getInstance()->userHasAnyRole($userId, $roleSlugs);
     }
 
+    /**
+     * Handles the user has permission workflow.
+     */
     public function userHasPermission(?array $user, string $slug, mixed $record = null): bool
     {
         $userId = $this->resolveUserId($user);
@@ -287,6 +331,9 @@ final class PermissionRegistry
         };
     }
 
+    /**
+     * Resolves the requested value.
+     */
     private function resolveUserId(?array $user): ?int
     {
         $userId = $user['id'] ?? null;
@@ -297,6 +344,9 @@ final class PermissionRegistry
         return (int)$userId;
     }
 
+    /**
+     * Handles the extract value workflow.
+     */
     private function extractValue(mixed $record, string $field): mixed
     {
         if (is_array($record)) {

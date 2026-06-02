@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Cli\Commands;
 
 use Catalyst\Framework\Argument\ArgumentBag;
@@ -12,13 +38,25 @@ use Catalyst\Helpers\Path\ProjectPath;
 use InvalidArgumentException;
 use RuntimeException;
 
+/**
+ * Defines the Make Migration Command class contract.
+ *
+ * @package Catalyst\Framework\Cli\Commands
+ * Responsibility: Coordinates the make migration command behavior within its module boundary.
+ */
 class MakeMigrationCommand extends AbstractCommand
 {
+    /**
+     * Returns the name value.
+     */
     public function getName(): string
     {
         return 'make:migration';
     }
 
+    /**
+     * Returns the description value.
+     */
     public function getDescription(): string
     {
         return 'Scaffold a new anonymous migration in boot-core/database/migrations/';
@@ -32,6 +70,9 @@ class MakeMigrationCommand extends AbstractCommand
         ];
     }
 
+    /**
+     * Executes the service workflow.
+     */
     public function execute(ArgumentBag $args): int
     {
         $manager = new ScaffoldManager();
@@ -59,6 +100,9 @@ class MakeMigrationCommand extends AbstractCommand
         return 0;
     }
 
+    /**
+     * Normalizes the provided value.
+     */
     private function normalizeMigrationName(string $name): string
     {
         $name = strtolower(trim($name));

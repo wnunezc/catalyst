@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Module;
 
 use Catalyst\Framework\Middleware\DevToolsGuardMiddleware;
@@ -14,6 +40,12 @@ use Catalyst\Framework\Navigation\NavigationRegistry;
 use Catalyst\Framework\Route\Route;
 use Catalyst\Framework\Route\Router;
 
+/**
+ * Defines the Module Inspector class contract.
+ *
+ * @package Catalyst\Framework\Module
+ * Responsibility: Coordinates the module inspector behavior within its module boundary.
+ */
 final class ModuleInspector
 {
     /**
@@ -128,6 +160,9 @@ final class ModuleInspector
         return null;
     }
 
+    /**
+     * Handles the ensure routes loaded workflow.
+     */
     private function ensureRoutesLoaded(): void
     {
         if (class_exists(CliRouteLoader::class)) {
@@ -311,6 +346,9 @@ final class ModuleInspector
         return array_values(array_unique(array_filter($permissions, 'is_string')));
     }
 
+    /**
+     * Handles the stringify handler workflow.
+     */
     private function stringifyHandler(mixed $handler, ?string $namespace): string
     {
         if (is_string($handler)) {
@@ -355,6 +393,9 @@ final class ModuleInspector
         ], static fn (mixed $value): bool => is_string($value) && $value !== ''), true);
     }
 
+    /**
+     * Handles the legacy app identifier for module workflow.
+     */
     private function legacyAppIdentifierForModule(string $moduleKey): ?string
     {
         if (!str_starts_with($moduleKey, 'app.surface.')) {

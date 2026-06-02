@@ -4,19 +4,28 @@ declare(strict_types=1);
 
 /**
  * Catalyst PHP Framework
- * PHP Version 8.4 (Required)
  *
- * DevTools Module - Route Definitions
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
  *
- * Each route group maps to a single-responsibility controller.
- * Static routes are registered before dynamic {param} routes on the same
- * prefix to prevent static segments from being caught as parameter values.
+ * PHP Version 8.4 (Required).
  *
- * @package   Catalyst\Repository\DevTools
- * @author    Walter Nuñez (arcanisgk) <icarosnet@gmail.com>
- * @copyright 2023 - 2025
- * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
- * @link      https://catalyst.dock Local development URL
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
  */
 
 use Catalyst\Framework\Route\Router;

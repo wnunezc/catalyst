@@ -2,16 +2,54 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Helpers\ToolBox;
 
 use Catalyst\Helpers\IO\FileOutput;
 
+/**
+ * Defines the Draw Box Text Helper class contract.
+ *
+ * @package Catalyst\Helpers\ToolBox
+ * Responsibility: Coordinates the draw box text helper behavior within its module boundary.
+ */
 final class DrawBoxTextHelper
 {
+    /**
+     * Initializes the Draw Box Text Helper instance.
+     */
     public function __construct(private readonly FileOutput $fileOutput)
     {
     }
 
+    /**
+     * Handles the visible length workflow.
+     */
     public function visibleLength(string $string): int
     {
         return mb_strlen($this->fileOutput->removeAnsiSequences($string));

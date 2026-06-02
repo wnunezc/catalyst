@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Queue;
 
 use Catalyst\Entities\QueuedJobRecord;
@@ -11,6 +37,12 @@ use Catalyst\Framework\Traits\SingletonTrait;
 use DateTimeImmutable;
 use RuntimeException;
 
+/**
+ * Defines the Queue Repository class contract.
+ *
+ * @package Catalyst\Framework\Queue
+ * Responsibility: Coordinates the queue repository behavior within its module boundary.
+ */
 final class QueueRepository
 {
     use SingletonTrait;
@@ -49,6 +81,9 @@ final class QueueRepository
         return (int) $this->connection()->getPdo()->lastInsertId();
     }
 
+    /**
+     * Handles the reserve next workflow.
+     */
     public function reserveNext(?string $queueName = null): ?QueuedJobRecord
     {
         QueueSchemaManager::ensure();
@@ -101,6 +136,9 @@ final class QueueRepository
         });
     }
 
+    /**
+     * Handles the complete workflow.
+     */
     public function complete(int $jobId): void
     {
         QueueSchemaManager::ensure();
@@ -112,6 +150,9 @@ final class QueueRepository
         );
     }
 
+    /**
+     * Handles the release for retry workflow.
+     */
     public function releaseForRetry(QueuedJobRecord $job, string $error, int $delaySeconds): void
     {
         QueueSchemaManager::ensure();
@@ -133,6 +174,9 @@ final class QueueRepository
         );
     }
 
+    /**
+     * Handles the move to failed workflow.
+     */
     public function moveToFailed(QueuedJobRecord $job, string $error): int
     {
         QueueSchemaManager::ensure();
@@ -252,6 +296,9 @@ final class QueueRepository
         return $requeued;
     }
 
+    /**
+     * Handles the pending count workflow.
+     */
     public function pendingCount(?string $queueName = null): int
     {
         QueueSchemaManager::ensure();
@@ -273,6 +320,9 @@ final class QueueRepository
         return (int) ($row['total'] ?? 0);
     }
 
+    /**
+     * Handles the failed count workflow.
+     */
     public function failedCount(?string $queueName = null): int
     {
         QueueSchemaManager::ensure();
@@ -294,6 +344,9 @@ final class QueueRepository
         return (int) ($row['total'] ?? 0);
     }
 
+    /**
+     * Handles the prune failed jobs workflow.
+     */
     public function pruneFailedJobs(int $olderThanDays = 14): int
     {
         QueueSchemaManager::ensure();
@@ -323,6 +376,9 @@ final class QueueRepository
         ];
     }
 
+    /**
+     * Handles the connection workflow.
+     */
     private function connection(): Connection
     {
         $config = QueueSettings::current();
@@ -330,6 +386,9 @@ final class QueueRepository
         return DatabaseManager::getInstance()->connection((string) $config['connection']);
     }
 
+    /**
+     * Handles the quote workflow.
+     */
     private function quote(string $identifier): string
     {
         if ($identifier === '' || preg_match('/^[A-Za-z0-9_]+$/', $identifier) !== 1) {

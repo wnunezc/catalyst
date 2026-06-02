@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Reporting;
 
 use Catalyst\Entities\ReportRun;
@@ -15,6 +41,12 @@ use Catalyst\Framework\Traits\SingletonTrait;
 use RuntimeException;
 use Throwable;
 
+/**
+ * Defines the Reporting Manager class contract.
+ *
+ * @package Catalyst\Framework\Reporting
+ * Responsibility: Coordinates the reporting manager behavior within its module boundary.
+ */
 final class ReportingManager
 {
     use SingletonTrait;
@@ -23,6 +55,9 @@ final class ReportingManager
     private AttachmentManager $attachments;
     private AttachmentRepository $attachmentRepository;
 
+    /**
+     * Initializes the Reporting Manager instance.
+     */
     protected function __construct()
     {
         $this->media = MediaManager::getInstance();
@@ -61,6 +96,9 @@ final class ReportingManager
         return $run;
     }
 
+    /**
+     * Processes the current workflow.
+     */
     public function process(int $reportRunId): ReportRun
     {
         $run = ReportRun::find($reportRunId);

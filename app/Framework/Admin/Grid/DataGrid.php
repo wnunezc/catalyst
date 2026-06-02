@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Admin\Grid;
 
 use Catalyst\Framework\Http\Request;
@@ -9,6 +35,12 @@ use Catalyst\Framework\Http\Response;
 use InvalidArgumentException;
 use RuntimeException;
 
+/**
+ * Defines the Data Grid class contract.
+ *
+ * @package Catalyst\Framework\Admin\Grid
+ * Responsibility: Coordinates the data grid behavior within its module boundary.
+ */
 final class DataGrid
 {
     /**
@@ -70,6 +102,9 @@ final class DataGrid
 
     private DataGridRowNormalizer $rowNormalizer;
 
+    /**
+     * Initializes the Data Grid instance.
+     */
     public function __construct(
         ?DataGridUrlBuilder $urlBuilder = null,
         ?DataGridTextFormatter $textFormatter = null,
@@ -110,6 +145,9 @@ final class DataGrid
             ?? new DataGridRowNormalizer($this->rowActionNormalizer);
     }
 
+    /**
+     * Creates the requested object.
+     */
     public static function make(): self
     {
         return new self();
@@ -190,6 +228,9 @@ final class DataGrid
         );
     }
 
+    /**
+     * Handles the base url workflow.
+     */
     public function baseUrl(string $baseUrl): self
     {
         $this->config['base_url'] = $baseUrl;
@@ -197,6 +238,9 @@ final class DataGrid
         return $this;
     }
 
+    /**
+     * Handles the title workflow.
+     */
     public function title(string $title, string $subtitle = ''): self
     {
         $this->config['title'] = $title;
@@ -205,6 +249,9 @@ final class DataGrid
         return $this;
     }
 
+    /**
+     * Handles the empty state workflow.
+     */
     public function emptyState(string $title, string $message, ?array $action = null): self
     {
         $this->config['empty_title'] = $title;
@@ -268,6 +315,9 @@ final class DataGrid
         return $this;
     }
 
+    /**
+     * Handles the resource key workflow.
+     */
     public function resourceKey(string $resourceKey): self
     {
         $this->config['resource_key'] = trim($resourceKey);
@@ -275,6 +325,9 @@ final class DataGrid
         return $this;
     }
 
+    /**
+     * Handles the row key workflow.
+     */
     public function rowKey(string $rowKey): self
     {
         $this->config['row_key'] = trim($rowKey);
@@ -282,6 +335,9 @@ final class DataGrid
         return $this;
     }
 
+    /**
+     * Handles the default sort workflow.
+     */
     public function defaultSort(string $column, string $direction = 'asc'): self
     {
         $this->config['default_sort'] = $column;
@@ -304,6 +360,9 @@ final class DataGrid
         return $this;
     }
 
+    /**
+     * Handles the search placeholder workflow.
+     */
     public function searchPlaceholder(string $placeholder): self
     {
         $this->config['search_placeholder'] = $placeholder;
@@ -311,6 +370,9 @@ final class DataGrid
         return $this;
     }
 
+    /**
+     * Handles the provider workflow.
+     */
     public function provider(callable $provider): self
     {
         $this->provider = $provider;
@@ -326,6 +388,9 @@ final class DataGrid
         return $this->resolveState($request);
     }
 
+    /**
+     * Handles the export format workflow.
+     */
     public function exportFormat(Request $request): ?string
     {
         $requested = trim((string) ($request->get((string) $this->config['query_param_export'], '') ?? ''));
@@ -334,6 +399,9 @@ final class DataGrid
         return array_key_exists($requested, $available) ? $requested : null;
     }
 
+    /**
+     * Handles the print enabled workflow.
+     */
     public function printEnabled(bool $enabled = true, ?string $label = null): self
     {
         $this->config['print_enabled'] = $enabled;
@@ -345,11 +413,17 @@ final class DataGrid
         return $this;
     }
 
+    /**
+     * Handles the export csv workflow.
+     */
     public function exportCsv(Request $request): Response
     {
         return $this->export($request);
     }
 
+    /**
+     * Handles the export workflow.
+     */
     public function export(Request $request): Response
     {
         $format = $this->exportFormat($request);

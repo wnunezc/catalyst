@@ -2,27 +2,29 @@
 
 declare(strict_types=1);
 
-/**************************************************************************************
- *
+/**
  * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
  * PHP Version 8.4 (Required).
  *
- * @package   Catalyst
- * @subpackage Helpers\Exceptions
- * @see       https://github.com/arcanisgk/catalyst
+ * @package    Catalyst
  *
- * @author    Walter Nuñez (arcanisgk/original founder) <icarosnet@gmail.com>
- * @copyright 2023 - 2025
- * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
  *
- * @note      This program is distributed in the hope that it will be useful
- *            WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- *            or FITNESS FOR A PARTICULAR PURPOSE.
+ * @version    GIT: See repository tags
  *
- * @category  Framework
+ * @category   Framework
  * @filesource
  *
- * @link      https://catalyst.dock Local development URL
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
  *
  */
 
@@ -45,11 +47,20 @@ use RuntimeException;
  *
  * @package Catalyst\Helpers\Exceptions
  */
+/**
+ * Defines the Forbidden Exception class contract.
+ *
+ * @package Catalyst\Helpers\Exceptions
+ * Responsibility: Coordinates the forbidden exception behavior within its module boundary.
+ */
 class ForbiddenException extends RuntimeException
 {
     private string $context;
     private string $contextValue;
 
+    /**
+     * Initializes the Forbidden Exception instance.
+     */
     private function __construct(string $message, string $context, string $contextValue)
     {
         parent::__construct($message, 403);
@@ -105,11 +116,17 @@ class ForbiddenException extends RuntimeException
 
     // -- Accessors -------------------------------------------------------------
 
+    /**
+     * Returns the context value.
+     */
     public function getContext(): string
     {
         return $this->context;
     }
 
+    /**
+     * Returns the context value value.
+     */
     public function getContextValue(): string
     {
         return $this->contextValue;

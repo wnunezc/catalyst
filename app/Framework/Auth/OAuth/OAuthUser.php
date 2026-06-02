@@ -2,25 +2,29 @@
 
 declare(strict_types=1);
 
-/**************************************************************************************
- *
+/**
  * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
  * PHP Version 8.4 (Required).
  *
- * @package   Catalyst
- * @subpackage Framework\Auth\OAuth
- * @see       https://github.com/arcanisgk/catalyst
+ * @package    Catalyst
  *
- * @author    Walter Nuñez (arcanisgk/original founder) <icarosnet@gmail.com>
- * @copyright 2023 - 2025
- * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
  *
- * @category  Framework
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
  * @filesource
  *
- * @link      https://catalyst.dock Local development URL
- *
- * OAuthUser — normalized resource owner returned by OAuth providers.
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
  *
  */
 
@@ -35,6 +39,12 @@ use League\OAuth2\Client\Provider\ResourceOwnerInterface;
  * Each provider's createResourceOwner() maps its fields to this class.
  *
  * @package Catalyst\Framework\Auth\OAuth
+ */
+/**
+ * Defines the OAuth User class contract.
+ *
+ * @package Catalyst\Framework\Auth\OAuth
+ * Responsibility: Coordinates the o auth user behavior within its module boundary.
  */
 class OAuthUser implements ResourceOwnerInterface
 {

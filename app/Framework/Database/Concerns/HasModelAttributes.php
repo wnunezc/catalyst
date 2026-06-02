@@ -2,14 +2,49 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Database\Concerns;
 
 use Catalyst\Framework\Database\Collection;
 use Catalyst\Framework\Database\Model;
 use DateTimeImmutable;
 
+/**
+ * Defines the Has Model Attributes trait contract.
+ *
+ * @package Catalyst\Framework\Database\Concerns
+ * Responsibility: Coordinates the has model attributes behavior within its module boundary.
+ */
 trait HasModelAttributes
 {
+    /**
+     * Handles the fill workflow.
+     */
     public function fill(array $attributes): static
     {
         foreach ($attributes as $key => $value) {
@@ -21,6 +56,9 @@ trait HasModelAttributes
         return $this;
     }
 
+    /**
+     * Handles the force fill workflow.
+     */
     public function forceFill(array $attributes): static
     {
         foreach ($attributes as $key => $value) {
@@ -30,6 +68,9 @@ trait HasModelAttributes
         return $this;
     }
 
+    /**
+     * Returns the attribute value.
+     */
     public function getAttribute(string $key): mixed
     {
         if (!array_key_exists($key, $this->attributes)) {
@@ -39,26 +80,41 @@ trait HasModelAttributes
         return $this->castAttribute($key, $this->attributes[$key]);
     }
 
+    /**
+     * Updates the attribute value.
+     */
     public function setAttribute(string $key, mixed $value): void
     {
         $this->attributes[$key] = $this->castForStorage($key, $value);
     }
 
+    /**
+     * Returns the raw attribute value.
+     */
     public function getRawAttribute(string $key): mixed
     {
         return $this->attributes[$key] ?? null;
     }
 
+    /**
+     * Returns the attributes value.
+     */
     public function getAttributes(): array
     {
         return $this->attributes;
     }
 
+    /**
+     * Returns the key value.
+     */
     public function getKey(): int|string|null
     {
         return $this->attributes[static::$primaryKey] ?? null;
     }
 
+    /**
+     * Determines whether is Dirty.
+     */
     public function isDirty(?string $key = null): bool
     {
         if ($key !== null) {
@@ -68,6 +124,9 @@ trait HasModelAttributes
         return $this->getDirty() !== [];
     }
 
+    /**
+     * Returns the dirty value.
+     */
     public function getDirty(): array
     {
         $dirty = [];
@@ -81,11 +140,17 @@ trait HasModelAttributes
         return $dirty;
     }
 
+    /**
+     * Handles the was changed workflow.
+     */
     public function wasChanged(?string $key = null): bool
     {
         return $this->isDirty($key);
     }
 
+    /**
+     * Handles the to array workflow.
+     */
     public function toArray(): array
     {
         $result = [];
@@ -114,16 +179,25 @@ trait HasModelAttributes
         return $result;
     }
 
+    /**
+     * Handles the to json workflow.
+     */
     public function toJson(int $flags = 0): string
     {
         return (string) json_encode($this->toArray(), $flags | JSON_THROW_ON_ERROR);
     }
 
+    /**
+     * Handles the json serialize workflow.
+     */
     public function jsonSerialize(): array
     {
         return $this->toArray();
     }
 
+    /**
+     * Handles the cast attribute workflow.
+     */
     protected function castAttribute(string $key, mixed $value): mixed
     {
         if ($value === null) {
@@ -153,6 +227,9 @@ trait HasModelAttributes
         };
     }
 
+    /**
+     * Handles the cast for storage workflow.
+     */
     protected function castForStorage(string $key, mixed $value): mixed
     {
         if ($value === null) {
@@ -180,6 +257,9 @@ trait HasModelAttributes
         };
     }
 
+    /**
+     * Handles the cast to datetime workflow.
+     */
     protected function castToDatetime(mixed $value): ?DateTimeImmutable
     {
         if ($value instanceof DateTimeImmutable) {
@@ -202,12 +282,18 @@ trait HasModelAttributes
         return null;
     }
 
+    /**
+     * Handles the cast to date workflow.
+     */
     protected function castToDate(mixed $value): ?DateTimeImmutable
     {
         $dt = $this->castToDatetime($value);
         return $dt?->setTime(0, 0);
     }
 
+    /**
+     * Determines whether is Fillable.
+     */
     protected function isFillable(string $key): bool
     {
         if (!empty(static::$fillable)) {

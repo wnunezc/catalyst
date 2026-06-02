@@ -2,8 +2,40 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Helpers\Config;
 
+/**
+ * Defines the Config Secret Catalog class contract.
+ *
+ * @package Catalyst\Helpers\Config
+ * Responsibility: Coordinates the config secret catalog behavior within its module boundary.
+ */
 final class ConfigSecretCatalog
 {
     /**
@@ -24,6 +56,9 @@ final class ConfigSecretCatalog
         return array_keys(self::SECTION_KEYS);
     }
 
+    /**
+     * Handles the manages section workflow.
+     */
     public static function managesSection(string $section): bool
     {
         return isset(self::SECTION_KEYS[strtolower($section)]);

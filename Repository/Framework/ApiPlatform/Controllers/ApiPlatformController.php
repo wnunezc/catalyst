@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Repository\ApiPlatform\Controllers;
 
 use Catalyst\Framework\Admin\Form\FormBuilder;
@@ -16,8 +42,17 @@ use Catalyst\Framework\Session\SessionManager;
 use Catalyst\Repository\ApiPlatform\Requests\ApiTokenRequest;
 use Throwable;
 
+/**
+ * Defines the Api Platform Controller class contract.
+ *
+ * @package Catalyst\Repository\ApiPlatform\Controllers
+ * Responsibility: Coordinates the api platform controller behavior within its module boundary.
+ */
 final class ApiPlatformController extends Controller
 {
+    /**
+     * Initializes the Api Platform Controller instance.
+     */
     public function __construct(
         private readonly ApiTokenManager $tokens,
         private readonly ApiTokenRepository $repository,
@@ -26,6 +61,9 @@ final class ApiPlatformController extends Controller
         parent::__construct();
     }
 
+    /**
+     * Handles the index workflow.
+     */
     public function index(Request $request): Response
     {
         $this->authorizeResource('view-any', 'api-platform');
@@ -33,6 +71,9 @@ final class ApiPlatformController extends Controller
         return $this->renderIndex();
     }
 
+    /**
+     * Handles the persistence workflow.
+     */
     public function storeToken(ApiTokenRequest $request): Response
     {
         $this->authorizeResource('create', 'api-platform');
@@ -56,6 +97,9 @@ final class ApiPlatformController extends Controller
         return $this->postActionSuccessRedirect('/api-platform', __('apiplatform.messages.created'), null, 0);
     }
 
+    /**
+     * Handles the revoke token workflow.
+     */
     public function revokeToken(Request $request, string $id): Response
     {
         $token = $this->repository->findModel((int) $id);
@@ -69,6 +113,9 @@ final class ApiPlatformController extends Controller
         return $this->postActionSuccessRedirect('/api-platform', __('apiplatform.messages.revoked'));
     }
 
+    /**
+     * Handles the api catalog workflow.
+     */
     public function apiCatalog(Request $request): Response
     {
         $this->authorizeResource('view-any', 'api-platform');
@@ -84,6 +131,9 @@ final class ApiPlatformController extends Controller
         ], __('apiplatform.messages.catalog_retrieved'));
     }
 
+    /**
+     * Renders the current view state.
+     */
     private function renderIndex(?string $plainText = null, ?array $createdToken = null): Response
     {
         if ($plainText === null) {
@@ -151,11 +201,17 @@ final class ApiPlatformController extends Controller
         ], 200, 'admin');
     }
 
+    /**
+     * Handles the stash created token workflow.
+     */
     private function stashCreatedToken(string $plainText): void
     {
         SessionManager::getInstance()->set('_api_platform_created_token', $plainText);
     }
 
+    /**
+     * Handles the consume created token workflow.
+     */
     private function consumeCreatedToken(): ?string
     {
         $session = SessionManager::getInstance();

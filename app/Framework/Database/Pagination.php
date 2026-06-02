@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Database;
 
 /**
@@ -14,6 +40,9 @@ namespace Catalyst\Framework\Database;
  */
 class Pagination
 {
+    /**
+     * Initializes the Pagination instance.
+     */
     public function __construct(
         /** Hydrated items for the current page. */
         public readonly Collection $items,
@@ -35,16 +64,25 @@ class Pagination
     // Convenience checks
     // -------------------------------------------------------------------------
 
+    /**
+     * Determines whether has More Pages.
+     */
     public function hasMorePages(): bool
     {
         return $this->currentPage < $this->lastPage;
     }
 
+    /**
+     * Handles the on first page workflow.
+     */
     public function onFirstPage(): bool
     {
         return $this->currentPage === 1;
     }
 
+    /**
+     * Handles the on last page workflow.
+     */
     public function onLastPage(): bool
     {
         return $this->currentPage >= $this->lastPage;
@@ -79,6 +117,9 @@ class Pagination
         ];
     }
 
+    /**
+     * Handles the to json workflow.
+     */
     public function toJson(int $flags = 0): string
     {
         return (string) json_encode($this->toArray(), $flags | JSON_THROW_ON_ERROR);

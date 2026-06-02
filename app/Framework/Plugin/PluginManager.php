@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Plugin;
 
 use Catalyst\Framework\Audit\AuditLogManager;
@@ -13,6 +39,12 @@ use Catalyst\Framework\Traits\SingletonTrait;
 use Catalyst\Helpers\Config\ConfigManager;
 use RuntimeException;
 
+/**
+ * Defines the Plugin Manager class contract.
+ *
+ * @package Catalyst\Framework\Plugin
+ * Responsibility: Coordinates the plugin manager behavior within its module boundary.
+ */
 final class PluginManager
 {
     use SingletonTrait;
@@ -53,6 +85,9 @@ final class PluginManager
         return null;
     }
 
+    /**
+     * Determines whether is Enabled.
+     */
     public function isEnabled(string $pluginKey): bool
     {
         $plugin = $this->find($pluginKey);
@@ -71,6 +106,9 @@ final class PluginManager
         return is_array($catalog) ? $catalog : [];
     }
 
+    /**
+     * Determines whether should Load Module.
+     */
     public function shouldLoadModule(string $moduleKey): bool
     {
         $plugin = PluginRegistry::getInstance()->forModule($moduleKey);
@@ -81,6 +119,9 @@ final class PluginManager
         return $this->isEnabled((string) ($plugin['key'] ?? ''));
     }
 
+    /**
+     * Updates the enabled value.
+     */
     public function setEnabled(string $pluginKey, bool $enabled): void
     {
         $plugin = $this->find($pluginKey);
@@ -115,6 +156,9 @@ final class PluginManager
         $this->refreshRouteDiscovery();
     }
 
+    /**
+     * Handles the refresh route discovery workflow.
+     */
     private function refreshRouteDiscovery(): void
     {
         PluginRegistry::getInstance()->flushCache();

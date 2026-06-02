@@ -2,11 +2,43 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Repository\Settings\Support;
 
 use Catalyst\Framework\Localization\LocalizationManager;
 use Catalyst\Helpers\Config\AppEntryCatalog;
 
+/**
+ * Defines the Settings Page View Context class contract.
+ *
+ * @package Catalyst\Repository\Settings\Support
+ * Responsibility: Coordinates the settings page view context behavior within its module boundary.
+ */
 final class SettingsPageViewContext
 {
     /**
@@ -64,6 +96,9 @@ final class SettingsPageViewContext
      */
     private array $cors;
 
+    /**
+     * Initializes the Settings Page View Context instance.
+     */
     public function __construct(array $scope)
     {
         $this->app = (array) ($scope['app'] ?? []);
@@ -79,6 +114,9 @@ final class SettingsPageViewContext
         $this->cors = (array) ($scope['cors'] ?? []);
     }
 
+    /**
+     * Handles the t workflow.
+     */
     public function t(string $key, array $replace = []): string
     {
         return __($key, $replace);
@@ -172,11 +210,17 @@ final class SettingsPageViewContext
         return $this->cors;
     }
 
+    /**
+     * Determines whether is Development Entry Env.
+     */
     public function isDevelopmentEntryEnv(): bool
     {
         return ($this->app['project_env'] ?? 'production') === 'development';
     }
 
+    /**
+     * Determines whether is Production Runtime Env.
+     */
     public function isProductionRuntimeEnv(): bool
     {
         return ($this->app['project_env'] ?? 'production') === 'production';
@@ -286,11 +330,17 @@ final class SettingsPageViewContext
             + AppEntryCatalog::secondaryLabels($this->isDevelopmentEntryEnv());
     }
 
+    /**
+     * Handles the ftp notice workflow.
+     */
     public function ftpNotice(): string
     {
         return $this->t('settings.notices.ftp');
     }
 
+    /**
+     * Handles the cache notice workflow.
+     */
     public function cacheNotice(): string
     {
         return $this->isProductionRuntimeEnv()
@@ -298,11 +348,17 @@ final class SettingsPageViewContext
             : $this->t('settings.notices.cache_locked');
     }
 
+    /**
+     * Handles the devtools notice workflow.
+     */
     public function devtoolsNotice(): string
     {
         return $this->t('settings.notices.devtools');
     }
 
+    /**
+     * Handles the app key preview workflow.
+     */
     public function appKeyPreview(): string
     {
         $appKey = (string) ($this->app['project_key'] ?? '');
@@ -310,6 +366,9 @@ final class SettingsPageViewContext
         return $appKey !== '' ? substr($appKey, 0, 4) . '••••••••' : '';
     }
 
+    /**
+     * Handles the cors origins workflow.
+     */
     public function corsOrigins(): string
     {
         return is_array($this->cors['allowed_origins'] ?? null)

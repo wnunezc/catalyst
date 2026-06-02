@@ -2,24 +2,65 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Helpers\Config;
 
 use RuntimeException;
 
+/**
+ * Defines the Config Secret Store class contract.
+ *
+ * @package Catalyst\Helpers\Config
+ * Responsibility: Coordinates the config secret store behavior within its module boundary.
+ */
 final class ConfigSecretStore
 {
     private string $filePath;
 
+    /**
+     * Initializes the Config Secret Store instance.
+     */
     public function __construct(string $environment)
     {
         $this->filePath = implode(DS, [PD, 'boot-core', 'config', $environment, 'secrets.json']);
     }
 
+    /**
+     * Handles the path workflow.
+     */
     public function path(): string
     {
         return $this->filePath;
     }
 
+    /**
+     * Handles the exists workflow.
+     */
     public function exists(): bool
     {
         return is_file($this->filePath);

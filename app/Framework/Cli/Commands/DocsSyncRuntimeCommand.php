@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Cli\Commands;
 
 use Catalyst\Framework\Argument\ArgumentBag;
@@ -10,15 +36,27 @@ use Catalyst\Framework\Cli\AbstractCommand;
 use Catalyst\Framework\Module\ModuleRuntimeDocsGenerator;
 use RuntimeException;
 
+/**
+ * Defines the Docs Sync Runtime Command class contract.
+ *
+ * @package Catalyst\Framework\Cli\Commands
+ * Responsibility: Coordinates the docs sync runtime command behavior within its module boundary.
+ */
 final class DocsSyncRuntimeCommand extends AbstractCommand
 {
     private const string DEFAULT_OUTPUT = PD . DS . 'docs' . DS . 'runtime-module-catalog.md';
 
+    /**
+     * Returns the name value.
+     */
     public function getName(): string
     {
         return 'docs:sync-runtime';
     }
 
+    /**
+     * Returns the description value.
+     */
     public function getDescription(): string
     {
         return 'Generate living runtime module documentation from registries, inspector, harness and lint';
@@ -33,6 +71,9 @@ final class DocsSyncRuntimeCommand extends AbstractCommand
         ];
     }
 
+    /**
+     * Executes the service workflow.
+     */
     public function execute(ArgumentBag $args): int
     {
         $markdown = (new ModuleRuntimeDocsGenerator())->generate();

@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Traits;
 
 use Catalyst\Framework\Audit\AuditLogManager;
@@ -150,18 +176,27 @@ trait HasAuditLogTrait
     // Accessors
     // -------------------------------------------------------------------------
 
+    /**
+     * Handles the create workflow.
+     */
     public function createdBy(): ?int
     {
         $v = $this->attributes['created_by'] ?? null;
         return $v !== null ? (int) $v : null;
     }
 
+    /**
+     * Handles the update workflow.
+     */
     public function updatedBy(): ?int
     {
         $v = $this->attributes['updated_by'] ?? null;
         return $v !== null ? (int) $v : null;
     }
 
+    /**
+     * Handles the delete workflow.
+     */
     public function deletedBy(): ?int
     {
         $v = $this->attributes['deleted_by'] ?? null;

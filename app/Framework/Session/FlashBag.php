@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Session;
 
 /**
@@ -20,11 +46,17 @@ class FlashBag
     private const int MAX_HISTORY_SIZE = 100;
     private const int HISTORY_TTL = 3600;
 
+    /**
+     * Initializes the Flash Bag instance.
+     */
     public function __construct(private readonly SessionManager $session)
     {
         $this->initializeStorage();
     }
 
+    /**
+     * Handles the add workflow.
+     */
     public function add(string $type, string $message, ?string $customId = null): void
     {
         $id = $customId ?? $this->generateMessageId($type, $message);
@@ -51,6 +83,9 @@ class FlashBag
         $this->session->set(self::FLASH_KEY, $messages);
     }
 
+    /**
+     * Handles the add persistent workflow.
+     */
     public function addPersistent(string $type, string $message, ?string $customId = null): void
     {
         $id = $customId ?? $this->generateMessageId($type, $message);
@@ -77,6 +112,9 @@ class FlashBag
         $this->session->set(self::PERSISTENT_KEY, $persistent);
     }
 
+    /**
+     * Handles the dismiss workflow.
+     */
     public function dismiss(string $id): void
     {
         $dismissed = $this->session->get(self::DISMISSED_KEY);
@@ -159,6 +197,9 @@ class FlashBag
         return $result;
     }
 
+    /**
+     * Handles the has workflow.
+     */
     public function has(?string $type = null): bool
     {
         $messages = $this->session->get(self::FLASH_KEY);
@@ -176,6 +217,9 @@ class FlashBag
         return false;
     }
 
+    /**
+     * Determines whether has Persistent.
+     */
     public function hasPersistent(?string $type = null): bool
     {
         $persistent = $this->session->get(self::PERSISTENT_KEY);
@@ -193,16 +237,25 @@ class FlashBag
         return false;
     }
 
+    /**
+     * Handles the clear workflow.
+     */
     public function clear(): void
     {
         $this->session->set(self::FLASH_KEY, []);
     }
 
+    /**
+     * Handles the clear persistent workflow.
+     */
     public function clearPersistent(): void
     {
         $this->session->set(self::PERSISTENT_KEY, []);
     }
 
+    /**
+     * Handles the clear history workflow.
+     */
     public function clearHistory(): void
     {
         $this->session->set(self::HISTORY_KEY, [
@@ -211,11 +264,17 @@ class FlashBag
         ]);
     }
 
+    /**
+     * Handles the clear dismissed workflow.
+     */
     public function clearDismissed(): void
     {
         $this->session->set(self::DISMISSED_KEY, []);
     }
 
+    /**
+     * Handles the reset workflow.
+     */
     public function reset(): void
     {
         $this->clear();
@@ -233,6 +292,9 @@ class FlashBag
         return is_array($messages) ? $messages : [];
     }
 
+    /**
+     * Handles the count workflow.
+     */
     public function count(): int
     {
         $count = 0;
@@ -252,6 +314,9 @@ class FlashBag
         return $count;
     }
 
+    /**
+     * Handles the initialize storage workflow.
+     */
     private function initializeStorage(): void
     {
         $messages = $this->session->get(self::FLASH_KEY);
@@ -283,6 +348,9 @@ class FlashBag
         }
     }
 
+    /**
+     * Determines whether is Valid Message.
+     */
     private function isValidMessage(mixed $message): bool
     {
         return is_array($message)
@@ -292,6 +360,9 @@ class FlashBag
             && is_string($message['message']);
     }
 
+    /**
+     * Handles the generate message id workflow.
+     */
     private function generateMessageId(string $type, string $message): string
     {
         $uniqueData = implode('|', [
@@ -304,18 +375,27 @@ class FlashBag
         return 'flash_' . hash('xxh3', $uniqueData);
     }
 
+    /**
+     * Determines whether is Displayed.
+     */
     private function isDisplayed(string $id): bool
     {
         $history = $this->session->get(self::HISTORY_KEY);
         return in_array($id, $history['ids'], true);
     }
 
+    /**
+     * Determines whether is Dismissed.
+     */
     private function isDismissed(string $id): bool
     {
         $dismissed = $this->session->get(self::DISMISSED_KEY);
         return in_array($id, $dismissed, true);
     }
 
+    /**
+     * Handles the mark as displayed workflow.
+     */
     private function markAsDisplayed(string $id): void
     {
         $history = $this->session->get(self::HISTORY_KEY);
@@ -332,6 +412,9 @@ class FlashBag
         $this->session->set(self::HISTORY_KEY, $history);
     }
 
+    /**
+     * Handles the cleanup history workflow.
+     */
     private function cleanupHistory(): void
     {
         $history = $this->session->get(self::HISTORY_KEY);

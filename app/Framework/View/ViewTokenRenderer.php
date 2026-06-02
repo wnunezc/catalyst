@@ -2,17 +2,52 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\View;
 
 use ArrayAccess;
 use Catalyst\Helpers\I18n\Translator;
 use Traversable;
 
+/**
+ * Defines the View Token Renderer class contract.
+ *
+ * @package Catalyst\Framework\View
+ * Responsibility: Coordinates the view token renderer behavior within its module boundary.
+ */
 final class ViewTokenRenderer
 {
     private const ESCAPED_DOUBLE = "\u{E100}";
     private const ESCAPED_TRIPLE = "\u{E101}";
 
+    /**
+     * Initializes the View Token Renderer instance.
+     */
     public function __construct(
         ?Translator $translator = null
     ) {
@@ -364,6 +399,9 @@ final class ViewTokenRenderer
         return $this->resolveNested($scope['@root'] ?? $scope, $path);
     }
 
+    /**
+     * Resolves the requested value.
+     */
     private function resolveNested(mixed $value, string $path): mixed
     {
         return $this->resolveNestedWithExistence($value, $path)['value'];
@@ -461,6 +499,9 @@ final class ViewTokenRenderer
         return [];
     }
 
+    /**
+     * Handles the stringify workflow.
+     */
     private function stringify(mixed $value): string
     {
         if ($value instanceof TrustedHtml) {
@@ -486,12 +527,18 @@ final class ViewTokenRenderer
         return json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?: '';
     }
 
+    /**
+     * Determines whether is Quoted Literal.
+     */
     private function isQuotedLiteral(string $expression): bool
     {
         return (str_starts_with($expression, '\'') && str_ends_with($expression, '\''))
             || (str_starts_with($expression, '"') && str_ends_with($expression, '"'));
     }
 
+    /**
+     * Determines whether is Truthy.
+     */
     private function isTruthy(mixed $value): bool
     {
         if (is_bool($value)) {

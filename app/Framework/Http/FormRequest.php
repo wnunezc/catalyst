@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Http;
 
 use Catalyst\Framework\Sensitivity\SensitiveDataPolicy;
@@ -9,6 +35,12 @@ use Catalyst\Helpers\Exceptions\ForbiddenException;
 use Catalyst\Helpers\Exceptions\ValidationException;
 use Catalyst\Helpers\Validation\Validator;
 
+/**
+ * Defines the Form Request class contract.
+ *
+ * @package Catalyst\Framework\Http
+ * Responsibility: Coordinates the form request behavior within its module boundary.
+ */
 abstract class FormRequest
 {
     protected Request $request;
@@ -23,11 +55,17 @@ abstract class FormRequest
      */
     private ?array $validatedData = null;
 
+    /**
+     * Initializes the Form Request instance.
+     */
     public function __construct(?Request $request = null)
     {
         $this->request = $request ?? Request::getInstance();
     }
 
+    /**
+     * Handles the authorize workflow.
+     */
     public function authorize(): bool
     {
         return true;
@@ -62,20 +100,32 @@ abstract class FormRequest
         return [];
     }
 
+    /**
+     * Handles the validation message workflow.
+     */
     public function validationMessage(): string
     {
         return 'Validation failed';
     }
 
+    /**
+     * Handles the prepare for validation workflow.
+     */
     public function prepareForValidation(): void
     {
     }
 
+    /**
+     * Handles the sensitive resource key workflow.
+     */
     protected function sensitiveResourceKey(): ?string
     {
         return null;
     }
 
+    /**
+     * Updates the route parameters value.
+     */
     public function setRouteParameters(array $routeParameters): static
     {
         $this->routeParameters = $routeParameters;
@@ -83,6 +133,9 @@ abstract class FormRequest
         return $this;
     }
 
+    /**
+     * Handles the route workflow.
+     */
     public function route(string $key, mixed $default = null): mixed
     {
         return $this->routeParameters[$key] ?? $default;
@@ -96,21 +149,33 @@ abstract class FormRequest
         return array_merge($this->request->all(), $this->request->files());
     }
 
+    /**
+     * Handles the input workflow.
+     */
     public function input(string $key, mixed $default = null): mixed
     {
         return $this->request->input($key, $default);
     }
 
+    /**
+     * Handles the has workflow.
+     */
     public function has(string $key): bool
     {
         return $this->request->has($key);
     }
 
+    /**
+     * Handles the filled workflow.
+     */
     public function filled(string $key): bool
     {
         return $this->request->filled($key);
     }
 
+    /**
+     * Handles the file workflow.
+     */
     public function file(string $key): ?UploadedFile
     {
         return $this->request->file($key);
@@ -124,6 +189,9 @@ abstract class FormRequest
         return $this->request->files();
     }
 
+    /**
+     * Handles the request workflow.
+     */
     public function request(): Request
     {
         return $this->request;

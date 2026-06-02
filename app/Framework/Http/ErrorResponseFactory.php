@@ -2,11 +2,43 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Http;
 
 use Catalyst\Framework\View\View;
 use Throwable;
 
+/**
+ * Defines the Error Response Factory class contract.
+ *
+ * @package Catalyst\Framework\Http
+ * Responsibility: Coordinates the error response factory behavior within its module boundary.
+ */
 final class ErrorResponseFactory
 {
     /**
@@ -75,6 +107,9 @@ final class ErrorResponseFactory
         );
     }
 
+    /**
+     * Handles the fallback html workflow.
+     */
     private static function fallbackHtml(int $status, string $title, string $message, ?string $ticket): string
     {
         $safeStatus = htmlspecialchars((string) $status, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');

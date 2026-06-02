@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Cli\Commands;
 
 use Catalyst\Framework\Argument\ArgumentBag;
@@ -10,22 +36,37 @@ use Catalyst\Framework\Cli\AbstractCommand;
 use Catalyst\Framework\Testing\AuthFixtureManager;
 use Throwable;
 
+/**
+ * Defines the Export Development Overlay Command class contract.
+ *
+ * @package Catalyst\Framework\Cli\Commands
+ * Responsibility: Coordinates the export development overlay command behavior within its module boundary.
+ */
 class ExportDevelopmentOverlayCommand extends AbstractCommand
 {
     private const string DEFAULT_OUTPUT = PD . DS . 'boot-core' . DS . 'database' . DS . 'create-catalyst-db.development.sql';
     private bool $usedDockerFallback = false;
     private AuthFixtureManager $fixtures;
 
+    /**
+     * Initializes the Export Development Overlay Command instance.
+     */
     public function __construct()
     {
         $this->fixtures = new AuthFixtureManager();
     }
 
+    /**
+     * Returns the name value.
+     */
     public function getName(): string
     {
         return 'dev:export-overlay';
     }
 
+    /**
+     * Returns the description value.
+     */
     public function getDescription(): string
     {
         return 'Export the live auth/RBAC development snapshot to boot-core/database/create-catalyst-db.development.sql';
@@ -41,6 +82,9 @@ class ExportDevelopmentOverlayCommand extends AbstractCommand
         ];
     }
 
+    /**
+     * Executes the service workflow.
+     */
     public function execute(ArgumentBag $args): int
     {
         $directDbOnly = (bool) ($args->getOptionValue('direct-db-only') ?? false);
@@ -125,6 +169,9 @@ class ExportDevelopmentOverlayCommand extends AbstractCommand
         }
     }
 
+    /**
+     * Writes the requested value.
+     */
     private function writeOverlay(string $path, string $sql): void
     {
         $directory = dirname($path);
@@ -138,6 +185,9 @@ class ExportDevelopmentOverlayCommand extends AbstractCommand
         }
     }
 
+    /**
+     * Renders the current view state.
+     */
     private function renderOverlayFromWebContainer(): string
     {
         $container = $this->resolveWebContainerName();
@@ -173,6 +223,9 @@ class ExportDevelopmentOverlayCommand extends AbstractCommand
         return $sql . PHP_EOL;
     }
 
+    /**
+     * Resolves the requested value.
+     */
     private function resolveWebContainerName(): string
     {
         $output = [];

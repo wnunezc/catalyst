@@ -4,20 +4,29 @@
 declare(strict_types=1);
 
 /**
- * Catalyst WebSocket Server — CLI entry point
+ * Catalyst PHP Framework
  *
- * Usage (from project root):
- *   php boot-core/bin/websocket-server.php
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
  *
- * Docker example:
- *   docker exec -it WSDD-Web-Server-PHP8.4 php /var/www/html/catalyst.dock/boot-core/bin/websocket-server.php
+ * PHP Version 8.4 (Required).
  *
- * Ports (configurable in .env):
- *   WS_PORT          = 8080   WebSocket public port  (ws://host:8080)
- *   WS_INTERNAL_PORT = 8181   Internal publish port  (http://127.0.0.1:8181/publish)
+ * @package    Catalyst
  *
- * The web server publishes notifications by POST-ing to the internal port.
- * The browser connects to the public WebSocket port.
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
  */
 
 // ─── Minimal bootstrap (no HTTP cycle needed) ────────────────────────────────

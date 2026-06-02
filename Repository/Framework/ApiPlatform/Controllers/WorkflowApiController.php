@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Repository\ApiPlatform\Controllers;
 
 use Catalyst\Entities\AutomationRule;
@@ -13,8 +39,17 @@ use Catalyst\Framework\Workflow\WorkflowManager;
 use Catalyst\Framework\Workflow\WorkflowRepository;
 use RuntimeException;
 
+/**
+ * Defines the Workflow Api Controller class contract.
+ *
+ * @package Catalyst\Repository\ApiPlatform\Controllers
+ * Responsibility: Coordinates the workflow api controller behavior within its module boundary.
+ */
 final class WorkflowApiController extends Controller
 {
+    /**
+     * Initializes the Workflow Api Controller instance.
+     */
     public function __construct(
         private readonly WorkflowRepository $repository,
         private readonly WorkflowManager $manager
@@ -22,6 +57,9 @@ final class WorkflowApiController extends Controller
         parent::__construct();
     }
 
+    /**
+     * Handles the index workflow.
+     */
     public function index(Request $request): Response
     {
         $page = max(1, (int) $request->input('page', 1));
@@ -47,6 +85,9 @@ final class WorkflowApiController extends Controller
         ]);
     }
 
+    /**
+     * Handles the transition workflow.
+     */
     public function transition(Request $request, string $id): Response
     {
         $instance = $this->repository->findById((int) $id);
@@ -101,6 +142,9 @@ final class WorkflowApiController extends Controller
         };
     }
 
+    /**
+     * Resolves the requested value.
+     */
     private function resolveRecord(string $resourceKey, int $recordId): mixed
     {
         return match ($resourceKey) {

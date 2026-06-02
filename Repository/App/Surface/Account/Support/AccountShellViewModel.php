@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace App\Surface\Account\Support;
 
 use Catalyst\Framework\Appearance\PlatformAppearanceManager;
@@ -12,6 +38,12 @@ use Catalyst\Helpers\I18n\Translator;
 use Catalyst\Helpers\Security\CspNonce;
 use Catalyst\Helpers\Security\CsrfProtection;
 
+/**
+ * Defines the Account Shell View Model class contract.
+ *
+ * @package App\Surface\Account\Support
+ * Responsibility: Coordinates the account shell view model behavior within its module boundary.
+ */
 final class AccountShellViewModel
 {
     /**

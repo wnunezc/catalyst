@@ -2,10 +2,42 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Repository\Settings\Support;
 
 use RuntimeException;
 
+/**
+ * Defines the Ftp Connection Probe class contract.
+ *
+ * @package Catalyst\Repository\Settings\Support
+ * Responsibility: Coordinates the ftp connection probe behavior within its module boundary.
+ */
 final class FtpConnectionProbe
 {
     /**
@@ -181,6 +213,9 @@ final class FtpConnectionProbe
         }
     }
 
+    /**
+     * Handles the delete workflow.
+     */
     private function deleteSftpFile(
         string $host,
         int $port,
@@ -221,6 +256,9 @@ final class FtpConnectionProbe
         return $result !== false && $error === '';
     }
 
+    /**
+     * Normalizes the provided value.
+     */
     private function normalizeRoot(string $root): string
     {
         $trimmed = trim($root);
@@ -234,6 +272,9 @@ final class FtpConnectionProbe
         return rtrim($normalized, '/') ?: '/';
     }
 
+    /**
+     * Builds the requested structure.
+     */
     private function buildRemotePath(string $root): string
     {
         $filename = '.catalyst-pretest-' . bin2hex(random_bytes(6)) . '.txt';
@@ -243,6 +284,9 @@ final class FtpConnectionProbe
             : $root . '/' . $filename;
     }
 
+    /**
+     * Handles the create workflow.
+     */
     private function createTempPayload(string $protocol): string
     {
         $file = tempnam(sys_get_temp_dir(), 'catalyst-ftp-');
@@ -265,6 +309,9 @@ final class FtpConnectionProbe
         return $file;
     }
 
+    /**
+     * Handles the encode remote path workflow.
+     */
     private function encodeRemotePath(string $path): string
     {
         $segments = explode('/', ltrim($path, '/'));

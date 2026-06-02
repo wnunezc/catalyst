@@ -2,11 +2,43 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Storage;
 
 use Catalyst\Framework\Http\UploadedFile;
 use RuntimeException;
 
+/**
+ * Defines the Ftp Storage Adapter class contract.
+ *
+ * @package Catalyst\Framework\Storage
+ * Responsibility: Coordinates the ftp storage adapter behavior within its module boundary.
+ */
 final class FtpStorageAdapter implements StorageAdapterInterface
 {
     /**
@@ -17,11 +49,17 @@ final class FtpStorageAdapter implements StorageAdapterInterface
     ) {
     }
 
+    /**
+     * Returns the driver name value.
+     */
     public function getDriverName(): string
     {
         return strtolower(trim((string) ($this->config['ftp_protocol'] ?? 'ftp')));
     }
 
+    /**
+     * Handles the put workflow.
+     */
     public function put(string $path, string $contents): string
     {
         $temp = tempnam(sys_get_temp_dir(), 'catalyst-storage-');
@@ -40,6 +78,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
         }
     }
 
+    /**
+     * Handles the put file workflow.
+     */
     public function putFile(UploadedFile $file, string $path): string
     {
         if (!$file->isValid()) {
@@ -49,6 +90,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
         return $this->uploadLocalPath($file->getPath(), $path);
     }
 
+    /**
+     * Returns the runtime value.
+     */
     public function get(string $path): string
     {
         return match ($this->protocol()) {
@@ -57,6 +101,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
         };
     }
 
+    /**
+     * Handles the delete workflow.
+     */
     public function delete(string $path): bool
     {
         return match ($this->protocol()) {
@@ -65,6 +112,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
         };
     }
 
+    /**
+     * Handles the exists workflow.
+     */
     public function exists(string $path): bool
     {
         return match ($this->protocol()) {
@@ -73,6 +123,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
         };
     }
 
+    /**
+     * Handles the url workflow.
+     */
     public function url(string $path): string
     {
         return sprintf(
@@ -84,6 +137,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
         );
     }
 
+    /**
+     * Handles the upload local path workflow.
+     */
     private function uploadLocalPath(string $localPath, string $path): string
     {
         if (!is_file($localPath)) {
@@ -96,6 +152,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
         };
     }
 
+    /**
+     * Handles the upload ftp workflow.
+     */
     private function uploadFtp(string $localPath, string $path): string
     {
         if (!function_exists('ftp_connect')) {
@@ -139,6 +198,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
         return $this->normalizePath($path);
     }
 
+    /**
+     * Handles the upload sftp workflow.
+     */
     private function uploadSftp(string $localPath, string $path): string
     {
         if (!function_exists('curl_init')) {
@@ -193,6 +255,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
         return $this->normalizePath($path);
     }
 
+    /**
+     * Handles the download ftp workflow.
+     */
     private function downloadFtp(string $path): string
     {
         if (!function_exists('ftp_connect')) {
@@ -246,6 +311,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
         }
     }
 
+    /**
+     * Handles the download sftp workflow.
+     */
     private function downloadSftp(string $path): string
     {
         if (!function_exists('curl_init')) {
@@ -284,6 +352,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
         return (string) $result;
     }
 
+    /**
+     * Handles the delete workflow.
+     */
     private function deleteFtp(string $path): bool
     {
         if (!function_exists('ftp_connect')) {
@@ -318,6 +389,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
         }
     }
 
+    /**
+     * Handles the delete workflow.
+     */
     private function deleteSftp(string $path): bool
     {
         if (!function_exists('curl_init')) {
@@ -356,6 +430,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
         return $result !== false && $error === '';
     }
 
+    /**
+     * Handles the exists ftp workflow.
+     */
     private function existsFtp(string $path): bool
     {
         if (!function_exists('ftp_connect')) {
@@ -390,6 +467,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
         }
     }
 
+    /**
+     * Handles the exists sftp workflow.
+     */
     private function existsSftp(string $path): bool
     {
         if (!function_exists('curl_init')) {
@@ -425,6 +505,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
         return is_string($result) && str_contains($result, $filename);
     }
 
+    /**
+     * Handles the ensure ftp directory workflow.
+     */
     private function ensureFtpDirectory(mixed $connection, string $directory): void
     {
         $segments = array_values(array_filter(explode('/', trim($directory, '/')), static fn(string $segment): bool => $segment !== ''));
@@ -448,6 +531,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
         }
     }
 
+    /**
+     * Handles the ensure sftp directory workflow.
+     */
     private function ensureSftpDirectory(string $directory): void
     {
         if (!function_exists('curl_init')) {
@@ -492,6 +578,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
         curl_close($ch);
     }
 
+    /**
+     * Handles the protocol workflow.
+     */
     private function protocol(): string
     {
         $protocol = strtolower(trim((string) ($this->config['ftp_protocol'] ?? 'ftp')));
@@ -503,16 +592,25 @@ final class FtpStorageAdapter implements StorageAdapterInterface
         return $protocol;
     }
 
+    /**
+     * Handles the port workflow.
+     */
     private function port(): int
     {
         return (int) ($this->config['ftp_port'] ?? ($this->protocol() === 'sftp' ? 22 : 21));
     }
 
+    /**
+     * Handles the timeout workflow.
+     */
     private function timeout(): int
     {
         return (int) ($this->config['ftp_timeout'] ?? 10);
     }
 
+    /**
+     * Handles the remote path workflow.
+     */
     private function remotePath(string $path): string
     {
         $normalized = $this->normalizePath($path);
@@ -523,6 +621,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
             : $root . '/' . $normalized;
     }
 
+    /**
+     * Normalizes the provided value.
+     */
     private function normalizePath(string $path): string
     {
         $path = trim(str_replace('\\', '/', $path), '/');
@@ -541,6 +642,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
         return implode('/', $segments);
     }
 
+    /**
+     * Normalizes the provided value.
+     */
     private function normalizeRoot(string $root): string
     {
         $trimmed = trim($root);
@@ -554,6 +658,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
         return rtrim($normalized, '/') ?: '/';
     }
 
+    /**
+     * Handles the encode remote path workflow.
+     */
     private function encodeRemotePath(string $path): string
     {
         $segments = explode('/', ltrim($path, '/'));
@@ -565,6 +672,9 @@ final class FtpStorageAdapter implements StorageAdapterInterface
         return '/' . implode('/', $encoded);
     }
 
+    /**
+     * Handles the required string workflow.
+     */
     private function requiredString(string $key): string
     {
         $value = trim((string) ($this->config[$key] ?? ''));

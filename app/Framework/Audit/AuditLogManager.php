@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Audit;
 
 use Catalyst\Entities\AuditLogEntry;
@@ -15,6 +41,12 @@ use Catalyst\Framework\Tenancy\TenancyManager;
 use Catalyst\Framework\Traits\SingletonTrait;
 use Throwable;
 
+/**
+ * Defines the Audit Log Manager class contract.
+ *
+ * @package Catalyst\Framework\Audit
+ * Responsibility: Coordinates the audit log manager behavior within its module boundary.
+ */
 final class AuditLogManager
 {
     use SingletonTrait;
@@ -26,6 +58,9 @@ final class AuditLogManager
 
     private bool $writeWarningEmitted = false;
 
+    /**
+     * Handles the remember model state workflow.
+     */
     public function rememberModelState(Model $model, string $action): void
     {
         if ($model instanceof AuditLogEntry) {
@@ -38,6 +73,9 @@ final class AuditLogManager
         ];
     }
 
+    /**
+     * Handles the record created workflow.
+     */
     public function recordCreated(Model $model): void
     {
         if ($model instanceof AuditLogEntry) {
@@ -59,6 +97,9 @@ final class AuditLogManager
         );
     }
 
+    /**
+     * Handles the record pending mutation workflow.
+     */
     public function recordPendingMutation(Model $model, string $fallbackAction): void
     {
         if ($model instanceof AuditLogEntry) {
@@ -148,6 +189,9 @@ final class AuditLogManager
         }
     }
 
+    /**
+     * Handles the record framework event workflow.
+     */
     public function recordFrameworkEvent(EventEnvelope $event): void
     {
         $payload = $this->normalizeArray($event->payload);
@@ -283,6 +327,9 @@ final class AuditLogManager
         return $action;
     }
 
+    /**
+     * Handles the resource label workflow.
+     */
     private function resourceLabel(Model $model): ?string
     {
         $attributes = $model->getAttributes();
@@ -299,6 +346,9 @@ final class AuditLogManager
         return $key !== null ? '#' . $key : null;
     }
 
+    /**
+     * Normalizes the provided value.
+     */
     private function normalizeResourceId(int|string|null $value): int|string|null
     {
         if ($value === null || $value === '') {
@@ -308,6 +358,9 @@ final class AuditLogManager
         return $value;
     }
 
+    /**
+     * Handles the event action workflow.
+     */
     private function eventAction(string $eventName): string
     {
         return match ($eventName) {

@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Repository\Operations\Controllers;
 
 use Catalyst\Framework\Admin\Form\FormBuilder;
@@ -13,8 +39,17 @@ use Catalyst\Framework\Http\Response;
 use Catalyst\Repository\Operations\Requests\FeatureFlagOverrideRequest;
 use Catalyst\Repository\Operations\Requests\FeatureFlagDefaultRequest;
 
+/**
+ * Defines the Feature Flags Controller class contract.
+ *
+ * @package Catalyst\Repository\Operations\Controllers
+ * Responsibility: Coordinates the feature flags controller behavior within its module boundary.
+ */
 final class FeatureFlagsController extends AbstractOperationsController
 {
+    /**
+     * Handles the feature flags workflow.
+     */
     public function featureFlags(Request $request): Response
     {
         $this->authorizeResource('manage', 'operations');
@@ -190,6 +225,9 @@ final class FeatureFlagsController extends AbstractOperationsController
         ], 200, 'admin');
     }
 
+    /**
+     * Updates the feature flag default value.
+     */
     public function setFeatureFlagDefault(Request $request, string $flagKey): Response
     {
         $this->authorizeResource('manage', 'operations');
@@ -217,6 +255,9 @@ final class FeatureFlagsController extends AbstractOperationsController
         return $this->postActionSuccessRedirect('/configuration/feature-flags', __('operations.feature_flags.messages.default_updated'));
     }
 
+    /**
+     * Handles the persistence workflow.
+     */
     public function storeFeatureFlagOverride(FeatureFlagOverrideRequest $request): Response
     {
         $this->authorizeResource('manage', 'operations');
@@ -250,6 +291,9 @@ final class FeatureFlagsController extends AbstractOperationsController
         return $this->postActionSuccessRedirect('/configuration/feature-flags', $existing === null ? __('operations.feature_flags.messages.override_created') : __('operations.feature_flags.messages.override_updated'));
     }
 
+    /**
+     * Handles the delete workflow.
+     */
     public function deleteFeatureFlagOverride(Request $request, string $id): Response
     {
         $this->authorizeResource('manage', 'operations');

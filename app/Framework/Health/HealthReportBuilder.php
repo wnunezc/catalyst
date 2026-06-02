@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Health;
 
 use Catalyst\Framework\Cache\BootstrapCacheManager;
@@ -22,6 +48,12 @@ use Catalyst\Helpers\Config\ConfigManager;
 use Catalyst\Helpers\Path\ProjectPath;
 use Catalyst\Helpers\Security\SensitiveValueRedactor;
 
+/**
+ * Defines the Health Report Builder class contract.
+ *
+ * @package Catalyst\Framework\Health
+ * Responsibility: Coordinates the health report builder behavior within its module boundary.
+ */
 final class HealthReportBuilder
 {
     private const MIN_PHP = '8.4.0';
@@ -602,6 +634,9 @@ final class HealthReportBuilder
         ];
     }
 
+    /**
+     * Handles the translate same site workflow.
+     */
     private function translateSameSite(string $sameSite): string
     {
         return match (strtolower($sameSite)) {

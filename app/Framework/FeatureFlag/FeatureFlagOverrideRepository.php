@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\FeatureFlag;
 
 use Catalyst\Entities\FeatureFlagOverride;
@@ -11,6 +37,12 @@ use Catalyst\Framework\Database\DatabaseManager;
 use Catalyst\Framework\Traits\SingletonTrait;
 use Catalyst\Helpers\Log\Logger;
 
+/**
+ * Defines the Feature Flag Override Repository class contract.
+ *
+ * @package Catalyst\Framework\FeatureFlag
+ * Responsibility: Coordinates the feature flag override repository behavior within its module boundary.
+ */
 final class FeatureFlagOverrideRepository
 {
     use SingletonTrait;
@@ -18,6 +50,9 @@ final class FeatureFlagOverrideRepository
     private DatabaseManager $db;
     private Logger $logger;
 
+    /**
+     * Initializes the Feature Flag Override Repository instance.
+     */
     protected function __construct()
     {
         $this->db = DatabaseManager::getInstance();
@@ -147,6 +182,9 @@ final class FeatureFlagOverrideRepository
         return $flags;
     }
 
+    /**
+     * Finds the requested record.
+     */
     public function find(int $id): ?array
     {
         try {
@@ -160,6 +198,9 @@ final class FeatureFlagOverrideRepository
         }
     }
 
+    /**
+     * Finds the requested record.
+     */
     public function findBySubject(string $flagKey, string $subjectType, string $subjectKey): ?FeatureFlagOverride
     {
         try {
@@ -179,6 +220,9 @@ final class FeatureFlagOverrideRepository
         return $this->findModel((int) $row['id']);
     }
 
+    /**
+     * Finds the requested record.
+     */
     public function findModel(int $id): ?FeatureFlagOverride
     {
         $model = FeatureFlagOverride::find($id);
@@ -223,6 +267,9 @@ final class FeatureFlagOverrideRepository
         return $model;
     }
 
+    /**
+     * Handles the delete workflow.
+     */
     public function delete(FeatureFlagOverride $model): void
     {
         $before = $model->toArray();

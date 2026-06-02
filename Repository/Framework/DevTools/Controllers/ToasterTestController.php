@@ -3,14 +3,29 @@
 declare(strict_types=1);
 
 /**
- * Catalyst PHP Framework — DevTools
+ * Catalyst PHP Framework
  *
- * ToasterTestController — Etapa 0: Toaster + Modal API endpoints.
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
  *
- * @package   Catalyst\Repository\DevTools\Controllers
- * @author    Walter Nuñez (arcanisgk) <icarosnet@gmail.com>
- * @copyright 2023 - 2025
- * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
  */
 
 namespace Catalyst\Repository\DevTools\Controllers;
@@ -19,8 +34,17 @@ use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\JsonResponse;
 use Catalyst\Framework\View\TrustedHtml;
 
+/**
+ * Defines the Toaster Test Controller class contract.
+ *
+ * @package Catalyst\Repository\DevTools\Controllers
+ * Responsibility: Coordinates the toaster test controller behavior within its module boundary.
+ */
 class ToasterTestController extends Controller
 {
+    /**
+     * Handles the api toaster success workflow.
+     */
     public function apiToasterSuccess(): JsonResponse
     {
         return $this->jsonSuccess(['action' => 'created'], __('messages.operation_completed_successfully'))
@@ -32,6 +56,9 @@ class ToasterTestController extends Controller
             );
     }
 
+    /**
+     * Handles the api toaster error workflow.
+     */
     public function apiToasterError(): JsonResponse
     {
         return $this->jsonError(__('devtools.toaster_runtime.error.response'), 400)
@@ -43,6 +70,9 @@ class ToasterTestController extends Controller
             );
     }
 
+    /**
+     * Handles the api toaster warning workflow.
+     */
     public function apiToasterWarning(): JsonResponse
     {
         return $this->jsonSuccess(['status' => 'partial'], __('devtools.toaster_runtime.warning.response'))
@@ -54,6 +84,9 @@ class ToasterTestController extends Controller
             );
     }
 
+    /**
+     * Handles the api toaster info workflow.
+     */
     public function apiToasterInfo(): JsonResponse
     {
         return $this->jsonSuccess(['info' => 'data'], __('devtools.toaster_runtime.info.response'))
@@ -65,6 +98,9 @@ class ToasterTestController extends Controller
             );
     }
 
+    /**
+     * Handles the api multiple toasters workflow.
+     */
     public function apiMultipleToasters(): JsonResponse
     {
         $notifications = $this->notify()
@@ -76,6 +112,9 @@ class ToasterTestController extends Controller
             ->withNotification($notifications);
     }
 
+    /**
+     * Handles the api modal trigger workflow.
+     */
     public function apiModalTrigger(): JsonResponse
     {
         return $this->jsonSuccess(['trigger' => 'modal'], __('devtools.toaster_runtime.modal_triggered'))
@@ -87,6 +126,9 @@ class ToasterTestController extends Controller
             );
     }
 
+    /**
+     * Handles the api js enhancement partial refresh workflow.
+     */
     public function apiJsEnhancementPartialRefresh(): JsonResponse
     {
         usleep(900000);

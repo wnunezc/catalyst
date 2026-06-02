@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Cli\Commands;
 
 use Catalyst\Framework\Argument\ArgumentBag;
@@ -9,13 +35,25 @@ use Catalyst\Framework\Argument\Option;
 use Catalyst\Framework\Cli\AbstractCommand;
 use Catalyst\Helpers\Config\ConfigManager;
 
+/**
+ * Defines the Dev Tools Disable Command class contract.
+ *
+ * @package Catalyst\Framework\Cli\Commands
+ * Responsibility: Coordinates the dev tools disable command behavior within its module boundary.
+ */
 class DevToolsDisableCommand extends AbstractCommand
 {
+    /**
+     * Returns the name value.
+     */
     public function getName(): string
     {
         return 'devtools:disable';
     }
 
+    /**
+     * Returns the description value.
+     */
     public function getDescription(): string
     {
         return 'Disable debug-oriented DevTools runtime flags in app and logging config';
@@ -29,6 +67,9 @@ class DevToolsDisableCommand extends AbstractCommand
         ];
     }
 
+    /**
+     * Executes the service workflow.
+     */
     public function execute(ArgumentBag $args): int
     {
         $config   = ConfigManager::getInstance();

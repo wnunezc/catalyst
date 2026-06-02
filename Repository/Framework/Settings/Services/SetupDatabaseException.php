@@ -7,9 +7,18 @@ namespace Catalyst\Repository\Settings\Services;
 use RuntimeException;
 use Throwable;
 
+/**
+ * Defines the Setup Database Exception class contract.
+ *
+ * @package Catalyst\Repository\Settings\Services
+ * Responsibility: Coordinates the setup database exception behavior within its module boundary.
+ */
 final class SetupDatabaseException extends RuntimeException
 {
-    public function __construct(
+    /**
+ * Initializes the Setup Database Exception instance.
+ */
+public function __construct(
         private readonly string $translationKey,
         private readonly int $httpStatus = 422,
         private readonly string $detail = '',
@@ -18,22 +27,34 @@ final class SetupDatabaseException extends RuntimeException
         parent::__construct($translationKey, 0, $previous);
     }
 
-    public function translationKey(): string
+    /**
+ * Handles the translation key workflow.
+ */
+public function translationKey(): string
     {
         return $this->translationKey;
     }
 
-    public function httpStatus(): int
+    /**
+ * Handles the http status workflow.
+ */
+public function httpStatus(): int
     {
         return $this->httpStatus;
     }
 
-    public function detail(): string
+    /**
+ * Handles the detail workflow.
+ */
+public function detail(): string
     {
         return $this->detail;
     }
 
-    public function translatedMessage(): string
+    /**
+ * Handles the translated message workflow.
+ */
+public function translatedMessage(): string
     {
         $message = __($this->translationKey);
 

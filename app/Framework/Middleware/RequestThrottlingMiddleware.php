@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Middleware;
 
 use Catalyst\Framework\Auth\AuthManager;
@@ -13,10 +39,19 @@ use Catalyst\Framework\Route\Route;
 use Catalyst\Framework\Route\Router;
 use Closure;
 
+/**
+ * Defines the Request Throttling Middleware class contract.
+ *
+ * @package Catalyst\Framework\Middleware
+ * Responsibility: Coordinates the request throttling middleware behavior within its module boundary.
+ */
 class RequestThrottlingMiddleware extends CoreMiddleware
 {
     private string $storageFile;
 
+    /**
+     * Initializes the Request Throttling Middleware instance.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -30,6 +65,9 @@ class RequestThrottlingMiddleware extends CoreMiddleware
         $this->storageFile = $throttleDir . DS . 'request_attempts.json';
     }
 
+    /**
+     * Processes the current workflow.
+     */
     public function process(Request $request, Closure $next): Response
     {
         if (defined('IS_DEVELOPMENT') && IS_DEVELOPMENT) {
@@ -107,6 +145,9 @@ class RequestThrottlingMiddleware extends CoreMiddleware
         return $this->passToNext($request, $next);
     }
 
+    /**
+     * Normalizes the provided value.
+     */
     private function normalizedPath(Request $request): string
     {
         $uri = $request->getUri();
@@ -119,6 +160,9 @@ class RequestThrottlingMiddleware extends CoreMiddleware
         return $path !== '/' ? rtrim($path, '/') : '/';
     }
 
+    /**
+     * Resolves the requested value.
+     */
     private function resolveActorKey(): string
     {
         $auth = AuthManager::getInstance();
@@ -156,6 +200,9 @@ class RequestThrottlingMiddleware extends CoreMiddleware
         return hash('sha256', implode('|', $parts));
     }
 
+    /**
+     * Resolves the requested value.
+     */
     private function resolveMatchedRoute(string $path, string $method): ?Route
     {
         $params = [];
@@ -163,6 +210,9 @@ class RequestThrottlingMiddleware extends CoreMiddleware
         return Router::getInstance()->getRoutes()->match($path, $method, $params);
     }
 
+    /**
+     * Handles the too many attempts response workflow.
+     */
     private function tooManyAttemptsResponse(Request $request, int $retryAfter, string $path, string $profile): Response
     {
         $minutesRemaining = max(1, (int) ceil($retryAfter / 60));

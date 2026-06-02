@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Metadata;
 
 use Catalyst\Framework\Catalog\CatalogManager;
@@ -10,6 +36,12 @@ use Catalyst\Framework\Database\DatabaseManager;
 use Catalyst\Framework\Tenancy\TenancyManager;
 use Catalyst\Framework\Traits\SingletonTrait;
 
+/**
+ * Defines the Metadata Manager class contract.
+ *
+ * @package Catalyst\Framework\Metadata
+ * Responsibility: Coordinates the metadata manager behavior within its module boundary.
+ */
 final class MetadataManager
 {
     use SingletonTrait;
@@ -24,6 +56,9 @@ final class MetadataManager
     private CatalogRepository $catalogs;
     private DatabaseManager $db;
 
+    /**
+     * Initializes the Metadata Manager instance.
+     */
     protected function __construct()
     {
         $this->fields = MetadataFieldRepository::getInstance();
@@ -51,6 +86,9 @@ final class MetadataManager
         ];
     }
 
+    /**
+     * Handles the supports resource workflow.
+     */
     public function supportsResource(string $resourceKey): bool
     {
         return $this->resources->exists($resourceKey);
@@ -439,6 +477,9 @@ final class MetadataManager
         return $options;
     }
 
+    /**
+     * Handles the select options text workflow.
+     */
     public function selectOptionsText(array $definition): string
     {
         $lines = [];
@@ -458,6 +499,9 @@ final class MetadataManager
         return implode(PHP_EOL, $lines);
     }
 
+    /**
+     * Handles the media library label workflow.
+     */
     public function mediaLibraryLabel(int $mediaId): ?string
     {
         return $this->mediaLabel($mediaId);
@@ -471,16 +515,25 @@ final class MetadataManager
         return $this->catalogs->definitionOptionMap($includeState);
     }
 
+    /**
+     * Handles the input key workflow.
+     */
     public static function inputKey(string $fieldKey): string
     {
         return self::INPUT_PREFIX . trim(strtolower($fieldKey));
     }
 
+    /**
+     * Handles the filter key workflow.
+     */
     public static function filterKey(string $fieldKey): string
     {
         return self::FILTER_PREFIX . trim(strtolower($fieldKey));
     }
 
+    /**
+     * Handles the grid column key workflow.
+     */
     public static function gridColumnKey(string $fieldKey): string
     {
         return 'meta_' . trim(strtolower($fieldKey));
@@ -657,11 +710,17 @@ final class MetadataManager
         };
     }
 
+    /**
+     * Handles the supports filter type workflow.
+     */
     private function supportsFilterType(string $type): bool
     {
         return in_array($type, ['text', 'number', 'boolean', 'select', 'catalog', 'date', 'datetime', 'media'], true);
     }
 
+    /**
+     * Handles the form field type workflow.
+     */
     private function formFieldType(string $type): string
     {
         return match ($type) {
@@ -707,6 +766,9 @@ final class MetadataManager
         return $options;
     }
 
+    /**
+     * Handles the media label workflow.
+     */
     private function mediaLabel(int $mediaId): ?string
     {
         if ($mediaId <= 0) {
@@ -730,6 +792,9 @@ final class MetadataManager
         return $name === '' ? null : $name;
     }
 
+    /**
+     * Handles the nullable string workflow.
+     */
     private function nullableString(mixed $value): ?string
     {
         $value = trim((string) ($value ?? ''));
@@ -737,6 +802,9 @@ final class MetadataManager
         return $value === '' ? null : $value;
     }
 
+    /**
+     * Handles the nullable lower string workflow.
+     */
     private function nullableLowerString(mixed $value): ?string
     {
         $value = trim(strtolower((string) ($value ?? '')));
@@ -744,6 +812,9 @@ final class MetadataManager
         return $value === '' ? null : $value;
     }
 
+    /**
+     * Handles the nullable int workflow.
+     */
     private function nullableInt(mixed $value): ?int
     {
         if ($value === null || $value === '') {
@@ -753,6 +824,9 @@ final class MetadataManager
         return (int) $value;
     }
 
+    /**
+     * Handles the nullable float workflow.
+     */
     private function nullableFloat(mixed $value): ?float
     {
         if ($value === null || $value === '') {
@@ -762,6 +836,9 @@ final class MetadataManager
         return (float) $value;
     }
 
+    /**
+     * Handles the humanize workflow.
+     */
     private function humanize(string $value): string
     {
         $value = trim(str_replace(['_', '-'], ' ', $value));
@@ -769,6 +846,9 @@ final class MetadataManager
         return $value === '' ? '' : ucwords($value);
     }
 
+    /**
+     * Handles the current tenant id workflow.
+     */
     private function currentTenantId(): int
     {
         return TenancyManager::getInstance()->requireCurrentTenantId();

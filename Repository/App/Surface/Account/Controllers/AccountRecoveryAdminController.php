@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace App\Surface\Account\Controllers;
 
 use App\Surface\Account\Repositories\AccountRecoveryRepository;
@@ -12,13 +38,25 @@ use Catalyst\Framework\Http\Response;
 use Catalyst\Framework\View\TrustedHtml;
 use Catalyst\Helpers\Security\CsrfProtection;
 
+/**
+ * Defines the Account Recovery Admin Controller class contract.
+ *
+ * @package App\Surface\Account\Controllers
+ * Responsibility: Coordinates the account recovery admin controller behavior within its module boundary.
+ */
 final class AccountRecoveryAdminController extends Controller
 {
+    /**
+     * Initializes the Account Recovery Admin Controller instance.
+     */
     public function __construct(private readonly AccountRecoveryRepository $repository = new AccountRecoveryRepository())
     {
         parent::__construct();
     }
 
+    /**
+     * Handles the index workflow.
+     */
     public function index(Request $request): Response
     {
         return $this->view('account.admin-index', [
@@ -28,6 +66,9 @@ final class AccountRecoveryAdminController extends Controller
         ], 200, 'admin');
     }
 
+    /**
+     * Handles the detail display workflow.
+     */
     public function show(Request $request, string $id): Response
     {
         $entry = $this->repository->findRequest((int) $id);
@@ -44,16 +85,25 @@ final class AccountRecoveryAdminController extends Controller
         ], 200, 'admin');
     }
 
+    /**
+     * Handles the approve workflow.
+     */
     public function approve(Request $request, string $id): Response
     {
         return $this->review((int) $id, 'approved');
     }
 
+    /**
+     * Handles the reject workflow.
+     */
     public function reject(Request $request, string $id): Response
     {
         return $this->review((int) $id, 'rejected');
     }
 
+    /**
+     * Handles the review workflow.
+     */
     private function review(int $id, string $status): Response
     {
         $reviewerId = (int) (AuthManager::getInstance()->id() ?? 0);

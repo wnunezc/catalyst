@@ -3,15 +3,29 @@
 declare(strict_types=1);
 
 /**
- * Catalyst PHP Framework — DevTools
+ * Catalyst PHP Framework
  *
- * OrmTestController — Etapa 9: ORM / Entities tests.
- * Exercises: Model, Collection, Pagination, dirty tracking, casts, $hidden.
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
  *
- * @package   Catalyst\Repository\DevTools\Controllers
- * @author    Walter Nuñez (arcanisgk) <icarosnet@gmail.com>
- * @copyright 2023 - 2025
- * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
  */
 
 namespace Catalyst\Repository\DevTools\Controllers;
@@ -22,13 +36,25 @@ use Catalyst\Helpers\Exceptions\ModelNotFoundException;
 use Catalyst\Repository\Auth\Models\User;
 use Catalyst\Repository\DevTools\Models\DemoEmail;
 
+/**
+ * Defines the Orm Test Controller class contract.
+ *
+ * @package Catalyst\Repository\DevTools\Controllers
+ * Responsibility: Coordinates the orm test controller behavior within its module boundary.
+ */
 class OrmTestController extends Controller
 {
+    /**
+     * Handles the unique orm email workflow.
+     */
     private function uniqueOrmEmail(string $prefix): string
     {
         return sprintf('%s-%s@catalyst.test', $prefix, bin2hex(random_bytes(6)));
     }
 
+    /**
+     * Handles the orm status workflow.
+     */
     public function ormStatus(): JsonResponse
     {
         try {
@@ -54,6 +80,9 @@ class OrmTestController extends Controller
         }
     }
 
+    /**
+     * Handles the orm create workflow.
+     */
     public function ormCreate(): JsonResponse
     {
         try {
@@ -70,6 +99,9 @@ class OrmTestController extends Controller
         }
     }
 
+    /**
+     * Handles the orm update workflow.
+     */
     public function ormUpdate(): JsonResponse
     {
         try {
@@ -100,6 +132,9 @@ class OrmTestController extends Controller
         }
     }
 
+    /**
+     * Handles the orm delete latest workflow.
+     */
     public function ormDeleteLatest(): JsonResponse
     {
         try {
@@ -126,6 +161,9 @@ class OrmTestController extends Controller
         }
     }
 
+    /**
+     * Handles the orm find or fail workflow.
+     */
     public function ormFindOrFail(): JsonResponse
     {
         try {
@@ -143,6 +181,9 @@ class OrmTestController extends Controller
         }
     }
 
+    /**
+     * Handles the orm user demo workflow.
+     */
     public function ormUserDemo(): JsonResponse
     {
         try {

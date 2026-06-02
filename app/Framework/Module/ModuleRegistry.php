@@ -2,11 +2,43 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Module;
 
 use Catalyst\Framework\Middleware\DevToolsGuardMiddleware;
 use Catalyst\Framework\Traits\SingletonTrait;
 
+/**
+ * Defines the Module Registry class contract.
+ *
+ * @package Catalyst\Framework\Module
+ * Responsibility: Coordinates the module registry behavior within its module boundary.
+ */
 final class ModuleRegistry
 {
     use SingletonTrait;
@@ -166,6 +198,9 @@ final class ModuleRegistry
     private ModuleRuntimeStateDecorator $runtimeState;
     private ModuleRouteOwnershipResolver $routeOwnership;
 
+    /**
+     * Initializes the Module Registry instance.
+     */
     protected function __construct()
     {
         $this->declarations = new BuiltInModuleDeclarations();
@@ -230,6 +265,9 @@ final class ModuleRegistry
         ));
     }
 
+    /**
+     * Handles the flush cache workflow.
+     */
     public function flushCache(): void
     {
         $this->baseModules = null;
@@ -347,6 +385,9 @@ final class ModuleRegistry
             && str_starts_with($path, $pattern . '/');
     }
 
+    /**
+     * Normalizes the provided value.
+     */
     private static function normalizePath(string $path): string
     {
         $path = parse_url($path, PHP_URL_PATH) ?: $path;
@@ -363,6 +404,9 @@ final class ModuleRegistry
         return $path !== '/' ? rtrim($path, '/') : $path;
     }
 
+    /**
+     * Normalizes the provided value.
+     */
     private function normalizeLookupKey(string $key): string
     {
         $key = trim(strtolower($key));

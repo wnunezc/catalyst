@@ -2,10 +2,42 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\View;
 
 use JsonException;
 
+/**
+ * Defines the Inline Json class contract.
+ *
+ * @package Catalyst\Framework\View
+ * Responsibility: Coordinates the inline json behavior within its module boundary.
+ */
 final class InlineJson
 {
     public const int DEFAULT_OPTIONS = JSON_UNESCAPED_UNICODE
@@ -15,6 +47,9 @@ final class InlineJson
         | JSON_HEX_APOS
         | JSON_HEX_QUOT;
 
+    /**
+     * Handles the encode workflow.
+     */
     public static function encode(mixed $value, int $options = self::DEFAULT_OPTIONS): string
     {
         try {

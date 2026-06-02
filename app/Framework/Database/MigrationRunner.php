@@ -2,17 +2,52 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Database;
 
 use Catalyst\Helpers\Path\ProjectPath;
 use RuntimeException;
 
+/**
+ * Defines the Migration Runner class contract.
+ *
+ * @package Catalyst\Framework\Database
+ * Responsibility: Coordinates the migration runner behavior within its module boundary.
+ */
 class MigrationRunner
 {
     private const MIGRATIONS_TABLE = 'migrations';
 
     private string $migrationPath;
 
+    /**
+     * Initializes the Migration Runner instance.
+     */
     public function __construct(
         private readonly Connection $connection,
         ?string $migrationPath = null
@@ -130,11 +165,17 @@ class MigrationRunner
         ];
     }
 
+    /**
+     * Returns the migration path value.
+     */
     public function getMigrationPath(): string
     {
         return $this->migrationPath;
     }
 
+    /**
+     * Handles the ensure migrations table workflow.
+     */
     private function ensureMigrationsTable(): void
     {
         $this->connection->getPdo()->exec(
@@ -150,6 +191,9 @@ class MigrationRunner
         );
     }
 
+    /**
+     * Handles the migrations table exists workflow.
+     */
     private function migrationsTableExists(): bool
     {
         $row = $this->connection->selectOne(
@@ -236,6 +280,9 @@ class MigrationRunner
         return $applied;
     }
 
+    /**
+     * Handles the next batch number workflow.
+     */
     private function nextBatchNumber(): int
     {
         $row = $this->connection->selectOne('SELECT MAX(batch) AS max_batch FROM migrations');
@@ -244,6 +291,9 @@ class MigrationRunner
         return $max + 1;
     }
 
+    /**
+     * Handles the last batch number workflow.
+     */
     private function lastBatchNumber(): ?int
     {
         $row = $this->connection->selectOne('SELECT MAX(batch) AS max_batch FROM migrations');
@@ -255,6 +305,9 @@ class MigrationRunner
         return (int) $row['max_batch'];
     }
 
+    /**
+     * Handles the record applied migration workflow.
+     */
     private function recordAppliedMigration(string $version, string $name, int $batch): void
     {
         $this->connection->execute(
@@ -267,6 +320,9 @@ class MigrationRunner
         );
     }
 
+    /**
+     * Handles the remove applied migration workflow.
+     */
     private function removeAppliedMigration(string $version): void
     {
         $this->connection->execute(

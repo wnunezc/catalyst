@@ -84,7 +84,10 @@ class WebSocketBootMiddleware extends CoreMiddleware implements FeatureFlagInter
         return $this->passToNext($request, $next);
     }
 
-    public function isEnabled(): bool
+    /**
+ * Determines whether is enabled.
+ */
+public function isEnabled(): bool
     {
         return (bool)($this->readWsConfig()['enabled'] ?? true);
     }
@@ -202,7 +205,10 @@ class WebSocketBootMiddleware extends CoreMiddleware implements FeatureFlagInter
         }
     }
 
-    private function rotateLogIfNeeded(string $logFile, string $logDir): void
+    /**
+ * Rotates the log when configured thresholds are exceeded.
+ */
+private function rotateLogIfNeeded(string $logFile, string $logDir): void
     {
         $logging = ConfigManager::getInstance()->entry('logging', 'logging');
         $maxFileSizeMb = (int) ($logging['log_max_file_size_mb'] ?? 2);

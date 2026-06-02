@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Attachment;
 
 use Catalyst\Entities\DocumentArtifact;
@@ -12,6 +38,12 @@ use Catalyst\Framework\Media\MediaManager;
 use Catalyst\Framework\Traits\SingletonTrait;
 use RuntimeException;
 
+/**
+ * Defines the Attachment Manager class contract.
+ *
+ * @package Catalyst\Framework\Attachment
+ * Responsibility: Coordinates the attachment manager behavior within its module boundary.
+ */
 final class AttachmentManager
 {
     use SingletonTrait;
@@ -22,6 +54,9 @@ final class AttachmentManager
     private MediaManager $media;
     private DocumentTemplateManager $documents;
 
+    /**
+     * Initializes the Attachment Manager instance.
+     */
     protected function __construct()
     {
         $this->repository = AttachmentRepository::getInstance();
@@ -37,6 +72,9 @@ final class AttachmentManager
         return $this->repository->listForResource($resourceKey, $recordId, $includeDetached);
     }
 
+    /**
+     * Handles the attach media workflow.
+     */
     public function attachMedia(
         string $resourceKey,
         int $recordId,
@@ -57,6 +95,9 @@ final class AttachmentManager
         ]);
     }
 
+    /**
+     * Handles the attach artifact workflow.
+     */
     public function attachArtifact(
         string $resourceKey,
         int $recordId,
@@ -125,6 +166,9 @@ final class AttachmentManager
         return $attachment;
     }
 
+    /**
+     * Handles the detach workflow.
+     */
     public function detach(ResourceAttachment $attachment, bool $deleteAsset = false): void
     {
         $snapshot = $attachment->toArray();
@@ -161,6 +205,9 @@ final class AttachmentManager
         }
     }
 
+    /**
+     * Handles the assert resource target workflow.
+     */
     private function assertResourceTarget(string $resourceKey, int $recordId): void
     {
         if (trim($resourceKey) === '' || $recordId <= 0) {
@@ -168,6 +215,9 @@ final class AttachmentManager
         }
     }
 
+    /**
+     * Normalizes the provided value.
+     */
     private function normalizePurpose(string $value): string
     {
         $value = trim($value);
@@ -175,6 +225,9 @@ final class AttachmentManager
         return $value === '' ? 'attachment' : mb_substr($value, 0, 80);
     }
 
+    /**
+     * Normalizes the provided value.
+     */
     private function normalizeType(string $value): string
     {
         $value = trim($value);

@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Repository\Catalogs\Controllers;
 
 use Catalyst\Entities\CatalogDefinition;
@@ -27,10 +53,19 @@ use Catalyst\Repository\Catalogs\Support\CatalogFormFactory;
 use Catalyst\Repository\Catalogs\Support\CatalogGridFactory;
 use RuntimeException;
 
+/**
+ * Defines the Catalog Controller class contract.
+ *
+ * @package Catalyst\Repository\Catalogs\Controllers
+ * Responsibility: Coordinates the catalog controller behavior within its module boundary.
+ */
 final class CatalogController extends Controller
 {
     use InteractsWithRecordClaimsTrait;
 
+    /**
+     * Initializes the Catalog Controller instance.
+     */
     public function __construct(
         private readonly CatalogRepository $repository,
         private readonly CatalogManager $manager,
@@ -45,6 +80,9 @@ final class CatalogController extends Controller
         parent::__construct();
     }
 
+    /**
+     * Handles the index workflow.
+     */
     public function index(Request $request): Response
     {
         $this->authorizeResource('view-any', CatalogManager::RESOURCE_KEY);
@@ -56,6 +94,9 @@ final class CatalogController extends Controller
         ], 200, 'admin');
     }
 
+    /**
+     * Handles the create workflow.
+     */
     public function create(Request $request): Response
     {
         $this->authorizeResource('create', CatalogManager::RESOURCE_KEY);
@@ -63,6 +104,9 @@ final class CatalogController extends Controller
         return $this->renderForm(__('catalogs.form_page.create_title'), null);
     }
 
+    /**
+     * Handles the persistence workflow.
+     */
     public function store(CatalogDefinitionRequest $request): Response
     {
         $this->authorizeResource('create', CatalogManager::RESOURCE_KEY);
@@ -70,11 +114,17 @@ final class CatalogController extends Controller
         return $this->postActionSuccessRedirect('/workspaces/catalogs/' . (int) $catalog->getKey(), __('catalogs.messages.catalog_created'));
     }
 
+    /**
+     * Handles the detail display workflow.
+     */
     public function show(Request $request, string $id): Response
     {
         return $this->renderShow((int) $id);
     }
 
+    /**
+     * Handles the edit workflow.
+     */
     public function edit(Request $request, string $id): Response
     {
         $catalog = $this->repository->findDefinition((int) $id);
@@ -99,6 +149,9 @@ final class CatalogController extends Controller
         return $this->renderForm(__('catalogs.form_page.edit_title'), $catalog, $claim);
     }
 
+    /**
+     * Handles the update workflow.
+     */
     public function update(CatalogDefinitionRequest $request, string $id): Response
     {
         $catalog = $this->repository->findDefinitionModel((int) $id);
@@ -118,6 +171,9 @@ final class CatalogController extends Controller
         return $this->postActionSuccessRedirect('/workspaces/catalogs/' . (int) $id, __('catalogs.messages.catalog_updated'));
     }
 
+    /**
+     * Handles the destroy workflow.
+     */
     public function destroy(Request $request, string $id): Response
     {
         $catalog = $this->repository->findDefinitionModel((int) $id);
@@ -136,6 +192,9 @@ final class CatalogController extends Controller
         return $this->postActionSuccessRedirect('/workspaces/catalogs', __('catalogs.messages.catalog_deleted'));
     }
 
+    /**
+     * Handles the transition workflow.
+     */
     public function transition(Request $request, string $id): Response
     {
         $catalog = $this->repository->findDefinitionModel((int) $id);
@@ -162,6 +221,9 @@ final class CatalogController extends Controller
         return $this->postActionSuccessRedirect('/workspaces/catalogs/' . (int) $id, __('catalogs.messages.catalog_transitioned'));
     }
 
+    /**
+     * Handles the restore version workflow.
+     */
     public function restoreVersion(Request $request, string $id, string $versionId): Response
     {
         $catalog = $this->repository->findDefinitionModel((int) $id);
@@ -180,6 +242,9 @@ final class CatalogController extends Controller
         return $this->postActionSuccessRedirect('/workspaces/catalogs/' . (int) $id, __('catalogs.messages.catalog_version_restored'));
     }
 
+    /**
+     * Handles the create workflow.
+     */
     public function createItem(Request $request, string $id): Response
     {
         $catalog = $this->repository->findDefinition((int) $id);
@@ -204,6 +269,9 @@ final class CatalogController extends Controller
         return $this->renderItemForm(__('catalogs.item_form_page.create_title'), $catalog, null, $claim);
     }
 
+    /**
+     * Handles the persistence workflow.
+     */
     public function storeItem(CatalogItemRequest $request, string $id): Response
     {
         $catalog = $this->repository->findDefinition((int) $id);
@@ -222,6 +290,9 @@ final class CatalogController extends Controller
         return $this->postActionSuccessRedirect('/workspaces/catalogs/' . (int) $id, __('catalogs.messages.item_created'));
     }
 
+    /**
+     * Handles the edit workflow.
+     */
     public function editItem(Request $request, string $id, string $itemId): Response
     {
         $catalog = $this->repository->findDefinition((int) $id);
@@ -248,6 +319,9 @@ final class CatalogController extends Controller
         return $this->renderItemForm(__('catalogs.item_form_page.edit_title'), $catalog, $item, $claim);
     }
 
+    /**
+     * Handles the update workflow.
+     */
     public function updateItem(CatalogItemRequest $request, string $id, string $itemId): Response
     {
         $catalog = $this->repository->findDefinition((int) $id);
@@ -269,6 +343,9 @@ final class CatalogController extends Controller
         return $this->postActionSuccessRedirect('/workspaces/catalogs/' . (int) $id, __('catalogs.messages.item_updated'));
     }
 
+    /**
+     * Handles the destroy workflow.
+     */
     public function destroyItem(Request $request, string $id, string $itemId): Response
     {
         $catalog = $this->repository->findDefinition((int) $id);
@@ -308,6 +385,9 @@ final class CatalogController extends Controller
         ], 200, 'admin');
     }
 
+    /**
+     * Renders the current view state.
+     */
     private function renderShow(int $id): Response
     {
         $catalog = $this->repository->findDefinition($id);
@@ -372,6 +452,9 @@ final class CatalogController extends Controller
         ], 200, 'admin');
     }
 
+    /**
+     * Loads the requested data.
+     */
     private function loadCatalogItemModel(int $catalogId, int $itemId): ?CatalogItem
     {
         $item = $this->repository->findItemModel($itemId);

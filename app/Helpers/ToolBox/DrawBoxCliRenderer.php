@@ -2,10 +2,42 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Helpers\ToolBox;
 
 use Catalyst\Helpers\IO\FileOutput;
 
+/**
+ * Defines the Draw Box Cli Renderer class contract.
+ *
+ * @package Catalyst\Helpers\ToolBox
+ * Responsibility: Coordinates the draw box cli renderer behavior within its module boundary.
+ */
 final class DrawBoxCliRenderer
 {
     /**
@@ -154,6 +186,9 @@ final class DrawBoxCliRenderer
         return max(array_map($this->textHelper->visibleLength(...), $content));
     }
 
+    /**
+     * Handles the calculate box width workflow.
+     */
     private function calculateBoxWidth(int $contentWidth, int $maxWidth, int $termWidth): int
     {
         if ($maxWidth === 0) {
@@ -163,11 +198,17 @@ final class DrawBoxCliRenderer
         return $contentWidth > $maxWidth ? $contentWidth : $maxWidth;
     }
 
+    /**
+     * Determines whether is Terminal Wide Enough.
+     */
     private function isTerminalWideEnough(int $boxWidth, int $termWidth): bool
     {
         return $boxWidth <= $termWidth;
     }
 
+    /**
+     * Handles the generate terminal too narrow message workflow.
+     */
     private function generateTerminalTooNarrowMessage(int $required, int $actual): string
     {
         $message = '!!!Your Terminal Windows is too Narrow. Resize It!!!' . PHP_EOL .
@@ -191,6 +232,9 @@ final class DrawBoxCliRenderer
         );
     }
 
+    /**
+     * Returns the terminal width value.
+     */
     private function getTerminalWidth(): int
     {
         return defined('TW') ? TW : 80;

@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Database;
 
 use ArrayIterator;
@@ -25,6 +51,9 @@ use Traversable;
  */
 class Collection implements Countable, IteratorAggregate, JsonSerializable
 {
+    /**
+     * Initializes the Collection instance.
+     */
     public function __construct(protected array $items = []) {}
 
     // -------------------------------------------------------------------------
@@ -51,6 +80,9 @@ class Collection implements Countable, IteratorAggregate, JsonSerializable
         );
     }
 
+    /**
+     * Handles the to json workflow.
+     */
     public function toJson(int $flags = 0): string
     {
         return (string) json_encode($this->toArray(), $flags | JSON_THROW_ON_ERROR);
@@ -71,11 +103,17 @@ class Collection implements Countable, IteratorAggregate, JsonSerializable
     // Transformation
     // -------------------------------------------------------------------------
 
+    /**
+     * Handles the map workflow.
+     */
     public function map(callable $callback): self
     {
         return new self(array_values(array_map($callback, $this->items)));
     }
 
+    /**
+     * Handles the filter workflow.
+     */
     public function filter(callable $callback): self
     {
         return new self(array_values(array_filter($this->items, $callback)));
@@ -224,21 +262,33 @@ class Collection implements Countable, IteratorAggregate, JsonSerializable
     // Countable / IteratorAggregate
     // -------------------------------------------------------------------------
 
+    /**
+     * Handles the count workflow.
+     */
     public function count(): int
     {
         return count($this->items);
     }
 
+    /**
+     * Determines whether is Empty.
+     */
     public function isEmpty(): bool
     {
         return empty($this->items);
     }
 
+    /**
+     * Determines whether is Not Empty.
+     */
     public function isNotEmpty(): bool
     {
         return !empty($this->items);
     }
 
+    /**
+     * Returns the iterator value.
+     */
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->items);

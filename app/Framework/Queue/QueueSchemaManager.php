@@ -2,15 +2,50 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Queue;
 
 use Catalyst\Framework\Database\DatabaseManager;
 use PDO;
 
+/**
+ * Defines the Queue Schema Manager class contract.
+ *
+ * @package Catalyst\Framework\Queue
+ * Responsibility: Coordinates the queue schema manager behavior within its module boundary.
+ */
 final class QueueSchemaManager
 {
     private static bool $ready = false;
 
+    /**
+     * Handles the ensure workflow.
+     */
     public static function ensure(): void
     {
         if (self::$ready) {
@@ -60,6 +95,9 @@ final class QueueSchemaManager
         self::$ready = true;
     }
 
+    /**
+     * Handles the quote workflow.
+     */
     private static function quote(string $identifier): string
     {
         return '`' . str_replace('`', '``', $identifier) . '`';

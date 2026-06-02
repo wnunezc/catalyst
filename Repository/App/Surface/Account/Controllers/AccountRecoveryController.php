@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace App\Surface\Account\Controllers;
 
 use App\Surface\Account\Requests\MfaRecoveryRequest;
@@ -12,18 +38,33 @@ use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
 
+/**
+ * Defines the Account Recovery Controller class contract.
+ *
+ * @package App\Surface\Account\Controllers
+ * Responsibility: Coordinates the account recovery controller behavior within its module boundary.
+ */
 final class AccountRecoveryController extends Controller
 {
+    /**
+     * Handles the start workflow.
+     */
     public function start(): Response
     {
         return $this->guest('recovery-start', __('account.recovery_public.start_title'));
     }
 
+    /**
+     * Handles the detail display workflow.
+     */
     public function showMfaRequest(): Response
     {
         return $this->guest('mfa-request', __('account.recovery_public.mfa_title'));
     }
 
+    /**
+     * Handles the request mfa reset workflow.
+     */
     public function requestMfaReset(Request $request): Response
     {
         $validated = (new MfaRecoveryRequest())->validate($request);
@@ -39,6 +80,9 @@ final class AccountRecoveryController extends Controller
         return $this->redirect('/login');
     }
 
+    /**
+     * Handles the consume mfa reset workflow.
+     */
     public function consumeMfaReset(string $token): Response
     {
         $ok = (new AccountRecoveryService())->consumeMfaResetToken($token);
@@ -49,6 +93,9 @@ final class AccountRecoveryController extends Controller
         return $this->redirect('/login');
     }
 
+    /**
+     * Handles the detail display workflow.
+     */
     public function showSupportRequest(): Response
     {
         return $this->guest('support-request', __('account.recovery_public.support_title'), [
@@ -58,11 +105,17 @@ final class AccountRecoveryController extends Controller
         ]);
     }
 
+    /**
+     * Handles the submit support request workflow.
+     */
     public function submitSupportRequest(Request $request): Response
     {
         return $this->handleSupport($request, null, '/account-recovery/support');
     }
 
+    /**
+     * Handles the detail display workflow.
+     */
     public function showCompromisedRequest(): Response
     {
         return $this->guest('support-request', __('account.recovery_public.compromised_title'), [
@@ -72,11 +125,17 @@ final class AccountRecoveryController extends Controller
         ]);
     }
 
+    /**
+     * Handles the submit compromised request workflow.
+     */
     public function submitCompromisedRequest(Request $request): Response
     {
         return $this->handleSupport($request, 'compromised_account', '/account-recovery/compromised');
     }
 
+    /**
+     * Handles the request workflow.
+     */
     private function handleSupport(Request $request, ?string $forcedType, string $fallback): Response
     {
         $validated = (new SupportRecoveryRequest())->validate($request, $forcedType);

@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Cli\Commands;
 
 use Catalyst\Framework\Argument\ArgumentBag;
@@ -10,6 +36,12 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
 
+/**
+ * Defines the Security Check Command class contract.
+ *
+ * @package Catalyst\Framework\Cli\Commands
+ * Responsibility: Coordinates the security check command behavior within its module boundary.
+ */
 class SecurityCheckCommand extends AbstractCommand
 {
     /**
@@ -27,16 +59,25 @@ class SecurityCheckCommand extends AbstractCommand
         'inline-style-attribute' => '/style\s*=\s*["\']/i',
     ];
 
+    /**
+     * Returns the name value.
+     */
     public function getName(): string
     {
         return 'security:check';
     }
 
+    /**
+     * Returns the description value.
+     */
     public function getDescription(): string
     {
         return 'Scan CSP/frontend hotspots and other low-hanging security regressions';
     }
 
+    /**
+     * Executes the service workflow.
+     */
     public function execute(ArgumentBag $args): int
     {
         $failures = [];
@@ -188,6 +229,9 @@ class SecurityCheckCommand extends AbstractCommand
         }
     }
 
+    /**
+     * Determines whether is Ignorable Line.
+     */
     private function isIgnorableLine(string $line): bool
     {
         $trimmed = ltrim($line);
@@ -205,6 +249,9 @@ class SecurityCheckCommand extends AbstractCommand
         return false;
     }
 
+    /**
+     * Determines whether is Escaped Demo Line.
+     */
     private function isEscapedDemoLine(string $line): bool
     {
         $normalized = strtolower($line);
@@ -222,6 +269,9 @@ class SecurityCheckCommand extends AbstractCommand
         return false;
     }
 
+    /**
+     * Determines whether has Inline Script Without Nonce.
+     */
     private function hasInlineScriptWithoutNonce(string $line): bool
     {
         if (stripos($line, '<script') === false) {
@@ -256,6 +306,9 @@ class SecurityCheckCommand extends AbstractCommand
         return true;
     }
 
+    /**
+     * Determines whether has Inline Style Block Without Nonce.
+     */
     private function hasInlineStyleBlockWithoutNonce(string $line): bool
     {
         if (stripos($line, '<style') === false) {
@@ -281,6 +334,9 @@ class SecurityCheckCommand extends AbstractCommand
         return true;
     }
 
+    /**
+     * Handles the relative path workflow.
+     */
     private function relativePath(string $path): string
     {
         $prefix = rtrim(PD, '\\/') . DS;

@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Database;
 
 use Catalyst\Framework\Database\Relations\Relation;
@@ -44,6 +70,9 @@ class ModelQueryBuilder extends QueryBuilder
      */
     protected array $eagerLoad = [];
 
+    /**
+     * Initializes the Model Query Builder instance.
+     */
     public function __construct(
         Connection $connection,
         string $table,
@@ -296,6 +325,9 @@ class ModelQueryBuilder extends QueryBuilder
         $this->softScopeApplied = true;
     }
 
+    /**
+     * Handles the apply tenant scope workflow.
+     */
     protected function applyTenantScope(): void
     {
         if ($this->tenantScopeApplied || !$this->hasTenantScope()) {
@@ -318,6 +350,9 @@ class ModelQueryBuilder extends QueryBuilder
         return defined("{$this->modelClass}::SOFT_DELETES");
     }
 
+    /**
+     * Determines whether has Tenant Scope.
+     */
     protected function hasTenantScope(): bool
     {
         return defined("{$this->modelClass}::TENANT_SCOPED") && ($this->modelClass)::TENANT_SCOPED === true;
@@ -333,6 +368,9 @@ class ModelQueryBuilder extends QueryBuilder
             : 'deleted_at';
     }
 
+    /**
+     * Returns the tenant column value.
+     */
     protected function getTenantColumn(): string
     {
         return defined("{$this->modelClass}::TENANT_COLUMN")

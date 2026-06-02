@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Document;
 
 use Catalyst\Entities\DocumentArtifact;
@@ -16,6 +42,12 @@ use Catalyst\Framework\View\HtmlAllowlistSanitizer;
 use Catalyst\Framework\Workflow\WorkflowManager;
 use RuntimeException;
 
+/**
+ * Defines the Document Template Manager class contract.
+ *
+ * @package Catalyst\Framework\Document
+ * Responsibility: Coordinates the document template manager behavior within its module boundary.
+ */
 final class DocumentTemplateManager
 {
     use SingletonTrait;
@@ -31,6 +63,9 @@ final class DocumentTemplateManager
     private PlatformAppearanceManager $appearance;
     private HtmlAllowlistSanitizer $htmlSanitizer;
 
+    /**
+     * Initializes the Document Template Manager instance.
+     */
     protected function __construct()
     {
         $this->renderer = new TemplateStringRenderer();
@@ -84,11 +119,17 @@ final class DocumentTemplateManager
         return $template;
     }
 
+    /**
+     * Handles the delete workflow.
+     */
     public function delete(DocumentTemplate $template): void
     {
         $template->delete();
     }
 
+    /**
+     * Handles the archive artifact workflow.
+     */
     public function archiveArtifact(DocumentArtifact $artifact): DocumentArtifact
     {
         if (!empty($artifact->toArray()['archived_at'])) {
@@ -103,6 +144,9 @@ final class DocumentTemplateManager
         return $artifact;
     }
 
+    /**
+     * Handles the purge artifact workflow.
+     */
     public function purgeArtifact(DocumentArtifact $artifact): void
     {
         $snapshot = $artifact->toArray();
@@ -181,6 +225,9 @@ final class DocumentTemplateManager
         ]);
     }
 
+    /**
+     * Handles the transition workflow.
+     */
     public function transition(DocumentTemplate $template, string $transitionKey, ?string $notes = null): array
     {
         return $this->workflows->transition(
@@ -208,6 +255,9 @@ final class DocumentTemplateManager
         return is_array($decoded) ? $decoded : [];
     }
 
+    /**
+     * Handles the workflow instance id workflow.
+     */
     private function workflowInstanceId(int $recordId): ?int
     {
         $instance = $this->workflows->ensureInstance(self::WORKFLOW_KEY, self::RESOURCE_KEY, $recordId);
@@ -216,6 +266,9 @@ final class DocumentTemplateManager
         return $id !== null ? (int) $id : null;
     }
 
+    /**
+     * Normalizes the provided value.
+     */
     private function normalizePdfText(string $content): string
     {
         $normalized = preg_replace('/<\s*br\s*\/?>/i', "\n", $content) ?? $content;

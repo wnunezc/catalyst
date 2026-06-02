@@ -4,14 +4,28 @@ declare(strict_types=1);
 
 /**
  * Catalyst PHP Framework
- * PHP Version 8.4 (Required)
  *
- * @package   Catalyst
- * @subpackage Framework\Controllers
- * @author    Walter Nuñez (arcanisgk) <wnunez@lh-2.net>
- * @copyright 2024 Walter Francisco Nuñez Cruz and Icaros Net
- * @license   Proprietary - https://catalyst.lh-2.net
- * @link      https://catalyst.lh-2.net
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
  */
 
 namespace Catalyst\Framework\Controllers;
@@ -107,6 +121,9 @@ abstract class Controller
         return new JsonResponse($data, $status);
     }
 
+    /**
+     * Handles the trusted html response workflow.
+     */
     protected function trustedHtmlResponse(TrustedHtml|string $html, int $status = 200): Response
     {
         $content = $html instanceof TrustedHtml ? $html->toHtml() : $html;
@@ -331,6 +348,9 @@ abstract class Controller
         return JsonResponse::api($data, $success, $message, $status, $meta);
     }
 
+    /**
+     * Handles the resource json success workflow.
+     */
     protected function resourceJsonSuccess(
         string $resourceKey,
         mixed $data = null,
@@ -347,6 +367,9 @@ abstract class Controller
         );
     }
 
+    /**
+     * Sanitizes the provided value.
+     */
     protected function sanitizeResourcePayload(string $resourceKey, mixed $data): mixed
     {
         if (is_object($data) && method_exists($data, 'toArray')) {
@@ -623,6 +646,9 @@ abstract class Controller
             ->withNotification($this->toaster('error', $message, $toasterOptions));
     }
 
+    /**
+     * Handles the post action success redirect workflow.
+     */
     protected function postActionSuccessRedirect(
         string $url,
         string $message,
@@ -633,6 +659,9 @@ abstract class Controller
         return $this->postActionRedirect($url, $message, true, $status, $data, $delay);
     }
 
+    /**
+     * Handles the post action error redirect workflow.
+     */
     protected function postActionErrorRedirect(
         string $url,
         string $message,
@@ -651,6 +680,9 @@ abstract class Controller
         return array_keys($value) === range(0, count($value) - 1);
     }
 
+    /**
+     * Handles the post action redirect workflow.
+     */
     private function postActionRedirect(
         string $url,
         string $message,

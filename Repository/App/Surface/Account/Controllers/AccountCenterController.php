@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace App\Surface\Account\Controllers;
 
 use App\Surface\Account\Requests\MfaRecoveryRequest;
@@ -15,8 +41,17 @@ use Catalyst\Framework\Http\RedirectResponse;
 use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
 
+/**
+ * Defines the Account Center Controller class contract.
+ *
+ * @package App\Surface\Account\Controllers
+ * Responsibility: Coordinates the account center controller behavior within its module boundary.
+ */
 final class AccountCenterController extends Controller
 {
+    /**
+     * Handles the profile workflow.
+     */
     public function profile(): Response
     {
         return $this->render('profile', __('account.profile.title'), [
@@ -24,11 +59,17 @@ final class AccountCenterController extends Controller
         ]);
     }
 
+    /**
+     * Handles the security workflow.
+     */
     public function security(): RedirectResponse
     {
         return $this->redirect('/account/security/mfa', 302);
     }
 
+    /**
+     * Handles the mfa workflow.
+     */
     public function mfa(): Response
     {
         return $this->render('mfa', __('account.mfa.title'), [
@@ -36,6 +77,9 @@ final class AccountCenterController extends Controller
         ]);
     }
 
+    /**
+     * Handles the mfa recovery workflow.
+     */
     public function mfaRecovery(): Response
     {
         return $this->render('mfa-recovery', __('account.mfa_recovery.title'), [
@@ -43,6 +87,9 @@ final class AccountCenterController extends Controller
         ]);
     }
 
+    /**
+     * Handles the request mfa recovery workflow.
+     */
     public function requestMfaRecovery(Request $request): Response
     {
         $validated = (new MfaRecoveryRequest())->validate($request);
@@ -59,11 +106,17 @@ final class AccountCenterController extends Controller
         return $this->redirect('/account/recovery/mfa');
     }
 
+    /**
+     * Handles the recovery workflow.
+     */
     public function recovery(): RedirectResponse
     {
         return $this->redirect('/account/recovery/support', 302);
     }
 
+    /**
+     * Handles the support workflow.
+     */
     public function support(): Response
     {
         return $this->render('support', __('account.support.title'), [
@@ -74,11 +127,17 @@ final class AccountCenterController extends Controller
         ]);
     }
 
+    /**
+     * Handles the submit support workflow.
+     */
     public function submitSupport(Request $request): Response
     {
         return $this->handleSupport($request, null, '/account/recovery/support');
     }
 
+    /**
+     * Handles the compromised workflow.
+     */
     public function compromised(): Response
     {
         return $this->render('support', __('account.support.compromised_title'), [
@@ -89,11 +148,17 @@ final class AccountCenterController extends Controller
         ]);
     }
 
+    /**
+     * Handles the submit compromised workflow.
+     */
     public function submitCompromised(Request $request): Response
     {
         return $this->handleSupport($request, 'compromised_account', '/account/recovery/compromised');
     }
 
+    /**
+     * Handles the activity workflow.
+     */
     public function activity(): Response
     {
         return $this->render('activity', __('account.activity.title'), [
@@ -101,6 +166,9 @@ final class AccountCenterController extends Controller
         ]);
     }
 
+    /**
+     * Handles the request workflow.
+     */
     private function handleSupport(Request $request, ?string $forcedType, string $fallback): Response
     {
         $validated = (new SupportRecoveryRequest())->validate($request, $forcedType);

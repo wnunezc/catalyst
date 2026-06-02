@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Repository\Automation\Controllers;
 
 use Catalyst\Entities\AutomationRule;
@@ -26,10 +52,19 @@ use Catalyst\Repository\Automation\Support\AutomationRuleGridFactory;
 use Catalyst\Repository\Automation\Support\AutomationRuleShowDataFactory;
 use RuntimeException;
 
+/**
+ * Defines the Automation Rule Controller class contract.
+ *
+ * @package Catalyst\Repository\Automation\Controllers
+ * Responsibility: Coordinates the automation rule controller behavior within its module boundary.
+ */
 final class AutomationRuleController extends Controller
 {
     use InteractsWithRecordClaimsTrait;
 
+    /**
+     * Initializes the Automation Rule Controller instance.
+     */
     public function __construct(
         private readonly AutomationRuleRepository $repository,
         private readonly AutomationManager $manager,
@@ -43,6 +78,9 @@ final class AutomationRuleController extends Controller
         parent::__construct();
     }
 
+    /**
+     * Handles the index workflow.
+     */
     public function index(Request $request): Response
     {
         $this->authorizeResource('view-any', AutomationManager::RESOURCE_KEY);
@@ -54,6 +92,9 @@ final class AutomationRuleController extends Controller
         ], 200, 'admin');
     }
 
+    /**
+     * Handles the create workflow.
+     */
     public function create(Request $request): Response
     {
         $this->authorizeResource('create', AutomationManager::RESOURCE_KEY);
@@ -61,6 +102,9 @@ final class AutomationRuleController extends Controller
         return $this->renderForm(__('automation.form_page.create_title'), null);
     }
 
+    /**
+     * Handles the persistence workflow.
+     */
     public function store(AutomationRuleRequest $request): Response
     {
         $this->authorizeResource('create', AutomationManager::RESOURCE_KEY);
@@ -69,11 +113,17 @@ final class AutomationRuleController extends Controller
         return $this->postActionSuccessRedirect('/automation-rules/' . (int) $rule->getKey(), __('automation.messages.created'));
     }
 
+    /**
+     * Handles the detail display workflow.
+     */
     public function show(Request $request, string $id): Response
     {
         return $this->renderShow((int) $id);
     }
 
+    /**
+     * Handles the edit workflow.
+     */
     public function edit(Request $request, string $id): Response
     {
         $rule = $this->repository->find((int) $id);
@@ -98,6 +148,9 @@ final class AutomationRuleController extends Controller
         return $this->renderForm(__('automation.form_page.edit_title'), $rule, $claim);
     }
 
+    /**
+     * Handles the update workflow.
+     */
     public function update(AutomationRuleRequest $request, string $id): Response
     {
         $rule = $this->repository->findModel((int) $id);
@@ -119,6 +172,9 @@ final class AutomationRuleController extends Controller
         return $this->postActionSuccessRedirect('/automation-rules/' . (int) $rule->getKey(), __('automation.messages.updated'));
     }
 
+    /**
+     * Handles the destroy workflow.
+     */
     public function destroy(Request $request, string $id): Response
     {
         $rule = $this->repository->findModel((int) $id);
@@ -137,6 +193,9 @@ final class AutomationRuleController extends Controller
         return $this->postActionSuccessRedirect('/automation-rules', __('automation.messages.deleted'));
     }
 
+    /**
+     * Executes the command workflow.
+     */
     public function run(AutomationRunContextRequest $request, string $id): Response
     {
         $rule = $this->repository->findModel((int) $id);
@@ -175,6 +234,9 @@ final class AutomationRuleController extends Controller
         }
     }
 
+    /**
+     * Handles the transition workflow.
+     */
     public function transition(Request $request, string $id): Response
     {
         $rule = $this->repository->findModel((int) $id);
@@ -196,6 +258,9 @@ final class AutomationRuleController extends Controller
         return $this->postActionSuccessRedirect('/automation-rules/' . (int) $rule->getKey(), __('automation.messages.transitioned'));
     }
 
+    /**
+     * Handles the restore version workflow.
+     */
     public function restoreVersion(Request $request, string $id, string $versionId): Response
     {
         $rule = $this->repository->findModel((int) $id);
@@ -214,6 +279,9 @@ final class AutomationRuleController extends Controller
         return $this->postActionSuccessRedirect('/automation-rules/' . (int) $id, __('automation.messages.version_restored'));
     }
 
+    /**
+     * Renders the current view state.
+     */
     private function renderShow(int $id): Response
     {
         $rule = $this->repository->find($id);

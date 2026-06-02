@@ -4,20 +4,28 @@ declare(strict_types=1);
 
 /**
  * Catalyst PHP Framework
- * PHP Version 8.4 (Required)
  *
- * Global Route Definitions
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
  *
- * Defines canonical redirect routes and framework-level actions.
- * Only framework-wide concerns belong here.
- * Module-specific routes live in each module's own routes.php file,
- * loaded automatically by Kernel::loadRoutes() via glob.
+ * PHP Version 8.4 (Required).
  *
- * @package   Catalyst
- * @author    Walter Nuñez (arcanisgk) <icarosnet@gmail.com>
- * @copyright 2023 - 2025
- * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
- * @link      https://catalyst.dock Local development URL
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
  */
 
 use Catalyst\Framework\Controllers\CanonicalRedirectController;

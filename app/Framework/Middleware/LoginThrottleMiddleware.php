@@ -2,29 +2,29 @@
 
 declare(strict_types=1);
 
-/**************************************************************************************
- *
+/**
  * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
  * PHP Version 8.4 (Required).
  *
- * @package   Catalyst
- * @subpackage Framework
- * @see       https://github.com/arcanisgk/catalyst
+ * @package    Catalyst
  *
- * @author    Walter Nuñez (arcanisgk/original founder) <icarosnet@gmail.com>
- * @copyright 2023 - 2025
- * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
  *
- * @note      This program is distributed in the hope that it will be useful
- *            WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- *            or FITNESS FOR A PARTICULAR PURPOSE.
+ * @version    GIT: See repository tags
  *
- * @category  Framework
+ * @category   Framework
  * @filesource
  *
- * @link      https://catalyst.dock Local development URL
- *
- * LoginThrottleMiddleware — IP-based brute force protection for auth routes.
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
  *
  */
 
@@ -51,6 +51,12 @@ use Closure;
  *
  * @package Catalyst\Framework\Middleware
  */
+/**
+ * Defines the Login Throttle Middleware class contract.
+ *
+ * @package Catalyst\Framework\Middleware
+ * Responsibility: Coordinates the login throttle middleware behavior within its module boundary.
+ */
 class LoginThrottleMiddleware extends CoreMiddleware
 {
     private const MAX_ATTEMPTS = 5;
@@ -59,6 +65,9 @@ class LoginThrottleMiddleware extends CoreMiddleware
 
     private string $storageFile;
 
+    /**
+     * Initializes the Login Throttle Middleware instance.
+     */
     public function __construct()
     {
         $throttleDir = implode(DS, [PD, 'boot-core', 'storage', 'throttle']);
@@ -70,6 +79,9 @@ class LoginThrottleMiddleware extends CoreMiddleware
         $this->storageFile = $throttleDir . DS . 'login_attempts.json';
     }
 
+    /**
+     * Processes the current workflow.
+     */
     public function process(Request $request, Closure $next): Response
     {
         if (defined('IS_DEVELOPMENT') && IS_DEVELOPMENT) {
@@ -121,6 +133,9 @@ class LoginThrottleMiddleware extends CoreMiddleware
 
     // -- Private helpers -------------------------------------------------------
 
+    /**
+     * Handles the too many attempts response workflow.
+     */
     private function tooManyAttemptsResponse(int $minutesRemaining): Response
     {
         $message = sprintf(
@@ -142,6 +157,9 @@ class LoginThrottleMiddleware extends CoreMiddleware
     }
 
 
+    /**
+     * Loads the requested data.
+     */
     private function loadData(): array
     {
         if (!file_exists($this->storageFile)) {
@@ -156,6 +174,9 @@ class LoginThrottleMiddleware extends CoreMiddleware
         return json_decode($json, true) ?? [];
     }
 
+    /**
+     * Persists the current state.
+     */
     private function saveData(array $data): void
     {
         // Prune entries with expired windows to keep file small

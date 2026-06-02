@@ -2,29 +2,29 @@
 
 declare(strict_types=1);
 
-/**************************************************************************************
- *
+/**
  * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
  * PHP Version 8.4 (Required).
  *
- * @package   Catalyst
- * @subpackage Framework\Authorization
- * @see       https://github.com/arcanisgk/catalyst
+ * @package    Catalyst
  *
- * @author    Walter Nuñez (arcanisgk/original founder) <icarosnet@gmail.com>
- * @copyright 2023 - 2025
- * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
  *
- * @note      This program is distributed in the hope that it will be useful
- *            WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- *            or FITNESS FOR A PARTICULAR PURPOSE.
+ * @version    GIT: See repository tags
  *
- * @category  Framework
+ * @category   Framework
  * @filesource
  *
- * @link      https://catalyst.dock Local development URL
- *
- * RoleRepository — all DB operations for RBAC roles, permissions and assignments.
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
  *
  */
 
@@ -53,6 +53,12 @@ use Exception;
  *
  * @package Catalyst\Framework\Authorization
  */
+/**
+ * Defines the Role Repository class contract.
+ *
+ * @package Catalyst\Framework\Authorization
+ * Responsibility: Coordinates the role repository behavior within its module boundary.
+ */
 class RoleRepository
 {
     use SingletonTrait;
@@ -69,6 +75,9 @@ class RoleRepository
 
     private RbacSortResolver $sortResolver;
 
+    /**
+     * Initializes the Role Repository instance.
+     */
     protected function __construct()
     {
         $this->db     = DatabaseManager::getInstance();
@@ -80,6 +89,9 @@ class RoleRepository
 
     // -- Private helper --------------------------------------------------------
 
+    /**
+     * Handles the conn workflow.
+     */
     private function conn(): Connection
     {
         return $this->db->connection();
@@ -285,6 +297,9 @@ class RoleRepository
         return $roleId;
     }
 
+    /**
+     * Handles the update workflow.
+     */
     public function updateRole(int $id, string $name, string $slug, ?string $description): void
     {
         $before = $this->findRole($id);
@@ -315,6 +330,9 @@ class RoleRepository
         $this->clearCache();
     }
 
+    /**
+     * Handles the delete workflow.
+     */
     public function deleteRole(int $id): void
     {
         $before = $this->findRole($id);
@@ -336,6 +354,9 @@ class RoleRepository
         $this->clearCache();
     }
 
+    /**
+     * Finds the requested record.
+     */
     public function findRole(int $id): ?array
     {
         try {
@@ -466,6 +487,9 @@ class RoleRepository
         }
     }
 
+    /**
+     * Handles the create workflow.
+     */
     public function createPermission(string $name, string $slug, ?string $description = null): int
     {
         $permissionId = $this->conn()->insert('permissions', [
@@ -495,6 +519,9 @@ class RoleRepository
         return $permissionId;
     }
 
+    /**
+     * Handles the update workflow.
+     */
     public function updatePermission(int $id, string $name, string $slug, ?string $description): void
     {
         $before = $this->findPermission($id);
@@ -525,6 +552,9 @@ class RoleRepository
         $this->clearCache();
     }
 
+    /**
+     * Handles the delete workflow.
+     */
     public function deletePermission(int $id): void
     {
         $before = $this->findPermission($id);
@@ -546,6 +576,9 @@ class RoleRepository
         $this->clearCache();
     }
 
+    /**
+     * Finds the requested record.
+     */
     public function findPermission(int $id): ?array
     {
         try {
@@ -678,6 +711,9 @@ class RoleRepository
         }
     }
 
+    /**
+     * Handles the assign permission to role workflow.
+     */
     public function assignPermissionToRole(int $roleId, int $permissionId): void
     {
         $role = $this->findRole($roleId);
@@ -710,6 +746,9 @@ class RoleRepository
         $this->clearCache();
     }
 
+    /**
+     * Handles the remove permission from role workflow.
+     */
     public function removePermissionFromRole(int $roleId, int $permissionId): void
     {
         $role = $this->findRole($roleId);
@@ -743,6 +782,9 @@ class RoleRepository
 
     // -- User → Role assignments -----------------------------------------------
 
+    /**
+     * Handles the assign role to user workflow.
+     */
     public function assignRoleToUser(int $userId, int $roleId): void
     {
         $role = $this->findRole($roleId);
@@ -773,6 +815,9 @@ class RoleRepository
         $this->clearUserCache($userId);
     }
 
+    /**
+     * Handles the assign role slug to user workflow.
+     */
     public function assignRoleSlugToUser(int $userId, string $slug): bool
     {
         $role = $this->findRoleBySlug($slug);
@@ -786,6 +831,9 @@ class RoleRepository
         return true;
     }
 
+    /**
+     * Handles the remove role from user workflow.
+     */
     public function removeRoleFromUser(int $userId, int $roleId): void
     {
         $role = $this->findRole($roleId);
@@ -817,11 +865,17 @@ class RoleRepository
 
     // -- Cache management ------------------------------------------------------
 
+    /**
+     * Handles the clear cache workflow.
+     */
     public function clearCache(): void
     {
         $this->cacheInvalidator->flushAll(self::$cache);
     }
 
+    /**
+     * Handles the clear user cache workflow.
+     */
     public function clearUserCache(int $userId): void
     {
         $this->cacheInvalidator->flushUser(
@@ -833,11 +887,17 @@ class RoleRepository
         );
     }
 
+    /**
+     * Handles the persistent cache key workflow.
+     */
     private function persistentCacheKey(string $segment, int $userId): string
     {
         return 'rbac:' . $this->persistentCacheVersion() . ':tenant:' . $this->currentTenantId() . ':' . $segment . ':' . $userId;
     }
 
+    /**
+     * Handles the persistent cache version workflow.
+     */
     private function persistentCacheVersion(): string
     {
         $cache = CacheManager::getInstance();
@@ -851,11 +911,17 @@ class RoleRepository
         return $version;
     }
 
+    /**
+     * Handles the memory cache key workflow.
+     */
     private function memoryCacheKey(string $segment, int $userId): string
     {
         return 'tenant_' . $this->currentTenantId() . '_' . $segment . '_' . $userId;
     }
 
+    /**
+     * Handles the current tenant id workflow.
+     */
     private function currentTenantId(): int
     {
         return TenancyManager::getInstance()->requireCurrentTenantId();

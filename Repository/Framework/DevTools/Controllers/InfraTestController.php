@@ -3,15 +3,29 @@
 declare(strict_types=1);
 
 /**
- * Catalyst PHP Framework — DevTools
+ * Catalyst PHP Framework
  *
- * InfraTestController — System / Infrastructure tests.
- * Covers: escape helper, layout, JSON response formats, logger, route cache.
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
  *
- * @package   Catalyst\Repository\DevTools\Controllers
- * @author    Walter Nuñez (arcanisgk) <icarosnet@gmail.com>
- * @copyright 2023 - 2025
- * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
  */
 
 namespace Catalyst\Repository\DevTools\Controllers;
@@ -22,13 +36,25 @@ use Catalyst\Framework\Http\Response;
 use Catalyst\Framework\Route\Router;
 use Catalyst\Framework\Route\RouteCollection;
 
+/**
+ * Defines the Infra Test Controller class contract.
+ *
+ * @package Catalyst\Repository\DevTools\Controllers
+ * Responsibility: Coordinates the infra test controller behavior within its module boundary.
+ */
 class InfraTestController extends Controller
 {
+    /**
+     * Handles the index workflow.
+     */
     public function index(): Response
     {
         return $this->redirect('/test-features');
     }
 
+    /**
+     * Handles the test escape helper workflow.
+     */
     public function testEscapeHelper(): JsonResponse
     {
         $cases = [
@@ -40,6 +66,9 @@ class InfraTestController extends Controller
         return $this->jsonSuccess(['cases' => $cases], __('devtools.infra_runtime.escape_ok'));
     }
 
+    /**
+     * Handles the test layout workflow.
+     */
     public function testLayout(): Response
     {
         return $this->view('layout-test', [
@@ -50,6 +79,9 @@ class InfraTestController extends Controller
         ], 200, 'admin');
     }
 
+    /**
+     * Handles the ui showcase workflow.
+     */
     public function uiShowcase(): Response
     {
         return $this->view('ui-showcase', [
@@ -58,21 +90,33 @@ class InfraTestController extends Controller
         ], 200, 'admin');
     }
 
+    /**
+     * Handles the test json workflow.
+     */
     public function testJson(): JsonResponse
     {
         return $this->json(['test' => 'json', 'timestamp' => date('Y-m-d H:i:s'), 'method' => 'json()']);
     }
 
+    /**
+     * Handles the test json success workflow.
+     */
     public function testJsonSuccess(): JsonResponse
     {
         return $this->jsonSuccess(['user' => 'test', 'id' => 123], __('messages.operation_completed_successfully'));
     }
 
+    /**
+     * Handles the test json error workflow.
+     */
     public function testJsonError(): JsonResponse
     {
         return $this->jsonError(__('messages.something_went_wrong'), 400);
     }
 
+    /**
+     * Handles the test validation error workflow.
+     */
     public function testValidationError(): JsonResponse
     {
         return $this->jsonValidationError([
@@ -84,11 +128,17 @@ class InfraTestController extends Controller
         ]);
     }
 
+    /**
+     * Handles the test api response workflow.
+     */
     public function testApiResponse(): JsonResponse
     {
         return $this->apiResponse(true, __('devtools.infra_runtime.data_retrieved'), ['items' => [1, 2, 3]], 200, ['total' => 3, 'page' => 1]);
     }
 
+    /**
+     * Handles the test logger email workflow.
+     */
     public function testLoggerEmail(): JsonResponse
     {
         $this->logger->email(
@@ -102,6 +152,9 @@ class InfraTestController extends Controller
         );
     }
 
+    /**
+     * Handles the test cors headers workflow.
+     */
     public function testCorsHeaders(): JsonResponse
     {
         $cfg = \Catalyst\Helpers\Config\ConfigManager::getInstance();
@@ -126,6 +179,9 @@ class InfraTestController extends Controller
         ], __('devtools.infra_runtime.cors_loaded'));
     }
 
+    /**
+     * Handles the test route cache workflow.
+     */
     public function testRouteCache(): JsonResponse
     {
         $router    = Router::getInstance();

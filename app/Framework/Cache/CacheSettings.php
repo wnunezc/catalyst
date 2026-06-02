@@ -2,8 +2,40 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Cache;
 
+/**
+ * Defines the Cache Settings class contract.
+ *
+ * @package Catalyst\Framework\Cache
+ * Responsibility: Coordinates the cache settings behavior within its module boundary.
+ */
 final class CacheSettings
 {
     /**
@@ -22,6 +54,9 @@ final class CacheSettings
         ];
     }
 
+    /**
+     * Handles the environment workflow.
+     */
     public static function environment(): string
     {
         if (defined('IS_DEVELOPMENT') && IS_DEVELOPMENT) {
@@ -39,6 +74,9 @@ final class CacheSettings
         return 'production';
     }
 
+    /**
+     * Handles the config path workflow.
+     */
     public static function configPath(?string $environment = null): string
     {
         return implode(DS, [PD, 'boot-core', 'config', $environment ?? self::environment(), 'cache.json']);
@@ -117,6 +155,9 @@ final class CacheSettings
         return (bool) ($resolved[$feature] ?? false);
     }
 
+    /**
+     * Normalizes the provided value.
+     */
     private static function normalizeDriver(string $driver): string
     {
         $driver = strtolower(trim($driver));
@@ -124,6 +165,9 @@ final class CacheSettings
         return in_array($driver, ['file', 'array', 'null'], true) ? $driver : 'file';
     }
 
+    /**
+     * Normalizes the provided value.
+     */
     private static function normalizePrefix(string $prefix): string
     {
         $prefix = trim($prefix);

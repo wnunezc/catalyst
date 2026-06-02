@@ -2,12 +2,44 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace App\Surface\Account\Services;
 
 use App\Surface\Account\Repositories\AccountRecoveryRepository;
 use Catalyst\Framework\Auth\AuthManager;
 use Catalyst\Framework\Auth\UserProvider;
 
+/**
+ * Defines the Account Security Service class contract.
+ *
+ * @package App\Surface\Account\Services
+ * Responsibility: Coordinates the account security service behavior within its module boundary.
+ */
 final class AccountSecurityService
 {
     /** @return array<string, mixed> */

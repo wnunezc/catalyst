@@ -2,11 +2,43 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Module;
 
 use Catalyst\Framework\Cli\ScaffoldManager;
 use RuntimeException;
 
+/**
+ * Defines the Module Blueprint Factory class contract.
+ *
+ * @package Catalyst\Framework\Module
+ * Responsibility: Coordinates the module blueprint factory behavior within its module boundary.
+ */
 final class ModuleBlueprintFactory
 {
     private const SURFACES = [
@@ -17,6 +49,9 @@ final class ModuleBlueprintFactory
         'devtools',
     ];
 
+    /**
+     * Initializes the Module Blueprint Factory instance.
+     */
     public function __construct(
         private readonly ScaffoldManager $manager,
         private readonly ModuleManifestBuilder $manifestBuilder,
@@ -80,6 +115,9 @@ final class ModuleBlueprintFactory
         return $blueprint;
     }
 
+    /**
+     * Normalizes the provided value.
+     */
     private function normalizeSurface(string $surface): string
     {
         $surface = strtolower(trim($surface));
@@ -93,6 +131,9 @@ final class ModuleBlueprintFactory
         return $surface;
     }
 
+    /**
+     * Normalizes the provided value.
+     */
     private function normalizeDescription(string $description, string $module): string
     {
         $description = trim($description);
@@ -125,6 +166,9 @@ final class ModuleBlueprintFactory
         return $items;
     }
 
+    /**
+     * Normalizes the provided value.
+     */
     private function normalizePermissionSlug(string $slug): string
     {
         $slug = trim(strtolower($slug));
@@ -140,6 +184,9 @@ final class ModuleBlueprintFactory
         return $slug;
     }
 
+    /**
+     * Handles the assert permission surface compatibility workflow.
+     */
     private function assertPermissionSurfaceCompatibility(string $surface, string $permissionSlug): void
     {
         if ($permissionSlug === '') {

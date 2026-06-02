@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Traits;
 
 use Catalyst\Framework\Concurrency\RecordClaimManager;
@@ -9,8 +35,17 @@ use Catalyst\Framework\Http\Request;
 use RuntimeException;
 use Throwable;
 
+/**
+ * Defines the Interacts With Record Claims Trait trait contract.
+ *
+ * @package Catalyst\Framework\Traits
+ * Responsibility: Coordinates the interacts with record claims trait behavior within its module boundary.
+ */
 trait InteractsWithRecordClaimsTrait
 {
+    /**
+     * Handles the acquire record claim workflow.
+     */
     protected function acquireRecordClaim(string $resourceKey, int $recordId, array $metadata = []): array
     {
         return RecordClaimManager::getInstance()->acquire(
@@ -20,6 +55,9 @@ trait InteractsWithRecordClaimsTrait
         );
     }
 
+    /**
+     * Handles the assert record claim available workflow.
+     */
     protected function assertRecordClaimAvailable(string $resourceKey, int $recordId, Request $request): ?array
     {
         $claimToken = trim((string) $request->input('claim_token', ''));
@@ -31,6 +69,9 @@ trait InteractsWithRecordClaimsTrait
         );
     }
 
+    /**
+     * Handles the release record claim workflow.
+     */
     protected function releaseRecordClaim(string $resourceKey, int $recordId, Request $request, ?string $reason = null): void
     {
         $claimToken = trim((string) $request->input('claim_token', ''));
@@ -104,6 +145,9 @@ trait InteractsWithRecordClaimsTrait
         return $fields;
     }
 
+    /**
+     * Handles the remember concurrency conflict workflow.
+     */
     protected function rememberConcurrencyConflict(Request $request, RuntimeException $e, string $bag = 'default'): void
     {
         $this->rememberValidationState($request->all(), [

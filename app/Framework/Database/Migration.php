@@ -2,20 +2,64 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Database;
 
 use RuntimeException;
 
+/**
+ * Defines the Migration class contract.
+ *
+ * @package Catalyst\Framework\Database
+ * Responsibility: Coordinates the migration behavior within its module boundary.
+ */
 abstract class Migration
 {
     private ?Connection $connection = null;
 
+    /**
+     * Returns the version value.
+     */
     abstract public function getVersion(): string;
 
+    /**
+     * Handles the up workflow.
+     */
     abstract public function up(): void;
 
+    /**
+     * Handles the down workflow.
+     */
     abstract public function down(): void;
 
+    /**
+     * Updates the connection value.
+     */
     final public function setConnection(Connection $connection): static
     {
         $this->connection = $connection;
@@ -23,6 +67,9 @@ abstract class Migration
         return $this;
     }
 
+    /**
+     * Handles the connection workflow.
+     */
     protected function connection(): Connection
     {
         if ($this->connection === null) {
@@ -32,26 +79,41 @@ abstract class Migration
         return $this->connection;
     }
 
+    /**
+     * Handles the statement workflow.
+     */
     protected function statement(string $sql): void
     {
         $this->connection()->getPdo()->exec($sql);
     }
 
+    /**
+     * Executes the service workflow.
+     */
     protected function execute(string $sql, array $params = []): int
     {
         return $this->connection()->execute($sql, $params);
     }
 
+    /**
+     * Handles the select workflow.
+     */
     protected function select(string $sql, array $params = []): array
     {
         return $this->connection()->select($sql, $params);
     }
 
+    /**
+     * Handles the select one workflow.
+     */
     protected function selectOne(string $sql, array $params = []): ?array
     {
         return $this->connection()->selectOne($sql, $params);
     }
 
+    /**
+     * Handles the table exists workflow.
+     */
     protected function tableExists(string $table): bool
     {
         $row = $this->selectOne(
@@ -66,6 +128,9 @@ abstract class Migration
         return $row !== null;
     }
 
+    /**
+     * Handles the foreign key exists workflow.
+     */
     protected function foreignKeyExists(string $table, string $constraint): bool
     {
         $row = $this->selectOne(
@@ -86,6 +151,9 @@ abstract class Migration
         return $row !== null;
     }
 
+    /**
+     * Handles the foreign key delete rule workflow.
+     */
     protected function foreignKeyDeleteRule(string $table, string $constraint): ?string
     {
         $row = $this->selectOne(
@@ -108,6 +176,9 @@ abstract class Migration
         return $row !== null ? strtoupper((string) $row['delete_rule']) : null;
     }
 
+    /**
+     * Handles the drop foreign key workflow.
+     */
     protected function dropForeignKey(string $table, string $constraint): void
     {
         $sql = sprintf(
@@ -119,6 +190,9 @@ abstract class Migration
         $this->statement($sql);
     }
 
+    /**
+     * Handles the add foreign key workflow.
+     */
     protected function addForeignKey(
         string $table,
         string $constraint,
@@ -142,6 +216,9 @@ abstract class Migration
         $this->statement($sql);
     }
 
+    /**
+     * Handles the quote identifier workflow.
+     */
     protected function quoteIdentifier(string $identifier): string
     {
         return '`' . str_replace('`', '``', $identifier) . '`';

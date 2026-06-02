@@ -2,10 +2,42 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Admin\Crud;
 
 use InvalidArgumentException;
 
+/**
+ * Defines the Crud Field Definition Parser class contract.
+ *
+ * @package Catalyst\Framework\Admin\Crud
+ * Responsibility: Coordinates the crud field definition parser behavior within its module boundary.
+ */
 final class CrudFieldDefinitionParser
 {
     /**
@@ -54,6 +86,9 @@ final class CrudFieldDefinitionParser
         return $parsed;
     }
 
+    /**
+     * Normalizes the provided value.
+     */
     private function normalizeFieldName(string $value): string
     {
         $value = strtolower(trim($value));
@@ -65,6 +100,9 @@ final class CrudFieldDefinitionParser
         return $value;
     }
 
+    /**
+     * Handles the humanize workflow.
+     */
     private function humanize(string $value): string
     {
         $value = trim((string) preg_replace('/(?<!^)[A-Z]/', ' $0', str_replace(['_', '-'], ' ', $value)));

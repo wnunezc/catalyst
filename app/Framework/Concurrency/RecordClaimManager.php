@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Concurrency;
 
 use Catalyst\Entities\RecordClaim;
@@ -14,6 +40,12 @@ use Catalyst\Framework\Traits\SingletonTrait;
 use DateTimeImmutable;
 use RuntimeException;
 
+/**
+ * Defines the Record Claim Manager class contract.
+ *
+ * @package Catalyst\Framework\Concurrency
+ * Responsibility: Coordinates the record claim manager behavior within its module boundary.
+ */
 final class RecordClaimManager
 {
     use SingletonTrait;
@@ -21,6 +53,9 @@ final class RecordClaimManager
     private RecordClaimRepository $repository;
     private DatabaseManager $db;
 
+    /**
+     * Initializes the Record Claim Manager instance.
+     */
     protected function __construct()
     {
         $this->repository = RecordClaimRepository::getInstance();
@@ -140,6 +175,9 @@ final class RecordClaimManager
         return $snapshot;
     }
 
+    /**
+     * Handles the release workflow.
+     */
     public function release(
         string $resourceKey,
         int $recordId,
@@ -407,6 +445,9 @@ final class RecordClaimManager
         }
     }
 
+    /**
+     * Determines whether is Owned By.
+     */
     private function isOwnedBy(RecordClaim $claim, ?int $actorId, string $actorLabel): bool
     {
         $claimedBy = $claim->getAttribute('claimed_by');
@@ -452,11 +493,17 @@ final class RecordClaimManager
         return $this->repository->decorateRow($claim->toArray());
     }
 
+    /**
+     * Handles the now workflow.
+     */
     private function now(): DateTimeImmutable
     {
         return new DateTimeImmutable();
     }
 
+    /**
+     * Handles the seconds between workflow.
+     */
     private function secondsBetween(DateTimeImmutable $start, DateTimeImmutable $end): int
     {
         return max(0, $end->getTimestamp() - $start->getTimestamp());

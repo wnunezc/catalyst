@@ -4,13 +4,28 @@ declare(strict_types=1);
 
 /**
  * Catalyst PHP Framework
- * PHP Version 8.4 (Required)
  *
- * @package   Catalyst
- * @subpackage Helpers\Validation\Rules
- * @author    Walter Nuñez (arcanisgk) <icarosnet@gmail.com>
- * @copyright 2024 Walter Francisco Nuñez Cruz and Icaros Net
- * @license   Proprietary - https://catalyst.lh-2.net
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
  */
 
 namespace Catalyst\Helpers\Validation\Rules;
@@ -31,6 +46,9 @@ use Catalyst\Framework\Http\UploadedFile;
  */
 class FileRules
 {
+    /**
+     * Handles the file workflow.
+     */
     public static function file(mixed $value): bool
     {
         $file = self::resolveUploadedFile($value);
@@ -125,6 +143,9 @@ class FileRules
         return (new FileValidator())->hasAllowedMimeTypes($file, $params);
     }
 
+    /**
+     * Resolves the requested value.
+     */
     private static function resolveUploadedFile(mixed $fieldOrFile): ?UploadedFile
     {
         if ($fieldOrFile instanceof UploadedFile) {

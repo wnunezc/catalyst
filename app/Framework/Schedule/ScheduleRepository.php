@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Schedule;
 
 use Catalyst\Framework\Database\Connection;
@@ -10,10 +36,19 @@ use Catalyst\Framework\Queue\QueueSettings;
 use Catalyst\Framework\Traits\SingletonTrait;
 use RuntimeException;
 
+/**
+ * Defines the Schedule Repository class contract.
+ *
+ * @package Catalyst\Framework\Schedule
+ * Responsibility: Coordinates the schedule repository behavior within its module boundary.
+ */
 final class ScheduleRepository
 {
     use SingletonTrait;
 
+    /**
+     * Handles the claim slot workflow.
+     */
     public function claimSlot(string $taskName, string $expression, string $slotKey, string $queueName): bool
     {
         ScheduleSchemaManager::ensure();
@@ -38,6 +73,9 @@ final class ScheduleRepository
         }
     }
 
+    /**
+     * Handles the mark queued workflow.
+     */
     public function markQueued(string $taskName, string $slotKey, int $jobId, ?string $message = null): void
     {
         ScheduleSchemaManager::ensure();
@@ -62,6 +100,9 @@ final class ScheduleRepository
         );
     }
 
+    /**
+     * Handles the mark skipped workflow.
+     */
     public function markSkipped(string $taskName, string $expression, string $slotKey, string $queueName, string $message): void
     {
         ScheduleSchemaManager::ensure();
@@ -82,6 +123,9 @@ final class ScheduleRepository
         );
     }
 
+    /**
+     * Handles the prune runs workflow.
+     */
     public function pruneRuns(int $olderThanDays = 30): int
     {
         ScheduleSchemaManager::ensure();
@@ -114,11 +158,17 @@ final class ScheduleRepository
         ];
     }
 
+    /**
+     * Handles the connection workflow.
+     */
     private function connection(): Connection
     {
         return DatabaseManager::getInstance()->connection((string) QueueSettings::current()['connection']);
     }
 
+    /**
+     * Handles the quote workflow.
+     */
     private function quote(string $identifier): string
     {
         if ($identifier === '' || preg_match('/^[A-Za-z0-9_]+$/', $identifier) !== 1) {

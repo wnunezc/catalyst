@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Api;
 
 use Catalyst\Entities\ApiToken;
@@ -11,6 +37,12 @@ use Catalyst\Framework\Traits\SingletonTrait;
 use Catalyst\Helpers\Log\Logger;
 use Exception;
 
+/**
+ * Defines the Api Token Repository class contract.
+ *
+ * @package Catalyst\Framework\Api
+ * Responsibility: Coordinates the api token repository behavior within its module boundary.
+ */
 final class ApiTokenRepository
 {
     use SingletonTrait;
@@ -18,6 +50,9 @@ final class ApiTokenRepository
     private DatabaseManager $db;
     private Logger $logger;
 
+    /**
+     * Initializes the Api Token Repository instance.
+     */
     protected function __construct()
     {
         $this->db = DatabaseManager::getInstance();
@@ -54,11 +89,17 @@ final class ApiTokenRepository
         }
     }
 
+    /**
+     * Finds the requested record.
+     */
     public function findModel(int $id): ?ApiToken
     {
         return ApiToken::find($id);
     }
 
+    /**
+     * Handles the revoke by id workflow.
+     */
     public function revokeById(int $id): void
     {
         if ($id <= 0) {
@@ -103,6 +144,9 @@ final class ApiTokenRepository
         }
     }
 
+    /**
+     * Handles the current tenant id workflow.
+     */
     private function currentTenantId(): int
     {
         return TenancyManager::getInstance()->requireCurrentTenantId();

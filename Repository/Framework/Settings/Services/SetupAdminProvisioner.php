@@ -10,19 +10,34 @@ use PDO;
 use RuntimeException;
 use Throwable;
 
+/**
+ * Defines the Setup Admin Provisioner class contract.
+ *
+ * @package Catalyst\Repository\Settings\Services
+ * Responsibility: Coordinates the setup admin provisioner behavior within its module boundary.
+ */
 final class SetupAdminProvisioner
 {
-    public function __construct(
+    /**
+ * Initializes the Setup Admin Provisioner instance.
+ */
+public function __construct(
         private readonly Logger $logger
     ) {
     }
 
-    public static function make(): self
+    /**
+ * Creates the requested object.
+ */
+public static function make(): self
     {
         return new self(Logger::getInstance());
     }
 
-    public function adminExists(PDO $pdo): bool
+    /**
+ * Determines whether an administrator exists.
+ */
+public function adminExists(PDO $pdo): bool
     {
         try {
             $stmt = $pdo->query(
@@ -38,7 +53,10 @@ final class SetupAdminProvisioner
         }
     }
 
-    public function userExistsByEmail(PDO $pdo, string $email): bool
+    /**
+ * Determines whether a user exists for the email address.
+ */
+public function userExistsByEmail(PDO $pdo, string $email): bool
     {
         try {
             $stmt = $pdo->prepare("SELECT 1 FROM users WHERE email = :email LIMIT 1");
@@ -50,7 +68,10 @@ final class SetupAdminProvisioner
         }
     }
 
-    public function ensureAdminRole(PDO $pdo): void
+    /**
+ * Ensures the administrator role exists.
+ */
+public function ensureAdminRole(PDO $pdo): void
     {
         try {
             $stmt = $pdo->prepare("SELECT id FROM roles WHERE slug = 'admin' LIMIT 1");
@@ -72,7 +93,10 @@ final class SetupAdminProvisioner
         }
     }
 
-    public function createAdmin(string $name, string $email, string $password): void
+    /**
+ * Creates the administrator account.
+ */
+public function createAdmin(string $name, string $email, string $password): void
     {
         try {
             UserProvider::getInstance()->create(

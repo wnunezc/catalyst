@@ -3,14 +3,29 @@
 declare(strict_types=1);
 
 /**
- * Catalyst PHP Framework — DevTools
+ * Catalyst PHP Framework
  *
- * FormEventTestController — Etapa 0: HandlesFormEventsTrait + FormHandler demo.
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
  *
- * @package   Catalyst\Repository\DevTools\Controllers
- * @author    Walter Nuñez (arcanisgk) <icarosnet@gmail.com>
- * @copyright 2023 - 2025
- * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
  */
 
 namespace Catalyst\Repository\DevTools\Controllers;
@@ -20,15 +35,27 @@ use Catalyst\Framework\Http\JsonResponse;
 use Catalyst\Framework\Http\Response;
 use Catalyst\Framework\Traits\HandlesFormEventsTrait;
 
+/**
+ * Defines the Form Event Test Controller class contract.
+ *
+ * @package Catalyst\Repository\DevTools\Controllers
+ * Responsibility: Coordinates the form event test controller behavior within its module boundary.
+ */
 class FormEventTestController extends Controller
 {
     use HandlesFormEventsTrait;
 
+    /**
+     * Handles the form demo store workflow.
+     */
     public function formDemoStore(): Response
     {
         return $this->dispatchEvent();
     }
 
+    /**
+     * Handles the on save workflow.
+     */
     protected function onSave(): JsonResponse
     {
         $name  = trim((string) $this->input('name', ''));
@@ -59,6 +86,9 @@ class FormEventTestController extends Controller
         );
     }
 
+    /**
+     * Handles the on validate workflow.
+     */
     protected function onValidate(): JsonResponse
     {
         return $this->jsonValidationError([
@@ -67,6 +97,9 @@ class FormEventTestController extends Controller
         ], __('devtools.form_events.messages.forced_validation_errors'));
     }
 
+    /**
+     * Handles the on refresh workflow.
+     */
     protected function onRefresh(): JsonResponse
     {
         return $this->jsonSuccess(null, __('devtools.form_events.messages.refreshing'))
@@ -74,6 +107,9 @@ class FormEventTestController extends Controller
             ->withRefresh(1000);
     }
 
+    /**
+     * Handles the on redirect workflow.
+     */
     protected function onRedirect(): JsonResponse
     {
         return $this->jsonSuccess(null, __('messages.redirecting'))

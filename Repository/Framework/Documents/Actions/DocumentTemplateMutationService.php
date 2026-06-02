@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Repository\Documents\Actions;
 
 use Catalyst\Entities\DocumentTemplate;
@@ -12,10 +38,19 @@ use Catalyst\Framework\Versioning\VersionManager;
 use Catalyst\Helpers\Log\Logger;
 use Throwable;
 
+/**
+ * Defines the Document Template Mutation Service class contract.
+ *
+ * @package Catalyst\Repository\Documents\Actions
+ * Responsibility: Coordinates the document template mutation service behavior within its module boundary.
+ */
 final class DocumentTemplateMutationService
 {
     private Logger $logger;
 
+    /**
+     * Initializes the Document Template Mutation Service instance.
+     */
     public function __construct(
         private readonly DocumentTemplateManager $manager,
         private readonly DocumentTemplateExportService $exportService
@@ -39,6 +74,9 @@ final class DocumentTemplateMutationService
         $this->releaseClaim($templateId, $request, 'document template updated');
     }
 
+    /**
+     * Handles the delete workflow.
+     */
     public function delete(DocumentTemplate $template, Request $request): void
     {
         $templateId = (int) $template->getKey();
@@ -56,12 +94,18 @@ final class DocumentTemplateMutationService
         $this->exportService->export($template, $payload);
     }
 
+    /**
+     * Handles the transition workflow.
+     */
     public function transition(DocumentTemplate $template, Request $request, string $transition, ?string $notes): void
     {
         $this->assertClaim((int) $template->getKey(), $request);
         $this->manager->transition($template, $transition, $notes);
     }
 
+    /**
+     * Handles the restore version workflow.
+     */
     public function restoreVersion(DocumentTemplate $template, Request $request, int $versionId): void
     {
         $templateId = (int) $template->getKey();
@@ -76,6 +120,9 @@ final class DocumentTemplateMutationService
         );
     }
 
+    /**
+     * Handles the assert claim workflow.
+     */
     private function assertClaim(int $templateId, Request $request): void
     {
         $claimToken = trim((string) $request->input('claim_token', ''));
@@ -87,6 +134,9 @@ final class DocumentTemplateMutationService
         );
     }
 
+    /**
+     * Handles the release claim workflow.
+     */
     private function releaseClaim(int $templateId, Request $request, ?string $reason = null): void
     {
         $claimToken = trim((string) $request->input('claim_token', ''));

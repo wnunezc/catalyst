@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Catalog;
 
 use Catalyst\Entities\CatalogDefinition;
@@ -12,6 +38,12 @@ use Catalyst\Framework\Traits\SingletonTrait;
 use Catalyst\Helpers\Log\Logger;
 use Exception;
 
+/**
+ * Defines the Catalog Repository class contract.
+ *
+ * @package Catalyst\Framework\Catalog
+ * Responsibility: Coordinates the catalog repository behavior within its module boundary.
+ */
 final class CatalogRepository
 {
     use SingletonTrait;
@@ -21,6 +53,9 @@ final class CatalogRepository
     private CatalogItemAvailabilityDecorator $itemDecorator;
     private CatalogOptionMapBuilder $optionMapBuilder;
 
+    /**
+     * Initializes the Catalog Repository instance.
+     */
     protected function __construct()
     {
         $this->db = DatabaseManager::getInstance();
@@ -180,11 +215,17 @@ final class CatalogRepository
         return is_array($row) ? $this->normalizeDefinitionRow($row) : null;
     }
 
+    /**
+     * Finds the requested record.
+     */
     public function findDefinitionModel(int $id): ?CatalogDefinition
     {
         return CatalogDefinition::find($id);
     }
 
+    /**
+     * Finds the requested record.
+     */
     public function findItemModel(int $id): ?CatalogItem
     {
         return CatalogItem::find($id);
@@ -362,6 +403,9 @@ final class CatalogRepository
         return $this->optionMapBuilder->buildDefinitionOptions($rows, $includeState);
     }
 
+    /**
+     * Handles the exists catalog key workflow.
+     */
     public function existsCatalogKey(string $catalogKey, ?int $ignoreId = null): bool
     {
         $bindings = [$this->currentTenantId(), trim(strtolower($catalogKey))];
@@ -386,6 +430,9 @@ final class CatalogRepository
         }
     }
 
+    /**
+     * Handles the exists item key workflow.
+     */
     public function existsItemKey(int $catalogId, string $itemKey, ?int $ignoreId = null): bool
     {
         $bindings = [$this->currentTenantId(), $catalogId, trim(strtolower($itemKey))];
@@ -411,11 +458,17 @@ final class CatalogRepository
         }
     }
 
+    /**
+     * Handles the delete workflow.
+     */
     public function deleteDefinition(CatalogDefinition $definition): void
     {
         $definition->delete();
     }
 
+    /**
+     * Handles the delete workflow.
+     */
     public function deleteItem(CatalogItem $item): void
     {
         $item->delete();
@@ -437,6 +490,9 @@ final class CatalogRepository
         ];
     }
 
+    /**
+     * Handles the version count workflow.
+     */
     private function versionCount(int $catalogId): int
     {
         try {
@@ -478,6 +534,9 @@ final class CatalogRepository
         return $this->itemDecorator->decorate($row);
     }
 
+    /**
+     * Resolves the requested value.
+     */
     private function resolveDefinitionSort(string $sort): string
     {
         return match ($sort) {
@@ -490,6 +549,9 @@ final class CatalogRepository
         };
     }
 
+    /**
+     * Resolves the requested value.
+     */
     private function resolveItemSort(string $sort): string
     {
         return match ($sort) {
@@ -503,11 +565,17 @@ final class CatalogRepository
         };
     }
 
+    /**
+     * Resolves the requested value.
+     */
     private function resolveSortDirection(string $direction): string
     {
         return strtolower($direction) === 'asc' ? 'ASC' : 'DESC';
     }
 
+    /**
+     * Handles the current tenant id workflow.
+     */
     private function currentTenantId(): int
     {
         return TenancyManager::getInstance()->requireCurrentTenantId();

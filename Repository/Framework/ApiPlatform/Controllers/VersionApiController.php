@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Repository\ApiPlatform\Controllers;
 
 use Catalyst\Entities\AutomationRule;
@@ -14,8 +40,17 @@ use Catalyst\Framework\Versioning\VersionManager;
 use Catalyst\Framework\Versioning\VersionRepository;
 use RuntimeException;
 
+/**
+ * Defines the Version Api Controller class contract.
+ *
+ * @package Catalyst\Repository\ApiPlatform\Controllers
+ * Responsibility: Coordinates the version api controller behavior within its module boundary.
+ */
 final class VersionApiController extends Controller
 {
+    /**
+     * Initializes the Version Api Controller instance.
+     */
     public function __construct(
         private readonly VersionRepository $repository,
         private readonly VersionManager $manager
@@ -23,6 +58,9 @@ final class VersionApiController extends Controller
         parent::__construct();
     }
 
+    /**
+     * Handles the index workflow.
+     */
     public function index(Request $request, string $resourceKey, string $recordId): Response
     {
         $resourceKey = trim($resourceKey);
@@ -41,6 +79,9 @@ final class VersionApiController extends Controller
         );
     }
 
+    /**
+     * Handles the restore workflow.
+     */
     public function restore(Request $request, string $id): Response
     {
         $version = $this->repository->findModel((int) $id);
@@ -74,6 +115,9 @@ final class VersionApiController extends Controller
         return $this->jsonSuccess($restored, __('apiplatform.messages.version_restored'));
     }
 
+    /**
+     * Resolves the requested value.
+     */
     private function resolveRecord(string $resourceKey, int $recordId): DocumentTemplate|AutomationRule|null
     {
         return match ($resourceKey) {

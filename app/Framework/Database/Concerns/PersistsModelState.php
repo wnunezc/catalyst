@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Database\Concerns;
 
 use Catalyst\Framework\Database\Connection;
@@ -9,8 +35,17 @@ use Catalyst\Framework\Database\DatabaseManager;
 use Catalyst\Framework\Tenancy\TenancyManager;
 use Catalyst\Helpers\Exceptions\OptimisticLockException;
 
+/**
+ * Defines the Persists Model State trait contract.
+ *
+ * @package Catalyst\Framework\Database\Concerns
+ * Responsibility: Coordinates the persists model state behavior within its module boundary.
+ */
 trait PersistsModelState
 {
+    /**
+     * Persists the current state.
+     */
     public function save(): bool
     {
         if ($this->exists) {
@@ -24,12 +59,18 @@ trait PersistsModelState
         return $this->performInsert();
     }
 
+    /**
+     * Handles the update workflow.
+     */
     public function update(array $attributes): bool
     {
         $this->fill($attributes);
         return $this->save();
     }
 
+    /**
+     * Handles the delete workflow.
+     */
     public function delete(): bool
     {
         if (!$this->exists) {
@@ -57,6 +98,9 @@ trait PersistsModelState
         return false;
     }
 
+    /**
+     * Handles the fresh workflow.
+     */
     public function fresh(): ?static
     {
         if (!$this->exists) {
@@ -66,6 +110,9 @@ trait PersistsModelState
         return static::find($this->getKey());
     }
 
+    /**
+     * Handles the refresh workflow.
+     */
     public function refresh(): static
     {
         $fresh = $this->fresh();
@@ -78,16 +125,25 @@ trait PersistsModelState
         return $this;
     }
 
+    /**
+     * Handles the exists workflow.
+     */
     public function exists(): bool
     {
         return $this->exists;
     }
 
+    /**
+     * Resolves the requested value.
+     */
     public static function resolveConnection(): Connection
     {
         return static::getConnectionInstance();
     }
 
+    /**
+     * Handles the perform insert workflow.
+     */
     protected function performInsert(): bool
     {
         $this->fireHook('inserting');
@@ -121,6 +177,9 @@ trait PersistsModelState
         return true;
     }
 
+    /**
+     * Handles the perform update workflow.
+     */
     protected function performUpdate(): bool
     {
         $this->fireHook('updating');
@@ -188,31 +247,49 @@ trait PersistsModelState
         return true;
     }
 
+    /**
+     * Returns the connection instance value.
+     */
     protected static function getConnectionInstance(): Connection
     {
         return DatabaseManager::getInstance()->connection(static::$connection);
     }
 
+    /**
+     * Handles the uses optimistic locking workflow.
+     */
     protected function usesOptimisticLocking(): bool
     {
         return defined(static::class . '::OPTIMISTIC_LOCKING') && static::OPTIMISTIC_LOCKING === true;
     }
 
+    /**
+     * Handles the optimistic lock column workflow.
+     */
     protected function optimisticLockColumn(): string
     {
         return defined(static::class . '::LOCK_VERSION') ? static::LOCK_VERSION : 'lock_version';
     }
 
+    /**
+     * Handles the uses tenant scoping workflow.
+     */
     protected function usesTenantScoping(): bool
     {
         return defined(static::class . '::TENANT_SCOPED') && static::TENANT_SCOPED === true;
     }
 
+    /**
+     * Handles the tenant scope column workflow.
+     */
     protected function tenantScopeColumn(): string
     {
         return defined(static::class . '::TENANT_COLUMN') ? static::TENANT_COLUMN : 'tenant_id';
     }
 
+    /**
+     * Handles the expected lock version workflow.
+     */
     protected function expectedLockVersion(string $column): ?int
     {
         $value = $this->attributes[$column] ?? $this->original[$column] ?? null;
@@ -224,6 +301,9 @@ trait PersistsModelState
         return (int) $value;
     }
 
+    /**
+     * Handles the current persisted lock version workflow.
+     */
     protected function currentPersistedLockVersion(string $column): ?int
     {
         $query = static::getConnectionInstance()

@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Tenancy;
 
 use Catalyst\Framework\Http\Request;
@@ -9,6 +35,12 @@ use Catalyst\Framework\Traits\SingletonTrait;
 use Catalyst\Helpers\Config\ConfigManager;
 use RuntimeException;
 
+/**
+ * Defines the Tenancy Manager class contract.
+ *
+ * @package Catalyst\Framework\Tenancy
+ * Responsibility: Coordinates the tenancy manager behavior within its module boundary.
+ */
 final class TenancyManager
 {
     use SingletonTrait;
@@ -146,11 +178,17 @@ final class TenancyManager
         return $this->resolveCurrentTenant();
     }
 
+    /**
+     * Handles the current tenant id workflow.
+     */
     public function currentTenantId(): int
     {
         return (int) ($this->currentContext()['tenant_id'] ?? 0);
     }
 
+    /**
+     * Handles the require current tenant id workflow.
+     */
     public function requireCurrentTenantId(): int
     {
         $tenantId = $this->currentTenantId();
@@ -162,11 +200,17 @@ final class TenancyManager
         return $tenantId;
     }
 
+    /**
+     * Handles the current tenant key workflow.
+     */
     public function currentTenantKey(): string
     {
         return (string) ($this->currentContext()['tenant_key'] ?? 'default');
     }
 
+    /**
+     * Determines whether is Isolation Active.
+     */
     public function isIsolationActive(): bool
     {
         return (bool) ($this->summary()['data_isolation_active'] ?? true);
@@ -237,6 +281,9 @@ final class TenancyManager
         $this->runtimeOverride = $context;
     }
 
+    /**
+     * Handles the clear override context workflow.
+     */
     public function clearOverrideContext(): void
     {
         $this->runtimeOverride = null;

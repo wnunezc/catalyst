@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Workflow;
 
 use Catalyst\Entities\AutomationRule;
@@ -16,6 +42,12 @@ use Catalyst\Framework\Timeline\TimelineManager;
 use Catalyst\Framework\Traits\SingletonTrait;
 use RuntimeException;
 
+/**
+ * Defines the Workflow Manager class contract.
+ *
+ * @package Catalyst\Framework\Workflow
+ * Responsibility: Coordinates the workflow manager behavior within its module boundary.
+ */
 final class WorkflowManager
 {
     use SingletonTrait;
@@ -24,6 +56,9 @@ final class WorkflowManager
     private WorkflowDefinitionRegistry $definitions;
     private EventBus $events;
 
+    /**
+     * Initializes the Workflow Manager instance.
+     */
     protected function __construct()
     {
         $this->repository = WorkflowRepository::getInstance();
@@ -235,6 +270,9 @@ final class WorkflowManager
         );
     }
 
+    /**
+     * Handles the definition workflow.
+     */
     private function definition(string $definitionKey): WorkflowDefinition
     {
         $definition = $this->definitions->get($definitionKey);
@@ -245,6 +283,9 @@ final class WorkflowManager
         return $definition;
     }
 
+    /**
+     * Resolves the requested value.
+     */
     private function resolveRecord(string $resourceKey, int $recordId): mixed
     {
         return match ($resourceKey) {

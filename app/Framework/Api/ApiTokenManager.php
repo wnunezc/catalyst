@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Api;
 
 use Catalyst\Entities\ApiToken;
@@ -9,6 +35,12 @@ use Catalyst\Framework\Auth\UserProvider;
 use Catalyst\Framework\Traits\SingletonTrait;
 use InvalidArgumentException;
 
+/**
+ * Defines the Api Token Manager class contract.
+ *
+ * @package Catalyst\Framework\Api
+ * Responsibility: Coordinates the api token manager behavior within its module boundary.
+ */
 final class ApiTokenManager
 {
     use SingletonTrait;
@@ -16,6 +48,9 @@ final class ApiTokenManager
     private ApiTokenRepository $repository;
     private UserProvider $users;
 
+    /**
+     * Initializes the Api Token Manager instance.
+     */
     protected function __construct()
     {
         $this->repository = ApiTokenRepository::getInstance();
@@ -50,6 +85,9 @@ final class ApiTokenManager
         ];
     }
 
+    /**
+     * Handles the revoke workflow.
+     */
     public function revoke(ApiToken $token): ApiToken
     {
         $token->fill([

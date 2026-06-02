@@ -3,26 +3,28 @@
 declare(strict_types=1);
 
 /**
- *
  * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
  * PHP Version 8.4 (Required).
  *
- * @package   Catalyst
+ * @package    Catalyst
  *
- * @see       https://catalyst.lh-2.net
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
  *
- * @author    Walter Nuñez (arcanisgk/original founder) <wnunez@lh-2.net>
- * @copyright 2024 Walter Francisco Nuñez Cruz and Icaros Net
- * @license   Proprietary - https://catalyst.lh-2.net
+ * @version    GIT: See repository tags
  *
- * @note      This program is provided "as is" without a warranty of any kind, too express
- *            or implied, including but not limited to the warranties of merchantability,
- *            fitness for a particular purpose, and non-infringement.
- *
- * @category  Framework
+ * @category   Framework
  * @filesource
  *
- * @link      https://catalyst.lh-2.net Project homepage
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
  *
  */
 

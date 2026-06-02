@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Repository\Media\Controllers;
 
 use Catalyst\Framework\Admin\Grid\DataGrid;
@@ -18,10 +44,19 @@ use Catalyst\Repository\Media\Requests\MediaBulkSelectionRequest;
 use Catalyst\Repository\Media\Support\MediaLibraryFormFactory;
 use RuntimeException;
 
+/**
+ * Defines the Media Library Controller class contract.
+ *
+ * @package Catalyst\Repository\Media\Controllers
+ * Responsibility: Coordinates the media library controller behavior within its module boundary.
+ */
 final class MediaLibraryController extends Controller
 {
     use InteractsWithRecordClaimsTrait;
 
+    /**
+     * Initializes the Media Library Controller instance.
+     */
     public function __construct(
         private readonly MediaRepository $repository,
         private readonly MediaManager $manager,
@@ -31,6 +66,9 @@ final class MediaLibraryController extends Controller
         parent::__construct();
     }
 
+    /**
+     * Handles the index workflow.
+     */
     public function index(Request $request): Response
     {
         $this->authorizeResource('view-any', MediaManager::RESOURCE_KEY);
@@ -180,6 +218,9 @@ final class MediaLibraryController extends Controller
         ], 200, 'admin');
     }
 
+    /**
+     * Handles the create workflow.
+     */
     public function create(Request $request): Response
     {
         $this->authorizeResource('create', MediaManager::RESOURCE_KEY);
@@ -187,6 +228,9 @@ final class MediaLibraryController extends Controller
         return $this->renderForm(__('media.library.form.create_title'), null);
     }
 
+    /**
+     * Handles the persistence workflow.
+     */
     public function store(MediaItemRequest $request): Response
     {
         $this->authorizeResource('create', MediaManager::RESOURCE_KEY);
@@ -200,6 +244,9 @@ final class MediaLibraryController extends Controller
         return $this->postActionSuccessRedirect('/workspaces/media-library', __('media.library.messages.created'));
     }
 
+    /**
+     * Handles the edit workflow.
+     */
     public function edit(Request $request, string $id): Response
     {
         $definitions = $this->metadata->definitionsFor(MediaManager::RESOURCE_KEY);
@@ -226,6 +273,9 @@ final class MediaLibraryController extends Controller
         return $this->renderForm(__('media.library.form.edit_title'), $media, $claim);
     }
 
+    /**
+     * Handles the update workflow.
+     */
     public function update(MediaItemRequest $request, string $id): Response
     {
         $item = $this->repository->findModel((int) $id);
@@ -251,6 +301,9 @@ final class MediaLibraryController extends Controller
         return $this->postActionSuccessRedirect('/workspaces/media-library', __('media.library.messages.updated'));
     }
 
+    /**
+     * Handles the destroy workflow.
+     */
     public function destroy(Request $request, string $id): Response
     {
         $item = $this->repository->findModel((int) $id);
@@ -272,6 +325,9 @@ final class MediaLibraryController extends Controller
         return $this->postActionSuccessRedirect('/workspaces/media-library', __('media.library.messages.deleted'));
     }
 
+    /**
+     * Handles the bulk destroy workflow.
+     */
     public function bulkDestroy(Request $request): Response
     {
         $this->authorizeResource('bulk-delete', MediaManager::RESOURCE_KEY);
@@ -316,6 +372,9 @@ final class MediaLibraryController extends Controller
         ], 200, 'admin');
     }
 
+    /**
+     * Handles the format bytes workflow.
+     */
     private function formatBytes(int $bytes): string
     {
         if ($bytes < 1024) {

@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Admin\Crud;
 
 use Catalyst\Framework\Cli\ScaffoldManager;
@@ -10,8 +36,17 @@ use Catalyst\Helpers\Path\ProjectPath;
 use InvalidArgumentException;
 use RuntimeException;
 
+/**
+ * Defines the Crud Blueprint Factory class contract.
+ *
+ * @package Catalyst\Framework\Admin\Crud
+ * Responsibility: Coordinates the crud blueprint factory behavior within its module boundary.
+ */
 final class CrudBlueprintFactory
 {
+    /**
+     * Initializes the Crud Blueprint Factory instance.
+     */
     public function __construct(
         private readonly ScaffoldManager $manager,
         private readonly ModuleScaffoldService $moduleService,
@@ -99,6 +134,9 @@ final class CrudBlueprintFactory
         return $blueprint;
     }
 
+    /**
+     * Normalizes the provided value.
+     */
     private function normalizeTableName(string $value): string
     {
         $value = strtolower(trim($value));

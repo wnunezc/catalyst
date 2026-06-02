@@ -2,8 +2,40 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Document\Pdf;
 
+/**
+ * Defines the Simple Pdf Writer class contract.
+ *
+ * @package Catalyst\Framework\Document\Pdf
+ * Responsibility: Coordinates the simple pdf writer behavior within its module boundary.
+ */
 final class SimplePdfWriter implements PdfRendererInterface
 {
     /**
@@ -207,6 +239,9 @@ final class SimplePdfWriter implements PdfRendererInterface
         return preg_split("/\r\n|\r|\n/", $wrapped) ?: [$line];
     }
 
+    /**
+     * Handles the escape text workflow.
+     */
     private function escapeText(string $text): string
     {
         $text = str_replace('\\', '\\\\', $text);

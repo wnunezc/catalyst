@@ -2,10 +2,45 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Module;
 
+/**
+ * Defines the Module Runtime Docs Generator class contract.
+ *
+ * @package Catalyst\Framework\Module
+ * Responsibility: Coordinates the module runtime docs generator behavior within its module boundary.
+ */
 final class ModuleRuntimeDocsGenerator
 {
+    /**
+     * Handles the generate workflow.
+     */
     public function generate(): string
     {
         $inspection = (new ModuleInspector())->inspect();
@@ -188,6 +223,9 @@ final class ModuleRuntimeDocsGenerator
         return implode(', ', array_map(fn (string $item): string => $this->inlineScalar($item), $items));
     }
 
+    /**
+     * Handles the inline scalar workflow.
+     */
     private function inlineScalar(mixed $value): string
     {
         $text = trim((string) $value);
@@ -199,6 +237,9 @@ final class ModuleRuntimeDocsGenerator
         return '`' . str_replace('`', '\`', $text) . '`';
     }
 
+    /**
+     * Handles the plain value workflow.
+     */
     private function plainValue(string $value): string
     {
         $value = trim($value);

@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Automation;
 
 use Catalyst\Entities\AutomationExecutionLog;
@@ -17,6 +43,12 @@ use DateTimeImmutable;
 use DateTimeZone;
 use Exception;
 
+/**
+ * Defines the Automation Rule Repository class contract.
+ *
+ * @package Catalyst\Framework\Automation
+ * Responsibility: Coordinates the automation rule repository behavior within its module boundary.
+ */
 final class AutomationRuleRepository
 {
     use SingletonTrait;
@@ -25,6 +57,9 @@ final class AutomationRuleRepository
     private Logger $logger;
     private EffectiveWindow $effectiveWindow;
 
+    /**
+     * Initializes the Automation Rule Repository instance.
+     */
     protected function __construct()
     {
         $this->db = DatabaseManager::getInstance();
@@ -139,6 +174,9 @@ final class AutomationRuleRepository
         return $row !== null ? $this->effectiveWindow->decorate($row) : null;
     }
 
+    /**
+     * Finds the requested record.
+     */
     public function findModel(int $id): ?AutomationRule
     {
         return AutomationRule::find($id);
@@ -200,6 +238,9 @@ final class AutomationRuleRepository
         }));
     }
 
+    /**
+     * Handles the touch last run workflow.
+     */
     public function touchLastRun(int $ruleId): void
     {
         $rule = AutomationRule::find($ruleId);
@@ -263,6 +304,9 @@ final class AutomationRuleRepository
         }
     }
 
+    /**
+     * Handles the current tenant id workflow.
+     */
     private function currentTenantId(): int
     {
         return TenancyManager::getInstance()->requireCurrentTenantId();

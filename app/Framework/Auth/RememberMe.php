@@ -2,29 +2,29 @@
 
 declare(strict_types=1);
 
-/**************************************************************************************
- *
+/**
  * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
  * PHP Version 8.4 (Required).
  *
- * @package   Catalyst
- * @subpackage Framework\Auth
- * @see       https://github.com/arcanisgk/catalyst
+ * @package    Catalyst
  *
- * @author    Walter Nuñez (arcanisgk/original founder) <icarosnet@gmail.com>
- * @copyright 2023 - 2025
- * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
  *
- * @note      This program is distributed in the hope that it will be useful
- *            WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- *            or FITNESS FOR A PARTICULAR PURPOSE.
+ * @version    GIT: See repository tags
  *
- * @category  Framework
+ * @category   Framework
  * @filesource
  *
- * @link      https://catalyst.dock Local development URL
- *
- * RememberMe — persistent login via secure HTTP-only cookie and hashed token.
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
  *
  */
 
@@ -43,6 +43,12 @@ use Exception;
  * Tokens are never physically deleted — they are invalidated via active=0.
  *
  * @package Catalyst\Framework\Auth
+ */
+/**
+ * Defines the Remember Me class contract.
+ *
+ * @package Catalyst\Framework\Auth
+ * Responsibility: Coordinates the remember me behavior within its module boundary.
  */
 class RememberMe
 {
@@ -201,6 +207,9 @@ class RememberMe
         );
     }
 
+    /**
+     * Determines whether is Secure Request.
+     */
     private function isSecureRequest(): bool
     {
         if (!empty($_SERVER['HTTPS']) && strtolower((string)$_SERVER['HTTPS']) !== 'off') {

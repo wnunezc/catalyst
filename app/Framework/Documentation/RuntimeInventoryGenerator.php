@@ -2,12 +2,44 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Documentation;
 
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
 
+/**
+ * Defines the Runtime Inventory Generator class contract.
+ *
+ * @package Catalyst\Framework\Documentation
+ * Responsibility: Coordinates the runtime inventory generator behavior within its module boundary.
+ */
 final class RuntimeInventoryGenerator
 {
     /**
@@ -32,6 +64,9 @@ final class RuntimeInventoryGenerator
         ];
     }
 
+    /**
+     * Handles the generate markdown workflow.
+     */
     public function generateMarkdown(): string
     {
         $report = $this->inspect();
@@ -334,11 +369,17 @@ final class RuntimeInventoryGenerator
         return false;
     }
 
+    /**
+     * Handles the relative path workflow.
+     */
     private function relativePath(string $path): string
     {
         return str_replace('\\', '/', ltrim(str_replace(PD, '', $path), '\\/'));
     }
 
+    /**
+     * Determines whether is Ignored Path.
+     */
     private function isIgnoredPath(string $path): bool
     {
         $normalized = str_replace('\\', '/', $path);

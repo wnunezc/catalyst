@@ -2,12 +2,43 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
 namespace Catalyst\Framework\Localization;
 
 use Catalyst\Framework\Traits\SingletonTrait;
 use Catalyst\Helpers\Config\ConfigManager;
 use RuntimeException;
 
+/**
+ * Defines the Localization Manager class contract.
+ *
+ * @package Catalyst\Framework\Localization
+ * Responsibility: Coordinates the localization manager behavior within its module boundary.
+ */
 final class LocalizationManager
 {
     use SingletonTrait;
@@ -18,6 +49,9 @@ final class LocalizationManager
 
     private ConfigManager $config;
 
+    /**
+     * Initializes the Localization Manager instance.
+     */
     protected function __construct()
     {
         $this->config = ConfigManager::getInstance();
@@ -34,6 +68,9 @@ final class LocalizationManager
         );
     }
 
+    /**
+     * Handles the default locale workflow.
+     */
     public function defaultLocale(): string
     {
         $settings = $this->settings();
@@ -368,6 +405,9 @@ final class LocalizationManager
         ];
     }
 
+    /**
+     * Normalizes the provided value.
+     */
     private function normalizeLocaleCode(string $locale): string
     {
         $locale = strtolower(trim($locale));
@@ -511,6 +551,9 @@ final class LocalizationManager
         return $normalized;
     }
 
+    /**
+     * Handles the guess locale label workflow.
+     */
     private function guessLocaleLabel(string $locale): string
     {
         return match ($locale) {

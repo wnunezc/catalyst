@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace App\Repositories;
 
 use Catalyst\Entities\UserProfile;
@@ -10,17 +36,29 @@ use Catalyst\Framework\Tenancy\TenancyManager;
 use Catalyst\Helpers\Log\Logger;
 use Exception;
 
+/**
+ * Defines the User Profile Repository class contract.
+ *
+ * @package App\Repositories
+ * Responsibility: Coordinates the user profile repository behavior within its module boundary.
+ */
 final class UserProfileRepository
 {
     private DatabaseManager $db;
     private Logger $logger;
 
+    /**
+     * Initializes the User Profile Repository instance.
+     */
     public function __construct()
     {
         $this->db = DatabaseManager::getInstance();
         $this->logger = Logger::getInstance();
     }
 
+    /**
+     * Finds the requested record.
+     */
     public function findByUserId(int $userId): ?UserProfile
     {
         try {
@@ -38,6 +76,9 @@ final class UserProfileRepository
         }
     }
 
+    /**
+     * Handles the total profiles workflow.
+     */
     public function totalProfiles(): int
     {
         try {
@@ -58,6 +99,9 @@ final class UserProfileRepository
         return (int) ($row['aggregate'] ?? 0);
     }
 
+    /**
+     * Handles the current tenant id workflow.
+     */
     private function currentTenantId(): int
     {
         return TenancyManager::getInstance()->requireCurrentTenantId();

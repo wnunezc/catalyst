@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Database;
 
 use Catalyst\Helpers\Exceptions\QueryException;
@@ -36,6 +62,9 @@ class QueryBuilder
 
     protected ?int $offset = null;
 
+    /**
+     * Initializes the Query Builder instance.
+     */
     public function __construct(Connection $connection, string $table)
     {
         $this->connection = $connection;
@@ -46,6 +75,9 @@ class QueryBuilder
     // Column selection
     // -------------------------------------------------------------------------
 
+    /**
+     * Handles the select workflow.
+     */
     public function select(array|string $columns = ['*']): self
     {
         $rawColumns = is_array($columns) ? $columns : func_get_args();
@@ -60,6 +92,9 @@ class QueryBuilder
     // WHERE clauses
     // -------------------------------------------------------------------------
 
+    /**
+     * Handles the where workflow.
+     */
     public function where(string $column, string $operator, mixed $value, string $boolean = 'AND'): self
     {
         $this->wheres[] = [
@@ -72,16 +107,25 @@ class QueryBuilder
         return $this;
     }
 
+    /**
+     * Handles the or where workflow.
+     */
     public function orWhere(string $column, string $operator, mixed $value): self
     {
         return $this->where($column, $operator, $value, 'OR');
     }
 
+    /**
+     * Handles the where equal workflow.
+     */
     public function whereEqual(string $column, mixed $value): self
     {
         return $this->where($column, '=', $value);
     }
 
+    /**
+     * Handles the where in workflow.
+     */
     public function whereIn(string $column, array $values, string $boolean = 'AND'): self
     {
         $this->wheres[] = [
@@ -93,11 +137,17 @@ class QueryBuilder
         return $this;
     }
 
+    /**
+     * Handles the or where in workflow.
+     */
     public function orWhereIn(string $column, array $values): self
     {
         return $this->whereIn($column, $values, 'OR');
     }
 
+    /**
+     * Handles the where null workflow.
+     */
     public function whereNull(string $column, string $boolean = 'AND', bool $not = false): self
     {
         $this->wheres[] = [
@@ -109,6 +159,9 @@ class QueryBuilder
         return $this;
     }
 
+    /**
+     * Handles the where not null workflow.
+     */
     public function whereNotNull(string $column, string $boolean = 'AND'): self
     {
         return $this->whereNull($column, $boolean, true);
@@ -118,6 +171,9 @@ class QueryBuilder
     // ORDER, GROUP, HAVING, JOIN
     // -------------------------------------------------------------------------
 
+    /**
+     * Handles the order by workflow.
+     */
     public function orderBy(string $column, string $direction = 'ASC'): self
     {
         $this->orders[] = [
@@ -127,6 +183,9 @@ class QueryBuilder
         return $this;
     }
 
+    /**
+     * Handles the group by workflow.
+     */
     public function groupBy(array|string $columns): self
     {
         $groupColumns = is_array($columns) ? $columns : [$columns];
@@ -140,6 +199,9 @@ class QueryBuilder
         return $this;
     }
 
+    /**
+     * Handles the having workflow.
+     */
     public function having(string $column, string $operator, mixed $value, string $boolean = 'AND'): self
     {
         $this->havings[] = [
@@ -151,6 +213,9 @@ class QueryBuilder
         return $this;
     }
 
+    /**
+     * Handles the join workflow.
+     */
     public function join(
         string $table,
         string $first,
@@ -168,11 +233,17 @@ class QueryBuilder
         return $this;
     }
 
+    /**
+     * Handles the left join workflow.
+     */
     public function leftJoin(string $table, string $first, string $operator, string $second): self
     {
         return $this->join($table, $first, $operator, $second, 'LEFT');
     }
 
+    /**
+     * Handles the right join workflow.
+     */
     public function rightJoin(string $table, string $first, string $operator, string $second): self
     {
         return $this->join($table, $first, $operator, $second, 'RIGHT');
@@ -182,18 +253,27 @@ class QueryBuilder
     // LIMIT / OFFSET / pagination
     // -------------------------------------------------------------------------
 
+    /**
+     * Handles the limit workflow.
+     */
     public function limit(int $limit): self
     {
         $this->limit = $limit;
         return $this;
     }
 
+    /**
+     * Handles the offset workflow.
+     */
     public function offset(int $offset): self
     {
         $this->offset = $offset;
         return $this;
     }
 
+    /**
+     * Handles the for page workflow.
+     */
     public function forPage(int $page, int $perPage): self
     {
         return $this->offset(($page - 1) * $perPage)->limit($perPage);
@@ -301,6 +381,9 @@ class QueryBuilder
     // Accessors
     // -------------------------------------------------------------------------
 
+    /**
+     * Returns the connection value.
+     */
     public function getConnection(): Connection
     {
         return $this->connection;
@@ -310,6 +393,9 @@ class QueryBuilder
     // SQL compilation (protected)
     // -------------------------------------------------------------------------
 
+    /**
+     * Handles the compile select workflow.
+     */
     protected function compileSelect(): array
     {
         $parts    = ['SELECT ' . $this->compileColumns(), 'FROM ' . $this->table];
@@ -350,6 +436,9 @@ class QueryBuilder
         return [implode(' ', $parts), $bindings];
     }
 
+    /**
+     * Handles the compile columns workflow.
+     */
     protected function compileColumns(): string
     {
         return implode(', ', array_map(
@@ -358,6 +447,9 @@ class QueryBuilder
         ));
     }
 
+    /**
+     * Handles the compile wheres workflow.
+     */
     protected function compileWheres(): array
     {
         $parts    = [];
@@ -386,6 +478,9 @@ class QueryBuilder
         return [implode(' ', $parts), $bindings];
     }
 
+    /**
+     * Handles the compile orders workflow.
+     */
     protected function compileOrders(): string
     {
         $parts = [];
@@ -395,6 +490,9 @@ class QueryBuilder
         return implode(', ', $parts);
     }
 
+    /**
+     * Handles the compile havings workflow.
+     */
     protected function compileHavings(): array
     {
         $parts    = [];
@@ -410,6 +508,9 @@ class QueryBuilder
         return [implode(' ', $parts), $bindings];
     }
 
+    /**
+     * Handles the compile update workflow.
+     */
     protected function compileUpdate(array $values): array
     {
         $sets     = [];
@@ -433,6 +534,9 @@ class QueryBuilder
         return [implode(' ', $parts), $bindings];
     }
 
+    /**
+     * Handles the compile delete workflow.
+     */
     protected function compileDelete(): array
     {
         $parts    = ['DELETE FROM ' . $this->table];

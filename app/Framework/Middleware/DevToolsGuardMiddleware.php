@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Middleware;
 
 use Catalyst\Framework\Auth\AuthManager;
@@ -34,6 +60,9 @@ class DevToolsGuardMiddleware extends CoreMiddleware
      */
     private array $permissions;
 
+    /**
+     * Initializes the Dev Tools Guard Middleware instance.
+     */
     public function __construct(string|array|null $permissions = null)
     {
         $this->permissions = $permissions === null ? [] : array_values(array_filter(
@@ -45,6 +74,9 @@ class DevToolsGuardMiddleware extends CoreMiddleware
         ));
     }
 
+    /**
+     * Processes the current workflow.
+     */
     public function process(Request $request, Closure $next): Response
     {
         if (!defined('IS_DEVELOPMENT') || !IS_DEVELOPMENT) {
@@ -114,6 +146,9 @@ class DevToolsGuardMiddleware extends CoreMiddleware
         )));
     }
 
+    /**
+     * Handles the forbidden response workflow.
+     */
     private function forbiddenResponse(Request $request, string $message): Response
     {
         if ($this->expectsJson($request)) {

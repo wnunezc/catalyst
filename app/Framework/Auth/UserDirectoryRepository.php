@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Auth;
 
 use Catalyst\Framework\Database\DatabaseManager;
@@ -23,6 +49,9 @@ final class UserDirectoryRepository
     private DatabaseManager $db;
     private Logger $logger;
 
+    /**
+     * Initializes the User Directory Repository instance.
+     */
     protected function __construct()
     {
         $this->db = DatabaseManager::getInstance();
@@ -204,6 +233,9 @@ final class UserDirectoryRepository
         ];
     }
 
+    /**
+     * Resolves the requested value.
+     */
     private function resolveUserSort(string $column): string
     {
         return match (trim($column)) {
@@ -216,11 +248,17 @@ final class UserDirectoryRepository
         };
     }
 
+    /**
+     * Resolves the requested value.
+     */
     private function resolveUserDirection(string $direction): string
     {
         return strtolower(trim($direction)) === 'asc' ? 'ASC' : 'DESC';
     }
 
+    /**
+     * Handles the current tenant id workflow.
+     */
     private function currentTenantId(): int
     {
         return TenancyManager::getInstance()->requireCurrentTenantId();

@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Repository\DemoUi\Controllers;
 
 use Catalyst\Framework\Auth\AuthManager;
@@ -10,6 +36,12 @@ use Catalyst\Framework\Http\Response;
 use Catalyst\Framework\View\TrustedHtml;
 use Catalyst\Helpers\Security\CspNonce;
 
+/**
+ * Defines the Demo Ui Controller class contract.
+ *
+ * @package Catalyst\Repository\DemoUi\Controllers
+ * Responsibility: Coordinates the demo ui controller behavior within its module boundary.
+ */
 final class DemoUiController extends Controller
 {
     private const string THEME_BASE_URL = 'https://tema-inspinia.dock/';
@@ -597,6 +629,9 @@ final class DemoUiController extends Controller
         ];
     }
 
+    /**
+     * Handles the index workflow.
+     */
     public function index(): Response
     {
         $sections = $this->demoUiSections();
@@ -626,221 +661,353 @@ final class DemoUiController extends Controller
         );
     }
 
+    /**
+     * Handles the basic elements workflow.
+     */
     public function basicElements(): Response
     {
         return $this->renderFormPage('basic-elements');
     }
 
+    /**
+     * Handles the pickers workflow.
+     */
     public function pickers(): Response
     {
         return $this->renderFormPage('pickers');
     }
 
+    /**
+     * Handles the select workflow.
+     */
     public function select(): Response
     {
         return $this->renderFormPage('select');
     }
 
+    /**
+     * Handles the validation workflow.
+     */
     public function validation(): Response
     {
         return $this->renderFormPage('validation');
     }
 
+    /**
+     * Handles the wizard workflow.
+     */
     public function wizard(): Response
     {
         return $this->renderFormPage('wizard');
     }
 
+    /**
+     * Handles the file uploads workflow.
+     */
     public function fileUploads(): Response
     {
         return $this->renderFormPage('file-uploads');
     }
 
+    /**
+     * Handles the text editors workflow.
+     */
     public function textEditors(): Response
     {
         return $this->renderFormPage('text-editors');
     }
 
+    /**
+     * Handles the range slider workflow.
+     */
     public function rangeSlider(): Response
     {
         return $this->renderFormPage('range-slider');
     }
 
+    /**
+     * Handles the alerts workflow.
+     */
     public function alerts(): Response
     {
         return $this->renderBaseUiPage('alerts');
     }
 
+    /**
+     * Handles the accordions workflow.
+     */
     public function accordions(): Response
     {
         return $this->renderBaseUiPage('accordions');
     }
 
+    /**
+     * Handles the badges workflow.
+     */
     public function badges(): Response
     {
         return $this->renderBaseUiPage('badges');
     }
 
+    /**
+     * Handles the breadcrumb workflow.
+     */
     public function breadcrumb(): Response
     {
         return $this->renderBaseUiPage('breadcrumb');
     }
 
+    /**
+     * Handles the buttons workflow.
+     */
     public function buttons(): Response
     {
         return $this->renderBaseUiPage('buttons');
     }
 
+    /**
+     * Handles the cards workflow.
+     */
     public function cards(): Response
     {
         return $this->renderBaseUiPage('cards');
     }
 
+    /**
+     * Handles the carousel workflow.
+     */
     public function carousel(): Response
     {
         return $this->renderBaseUiPage('carousel');
     }
 
+    /**
+     * Handles the collapse workflow.
+     */
     public function collapse(): Response
     {
         return $this->renderBaseUiPage('collapse');
     }
 
+    /**
+     * Handles the colors workflow.
+     */
     public function colors(): Response
     {
         return $this->renderBaseUiPage('colors');
     }
 
+    /**
+     * Handles the dropdowns workflow.
+     */
     public function dropdowns(): Response
     {
         return $this->renderBaseUiPage('dropdowns');
     }
 
+    /**
+     * Handles the grid options workflow.
+     */
     public function gridOptions(): Response
     {
         return $this->renderBaseUiPage('grid-options');
     }
 
+    /**
+     * Handles the images workflow.
+     */
     public function images(): Response
     {
         return $this->renderBaseUiPage('images');
     }
 
+    /**
+     * Handles the links workflow.
+     */
     public function links(): Response
     {
         return $this->renderBaseUiPage('links');
     }
 
+    /**
+     * Handles the list group workflow.
+     */
     public function listGroup(): Response
     {
         return $this->renderBaseUiPage('list-group');
     }
 
+    /**
+     * Handles the modals workflow.
+     */
     public function modals(): Response
     {
         return $this->renderBaseUiPage('modals');
     }
 
+    /**
+     * Handles the notifications workflow.
+     */
     public function notifications(): Response
     {
         return $this->renderBaseUiPage('notifications');
     }
 
+    /**
+     * Handles the offcanvas workflow.
+     */
     public function offcanvas(): Response
     {
         return $this->renderBaseUiPage('offcanvas');
     }
 
+    /**
+     * Handles the pagination workflow.
+     */
     public function pagination(): Response
     {
         return $this->renderBaseUiPage('pagination');
     }
 
+    /**
+     * Handles the placeholders workflow.
+     */
     public function placeholders(): Response
     {
         return $this->renderBaseUiPage('placeholders');
     }
 
+    /**
+     * Handles the progress workflow.
+     */
     public function progress(): Response
     {
         return $this->renderBaseUiPage('progress');
     }
 
+    /**
+     * Handles the popovers workflow.
+     */
     public function popovers(): Response
     {
         return $this->renderBaseUiPage('popovers');
     }
 
+    /**
+     * Handles the scrollspy workflow.
+     */
     public function scrollspy(): Response
     {
         return $this->renderBaseUiPage('scrollspy');
     }
 
+    /**
+     * Handles the spinners workflow.
+     */
     public function spinners(): Response
     {
         return $this->renderBaseUiPage('spinners');
     }
 
+    /**
+     * Handles the tabs workflow.
+     */
     public function tabs(): Response
     {
         return $this->renderBaseUiPage('tabs');
     }
 
+    /**
+     * Handles the tooltips workflow.
+     */
     public function tooltips(): Response
     {
         return $this->renderBaseUiPage('tooltips');
     }
 
+    /**
+     * Handles the typography workflow.
+     */
     public function typography(): Response
     {
         return $this->renderBaseUiPage('typography');
     }
 
+    /**
+     * Handles the utilities workflow.
+     */
     public function utilities(): Response
     {
         return $this->renderBaseUiPage('utilities');
     }
 
+    /**
+     * Handles the videos workflow.
+     */
     public function videos(): Response
     {
         return $this->renderBaseUiPage('videos');
     }
 
+    /**
+     * Handles the charts workflow.
+     */
     public function charts(string $family, string $page): Response
     {
         return $this->renderChartPage($family, $page);
     }
 
+    /**
+     * Handles the table workflow.
+     */
     public function table(string $page): Response
     {
         return $this->renderTablePage($page);
     }
 
+    /**
+     * Handles the data table workflow.
+     */
     public function dataTable(string $page): Response
     {
         return $this->renderDataTablePage($page);
     }
 
+    /**
+     * Renders the current view state.
+     */
     private function renderBaseUiPage(string $pageSlug): Response
     {
         return $this->renderMappedPage(self::BASE_UI_PAGES, 'base-ui', $pageSlug);
     }
 
+    /**
+     * Renders the current view state.
+     */
     private function renderFormPage(string $pageSlug): Response
     {
         return $this->renderMappedPage(self::FORM_PAGES, 'forms', $pageSlug);
     }
 
+    /**
+     * Renders the current view state.
+     */
     private function renderChartPage(string $family, string $page): Response
     {
         return $this->renderMappedPage(self::CHART_PAGES, 'charts', 'charts-' . $family . '-' . $page);
     }
 
+    /**
+     * Renders the current view state.
+     */
     private function renderTablePage(string $pageSlug): Response
     {
         return $this->renderMappedPage(self::TABLE_PAGES, 'tables', $pageSlug);
     }
 
+    /**
+     * Renders the current view state.
+     */
     private function renderDataTablePage(string $page): Response
     {
         return $this->renderTablePage('datatables-' . $page);
@@ -866,6 +1033,9 @@ final class DemoUiController extends Controller
         );
     }
 
+    /**
+     * Renders the current view state.
+     */
     private function renderPage(string $selectedFile, string $selectedSection, string $selectedLabel, ?string $pageSlug = null): Response
     {
         $frontDir = PD . DS . 'Repository' . DS . 'Framework' . DS . 'DemoUi' . DS . 'front';
@@ -1096,6 +1266,9 @@ final class DemoUiController extends Controller
         return $items;
     }
 
+    /**
+     * Resolves the requested value.
+     */
     private function resolveNavHref(string $file): string
     {
         if (str_starts_with($file, '/')) {
@@ -1178,6 +1351,9 @@ final class DemoUiController extends Controller
         return $groups;
     }
 
+    /**
+     * Loads the requested data.
+     */
     private function loadThemePreviewHtml(string $file): string
     {
         $previewPath = PD . DS . 'Repository' . DS . 'Framework' . DS . 'DemoUi' . DS . 'generated' . DS . 'theme-previews' . DS . basename($file);
@@ -1193,6 +1369,9 @@ final class DemoUiController extends Controller
         return $content;
     }
 
+    /**
+     * Resolves the requested value.
+     */
     private function resolveFormPageSlugByFile(string $file): ?string
     {
         foreach ([self::FORM_PAGES, self::BASE_UI_PAGES, self::CHART_PAGES, self::TABLE_PAGES] as $catalog) {

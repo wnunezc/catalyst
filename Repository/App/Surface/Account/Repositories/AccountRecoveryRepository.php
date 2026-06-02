@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace App\Surface\Account\Repositories;
 
 use Catalyst\Framework\Database\DatabaseManager;
@@ -9,6 +35,12 @@ use Catalyst\Framework\Tenancy\TenancyManager;
 use Catalyst\Helpers\Log\Logger;
 use Throwable;
 
+/**
+ * Defines the Account Recovery Repository class contract.
+ *
+ * @package App\Surface\Account\Repositories
+ * Responsibility: Coordinates the account recovery repository behavior within its module boundary.
+ */
 final class AccountRecoveryRepository
 {
     private const OPEN_STATUSES = [
@@ -37,6 +69,9 @@ final class AccountRecoveryRepository
         ]);
     }
 
+    /**
+     * Handles the create workflow.
+     */
     public function createToken(int $requestId, int $userId, string $purpose, int $ttlSeconds = 1800): string
     {
         $raw = bin2hex(random_bytes(32));
@@ -92,6 +127,9 @@ final class AccountRecoveryRepository
         }
     }
 
+    /**
+     * Handles the update workflow.
+     */
     public function updateRequestStatus(int $requestId, string $status): void
     {
         try {
@@ -178,6 +216,9 @@ final class AccountRecoveryRepository
         }
     }
 
+    /**
+     * Handles the mark reviewed workflow.
+     */
     public function markReviewed(int $requestId, string $status, int $reviewerId): bool
     {
         if ($requestId <= 0 || !in_array($status, ['approved', 'rejected'], true)) {
@@ -213,6 +254,9 @@ final class AccountRecoveryRepository
         }
     }
 
+    /**
+     * Handles the count open requests for user workflow.
+     */
     public function countOpenRequestsForUser(int $userId): int
     {
         if ($userId <= 0) {
@@ -283,6 +327,9 @@ final class AccountRecoveryRepository
         ];
     }
 
+    /**
+     * Handles the tenant id workflow.
+     */
     private function tenantId(): int
     {
         try {
@@ -292,6 +339,9 @@ final class AccountRecoveryRepository
         }
     }
 
+    /**
+     * Handles the hash nullable workflow.
+     */
     private function hashNullable(string $value): string
     {
         $value = trim($value);

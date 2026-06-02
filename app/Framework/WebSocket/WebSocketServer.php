@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\WebSocket;
 
 use Ratchet\ConnectionInterface;
@@ -42,17 +68,26 @@ class WebSocketServer implements MessageComponentInterface
     /** spl_object_id => array<string, true> */
     private array $connectionSubscriptions = [];
 
+    /**
+     * Initializes the Web Socket Server instance.
+     */
     public function __construct()
     {
         $this->clients = new SplObjectStorage();
     }
 
+    /**
+     * Handles the on open workflow.
+     */
     public function onOpen(ConnectionInterface $conn): void
     {
         $this->clients->attach($conn);
         echo '[WS] Connection opened: ' . spl_object_id($conn) . PHP_EOL;
     }
 
+    /**
+     * Handles the on message workflow.
+     */
     public function onMessage(ConnectionInterface $from, $msg): void
     {
         $data = json_decode((string)$msg, true);
@@ -157,6 +192,9 @@ class WebSocketServer implements MessageComponentInterface
         }
     }
 
+    /**
+     * Handles the on close workflow.
+     */
     public function onClose(ConnectionInterface $conn): void
     {
         $id = spl_object_id($conn);
@@ -190,6 +228,9 @@ class WebSocketServer implements MessageComponentInterface
         $this->clients->detach($conn);
     }
 
+    /**
+     * Handles the on error workflow.
+     */
     public function onError(ConnectionInterface $conn, \Exception $e): void
     {
         echo '[WS] Error: ' . $e->getMessage() . PHP_EOL;
@@ -212,6 +253,9 @@ class WebSocketServer implements MessageComponentInterface
         }
     }
 
+    /**
+     * Handles the broadcast to resource workflow.
+     */
     public function broadcastToResource(int $tenantId, string $resourceKey, int $recordId, array $payload): void
     {
         $json = json_encode(array_merge([
@@ -235,6 +279,9 @@ class WebSocketServer implements MessageComponentInterface
         return count($this->userConnections);
     }
 
+    /**
+     * Handles the resource subscription key workflow.
+     */
     private function resourceSubscriptionKey(int $tenantId, string $resourceKey, int $recordId): string
     {
         return implode(':', [$tenantId, $resourceKey, $recordId]);

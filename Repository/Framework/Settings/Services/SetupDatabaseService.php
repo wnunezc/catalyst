@@ -12,14 +12,26 @@ use PDOException;
 use RuntimeException;
 use Throwable;
 
+/**
+ * Defines the Setup Database Service class contract.
+ *
+ * @package Catalyst\Repository\Settings\Services
+ * Responsibility: Coordinates the setup database service behavior within its module boundary.
+ */
 final class SetupDatabaseService
 {
-    public function __construct(
+    /**
+ * Initializes the Setup Database Service instance.
+ */
+public function __construct(
         private readonly ConfigManager $config
     ) {
     }
 
-    public static function make(): self
+    /**
+ * Creates the requested object.
+ */
+public static function make(): self
     {
         return new self(ConfigManager::getInstance());
     }
@@ -82,7 +94,10 @@ final class SetupDatabaseService
         }
     }
 
-    private function resolveEnv(): string
+    /**
+ * Handles the resolve env workflow.
+ */
+private function resolveEnv(): string
     {
         if (defined('IS_DEVELOPMENT') && IS_DEVELOPMENT) {
             return 'development';
@@ -168,7 +183,10 @@ final class SetupDatabaseService
         }
     }
 
-    private function tableExists(PDO $pdo, string $table): bool
+    /**
+ * Determines whether the table exists.
+ */
+private function tableExists(PDO $pdo, string $table): bool
     {
         try {
             $stmt = $pdo->prepare(
@@ -226,7 +244,10 @@ final class SetupDatabaseService
         }
     }
 
-    private function shouldSkipStatement(string $stmt): bool
+    /**
+ * Determines whether should skip statement.
+ */
+private function shouldSkipStatement(string $stmt): bool
     {
         $head = ltrim($stmt);
 

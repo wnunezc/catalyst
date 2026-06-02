@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Testing;
 
 use Catalyst\Framework\Auth\TokenRepository;
@@ -16,6 +42,12 @@ use InvalidArgumentException;
 use JsonException;
 use RuntimeException;
 
+/**
+ * Defines the Auth Fixture Manager class contract.
+ *
+ * @package Catalyst\Framework\Testing
+ * Responsibility: Coordinates the auth fixture manager behavior within its module boundary.
+ */
 final class AuthFixtureManager
 {
     /**
@@ -48,6 +80,9 @@ final class AuthFixtureManager
     private DatabaseManager $db;
     private AuthFixtureFactory $factory;
 
+    /**
+     * Initializes the Auth Fixture Manager instance.
+     */
     public function __construct()
     {
         $this->db = DatabaseManager::getInstance();
@@ -582,6 +617,9 @@ final class AuthFixtureManager
         return rtrim(implode(PHP_EOL, array_filter($sections, static fn (mixed $line): bool => $line !== null)), PHP_EOL) . PHP_EOL;
     }
 
+    /**
+     * Handles the connection workflow.
+     */
     private function connection(): Connection
     {
         return $this->db->connection();
@@ -823,6 +861,9 @@ final class AuthFixtureManager
         throw new InvalidArgumentException('Unknown auth fixture user: ' . $identifier);
     }
 
+    /**
+     * Handles the slot path workflow.
+     */
     private function slotPath(string $slot): string
     {
         $slot = trim($slot);
@@ -912,6 +953,9 @@ final class AuthFixtureManager
         );
     }
 
+    /**
+     * Handles the to sql literal workflow.
+     */
     private function toSqlLiteral(mixed $value): string
     {
         if ($value === null) {
@@ -935,6 +979,9 @@ final class AuthFixtureManager
         return "'" . $string . "'";
     }
 
+    /**
+     * Handles the order by for table workflow.
+     */
     private function orderByForTable(string $table): string
     {
         return match ($table) {
@@ -945,6 +992,9 @@ final class AuthFixtureManager
         };
     }
 
+    /**
+     * Handles the require development environment workflow.
+     */
     private function requireDevelopmentEnvironment(string $operation): void
     {
         $environment = ConfigManager::getInstance()->getEnvironment();
@@ -974,6 +1024,9 @@ final class AuthFixtureManager
         };
     }
 
+    /**
+     * Handles the delete workflow.
+     */
     private function deleteTenantScopedRows(string $table): void
     {
         $tenantId = $this->currentTenantId();
@@ -992,6 +1045,9 @@ final class AuthFixtureManager
         };
     }
 
+    /**
+     * Handles the current tenant id workflow.
+     */
     private function currentTenantId(): int
     {
         return TenancyManager::getInstance()->requireCurrentTenantId();

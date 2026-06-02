@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Catalog;
 
 use Catalyst\Entities\CatalogDefinition;
@@ -15,6 +41,12 @@ use Catalyst\Framework\Workflow\WorkflowManager;
 use Catalyst\Framework\Workflow\WorkflowRepository;
 use RuntimeException;
 
+/**
+ * Defines the Catalog Manager class contract.
+ *
+ * @package Catalyst\Framework\Catalog
+ * Responsibility: Coordinates the catalog manager behavior within its module boundary.
+ */
 final class CatalogManager
 {
     use SingletonTrait;
@@ -29,6 +61,9 @@ final class CatalogManager
     private DatabaseManager $db;
     private EffectiveWindow $window;
 
+    /**
+     * Initializes the Catalog Manager instance.
+     */
     protected function __construct()
     {
         $this->repository = CatalogRepository::getInstance();
@@ -73,11 +108,17 @@ final class CatalogManager
         return $catalog;
     }
 
+    /**
+     * Handles the delete workflow.
+     */
     public function deleteCatalog(CatalogDefinition $catalog): void
     {
         $this->repository->deleteDefinition($catalog);
     }
 
+    /**
+     * Handles the transition catalog workflow.
+     */
     public function transitionCatalog(CatalogDefinition $catalog, string $transitionKey, ?string $notes = null): array
     {
         $result = $this->workflows->transition(
@@ -141,6 +182,9 @@ final class CatalogManager
         return $item;
     }
 
+    /**
+     * Handles the delete workflow.
+     */
     public function deleteItem(CatalogItem $item): void
     {
         $catalogId = (int) ($item->toArray()['catalog_definition_id'] ?? 0);
@@ -158,6 +202,9 @@ final class CatalogManager
         return $this->repository->optionMap($catalogKey, $selectedKeys);
     }
 
+    /**
+     * Determines whether has Option.
+     */
     public function hasOption(string $catalogKey, string $itemKey): bool
     {
         return array_key_exists(trim(strtolower($itemKey)), $this->options($catalogKey));
@@ -227,6 +274,9 @@ final class CatalogManager
         return $restored;
     }
 
+    /**
+     * Handles the capture catalog version workflow.
+     */
     private function captureCatalogVersion(int $catalogId, string $summary): void
     {
         if ($catalogId <= 0) {
@@ -241,6 +291,9 @@ final class CatalogManager
         );
     }
 
+    /**
+     * Handles the require catalog workflow.
+     */
     private function requireCatalog(int $catalogId): CatalogDefinition
     {
         $catalog = CatalogDefinition::find($catalogId);

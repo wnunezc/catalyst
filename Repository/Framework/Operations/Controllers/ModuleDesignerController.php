@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Repository\Operations\Controllers;
 
 use Catalyst\Framework\Controllers\Controller;
@@ -15,8 +41,17 @@ use Catalyst\Repository\Operations\Requests\ModuleDesignerRequest;
 use InvalidArgumentException;
 use RuntimeException;
 
+/**
+ * Defines the Module Designer Controller class contract.
+ *
+ * @package Catalyst\Repository\Operations\Controllers
+ * Responsibility: Coordinates the module designer controller behavior within its module boundary.
+ */
 final class ModuleDesignerController extends Controller
 {
+    /**
+     * Handles the index workflow.
+     */
     public function index(Request $request): Response
     {
         $this->authorizeResource('manage', 'operations');
@@ -30,6 +65,9 @@ final class ModuleDesignerController extends Controller
         );
     }
 
+    /**
+     * Handles the preview workflow.
+     */
     public function preview(Request $request): Response
     {
         $this->authorizeResource('manage', 'operations');
@@ -49,6 +87,9 @@ final class ModuleDesignerController extends Controller
         return $this->postActionSuccessRedirect('/workspaces/module-designer', __('devtools.module_designer.messages.preview_generated'), null, 0);
     }
 
+    /**
+     * Handles the generate workflow.
+     */
     public function generate(Request $request): Response
     {
         $this->authorizeResource('manage', 'operations');
@@ -72,16 +113,25 @@ final class ModuleDesignerController extends Controller
         ));
     }
 
+    /**
+     * Handles the legacy index workflow.
+     */
     public function legacyIndex(Request $request): Response
     {
         return $this->redirect('/workspaces/module-designer', 301);
     }
 
+    /**
+     * Handles the legacy preview entry workflow.
+     */
     public function legacyPreviewEntry(Request $request): Response
     {
         return $this->redirect('/workspaces/module-designer', 302);
     }
 
+    /**
+     * Handles the legacy generate entry workflow.
+     */
     public function legacyGenerateEntry(Request $request): Response
     {
         return $this->redirect('/workspaces/module-designer', 302);

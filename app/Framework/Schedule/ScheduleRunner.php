@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Schedule;
 
 use Catalyst\Entities\ScheduledTask;
@@ -12,8 +38,17 @@ use DateTimeZone;
 use RuntimeException;
 use Throwable;
 
+/**
+ * Defines the Schedule Runner class contract.
+ *
+ * @package Catalyst\Framework\Schedule
+ * Responsibility: Coordinates the schedule runner behavior within its module boundary.
+ */
 final class ScheduleRunner
 {
+    /**
+     * Initializes the Schedule Runner instance.
+     */
     public function __construct(
         private readonly ScheduleLockManager $lockManager = new ScheduleLockManager()
     ) {
@@ -87,6 +122,9 @@ final class ScheduleRunner
         return $results;
     }
 
+    /**
+     * Resolves the requested value.
+     */
     private function resolveTask(string $taskName): ScheduledTask
     {
         $task = ScheduleRegistry::getInstance()->get($taskName);
@@ -98,6 +136,9 @@ final class ScheduleRunner
         return $task;
     }
 
+    /**
+     * Handles the claim task slot workflow.
+     */
     private function claimTaskSlot(ScheduledTask $task, string $slotKey): bool
     {
         return ScheduleRepository::getInstance()->claimSlot(

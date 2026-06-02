@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Audit;
 
 use Catalyst\Framework\Database\DatabaseManager;
@@ -10,6 +36,12 @@ use Catalyst\Framework\Traits\SingletonTrait;
 use Catalyst\Helpers\Log\Logger;
 use Exception;
 
+/**
+ * Defines the Audit Log Repository class contract.
+ *
+ * @package Catalyst\Framework\Audit
+ * Responsibility: Coordinates the audit log repository behavior within its module boundary.
+ */
 final class AuditLogRepository
 {
     use SingletonTrait;
@@ -17,6 +49,9 @@ final class AuditLogRepository
     private DatabaseManager $db;
     private Logger $logger;
 
+    /**
+     * Initializes the Audit Log Repository instance.
+     */
     protected function __construct()
     {
         $this->db = DatabaseManager::getInstance();
@@ -176,6 +211,9 @@ final class AuditLogRepository
         )));
     }
 
+    /**
+     * Resolves the requested value.
+     */
     private function resolveSortColumn(string $sort): string
     {
         return match ($sort) {
@@ -184,11 +222,17 @@ final class AuditLogRepository
         };
     }
 
+    /**
+     * Resolves the requested value.
+     */
     private function resolveSortDirection(string $direction): string
     {
         return strtolower($direction) === 'asc' ? 'ASC' : 'DESC';
     }
 
+    /**
+     * Handles the current tenant id workflow.
+     */
     private function currentTenantId(): int
     {
         return TenancyManager::getInstance()->requireCurrentTenantId();

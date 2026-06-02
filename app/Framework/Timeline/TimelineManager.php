@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Timeline;
 
 use Catalyst\Framework\Event\EventBus;
@@ -10,6 +36,12 @@ use DateInterval;
 use DateTimeImmutable;
 use DateTimeZone;
 
+/**
+ * Defines the Timeline Manager class contract.
+ *
+ * @package Catalyst\Framework\Timeline
+ * Responsibility: Coordinates the timeline manager behavior within its module boundary.
+ */
 final class TimelineManager
 {
     use SingletonTrait;
@@ -21,22 +53,34 @@ final class TimelineManager
     private TimelineRepository $repository;
     private EventBus $events;
 
+    /**
+     * Initializes the Timeline Manager instance.
+     */
     protected function __construct()
     {
         $this->repository = TimelineRepository::getInstance();
         $this->events = EventBus::getInstance();
     }
 
+    /**
+     * Handles the start workflow.
+     */
     public function start(string $resourceKey, int $recordId, string $eventKey = 'started', string $label = 'Started', ?string $occurredAt = null, array $metadata = []): array
     {
         return $this->record(self::TYPE_START, $resourceKey, $recordId, $eventKey, $label, $occurredAt, $metadata);
     }
 
+    /**
+     * Handles the milestone workflow.
+     */
     public function milestone(string $resourceKey, int $recordId, string $eventKey, string $label, ?string $occurredAt = null, array $metadata = []): array
     {
         return $this->record(self::TYPE_MILESTONE, $resourceKey, $recordId, $eventKey, $label, $occurredAt, $metadata);
     }
 
+    /**
+     * Handles the stop workflow.
+     */
     public function stop(string $resourceKey, int $recordId, string $eventKey = 'stopped', string $label = 'Stopped', ?string $occurredAt = null, array $metadata = []): array
     {
         return $this->record(self::TYPE_STOP, $resourceKey, $recordId, $eventKey, $label, $occurredAt, $metadata);
@@ -124,6 +168,9 @@ final class TimelineManager
         );
     }
 
+    /**
+     * Handles the elapsed seconds workflow.
+     */
     private function elapsedSeconds(?string $startedAt, ?string $endedAt): int
     {
         if ($startedAt === null || $endedAt === null) {
@@ -165,6 +212,9 @@ final class TimelineManager
         return $event;
     }
 
+    /**
+     * Handles the iso duration workflow.
+     */
     private function isoDuration(int $seconds): string
     {
         $seconds = max(0, $seconds);

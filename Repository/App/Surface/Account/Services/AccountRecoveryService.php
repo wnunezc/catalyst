@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace App\Surface\Account\Services;
 
 use App\Surface\Account\Repositories\AccountRecoveryRepository;
@@ -12,12 +38,24 @@ use Catalyst\Helpers\Config\ConfigManager;
 use Catalyst\Helpers\Log\Logger;
 use Throwable;
 
+/**
+ * Defines the Account Recovery Service class contract.
+ *
+ * @package App\Surface\Account\Services
+ * Responsibility: Coordinates the account recovery service behavior within its module boundary.
+ */
 final class AccountRecoveryService
 {
+    /**
+     * Initializes the Account Recovery Service instance.
+     */
     public function __construct(private readonly AccountRecoveryRepository $repository = new AccountRecoveryRepository())
     {
     }
 
+    /**
+     * Handles the request mfa reset by email workflow.
+     */
     public function requestMfaResetByEmail(string $email): void
     {
         $email = strtolower(trim($email));
@@ -51,6 +89,9 @@ final class AccountRecoveryService
         }
     }
 
+    /**
+     * Handles the consume mfa reset token workflow.
+     */
     public function consumeMfaResetToken(string $token): bool
     {
         $row = $this->repository->consumeToken($token, 'mfa_reset');
@@ -94,6 +135,9 @@ final class AccountRecoveryService
         }
     }
 
+    /**
+     * Handles the send mfa reset email workflow.
+     */
     private function sendMfaResetEmail(string $email, string $name, string $token): void
     {
         $link = $this->resolveAppUrl() . '/account-recovery/mfa/' . $token;
@@ -117,6 +161,9 @@ final class AccountRecoveryService
         }
     }
 
+    /**
+     * Resolves the requested value.
+     */
     private function resolveAppUrl(): string
     {
         try {

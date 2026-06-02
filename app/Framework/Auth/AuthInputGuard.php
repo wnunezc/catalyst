@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Auth;
 
 use Catalyst\Helpers\Config\ConfigManager;
@@ -48,16 +74,25 @@ final class AuthInputGuard
         return $target;
     }
 
+    /**
+     * Determines whether is Raw Token.
+     */
     public static function isRawToken(string $token): bool
     {
         return preg_match(self::RAW_TOKEN_PATTERN, trim($token)) === 1;
     }
 
+    /**
+     * Normalizes the provided value.
+     */
     public static function normalizeMfaCode(string $code): string
     {
         return strtoupper(trim($code));
     }
 
+    /**
+     * Determines whether is Mfa Code Candidate.
+     */
     public static function isMfaCodeCandidate(string $code): bool
     {
         return preg_match(self::MFA_CODE_PATTERN, self::normalizeMfaCode($code)) === 1;
@@ -123,6 +158,9 @@ final class AuthInputGuard
         return $errors !== [] ? ['password' => $errors] : [];
     }
 
+    /**
+     * Handles the fallback path workflow.
+     */
     private static function fallbackPath(string $fallback): string
     {
         $fallback = trim($fallback);
@@ -131,6 +169,9 @@ final class AuthInputGuard
             : '/';
     }
 
+    /**
+     * Handles the boolean workflow.
+     */
     private static function boolean(mixed $value): bool
     {
         if (is_bool($value)) {

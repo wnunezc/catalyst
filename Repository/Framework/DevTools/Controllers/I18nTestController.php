@@ -3,14 +3,29 @@
 declare(strict_types=1);
 
 /**
- * Catalyst PHP Framework — DevTools
+ * Catalyst PHP Framework
  *
- * I18nTestController — Etapa 2: Translation system tests.
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
  *
- * @package   Catalyst\Repository\DevTools\Controllers
- * @author    Walter Nuñez (arcanisgk) <icarosnet@gmail.com>
- * @copyright 2023 - 2025
- * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
  */
 
 namespace Catalyst\Repository\DevTools\Controllers;
@@ -19,8 +34,17 @@ use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\JsonResponse;
 use Catalyst\Helpers\I18n\Translator;
 
+/**
+ * Defines the I18n Test Controller class contract.
+ *
+ * @package Catalyst\Repository\DevTools\Controllers
+ * Responsibility: Coordinates the i18n test controller behavior within its module boundary.
+ */
 class I18nTestController extends Controller
 {
+    /**
+     * Handles the test i18n workflow.
+     */
     public function testI18n(): JsonResponse
     {
         $tr     = Translator::getInstance();
@@ -48,6 +72,9 @@ class I18nTestController extends Controller
         ], sprintf(__('devtools.i18n_runtime.locale_summary'), $locale));
     }
 
+    /**
+     * Updates the locale value.
+     */
     public function setLocale(): JsonResponse
     {
         $locale       = trim((string) $this->input('locale', ''));

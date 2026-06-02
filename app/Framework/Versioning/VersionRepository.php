@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Versioning;
 
 use Catalyst\Entities\ContentVersion;
@@ -11,6 +37,12 @@ use Catalyst\Framework\Traits\SingletonTrait;
 use Catalyst\Helpers\Log\Logger;
 use Exception;
 
+/**
+ * Defines the Version Repository class contract.
+ *
+ * @package Catalyst\Framework\Versioning
+ * Responsibility: Coordinates the version repository behavior within its module boundary.
+ */
 final class VersionRepository
 {
     use SingletonTrait;
@@ -18,6 +50,9 @@ final class VersionRepository
     private DatabaseManager $db;
     private Logger $logger;
 
+    /**
+     * Initializes the Version Repository instance.
+     */
     protected function __construct()
     {
         $this->db = DatabaseManager::getInstance();
@@ -70,6 +105,9 @@ final class VersionRepository
         return is_array($row) ? $this->normalizeRow($row) : null;
     }
 
+    /**
+     * Handles the next version number workflow.
+     */
     public function nextVersionNumber(string $resourceKey, int $recordId): int
     {
         $latest = $this->latest($resourceKey, $recordId);
@@ -77,6 +115,9 @@ final class VersionRepository
         return (int) (($latest['version_number'] ?? 0) + 1);
     }
 
+    /**
+     * Finds the requested record.
+     */
     public function findModel(int $versionId): ?ContentVersion
     {
         return ContentVersion::find($versionId);
@@ -98,6 +139,9 @@ final class VersionRepository
         return $row;
     }
 
+    /**
+     * Handles the current tenant id workflow.
+     */
     private function currentTenantId(): int
     {
         return TenancyManager::getInstance()->requireCurrentTenantId();

@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Repository\Roles\Controllers;
 
 use Catalyst\Framework\Admin\Form\FormBuilder;
@@ -17,16 +43,28 @@ use Catalyst\Repository\Roles\Requests\RolePayloadRequest;
 use Catalyst\Repository\Roles\Requests\RoleBulkSelectionRequest;
 use Catalyst\Repository\Roles\Requests\RolePermissionSyncRequest;
 
+/**
+ * Defines the Roles Controller class contract.
+ *
+ * @package Catalyst\Repository\Roles\Controllers
+ * Responsibility: Coordinates the roles controller behavior within its module boundary.
+ */
 class RolesController extends Controller
 {
     use InteractsWithRecordClaimsTrait;
 
+    /**
+     * Initializes the Roles Controller instance.
+     */
     public function __construct(
         private readonly RoleRepository $repo
     ) {
         parent::__construct();
     }
 
+    /**
+     * Handles the index workflow.
+     */
     public function index(Request $request): Response
     {
         $this->authorizeResource('view-any', 'roles');
@@ -149,12 +187,18 @@ class RolesController extends Controller
         ], 200, 'admin');
     }
 
+    /**
+     * Handles the create workflow.
+     */
     public function create(Request $request): Response
     {
         $this->authorizeResource('create', 'roles');
         return $this->renderForm((string) __('roles.roles.create_title'), null);
     }
 
+    /**
+     * Handles the persistence workflow.
+     */
     public function store(RolePayloadRequest $request): Response
     {
         $this->authorizeResource('create', 'roles');
@@ -169,6 +213,9 @@ class RolesController extends Controller
         return $this->postActionSuccessRedirect('/users/roles', (string) __('roles.roles.created'));
     }
 
+    /**
+     * Handles the edit workflow.
+     */
     public function edit(Request $request, string $id): Response
     {
         $role = $this->repo->findRole((int) $id);
@@ -192,6 +239,9 @@ class RolesController extends Controller
         return $this->renderForm((string) __('roles.roles.edit_title'), $role, $claim);
     }
 
+    /**
+     * Handles the update workflow.
+     */
     public function update(RolePayloadRequest $request, string $id): Response
     {
         $roleId = (int) $id;
@@ -223,6 +273,9 @@ class RolesController extends Controller
         return $this->postActionSuccessRedirect('/users/roles', (string) __('roles.roles.updated'));
     }
 
+    /**
+     * Handles the destroy workflow.
+     */
     public function destroy(Request $request, string $id): Response
     {
         $role = $this->repo->findRole((int) $id);
@@ -243,6 +296,9 @@ class RolesController extends Controller
         return $this->postActionSuccessRedirect('/users/roles', (string) __('roles.roles.deleted'));
     }
 
+    /**
+     * Handles the bulk destroy workflow.
+     */
     public function bulkDestroy(Request $request): Response
     {
         $this->authorizeResource('bulk-delete', 'roles');
@@ -262,6 +318,9 @@ class RolesController extends Controller
         return $this->postActionSuccessRedirect('/users/roles', count($ids) . ' ' . (string) __('roles.roles.bulk.deleted_suffix'));
     }
 
+    /**
+     * Handles the permissions workflow.
+     */
     public function permissions(Request $request, string $id): Response
     {
         $role = $this->repo->findRole((int) $id);
@@ -290,6 +349,9 @@ class RolesController extends Controller
         ], 200, 'admin');
     }
 
+    /**
+     * Handles the sync permissions workflow.
+     */
     public function syncPermissions(Request $request, string $id): Response
     {
         $roleId = (int) $id;
@@ -323,6 +385,9 @@ class RolesController extends Controller
         return $this->postActionSuccessRedirect('/users/roles/' . $roleId . '/permissions', (string) __('roles.permissions.updated'));
     }
 
+    /**
+     * Renders the current view state.
+     */
     private function renderForm(string $title, ?array $role, ?array $claim = null): Response
     {
         $action = $role === null
@@ -397,6 +462,9 @@ class RolesController extends Controller
         ], 200, 'admin');
     }
 
+    /**
+     * Normalizes the provided value.
+     */
     private function normalizeDescription(mixed $description): ?string
     {
         $value = trim((string) ($description ?? ''));

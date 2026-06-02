@@ -2,26 +2,29 @@
 
 declare(strict_types=1);
 
-/**************************************************************************************
- *
+/**
  * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
  * PHP Version 8.4 (Required).
  *
- * @package   Catalyst
- * @subpackage Framework\Auth
- * @see       https://github.com/arcanisgk/catalyst
+ * @package    Catalyst
  *
- * @author    Walter Nuñez (arcanisgk/original founder) <icarosnet@gmail.com>
- * @copyright 2023 - 2025
- * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
  *
- * @category  Framework
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
  * @filesource
  *
- * @link      https://catalyst.dock Local development URL
- *
- * MfaManager — Pure-PHP TOTP implementation (RFC 6238 / RFC 4226).
- * HIPAA §164.312(d) — multi-factor authentication.
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
  *
  */
 
@@ -38,6 +41,12 @@ use Catalyst\Framework\Traits\SingletonTrait;
  *   - hash_equals()   — timing-safe comparison for backup codes
  *
  * @package Catalyst\Framework\Auth
+ */
+/**
+ * Defines the Mfa Manager class contract.
+ *
+ * @package Catalyst\Framework\Auth
+ * Responsibility: Coordinates the mfa manager behavior within its module boundary.
  */
 class MfaManager
 {
@@ -123,6 +132,9 @@ class MfaManager
         return false;
     }
 
+    /**
+     * Normalizes the provided value.
+     */
     public function normalizeTotpCode(string $code): ?string
     {
         $normalized = preg_replace('/[\s-]+/', '', trim($code));
@@ -134,6 +146,9 @@ class MfaManager
         return $normalized;
     }
 
+    /**
+     * Normalizes the provided value.
+     */
     public function normalizeBackupCode(string $code): string
     {
         return strtoupper((string) preg_replace('/[^A-Za-z0-9]/', '', trim($code)));
@@ -310,11 +325,17 @@ class MfaManager
         return $result;
     }
 
+    /**
+     * Handles the hash backup code workflow.
+     */
     private function hashBackupCode(string $code): string
     {
         return hash('sha256', $this->normalizeBackupCode($code));
     }
 
+    /**
+     * Determines whether is Hashed Backup Code.
+     */
     private function isHashedBackupCode(string $value): bool
     {
         return preg_match('/^[a-f0-9]{64}$/', $value) === 1;

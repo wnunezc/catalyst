@@ -2,8 +2,40 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Http;
 
+/**
+ * Defines the File Validator class contract.
+ *
+ * @package Catalyst\Framework\Http
+ * Responsibility: Coordinates the file validator behavior within its module boundary.
+ */
 class FileValidator
 {
     /**
@@ -22,11 +54,17 @@ class FileValidator
         'webp' => ['image/webp'],
     ];
 
+    /**
+     * Determines whether is File.
+     */
     public function isFile(mixed $value): bool
     {
         return $value instanceof UploadedFile && $value->isValid();
     }
 
+    /**
+     * Determines whether has Allowed Mime Types.
+     */
     public function hasAllowedMimeTypes(UploadedFile $file, array $allowedMimeTypes): bool
     {
         $mimeType = strtolower($file->getMimeType());
@@ -35,6 +73,9 @@ class FileValidator
         return in_array($mimeType, $allowedMimeTypes, true);
     }
 
+    /**
+     * Determines whether has Allowed Extensions.
+     */
     public function hasAllowedExtensions(UploadedFile $file, array $allowedExtensions): bool
     {
         $extension = strtolower($file->getExtension());
@@ -61,6 +102,9 @@ class FileValidator
         return $this->hasAllowedMimeTypes($file, $allowedMimeTypes);
     }
 
+    /**
+     * Determines whether has Max Size.
+     */
     public function hasMaxSize(UploadedFile $file, int $maxKilobytes): bool
     {
         if ($maxKilobytes <= 0) {

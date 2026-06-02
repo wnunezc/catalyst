@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Event;
 
 use Catalyst\Entities\EventEnvelope;
@@ -12,6 +38,12 @@ use Catalyst\Helpers\Log\Logger;
 use Closure;
 use RuntimeException;
 
+/**
+ * Defines the Event Bus class contract.
+ *
+ * @package Catalyst\Framework\Event
+ * Responsibility: Coordinates the event bus behavior within its module boundary.
+ */
 final class EventBus
 {
     use SingletonTrait;
@@ -21,12 +53,18 @@ final class EventBus
 
     private Logger $logger;
 
+    /**
+     * Initializes the Event Bus instance.
+     */
     protected function __construct()
     {
         $this->logger = Logger::getInstance();
         FrameworkEventCatalog::registerDefaults($this);
     }
 
+    /**
+     * Handles the listen workflow.
+     */
     public function listen(
         string $eventName,
         callable|string $listener,
@@ -92,6 +130,9 @@ final class EventBus
         return $this->listeners;
     }
 
+    /**
+     * Determines whether should Skip Queued Wildcard Listener.
+     */
     private function shouldSkipQueuedWildcardListener(EventListenerDefinition $definition, string $eventName): bool
     {
         if (!$definition->queued || !is_string($definition->listener)) {
@@ -105,6 +146,9 @@ final class EventBus
         return str_starts_with($eventName, 'framework.queue.');
     }
 
+    /**
+     * Handles the invoke workflow.
+     */
     private function invoke(callable|string $listener, EventEnvelope $event): void
     {
         if ($listener instanceof Closure || is_callable($listener)) {

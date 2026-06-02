@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Middleware;
 
 use Catalyst\Framework\FeatureFlag\FeatureFlagManager;
@@ -12,8 +38,17 @@ use Catalyst\Framework\Http\Response;
 use Catalyst\Helpers\Log\Logger;
 use Closure;
 
+/**
+ * Defines the Route Feature Middleware class contract.
+ *
+ * @package Catalyst\Framework\Middleware
+ * Responsibility: Coordinates the route feature middleware behavior within its module boundary.
+ */
 final class RouteFeatureMiddleware extends CoreMiddleware
 {
+    /**
+     * Initializes the Route Feature Middleware instance.
+     */
     public function __construct(
         private readonly string $flagKey,
         private readonly ?string $redirectTo = null
@@ -21,16 +56,25 @@ final class RouteFeatureMiddleware extends CoreMiddleware
         parent::__construct();
     }
 
+    /**
+     * Handles the flag key workflow.
+     */
     public function flagKey(): string
     {
         return $this->flagKey;
     }
 
+    /**
+     * Handles the redirect to workflow.
+     */
     public function redirectTo(): ?string
     {
         return $this->redirectTo;
     }
 
+    /**
+     * Handles the serialize workflow.
+     */
     public function __serialize(): array
     {
         return [
@@ -39,6 +83,9 @@ final class RouteFeatureMiddleware extends CoreMiddleware
         ];
     }
 
+    /**
+     * Handles the unserialize workflow.
+     */
     public function __unserialize(array $data): void
     {
         $this->flagKey = (string)($data['flagKey'] ?? '');
@@ -46,6 +93,9 @@ final class RouteFeatureMiddleware extends CoreMiddleware
         $this->logger = Logger::getInstance();
     }
 
+    /**
+     * Processes the current workflow.
+     */
     public function process(Request $request, Closure $next): Response
     {
         if (FeatureFlagManager::getInstance()->isEnabledForCurrentUser($this->flagKey)) {

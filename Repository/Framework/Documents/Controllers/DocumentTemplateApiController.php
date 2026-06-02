@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Repository\Documents\Controllers;
 
 use Catalyst\Framework\Controllers\Controller;
@@ -18,8 +44,17 @@ use Catalyst\Repository\Documents\Requests\DocumentPreviewPayloadRequest;
 use Catalyst\Repository\Documents\Requests\DocumentTemplateIndexRequest;
 use RuntimeException;
 
+/**
+ * Defines the Document Template Api Controller class contract.
+ *
+ * @package Catalyst\Repository\Documents\Controllers
+ * Responsibility: Coordinates the document template api controller behavior within its module boundary.
+ */
 final class DocumentTemplateApiController extends Controller
 {
+    /**
+     * Initializes the Document Template Api Controller instance.
+     */
     public function __construct(
         private readonly DocumentTemplateRepository $repository,
         private readonly WorkflowManager $workflows,
@@ -30,6 +65,9 @@ final class DocumentTemplateApiController extends Controller
         parent::__construct();
     }
 
+    /**
+     * Handles the api index workflow.
+     */
     public function apiIndex(DocumentTemplateIndexRequest $request): Response
     {
         $this->authorizeResource('view-any', DocumentTemplateManager::RESOURCE_KEY);
@@ -43,6 +81,9 @@ final class DocumentTemplateApiController extends Controller
         ]);
     }
 
+    /**
+     * Handles the api show workflow.
+     */
     public function apiShow(Request $request, string $id): Response
     {
         $template = $this->repository->find((int) $id);
@@ -65,6 +106,9 @@ final class DocumentTemplateApiController extends Controller
         ], __('documents.messages.template_retrieved'));
     }
 
+    /**
+     * Handles the api preview workflow.
+     */
     public function apiPreview(DocumentPreviewPayloadRequest $request, string $id): Response
     {
         $template = $this->repository->findModel((int) $id);
@@ -83,6 +127,9 @@ final class DocumentTemplateApiController extends Controller
         return $this->jsonSuccess($preview, __('documents.messages.preview_generated'));
     }
 
+    /**
+     * Handles the api export workflow.
+     */
     public function apiExport(DocumentExportPayloadRequest $request, string $id): Response
     {
         $template = $this->repository->findModel((int) $id);

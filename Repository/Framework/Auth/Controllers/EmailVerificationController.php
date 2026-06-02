@@ -2,22 +2,29 @@
 
 declare(strict_types=1);
 
-/**************************************************************************************
- *
+/**
  * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
  * PHP Version 8.4 (Required).
  *
- * @package   Catalyst\Repository\Auth\Controllers
- * @see       https://github.com/arcanisgk/catalyst
+ * @package    Catalyst
  *
- * @author    Walter Nuñez (arcanisgk/original founder) <icarosnet@gmail.com>
- * @copyright 2023 - 2025
- * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
  *
- * @category  Repository
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
  * @filesource
  *
- * @link      https://catalyst.dock Local development URL
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
  *
  */
 
@@ -40,8 +47,17 @@ use Catalyst\Repository\Auth\Requests\EmailVerificationTokenRequest;
  *
  * @package Catalyst\Repository\Auth\Controllers
  */
+/**
+ * Defines the Email Verification Controller class contract.
+ *
+ * @package Catalyst\Repository\Auth\Controllers
+ * Responsibility: Coordinates the email verification controller behavior within its module boundary.
+ */
 class EmailVerificationController extends Controller
 {
+    /**
+     * Handles the detail display workflow.
+     */
     public function showManualForm(): Response
     {
         return $this->view('auth.verify-email', [
@@ -49,6 +65,9 @@ class EmailVerificationController extends Controller
         ], 200, 'auth');
     }
 
+    /**
+     * Handles the manual verify workflow.
+     */
     public function manualVerify(Request $request): Response
     {
         $payload = (new EmailVerificationTokenRequest($request))->validated();
@@ -75,6 +94,9 @@ class EmailVerificationController extends Controller
         return $this->consumeToken($token);
     }
 
+    /**
+     * Handles the consume token workflow.
+     */
     private function consumeToken(string $token): Response
     {
         $userId = TokenRepository::getInstance()->consumeVerificationToken($token);

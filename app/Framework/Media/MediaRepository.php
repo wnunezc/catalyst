@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Media;
 
 use Catalyst\Entities\MediaItem;
@@ -12,6 +38,12 @@ use Catalyst\Framework\Traits\SingletonTrait;
 use Catalyst\Helpers\Log\Logger;
 use Exception;
 
+/**
+ * Defines the Media Repository class contract.
+ *
+ * @package Catalyst\Framework\Media
+ * Responsibility: Coordinates the media repository behavior within its module boundary.
+ */
 final class MediaRepository
 {
     use SingletonTrait;
@@ -20,6 +52,9 @@ final class MediaRepository
     private Logger $logger;
     private MetadataValueRepository $values;
 
+    /**
+     * Initializes the Media Repository instance.
+     */
     protected function __construct()
     {
         $this->db = DatabaseManager::getInstance();
@@ -161,6 +196,9 @@ final class MediaRepository
         return $row;
     }
 
+    /**
+     * Finds the requested record.
+     */
     public function findModel(int $id): ?MediaItem
     {
         return MediaItem::find($id);
@@ -280,6 +318,9 @@ final class MediaRepository
         return [$base, $bindings];
     }
 
+    /**
+     * Resolves the requested value.
+     */
     private function resolveSortColumn(string $sort): string
     {
         return match ($sort) {
@@ -293,11 +334,17 @@ final class MediaRepository
         };
     }
 
+    /**
+     * Resolves the requested value.
+     */
     private function resolveSortDirection(string $direction): string
     {
         return strtolower($direction) === 'asc' ? 'ASC' : 'DESC';
     }
 
+    /**
+     * Handles the current tenant id workflow.
+     */
     private function currentTenantId(): int
     {
         return TenancyManager::getInstance()->requireCurrentTenantId();

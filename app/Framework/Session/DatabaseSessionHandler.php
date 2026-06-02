@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Session;
 
 use Catalyst\Framework\Database\DatabaseManager;
@@ -10,26 +36,44 @@ use PDO;
 use SessionHandlerInterface;
 use Throwable;
 
+/**
+ * Defines the Database Session Handler class contract.
+ *
+ * @package Catalyst\Framework\Session
+ * Responsibility: Coordinates the database session handler behavior within its module boundary.
+ */
 final class DatabaseSessionHandler implements SessionHandlerInterface
 {
     private bool $tableReady = false;
 
+    /**
+     * Initializes the Database Session Handler instance.
+     */
     public function __construct(
         private readonly string $connectionName,
         private readonly string $tableName
     ) {
     }
 
+    /**
+     * Handles the open workflow.
+     */
     public function open(string $savePath, string $sessionName): bool
     {
         return $this->ensureTable();
     }
 
+    /**
+     * Handles the close workflow.
+     */
     public function close(): bool
     {
         return true;
     }
 
+    /**
+     * Reads the requested value.
+     */
     public function read(string $id): string|false
     {
         if (!$this->ensureTable()) {
@@ -54,6 +98,9 @@ final class DatabaseSessionHandler implements SessionHandlerInterface
         }
     }
 
+    /**
+     * Writes the requested value.
+     */
     public function write(string $id, string $data): bool
     {
         if (!$this->ensureTable()) {
@@ -91,6 +138,9 @@ final class DatabaseSessionHandler implements SessionHandlerInterface
         }
     }
 
+    /**
+     * Handles the destroy workflow.
+     */
     public function destroy(string $id): bool
     {
         if (!$this->ensureTable()) {
@@ -113,6 +163,9 @@ final class DatabaseSessionHandler implements SessionHandlerInterface
         }
     }
 
+    /**
+     * Handles the gc workflow.
+     */
     public function gc(int $max_lifetime): int|false
     {
         if (!$this->ensureTable()) {
@@ -138,6 +191,9 @@ final class DatabaseSessionHandler implements SessionHandlerInterface
         }
     }
 
+    /**
+     * Handles the ensure table workflow.
+     */
     private function ensureTable(): bool
     {
         if ($this->tableReady) {
@@ -170,11 +226,17 @@ final class DatabaseSessionHandler implements SessionHandlerInterface
         }
     }
 
+    /**
+     * Handles the pdo workflow.
+     */
     private function pdo(): PDO
     {
         return DatabaseManager::getInstance()->connection($this->connectionName)->getPdo();
     }
 
+    /**
+     * Handles the client ip workflow.
+     */
     private function clientIp(): ?string
     {
         $value = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['HTTP_CLIENT_IP'] ?? $_SERVER['REMOTE_ADDR'] ?? null;
@@ -191,6 +253,9 @@ final class DatabaseSessionHandler implements SessionHandlerInterface
         return $value;
     }
 
+    /**
+     * Handles the user agent workflow.
+     */
     private function userAgent(): ?string
     {
         $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? null;

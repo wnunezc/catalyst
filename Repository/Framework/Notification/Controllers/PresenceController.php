@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Repository\Notification\Controllers;
 
 use Catalyst\Framework\Auth\AuthManager;
@@ -12,13 +38,25 @@ use Catalyst\Framework\Http\Response;
 use Catalyst\Framework\Presence\PresenceManager;
 use RuntimeException;
 
+/**
+ * Defines the Presence Controller class contract.
+ *
+ * @package Catalyst\Repository\Notification\Controllers
+ * Responsibility: Coordinates the presence controller behavior within its module boundary.
+ */
 final class PresenceController extends Controller
 {
+    /**
+     * Handles the user id workflow.
+     */
     private function userId(): int
     {
         return (int) (AuthManager::getInstance()->id() ?? 0);
     }
 
+    /**
+     * Handles the actor label workflow.
+     */
     private function actorLabel(): string
     {
         $user = AuthManager::getInstance()->user() ?? [];
@@ -28,6 +66,9 @@ final class PresenceController extends Controller
         return $name !== '' ? $name : ($email !== '' ? $email : 'user#' . $this->userId());
     }
 
+    /**
+     * Handles the heartbeat workflow.
+     */
     public function heartbeat(Request $request, string $resourceKey, string $recordId): Response
     {
         $resourceKey = trim($resourceKey);

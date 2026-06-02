@@ -4,14 +4,28 @@ declare(strict_types=1);
 
 /**
  * Catalyst PHP Framework
- * PHP Version 8.4 (Required)
  *
- * @package   Catalyst
- * @subpackage Framework\View
- * @author    Walter Nuñez (arcanisgk) <wnunez@lh-2.net>
- * @copyright 2024 Walter Francisco Nuñez Cruz and Icaros Net
- * @license   Proprietary - https://catalyst.lh-2.net
- * @link      https://catalyst.lh-2.net
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
  */
 
 namespace Catalyst\Framework\View;
@@ -313,11 +327,17 @@ class View
         return $this->renderTemplate($templatePath, $scope);
     }
 
+    /**
+     * Determines whether is Token Template.
+     */
     private function isTokenTemplate(string $templatePath): bool
     {
         return strtolower((string) pathinfo($templatePath, PATHINFO_EXTENSION)) === 'phtml';
     }
 
+    /**
+     * Finds the requested record.
+     */
     private function findTemplateFile(string $basePathWithoutExtension): ?string
     {
         foreach (self::TEMPLATE_EXTENSIONS as $extension) {
@@ -398,6 +418,9 @@ class View
         return array_merge($scope, $companion);
     }
 
+    /**
+     * Resolves the requested value.
+     */
     private function resolveTokenTemplateCompanionPath(string $templatePath): ?string
     {
         if (!$this->isTokenTemplate($templatePath)) {
@@ -430,6 +453,9 @@ class View
         return null;
     }
 
+    /**
+     * Resolves the requested value.
+     */
     private function resolvePartialTemplatePath(string $reference, ?string $fromTemplatePath): ?string
     {
         $reference = trim($reference);
@@ -456,6 +482,9 @@ class View
         return $this->findTemplate($reference);
     }
 
+    /**
+     * Determines whether is Quoted Literal.
+     */
     private function isQuotedLiteral(string $value): bool
     {
         return (str_starts_with($value, '\'') && str_ends_with($value, '\''))
@@ -541,6 +570,9 @@ class View
         return $bases;
     }
 
+    /**
+     * Handles the relative template path workflow.
+     */
     private function relativeTemplatePath(string $templatePath, string $basePath): ?string
     {
         $normalizedTemplate = rtrim(str_replace(['/', '\\'], DS, $templatePath), DS);

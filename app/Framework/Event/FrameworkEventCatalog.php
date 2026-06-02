@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Event;
 
 use Catalyst\Framework\Event\Listeners\CaptureAuditEventListener;
@@ -9,10 +35,19 @@ use Catalyst\Framework\Event\Listeners\CaptureTimelineMilestoneListener;
 use Catalyst\Framework\Event\Listeners\DeliverNotificationListener;
 use Catalyst\Framework\Event\Listeners\ProcessAutomationEventListener;
 
+/**
+ * Defines the Framework Event Catalog class contract.
+ *
+ * @package Catalyst\Framework\Event
+ * Responsibility: Coordinates the framework event catalog behavior within its module boundary.
+ */
 final class FrameworkEventCatalog
 {
     private static bool $registered = false;
 
+    /**
+     * Registers the requested definition.
+     */
     public static function registerDefaults(EventBus $bus): void
     {
         if (self::$registered) {

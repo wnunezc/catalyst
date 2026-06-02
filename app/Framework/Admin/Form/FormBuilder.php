@@ -2,8 +2,40 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Admin\Form;
 
+/**
+ * Defines the Form Builder class contract.
+ *
+ * @package Catalyst\Framework\Admin\Form
+ * Responsibility: Coordinates the form builder behavior within its module boundary.
+ */
 final class FormBuilder
 {
     /**
@@ -27,11 +59,17 @@ final class FormBuilder
         ],
     ];
 
+    /**
+     * Creates the requested object.
+     */
     public static function make(): self
     {
         return new self();
     }
 
+    /**
+     * Handles the action workflow.
+     */
     public function action(string $action): self
     {
         $this->config['action'] = $action;
@@ -39,6 +77,9 @@ final class FormBuilder
         return $this;
     }
 
+    /**
+     * Handles the method workflow.
+     */
     public function method(string $method): self
     {
         $this->config['method'] = strtoupper(trim($method));
@@ -106,6 +147,9 @@ final class FormBuilder
         return $this;
     }
 
+    /**
+     * Handles the error bag workflow.
+     */
     public function errorBag(string $errorBag): self
     {
         $this->config['error_bag'] = $errorBag;
@@ -113,6 +157,9 @@ final class FormBuilder
         return $this;
     }
 
+    /**
+     * Handles the multipart workflow.
+     */
     public function multipart(bool $multipart = true): self
     {
         $this->config['multipart'] = $multipart;
@@ -120,6 +167,9 @@ final class FormBuilder
         return $this;
     }
 
+    /**
+     * Handles the wrapper class workflow.
+     */
     public function wrapperClass(string $wrapperClass): self
     {
         $this->config['wrapper_class'] = trim($wrapperClass);
@@ -127,6 +177,9 @@ final class FormBuilder
         return $this;
     }
 
+    /**
+     * Handles the autosave workflow.
+     */
     public function autosave(bool $enabled = true, ?string $key = null): self
     {
         $this->config['autosave'] = [
@@ -530,6 +583,9 @@ final class FormBuilder
         return implode(' ', $parts);
     }
 
+    /**
+     * Handles the humanize workflow.
+     */
     private function humanize(string $value): string
     {
         $value = trim(str_replace(['_', '-'], ' ', $value));

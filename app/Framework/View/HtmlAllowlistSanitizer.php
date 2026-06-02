@@ -2,12 +2,44 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\View;
 
 use DOMDocument;
 use DOMElement;
 use DOMNode;
 
+/**
+ * Defines the Html Allowlist Sanitizer class contract.
+ *
+ * @package Catalyst\Framework\View
+ * Responsibility: Coordinates the html allowlist sanitizer behavior within its module boundary.
+ */
 final class HtmlAllowlistSanitizer
 {
     /** @var array<string, true> */
@@ -84,6 +116,9 @@ final class HtmlAllowlistSanitizer
         ],
     ];
 
+    /**
+     * Sanitizes the provided value.
+     */
     public function sanitize(string $html): string
     {
         if (trim($html) === '') {
@@ -114,6 +149,9 @@ final class HtmlAllowlistSanitizer
         return $result;
     }
 
+    /**
+     * Sanitizes the provided value.
+     */
     private function sanitizeChildren(DOMNode $parent): void
     {
         foreach (iterator_to_array($parent->childNodes) as $child) {
@@ -148,6 +186,9 @@ final class HtmlAllowlistSanitizer
         }
     }
 
+    /**
+     * Sanitizes the provided value.
+     */
     private function sanitizeAttributes(DOMElement $element, string $tag): void
     {
         foreach (iterator_to_array($element->attributes) as $attribute) {
@@ -178,6 +219,9 @@ final class HtmlAllowlistSanitizer
         }
     }
 
+    /**
+     * Determines whether is Safe Url.
+     */
     private function isSafeUrl(string $url): bool
     {
         if ($url === '' || str_starts_with($url, '/') || str_starts_with($url, '#')) {

@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Deployment;
 
 use Catalyst\Entities\DeploymentRun;
@@ -9,6 +35,12 @@ use Catalyst\Framework\Database\DatabaseManager;
 use Catalyst\Framework\Traits\SingletonTrait;
 use Catalyst\Helpers\Log\Logger;
 
+/**
+ * Defines the Deployment Run Repository class contract.
+ *
+ * @package Catalyst\Framework\Deployment
+ * Responsibility: Coordinates the deployment run repository behavior within its module boundary.
+ */
 final class DeploymentRunRepository
 {
     use SingletonTrait;
@@ -16,6 +48,9 @@ final class DeploymentRunRepository
     private DatabaseManager $db;
     private Logger $logger;
 
+    /**
+     * Initializes the Deployment Run Repository instance.
+     */
     protected function __construct()
     {
         $this->db = DatabaseManager::getInstance();
@@ -86,6 +121,9 @@ final class DeploymentRunRepository
         }
     }
 
+    /**
+     * Finds the requested record.
+     */
     public function find(int $id): ?array
     {
         try {
@@ -99,6 +137,9 @@ final class DeploymentRunRepository
         }
     }
 
+    /**
+     * Finds the requested record.
+     */
     public function findModel(int $id): ?DeploymentRun
     {
         $model = DeploymentRun::find($id);

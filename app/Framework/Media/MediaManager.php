@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Media;
 
 use Catalyst\Entities\MediaItem;
@@ -13,6 +39,12 @@ use Catalyst\Framework\Traits\SingletonTrait;
 use Catalyst\Helpers\Log\Logger;
 use RuntimeException;
 
+/**
+ * Defines the Media Manager class contract.
+ *
+ * @package Catalyst\Framework\Media
+ * Responsibility: Coordinates the media manager behavior within its module boundary.
+ */
 final class MediaManager
 {
     use SingletonTrait;
@@ -24,6 +56,9 @@ final class MediaManager
     private MetadataValueRepository $values;
     private Logger $logger;
 
+    /**
+     * Initializes the Media Manager instance.
+     */
     protected function __construct()
     {
         $this->storage = StorageManager::getInstance();
@@ -110,6 +145,9 @@ final class MediaManager
         return $item;
     }
 
+    /**
+     * Handles the delete workflow.
+     */
     public function delete(MediaItem $item): void
     {
         $snapshot = $item->toArray();
@@ -146,6 +184,9 @@ final class MediaManager
         $item->delete();
     }
 
+    /**
+     * Handles the archive workflow.
+     */
     public function archive(MediaItem $item): MediaItem
     {
         if (!empty($item->toArray()['archived_at'])) {

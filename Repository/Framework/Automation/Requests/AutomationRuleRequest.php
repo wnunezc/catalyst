@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Repository\Automation\Requests;
 
 use Catalyst\Entities\AutomationRule;
@@ -15,6 +41,12 @@ use Catalyst\Helpers\Exceptions\ForbiddenException;
 use Catalyst\Helpers\Exceptions\ValidationException;
 use Catalyst\Helpers\Validation\Validator;
 
+/**
+ * Defines the Automation Rule Request class contract.
+ *
+ * @package Catalyst\Repository\Automation\Requests
+ * Responsibility: Coordinates the automation rule request behavior within its module boundary.
+ */
 final class AutomationRuleRequest extends FormRequest
 {
     /**
@@ -22,6 +54,9 @@ final class AutomationRuleRequest extends FormRequest
      */
     private ?array $resolvedData = null;
 
+    /**
+     * Handles the authorize workflow.
+     */
     public function authorize(): bool
     {
         return PermissionRegistry::getInstance()->userHasResourceAbility(
@@ -91,6 +126,9 @@ final class AutomationRuleRequest extends FormRequest
         ];
     }
 
+    /**
+     * Handles the sensitive resource key workflow.
+     */
     protected function sensitiveResourceKey(): ?string
     {
         return AutomationManager::RESOURCE_KEY;

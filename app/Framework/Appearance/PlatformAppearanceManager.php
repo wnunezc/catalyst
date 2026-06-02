@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Appearance;
 
 use Catalyst\Framework\Http\UploadedFile;
@@ -10,6 +36,12 @@ use Catalyst\Framework\Traits\SingletonTrait;
 use Catalyst\Helpers\Config\ConfigManager;
 use InvalidArgumentException;
 
+/**
+ * Defines the Platform Appearance Manager class contract.
+ *
+ * @package Catalyst\Framework\Appearance
+ * Responsibility: Coordinates the platform appearance manager behavior within its module boundary.
+ */
 final class PlatformAppearanceManager
 {
     use SingletonTrait;
@@ -37,6 +69,9 @@ final class PlatformAppearanceManager
     private ConfigManager $config;
     private StorageManager $storage;
 
+    /**
+     * Initializes the Platform Appearance Manager instance.
+     */
     protected function __construct()
     {
         $this->config = ConfigManager::getInstance();
@@ -106,6 +141,9 @@ final class PlatformAppearanceManager
         ];
     }
 
+    /**
+     * Handles the theme family workflow.
+     */
     public function themeFamily(): string
     {
         $settings = $this->settings();
@@ -115,6 +153,9 @@ final class PlatformAppearanceManager
         return array_key_exists($family, $this->themeCatalog()) ? $family : 'inspinia';
     }
 
+    /**
+     * Handles the default variant workflow.
+     */
     public function defaultVariant(): string
     {
         $settings = $this->settings();
@@ -124,11 +165,17 @@ final class PlatformAppearanceManager
         return in_array($variant, ['light', 'dark'], true) ? $variant : 'light';
     }
 
+    /**
+     * Handles the allow user variant override workflow.
+     */
     public function allowUserVariantOverride(): bool
     {
         return false;
     }
 
+    /**
+     * Determines whether is Admin Customizer Enabled.
+     */
     public function isAdminCustomizerEnabled(): bool
     {
         $settings = $this->settings();
@@ -327,6 +374,9 @@ final class PlatformAppearanceManager
         ]);
     }
 
+    /**
+     * Handles the persistence workflow.
+     */
     public function storeBrandAsset(UploadedFile $file, string $slot): string
     {
         if (!in_array($slot, ['logo-primary', 'logo-dark', 'favicon'], true)) {
@@ -493,6 +543,9 @@ final class PlatformAppearanceManager
         return in_array($value, $choices, true) ? $value : $fallback;
     }
 
+    /**
+     * Handles the boolean value workflow.
+     */
     private function booleanValue(mixed $value, bool $default): bool
     {
         if (is_bool($value)) {
@@ -519,6 +572,9 @@ final class PlatformAppearanceManager
         return $default;
     }
 
+    /**
+     * Handles the default brand name workflow.
+     */
     private function defaultBrandName(): string
     {
         $project = $this->config->entry('app', 'project');
@@ -526,6 +582,9 @@ final class PlatformAppearanceManager
         return trim((string) ($project['project_name'] ?? 'Catalyst Framework')) ?: 'Catalyst Framework';
     }
 
+    /**
+     * Handles the initials workflow.
+     */
     private function initials(string $value): string
     {
         $parts = preg_split('/\s+/', trim($value)) ?: [];
@@ -542,6 +601,9 @@ final class PlatformAppearanceManager
         return $letters !== '' ? substr($letters, 0, 12) : 'CF';
     }
 
+    /**
+     * Resolves the requested value.
+     */
     private function resolveBrandTagline(string $value): string
     {
         $value = trim($value);
@@ -553,6 +615,9 @@ final class PlatformAppearanceManager
         return $value;
     }
 
+    /**
+     * Normalizes the provided value.
+     */
     private function normalizeAssetPath(string $path): string
     {
         $path = trim($path);
@@ -572,6 +637,9 @@ final class PlatformAppearanceManager
         return $this->storage->url($path, 'local');
     }
 
+    /**
+     * Normalizes the provided value.
+     */
     private function normalizeHexColor(string $value): string
     {
         $value = strtoupper(trim($value));
@@ -583,6 +651,9 @@ final class PlatformAppearanceManager
         return '#CBD5E1';
     }
 
+    /**
+     * Resolves the requested value.
+     */
     private function resolveLocalPublicAssetPath(string $path): string
     {
         $path = trim($path);
@@ -599,6 +670,9 @@ final class PlatformAppearanceManager
         return is_file($absolutePath) ? $absolutePath : '';
     }
 
+    /**
+     * Determines whether is Supported Pdf Watermark Logo.
+     */
     private function isSupportedPdfWatermarkLogo(string $path): bool
     {
         return $path !== '' && preg_match('/\.(jpe?g)$/i', $path) === 1;

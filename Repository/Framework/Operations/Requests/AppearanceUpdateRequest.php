@@ -2,24 +2,65 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Repository\Operations\Requests;
 
 use Catalyst\Framework\Http\Request;
 use Catalyst\Repository\Operations\Requests\Concerns\NormalizesCheckboxValues;
 
+/**
+ * Defines the Appearance Update Request class contract.
+ *
+ * @package Catalyst\Repository\Operations\Requests
+ * Responsibility: Coordinates the appearance update request behavior within its module boundary.
+ */
 final class AppearanceUpdateRequest
 {
     use NormalizesCheckboxValues;
 
+    /**
+     * Initializes the Appearance Update Request instance.
+     */
     public function __construct(private readonly Request $request)
     {
     }
 
+    /**
+     * Handles the admin customizer enabled workflow.
+     */
     public function adminCustomizerEnabled(): bool
     {
         return $this->checkboxValue($this->request->input('admin_customizer_enabled'));
     }
 
+    /**
+     * Handles the pdf watermark enabled workflow.
+     */
     public function pdfWatermarkEnabled(): bool
     {
         return $this->checkboxValue($this->request->input('pdf_watermark_enabled'));
@@ -70,6 +111,9 @@ final class AppearanceUpdateRequest
         ];
     }
 
+    /**
+     * Handles the reset requested workflow.
+     */
     public function resetRequested(string $asset): bool
     {
         return !empty($this->request->input('reset_' . $asset));

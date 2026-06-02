@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\FeatureFlag;
 
 use Catalyst\Framework\Audit\AuditLogManager;
@@ -18,6 +44,12 @@ use Catalyst\Framework\Traits\SingletonTrait;
 use Catalyst\Helpers\Config\ConfigManager;
 use RuntimeException;
 
+/**
+ * Defines the Feature Flag Manager class contract.
+ *
+ * @package Catalyst\Framework\FeatureFlag
+ * Responsibility: Coordinates the feature flag manager behavior within its module boundary.
+ */
 final class FeatureFlagManager
 {
     use SingletonTrait;
@@ -30,6 +62,9 @@ final class FeatureFlagManager
      */
     private ?array $catalogCache = null;
 
+    /**
+     * Handles the module flag key workflow.
+     */
     public static function moduleFlagKey(string $moduleKey): string
     {
         return 'module.' . strtolower(trim($moduleKey));
@@ -77,6 +112,9 @@ final class FeatureFlagManager
         return $catalog[$flagKey] ?? null;
     }
 
+    /**
+     * Determines whether is Runtime Enabled.
+     */
     public function isRuntimeEnabled(string $flagKey, ?int $userId = null, ?array $roleSlugs = null): bool
     {
         $flagKey = trim($flagKey);
@@ -101,6 +139,9 @@ final class FeatureFlagManager
         return $enabled;
     }
 
+    /**
+     * Determines whether is Enabled For Current User.
+     */
     public function isEnabledForCurrentUser(string $flagKey): bool
     {
         $auth = AuthManager::getInstance();
@@ -180,6 +221,9 @@ final class FeatureFlagManager
         $this->refreshRouteDiscovery();
     }
 
+    /**
+     * Updates the default state value.
+     */
     public function setDefaultState(string $flagKey, bool $enabled, ?string $label = null, ?string $description = null): void
     {
         if ($this->isConfigBackedFlag($flagKey)) {
@@ -214,6 +258,9 @@ final class FeatureFlagManager
         return is_array($catalog) ? $catalog : [];
     }
 
+    /**
+     * Handles the refresh route discovery workflow.
+     */
     private function refreshRouteDiscovery(): void
     {
         ModuleRegistry::getInstance()->flushCache();
@@ -295,11 +342,17 @@ final class FeatureFlagManager
         ];
     }
 
+    /**
+     * Determines whether is Config Backed Flag.
+     */
     private function isConfigBackedFlag(string $flagKey): bool
     {
         return array_key_exists($flagKey, $this->configBackedFlags());
     }
 
+    /**
+     * Resolves the requested value.
+     */
     private function resolveConfigBackedFlag(string $flagKey): bool
     {
         return (bool) (($this->configBackedFlags()[$flagKey] ?? [])['enabled'] ?? true);
@@ -352,6 +405,9 @@ final class FeatureFlagManager
         return $localized;
     }
 
+    /**
+     * Handles the translate workflow.
+     */
     private function translate(string $key, string $default = ''): string
     {
         $value = (string) __($key);

@@ -2,10 +2,42 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Metadata;
 
 use Catalyst\Framework\Traits\SingletonTrait;
 
+/**
+ * Defines the Metadata Resource Registry class contract.
+ *
+ * @package Catalyst\Framework\Metadata
+ * Responsibility: Coordinates the metadata resource registry behavior within its module boundary.
+ */
 final class MetadataResourceRegistry
 {
     use SingletonTrait;
@@ -89,16 +121,25 @@ final class MetadataResourceRegistry
         return $definition;
     }
 
+    /**
+     * Handles the exists workflow.
+     */
     public function exists(string $key): bool
     {
         return $this->find($key) !== null;
     }
 
+    /**
+     * Normalizes the provided value.
+     */
     private function normalizeKey(string $key): string
     {
         return trim(strtolower($key));
     }
 
+    /**
+     * Resolves the requested value.
+     */
     private function resolveDefinitionValue(array $definition, string $field, string $fallback = ''): string
     {
         $value = trim((string) ($definition[$field] ?? ''));

@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Repository\Audit\Controllers;
 
 use Catalyst\Framework\Admin\Grid\DataGrid;
@@ -10,14 +36,26 @@ use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
 
+/**
+ * Defines the Audit Log Controller class contract.
+ *
+ * @package Catalyst\Repository\Audit\Controllers
+ * Responsibility: Coordinates the audit log controller behavior within its module boundary.
+ */
 final class AuditLogController extends Controller
 {
+    /**
+     * Initializes the Audit Log Controller instance.
+     */
     public function __construct(
         private readonly AuditLogRepository $repository
     ) {
         parent::__construct();
     }
 
+    /**
+     * Handles the index workflow.
+     */
     public function index(Request $request): Response
     {
         $this->authorizeResource('view-any', 'audit-log');
@@ -150,6 +188,9 @@ final class AuditLogController extends Controller
         ], 200, 'admin');
     }
 
+    /**
+     * Handles the detail display workflow.
+     */
     public function show(Request $request, string $id): Response
     {
         $entry = $this->repository->find((int) $id);

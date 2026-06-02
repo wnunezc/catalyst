@@ -2,11 +2,43 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Sensitivity;
 
 use Catalyst\Framework\Traits\SingletonTrait;
 use Catalyst\Helpers\Security\SensitiveValueRedactor;
 
+/**
+ * Defines the Sensitive Data Policy class contract.
+ *
+ * @package Catalyst\Framework\Sensitivity
+ * Responsibility: Coordinates the sensitive data policy behavior within its module boundary.
+ */
 final class SensitiveDataPolicy
 {
     use SingletonTrait;
@@ -28,6 +60,9 @@ final class SensitiveDataPolicy
     private DataClassificationRegistry $registry;
     private SensitiveValueRedactor $redactor;
 
+    /**
+     * Initializes the Sensitive Data Policy instance.
+     */
     protected function __construct()
     {
         $this->registry = DataClassificationRegistry::getInstance();
@@ -50,6 +85,9 @@ final class SensitiveDataPolicy
         return $sanitized;
     }
 
+    /**
+     * Sanitizes the provided value.
+     */
     public function sanitizeField(?string $resourceKey, string $field, mixed $value, string $channel): mixed
     {
         $policy = $this->registry->policyFor($resourceKey, $field, $channel);
@@ -69,6 +107,9 @@ final class SensitiveDataPolicy
         return $value;
     }
 
+    /**
+     * Handles the mask scalar workflow.
+     */
     public function maskScalar(mixed $value): mixed
     {
         if ($value === null || is_bool($value) || is_int($value) || is_float($value)) {
@@ -91,6 +132,9 @@ final class SensitiveDataPolicy
         return substr($trimmed, 0, 2) . str_repeat('*', max(4, strlen($trimmed) - 4)) . substr($trimmed, -2);
     }
 
+    /**
+     * Handles the apply policy workflow.
+     */
     private function applyPolicy(mixed $value, string $policy): mixed
     {
         return match ($policy) {
@@ -101,6 +145,9 @@ final class SensitiveDataPolicy
         };
     }
 
+    /**
+     * Handles the mask value workflow.
+     */
     private function maskValue(mixed $value): mixed
     {
         if (is_array($value)) {

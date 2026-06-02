@@ -2,8 +2,40 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Route;
 
+/**
+ * Defines the Canonical Path Redirector class contract.
+ *
+ * @package Catalyst\Framework\Route
+ * Responsibility: Coordinates the canonical path redirector behavior within its module boundary.
+ */
 final class CanonicalPathRedirector
 {
     /**
@@ -34,6 +66,9 @@ final class CanonicalPathRedirector
         '/demo-ui' => '/demo-ui',
     ];
 
+    /**
+     * Handles the redirect target workflow.
+     */
     public function redirectTarget(string $uri): ?string
     {
         $path = $this->normalizePath((string) (parse_url($uri, PHP_URL_PATH) ?: $uri));
@@ -86,12 +121,18 @@ final class CanonicalPathRedirector
         return $map;
     }
 
+    /**
+     * Handles the matches prefix workflow.
+     */
     private function matchesPrefix(string $path, string $prefix): bool
     {
         return $path === $prefix
             || str_starts_with($path, $prefix . '/');
     }
 
+    /**
+     * Normalizes the provided value.
+     */
     private function normalizePath(string $path): string
     {
         $path = trim($path);

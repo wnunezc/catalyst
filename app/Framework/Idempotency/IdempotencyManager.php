@@ -2,22 +2,60 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Framework\Idempotency;
 
 use Catalyst\Framework\Traits\SingletonTrait;
 use Throwable;
 
+/**
+ * Defines the Idempotency Manager class contract.
+ *
+ * @package Catalyst\Framework\Idempotency
+ * Responsibility: Coordinates the idempotency manager behavior within its module boundary.
+ */
 final class IdempotencyManager
 {
     use SingletonTrait;
 
     private IdempotencyRepository $repository;
 
+    /**
+     * Initializes the Idempotency Manager instance.
+     */
     protected function __construct()
     {
         $this->repository = IdempotencyRepository::getInstance();
     }
 
+    /**
+     * Handles the generate key workflow.
+     */
     public function generateKey(): string
     {
         return 'idem_' . bin2hex(random_bytes(16));

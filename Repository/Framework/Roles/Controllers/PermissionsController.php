@@ -2,6 +2,32 @@
 
 declare(strict_types=1);
 
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
 namespace Catalyst\Repository\Roles\Controllers;
 
 use Catalyst\Framework\Admin\Form\FormBuilder;
@@ -16,16 +42,28 @@ use RuntimeException;
 use Catalyst\Repository\Roles\Requests\PermissionPayloadRequest;
 use Catalyst\Repository\Roles\Requests\PermissionBulkSelectionRequest;
 
+/**
+ * Defines the Permissions Controller class contract.
+ *
+ * @package Catalyst\Repository\Roles\Controllers
+ * Responsibility: Coordinates the permissions controller behavior within its module boundary.
+ */
 class PermissionsController extends Controller
 {
     use InteractsWithRecordClaimsTrait;
 
+    /**
+     * Initializes the Permissions Controller instance.
+     */
     public function __construct(
         private readonly RoleRepository $repo
     ) {
         parent::__construct();
     }
 
+    /**
+     * Handles the index workflow.
+     */
     public function index(Request $request): Response
     {
         $this->authorizeResource('view-any', 'permissions');
@@ -148,12 +186,18 @@ class PermissionsController extends Controller
         ], 200, 'admin');
     }
 
+    /**
+     * Handles the create workflow.
+     */
     public function create(Request $request): Response
     {
         $this->authorizeResource('create', 'permissions');
         return $this->renderForm((string) __('roles.permissions.create_title'), null);
     }
 
+    /**
+     * Handles the persistence workflow.
+     */
     public function store(PermissionPayloadRequest $request): Response
     {
         $this->authorizeResource('create', 'permissions');
@@ -167,6 +211,9 @@ class PermissionsController extends Controller
         return $this->postActionSuccessRedirect('/users/permissions', (string) __('roles.permissions.created'));
     }
 
+    /**
+     * Handles the edit workflow.
+     */
     public function edit(Request $request, string $id): Response
     {
         $permission = $this->repo->findPermission((int) $id);
@@ -190,6 +237,9 @@ class PermissionsController extends Controller
         return $this->renderForm((string) __('roles.permissions.edit_title'), $permission, $claim);
     }
 
+    /**
+     * Handles the update workflow.
+     */
     public function update(PermissionPayloadRequest $request, string $id): Response
     {
         $permissionId = (int) $id;
@@ -221,6 +271,9 @@ class PermissionsController extends Controller
         return $this->postActionSuccessRedirect('/users/permissions', (string) __('roles.permissions.updated'));
     }
 
+    /**
+     * Handles the destroy workflow.
+     */
     public function destroy(Request $request, string $id): Response
     {
         $permission = $this->repo->findPermission((int) $id);
@@ -241,6 +294,9 @@ class PermissionsController extends Controller
         return $this->postActionSuccessRedirect('/users/permissions', (string) __('roles.permissions.deleted'));
     }
 
+    /**
+     * Handles the bulk destroy workflow.
+     */
     public function bulkDestroy(Request $request): Response
     {
         $this->authorizeResource('bulk-delete', 'permissions');
@@ -260,6 +316,9 @@ class PermissionsController extends Controller
         return $this->postActionSuccessRedirect('/users/permissions', count($ids) . ' ' . (string) __('roles.permissions.bulk.deleted_suffix'));
     }
 
+    /**
+     * Renders the current view state.
+     */
     private function renderForm(string $title, ?array $permission, ?array $claim = null): Response
     {
         $action = $permission === null
@@ -334,6 +393,9 @@ class PermissionsController extends Controller
         ], 200, 'admin');
     }
 
+    /**
+     * Normalizes the provided value.
+     */
     private function normalizeDescription(mixed $description): ?string
     {
         $value = trim((string) ($description ?? ''));
