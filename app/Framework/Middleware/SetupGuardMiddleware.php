@@ -20,7 +20,7 @@ declare(strict_types=1);
  *
  * @link      https://catalyst.dock Local development URL
  *
- * SetupGuardMiddleware — dual-state access control for /setup routes.
+ * SetupGuardMiddleware — dual-state access control for environment setup routes.
  *
  **************************************************************************************/
 
@@ -36,11 +36,11 @@ use Catalyst\Framework\Http\Response;
 use Closure;
 
 /**************************************************************************************
- * SetupGuardMiddleware — dual-state access control for /setup routes.
+ * SetupGuardMiddleware — dual-state access control for environment setup routes.
  *
- * SRP: this middleware is attached only to /setup routes (Settings module).
+ * SRP: this middleware is attached only to environment setup routes (Settings module).
  * The complementary SetupMiddleware runs globally and decides where
- * unconfigured requests go; this one decides who may enter /setup itself.
+ * unconfigured requests go; this one decides who may enter setup itself.
  *
  * When the framework is NOT yet configured (first run):
  *   → Pass through without authentication. The setup wizard must be reachable
@@ -48,7 +48,7 @@ use Closure;
  *
  * When the framework IS configured:
  *   → Require an authenticated admin session (same as AuthMiddleware + RoleMiddleware).
- *   → Unauthenticated HTML request → /login?redirect=/setup.
+ *   → Unauthenticated HTML request → /login?redirect=/configuration/environment-setup.
  *   → Unauthenticated AJAX / JSON → 401 JSON.
  *   → Authenticated but non-admin → 403 JSON / 403 HTML.
  *

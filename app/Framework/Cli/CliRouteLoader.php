@@ -28,7 +28,7 @@ final class CliRouteLoader
 
         $cachedManifest = BootstrapCacheManager::loadDiscoveryCache();
         if (is_array($cachedManifest) && $cachedManifest !== []) {
-            return $cachedManifest;
+            return self::orderRouteFiles($cachedManifest);
         }
 
         return self::discoverFreshRouteFiles();
@@ -59,11 +59,66 @@ final class CliRouteLoader
             $files[] = $file;
         }
 
-        $files = array_values(array_unique($files));
-        sort($files);
+        $files = self::orderRouteFiles($files);
 
         BootstrapCacheManager::syncDiscoveryCache($files);
 
         return $files;
+    }
+
+    /**
+     * @param string[] $files
+     * @return string[]
+     */
+    private static function orderRouteFiles(array $files): array
+    {
+        $groups = [
+            'global' => [],
+            'api' => [],
+            'global_other' => [],
+            'framework' => [],
+            'app' => [],
+            'other' => [],
+        ];
+
+        foreach (array_values(array_unique($files)) as $file) {
+            $normalized = str_replace(['/', '\\'], DS, $file);
+
+            if (str_contains($normalized, implode(DS, ['boot-core', 'routes']))) {
+                $group = match (basename($normalized)) {
+                    'global-routes.php' => 'global',
+                    'api.php' => 'api',
+                    default => 'global_other',
+                };
+                $groups[$group][] = $file;
+                continue;
+            }
+
+            if (str_contains($normalized, implode(DS, ['Repository', 'Framework']))) {
+                $groups['framework'][] = $file;
+                continue;
+            }
+
+            if (str_contains($normalized, implode(DS, ['Repository', 'App', 'Surface']))) {
+                $groups['app'][] = $file;
+                continue;
+            }
+
+            $groups['other'][] = $file;
+        }
+
+        foreach ($groups as &$group) {
+            sort($group);
+        }
+        unset($group);
+
+        return array_merge(
+            $groups['global'],
+            $groups['api'],
+            $groups['global_other'],
+            $groups['framework'],
+            $groups['app'],
+            $groups['other']
+        );
     }
 }

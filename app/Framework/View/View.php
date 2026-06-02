@@ -78,6 +78,14 @@ class View
     }
 
     /**
+     * @return array<string, string>
+     */
+    public function getPaths(): array
+    {
+        return $this->paths;
+    }
+
+    /**
      * Share data with all views
      *
      * @param string $key Variable name

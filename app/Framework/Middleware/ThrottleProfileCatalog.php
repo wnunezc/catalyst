@@ -52,6 +52,16 @@ final class ThrottleProfileCatalog
             'context' => 'api',
             'route_scoped' => true,
         ],
+        'presence_heartbeat' => [
+            'name' => 'presence_heartbeat',
+            'enabled' => true,
+            'max_attempts' => 30,
+            'window_seconds' => 60,
+            'lockout_seconds' => 60,
+            'scope' => 'actor',
+            'context' => 'presence',
+            'route_scoped' => true,
+        ],
         'auth_recovery' => [
             'name' => 'auth_recovery',
             'enabled' => true,

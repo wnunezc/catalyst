@@ -312,6 +312,14 @@ class Router
     }
 
     /**
+     * @return array<int, string|callable>
+     */
+    public function getGlobalMiddleware(): array
+    {
+        return $this->middleware->getStack();
+    }
+
+    /**
      * Generate a URL for a named route
      *
      * @param string $name Route name

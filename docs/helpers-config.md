@@ -11,7 +11,7 @@ Resolved runtime configuration for JSON-backed framework features.
 
 - `.env` is still the bootstrap source for concerns that must exist before autoload + config classes are available, especially environment detection.
 - After `error-catcher.php` finishes bootstrapping, `ConfigManager::getInstance()` is created early and mirrored into `$GLOBALS['APP_CONFIGURATION']`.
-- Runtime consumers should prefer `ConfigManager` or `$GLOBALS['APP_CONFIGURATION']` over reading `.env` directly when the section is managed by `/setup`.
+- Runtime consumers should prefer `ConfigManager` or `$GLOBALS['APP_CONFIGURATION']` over reading `.env` directly when the section is managed by `/configuration/environment-setup`.
 
 ## Runtime Priority
 1. JSON file in `boot-core/config/{environment}/*.json`

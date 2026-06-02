@@ -71,10 +71,15 @@ The async foundations introduced later still respect this split:
 ```
 
 ### Route loading order (Kernel::loadRoutes)
-1. `boot-core/routes/global-routes.php` — global middleware + canonical redirects
+1. `boot-core/routes/global-routes.php` — canonical redirects + core actions
 2. `boot-core/routes/api.php` — global API routes (if present)
 3. `Repository/Framework/{Module}/routes.php` — framework modules (glob)
 4. `Repository/App/Surface/{Module}/routes.php` — app modules (glob)
+
+Before route cache lookup, `Kernel::loadRoutes()` always registers the global
+middleware pipeline through `GlobalMiddlewareRegistrar` and module view
+namespaces through `ModuleViewPathRegistrar`. Cold and cached bootstraps share
+the same transversal setup.
 
 ## Third-Party Dependencies
 

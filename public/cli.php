@@ -56,6 +56,7 @@ use Catalyst\Framework\Cli\Commands\DocsSyncRuntimeCommand;
 use Catalyst\Framework\Cli\Commands\FixturesAuthCommand;
 use Catalyst\Framework\Cli\Commands\FeatureFlagsListCommand;
 use Catalyst\Framework\Cli\Commands\FeatureFlagsSetCommand;
+use Catalyst\Framework\Cli\Commands\ExportDevelopmentOverlayCommand;
 use Catalyst\Framework\Cli\Commands\InspectHarnessCommand;
 use Catalyst\Framework\Cli\Commands\InspectLintCommand;
 use Catalyst\Framework\Cli\Commands\InspectModuleCommand;
@@ -81,6 +82,7 @@ use Catalyst\Framework\Cli\Commands\QueueRetryCommand;
 use Catalyst\Framework\Cli\Commands\QueueWorkCommand;
 use Catalyst\Framework\Cli\Commands\QualityCheckCommand;
 use Catalyst\Framework\Cli\Commands\RouteCacheCommand;
+use Catalyst\Framework\Cli\Commands\RouteBootstrapRegressionCommand;
 use Catalyst\Framework\Cli\Commands\RouteClearCommand;
 use Catalyst\Framework\Cli\Commands\RouteLintCommand;
 use Catalyst\Framework\Cli\Commands\RouteListCommand;
@@ -135,6 +137,7 @@ $registry
     ->register(new ApiTokensSmokeCommand())
     ->register(new FeatureFlagsListCommand())
     ->register(new FeatureFlagsSetCommand())
+    ->register(new ExportDevelopmentOverlayCommand())
     ->register(new DocsSyncRuntimeCommand())
     ->register(new DeployListCommand())
     ->register(new DeployRunCommand())
@@ -170,6 +173,7 @@ $registry
     ->register(new RetentionRunCommand())
     ->register(new RetentionSmokeCommand())
     ->register(new RouteCacheCommand())
+    ->register(new RouteBootstrapRegressionCommand())
     ->register(new RouteClearCommand())
     ->register(new RouteLintCommand())
     ->register(new RouteListCommand())

@@ -17,7 +17,7 @@ It is transport infrastructure, not the notification UI itself.
 
 Effective WebSocket config is resolved in this order:
 
-1. `/setup` JSON config via `ConfigManager` (`websocket.json`, entry `websocket`)
+1. `/configuration/environment-setup` JSON config via `ConfigManager` (`websocket.json`, entry `websocket`)
 2. `.env` defaults
 
 The same effective config is consumed by:

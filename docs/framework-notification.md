@@ -59,7 +59,7 @@ Collection object used by controllers and `JsonResponse` to attach:
 Current confirmed repo usage includes:
 
 - controller helpers in `app/Framework/Controllers/Controller.php`
-- JSON settings save flows such as the dedicated `/setup/*` save controllers in `Repository/Framework/Settings/Controllers/`
+- JSON settings save flows such as the dedicated `/configuration/environment-setup/*` save controllers in `Repository/Framework/Settings/Controllers/`
 - frontend processing through `public/assets/js/catalyst/modules/notification.js`
 
 ### `NotificationPosition`

@@ -20,7 +20,7 @@ declare(strict_types=1);
  *
  * @link      https://catalyst.dock Local development URL
  *
- * SetupMiddleware — redirects to /setup when the framework is not configured.
+ * SetupMiddleware — redirects to /configuration/environment-setup when the framework is not configured.
  *
  **************************************************************************************/
 
@@ -35,20 +35,20 @@ use Closure;
  * SetupMiddleware — first-run configuration guard (global scope).
  *
  * Intercepts every request before routing. If ConfigManager::isConfigured()
- * returns false the user is redirected to /setup so they can complete the
+ * returns false the user is redirected to /configuration/environment-setup so they can complete the
  * initial framework setup.
  *
  * SRP: this middleware decides *where* unconfigured requests go. Access
- * control for /setup itself (open when unconfigured, admin-only once
+ * control for /configuration/environment-setup itself (open when unconfigured, admin-only once
  * configured) belongs to SetupGuardMiddleware.
  *
  * Bypass paths (always allowed regardless of configuration state):
- *   - /setup   and  /setup/*    — the setup panel itself
+ *   - /configuration/environment-setup/* — the setup panel itself
  *   - /login   and  /logout     — auth routes needed during setup
  *   - /assets/*                 — static public assets
  *
- * Registration in global-routes.php:
- *   $router->addMiddleware(SetupMiddleware::class);
+ * Registration belongs to GlobalMiddlewareRegistrar so cached and cold
+ * bootstraps receive the same pipeline.
  *
  * @package Catalyst\Framework\Middleware
  **************************************************************************************/

@@ -30,9 +30,9 @@ $router->post('/workspaces/module-designer/preview', [ModuleDesignerController::
 $router->post('/workspaces/module-designer/generate', [ModuleDesignerController::class, 'generate'])->middleware($moduleMiddleware)->throttle('admin_mutation');
 
 $router->get('/configuration/feature-flags', [FeatureFlagsController::class, 'featureFlags'])->middleware($moduleMiddleware);
-$router->post('/configuration/feature-flags/defaults/{flagKey}', [FeatureFlagsController::class, 'setFeatureFlagDefault'])->middleware($moduleMiddleware);
-$router->post('/configuration/feature-flags/overrides', [FeatureFlagsController::class, 'storeFeatureFlagOverride'])->middleware($moduleMiddleware);
-$router->post('/configuration/feature-flags/overrides/{id}/delete', [FeatureFlagsController::class, 'deleteFeatureFlagOverride'])->middleware($moduleMiddleware);
+$router->post('/configuration/feature-flags/defaults/{flagKey}', [FeatureFlagsController::class, 'setFeatureFlagDefault'])->middleware($moduleMiddleware)->throttle('admin_mutation');
+$router->post('/configuration/feature-flags/overrides', [FeatureFlagsController::class, 'storeFeatureFlagOverride'])->middleware($moduleMiddleware)->throttle('admin_mutation');
+$router->post('/configuration/feature-flags/overrides/{id}/delete', [FeatureFlagsController::class, 'deleteFeatureFlagOverride'])->middleware($moduleMiddleware)->throttle('admin_mutation');
 
 $router->get('/workspaces/locale-tools', [LocalizationController::class, 'index'])->middleware($moduleMiddleware);
 $router->post('/workspaces/locale-tools/settings', [LocalizationController::class, 'updateSettings'])->middleware($moduleMiddleware)->throttle('admin_mutation');
@@ -43,8 +43,8 @@ $router->get('/configuration/platform-appearance', [AppearanceController::class,
 $router->post('/configuration/platform-appearance', [AppearanceController::class, 'update'])->middleware($moduleMiddleware)->throttle('admin_mutation');
 
 $router->get('/configuration/plugins', [PluginsController::class, 'plugins'])->middleware($moduleMiddleware);
-$router->post('/configuration/plugins/{pluginKey}/toggle', [PluginsController::class, 'togglePlugin'])->middleware($moduleMiddleware);
+$router->post('/configuration/plugins/{pluginKey}/toggle', [PluginsController::class, 'togglePlugin'])->middleware($moduleMiddleware)->throttle('admin_mutation');
 
 $router->get('/operations/deployments', [DeploymentsController::class, 'deployments'])->middleware($moduleMiddleware);
-$router->post('/operations/deployments/runs', [DeploymentsController::class, 'runDeployment'])->middleware($moduleMiddleware);
+$router->post('/operations/deployments/runs', [DeploymentsController::class, 'runDeployment'])->middleware($moduleMiddleware)->throttle('admin_mutation');
 $router->get('/operations/tenancy', [TenancyController::class, 'tenancy'])->middleware($moduleMiddleware);

@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Catalyst\Framework\Module;
 
-use Catalyst\Framework\Middleware\AuthMiddleware;
 use Catalyst\Framework\Middleware\DevToolsGuardMiddleware;
-use Catalyst\Framework\Middleware\RoleMiddleware;
 use Catalyst\Framework\Traits\SingletonTrait;
 
 final class ModuleRegistry
@@ -17,49 +15,6 @@ final class ModuleRegistry
      * @var array<string, array<string, mixed>>
      */
     private const DECLARATIONS = [
-        'framework.auth' => [
-            'description' => 'Authentication, recovery, MFA and social access surfaces.',
-            'routes' => [
-                'web' => [
-                    '/login',
-                    '/register',
-                    '/forgot-password',
-                    '/reset-password/{token}',
-                    '/verify-email',
-                    '/verify-email/{token}',
-                    '/logout',
-                    '/auth/social/{provider}',
-                    '/auth/social/callback/{provider}',
-                    '/mfa/setup',
-                    '/mfa/challenge',
-                    '/mfa/enable',
-                    '/mfa/disable',
-                    '/mfa/verify',
-                ],
-                'api' => [],
-                'aliases' => [],
-                'prefixes' => [
-                    '/login',
-                    '/register',
-                    '/forgot-password',
-                    '/reset-password',
-                    '/verify-email',
-                    '/logout',
-                    '/auth/social',
-                    '/mfa',
-                ],
-            ],
-            'feature_flags' => [
-                'social_auth',
-                'mfa',
-            ],
-            'seeds' => [
-                'users',
-                'remember_tokens',
-                'email_verification_tokens',
-                'password_reset_tokens',
-            ],
-        ],
         'framework.devtools' => [
             'description' => 'Developer tooling, UML and runtime smoke surfaces.',
             'routes' => [
@@ -195,42 +150,6 @@ final class ModuleRegistry
                         ],
                     ],
                 ],
-            ],
-        ],
-        'framework.notification' => [
-            'description' => 'Authenticated notification APIs and websocket token issuance.',
-            'routes' => [
-                'web' => [],
-                'api' => [
-                    '/api/ws-token',
-                    '/api/notifications',
-                    '/api/notifications/unread-count',
-                    '/api/notifications/read-all',
-                    '/api/notifications/{id}/read',
-                    '/api/presence/{resourceKey}/{recordId}/heartbeat',
-                ],
-                'aliases' => [],
-                'prefixes' => [
-                    '/api/ws-token',
-                    '/api/notifications',
-                    '/api/presence',
-                ],
-            ],
-            'route_guards' => [
-                [
-                    'patterns' => [
-                        '/api/ws-token',
-                        '/api/notifications',
-                        '/api/presence',
-                    ],
-                    'middleware_all' => [
-                        AuthMiddleware::class,
-                    ],
-                ],
-            ],
-            'feature_flags' => [
-                'websocket_enabled',
-                'notifications',
             ],
         ],
     ];

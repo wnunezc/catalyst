@@ -51,7 +51,7 @@ final class RedirectTarget
             return '/login';
         }
 
-        return '/login?redirect=' . rawurlencode($safeTarget);
+        return '/login?redirect=' . str_replace('%2F', '/', rawurlencode($safeTarget));
     }
 
     private static function fallbackPath(string $fallback): string

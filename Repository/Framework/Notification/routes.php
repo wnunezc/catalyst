@@ -36,10 +36,13 @@ $router->get('/api/notifications/unread-count', [NotificationController::class, 
        ->middleware(AuthMiddleware::class);
 
 $router->post('/api/notifications/read-all', [NotificationController::class, 'markAllRead'])
-       ->middleware(AuthMiddleware::class);
+       ->middleware(AuthMiddleware::class)
+       ->throttle('api_mutation');
 
 $router->post('/api/notifications/{id}/read', [NotificationController::class, 'markRead'])
-       ->middleware(AuthMiddleware::class);
+       ->middleware(AuthMiddleware::class)
+       ->throttle('api_mutation');
 
 $router->post('/api/presence/{resourceKey}/{recordId}/heartbeat', [PresenceController::class, 'heartbeat'])
-       ->middleware(AuthMiddleware::class);
+       ->middleware(AuthMiddleware::class)
+       ->throttle('presence_heartbeat');

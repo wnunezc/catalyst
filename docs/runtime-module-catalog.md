@@ -1,7 +1,7 @@
 # Runtime Module Catalog
 
 > Auto-generated from `ModuleRegistry`, `PermissionRegistry`, `NavigationRegistry`, `ModuleInspector`, `ModuleHarnessInspector` and `ModuleLinter`.
-> Last generated: 2026-06-01 08:02:14
+> Last generated: 2026-06-01 23:35:30
 
 ## Runtime Summary
 
@@ -21,7 +21,7 @@
 | `framework.automation` | `authenticated` | 4 | 2 | 7 | `ok` | `manage-automation-rules` | `n/a` | `n/a` |
 | `framework.catalogs` | `authenticated` | 6 | 0 | 8 | `ok` | `manage-catalogs` | `n/a` | `n/a` |
 | `framework.demoui` | `authenticated` | 40 | 0 | 0 | `ok` | `n/a` | `n/a` | `n/a` |
-| `framework.devtools` | `devtools` | 28 | 7 | 12 | `ok` | `access-devtools` | `n/a` | `n/a` |
+| `framework.devtools` | `devtools` | 26 | 7 | 12 | `ok` | `access-devtools` | `n/a` | `n/a` |
 | `framework.documents` | `authenticated` | 4 | 2 | 9 | `ok` | `manage-document-templates` | `n/a` | `n/a` |
 | `framework.media` | `authenticated` | 6 | 0 | 7 | `ok` | `manage-media-library`, `manage-media-metadata` | `n/a` | `n/a` |
 | `framework.notification` | `authenticated-api` | 0 | 3 | 3 | `n/a` | `n/a` | `n/a` | `n/a` |
@@ -533,8 +533,6 @@ _No mutation routes declared for harness._
 
 | Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
 |---|---|---|---|---|---|---|---|
-| `/index` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
-| `/index.php` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
 | `/test-features` | `GET,HEAD` | `login` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
 | `/test-features/api-response` | `GET,HEAD` | `login` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
 | `/test-features/cors-headers` | `GET,HEAD` | `login` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |

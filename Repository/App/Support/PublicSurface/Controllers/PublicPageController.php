@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Surface\PublicSupport\Controllers;
+namespace App\Support\PublicSurface\Controllers;
 
 use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\RedirectResponse;

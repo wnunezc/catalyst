@@ -39,10 +39,13 @@
    - Evidencia: `docs/audits/security-first/2026-06-01-security-first-audit.md`.
    - Hardening consolidado: `903019b` (`implement phase 5 security hardening`).
 
-6. **Auditar arquitectura** — Siguiente fase activa.
+6. **Auditar arquitectura y normalizar deuda tecnica** — En ejecucion.
    - Core framework vs demo/app ejemplo.
    - Rutas sin duenio, clases duplicadas, controladores grandes.
    - Docs desalineadas y deuda DevTools.
+   - Evidencia: `docs/audits/architecture-first/2026-06-01-architecture-first-audit.md`.
+   - Regla confirmada: `shell` describe layouts/composicion visual; no asumir que
+     representa un modulo faltante.
 
 7. **Flujo futuro sin zips directos** — Pendiente.
    - Checklist para revisar zips/parches en carpeta temporal.
@@ -192,3 +195,143 @@ Expected:
 
 - Reviewable diff focused on quality gate.
 - Ready for user review before commit/push unless the user explicitly asks to commit immediately.
+
+---
+
+## Phase 6: Auditar Arquitectura Y Normalizar Deuda Tecnica
+
+### Objective
+
+Razonar el flujo real del framework por superficies, detectar inconsistencias y
+normalizar la arquitectura sin introducir abstracciones por intuicion. La
+auditoria precede a cada lote de cambios y cada lote debe quedar verificable de
+forma independiente.
+
+### Engineering Rules
+
+Aplicar durante toda modificacion de codigo:
+
+1. SOLID: responsabilidades claras, bajo acoplamiento y extensibilidad.
+2. DRY: evitar duplicacion de logica, vistas, validaciones, consultas y config.
+3. KISS: preferir soluciones simples antes de agregar abstracciones.
+4. DAO / Repository Pattern: separar persistencia de logica de negocio.
+5. MVC estricto: controladores delgados, modelos de datos y vistas simples.
+6. Separation of Concerns: separar rutas, controladores, servicios,
+   middleware, vistas, helpers, configuracion y persistencia.
+7. Dependency Inversion / Service Layer: mover logica de negocio a servicios.
+8. Middleware Pipeline: centralizar concerns transversales.
+9. PSR-4 / namespaces consistentes.
+10. Validacion centralizada en Requests.
+11. Escaping HTML por defecto mediante `e()` o equivalente seguro.
+12. Prepared statements siempre.
+13. Separacion de PHP, HTML, CSS y JS.
+14. Programacion orientada a objetos.
+15. Respetar CSP.
+16. Usar i18n de forma obligatoria para texto visible.
+
+### Confirmed Architecture Criteria
+
+- `shell` es terminologia de layout/composicion visual. No es un modulo faltante.
+- `boot-core/routes/global-routes.php` conserva middleware, gates y endpoints
+  realmente transversales.
+- Los modulos Framework y App conservan `module.php` y `routes.php`
+  autocontenidos.
+- `CliRouteLoader` conserva la composicion central de rutas activas.
+- No centralizar todas las rutas Framework en un archivo monolitico.
+- No aceptar como suficiente que una superficie "funciona": revisar flujo,
+  responsabilidades, duplicidades, coherencia y documentacion.
+
+### Execution Tasks
+
+- [x] **Task 6A.1: Auditar bootstrap, entry points, composicion de rutas y middleware**
+  - Revisar archivo por archivo el flujo web y CLI.
+  - Confirmar orden de carga, dependencias, ownership y puntos transversales.
+  - Registrar inconsistencias y recomendaciones sin modificar runtime.
+  - Evidencia:
+    `docs/audits/architecture-first/2026-06-01-6a1-bootstrap-routing-middleware.md`.
+  - Bloqueante confirmado: el consumo de route cache omite el pipeline global
+    de middleware. Requiere remediacion inmediata aprobada antes de continuar
+    normalizaciones de runtime.
+
+- [x] **Task 6A.2: Auditar modulos Framework por superficie**
+  - Revisar Auth, Notification, Roles, Settings, Operations, Media, Documents,
+    Automation, ApiPlatform, Catalogs, Audit, DemoUi y DevTools.
+  - Revisar `module.php`, `routes.php`, controladores, servicios, repositories,
+    modelos, vistas, assets, CSP, i18n y documentacion de clase.
+  - Evidencia:
+    `docs/audits/architecture-first/2026-06-01-6a2-framework-modules.md`.
+  - DevTools queda diferido por decision del usuario: ordenar su deuda UML,
+    manifiesto y overlay sin entrar ahora en su superficie interna.
+
+- [x] **Task 6A.3: Auditar superficies App y soporte compartido**
+  - Revisar Account, Dashboard, Home, Landing, Store, Demo y PublicSupport.
+  - Separar modulos runtime, soporte compartido, CLI de desarrollo y codigo
+    muerto confirmado.
+  - Evidencia:
+    `docs/audits/architecture-first/2026-06-01-6a3-app-surfaces.md`.
+
+- [x] **Task 6A.4: Auditar documentacion inline y `/docs`**
+  - Inventariar clases PHP y modulos JS sin documentacion util.
+  - Detectar docs calientes obsoletas, docs por clase abandonadas y snapshots
+    historicos que deben permanecer como evidencia.
+  - Evidencia:
+    `docs/audits/architecture-first/2026-06-01-6a4-documentation-debt.md`.
+
+- [x] **Task 6B.0: Corregir bootstrap de route cache**
+  - Registrar middleware global de forma incondicional antes de consumir rutas
+    frias o cacheadas.
+  - Registrar namespaces de vistas de modulos sin depender de ejecutar
+    `routes.php`; el consumo de route cache tambien debe conservar renderizado.
+  - Retirar del archivo de rutas responsabilidades transversales duplicadas.
+  - Normalizar el orden de composicion documentado y ejecutado:
+    global, API opcional, Framework y App.
+  - Agregar regresion ejecutable para el camino productivo con route cache.
+
+- [x] **Task 6B.1: Normalizar manifiestos Framework**
+  - Migrar Auth y Notification a `module.php`.
+  - Mantener migracion de DevTools ordenada como lote diferido.
+  - Retirar declaraciones internas redundantes y validar todas las superficies.
+
+- [x] **Task 6B.2: Corregir responsabilidades transversales y CLI overlay**
+  - Extraer redirects globales fuera de DevTools hacia core transversal.
+  - Mantener `/flash/dismiss` como endpoint transversal de core.
+  - Hacer que inspectores clasifiquen rutas globales sin inventar modulos.
+  - Mover `dev:export-overlay` junto a CLI/testing de framework y registrarlo
+    explicitamente.
+
+- [x] **Task 6B.3: Normalizar soporte App y purgar codigo muerto confirmado**
+  - Reubicar soporte publico compartido fuera de `Surface/`; el inventario
+    confirma que `PublicSupport` no es un modulo runtime.
+  - Mover `dev:export-overlay` desde `Surface/Demo` hacia CLI/testing de
+    framework y registrarlo explicitamente.
+  - Presentar lista final antes de cualquier borrado destructivo.
+
+- [x] **Task 6B.4: Purgar documentacion caliente obsoleta**
+  - Alinear `STRUCTURE.md`, `TERMINAL.md`, `docs/architecture.md`,
+    `docs/entry-points.md`, docs por clase y mapa documental.
+  - Evidencia de implementacion y verificacion:
+    `docs/audits/architecture-first/2026-06-01-6b-architecture-normalization.md`.
+  - Estado: implementado y verificado / pendiente de revision del usuario y
+    consolidacion en commit.
+
+- [ ] **Task 6C.1: Refactor MVC de Automation**
+  - Aplicar TDD y separar web, API, servicios, Requests y persistencia.
+
+- [ ] **Task 6C.2: Refactor MVC de Documents**
+  - Aplicar TDD y separar web, API, preview/export, servicios y persistencia.
+
+- [ ] **Task 6C.3: Planificar lotes restantes segun evidencia 6A**
+  - Priorizar superficies por riesgo real antes de tocar codigo.
+
+- [ ] **Task 6D.1: Cerrar contrato documental**
+  - Agregar documentacion inline util para clases, contratos publicos,
+    invariantes, modulos JS, eventos y payloads.
+  - Mantener comentarios breves y evitar narracion trivial.
+  - Generar inventario verificable para evitar mantener a mano un catalogo
+    exhaustivo de clases dentro de `STRUCTURE.md`.
+  - Migrar vistas PHP ejecutables e inline JS/CSS por lotes priorizados,
+    conservando CSP durante la transicion.
+
+- [ ] **Task 6E.1: Verificar y presentar cierre de fase**
+  - Ejecutar Composer, quality gate, inspectores, sync documental y diff checks.
+  - No marcar fase 6 completada sin confirmacion explicita del usuario.

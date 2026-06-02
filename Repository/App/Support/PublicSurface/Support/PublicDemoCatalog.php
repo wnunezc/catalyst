@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Surface\PublicSupport\Support;
+namespace App\Support\PublicSurface\Support;
 
 final class PublicDemoCatalog
 {

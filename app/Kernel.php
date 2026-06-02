@@ -33,6 +33,7 @@ namespace Catalyst;
 use Catalyst\Framework\Authorization\Gate;
 use Catalyst\Framework\Authorization\PermissionRegistry;
 use Catalyst\Framework\Cache\CacheSettings;
+use Catalyst\Framework\Module\ModuleRegistry;
 use Catalyst\Helpers\Exceptions\ForbiddenException;
 use Catalyst\Helpers\Exceptions\MethodNotAllowedException;
 use Catalyst\Helpers\Exceptions\RouteNotFoundException;
@@ -42,8 +43,11 @@ use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
 use Catalyst\Framework\Middleware\SecurityHeadersMiddleware;
 use Catalyst\Framework\Route\Router;
+use Catalyst\Framework\Route\GlobalMiddlewareRegistrar;
 use Catalyst\Framework\Session\SessionManager;
 use Catalyst\Framework\Traits\SingletonTrait;
+use Catalyst\Framework\View\ModuleViewPathRegistrar;
+use Catalyst\Framework\View\View;
 use Catalyst\Helpers\Config\ConfigManager;
 use Catalyst\Helpers\I18n\Translator;
 use Catalyst\Helpers\Log\Logger;
@@ -285,19 +289,22 @@ class Kernel
      * Load application routes
      *
      * Loading order:
-     *   1. boot-core/routes/global-routes.php        — global middleware + canonical redirects
+     *   1. boot-core/routes/global-routes.php        — canonical redirects + core actions
      *   2. boot-core/routes/api.php                  — global API routes (if present)
      *   3. Repository/Framework/{Module}/routes.php  — framework module routes (glob)
      *   4. Repository/App/Surface/{Module}/routes.php        — application module routes (glob)
      *
-     * Each module routes.php is responsible for registering its own routes and,
-     * if needed, its view paths via View::addPath().
+     * Global middleware and module view paths are registered before the cache
+     * branch so cold and cached bootstraps receive the same transversal setup.
      *
      * @return void
      */
     protected function loadRoutes(): void
     {
         $router = Router::getInstance();
+        (new GlobalMiddlewareRegistrar())->register($router);
+        (new ModuleViewPathRegistrar())->register(View::getInstance(), ModuleRegistry::getInstance()->active());
+
         $cacheConfig = CacheSettings::current();
         $routeCacheEnabled = CacheSettings::featureEnabled('route_cache', $cacheConfig);
 

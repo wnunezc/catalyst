@@ -6,7 +6,7 @@ namespace App\Surface\Dashboard\Controllers;
 
 use App\Surface\Account\Services\AccountDashboardService;
 use App\Surface\Account\Support\AccountShellViewModel;
-use App\Surface\PublicSupport\Support\PublicDemoCatalog;
+use App\Support\PublicSurface\Support\PublicDemoCatalog;
 use Catalyst\Framework\Auth\AuthManager;
 use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\JsonResponse;

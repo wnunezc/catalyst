@@ -97,14 +97,16 @@ return static function (array $scope): array {
         'middleware_rows' => [
             ['class_name' => 'SecurityHeadersMiddleware', 'layer' => __('uml.middleware.rows.security_headers.layer'), 'behaviour' => __('uml.middleware.rows.security_headers.behaviour')],
             ['class_name' => 'CorsMiddleware', 'layer' => __('uml.middleware.rows.cors.layer'), 'behaviour' => __('uml.middleware.rows.cors.behaviour')],
+            ['class_name' => 'CanonicalPathRedirectMiddleware', 'layer' => __('uml.middleware.rows.canonical_path.layer'), 'behaviour' => __('uml.middleware.rows.canonical_path.behaviour')],
             ['class_name' => 'WebSocketBootMiddleware', 'layer' => __('uml.middleware.rows.websocket_boot.layer'), 'behaviour' => __('uml.middleware.rows.websocket_boot.behaviour')],
+            ['class_name' => 'TenancyContextMiddleware', 'layer' => __('uml.middleware.rows.tenancy_context.layer'), 'behaviour' => __('uml.middleware.rows.tenancy_context.behaviour')],
             ['class_name' => 'SetupMiddleware', 'layer' => __('uml.middleware.rows.setup.layer'), 'behaviour' => __('uml.middleware.rows.setup.behaviour')],
+            ['class_name' => 'RequestThrottlingMiddleware', 'layer' => __('uml.middleware.rows.request_throttle.layer'), 'behaviour' => __('uml.middleware.rows.request_throttle.behaviour')],
             ['class_name' => 'CsrfMiddleware', 'layer' => __('uml.middleware.rows.csrf.layer'), 'behaviour' => __('uml.middleware.rows.csrf.behaviour')],
             ['class_name' => 'AuthMiddleware', 'layer' => __('uml.middleware.rows.auth.layer'), 'behaviour' => __('uml.middleware.rows.auth.behaviour')],
             ['class_name' => 'GuestMiddleware', 'layer' => __('uml.middleware.rows.guest.layer'), 'behaviour' => __('uml.middleware.rows.guest.behaviour')],
             ['class_name' => 'RoleMiddleware', 'layer' => __('uml.middleware.rows.role.layer'), 'behaviour' => __('uml.middleware.rows.role.behaviour')],
             ['class_name' => 'LoginThrottleMiddleware', 'layer' => __('uml.middleware.rows.login_throttle.layer'), 'behaviour' => __('uml.middleware.rows.login_throttle.behaviour')],
-            ['class_name' => 'RequestThrottlingMiddleware', 'layer' => __('uml.middleware.rows.request_throttle.layer'), 'behaviour' => __('uml.middleware.rows.request_throttle.behaviour')],
             ['class_name' => 'SetupGuardMiddleware', 'layer' => __('uml.middleware.rows.setup_guard.layer'), 'behaviour' => __('uml.middleware.rows.setup_guard.behaviour')],
         ],
         'layer_cards' => [

@@ -59,7 +59,7 @@ Este archivo enruta la documentacion de `catalyst` para que el contexto caliente
 - `docs/framework-schedule.md` - Schedule registry, locking y runner CLI
 - `docs/entry-points.md` - `index.php` / `cli.php`
 - `docs/kernel.md` - bootstrap y carga de rutas
-- `docs/checklists/setup-completion-e2e.md` - flujo `/setup`
+- `docs/checklists/setup-completion-e2e.md` - flujo `/configuration/environment-setup`
 
 ### Cold
 
@@ -80,7 +80,7 @@ Este archivo enruta la documentacion de `catalyst` para que el contexto caliente
 | inventario visual de rutas, clasificacion publica/protegida y reachability de las 99 entradas HTML auditadas | `docs/ui/route-inventory-99.md`, `visual-audit/route-coverage.csv`, `docs/runtime-module-catalog.md` |
 | taxonomia de navegacion, ownership de rutas y segregacion Workspace/Administration/DevTools | `docs/navigation-route-refactor-plan.md`, `docs/ui/sidebar-navigation.md`, `docs/runtime-module-catalog.md`, `php public/cli.php route:list --json`, `app/Framework/Navigation/NavigationRegistry.php`, `app/Framework/Module/ModuleRegistry.php` |
 | geo reusable, distance, radius, bounding box | `docs/framework-geo.md`, `STRUCTURE.md` |
-| fixtures auth/RBAC, snapshots reversibles, overlay dev | `TERMINAL.md`, `docs/testing.md`, `app/Framework/Testing/`, `Repository/App/Surface/Demo/Commands/ExportDevelopmentOverlayCommand.php` |
+| fixtures auth/RBAC, snapshots reversibles, overlay dev | `TERMINAL.md`, `docs/testing.md`, `app/Framework/Testing/`, `app/Framework/Cli/Commands/ExportDevelopmentOverlayCommand.php` |
 | harness por modulo, rutas estaticas, guards/surfaces, estados MFA y presencia sobre claims | `docs/runtime-module-catalog.md`, `TERMINAL.md`, `STRUCTURE.md` |
 | db, query builder, ORM, relations | `docs/framework-database.md`, `STRUCTURE.md` |
 | concurrency, optimistic locking, record claiming | `docs/framework-concurrency.md`, `docs/framework-database.md`, `STRUCTURE.md`, `TERMINAL.md` |

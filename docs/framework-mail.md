@@ -9,15 +9,15 @@
 ### Runtime Config Source
 Effective SMTP config is resolved through `ConfigManager::entry('mail', 'mail1')`,
 which merges sources in this order:
-1. `/setup` JSON config in `boot-core/config/{environment}/mail.json` (`mail1`)
+1. `/configuration/environment-setup` JSON config in `boot-core/config/{environment}/mail.json` (`mail1`)
 2. `.env`-derived defaults exposed by `ConfigManager::readDefaults()`
 
-This means `/setup/mail` is the live runtime source of truth when the JSON entry
+This means `/configuration/environment-setup/mail` is the live runtime source of truth when the JSON entry
 exists, while first boot still falls back to `.env` values without requiring a
 manual merge inside `MailManager`.
 
 DKIM- and humanitarian-related settings remain read directly from `.env`/runtime
-constants because `/setup` does not manage those surfaces today.
+constants because environment setup does not manage those surfaces today.
 
 ### Sender Identity
 - `from_address` comes from `mail_from_address`

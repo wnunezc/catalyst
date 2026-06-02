@@ -16,7 +16,7 @@ La capa de sesion del framework separa tres responsabilidades:
 
 ### Runtime Config Source
 La configuracion efectiva de sesion se resuelve asi:
-1. `/setup` JSON via `ConfigManager` (`session.json`, entry `session`)
+1. `/configuration/environment-setup` JSON via `ConfigManager` (`session.json`, entry `session`)
 2. `.env` defaults
 
 ### Effective Keys
@@ -34,7 +34,7 @@ La configuracion efectiva de sesion se resuelve asi:
 
 ### Notes
 - `SessionManager` usa la referencia temprana `$GLOBALS['APP_CONFIGURATION']` cuando ya existe.
-- `/setup/session` ya no guarda configuracion fantasma: esas claves son consumidas por el runtime real.
+- `/configuration/environment-setup/session` ya no guarda configuracion fantasma: esas claves son consumidas por el runtime real.
 - El runtime soporta `session_driver=file|database`; en `database` registra `DatabaseSessionHandler` y autoprovisiona la tabla configurada.
 - El manager ahora tambien transporta estado de validacion HTML entre redirect y render:
   - `flashOldInput(array $input)`

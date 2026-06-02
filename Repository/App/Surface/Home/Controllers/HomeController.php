@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Surface\Home\Controllers;
 
-use App\Surface\PublicSupport\Controllers\PublicPageController;
+use App\Support\PublicSurface\Controllers\PublicPageController;
 use App\Services\ApplicationEntryService;
-use App\Surface\PublicSupport\Support\PublicDemoCatalog;
+use App\Support\PublicSurface\Support\PublicDemoCatalog;
 use Catalyst\Framework\Http\JsonResponse;
 use Catalyst\Framework\Http\RedirectResponse;
 use Catalyst\Framework\Http\Response;

@@ -25,7 +25,7 @@
 - `.env` remains the first source for environment resolution.
 - JSON-backed runtime sections become available in the same bootstrap phase through `$GLOBALS['APP_CONFIGURATION']`, so consumers can read effective config consistently during the request lifecycle.
 - App entry values are catalogued centrally in `app/Helpers/Config/AppEntryCatalog.php`.
-- Canonical route style is lowercase for real web paths: `/setup`, `/home`, `/landing`, `/dashboard`, `/store`.
+- Canonical route style is lowercase for real web paths: `/configuration/environment-setup`, `/home`, `/landing`, `/dashboard`, `/store`.
 - Compatibility aliases may exist for historical/documented PascalCase entry names, but canonical redirects always normalize to lowercase paths.
 - Public entry modules (`Home`, `Landing`, `Dashboard`, `Store`) should own their frontend assets through module-local `front/style.css` and `front/script.js`, published via `FrontResourceTrait` to `public/assets/*/work/{slug}/`.
 ## Runtime Entry Point Behavior
@@ -51,4 +51,3 @@ Important behavior:
   entry point, but they must not render the Admin Shell menu.
 
 See also: `docs/ui/public-surface-contract.md`.
-

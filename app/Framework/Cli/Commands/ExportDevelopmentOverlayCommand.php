@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Surface\Demo\Commands;
+namespace Catalyst\Framework\Cli\Commands;
 
 use Catalyst\Framework\Argument\ArgumentBag;
 use Catalyst\Framework\Argument\Option;
