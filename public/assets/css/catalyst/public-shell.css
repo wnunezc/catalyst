@@ -1,10 +1,7 @@
 /* Catalyst public/demo shell: theme-aware surfaces without Admin Shell navigation. */
 .catalyst-public-shell-body {
     min-height: 100vh;
-    background:
-        radial-gradient(circle at 10% 0%, rgba(var(--theme-primary-rgb, var(--bs-primary-rgb, 13, 110, 253)), .11), transparent 28rem),
-        radial-gradient(circle at 90% 8%, rgba(var(--theme-info-rgb, var(--bs-info-rgb, 13, 202, 240)), .08), transparent 24rem),
-        linear-gradient(180deg, var(--theme-body-bg, var(--bs-body-bg)) 0%, var(--theme-tertiary-bg, var(--bs-tertiary-bg)) 100%);
+    background: var(--theme-body-bg, var(--bs-body-bg));
     color: var(--theme-body-color, var(--bs-body-color));
     font-family: var(--theme-body-font-family, var(--bs-body-font-family));
 }

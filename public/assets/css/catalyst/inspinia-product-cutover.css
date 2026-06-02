@@ -8,8 +8,8 @@
     --catalyst-brand-primary-rgb: var(--theme-primary-rgb, 26, 179, 148);
     --catalyst-brand-secondary: var(--theme-secondary-color, #8a969c);
     --catalyst-brand-accent: #23c6c8;
-    --catalyst-brand-shell: linear-gradient(135deg, rgba(var(--catalyst-brand-primary-rgb), .14), rgba(35, 198, 200, .1));
-    --catalyst-brand-shell-strong: linear-gradient(135deg, rgba(24, 33, 45, .98), rgba(30, 42, 56, .98));
+    --catalyst-brand-shell: var(--theme-secondary-bg, #fff);
+    --catalyst-brand-shell-strong: #18212d;
     --catalyst-brand-surface: var(--theme-secondary-bg, #fff);
     --catalyst-brand-surface-dark: #1f2937;
     --catalyst-brand-border: rgba(var(--catalyst-brand-primary-rgb), .16);
@@ -286,17 +286,17 @@ body.demo-ui-shell-body .side-nav--rebuild .side-nav-link[aria-expanded="true"] 
 body.demo-ui-shell-body .side-nav--rebuild .side-nav-area.is-current > .side-nav-link--area,
 body.demo-ui-shell-body[data-admin-context="workspace"] .side-nav--rebuild .side-nav-link.active,
 body.demo-ui-shell-body[data-admin-context="workspace"] .side-nav--rebuild .side-nav-link[aria-expanded="true"] {
-    background: linear-gradient(135deg, rgba(var(--catalyst-shell-workspace-rgb), .88), rgba(var(--catalyst-shell-workspace-rgb), .58));
+    background: rgba(var(--catalyst-shell-workspace-rgb), .88);
 }
 
 body.demo-ui-shell-body[data-admin-context="administration"] .side-nav--rebuild .side-nav-link.active,
 body.demo-ui-shell-body[data-admin-context="administration"] .side-nav--rebuild .side-nav-link[aria-expanded="true"] {
-    background: linear-gradient(135deg, rgba(var(--catalyst-shell-administration-rgb), .9), rgba(var(--catalyst-shell-administration-rgb), .58));
+    background: rgba(var(--catalyst-shell-administration-rgb), .9);
 }
 
 body.demo-ui-shell-body[data-admin-context="devtools"] .side-nav--rebuild .side-nav-link.active,
 body.demo-ui-shell-body[data-admin-context="devtools"] .side-nav--rebuild .side-nav-link[aria-expanded="true"] {
-    background: linear-gradient(135deg, rgba(var(--catalyst-shell-devtools-rgb), .92), rgba(var(--catalyst-shell-devtools-rgb), .62));
+    background: rgba(var(--catalyst-shell-devtools-rgb), .92);
 }
 
 body.demo-ui-shell-body .side-nav--rebuild .side-nav-link .menu-icon {
@@ -543,4 +543,3 @@ html[data-sidenav-size="offcanvas"] .demo-ui-shell-body .app-topbar {
 .demo-ui-shell-body .form-floating > .form-select:disabled ~ label::after {
     background-color: var(--theme-tertiary-bg);
 }
-

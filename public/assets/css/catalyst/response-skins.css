@@ -127,7 +127,7 @@ html[data-skin="grempa"] {
     --catalyst-brand-text-strong: var(--catalyst-response-ink);
     --catalyst-brand-text-muted: var(--catalyst-response-muted);
     --catalyst-brand-surface: var(--catalyst-response-surface);
-    --catalyst-brand-shell: linear-gradient(135deg, rgba(var(--catalyst-response-primary-rgb), 0.08), var(--catalyst-response-surface));
+    --catalyst-brand-shell: var(--catalyst-response-surface);
     --catalyst-brand-border: rgba(var(--catalyst-response-primary-rgb), 0.18);
 
     --theme-primary: var(--catalyst-response-primary);
@@ -542,7 +542,7 @@ html[data-skin="grempa"] .card {
 html[data-skin="civil-protection"] .demo-ui-theme-panel__header,
 html[data-skin="firefighters"] .demo-ui-theme-panel__header,
 html[data-skin="grempa"] .demo-ui-theme-panel__header {
-    background: linear-gradient(135deg, var(--catalyst-response-primary) 0%, var(--catalyst-response-accent) 100%);
+    background: var(--catalyst-response-primary);
 }
 
 html[data-skin="civil-protection"] .catalyst-status-bar,
@@ -564,18 +564,14 @@ html[data-skin="grempa"] .catalyst-status-bar button:hover {
 
 html[data-skin="civil-protection"] .dashboard-surface > .card,
 html[data-skin="firefighters"] .dashboard-surface > .card {
-    background:
-        radial-gradient(circle at top left, rgba(var(--catalyst-response-primary-rgb), 0.10), transparent 18rem),
-        linear-gradient(135deg, #ffffff, #ffffff) !important;
+    background: #ffffff !important;
     color: var(--catalyst-response-card-color) !important;
     border: 1px solid var(--catalyst-response-card-border) !important;
     border-top: 3px solid var(--catalyst-response-primary) !important;
 }
 
 html[data-skin="grempa"] .dashboard-surface > .card {
-    background:
-        radial-gradient(circle at top left, rgba(var(--catalyst-response-primary-rgb), 0.14), transparent 18rem),
-        linear-gradient(135deg, #111827, #0f172a) !important;
+    background: #111827 !important;
     color: var(--catalyst-response-card-color) !important;
     border: 1px solid var(--catalyst-response-card-border) !important;
     border-top: 3px solid var(--catalyst-response-primary) !important;
@@ -996,4 +992,3 @@ html[data-skin="firefighters"] a:not(.btn):not(.dropdown-item):not(.nav-link):no
 html[data-skin="grempa"] a:not(.btn):not(.dropdown-item):not(.nav-link):not(.side-nav-link):hover {
     color: var(--theme-link-hover-color);
 }
-

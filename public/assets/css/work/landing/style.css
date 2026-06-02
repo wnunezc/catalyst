@@ -8,9 +8,7 @@
 .landing-surface__copy {
     min-height: 32rem;
     padding: clamp(2rem, 5vw, 4.6rem);
-    background:
-        linear-gradient(135deg, rgba(var(--demo-primary-rgb), .12), transparent 42%),
-        var(--demo-surface);
+    background: var(--demo-surface);
 }
 
 .landing-surface__tags,
@@ -35,9 +33,7 @@
     min-height: 10rem;
     padding: 1rem;
     border-radius: 1.2rem;
-    background:
-        radial-gradient(circle at 85% 15%, rgba(var(--demo-primary-rgb), .24), transparent 7rem),
-        rgba(var(--demo-primary-rgb), .08);
+    background: rgba(var(--demo-primary-rgb), .08);
 }
 
 .landing-surface__offer-screen span {
@@ -109,7 +105,7 @@
     height: 2.5rem;
     margin-bottom: 1rem;
     border-radius: .9rem;
-    background: linear-gradient(135deg, var(--demo-primary), rgba(var(--demo-primary-rgb), .28));
+    background: var(--demo-primary);
 }
 
 .landing-surface__steps {

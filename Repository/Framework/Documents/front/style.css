@@ -3,9 +3,8 @@
  */
 
 .documents-admin-page .documents-hero {
-    background:
-        radial-gradient(circle at top left, rgba(14, 116, 144, 0.16), transparent 42%),
-        linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(241, 245, 249, 0.94));
+    background: rgba(255, 255, 255, 0.96);
+    border-left: 4px solid #0f766e;
 }
 
 .documents-eyebrow {

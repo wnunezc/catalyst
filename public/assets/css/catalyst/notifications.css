@@ -214,18 +214,18 @@
 
 /* Type-specific styling */
 .catalyst-toast.toast-success {
-    background: linear-gradient(135deg, #198754 0%, #157347 100%);
+    background: #198754;
     color: #fff;
 }
 
 .catalyst-toast.toast-error,
 .catalyst-toast.toast-danger {
-    background: linear-gradient(135deg, #dc3545 0%, #bb2d3b 100%);
+    background: #dc3545;
     color: #fff;
 }
 
 .catalyst-toast.toast-warning {
-    background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+    background: #ffc107;
     color: #000;
 }
 
@@ -234,7 +234,7 @@
 }
 
 .catalyst-toast.toast-info {
-    background: linear-gradient(135deg, #0dcaf0 0%, #0aa2c0 100%);
+    background: #0dcaf0;
     color: #000;
 }
 
@@ -243,12 +243,12 @@
 }
 
 .catalyst-toast.toast-primary {
-    background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+    background: #0d6efd;
     color: #fff;
 }
 
 .catalyst-toast.toast-secondary {
-    background: linear-gradient(135deg, #6c757d 0%, #5c636a 100%);
+    background: #6c757d;
     color: #fff;
 }
 

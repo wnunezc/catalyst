@@ -3,9 +3,8 @@
  */
 
 .automation-admin-page .automation-hero {
-    background:
-        radial-gradient(circle at top left, rgba(217, 119, 6, 0.18), transparent 42%),
-        linear-gradient(135deg, rgba(255, 251, 235, 0.96), rgba(255, 255, 255, 0.95));
+    background: rgba(255, 251, 235, 0.96);
+    border-left: 4px solid #d97706;
 }
 
 .automation-eyebrow {

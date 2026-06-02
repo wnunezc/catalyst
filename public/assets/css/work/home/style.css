@@ -10,9 +10,7 @@
     min-height: 32rem;
     overflow: hidden;
     padding: clamp(2rem, 5vw, 4.5rem);
-    background:
-        radial-gradient(circle at 16% 18%, rgba(var(--demo-primary-rgb), .14), transparent 16rem),
-        linear-gradient(135deg, rgba(var(--theme-secondary-bg-rgb, 255, 255, 255), .98), rgba(var(--theme-tertiary-bg-rgb, 248, 249, 250), .9));
+    background: rgba(var(--theme-secondary-bg-rgb, 255, 255, 255), .98);
 }
 
 .home-surface__copy::after {
@@ -47,9 +45,7 @@
     min-height: 32rem;
     padding: 1.4rem;
     overflow: hidden;
-    background:
-        linear-gradient(160deg, rgba(var(--demo-primary-rgb), .13), transparent 46%),
-        var(--demo-surface);
+    background: var(--demo-surface);
 }
 
 .home-surface__map::before {
@@ -60,7 +56,7 @@
     width: 7.2rem;
     height: 7.2rem;
     border-radius: 2rem;
-    background: linear-gradient(135deg, var(--demo-primary), rgba(var(--demo-primary-rgb), .28));
+    background: var(--demo-primary);
     box-shadow: 0 1rem 2rem rgba(var(--demo-primary-rgb), .18);
     transform: rotate(-10deg);
 }
@@ -75,9 +71,7 @@
     padding: 1rem;
     border: 1px solid rgba(var(--demo-primary-rgb), .14);
     border-radius: 1.15rem;
-    background:
-        repeating-linear-gradient(0deg, rgba(var(--theme-body-color-rgb, 15, 23, 42), .065) 0 1px, transparent 1px 2rem),
-        var(--theme-secondary-bg, var(--bs-body-bg));
+    background: var(--theme-secondary-bg, var(--bs-body-bg));
 }
 
 .home-surface__device span {

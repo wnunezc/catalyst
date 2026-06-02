@@ -121,9 +121,8 @@
 }
 
 .operations-card--accent {
-    background:
-        linear-gradient(180deg, rgba(var(--catalyst-brand-primary-rgb), 0.05), rgba(255, 255, 255, 0.96)),
-        var(--ops-card-bg);
+    background: var(--ops-card-bg);
+    border-top: 3px solid rgba(var(--catalyst-brand-primary-rgb), 0.34);
 }
 
 .operations-card__eyebrow {
@@ -202,7 +201,7 @@
     display: block;
     min-height: 4.5rem;
     border-radius: 0.9rem;
-    background: linear-gradient(135deg, var(--ops-primary, #1f2937), var(--ops-secondary, #475569));
+    background: var(--ops-primary, #1f2937);
     position: relative;
     overflow: hidden;
 }
@@ -213,7 +212,7 @@
     inset: auto 0 0 auto;
     width: 42%;
     height: 100%;
-    background: radial-gradient(circle at center, var(--ops-accent), transparent 72%);
+    background: var(--ops-accent);
     opacity: 0.65;
 }
 

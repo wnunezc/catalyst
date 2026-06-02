@@ -1,7 +1,6 @@
 .media-admin-page .media-hero {
-    background:
-        radial-gradient(circle at top left, rgba(13, 110, 253, 0.18), transparent 42%),
-        linear-gradient(135deg, rgba(15, 23, 42, 0.04), rgba(14, 165, 233, 0.08));
+    background: rgba(15, 23, 42, 0.04);
+    border-left: 4px solid var(--bs-primary);
     border-radius: 1.25rem;
 }
 

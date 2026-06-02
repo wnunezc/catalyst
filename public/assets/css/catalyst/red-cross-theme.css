@@ -33,7 +33,7 @@ html[data-skin="red-cross"] {
     --catalyst-brand-text-strong: var(--catalyst-red-cross-ink);
     --catalyst-brand-text-muted: var(--catalyst-red-cross-muted);
     --catalyst-brand-surface: var(--catalyst-red-cross-surface);
-    --catalyst-brand-shell: linear-gradient(135deg, rgba(215, 25, 32, 0.08), rgba(255, 255, 255, 0.94));
+    --catalyst-brand-shell: var(--catalyst-red-cross-surface);
     --catalyst-brand-border: rgba(215, 25, 32, 0.16);
 
     /* Inspinia / Bootstrap custom-prefix tokens. */
@@ -370,7 +370,7 @@ html[data-skin="red-cross"] .card {
 }
 
 html[data-skin="red-cross"] .demo-ui-theme-panel__header {
-    background: linear-gradient(135deg, var(--catalyst-red-cross-primary) 0%, var(--catalyst-red-cross-primary-active) 100%);
+    background: var(--catalyst-red-cross-primary);
 }
 
 html[data-skin="red-cross"] .catalyst-status-bar {
@@ -387,9 +387,7 @@ html[data-skin="red-cross"] .catalyst-status-bar button:hover {
 /* Per-surface color compatibility. The link is loaded again after work assets, so
    these rules deliberately only correct color contrast for Red Cross. */
 html[data-skin="red-cross"] .dashboard-surface > .card {
-    background:
-        radial-gradient(circle at top left, rgba(215, 25, 32, 0.10), transparent 18rem),
-        linear-gradient(135deg, #ffffff, #ffffff) !important;
+    background: #ffffff !important;
     color: var(--catalyst-red-cross-body) !important;
     border: 1px solid var(--catalyst-red-cross-border) !important;
     border-top: 3px solid var(--catalyst-red-cross-primary) !important;

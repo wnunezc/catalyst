@@ -10,8 +10,8 @@
     --catalyst-brand-primary-rgb: var(--theme-primary-rgb, 26, 179, 148);
     --catalyst-brand-secondary: var(--theme-secondary-color, #8a969c);
     --catalyst-brand-accent: #23c6c8;
-    --catalyst-brand-shell: linear-gradient(135deg, rgba(var(--catalyst-brand-primary-rgb), 0.14), rgba(35, 198, 200, 0.1));
-    --catalyst-brand-shell-strong: linear-gradient(135deg, rgba(24, 33, 45, 0.98), rgba(30, 42, 56, 0.98));
+    --catalyst-brand-shell: var(--theme-secondary-bg, #fff);
+    --catalyst-brand-shell-strong: #18212d;
     --catalyst-brand-surface: var(--theme-secondary-bg, #fff);
     --catalyst-brand-surface-dark: #1f2937;
     --catalyst-brand-border: rgba(var(--catalyst-brand-primary-rgb), 0.16);
