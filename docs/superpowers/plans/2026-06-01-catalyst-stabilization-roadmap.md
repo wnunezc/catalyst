@@ -328,17 +328,44 @@ Aplicar durante toda modificacion de codigo:
   - Evidencia:
     `docs/audits/architecture-first/2026-06-02-6c2-documents-mvc-refactor.md`.
 
-- [ ] **Task 6C.3: Planificar lotes restantes segun evidencia 6A**
+- [x] **Task 6C.3: Planificar lotes restantes segun evidencia 6A**
   - Priorizar superficies por riesgo real antes de tocar codigo.
+  - Estado: plan residual documentado / pendiente de revision del usuario y
+    consolidacion en commit.
+  - Evidencia:
+    `docs/audits/architecture-first/2026-06-02-6c3-residual-batch-plan.md`.
+
+- [ ] **Task 6C.4: Refactor MVC y Requests de Roles**
+  - Extraer construccion UI y centralizar validacion de enrollment, bulk delete
+    y sincronizacion de permisos sin redisenar persistencia RBAC.
+
+- [ ] **Task 6C.5: Refactor MVC y Requests de Media**
+  - Extraer construccion UI y centralizar bulk mutations preservando storage,
+    metadata dinamica y claims.
+
+- [ ] **Task 6C.6: Centralizar Requests de Operations**
+  - Mover validacion y normalizacion de mutaciones Operations fuera de
+    controladores, preservando rutas y throttles.
+
+- [ ] **Task 6C.7: Normalizar contrato i18n de manifests**
+  - Retirar correcciones posicionales fragiles para manifests activos y
+    normalizar strings visibles App; mantener DevTools diferido.
 
 - [ ] **Task 6D.1: Cerrar contrato documental**
-  - Agregar documentacion inline util para clases, contratos publicos,
-    invariantes, modulos JS, eventos y payloads.
-  - Mantener comentarios breves y evitar narracion trivial.
-  - Generar inventario verificable para evitar mantener a mano un catalogo
-    exhaustivo de clases dentro de `STRUCTURE.md`.
-  - Migrar vistas PHP ejecutables e inline JS/CSS por lotes priorizados,
-    conservando CSP durante la transicion.
+  - Definir indice hot/warm/cold, inventario verificable e inline docs por
+    frontera de riesgo sin convertir `STRUCTURE.md` en catalogo exhaustivo.
+
+- [ ] **Task 6D.2: Documentar contratos JS canonicos**
+  - Cubrir inicializacion, DOM, eventos, payloads y supuestos CSP de scripts
+    no triviales sin narracion redundante.
+
+- [ ] **Task 6D.3: Planificar migracion de templates PHP ejecutables**
+  - Inventariar y migrar por superficies acotadas; mantener fallback PHP hasta
+    alcanzar inventario cero con regresiones.
+
+- [ ] **Task 6D.4: Planificar extraccion de inline JS/CSS**
+  - Separar comportamiento hacia assets versionados conservando CSP y bloques
+    JSON de transporte intencionales.
 
 - [ ] **Task 6E.1: Verificar y presentar cierre de fase**
   - Ejecutar Composer, quality gate, inspectores, sync documental y diff checks.
