@@ -2,33 +2,29 @@
 
 declare(strict_types=1);
 
-/**************************************************************************************
- *
+/**
  * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
  * PHP Version 8.4 (Required).
  *
- * @package   Catalyst
- * @subpackage Framework
- * @see       https://github.com/arcanisgk/catalyst
+ * @package    Catalyst
  *
- * @author    Walter Nuñez (arcanisgk/original founder) <icarosnet@gmail.com>
- * @copyright 2023 - 2025
- * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
  *
- * @note      This program is distributed in the hope that it will be useful
- *            WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- *            or FITNESS FOR A PARTICULAR PURPOSE.
+ * @version    GIT: See repository tags
  *
- * @category  Framework
+ * @category   Framework
  * @filesource
  *
- * @link      https://catalyst.dock Local development URL
- *
- * WebSocketBootMiddleware — auto-starts the Ratchet WebSocket server when not running.
- *
- * Runs early in the middleware stack on every non-static HTML request.
- * Checks at most once every CHECK_INTERVAL seconds (stamp file throttle).
- * Degrades silently when exec() is unavailable (shared hosting restriction).
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
  *
  */
 
@@ -37,6 +33,9 @@ namespace Catalyst\Framework\Middleware;
 use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
 use Catalyst\Framework\Traits\LoadsFeatureConfigTrait;
+use Catalyst\Helpers\Config\ConfigManager;
+use Catalyst\Helpers\Log\LogRotator;
+use Catalyst\Helpers\Log\LoggerSettings;
 use Catalyst\Helpers\Path\ProjectPath;
 use Closure;
 
@@ -183,6 +182,8 @@ class WebSocketBootMiddleware extends CoreMiddleware implements FeatureFlagInter
             @mkdir($logDir, 0755, true);
         }
 
+        $this->rotateLogIfNeeded($logFile, $logDir);
+
         // nohup keeps the process alive after the request ends; & backgrounds it;
         // echo $! captures the PID of the child process.
         $cmd    = "nohup {$php} {$script} >> {$logFile} 2>&1 & echo $!";
@@ -199,5 +200,20 @@ class WebSocketBootMiddleware extends CoreMiddleware implements FeatureFlagInter
         } else {
             $this->logger?->warning('WebSocket server launch attempted but PID not captured');
         }
+    }
+
+    private function rotateLogIfNeeded(string $logFile, string $logDir): void
+    {
+        $logging = ConfigManager::getInstance()->entry('logging', 'logging');
+        $maxFileSizeMb = (int) ($logging['log_max_file_size_mb'] ?? 2);
+        $maxRotatedFiles = (int) ($logging['log_max_rotated_files'] ?? 5);
+
+        (new LogRotator())->rotateIfNeeded($logFile, new LoggerSettings(
+            logDirectory: $logDir,
+            minimumLogLevel: 0,
+            logRotationEnabled: (bool) ($logging['log_rotation_enabled'] ?? true),
+            maxFileSizeBytes: max(1, $maxFileSizeMb) * 1024 * 1024,
+            maxRotatedFiles: max(1, $maxRotatedFiles),
+        ));
     }
 }
