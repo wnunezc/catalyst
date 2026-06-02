@@ -418,12 +418,19 @@ All layouts share `_head-assets.phtml` (CSRF meta, Bootstrap, FontAwesome, Table
 ### Repository Runtime Requests
 - **RolePayloadRequest** — Reusable RBAC request for role create/update with route-aware unique checks → `Repository/Framework/Roles/Requests/RolePayloadRequest.php`
 - **PermissionPayloadRequest** — Reusable RBAC request for permission create/update with route-aware unique checks → `Repository/Framework/Roles/Requests/PermissionPayloadRequest.php`
+- **Roles mutation Requests** — Enrollment, bulk-delete and permission-sync normalization boundaries → `Repository/Framework/Roles/Requests/`
+- **MediaBulkSelectionRequest** — Media bulk-delete ID normalization boundary → `Repository/Framework/Media/Requests/MediaBulkSelectionRequest.php`
+- **Operations mutation Requests** — Feature-flag, locale, module-designer and appearance payload normalization boundaries → `Repository/Framework/Operations/Requests/`
 - **StatusCommand** (`status`) — Unified runtime health snapshot: base platform checks + session/cache/storage/secrets/throttling + route-contract summary; supports `--json` → `app/Framework/Cli/Commands/StatusCommand.php`
 - **QualityCheckCommand** (`quality:check`) — Local quality gate that runs Composer validation/audit plus route, structural, security and runtime status checks; treats `status` as warning-only for local WSDD host DNS caveats → `app/Framework/Cli/Commands/QualityCheckCommand.php`
 - **SecurityCheckCommand** (`security:check`) — CSP/frontend hotspot scan for inline handlers, `javascript:` URIs, inline scripts without nonce and remaining inline-style warnings → `app/Framework/Cli/Commands/SecurityCheckCommand.php`
 - **SecurityRegressionCommand** (`security:regression`) — Focused security regressions for inline JSON escaping, reset/remember invalidation and signed local cache / route-cache payloads → `app/Framework/Cli/Commands/SecurityRegressionCommand.php`
 - **AutomationMvcRegressionCommand** (`automation:mvc-regression`) — Verifies Automation web/API separation, extracted UI factories, execution service, session state and centralized Requests → `app/Framework/Cli/Commands/AutomationMvcRegressionCommand.php`
 - **DocumentsMvcRegressionCommand** (`documents:mvc-regression`) — Verifies Documents web/API separation, extracted UI factories, preview/export services, session state and centralized Requests → `app/Framework/Cli/Commands/DocumentsMvcRegressionCommand.php`
+- **RolesMvcRegressionCommand** (`roles:mvc-regression`) — Verifies Roles enrollment presentation and mutation Request boundaries → `app/Framework/Cli/Commands/RolesMvcRegressionCommand.php`
+- **MediaMvcRegressionCommand** (`media:mvc-regression`) — Verifies Media form factories and bulk mutation Request boundary → `app/Framework/Cli/Commands/MediaMvcRegressionCommand.php`
+- **OperationsRequestsRegressionCommand** (`operations:requests-regression`) — Verifies Operations mutation payload boundaries → `app/Framework/Cli/Commands/OperationsRequestsRegressionCommand.php`
+- **ModuleLocalizationRegressionCommand** (`modules:localization-regression`) — Verifies the visible manifest translation-key contract → `app/Framework/Cli/Commands/ModuleLocalizationRegressionCommand.php`
 - **ApiTokensSmokeCommand** (`api-tokens:smoke`) — Live-schema ownership smoke over API token creation, inactive-user revocation, FK enforcement and orphan detection → `app/Framework/Cli/Commands/ApiTokensSmokeCommand.php`
 - **RouteCacheCommand** (`route:cache`) — Loads all routes then calls `Router::cacheRoutes()` → `app/Framework/Cli/Commands/RouteCacheCommand.php`
 - **RouteClearCommand** (`route:clear`) — Deletes the route cache file via `Router::clearRouteCache()` → `app/Framework/Cli/Commands/RouteClearCommand.php`

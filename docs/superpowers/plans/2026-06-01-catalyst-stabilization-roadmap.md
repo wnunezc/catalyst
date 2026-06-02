@@ -335,21 +335,31 @@ Aplicar durante toda modificacion de codigo:
   - Evidencia:
     `docs/audits/architecture-first/2026-06-02-6c3-residual-batch-plan.md`.
 
-- [ ] **Task 6C.4: Refactor MVC y Requests de Roles**
+- [x] **Task 6C.4: Refactor MVC y Requests de Roles**
   - Extraer construccion UI y centralizar validacion de enrollment, bulk delete
     y sincronizacion de permisos sin redisenar persistencia RBAC.
+  - Estado: implementado y verificado / pendiente de revision del usuario y
+    consolidacion en commit.
 
-- [ ] **Task 6C.5: Refactor MVC y Requests de Media**
+- [x] **Task 6C.5: Refactor MVC y Requests de Media**
   - Extraer construccion UI y centralizar bulk mutations preservando storage,
     metadata dinamica y claims.
+  - Estado: implementado y verificado / pendiente de revision del usuario y
+    consolidacion en commit.
 
-- [ ] **Task 6C.6: Centralizar Requests de Operations**
+- [x] **Task 6C.6: Centralizar Requests de Operations**
   - Mover validacion y normalizacion de mutaciones Operations fuera de
     controladores, preservando rutas y throttles.
+  - Estado: implementado y verificado / pendiente de revision del usuario y
+    consolidacion en commit.
 
-- [ ] **Task 6C.7: Normalizar contrato i18n de manifests**
+- [x] **Task 6C.7: Normalizar contrato i18n de manifests**
   - Retirar correcciones posicionales fragiles para manifests activos y
     normalizar strings visibles App; mantener DevTools diferido.
+  - Estado: implementado y verificado / pendiente de revision del usuario y
+    consolidacion en commit.
+  - Evidencia:
+    `docs/audits/architecture-first/2026-06-02-6c4-6c7-runtime-normalization.md`.
 
 - [ ] **Task 6D.1: Cerrar contrato documental**
   - Definir indice hot/warm/cold, inventario verificable e inline docs por

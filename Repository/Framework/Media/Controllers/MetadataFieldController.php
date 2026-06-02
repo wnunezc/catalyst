@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Catalyst\Repository\Media\Controllers;
 
-use Catalyst\Framework\Admin\Form\FormBuilder;
 use Catalyst\Framework\Admin\Grid\DataGrid;
 use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\Request;
@@ -16,6 +15,7 @@ use Catalyst\Framework\Metadata\MetadataResourceRegistry;
 use Catalyst\Framework\Traits\InteractsWithRecordClaimsTrait;
 use Catalyst\Helpers\Exceptions\OptimisticLockException;
 use Catalyst\Repository\Media\Requests\MetadataFieldDefinitionRequest;
+use Catalyst\Repository\Media\Support\MetadataFieldFormFactory;
 use RuntimeException;
 
 final class MetadataFieldController extends Controller
@@ -26,7 +26,8 @@ final class MetadataFieldController extends Controller
         private readonly MetadataFieldRepository $repository,
         private readonly MetadataManager $metadata,
         private readonly MetadataResourceRegistry $resources,
-        private readonly CatalogRepository $catalogs
+        private readonly CatalogRepository $catalogs,
+        private readonly MetadataFieldFormFactory $formFactory
     ) {
         parent::__construct();
     }
@@ -388,41 +389,7 @@ final class MetadataFieldController extends Controller
                 ],
             ]
         );
-        $form = FormBuilder::make()
-            ->action($action)
-            ->method('POST')
-            ->model($field)
-            ->defaults($defaults)
-            ->sections([
-                'identity' => [
-                    'title' => __('media.fields.form.sections.identity.title'),
-                    'description' => __('media.fields.form.sections.identity.description'),
-                ],
-                'behavior' => [
-                    'title' => __('media.fields.form.sections.behavior.title'),
-                    'description' => __('media.fields.form.sections.behavior.description'),
-                ],
-                'type-configuration' => [
-                    'title' => __('media.fields.form.sections.type_configuration.title'),
-                    'description' => __('media.fields.form.sections.type_configuration.description'),
-                ],
-            ])
-            ->autosave()
-            ->fields($fields)
-            ->actions([
-                [
-                    'type' => 'submit',
-                    'label' => $field === null ? __('media.fields.form.actions.create') : __('media.fields.form.actions.save'),
-                    'class' => 'btn btn-primary',
-                ],
-                [
-                    'type' => 'link',
-                    'label' => __('media.fields.form.actions.back'),
-                    'href' => '/workspaces/media-fields',
-                    'class' => 'btn btn-outline-secondary',
-                ],
-            ])
-            ->toArray();
+        $form = $this->formFactory->build($action, $field, $defaults, $fields);
 
         return $this->view('media.field-form', [
             'title' => $title,

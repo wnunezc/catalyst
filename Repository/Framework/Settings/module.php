@@ -7,7 +7,7 @@ use Catalyst\Framework\Middleware\RoleMiddleware;
 use Catalyst\Framework\Middleware\SetupGuardMiddleware;
 
 return [
-    'description' => 'Framework setup and health panels.',
+    'description' => __('settings.module.description'),
     'routes' => [
         'web' => [
             '/configuration/environment-setup',
@@ -37,26 +37,26 @@ return [
         'admin' => [
             [
                 'context' => 'configuration',
-                'label' => 'Environment Setup',
+                'label' => __('settings.module.setup_label'),
                 'href' => '/configuration/environment-setup',
                 'icon' => 'ti ti-adjustments-cog',
                 'matches' => ['/configuration/environment-setup'],
                 'group' => 'configuration',
-                'group_label' => 'Configuration',
+                'group_label' => __('ui.shell.group_platform'),
                 'group_order' => 10,
-                'hint' => 'Bootstrap and runtime settings',
+                'hint' => __('settings.module.setup_hint'),
                 'order' => 10,
             ],
             [
                 'context' => 'configuration',
-                'label' => 'Application Health',
+                'label' => __('settings.module.health_label'),
                 'href' => '/configuration/application-health',
                 'icon' => 'ti ti-heartbeat',
                 'matches' => ['/configuration/application-health'],
                 'group' => 'configuration',
-                'group_label' => 'Configuration',
+                'group_label' => __('ui.shell.group_platform'),
                 'group_order' => 10,
-                'hint' => 'Health panel and probes',
+                'hint' => __('settings.module.health_hint'),
                 'order' => 20,
             ],
         ],
@@ -64,15 +64,15 @@ return [
             [
                 'pattern' => '/configuration/environment-setup',
                 'trail' => [
-                    ['label' => 'Configuration', 'href' => null],
-                    ['label' => 'Environment Setup', 'href' => null],
+                    ['label' => __('settings.module.home_label'), 'href' => null],
+                    ['label' => __('settings.settings.title'), 'href' => null],
                 ],
             ],
             [
                 'pattern' => '/configuration/application-health',
                 'trail' => [
-                    ['label' => 'Configuration', 'href' => '/configuration/environment-setup'],
-                    ['label' => 'Application Health', 'href' => null],
+                    ['label' => __('settings.module.home_label'), 'href' => '/configuration/environment-setup'],
+                    ['label' => __('settings.module.health_label'), 'href' => null],
                 ],
             ],
         ],

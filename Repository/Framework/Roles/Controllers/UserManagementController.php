@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Catalyst\Repository\Roles\Controllers;
 
-use Catalyst\Framework\Admin\Form\FormBuilder;
 use Catalyst\Framework\Admin\Grid\DataGrid;
 use Catalyst\Framework\Auth\UserDirectoryRepository;
 use Catalyst\Framework\Auth\UserProvider;
 use Catalyst\Framework\Authorization\RoleRepository;
 use Catalyst\Framework\Controllers\Controller;
-use Catalyst\Framework\Http\JsonResponse;
 use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
 use Catalyst\Framework\Session\SessionManager;
+use Catalyst\Repository\Roles\Requests\UserEnrollmentRequest;
 use Catalyst\Repository\Roles\Support\RbacLabelPresenter;
+use Catalyst\Repository\Roles\Support\UserEnrollmentFormFactory;
 use Exception;
 
 class UserManagementController extends Controller
@@ -26,7 +26,8 @@ class UserManagementController extends Controller
     public function __construct(
         RoleRepository $roles,
         UserProvider $users,
-        UserDirectoryRepository $userDirectory
+        UserDirectoryRepository $userDirectory,
+        private readonly UserEnrollmentFormFactory $enrollmentFormFactory
     ) {
         parent::__construct();
 
@@ -182,7 +183,7 @@ class UserManagementController extends Controller
         return $this->view('roles.user-register', [
             'title' => __('roles.users.register_title'),
             'pageTitle' => __('roles.users.register_title'),
-            'form' => $this->buildEnrollmentForm(),
+            'form' => $this->enrollmentFormFactory->build($this->roles),
         ], 200, 'admin');
     }
 
@@ -190,30 +191,16 @@ class UserManagementController extends Controller
     {
         $this->authorizeResource('create', 'users');
 
-        $payload = [
-            'name' => trim((string) $request->input('name', '')),
-            'email' => trim((string) $request->input('email', '')),
-            'password' => (string) $request->input('password', ''),
-            'password_confirm' => (string) $request->input('password_confirm', ''),
-            'role' => trim((string) $request->input('role', 'user')),
-            'email_verified' => (string) $request->input('email_verified', '1'),
-        ];
-
-        if ($response = $this->validatePayload($payload)) {
-            return $response;
-        }
-
-        if ($payload['password'] !== $payload['password_confirm']) {
+        $enrollment = new UserEnrollmentRequest($request);
+        $payload = $enrollment->payload();
+        $errors = $enrollment->errors($payload);
+        if ($errors !== []) {
             if ($this->expectsJson()) {
-                return $this->jsonValidationError([
-                    'password_confirm' => [__('auth.validation.password_mismatch')],
-                ]);
+                return $this->jsonValidationError($errors);
             }
 
-            $this->rememberValidationState($this->replayableInput($payload), [
-                'password_confirm' => [__('auth.validation.password_mismatch')],
-            ]);
-            $this->flash()->error(__('auth.validation.password_mismatch'));
+            $this->rememberValidationState($enrollment->replayableInput($payload), $errors);
+            $this->flash()->error(implode(' ', array_map(static fn (array $messages): string => (string) ($messages[0] ?? ''), $errors)));
             return $this->redirect('/users/enroll');
         }
 
@@ -224,7 +211,7 @@ class UserManagementController extends Controller
                 ], __('roles.users.messages.validation_failed'), 409);
             }
 
-            $this->rememberValidationState($this->replayableInput($payload), [
+            $this->rememberValidationState($enrollment->replayableInput($payload), [
                 'email' => [__('roles.users.messages.email_exists')],
             ]);
             $this->flash()->error(__('roles.users.messages.email_exists'));
@@ -247,7 +234,7 @@ class UserManagementController extends Controller
                 return $this->jsonErrorWithToast(__('roles.users.messages.create_error') . ' ' . $e->getMessage(), 500);
             }
 
-            SessionManager::getInstance()->flashOldInput($this->replayableInput($payload));
+            SessionManager::getInstance()->flashOldInput($enrollment->replayableInput($payload));
             $this->flash()->error(__('roles.users.messages.create_error') . ' ' . $e->getMessage());
             return $this->redirect('/users/enroll');
         }
@@ -261,49 +248,6 @@ class UserManagementController extends Controller
 
         $this->toast('success', __('roles.users.messages.created'));
         return $this->redirect('/users');
-    }
-
-    private function validatePayload(array $payload): JsonResponse|Response|null
-    {
-        $validator = $this->validate($payload, [
-            'name' => 'required|min:2|max:255',
-            'email' => 'required|email|max:255',
-            'password' => 'required|min:8',
-            'password_confirm' => 'required',
-            'role' => 'required|max:50',
-        ], [
-            'name' => __('roles.users.form.labels.name'),
-            'email' => __('roles.users.form.labels.email'),
-            'password' => __('roles.users.form.labels.password'),
-            'password_confirm' => __('roles.users.form.labels.password_confirm'),
-            'role' => __('roles.users.form.labels.role'),
-        ]);
-
-        if (!$validator->fails()) {
-            return null;
-        }
-
-        if ($this->expectsJson()) {
-            return $this->jsonValidationError($validator->errors());
-        }
-
-        $this->rememberValidationState($this->replayableInput($payload), $validator->errors());
-        $this->flash()->error(implode(' ', array_values($validator->firstErrors())));
-        return $this->redirect('/users/enroll');
-    }
-
-    /**
-     * @param array<string, string> $payload
-     * @return array<string, string>
-     */
-    private function replayableInput(array $payload): array
-    {
-        return [
-            'name' => $payload['name'] ?? '',
-            'email' => $payload['email'] ?? '',
-            'role' => $payload['role'] ?? 'user',
-            'email_verified' => $payload['email_verified'] ?? '1',
-        ];
     }
 
     private function normalizeRoleSlug(string $selectedSlug): string
@@ -332,120 +276,6 @@ class UserManagementController extends Controller
         }
 
         return $result;
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    private function buildEnrollmentForm(): array
-    {
-        $roleOptions = [];
-        foreach ($this->roles->allRoles() as $role) {
-            $slug = (string) ($role['slug'] ?? '');
-            if ($slug === '') {
-                continue;
-            }
-
-            $roleOptions[$slug] = RbacLabelPresenter::roleName((string) ($role['name'] ?? ''), $slug) . ' — ' . $slug;
-        }
-
-        if ($roleOptions === []) {
-            $roleOptions['user'] = (string) __('roles.users.form.default_role_label');
-        }
-
-        return FormBuilder::make()
-            ->action('/users/enroll')
-            ->method('POST')
-            ->wrapperClass('row g-3 admin-enrollment-form')
-            ->sections([
-                'identity' => [
-                    'title' => (string) __('roles.users.enroll.sections.identity_title'),
-                    'description' => (string) __('roles.users.enroll.sections.identity_description'),
-                ],
-                'security' => [
-                    'title' => (string) __('roles.users.enroll.sections.security_title'),
-                    'description' => (string) __('roles.users.enroll.sections.security_description'),
-                ],
-                'access' => [
-                    'title' => (string) __('roles.users.enroll.sections.access_title'),
-                    'description' => (string) __('roles.users.enroll.sections.access_description'),
-                ],
-            ])
-            ->fields([
-                'name' => [
-                    'label' => (string) __('roles.users.form.labels.name'),
-                    'required' => true,
-                    'section' => 'identity',
-                    'col_class' => 'col-12 col-xl-6',
-                    'placeholder' => (string) __('roles.users.form.placeholders.name'),
-                    'attributes' => ['maxlength' => 255, 'autocomplete' => 'name'],
-                ],
-                'email' => [
-                    'label' => (string) __('roles.users.form.labels.email'),
-                    'required' => true,
-                    'section' => 'identity',
-                    'col_class' => 'col-12 col-xl-6',
-                    'type' => 'email',
-                    'placeholder' => (string) __('roles.users.form.placeholders.email'),
-                    'attributes' => ['maxlength' => 255, 'autocomplete' => 'email'],
-                ],
-                'password' => [
-                    'label' => (string) __('roles.users.form.labels.password'),
-                    'required' => true,
-                    'section' => 'security',
-                    'col_class' => 'col-12 col-xl-6',
-                    'type' => 'password',
-                    'placeholder' => (string) __('roles.users.form.placeholders.password'),
-                    'help' => (string) __('roles.users.form.help.password'),
-                    'attributes' => ['autocomplete' => 'new-password', 'minlength' => 8],
-                    'value' => '',
-                ],
-                'password_confirm' => [
-                    'label' => (string) __('roles.users.form.labels.password_confirm'),
-                    'required' => true,
-                    'section' => 'security',
-                    'col_class' => 'col-12 col-xl-6',
-                    'type' => 'password',
-                    'placeholder' => (string) __('roles.users.form.placeholders.password_confirm'),
-                    'attributes' => ['autocomplete' => 'new-password', 'minlength' => 8],
-                    'value' => '',
-                ],
-                'role' => [
-                    'label' => (string) __('roles.users.form.labels.role'),
-                    'required' => true,
-                    'section' => 'access',
-                    'col_class' => 'col-12 col-xl-6',
-                    'type' => 'select',
-                    'options' => $roleOptions,
-                    'help' => (string) __('roles.users.form.help.role'),
-                ],
-                'email_verified' => [
-                    'label' => (string) __('roles.users.form.labels.email_verified'),
-                    'section' => 'access',
-                    'col_class' => 'col-12 col-xl-6',
-                    'type' => 'select',
-                    'options' => [
-                        '1' => (string) __('roles.users.form.options.email_verified_yes'),
-                        '0' => (string) __('roles.users.form.options.email_verified_no'),
-                    ],
-                    'help' => (string) __('roles.users.form.help.email_verified'),
-                ],
-            ])
-            ->actions([
-                [
-                    'type' => 'submit',
-                    'label' => (string) __('roles.users.form.actions.submit'),
-                    'class' => 'btn btn-primary btn-sm',
-                    'icon' => 'fa-solid fa-user-plus',
-                ],
-                [
-                    'type' => 'link',
-                    'label' => (string) __('roles.common.cancel'),
-                    'href' => '/users',
-                    'class' => 'btn btn-outline-secondary btn-sm',
-                ],
-            ])
-            ->toArray();
     }
 
 }

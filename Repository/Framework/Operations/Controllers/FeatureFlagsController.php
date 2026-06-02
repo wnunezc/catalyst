@@ -11,6 +11,7 @@ use Catalyst\Framework\FeatureFlag\FeatureFlagOverrideRepository;
 use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
 use Catalyst\Repository\Operations\Requests\FeatureFlagOverrideRequest;
+use Catalyst\Repository\Operations\Requests\FeatureFlagDefaultRequest;
 
 final class FeatureFlagsController extends AbstractOperationsController
 {
@@ -194,6 +195,7 @@ final class FeatureFlagsController extends AbstractOperationsController
         $this->authorizeResource('manage', 'operations');
 
         $flagKey = trim($flagKey);
+        $payload = new FeatureFlagDefaultRequest($request);
         $manager = FeatureFlagManager::getInstance();
         $definition = $manager->definition($flagKey);
 
@@ -207,7 +209,7 @@ final class FeatureFlagsController extends AbstractOperationsController
 
         $manager->setDefaultState(
             $flagKey,
-            $this->checkboxValue($request->input('enabled')),
+            $payload->enabled(),
             (string) ($definition['label'] ?? $flagKey),
             (string) ($definition['description'] ?? '')
         );

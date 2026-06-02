@@ -35,7 +35,7 @@ return [
                 'icon' => 'ti ti-history',
                 'matches' => ['/audit-log'],
                 'group' => 'platform-tools',
-                'group_label' => 'Platform Tools',
+                'group_label' => __('ui.shell.group_platform'),
                 'group_order' => 30,
                 'hint' => __('audit.module.navigation_hint'),
                 'order' => 45,

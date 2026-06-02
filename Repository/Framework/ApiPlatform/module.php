@@ -62,7 +62,7 @@ return [
                 'icon' => 'ti ti-api',
                 'matches' => ['/api-platform'],
                 'group' => 'platform-tools',
-                'group_label' => 'Platform Tools',
+                'group_label' => __('ui.shell.group_platform'),
                 'group_order' => 30,
                 'hint' => __('apiplatform.module.navigation_hint'),
                 'order' => 70,

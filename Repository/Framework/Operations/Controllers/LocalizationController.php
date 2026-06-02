@@ -8,6 +8,9 @@ use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
 use Catalyst\Framework\Localization\LocalizationManager;
+use Catalyst\Repository\Operations\Requests\LocaleCreateRequest;
+use Catalyst\Repository\Operations\Requests\LocaleSyncRequest;
+use Catalyst\Repository\Operations\Requests\LocalizationSettingsRequest;
 use RuntimeException;
 
 final class LocalizationController extends Controller
@@ -47,8 +50,9 @@ final class LocalizationController extends Controller
         $this->authorizeResource('manage', 'operations');
 
         $manager = LocalizationManager::getInstance();
-        $defaultLocale = strtolower(trim((string) $request->input('default_locale', '')));
-        $labelsJson = trim((string) $request->input('locale_labels_json', '{}'));
+        $payload = new LocalizationSettingsRequest($request);
+        $defaultLocale = $payload->defaultLocale();
+        $labelsJson = $payload->labelsJson();
         $labels = json_decode($labelsJson, true);
 
         if (!is_array($labels)) {
@@ -73,9 +77,10 @@ final class LocalizationController extends Controller
     {
         $this->authorizeResource('manage', 'operations');
 
-        $locale = trim((string) $request->input('locale_code', ''));
-        $label = trim((string) $request->input('locale_label', ''));
-        $dryRun = $this->checkboxValue($request->input('dry_run'));
+        $payload = new LocaleCreateRequest($request);
+        $locale = $payload->locale();
+        $label = $payload->label();
+        $dryRun = $payload->dryRun();
 
         try {
             $result = LocalizationManager::getInstance()->initializeLocale($locale, $label, $dryRun);
@@ -101,8 +106,9 @@ final class LocalizationController extends Controller
     {
         $this->authorizeResource('manage', 'operations');
 
-        $locale = trim((string) $request->input('target_locale', ''));
-        $dryRun = $this->checkboxValue($request->input('dry_run_sync'));
+        $payload = new LocaleSyncRequest($request);
+        $locale = $payload->locale();
+        $dryRun = $payload->dryRun();
 
         try {
             $result = LocalizationManager::getInstance()->synchronizeLocale($locale, $dryRun);
@@ -124,12 +130,4 @@ final class LocalizationController extends Controller
         return $this->postActionSuccessRedirect('/workspaces/locale-tools?locale=' . rawurlencode((string) ($result['locale'] ?? $locale)), $message);
     }
 
-    private function checkboxValue(mixed $value): bool
-    {
-        if (is_bool($value)) {
-            return $value;
-        }
-
-        return in_array(strtolower((string) $value), ['1', 'true', 'on', 'yes'], true);
-    }
 }

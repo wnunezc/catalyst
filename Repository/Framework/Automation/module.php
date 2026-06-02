@@ -72,7 +72,7 @@ return [
                 'icon' => 'ti ti-bolt',
                 'matches' => ['/automation-rules'],
                 'group' => 'platform-tools',
-                'group_label' => 'Platform Tools',
+                'group_label' => __('ui.shell.group_platform'),
                 'group_order' => 30,
                 'hint' => __('automation.module.navigation_hint'),
                 'order' => 65,

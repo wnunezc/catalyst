@@ -8,6 +8,7 @@ use Catalyst\Framework\Appearance\PlatformAppearanceManager;
 use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
+use Catalyst\Repository\Operations\Requests\AppearanceUpdateRequest;
 
 final class AppearanceController extends Controller
 {
@@ -34,29 +35,12 @@ final class AppearanceController extends Controller
         $this->authorizeResource('manage', 'operations');
 
         $manager = PlatformAppearanceManager::getInstance();
+        $payload = new AppearanceUpdateRequest($request);
         $themeCatalog = $manager->themeCatalog();
 
-        $adminCustomizerEnabled = $this->checkboxValue($request->input('admin_customizer_enabled'));
-        $platformTheme = $manager->sanitizeThemeConfig([
-            'skin' => trim((string) $request->input('platform_skin', 'default')),
-            'theme' => trim((string) $request->input('platform_theme', 'light')),
-            'topbar-color' => trim((string) $request->input('platform_topbar_color', 'gray')),
-            'sidenav-color' => trim((string) $request->input('platform_sidenav_color', 'dark')),
-        ]);
-
-        $data = [
-            'theme_family' => trim((string) $request->input('theme_family', 'inspinia')),
-            'default_variant' => trim((string) $request->input('default_variant', 'light')),
-            'brand_name' => trim((string) $request->input('brand_name', '')),
-            'brand_short_name' => trim((string) $request->input('brand_short_name', '')),
-            'brand_tagline' => trim((string) $request->input('brand_tagline', '')),
-            'logo_primary_path' => trim((string) $request->input('logo_primary_path', '')),
-            'logo_dark_path' => trim((string) $request->input('logo_dark_path', '')),
-            'favicon_path' => trim((string) $request->input('favicon_path', '')),
-            'pdf_watermark_text' => trim((string) $request->input('pdf_watermark_text', '')),
-            'pdf_watermark_font_size' => (string) $request->input('pdf_watermark_font_size', '46'),
-            'pdf_watermark_color' => strtoupper(trim((string) $request->input('pdf_watermark_color', '#CBD5E1'))),
-        ];
+        $adminCustomizerEnabled = $payload->adminCustomizerEnabled();
+        $platformTheme = $manager->sanitizeThemeConfig($payload->platformTheme());
+        $data = $payload->branding();
 
         if ($data['theme_family'] === '') {
             $data['theme_family'] = 'inspinia';
@@ -110,11 +94,7 @@ final class AppearanceController extends Controller
             return $this->postActionErrorRedirect('/configuration/platform-appearance', __('operations.appearance.messages.invalid_watermark_color'), 422);
         }
 
-        $files = [
-            'logo_primary_file' => $request->file('logo_primary_file'),
-            'logo_dark_file' => $request->file('logo_dark_file'),
-            'favicon_file' => $request->file('favicon_file'),
-        ];
+        $files = $payload->files();
 
         foreach ($files as $field => $file) {
             if ($file === null) {
@@ -132,13 +112,13 @@ final class AppearanceController extends Controller
             }
         }
 
-        if (!empty($request->input('reset_logo_primary'))) {
+        if ($payload->resetRequested('logo_primary')) {
             $data['logo_primary_path'] = '';
         }
-        if (!empty($request->input('reset_logo_dark'))) {
+        if ($payload->resetRequested('logo_dark')) {
             $data['logo_dark_path'] = '';
         }
-        if (!empty($request->input('reset_favicon'))) {
+        if ($payload->resetRequested('favicon')) {
             $data['favicon_path'] = '';
         }
 
@@ -168,7 +148,7 @@ final class AppearanceController extends Controller
                 'logo_primary_path' => $data['logo_primary_path'],
                 'logo_dark_path' => $data['logo_dark_path'],
                 'favicon_path' => $data['favicon_path'],
-                'pdf_watermark_enabled' => $this->checkboxValue($request->input('pdf_watermark_enabled')),
+                'pdf_watermark_enabled' => $payload->pdfWatermarkEnabled(),
                 'pdf_watermark_text' => $data['pdf_watermark_text'],
                 'pdf_watermark_font_size' => (int) $data['pdf_watermark_font_size'],
                 'pdf_watermark_color' => $data['pdf_watermark_color'],
@@ -196,12 +176,4 @@ final class AppearanceController extends Controller
         return 'Invalid appearance payload.';
     }
 
-    private function checkboxValue(mixed $value): bool
-    {
-        if (is_bool($value)) {
-            return $value;
-        }
-
-        return in_array(strtolower((string) $value), ['1', 'true', 'on', 'yes'], true);
-    }
 }

@@ -67,7 +67,7 @@ return [
                 'icon' => 'ti ti-file-description',
                 'matches' => ['/workspaces/document-templates'],
                 'group' => 'media-documents',
-                'group_label' => 'Media and Documents',
+                'group_label' => __('ui.shell.group_content'),
                 'group_order' => 20,
                 'hint' => __('documents.module.navigation_hint'),
                 'order' => 60,

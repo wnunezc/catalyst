@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Catalyst\Repository\Media\Controllers;
 
-use Catalyst\Framework\Admin\Form\FormBuilder;
 use Catalyst\Framework\Admin\Grid\DataGrid;
 use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\Request;
@@ -12,10 +11,11 @@ use Catalyst\Framework\Http\Response;
 use Catalyst\Framework\Media\MediaManager;
 use Catalyst\Framework\Media\MediaRepository;
 use Catalyst\Framework\Metadata\MetadataManager;
-use Catalyst\Framework\Storage\StorageManager;
 use Catalyst\Framework\Traits\InteractsWithRecordClaimsTrait;
 use Catalyst\Helpers\Exceptions\OptimisticLockException;
 use Catalyst\Repository\Media\Requests\MediaItemRequest;
+use Catalyst\Repository\Media\Requests\MediaBulkSelectionRequest;
+use Catalyst\Repository\Media\Support\MediaLibraryFormFactory;
 use RuntimeException;
 
 final class MediaLibraryController extends Controller
@@ -25,7 +25,8 @@ final class MediaLibraryController extends Controller
     public function __construct(
         private readonly MediaRepository $repository,
         private readonly MediaManager $manager,
-        private readonly MetadataManager $metadata
+        private readonly MetadataManager $metadata,
+        private readonly MediaLibraryFormFactory $formFactory
     ) {
         parent::__construct();
     }
@@ -275,10 +276,7 @@ final class MediaLibraryController extends Controller
     {
         $this->authorizeResource('bulk-delete', MediaManager::RESOURCE_KEY);
 
-        $ids = array_values(array_filter(
-            array_map('intval', (array) ($request->input('selected') ?? [])),
-            static fn (int $id): bool => $id > 0
-        ));
+        $ids = (new MediaBulkSelectionRequest($request))->ids();
 
         if ($ids === []) {
             return $this->postActionErrorRedirect('/workspaces/media-library', __('media.library.index.bulk.select_one'));
@@ -301,96 +299,13 @@ final class MediaLibraryController extends Controller
      */
     private function renderForm(string $title, ?array $media, ?array $claim = null): Response
     {
-        $t = static fn (string $key, array $replace = []): string => __($key, $replace);
-        $definitions = $this->metadata->definitionsFor(MediaManager::RESOURCE_KEY);
-        $dynamicValues = $media !== null
-            ? (array) ($media['metadata'] ?? [])
-            : [];
-        $action = $media === null
-            ? '/workspaces/media-library'
-            : '/workspaces/media-library/' . (int) ($media['id'] ?? 0);
-        $storageSummary = StorageManager::getInstance()->summary();
-        $diskOptions = ['local' => $t('media.library.common.local')];
-        if ((bool) ($storageSummary['remote_ready'] ?? false)) {
-            $diskOptions['ftp'] = $t('media.library.common.remote_storage');
-        }
-
-        $currentDisk = trim((string) ($media['disk'] ?? ''));
-        if ($currentDisk !== '' && !array_key_exists($currentDisk, $diskOptions)) {
-            $diskOptions[$currentDisk] = strtoupper($currentDisk);
-        }
-
-        $sections = array_merge([
-            'asset-file' => [
-                'title' => $t('media.library.form.sections.asset_file.title'),
-                'description' => $t('media.library.form.sections.asset_file.description'),
-            ],
-            'asset-context' => [
-                'title' => $t('media.library.form.sections.asset_context.title'),
-                'description' => $t('media.library.form.sections.asset_context.description'),
-            ],
-        ], $this->metadata->formSections($definitions, $dynamicValues));
-
-        $fields = array_merge([
-            ...$this->concurrencyHiddenFields(
+        $form = $this->formFactory->build(
+            $media,
+            $this->concurrencyHiddenFields(
                 $claim,
                 $media !== null ? (int) ($media['lock_version'] ?? 1) : null
-            ),
-            'name' => [
-                'label' => $t('media.library.form.labels.name'),
-                'required' => true,
-                'section' => 'asset-context',
-                'placeholder' => $t('media.library.form.placeholders.name'),
-                'attributes' => ['maxlength' => 150],
-            ],
-            'disk' => [
-                'label' => $t('media.library.form.labels.disk'),
-                'required' => true,
-                'section' => 'asset-file',
-                'type' => 'select',
-                'options' => $diskOptions,
-                'value' => $media['disk'] ?? 'local',
-                'help' => $t('media.library.form.help.disk'),
-            ],
-            'asset_file' => [
-                'label' => $media === null ? $t('media.library.form.labels.asset_file_create') : $t('media.library.form.labels.asset_file_edit'),
-                'required' => $media === null,
-                'section' => 'asset-file',
-                'type' => 'file',
-                'help' => $media === null
-                    ? $t('media.library.form.help.asset_file_create')
-                    : $t('media.library.form.help.asset_file_edit'),
-            ],
-        ], $this->metadata->formFields($definitions, $dynamicValues));
-
-        $defaults = [];
-        foreach ($dynamicValues as $fieldKey => $entry) {
-            $defaults[MetadataManager::inputKey((string) $fieldKey)] = $entry['value'] ?? null;
-        }
-
-        $form = FormBuilder::make()
-            ->action($action)
-            ->method('POST')
-            ->multipart()
-            ->model($media)
-            ->defaults($defaults)
-            ->sections($sections)
-            ->autosave()
-            ->fields($fields)
-            ->actions([
-                [
-                    'type' => 'submit',
-                    'label' => $media === null ? $t('media.library.form.actions.create') : $t('media.library.form.actions.save'),
-                    'class' => 'btn btn-primary',
-                ],
-                [
-                    'type' => 'link',
-                    'label' => $t('media.library.form.actions.back'),
-                    'href' => '/workspaces/media-library',
-                    'class' => 'btn btn-outline-secondary',
-                ],
-            ])
-            ->toArray();
+            )
+        );
 
         return $this->view('media.form', [
             'title' => $title,

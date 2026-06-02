@@ -2,7 +2,7 @@
 
 Date: 2026-06-02
 
-Status: residual batches prioritized / pending user review and commit.
+Status: residual batches prioritized / committed in `be29b02`.
 
 ## Objective
 
@@ -174,3 +174,10 @@ Scope:
 3. Documentation contract tasks approved for Phase 6 are completed.
 4. `6E.1` executes the full verification gate.
 5. Phase 6 is marked complete only after explicit user confirmation.
+
+## Runtime Batch Execution Update
+
+Tasks `6C.4` through `6C.7` were implemented in one bounded pass after explicit
+user approval. The exact scope and verification evidence are recorded in:
+
+`docs/audits/architecture-first/2026-06-02-6c4-6c7-runtime-normalization.md`.

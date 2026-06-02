@@ -14,6 +14,8 @@ use Catalyst\Framework\Traits\InteractsWithRecordClaimsTrait;
 use Catalyst\Repository\Roles\Support\RbacLabelPresenter;
 use RuntimeException;
 use Catalyst\Repository\Roles\Requests\RolePayloadRequest;
+use Catalyst\Repository\Roles\Requests\RoleBulkSelectionRequest;
+use Catalyst\Repository\Roles\Requests\RolePermissionSyncRequest;
 
 class RolesController extends Controller
 {
@@ -244,10 +246,8 @@ class RolesController extends Controller
     public function bulkDestroy(Request $request): Response
     {
         $this->authorizeResource('bulk-delete', 'roles');
-        $ids = array_values(array_filter(
-            array_map('intval', (array) ($request->input('selected') ?? [])),
-            static fn (int $id): bool => $id > 0
-        ));
+        $payload = new RoleBulkSelectionRequest($request);
+        $ids = $payload->ids();
 
         if ($ids === []) {
             return $this->postActionErrorRedirect('/users/roles', (string) __('roles.roles.bulk.select_one'));
@@ -302,7 +302,8 @@ class RolesController extends Controller
         }
 
         $this->authorizeResource('sync', 'roles', $role);
-        $selectedIds = (array) ($request->input('permissions') ?? []);
+        $payload = new RolePermissionSyncRequest($request);
+        $selectedIds = $payload->selectedIds();
         $allPermissions = $this->repo->allPermissions();
 
         try {

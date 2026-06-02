@@ -75,7 +75,7 @@ return [
                 'icon' => 'ti ti-users',
                 'matches' => ['/users'],
                 'group' => 'users',
-                'group_label' => 'Users',
+                'group_label' => __('ui.shell.group_access'),
                 'group_order' => 10,
                 'hint' => __('roles.module.users_hint'),
                 'order' => 10,
@@ -94,12 +94,12 @@ return [
             ],
             [
                 'context' => 'users',
-                'label' => 'Roles',
+                'label' => __('roles.roles.title'),
                 'href' => '/users/roles',
                 'icon' => 'ti ti-shield-check',
                 'matches' => ['/users/roles'],
                 'group' => 'users',
-                'group_label' => 'Users',
+                'group_label' => __('ui.shell.group_access'),
                 'group_order' => 10,
                 'hint' => __('roles.module.roles_hint'),
                 'order' => 20,
@@ -109,12 +109,12 @@ return [
             ],
             [
                 'context' => 'users',
-                'label' => 'Permissions',
+                'label' => __('roles.permissions.title'),
                 'href' => '/users/permissions',
                 'icon' => 'ti ti-key',
                 'matches' => ['/users/permissions'],
                 'group' => 'users',
-                'group_label' => 'Users',
+                'group_label' => __('ui.shell.group_access'),
                 'group_order' => 10,
                 'hint' => __('roles.module.permissions_hint'),
                 'order' => 30,
@@ -147,34 +147,34 @@ return [
             [
                 'pattern' => '/users/roles/create',
                 'trail' => [
-                    ['label' => 'Roles', 'href' => '/users/roles'],
+                    ['label' => __('roles.roles.title'), 'href' => '/users/roles'],
                     ['label' => __('roles.module.create_role_breadcrumb'), 'href' => null],
                 ],
             ],
             [
                 'pattern' => '/users/roles/{id}/edit',
                 'trail' => [
-                    ['label' => 'Roles', 'href' => '/users/roles'],
+                    ['label' => __('roles.roles.title'), 'href' => '/users/roles'],
                     ['label' => __('roles.module.edit_role_breadcrumb'), 'href' => null],
                 ],
             ],
             [
                 'pattern' => '/users/roles/{id}/permissions',
                 'trail' => [
-                    ['label' => 'Roles', 'href' => '/users/roles'],
-                    ['label' => 'Permissions', 'href' => null],
+                    ['label' => __('roles.roles.title'), 'href' => '/users/roles'],
+                    ['label' => __('roles.permissions.title'), 'href' => null],
                 ],
             ],
             [
                 'pattern' => '/users/roles',
                 'trail' => [
-                    ['label' => 'Roles', 'href' => null],
+                    ['label' => __('roles.roles.title'), 'href' => null],
                 ],
             ],
             [
                 'pattern' => '/users/permissions/create',
                 'trail' => [
-                    ['label' => 'Permissions', 'href' => '/users/permissions'],
+                    ['label' => __('roles.permissions.title'), 'href' => '/users/permissions'],
                     ['label' => __('roles.module.create_permission_breadcrumb'), 'href' => null],
                 ],
             ],
@@ -182,7 +182,7 @@ return [
                 'pattern' => '/users/permissions',
                 'trail' => [
                     ['label' => __('roles.module.users_label'), 'href' => '/users'],
-                    ['label' => 'Permissions', 'href' => null],
+                    ['label' => __('roles.permissions.title'), 'href' => null],
                 ],
             ],
         ],

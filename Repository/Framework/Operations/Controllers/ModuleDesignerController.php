@@ -11,6 +11,7 @@ use Catalyst\Framework\Module\ModuleInspector;
 use Catalyst\Framework\Module\ModuleLinter;
 use Catalyst\Framework\Module\ModuleScaffoldService;
 use Catalyst\Framework\Session\SessionManager;
+use Catalyst\Repository\Operations\Requests\ModuleDesignerRequest;
 use InvalidArgumentException;
 use RuntimeException;
 
@@ -33,7 +34,7 @@ final class ModuleDesignerController extends Controller
     {
         $this->authorizeResource('manage', 'operations');
 
-        $form = $this->collectFormState($request);
+        $form = (new ModuleDesignerRequest($request))->formState();
 
         try {
             $preview = (new ModuleScaffoldService())->preview($form);
@@ -52,7 +53,7 @@ final class ModuleDesignerController extends Controller
     {
         $this->authorizeResource('manage', 'operations');
 
-        $form = $this->collectFormState($request);
+        $form = (new ModuleDesignerRequest($request))->formState();
 
         try {
             $result = (new ModuleScaffoldService())->create($form);
@@ -117,22 +118,6 @@ final class ModuleDesignerController extends Controller
             'permission_slug' => '',
             'settings' => '',
             'feature_flags' => '',
-        ];
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    private function collectFormState(Request $request): array
-    {
-        return [
-            'space' => (string) $request->input('space', 'App'),
-            'module' => (string) $request->input('module', ''),
-            'description' => (string) $request->input('description', ''),
-            'surface' => (string) $request->input('surface', 'public'),
-            'permission_slug' => (string) $request->input('permission_slug', ''),
-            'settings' => (string) $request->input('settings', ''),
-            'feature_flags' => (string) $request->input('feature_flags', ''),
         ];
     }
 
