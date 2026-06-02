@@ -39,7 +39,7 @@
    - Evidencia: `docs/audits/security-first/2026-06-01-security-first-audit.md`.
    - Hardening consolidado: `903019b` (`implement phase 5 security hardening`).
 
-6. **Auditar arquitectura y normalizar deuda tecnica** — En ejecucion.
+6. **Auditar arquitectura y normalizar deuda tecnica** — Completada por confirmacion explicita del usuario.
    - Core framework vs demo/app ejemplo.
    - Rutas sin duenio, clases duplicadas, controladores grandes.
    - Docs desalineadas y deuda DevTools.
@@ -47,7 +47,7 @@
    - Regla confirmada: `shell` describe layouts/composicion visual; no asumir que
      representa un modulo faltante.
 
-7. **Flujo futuro sin zips directos** — Pendiente.
+7. **Flujo futuro sin zips directos** — Activa.
    - Checklist para revisar zips/parches en carpeta temporal.
    - Setup de primer arranque para otro desarrollador.
    - Instalacion reproducible como base para otros proyectos.
@@ -395,3 +395,40 @@ Aplicar durante toda modificacion de codigo:
     usuario para marcar Phase 6 completa.
   - Evidencia:
     `docs/audits/architecture-first/2026-06-02-6e1-phase-6-verification.md`.
+
+### Phase 6 Closeout
+
+- [x] **Cerrar Phase 6 por confirmacion explicita del usuario**
+  - Estado: completada.
+  - Evidencia:
+    `docs/audits/architecture-first/2026-06-02-phase-6-closeout-phase-7-kickoff.md`.
+
+---
+
+## Phase 7: Flujo Futuro Sin Zips Directos
+
+### Objective
+
+Definir un flujo reproducible para revisar zips/parches fuera del arbol activo,
+aplicarlos solo despues de inspeccion, y dejar Catalyst instalable como base
+confiable para otros proyectos.
+
+### Initial Scope
+
+- Checklist para revisar zips/parches en carpeta temporal.
+- Setup de primer arranque para otro desarrollador.
+- Instalacion reproducible como base para otros proyectos.
+
+### Execution Tasks
+
+- [ ] **Task 7A.1: Planificar flujo de intake de parches**
+  - Definir carpeta temporal, checklist de inspeccion, comandos pre/post apply,
+    criterios de rechazo y evidencia requerida antes de tocar el repo activo.
+
+- [ ] **Task 7A.2: Documentar primer arranque reproducible**
+  - Alinear README/checklists existentes con WSDD, Composer, config local,
+    setup, fixtures/smokes y warnings aceptables.
+
+- [ ] **Task 7A.3: Definir instalacion reusable como base**
+  - Documentar como clonar/renombrar/configurar Catalyst para un proyecto nuevo
+    sin heredar artefactos locales ni secretos.
