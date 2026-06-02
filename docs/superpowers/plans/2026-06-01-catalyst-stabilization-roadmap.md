@@ -374,9 +374,12 @@ Aplicar durante toda modificacion de codigo:
   - Evidencia:
     `docs/audits/architecture-first/2026-06-02-6d2-js-contracts.md`.
 
-- [ ] **Task 6D.3: Planificar migracion de templates PHP ejecutables**
+- [x] **Task 6D.3: Planificar migracion de templates PHP ejecutables**
   - Inventariar y migrar por superficies acotadas; mantener fallback PHP hasta
     alcanzar inventario cero con regresiones.
+  - Estado: implementado y verificado.
+  - Evidencia:
+    `docs/audits/architecture-first/2026-06-02-6d3-template-migration-plan.md`.
 
 - [ ] **Task 6D.4: Planificar extraccion de inline JS/CSS**
   - Separar comportamiento hacia assets versionados conservando CSP y bloques
