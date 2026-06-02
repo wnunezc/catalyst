@@ -165,6 +165,9 @@ There is no manual central registration for module route files.
 - [docs/security-conventions.md](docs/security-conventions.md) - CSP, nonce, JS/view rules
 - [docs/quality-gate.md](docs/quality-gate.md) - local pre-commit/pre-push checks and warning policy
 - [docs/deployment.md](docs/deployment.md) - deployment and packaging safety
+- [docs/workflow/patch-intake.md](docs/workflow/patch-intake.md) - review workflow for external zips/patches before applying changes
+- [docs/workflow/first-run.md](docs/workflow/first-run.md) - reproducible first-run setup
+- [docs/workflow/reusable-base-install.md](docs/workflow/reusable-base-install.md) - using Catalyst as a reusable base for another project
 - [API.md](API.md) - subsystem index
 
 ## Notes

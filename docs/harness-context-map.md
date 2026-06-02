@@ -29,6 +29,9 @@ Este archivo enruta la documentacion de `catalyst` para que el contexto caliente
 - `docs/security-conventions.md` - CSP, vistas, JS, nonce, patrones `data-*`
 - `docs/documentation-contract.md` - contrato hot/warm/cold e inventarios generados
 - `docs/deployment.md` - checklist de seguridad previa a despliegue y empaquetado limpio
+- `docs/workflow/patch-intake.md` - intake seguro de zips/parches antes de tocar el repo activo
+- `docs/workflow/first-run.md` - primer arranque reproducible de un checkout fresco
+- `docs/workflow/reusable-base-install.md` - instalacion reusable como base para nuevos proyectos
 - `docs/auth.md` - indice amplio de auth; enruta a `framework-auth.md` y `repository-auth.md`
 - `docs/database.md` - indice amplio de DB/ORM; enruta a `framework-database.md`
 - `docs/routing.md` - indice amplio de routing/dispatch; enruta a `architecture.md`, `kernel.md` y docs de modulo
@@ -92,6 +95,7 @@ Este archivo enruta la documentacion de `catalyst` para que el contexto caliente
 | checklist de validacion visual, CLI, CSP e integridad de assets CSS publicados | `docs/ui/validation-checklist.md`, `docs/testing.md`, `docs/security-conventions.md` |
 | reestructuracion del arbol `Views`, companions y convencion `scope/` | `docs/framework-view.md`, `docs/views.md`, `STRUCTURE.md` |
 | despliegue, empaquetado, rotacion de secretos | `docs/deployment.md`, `docs/security-conventions.md` |
+| zips/parches externos, intake, primer arranque, base reusable | `docs/workflow/patch-intake.md`, `docs/workflow/first-run.md`, `docs/workflow/reusable-base-install.md`, `docs/deployment.md`, `docs/quality-gate.md` |
 | quality gate, pre-commit/pre-push, checks CLI | `docs/quality-gate.md`, `TERMINAL.md`, `public/cli.php` |
 | bootstrap, routing, kernel, entry points | `docs/architecture.md`, `docs/entry-points.md`, `docs/kernel.md` |
 | setup/config | `docs/checklists/setup-completion-e2e.md`, `docs/helpers-config.md` |

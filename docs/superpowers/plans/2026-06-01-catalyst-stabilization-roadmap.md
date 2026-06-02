@@ -421,14 +421,23 @@ confiable para otros proyectos.
 
 ### Execution Tasks
 
-- [ ] **Task 7A.1: Planificar flujo de intake de parches**
+- [x] **Task 7A.1: Planificar flujo de intake de parches**
   - Definir carpeta temporal, checklist de inspeccion, comandos pre/post apply,
     criterios de rechazo y evidencia requerida antes de tocar el repo activo.
+  - Estado: implementado y verificado.
+  - Evidencia:
+    `docs/audits/architecture-first/2026-06-02-7a-future-workflow.md`.
 
-- [ ] **Task 7A.2: Documentar primer arranque reproducible**
+- [x] **Task 7A.2: Documentar primer arranque reproducible**
   - Alinear README/checklists existentes con WSDD, Composer, config local,
     setup, fixtures/smokes y warnings aceptables.
+  - Estado: implementado y verificado.
+  - Evidencia:
+    `docs/audits/architecture-first/2026-06-02-7a-future-workflow.md`.
 
-- [ ] **Task 7A.3: Definir instalacion reusable como base**
+- [x] **Task 7A.3: Definir instalacion reusable como base**
   - Documentar como clonar/renombrar/configurar Catalyst para un proyecto nuevo
     sin heredar artefactos locales ni secretos.
+  - Estado: implementado y verificado.
+  - Evidencia:
+    `docs/audits/architecture-first/2026-06-02-7a-future-workflow.md`.
