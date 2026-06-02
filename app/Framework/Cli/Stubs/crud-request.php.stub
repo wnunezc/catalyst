@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\{{Module}}\Requests;
+namespace {{ModuleNamespaceRoot}}\Requests;
 
 use Catalyst\Framework\Authorization\AbilitySubject;
 use Catalyst\Framework\Authorization\Gate;

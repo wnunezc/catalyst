@@ -1,0 +1,8 @@
+$router->post({{BulkRestoreRouteLiteral}}, [{{ControllerClass}}::class, 'bulkRestore'])
+       ->middleware($moduleMiddleware)
+       ->throttle('admin_mutation');
+
+$router->post({{RestoreRouteLiteral}}, [{{ControllerClass}}::class, 'restore'])
+       ->middleware($moduleMiddleware)
+       ->throttle('admin_mutation');
+

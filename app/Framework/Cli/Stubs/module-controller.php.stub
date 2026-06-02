@@ -1,0 +1,20 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{NamespaceRoot}}\Controllers;
+
+use Catalyst\Framework\Controllers\Controller;
+use Catalyst\Framework\Http\Request;
+use Catalyst\Framework\Http\Response;
+
+class {{ControllerClass}} extends Controller
+{
+    /**
+     * Renders the default module landing screen.
+     */
+    public function index(Request $request): Response
+    {
+        {{ViewCall}}
+    }
+}

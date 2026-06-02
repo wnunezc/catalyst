@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\{{Module}}\Controllers;
+namespace {{ModuleNamespaceRoot}}\Controllers;
 
-use App\{{Module}}\Requests\{{RequestClass}};
+use {{ModuleNamespaceRoot}}\Requests\{{RequestClass}};
 use Catalyst\Entities\{{Entity}};
 use Catalyst\Framework\Admin\Form\FormBuilder;
 use Catalyst\Framework\Admin\Grid\DataGrid;

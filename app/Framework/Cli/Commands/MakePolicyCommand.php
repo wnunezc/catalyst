@@ -105,8 +105,8 @@ final class MakePolicyCommand extends AbstractCommand
         try {
             $className = $manager->normalizeClassName((string) ($args->getParameterValue(0) ?? ''), 'Policy');
             $module = $manager->normalizeAppModule((string) ($args->getOptionValue('module') ?? $args->getOptionValue('m') ?? ''));
-            $namespace = 'App\\' . $module . '\\Policies';
-            $targetDir = implode(DS, [PD, 'Repository', 'App', $module, 'Policies']);
+            $namespace = 'App\\Surface\\' . $module . '\\Policies';
+            $targetDir = implode(DS, [PD, 'Repository', 'App', 'Surface', $module, 'Policies']);
             $targetFile = $targetDir . DS . $className . '.php';
 
             $stub = $manager->renderStub('policy.php.stub', [

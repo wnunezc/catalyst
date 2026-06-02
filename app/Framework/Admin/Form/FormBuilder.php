@@ -450,6 +450,7 @@ final class FormBuilder
      *
      * Responsibility: Normalizes existing repeater item values and ensures the minimum item count.
      * @param mixed $items
+     * @param int $minItems
      * @return array<int, array<string, mixed>>
      */
     private function normalizeRepeaterItems(mixed $items, int $minItems): array

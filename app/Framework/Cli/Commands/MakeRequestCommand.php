@@ -105,8 +105,8 @@ class MakeRequestCommand extends AbstractCommand
         try {
             $className  = $manager->normalizeClassName((string) ($args->getParameterValue(0) ?? ''), 'Request');
             $module     = $manager->normalizeAppModule((string) ($args->getOptionValue('module') ?? $args->getOptionValue('m') ?? ''));
-            $namespace  = 'App\\' . $module . '\\Requests';
-            $targetDir  = implode(DS, [PD, 'Repository', 'App', $module, 'Requests']);
+            $namespace  = 'App\\Surface\\' . $module . '\\Requests';
+            $targetDir  = implode(DS, [PD, 'Repository', 'App', 'Surface', $module, 'Requests']);
             $targetFile = $targetDir . DS . $className . '.php';
 
             $stub = $manager->renderStub('request.php.stub', [

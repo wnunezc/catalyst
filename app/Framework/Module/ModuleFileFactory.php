@@ -31,6 +31,7 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Module;
 
 use Catalyst\Framework\Cli\ScaffoldManager;
+use Catalyst\Framework\Cli\Support\PhpValueExporter;
 
 /**
  * Builds files emitted by module scaffolding.
@@ -40,6 +41,8 @@ use Catalyst\Framework\Cli\ScaffoldManager;
  */
 final class ModuleFileFactory
 {
+    private readonly PhpValueExporter $exporter;
+
     /**
      * Initializes the factory with scaffold and manifest rendering support.
      *
@@ -47,8 +50,10 @@ final class ModuleFileFactory
      */
     public function __construct(
         private readonly ScaffoldManager $manager,
-        private readonly ModuleManifestBuilder $manifestBuilder
+        private readonly ModuleManifestBuilder $manifestBuilder,
+        ?PhpValueExporter $exporter = null
     ) {
+        $this->exporter = $exporter ?? new PhpValueExporter();
     }
 
     /**
@@ -75,12 +80,14 @@ final class ModuleFileFactory
         return [
             [
                 'path' => $baseDir . DS . 'Controllers' . DS . $controllerName . '.php',
-                'contents' => $this->buildControllerContents(
-                    $namespaceRoot,
-                    $controllerName,
-                    $viewNamespace . '.index',
-                    is_string($layout) ? $layout : null
-                ),
+                'contents' => $this->manager->renderStub('module-controller.php.stub', [
+                    'NamespaceRoot' => $namespaceRoot,
+                    'ControllerClass' => $controllerName,
+                    'ViewCall' => $this->buildControllerViewCall(
+                        $viewNamespace . '.index',
+                        is_string($layout) ? $layout : null
+                    ),
+                ]),
             ],
             [
                 'path' => $baseDir . DS . 'Views' . DS . 'pages' . DS . 'index.phtml',
@@ -114,15 +121,21 @@ final class ModuleFileFactory
             ],
             [
                 'path' => $baseDir . DS . 'routes.php',
-                'contents' => $this->buildRouteTemplate(
-                    $surface,
-                    $controllerName,
-                    $routeUri,
-                    $space,
-                    $module,
-                    $viewNamespace,
-                    $permissionSlug
-                ),
+                'contents' => $this->manager->renderStub('module-routes.php.stub', [
+                    'ControllerNamespace' => $this->controllerNamespace($space, $module),
+                    'ControllerClass' => $controllerName,
+                    'MiddlewareImports' => $this->buildMiddlewareImports($surface),
+                    'ViewNamespaceLiteral' => $this->exporter->export($viewNamespace),
+                    'ViewPathExpression' => $this->buildPathExpression(
+                        array_merge($this->repositorySegments($space, $module), ['Views'])
+                    ),
+                    'LangPathExpression' => $this->buildPathExpression(
+                        array_merge($this->repositorySegments($space, $module), ['lang'])
+                    ),
+                    'MiddlewareSetup' => $this->buildMiddlewareSetup($surface, $permissionSlug),
+                    'RoutePathLiteral' => $this->exporter->export('/' . $routeUri),
+                    'RouteMiddlewareChain' => $this->buildRouteMiddlewareChain($surface),
+                ]),
             ],
             [
                 'path' => $baseDir . DS . 'module.php',
@@ -132,120 +145,113 @@ final class ModuleFileFactory
     }
 
     /**
-     * Renders the generated module controller source.
-     *
-     * Responsibility: Renders the generated module controller source.
+     * Builds the controller response statement used by the module controller stub.
      */
-    private function buildControllerContents(string $namespaceRoot, string $controllerName, string $view, ?string $layout): string
+    private function buildControllerViewCall(string $view, ?string $layout): string
     {
-        $viewCall = $layout === null
-            ? "return \$this->view('{$view}');"
-            : "return \$this->view('{$view}', [], 200, '{$layout}');";
+        if ($layout === null) {
+            return 'return $this->view(' . $this->exporter->export($view) . ');';
+        }
 
-        return <<<PHP
-<?php
-
-declare(strict_types=1);
-
-namespace {$namespaceRoot}\Controllers;
-
-use Catalyst\Framework\Controllers\Controller;
-use Catalyst\Framework\Http\Request;
-use Catalyst\Framework\Http\Response;
-
-class {$controllerName} extends Controller
-{
-    /**
-     * Renders the default module landing screen.
-     */
-    public function index(Request \$request): Response
-    {
-        {$viewCall}
+        return 'return $this->view(' . $this->exporter->export($view) . ', [], 200, '
+            . $this->exporter->export($layout) . ');';
     }
-}
 
-PHP;
+
+    /**
+     * Builds a PD-relative path expression for generated route files.
+     *
+     * @param string[] $segments
+     */
+    private function buildPathExpression(array $segments): string
+    {
+        $exportedSegments = array_map(
+            fn (string $segment): string => $this->exporter->export($segment),
+            $segments
+        );
+
+        return 'implode(DS, [PD, ' . implode(', ', $exportedSegments) . '])';
     }
 
     /**
-     * Renders the generated module route source for its surface.
+     * Returns repository path segments below PD for a generated module.
      *
-     * Responsibility: Renders the generated module route source for its surface.
+     * @return string[]
      */
-    private function buildRouteTemplate(
-        string $surface,
-        string $controllerName,
-        string $routeUri,
-        string $space,
-        string $module,
-        string $viewNamespace,
-        string $permissionSlug
-    ): string {
-        $repositorySegments = $space === 'Framework'
-            ? ['Repository', 'Framework', $module]
-            : ['Repository', 'App', 'Surface', $module];
-        $controllerNamespace = $space === 'Framework'
-            ? 'Catalyst\\Repository\\' . $module . '\\Controllers'
-            : 'App\\Surface\\' . $module . '\\Controllers';
+    private function repositorySegments(string $space, string $module): array
+    {
+        if ($space === 'Framework') {
+            return ['Repository', 'Framework', $module];
+        }
 
-        $imports = [];
-        $middlewareSetup = '';
-        $routeTail = ';';
+        return ['Repository', 'App', 'Surface', $module];
+    }
 
+    /**
+     * Returns the controller namespace for the generated route file.
+     */
+    private function controllerNamespace(string $space, string $module): string
+    {
+        if ($space === 'Framework') {
+            return 'Catalyst\\Repository\\' . $module . '\\Controllers';
+        }
+
+        return 'App\\Surface\\' . $module . '\\Controllers';
+    }
+
+    /**
+     * Builds optional middleware imports for guarded module surfaces.
+     */
+    private function buildMiddlewareImports(string $surface): string
+    {
         if (in_array($surface, ['workspace', 'administration'], true)) {
-            $imports[] = 'use Catalyst\\Framework\\Middleware\\AuthMiddleware;';
-            $imports[] = 'use Catalyst\\Framework\\Middleware\\RoleMiddleware;';
+            return implode(PHP_EOL, [
+                'use Catalyst\\Framework\\Middleware\\AuthMiddleware;',
+                'use Catalyst\\Framework\\Middleware\\RoleMiddleware;',
+            ]);
+        }
+
+        if ($surface === 'devtools') {
+            return 'use Catalyst\\Framework\\Middleware\\DevToolsGuardMiddleware;';
+        }
+
+        return '';
+    }
+
+    /**
+     * Builds optional middleware setup for guarded module surfaces.
+     */
+    private function buildMiddlewareSetup(string $surface, string $permissionSlug): string
+    {
+        if (in_array($surface, ['workspace', 'administration'], true)) {
             $roleMiddleware = $permissionSlug !== ''
-                ? "new RoleMiddleware(permissions: '{$permissionSlug}')"
-                : "new RoleMiddleware(roles: 'admin')";
-            $middlewareSetup = '$moduleMiddleware = [AuthMiddleware::class, ' . $roleMiddleware . '];';
-            $routeTail = PHP_EOL . '       ->middleware($moduleMiddleware);';
-        } elseif ($surface === 'devtools') {
-            $imports[] = 'use Catalyst\\Framework\\Middleware\\DevToolsGuardMiddleware;';
-            $middlewareSetup = $permissionSlug !== ''
-                ? '$moduleMiddleware = new DevToolsGuardMiddleware(permissions: ' . "'{$permissionSlug}'" . ');'
-                : '$moduleMiddleware = DevToolsGuardMiddleware::class;';
-            $routeTail = PHP_EOL . '       ->middleware($moduleMiddleware);';
+                ? 'new RoleMiddleware(permissions: ' . $this->exporter->export($permissionSlug) . ')'
+                : 'new RoleMiddleware(roles: ' . $this->exporter->export('admin') . ')';
+
+            return '$moduleMiddleware = [AuthMiddleware::class, ' . $roleMiddleware . '];';
         }
 
-        $lines = [
-            '<?php',
-            '',
-            'declare(strict_types=1);',
-            '',
-            'use Catalyst\Framework\Route\Router;',
-            'use Catalyst\Framework\View\View;',
-            'use Catalyst\Helpers\I18n\Translator;',
-            'use ' . $controllerNamespace . '\\' . $controllerName . ';',
-        ];
+        if ($surface === 'devtools') {
+            if ($permissionSlug !== '') {
+                return '$moduleMiddleware = new DevToolsGuardMiddleware(permissions: '
+                    . $this->exporter->export($permissionSlug) . ');';
+            }
 
-        foreach ($imports as $import) {
-            $lines[] = $import;
+            return '$moduleMiddleware = DevToolsGuardMiddleware::class;';
         }
 
-        $lines = array_merge($lines, [
-            '',
-            '$router = Router::getInstance();',
-            '',
-            'View::getInstance()->addPath(',
-            "    '{$viewNamespace}',",
-            "    implode(DS, [PD, '" . implode("', '", $repositorySegments) . "', 'Views'])",
-            ');',
-            '',
-            'Translator::getInstance()->addPath(',
-            "    implode(DS, [PD, '" . implode("', '", $repositorySegments) . "', 'lang'])",
-            ');',
-        ]);
+        return '';
+    }
 
-        if ($middlewareSetup !== '') {
-            $lines[] = '';
-            $lines[] = $middlewareSetup;
+    /**
+     * Builds the optional middleware chain for the generated route.
+     */
+    private function buildRouteMiddlewareChain(string $surface): string
+    {
+        if (in_array($surface, ['workspace', 'administration', 'devtools'], true)) {
+            return PHP_EOL . '       ->middleware($moduleMiddleware);';
         }
 
-        $lines[] = '';
-        $lines[] = '$router->get(\'/' . $routeUri . '\', [' . $controllerName . '::class, \'index\'])' . $routeTail;
-        $lines[] = '';
-
-        return implode(PHP_EOL, $lines);
+        return ';';
     }
 }

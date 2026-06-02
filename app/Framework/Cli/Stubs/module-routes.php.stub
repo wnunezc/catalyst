@@ -5,17 +5,20 @@ declare(strict_types=1);
 use Catalyst\Framework\Route\Router;
 use Catalyst\Framework\View\View;
 use Catalyst\Helpers\I18n\Translator;
-use {{controllerNamespace}}\{{controllerClass}};
+use {{ControllerNamespace}}\{{ControllerClass}};
+{{MiddlewareImports}}
 
 $router = Router::getInstance();
 
 View::getInstance()->addPath(
-    '{{viewNamespace}}',
-    implode(DS, [PD, 'Repository', '{{spaceDirectory}}', '{{moduleName}}', 'Views'])
+    {{ViewNamespaceLiteral}},
+    {{ViewPathExpression}}
 );
 
 Translator::getInstance()->addPath(
-    implode(DS, [PD, 'Repository', '{{spaceDirectory}}', '{{moduleName}}', 'lang'])
+    {{LangPathExpression}}
 );
 
-$router->get('/{{routeUri}}', [{{controllerClass}}::class, 'index']);
+{{MiddlewareSetup}}
+
+$router->get({{RoutePathLiteral}}, [{{ControllerClass}}::class, 'index']){{RouteMiddlewareChain}}

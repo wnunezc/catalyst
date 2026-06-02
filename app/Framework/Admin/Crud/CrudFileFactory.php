@@ -81,6 +81,7 @@ final class CrudFileFactory
         $auditable = (bool) ($blueprint['auditable'] ?? true);
         $optimisticLocking = (bool) ($blueprint['optimistic_locking'] ?? false);
         $schema = (array) ($blueprint['schema'] ?? []);
+        $moduleNamespaceRoot = (string) ($moduleBlueprint['namespace_root'] ?? ('App\\Surface\\' . $module));
 
         $files = [];
 
@@ -105,6 +106,7 @@ final class CrudFileFactory
             'path' => $baseDir . DS . 'Controllers' . DS . $controllerClass . '.php',
             'contents' => $this->manager->renderStub('crud-controller.php.stub', [
                 'Module' => $module,
+                'ModuleNamespaceRoot' => $moduleNamespaceRoot,
                 'Entity' => $entity,
                 'ControllerClass' => $controllerClass,
                 'RequestClass' => $requestClass,
@@ -130,6 +132,7 @@ final class CrudFileFactory
             'path' => $baseDir . DS . 'Requests' . DS . $requestClass . '.php',
             'contents' => $this->manager->renderStub('crud-request.php.stub', [
                 'Module' => $module,
+                'ModuleNamespaceRoot' => $moduleNamespaceRoot,
                 'RequestClass' => $requestClass,
                 'ResourceKey' => $routeUri,
                 'OnlyFields' => $this->exporter->export((array) ($schema['fillable'] ?? [])),
@@ -182,7 +185,15 @@ final class CrudFileFactory
         ];
         $files[] = [
             'path' => $baseDir . DS . 'routes.php',
-            'contents' => $this->buildRoutes($module, $controllerClass, $routeUri, $viewNamespace, $permission, $softDeletes),
+            'contents' => $this->buildRoutes(
+                $moduleNamespaceRoot,
+                $module,
+                $controllerClass,
+                $routeUri,
+                $viewNamespace,
+                $permission,
+                $softDeletes
+            ),
         ];
         $files[] = [
             'path' => $baseDir . DS . 'module.php',
@@ -198,6 +209,7 @@ final class CrudFileFactory
      * Responsibility: Builds route declarations for generated CRUD endpoints.
      */
     private function buildRoutes(
+        string $moduleNamespaceRoot,
         string $module,
         string $controllerClass,
         string $routeUri,
@@ -205,78 +217,45 @@ final class CrudFileFactory
         string $permission,
         bool $softDeletes
     ): string {
-        $restoreRoutes = $softDeletes ? <<<PHP
-\$router->post('/{$routeUri}/bulk-restore', [{$controllerClass}::class, 'bulkRestore'])
-       ->middleware(\$moduleMiddleware)
-       ->throttle('admin_mutation');
+        $restoreRoutes = $softDeletes
+            ? $this->manager->renderStub('crud-restore-routes.php.stub', [
+                'ControllerClass' => $controllerClass,
+                'BulkRestoreRouteLiteral' => $this->exporter->export('/' . $routeUri . '/bulk-restore'),
+                'RestoreRouteLiteral' => $this->exporter->export('/' . $routeUri . '/{id}/restore'),
+            ])
+            : '';
 
-\$router->post('/{$routeUri}/{id}/restore', [{$controllerClass}::class, 'restore'])
-       ->middleware(\$moduleMiddleware)
-       ->throttle('admin_mutation');
+        return $this->manager->renderStub('crud-routes.php.stub', [
+            'ControllerNamespace' => $moduleNamespaceRoot . '\\Controllers',
+            'ControllerClass' => $controllerClass,
+            'ViewNamespaceLiteral' => $this->exporter->export($viewNamespace),
+            'ViewPathExpression' => $this->buildPathExpression(['Repository', 'App', 'Surface', $module, 'Views']),
+            'LangPathExpression' => $this->buildPathExpression(['Repository', 'App', 'Surface', $module, 'lang']),
+            'PermissionLiteral' => $this->exporter->export($permission),
+            'IndexRouteLiteral' => $this->exporter->export('/' . $routeUri),
+            'CreateRouteLiteral' => $this->exporter->export('/' . $routeUri . '/create'),
+            'EditRouteLiteral' => $this->exporter->export('/' . $routeUri . '/{id}/edit'),
+            'BulkDeleteRouteLiteral' => $this->exporter->export('/' . $routeUri . '/bulk-delete'),
+            'UpdateRouteLiteral' => $this->exporter->export('/' . $routeUri . '/{id}'),
+            'DeleteRouteLiteral' => $this->exporter->export('/' . $routeUri . '/{id}/delete'),
+            'RestoreRoutes' => $restoreRoutes,
+        ]);
+    }
 
-PHP : '';
 
-        $body = <<<PHP
-<?php
+    /**
+     * Builds a PD-relative path expression for generated route files.
+     *
+     * @param string[] $segments
+     */
+    private function buildPathExpression(array $segments): string
+    {
+        $exportedSegments = array_map(
+            fn (string $segment): string => $this->exporter->export($segment),
+            $segments
+        );
 
-declare(strict_types=1);
-
-use App\\{$module}\\Controllers\\{$controllerClass};
-use Catalyst\\Framework\\Middleware\\AuthMiddleware;
-use Catalyst\\Framework\\Middleware\\RoleMiddleware;
-use Catalyst\\Framework\\Route\\Router;
-use Catalyst\\Framework\\View\\View;
-use Catalyst\\Helpers\\I18n\\Translator;
-
-\$router = Router::getInstance();
-
-View::getInstance()->addPath(
-    '{$viewNamespace}',
-    implode(DS, [PD, 'Repository', 'App', '{$module}', 'Views'])
-);
-
-Translator::getInstance()->addPath(
-    implode(DS, [PD, 'Repository', 'App', '{$module}', 'lang'])
-);
-
-\$moduleMiddleware = [AuthMiddleware::class, new RoleMiddleware(permissions: '{$permission}')];
-
-\$router->get('/{$routeUri}', [{$controllerClass}::class, 'index'])
-       ->middleware(\$moduleMiddleware);
-
-\$router->get('/{$routeUri}/create', [{$controllerClass}::class, 'create'])
-       ->middleware(\$moduleMiddleware);
-
-\$router->post('/{$routeUri}', [{$controllerClass}::class, 'store'])
-       ->middleware(\$moduleMiddleware)
-       ->throttle('admin_mutation');
-
-\$router->get('/{$routeUri}/{id}/edit', [{$controllerClass}::class, 'edit'])
-       ->middleware(\$moduleMiddleware);
-
-\$router->post('/{$routeUri}/bulk-delete', [{$controllerClass}::class, 'bulkDestroy'])
-       ->middleware(\$moduleMiddleware)
-       ->throttle('admin_mutation');
-
-\$router->post('/{$routeUri}/{id}', [{$controllerClass}::class, 'update'])
-       ->middleware(\$moduleMiddleware)
-       ->throttle('admin_mutation');
-
-\$router->post('/{$routeUri}/{id}/delete', [{$controllerClass}::class, 'destroy'])
-       ->middleware(\$moduleMiddleware)
-       ->throttle('admin_mutation');
-
-PHP;
-
-        if ($restoreRoutes !== '') {
-            $body = str_replace(
-                "\$router->post('/{$routeUri}/{id}/delete'",
-                $restoreRoutes . "\n\$router->post('/{$routeUri}/{id}/delete'",
-                $body
-            );
-        }
-
-        return $body;
+        return 'implode(DS, [PD, ' . implode(', ', $exportedSegments) . '])';
     }
 
     /**
@@ -295,7 +274,9 @@ PHP;
         ];
         $manifest['routes']['prefixes'] = ['/' . $routeUri];
 
-        return "<?php\n\ndeclare(strict_types=1);\n\nreturn " . $this->exporter->export($manifest) . ";\n";
+        return $this->manager->renderStub('crud-module.php.stub', [
+            'Manifest' => $this->exporter->export($manifest),
+        ]);
     }
 
     /**

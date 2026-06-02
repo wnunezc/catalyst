@@ -74,9 +74,9 @@ final class EventEnvelope
     }
 
     /**
-     * Serializes the event envelope for persistence or queue transport. id:string, name:string, payload:array<string, mixed>, meta:array<string, mixed>, occurred_at:string }.
+     * Serializes the event envelope for persistence or queue transport. id:string, name:string, payload:array<string, mixed>, meta:array<string, mixed>, occurred_at:string.
      *
-     * Responsibility: Serializes the event envelope for persistence or queue transport. id:string, name:string, payload:array<string, mixed>, meta:array<string, mixed>, occurred_at:string }.
+     * Responsibility: Serializes the event envelope for persistence or queue transport. id:string, name:string, payload:array<string, mixed>, meta:array<string, mixed>, occurred_at:string.
      * @return array{
      */
     public function toArray(): array

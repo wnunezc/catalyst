@@ -1,0 +1,49 @@
+<?php
+
+declare(strict_types=1);
+
+use {{ControllerNamespace}}\{{ControllerClass}};
+use Catalyst\Framework\Middleware\AuthMiddleware;
+use Catalyst\Framework\Middleware\RoleMiddleware;
+use Catalyst\Framework\Route\Router;
+use Catalyst\Framework\View\View;
+use Catalyst\Helpers\I18n\Translator;
+
+$router = Router::getInstance();
+
+View::getInstance()->addPath(
+    {{ViewNamespaceLiteral}},
+    {{ViewPathExpression}}
+);
+
+Translator::getInstance()->addPath(
+    {{LangPathExpression}}
+);
+
+$moduleMiddleware = [AuthMiddleware::class, new RoleMiddleware(permissions: {{PermissionLiteral}})];
+
+$router->get({{IndexRouteLiteral}}, [{{ControllerClass}}::class, 'index'])
+       ->middleware($moduleMiddleware);
+
+$router->get({{CreateRouteLiteral}}, [{{ControllerClass}}::class, 'create'])
+       ->middleware($moduleMiddleware);
+
+$router->post({{IndexRouteLiteral}}, [{{ControllerClass}}::class, 'store'])
+       ->middleware($moduleMiddleware)
+       ->throttle('admin_mutation');
+
+$router->get({{EditRouteLiteral}}, [{{ControllerClass}}::class, 'edit'])
+       ->middleware($moduleMiddleware);
+
+$router->post({{BulkDeleteRouteLiteral}}, [{{ControllerClass}}::class, 'bulkDestroy'])
+       ->middleware($moduleMiddleware)
+       ->throttle('admin_mutation');
+
+{{RestoreRoutes}}
+$router->post({{UpdateRouteLiteral}}, [{{ControllerClass}}::class, 'update'])
+       ->middleware($moduleMiddleware)
+       ->throttle('admin_mutation');
+
+$router->post({{DeleteRouteLiteral}}, [{{ControllerClass}}::class, 'destroy'])
+       ->middleware($moduleMiddleware)
+       ->throttle('admin_mutation');
