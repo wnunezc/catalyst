@@ -381,9 +381,12 @@ Aplicar durante toda modificacion de codigo:
   - Evidencia:
     `docs/audits/architecture-first/2026-06-02-6d3-template-migration-plan.md`.
 
-- [ ] **Task 6D.4: Planificar extraccion de inline JS/CSS**
+- [x] **Task 6D.4: Planificar extraccion de inline JS/CSS**
   - Separar comportamiento hacia assets versionados conservando CSP y bloques
     JSON de transporte intencionales.
+  - Estado: implementado y verificado.
+  - Evidencia:
+    `docs/audits/architecture-first/2026-06-02-6d4-inline-asset-extraction-plan.md`.
 
 - [ ] **Task 6E.1: Verificar y presentar cierre de fase**
   - Ejecutar Composer, quality gate, inspectores, sync documental y diff checks.
