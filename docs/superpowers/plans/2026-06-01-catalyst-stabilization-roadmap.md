@@ -367,9 +367,12 @@ Aplicar durante toda modificacion de codigo:
   - Evidencia:
     `docs/audits/architecture-first/2026-06-02-6d1-documentation-contract.md`.
 
-- [ ] **Task 6D.2: Documentar contratos JS canonicos**
+- [x] **Task 6D.2: Documentar contratos JS canonicos**
   - Cubrir inicializacion, DOM, eventos, payloads y supuestos CSP de scripts
     no triviales sin narracion redundante.
+  - Estado: implementado y verificado.
+  - Evidencia:
+    `docs/audits/architecture-first/2026-06-02-6d2-js-contracts.md`.
 
 - [ ] **Task 6D.3: Planificar migracion de templates PHP ejecutables**
   - Inventariar y migrar por superficies acotadas; mantener fallback PHP hasta

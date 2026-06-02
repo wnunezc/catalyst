@@ -1,7 +1,7 @@
 # Runtime Inventory
 
 > Auto-generated from filesystem and PHP tokens. Run `php public/cli.php docs:inventory` to refresh.
-> Last generated: 2026-06-02 02:01:53
+> Last generated: 2026-06-02 02:04:46
 
 ## Summary
 
@@ -900,17 +900,17 @@
 | `Repository/App/Surface/Home/front/script.js` | `Repository front` | 141 |
 | `Repository/App/Surface/Landing/front/script.js` | `Repository front` | 141 |
 | `Repository/App/Surface/Store/front/script.js` | `Repository front` | 141 |
-| `Repository/Framework/ApiPlatform/front/script.js` | `Repository front` | 375 |
-| `Repository/Framework/Audit/front/script.js` | `Repository front` | 53 |
-| `Repository/Framework/Auth/front/script.js` | `Repository front` | 2177 |
-| `Repository/Framework/Automation/front/script.js` | `Repository front` | 375 |
-| `Repository/Framework/Catalogs/front/script.js` | `Repository front` | 187 |
-| `Repository/Framework/DemoUi/front/script.js` | `Repository front` | 1093 |
+| `Repository/Framework/ApiPlatform/front/script.js` | `Repository front` | 631 |
+| `Repository/Framework/Audit/front/script.js` | `Repository front` | 344 |
+| `Repository/Framework/Auth/front/script.js` | `Repository front` | 2512 |
+| `Repository/Framework/Automation/front/script.js` | `Repository front` | 630 |
+| `Repository/Framework/Catalogs/front/script.js` | `Repository front` | 454 |
+| `Repository/Framework/DemoUi/front/script.js` | `Repository front` | 1447 |
 | `Repository/Framework/DevTools/front/script.js` | `Repository front` | 20808 |
-| `Repository/Framework/Documents/front/script.js` | `Repository front` | 375 |
-| `Repository/Framework/Media/front/script.js` | `Repository front` | 892 |
-| `Repository/Framework/Operations/front/script.js` | `Repository front` | 1020 |
-| `Repository/Framework/Roles/front/script.js` | `Repository front` | 40 |
+| `Repository/Framework/Documents/front/script.js` | `Repository front` | 629 |
+| `Repository/Framework/Media/front/script.js` | `Repository front` | 1187 |
+| `Repository/Framework/Operations/front/script.js` | `Repository front` | 1320 |
+| `Repository/Framework/Roles/front/script.js` | `Repository front` | 275 |
 | `Repository/Framework/Settings/front/script.js` | `Repository front` | 8382 |
 | `public/assets/js/catalyst/account-shell.js` | `public catalyst js` | 833 |
 | `public/assets/js/catalyst/account-theme-bootstrap.js` | `public catalyst js` | 5667 |

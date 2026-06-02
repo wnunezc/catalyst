@@ -1,3 +1,10 @@
+/**
+ * Contract:
+ * - Init: DOMContentLoaded on Operations admin views.
+ * - DOM: `[data-confirm]` forms and `.operations-theme-card` radio wrappers.
+ * - Events/Payload: confirms submits and mirrors selected theme radio state.
+ * - CSP: class-only DOM mutation, no inline style or dynamic HTML.
+ */
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[data-confirm]').forEach((element) => {
         element.addEventListener('submit', (event) => {

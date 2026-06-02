@@ -1,3 +1,10 @@
+/**
+ * Contract:
+ * - Init: immediate boot plus one DOMContentLoaded retry guarded by `authModuleBooted`.
+ * - DOM: optional `#mfa-qr[data-qr-uri]` container on MFA setup pages.
+ * - Events/Payload: loads QRCode only when the URI payload is present.
+ * - CSP: no inline handlers; external QR runtime must be allowed by script-src.
+ */
 const QR_CODE_SCRIPT_SRC = 'https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js';
 
 let authModuleBooted = false;
