@@ -1,57 +1,29 @@
 # Views Index
 
-This file is a thin navigation index for Catalyst's view layer.
+## Purpose
 
-It exists to satisfy the generic Phase 4 target without collapsing the existing split view/security/runtime docs into one file again.
+Serve as the broad entry point for Catalyst view, template, frontend resource and CSP documentation.
 
-## Canonical references
+## Runtime Owners
 
-- View engine, template resolution, layouts, and exceptions: `docs/framework-view.md`
-- Runtime i18n integration for templates: `docs/helpers-i18n.md`
-- MVC placement and module co-location model: `docs/architecture.md`
-- Output escaping, CSP, nonce, `data-*`, and frontend conventions: `docs/security-conventions.md`
-- Layout inventory and template locations: `STRUCTURE.md`
+| Concern | Owner |
+|---|---|
+| View rendering | `Catalyst\Framework\View\View` |
+| Module view registration | `Catalyst\Framework\View\ModuleViewPathRegistrar` |
+| Token rendering | `Catalyst\Framework\View\ViewTokenRenderer` |
+| Trusted HTML and inline JSON boundaries | `Catalyst\Framework\View\TrustedHtml`, `Catalyst\Framework\View\InlineJson` |
+| Work assets | `Catalyst\Framework\Traits\FrontResourceTrait` |
 
-## Current template contract
+## Current Behavior
 
-Catalyst now uses a token-aware `.phtml` contract for declarative HTML views.
+Runtime inventory currently reports 230 templates and 54 scripts. Module-specific frontend assets belong in `Repository/{Framework|App}/{Module}/front/` and are published under `public/assets/*/work/{slug}/`. CSP and trusted HTML rules are documented in `docs/security-conventions.md`.
 
-Core rules:
+## Operational Notes
 
-- `.phtml` = HTML only, no `<?php` or `<?=`
-- module templates live under `Views/pages|partials|components`
-- companion scope preparation = `Views/scope/.../*.php` or `boot-core/template/scope/.../*.php`
-- renderer = `ViewTokenRenderer`
-- trusted raw HTML = `TrustedHtml`
+After template/script changes, run `php public/cli.php docs:inventory --json`, `php public/cli.php inspect:lint` and `git diff --check`.
 
-Canonical token forms:
+## Related Documentation
 
-- escaped variable:
-  - `{{ page_title }}`
-- translation:
-  - `{{ t:operations.appearance.hero_eyebrow }}`
-- translation with replacements:
-  - `{{ t:messages.welcome name=user_name }}`
-- trusted raw:
-  - `{{{ csrfField }}}`
-- conditional:
-  - `{{#if has_items}} ... {{else}} ... {{/if}}`
-- iterable:
-  - `{{#each cards}} ... {{/each}}`
-- partial:
-  - `{{> "./partials/_card" }}`
-
-Default safety model:
-
-- `{{ ... }}` escapes by default
-- `{{ t:... }}` translates and escapes
-- `{{{ ... }}}` should only receive `TrustedHtml`
-
-## Scope note
-
-`docs/framework-view.md` is the canonical deep dive for the framework view engine.
-This file is only the broad entry point for readers expecting a generic `views.md`.
-
-## Usage note
-
-Use this file when a task starts from the broad label `views`.
+- `docs/framework-view.md`
+- `docs/security-conventions.md`
+- `docs/runtime-inventory.md`

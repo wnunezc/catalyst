@@ -1,34 +1,39 @@
 # Testing Guide
 
-This file is a thin navigation index for Catalyst's current verification surface.
+## Purpose
 
-It exists to satisfy the generic Phase 4 target without duplicating the split documentation already aligned to the real runtime.
+List the current verification commands that represent Catalyst runtime readiness.
 
-## Scope
+## Runtime Owners
 
-Catalyst does not ship a dedicated Phase 6 toolchain in the current approved stream.
+| Concern | Owner |
+|---|---|
+| Quality gate | `Catalyst\Framework\Cli\Commands\QualityCheckCommand` |
+| Structural lint | `Catalyst\Framework\Cli\Commands\InspectLintCommand` |
+| Route lint | `Catalyst\Framework\Cli\Commands\RouteLintCommand` |
+| Runtime docs inventory | `Catalyst\Framework\Cli\Commands\DocsInventoryCommand` |
+| Runtime module sync | `Catalyst\Framework\Cli\Commands\DocsSyncRuntimeCommand` |
 
-- No `PHPUnit` bootstrap is treated as canonical in this stream.
-- No `PHPStan` or other new dev dependencies are part of this document set.
-- Current verification remains centered on runtime smoke checks, targeted checklists, and subsystem-specific docs.
+## Current Behavior
 
-## Canonical references
+The standard documentation/runtime verification set is:
 
-- CLI/runtime smoke and command surface: `TERMINAL.md`, `docs/entry-points.md`
-- Official reversible auth/RBAC fixtures: `php public/cli.php fixtures:auth --help`
-- Per-module harness matrix: `php public/cli.php inspect:harness --json`
-- Living runtime catalog: `docs/runtime-module-catalog.md`, `php public/cli.php docs:sync-runtime`
-- Canonical full smoke: `npm run qa:catalyst:buckets`
-- Setup flow verification: `docs/checklists/setup-completion-e2e.md`
-- Security/frontend checks: `docs/security-conventions.md`, `docs/deployment.md`
-- Auth behavior under test: `docs/framework-auth.md`, `docs/repository-auth.md`
-- DevTools/runtime harness coverage: `docs/repository-devtools.md`
-- Notification/status bar runtime coverage: `docs/repository-notification.md`
+```powershell
+php public/cli.php docs:inventory --json
+php public/cli.php docs:sync-runtime --stdout
+php public/cli.php route:list --json
+php public/cli.php inspect:lint
+php public/cli.php route:lint
+php public/cli.php quality:check
+git diff --check
+```
 
-## Usage note
+## Operational Notes
 
-Use this file when a task starts from the broad label `testing`.
-For the actual behavior contract of each subsystem, read the split documents above.
-When a test needs auth/RBAC state changes, prefer `fixtures:auth` snapshot slots over ad-hoc SQL or manual baseline rewriting.
-When a test needs to assert auth runtime state, prefer `fixtures:auth --field`, `--password-check` and `--token-counts` over direct SQL checks.
-When a test needs forced MFA setup or challenge state, prefer `fixtures:auth --set-mfa-enabled` plus the real MFA runtime flow instead of synthetic session hacks.
+`quality:check` includes `status`, which may emit environment-bound DNS warnings from host Windows for Docker-only service names. Treat those as acceptable only when the gate reports ready and the failing check is known to be host-environment specific.
+
+## Related Documentation
+
+- `docs/quality-gate.md`
+- `docs/documentation-contract.md`
+- `docs/runtime-module-catalog.md`

@@ -1,23 +1,30 @@
 # Database Index
 
-This file is a thin navigation index for Catalyst's database and ORM documentation.
+## Purpose
 
-It exists to satisfy the generic Phase 4 target while keeping the canonical detail in the split docs already reconciled against runtime.
+Serve as the broad entry point for Catalyst database, ORM, relation and migration documentation.
 
-## Canonical references
+## Runtime Owners
 
-- Core database stack, ORM, relations, migrations: `docs/framework-database.md`
-- Runtime configuration source and priority: `docs/helpers-config.md`
-- Architecture placement and dependency map: `docs/architecture.md`
-- Class dictionary and live model inventory: `STRUCTURE.md`
-- CLI entry points for migrations and operational commands: `docs/entry-points.md`, `TERMINAL.md`
+| Concern | Owner |
+|---|---|
+| Connection management | `Catalyst\Framework\Database\DatabaseManager` |
+| Low-level connection | `Catalyst\Framework\Database\Connection` |
+| Active-record model primitive | `Catalyst\Framework\Database\Model` |
+| Query builder | `Catalyst\Framework\Database\ModelQueryBuilder` |
+| Migrations | `Catalyst\Framework\Database\MigrationRunner` |
+| Relations | `Catalyst\Framework\Database\Relations\*` |
 
-## Scope split
+## Current Behavior
 
-- `docs/framework-database.md` is the canonical deep dive for `DatabaseManager`, `Connection`, `QueryBuilder`, `Model`, relations, and migrations.
-- This file is only the broad entry point for readers looking for `database.md`.
+Database primitives live under `Catalyst\Framework\Database`. Module repositories use those primitives but do not own the ORM contract. Current class and method details are generated in `docs/framework-database.md` from PHP docblocks.
 
-## Usage note
+## Operational Notes
 
-Use this file when a task starts from the broad label `database`.
-Do not duplicate contracts here that already live in `docs/framework-database.md`.
+Run `php public/cli.php migrate:status` for migration state and `php public/cli.php docs:inventory --json` after class changes. Keep module persistence details in module/repository docs instead of duplicating them here.
+
+## Related Documentation
+
+- `docs/framework-database.md`
+- `docs/framework-concurrency.md`
+- `docs/runtime-inventory.md`

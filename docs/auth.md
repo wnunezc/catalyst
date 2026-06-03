@@ -1,23 +1,30 @@
 # Auth Index
 
-This file is a thin navigation index for Catalyst's authentication surface.
+## Purpose
 
-It exists to satisfy the generic Phase 4 target while keeping the detailed auth story split between framework and repository layers.
+Serve as the broad entry point for Catalyst authentication documentation.
 
-## Canonical references
+## Runtime Owners
 
-- Auth core, provider, remember-me, OAuth, MFA primitives: `docs/framework-auth.md`
-- User-facing routes, controllers, and flows: `docs/repository-auth.md`
-- Setup completion path that materializes the initial admin user: `docs/checklists/setup-completion-e2e.md`
-- Runtime architecture and entry points: `docs/architecture.md`, `docs/entry-points.md`
-- Full class dictionary: `STRUCTURE.md`
+| Concern | Owner |
+|---|---|
+| Auth primitives | `Catalyst\Framework\Auth\AuthManager` |
+| User provider | `Catalyst\Framework\Auth\UserProvider` |
+| MFA runtime | `Catalyst\Framework\Auth\MfaManager` |
+| OAuth runtime | `Catalyst\Framework\Auth\OAuthManager` |
+| Auth routes/controllers | `Catalyst\Repository\Auth\Controllers\*` |
 
-## Scope split
+## Current Behavior
 
-- `docs/framework-auth.md` covers the framework auth core.
-- `docs/repository-auth.md` covers login, register, logout, password reset, verification, OAuth callbacks, and MFA-facing controllers.
-- This file stays as the broad entry point for the generic `auth.md` target.
+Authentication is split between framework primitives and repository-facing routes. Framework auth owns identity, session, remember-me, MFA and OAuth primitives. Repository auth owns `/login`, `/register`, `/logout`, reset password, email verification, social callbacks and MFA-facing controller flows.
 
-## Usage note
+## Operational Notes
 
-Use this file when a task starts from the broad label `auth`.
+Use `docs/framework-auth.md` for class and method contracts generated from PHP docblocks. Use `docs/repository-auth.md` for routed module behavior. Route truth comes from `php public/cli.php route:list --json` and `docs/runtime-module-catalog.md`.
+
+## Related Documentation
+
+- `docs/framework-auth.md`
+- `docs/repository-auth.md`
+- `docs/middleware.md`
+- `docs/checklists/setup-completion-e2e.md`
