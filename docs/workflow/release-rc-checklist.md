@@ -61,15 +61,15 @@ regression, when the Docker rerun passes.
 1. Confirm the working tree scope and keep unrelated changes out of the release commit.
 2. Commit intentionally after review.
 3. Tag the exact commit with `v{version}` from `catalyst.json`.
-4. Build the release archive from the committed tree.
-5. Exclude runtime/private artifacts.
-6. Generate checksum files for release assets.
+4. Push the tag so `.github/workflows/release.yml` can build the archive and checksum from the committed tree.
+5. Exclude runtime/private artifacts by relying on `git archive` output, not a working directory zip.
+6. If the release already exists, rerun `Catalyst Release` with `workflow_dispatch` and the tag to upload assets with `--clobber`.
 
 ## GitHub Release
 
-1. Push the tag.
-2. Create a GitHub Release marked as pre-release.
-3. Upload release assets and checksums.
+1. Push the tag or run `.github/workflows/release.yml` manually with `workflow_dispatch`.
+2. Confirm the GitHub Release is marked as pre-release.
+3. Confirm release assets and checksums are uploaded.
 4. Include:
    - installation contract;
    - upgrade/update notes;
@@ -77,6 +77,18 @@ regression, when the Docker rerun passes.
    - verification commands;
    - dependency decisions and deferred items.
 5. Verify public asset downloads and checksums from the release page.
+
+## Cloud Repository Configuration
+
+- `.github/workflows/quality.yml` runs Composer validation/audit, PHP lint,
+  route lint, structural lint, security check, i18n usage lint, Settings
+  localization smoke and `quality:check` on `main` pushes and pull requests.
+- `.github/workflows/release.yml` builds `catalyst-{version}.zip`, generates
+  `sha256sum`, creates a pre-release for `v*` tags or updates assets when run
+  manually with `workflow_dispatch`.
+- The GitHub repository should keep issues and discussions enabled, wiki and
+  projects disabled, secret scanning with push protection enabled, and `main`
+  protected against force-pushes/deletions.
 
 ## Known RC Constraints
 

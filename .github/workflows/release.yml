@@ -1,0 +1,77 @@
+name: Catalyst Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag, for example v0.1.0-rc.1'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build release assets
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Resolve tag
+        id: ref
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "tag=${{ inputs.tag }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "tag=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Checkout tag
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.ref.outputs.tag }}
+          fetch-depth: 0
+
+      - name: Build archive and checksum
+        shell: bash
+        run: |
+          tag="${{ steps.ref.outputs.tag }}"
+          version="${tag#v}"
+          archive="catalyst-${version}.zip"
+          git archive --format=zip --prefix="catalyst-${version}/" -o "$archive" "$tag"
+          sha256sum "$archive" > "${archive}.sha256"
+
+      - name: Publish GitHub pre-release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          tag="${{ steps.ref.outputs.tag }}"
+          version="${tag#v}"
+          archive="catalyst-${version}.zip"
+          notes_file="$(mktemp)"
+          cat > "$notes_file" <<EOF
+          ## Catalyst ${version}
+
+          Automated release assets for ${tag}.
+
+          Validate the archive with:
+
+          \`\`\`powershell
+          Get-FileHash -Algorithm SHA256 .\\${archive}
+          Get-Content .\\${archive}.sha256
+          \`\`\`
+          EOF
+
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" "$archive" "${archive}.sha256" --clobber
+          else
+            gh release create "$tag" "$archive" "${archive}.sha256" \
+              --title "Catalyst ${version}" \
+              --notes-file "$notes_file" \
+              --prerelease
+          fi

@@ -1,0 +1,58 @@
+name: Catalyst Quality Gate
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: PHP 8.4 quality gate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: ctype, fileinfo, json, mbstring, openssl, pdo, pdo_mysql
+          coverage: none
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Validate Composer metadata
+        run: composer validate --strict
+
+      - name: Audit Composer dependencies
+        run: composer audit
+
+      - name: Lint changed PHP baseline
+        run: find app boot-core Repository public -name '*.php' -not -path '*/vendor/*' -print0 | xargs -0 -n1 php -l
+
+      - name: Route lint
+        run: php public/cli.php route:lint
+
+      - name: Structural lint
+        run: php public/cli.php inspect:lint
+
+      - name: Security check
+        run: php public/cli.php security:check
+
+      - name: I18n usage lint
+        run: php public/cli.php i18n:usage-lint
+
+      - name: Settings localization smoke
+        run: php public/cli.php settings:localization-smoke
+
+      - name: Quality check
+        run: php public/cli.php quality:check
