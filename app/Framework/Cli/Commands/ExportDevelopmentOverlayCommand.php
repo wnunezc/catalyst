@@ -201,11 +201,16 @@ class ExportDevelopmentOverlayCommand extends AbstractCommand
     private function renderOverlayFromWebContainer(): string
     {
         $container = $this->resolveWebContainerName();
+        $cliPath = trim((string) (GET_ENV_VAR['CATALYST_DOCKER_CLI_PATH'] ?? ''));
+        if ($cliPath === '') {
+            $cliPath = '/var/www/html/public/cli.php';
+        }
+
         $args = [
             'exec',
             $container,
             'php',
-            '/var/www/html/catalyst.dock/public/cli.php',
+            $cliPath,
             'dev:export-overlay',
             '--stdout',
             '--direct-db-only',

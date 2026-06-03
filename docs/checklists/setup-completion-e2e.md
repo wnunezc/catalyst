@@ -39,9 +39,10 @@ Usar esta checklist cuando cambien:
 
 ## Pre-requisitos
 
-- `https://catalyst.dock/` responde.
+- La URL local configurada responde, por ejemplo `http://localhost/` o el
+  VirtualHost elegido para el proyecto.
 - Browser con DevTools.
-- Acceso al contenedor MariaDB del stack WSDD si se va a verificar DB real.
+- Acceso al servidor MySQL/MariaDB de la instalación si se va a verificar DB real.
 - Terminal con `php`.
 
 ## Estado inicial esperado
@@ -64,7 +65,7 @@ Objetivo:
 - confirmar que los POST parciales de `/configuration/environment-setup/*` preservan `project.project_config=false`
 
 Pasos:
-1. Abrir `https://catalyst.dock/configuration/environment-setup`.
+1. Abrir `{APP_URL}/configuration/environment-setup`.
 2. Guardar varias secciones (`app`, `db`, `mail`, `session`, `cache`, `logging`, `security`, `websocket`, `cors`).
 3. Tras cada guardado, verificar que `app.json` sigue con `"project_config": false`.
 
@@ -177,7 +178,7 @@ Objetivo:
 - confirmar el acceso real a `/configuration/environment-setup` una vez configurado
 
 Pasos:
-1. Con `project_config=true`, abrir `https://catalyst.dock/configuration/environment-setup` sin sesión.
+1. Con `project_config=true`, abrir `{APP_URL}/configuration/environment-setup` sin sesión.
 2. Verificar redirect a `/login?redirect=/configuration/environment-setup`.
 3. Autenticarse como admin.
 4. Reabrir `/configuration/environment-setup`.

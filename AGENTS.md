@@ -12,7 +12,7 @@
 - PHP 8.4 strict types
 - Bootstrap 5.3.8 + JavaScript ES Modules
 - MySQL/MariaDB
-- Docker via WSDD en `https://catalyst.dock/`
+- Docker via WSDD en `https://catalyst.dock/` para el workspace local; no es requisito universal de distribucion.
 - Dependencias aprobadas: `phpmailer/phpmailer`, `league/oauth2-client`, `cboden/ratchet`, `react/http`
 - Debug: Xdebug puerto `9003` con `host.docker.internal`
 
@@ -35,7 +35,7 @@ php public/cli.php status
 php public/cli.php make:controller --help
 ```
 
-Uso local:
+Uso local del workspace:
 
 - Web: `https://catalyst.dock/`
 - CLI: `php public/cli.php`

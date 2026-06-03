@@ -1,0 +1,37 @@
+# Catalyst project-root Apache fallback.
+#
+# Preferred deployment: configure the web server DocumentRoot to this project's
+# public/ directory. This file exists for local/shared hosts that point Apache at
+# the project root, such as a direct XAMPP htdocs install.
+
+DirectoryIndex public/index.php
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Hide the implementation detail when a caller reaches /public directly.
+    RewriteCond %{THE_REQUEST} \s/+public/([^\s?]*) [NC]
+    RewriteRule ^public/(.*)$ /$1 [R=301,L,NE]
+
+    # Serve existing public files without exposing the project tree.
+    RewriteCond %{DOCUMENT_ROOT}/public/$1 -f
+    RewriteRule ^(.+)$ public/$1 [L]
+
+    RewriteCond %{DOCUMENT_ROOT}/public/$1 -d
+    RewriteRule ^(.+)$ public/$1 [L]
+
+    # Send all application routes to the public entry point.
+    RewriteRule ^$ public/index.php [L]
+    RewriteRule ^(.+)$ public/index.php [QSA,L]
+</IfModule>
+
+<FilesMatch "^(\.env|\.git|\.htaccess|composer\.json|composer\.lock|phpunit\.xml)$">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_authz_core.c>
+    <If "%{REQUEST_URI} =~ m#^/(app|boot-core|Repository|vendor|docs|Patch)/#">
+        Require all denied
+    </If>
+</IfModule>

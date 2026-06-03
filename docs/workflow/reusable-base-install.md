@@ -21,6 +21,7 @@ php public/cli.php quality:check
 
 Keep:
 
+- `.htaccess`
 - `app/`
 - `Repository/Framework/`
 - `Repository/App/` starter surfaces that are intentionally part of the base
@@ -51,8 +52,9 @@ Do not carry over:
 
 ## Rename And Configure
 
-1. Choose the target project folder and host name.
-2. Copy the reviewed base into the target folder.
+1. Choose the target site root and host name.
+2. Copy the reviewed base contents into the target site root. For XAMPP this can
+   be `htdocs` itself; do not require a wrapper folder named `catalyst`.
 3. Run:
 
 ```powershell
@@ -67,7 +69,11 @@ composer dump-autoload
    - mail credentials;
    - OAuth credentials if used;
    - storage credentials if used.
-6. Run the setup wizard and create the initial admin.
+6. Configure the web server:
+   - preferred: point the VirtualHost document root to `public/`;
+   - fallback: allow the root `.htaccess` to forward project-root requests to
+     `public/` transparently.
+7. Run the setup wizard and create the initial admin.
 
 ## Baseline Verification
 
@@ -82,6 +88,11 @@ php public/cli.php docs:inventory --json
 php public/cli.php docs:sync-runtime --stdout
 git diff --check
 ```
+
+Also verify the configured browser URL does not require `/catalyst` or another
+project-folder segment. Catalyst must be able to run from any physical directory
+name because runtime paths are resolved from the project structure, not from a
+literal folder name.
 
 ## Project-Specific Reset Points
 
@@ -105,3 +116,5 @@ Each new project should retain:
 - local setup notes;
 - first quality gate output;
 - list of any base modules intentionally disabled.
+- configured web URL and whether Apache serves `public/` directly or via the
+  root `.htaccess` fallback.
