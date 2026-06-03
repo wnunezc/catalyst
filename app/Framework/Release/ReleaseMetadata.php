@@ -14,7 +14,7 @@ final class ReleaseMetadata
      */
     public static function local(): array
     {
-        return self::fromFile(PD . DS . 'boot-core' . DS . 'version.json');
+        return self::fromFile(PD . DS . 'catalyst.json');
     }
 
     /**

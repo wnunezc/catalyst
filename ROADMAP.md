@@ -38,7 +38,7 @@ application inside `Repository/App/`.
 4. Confirm setup wizard can configure app URL, database, mail, security and DKIM
    values without maintainer-local assumptions.
 5. Produce release notes with known constraints and verification commands.
-6. Publish a tag matching `boot-core/version.json`.
+6. Publish a tag matching `catalyst.json`.
 
 ## Expected 0.1.0 Feedback
 

@@ -1,6 +1,0 @@
-{
-  "version": "0.1.0-rc.1",
-  "channel": "rc",
-  "source": "https://github.com/wnunezc/catalyst",
-  "release_manifest": "https://raw.githubusercontent.com/wnunezc/catalyst/main/boot-core/version.json"
-}
