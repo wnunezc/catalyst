@@ -5,7 +5,7 @@ Use this checklist before publishing a Catalyst release candidate. Publishing an
 ## Preconditions
 
 - `catalyst.json` has the intended version and channel.
-- `README.md`, `ROADMAP.md`, `docs/architecture.md`, `docs/harness-context-map.md`, runtime inventory and module catalog are current.
+- `README.md`, `docs/architecture.md`, `docs/harness-context-map.md`, runtime inventory and module catalog are current.
 - Closed planning artifacts are archived outside the repo; `/docs` contains only current product/framework documentation.
 - Changed PHP classes and methods have docblocks with meaningful `Responsibility:` lines that are not copied from the summary.
 - No RTM Hub modules, tables or screens are present in Catalyst.
