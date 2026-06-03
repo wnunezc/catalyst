@@ -22,7 +22,7 @@ Routes are declared by framework and app modules, loaded through the kernel, and
 
 ## Operational Notes
 
-Do not rely on `docs/navigation-route-matrix-222.md` or `docs/ui/route-inventory-99.md` for live route truth. Those snapshots are superseded by `route:list --json` and `docs/runtime-module-catalog.md`.
+Use `route:list --json` and `docs/runtime-module-catalog.md` for live route truth; historical route snapshots are not kept in `/docs`.
 
 ## Related Documentation
 
