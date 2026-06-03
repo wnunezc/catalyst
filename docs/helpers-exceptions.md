@@ -1,118 +1,184 @@
 # Catalyst\Helpers\Exceptions
 
-All custom exceptions extend PHP's base `Exception` (or `RuntimeException`) and are located in `app/Helpers/Exceptions/`.
+## Purpose
 
-## Class: EnvironmentException
-**File**: app/Helpers/Exceptions/EnvironmentException.php
-**Namespace**: Catalyst\Helpers\Exceptions
-**Type**: Class
-**Extends**: RuntimeException
-**Purpose**: Thrown during bootstrap when the .env file cannot be loaded. Used by `readEnvironmentVariable()` in env-constant.php.
+Document framework exception types.
 
-### Static Factory Methods
-- `fileMissing(string $path): self` - **public static** - .env and .env.example both absent
-- `copyFailed(string $source, string $dest): self` - **public static** - Failed to copy .env.example to .env
-- `unreadable(string $path): self` - **public static** - file() returned false
-- `empty(string $path): self` - **public static** - .env exists but contains no parseable lines
+## Runtime Owners
 
-### Usage Notes
-- Must be resolvable during bootstrap BEFORE Composer is loaded
-- SPL autoloader (`spl-autoload.php`) maps `Catalyst\Helpers\Exceptions\` → `app/Helpers/Exceptions`
-- `readEnvironmentVariable()` throws; single top-level catch in env-constant.php bootstrap scope
+| Concern | Owner |
+|---|---|
+| Represents failures while establishing database connections. | `Catalyst\Helpers\Exceptions\ConnectionException` |
+| Provides bootstrap exceptions for missing, unreadable or invalid environment files. | `Catalyst\Helpers\Exceptions\EnvironmentException` |
+| Provides exceptions for common file read, write and existence failures. | `Catalyst\Helpers\Exceptions\FileSystemException` |
+| Carries denial context for role, permission and policy authorization failures. | `Catalyst\Helpers\Exceptions\ForbiddenException` |
+| Provides typed error codes and factories for mail delivery failures. | `Catalyst\Helpers\Exceptions\MailException` |
+| Carries the HTTP methods accepted by a route after a 405 match failure. | `Catalyst\Helpers\Exceptions\MethodNotAllowedException` |
+| Carries model identity when an expected database record is absent. | `Catalyst\Helpers\Exceptions\ModelNotFoundException` |
+| Carries model identity and expected versus stored lock versions. | `Catalyst\Helpers\Exceptions\OptimisticLockException` |
+| Represents failures while executing database queries. | `Catalyst\Helpers\Exceptions\QueryException` |
+| Represents URI or named-route lookup failures with HTTP 404 semantics. | `Catalyst\Helpers\Exceptions\RouteNotFoundException` |
+| Carries field errors, safe old input and response metadata for failed validation. | `Catalyst\Helpers\Exceptions\ValidationException` |
+| Provides exceptions for missing layouts, missing templates and executable token templates. | `Catalyst\Helpers\Exceptions\ViewException` |
 
----
+## Current Behavior
 
-## Class: ViewException
-**File**: app/Helpers/Exceptions/ViewException.php
-**Namespace**: Catalyst\Helpers\Exceptions
-**Type**: Class
-**Extends**: RuntimeException
-**Purpose**: Thrown by `View::render()` when a template or layout file cannot be found.
+This file is regenerated from current PHP docblocks and the runtime inventory scope for `Catalyst\Helpers\Exceptions`. It intentionally replaces stale historical API notes with the classes and methods that exist in code now.
 
-### Static Factory Methods
-- `templateNotFound(string $template): self` - Template name (dot notation) not resolved in any registered path
-- `layoutNotFound(string $layout): self` - Layout name not found in `boot-core/template/layouts/`
+## API From Docblocks
 
----
+### `Catalyst\Helpers\Exceptions\ConnectionException`
 
-## Class: ConnectionException
-**File**: app/Helpers/Exceptions/ConnectionException.php
-**Purpose**: Thrown for database or network connection failures
+- File: `app/Helpers/Exceptions/ConnectionException.php`
+- Kind: `class`
+- Summary: Database connection exception
+- Responsibility: Represents failures while establishing database connections.
 
----
+### `Catalyst\Helpers\Exceptions\EnvironmentException`
 
-## Class: FileSystemException
-**File**: app/Helpers/Exceptions/FileSystemException.php
-**Purpose**: Thrown for file system operation failures
+- File: `app/Helpers/Exceptions/EnvironmentException.php`
+- Kind: `class`
+- Summary: Exception thrown when the environment configuration cannot be loaded.
+- Responsibility: Provides bootstrap exceptions for missing, unreadable or invalid environment files.
 
----
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `fileMissing()` | `public` | n/a | n/a |
+| `copyFailed()` | `public` | n/a | n/a |
+| `unreadable()` | `public` | n/a | n/a |
 
-## Class: MailException
-**File**: app/Helpers/Exceptions/MailException.php
-**Namespace**: Catalyst\Helpers\Exceptions
-**Extends**: Exception
-**Purpose**: Thrown for all email-related failures. Used by MailManager, MailMessage, and MailTemplate.
+### `Catalyst\Helpers\Exceptions\FileSystemException`
 
-### Error Codes
-- `ERROR_CONFIGURATION = 100` — Missing or invalid SMTP configuration
-- `ERROR_INVALID_ADDRESS = 101` — Invalid email address format
-- `ERROR_SENDING = 102` — SMTP send failure
-- `ERROR_ATTACHMENT = 103` — File attachment failure
-- `ERROR_TEMPLATE = 104` — Template load/render failure
-- `ERROR_DKIM = 105` — DKIM signing failure
+- File: `app/Helpers/Exceptions/FileSystemException.php`
+- Kind: `class`
+- Summary: Exception class for file system-related errors.
+- Responsibility: Provides exceptions for common file read, write and existence failures.
 
-### Static Factory Methods
-- `configurationError(string $message): self`
-- `invalidAddress(string $address): self`
-- `sendingError(string $message): self`
-- `attachmentError(string $filePath, string $message): self`
-- `templateError(string $template, string $message): self`
-- `dkimError(string $message): self`
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `unableToWriteFile()` | `public` | n/a | n/a |
+| `unableToReadFile()` | `public` | n/a | n/a |
+| `fileMissing()` | `public` | n/a | n/a |
 
----
+### `Catalyst\Helpers\Exceptions\ForbiddenException`
 
-## Class: MethodNotAllowedException
-**File**: app/Helpers/Exceptions/MethodNotAllowedException.php
-**Purpose**: Thrown for HTTP method not allowed (405)
+- File: `app/Helpers/Exceptions/ForbiddenException.php`
+- Kind: `class`
+- Summary: ForbiddenException — HTTP 403 Forbidden
+- Responsibility: Carries denial context for role, permission and policy authorization failures.
 
----
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `__construct()` | `private` | Initializes the Forbidden Exception instance. | Initializes the Forbidden Exception instance. |
+| `role()` | `public` | User does not have the required role. | n/a |
 
-## Class: QueryException
-**File**: app/Helpers/Exceptions/QueryException.php
-**Purpose**: Thrown for database query failures
+### `Catalyst\Helpers\Exceptions\MailException`
 
----
+- File: `app/Helpers/Exceptions/MailException.php`
+- Kind: `class`
+- Summary: Mail exception
+- Responsibility: Provides typed error codes and factories for mail delivery failures.
 
-## Class: OptimisticLockException
-**File**: app/Helpers/Exceptions/OptimisticLockException.php
-**Purpose**: Thrown when a model using `HasOptimisticLockingTrait` attempts to save with a stale `lock_version`
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `configurationError()` | `public` | Create a new configuration error instance | n/a |
+| `invalidAddress()` | `public` | Create a new invalid address error instance | n/a |
+| `sendingError()` | `public` | Create a new sending error instance | n/a |
+| `attachmentError()` | `public` | Create a new attachment error instance | n/a |
+| `templateError()` | `public` | Create a new template error instance | n/a |
+| `dkimError()` | `public` | Create a new DKIM error instance | n/a |
 
-### Methods
-- `forModel(string $modelClass, int|string|null $recordId, string $column, int $expectedVersion, ?int $currentVersion = null): self`
-- `modelClass(): string`
-- `recordId(): int|string|null`
-- `column(): string`
-- `expectedVersion(): int`
-- `currentVersion(): ?int`
+### `Catalyst\Helpers\Exceptions\MethodNotAllowedException`
 
----
+- File: `app/Helpers/Exceptions/MethodNotAllowedException.php`
+- Kind: `class`
+- Summary: Exception thrown when an HTTP method is not allowed for a route
+- Responsibility: Carries the HTTP methods accepted by a route after a 405 match failure.
 
-## Class: RouteNotFoundException
-**File**: app/Helpers/Exceptions/RouteNotFoundException.php
-**Purpose**: Thrown when route is not found (404)
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `__construct()` | `public` | Create a new method not allowed exception. | Create a new method not allowed exception. |
+| `getAllowedMethods()` | `public` | Get the HTTP methods that are allowed for the route. | Exposes the route methods accepted by the failed request target. |
 
----
+### `Catalyst\Helpers\Exceptions\ModelNotFoundException`
 
-## Class: ValidationException
-**File**: app/Helpers/Exceptions/ValidationException.php
-**Namespace**: Catalyst\Helpers\Exceptions
-**Type**: Class
-**Extends**: RuntimeException
-**Purpose**: Thrown by `Controller::validateOrFail()` when validation fails. `ExceptionHandler` converts it to a 422 JSON response.
+- File: `app/Helpers/Exceptions/ModelNotFoundException.php`
+- Kind: `class`
+- Summary: Thrown when a Model query expected exactly one result but found none.
+- Responsibility: Carries model identity when an expected database record is absent.
 
-### Static Factory Methods
-- `withErrors(array $errors, string $message = 'Validation failed'): self` - Create from field-level errors array
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `forModel()` | `public` | Model::findOrFail($id) — expected a specific record. | n/a |
 
-### Methods
-- `getErrors(): array<string, string[]>` - Returns field-level errors `['field' => ['msg1', ...]]`
-- `getStatusCode(): int` - Returns 422
+### `Catalyst\Helpers\Exceptions\OptimisticLockException`
+
+- File: `app/Helpers/Exceptions/OptimisticLockException.php`
+- Kind: `class`
+- Summary: Represents an optimistic-lock conflict while persisting a model.
+- Responsibility: Carries model identity and expected versus stored lock versions.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `__construct()` | `public` | Initializes the Optimistic Lock Exception instance. | Initializes the Optimistic Lock Exception instance. |
+| `forModel()` | `public` | Creates a conflict exception for a model persistence attempt. | n/a |
+| `modelClass()` | `public` | Returns the conflicted model class. | Returns the conflicted model class. |
+| `recordId()` | `public` | Returns the conflicted record identifier. | Returns the conflicted record identifier. |
+| `column()` | `public` | Returns the lock-version column name. | Returns the lock-version column name. |
+| `expectedVersion()` | `public` | Returns the version expected by the writer. | Returns the version expected by the writer. |
+| `currentVersion()` | `public` | Returns the current stored version when known. | Returns the current stored version when known. |
+
+### `Catalyst\Helpers\Exceptions\QueryException`
+
+- File: `app/Helpers/Exceptions/QueryException.php`
+- Kind: `class`
+- Summary: Database query exception
+- Responsibility: Represents failures while executing database queries.
+
+### `Catalyst\Helpers\Exceptions\RouteNotFoundException`
+
+- File: `app/Helpers/Exceptions/RouteNotFoundException.php`
+- Kind: `class`
+- Summary: Exception thrown when a route cannot be found
+- Responsibility: Represents URI or named-route lookup failures with HTTP 404 semantics.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `__construct()` | `public` | Create a new route not found exception. | Create a new route not found exception. |
+
+### `Catalyst\Helpers\Exceptions\ValidationException`
+
+- File: `app/Helpers/Exceptions/ValidationException.php`
+- Kind: `class`
+- Summary: ValidationException — thrown when validation fails.
+- Responsibility: Carries field errors, safe old input and response metadata for failed validation.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `__construct()` | `private` | Private constructor — use factory methods. | Private constructor — use factory methods. |
+| `withErrors()` | `public` | Create a ValidationException from a field-errors array. | n/a |
+| `getErrors()` | `public` | Get field-level validation errors. | Get field-level validation errors. |
+| `getStatusCode()` | `public` | Get the HTTP status code. | Exposes the response status associated with the validation failure. |
+| `getOldInput()` | `public` | Returns sanitized input for HTML form repopulation. | Returns sanitized input for HTML form repopulation. |
+| `getErrorBag()` | `public` | Returns the validation error bag name. | Returns the validation error bag name. |
+
+### `Catalyst\Helpers\Exceptions\ViewException`
+
+- File: `app/Helpers/Exceptions/ViewException.php`
+- Kind: `class`
+- Summary: ViewException - Thrown for view rendering failures
+- Responsibility: Provides exceptions for missing layouts, missing templates and executable token templates.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `templateNotFound()` | `public` | Template file not found in any registered path | n/a |
+
+## Operational Notes
+
+When PHP symbols or method contracts in this namespace change, refresh this document from docblocks and run `php public/cli.php docs:inventory --json`.
+
+## Related Documentation
+
+- `docs/runtime-inventory.md`
+- `docs/runtime-module-catalog.md`
+- `docs/harness-context-map.md`

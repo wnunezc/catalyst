@@ -1,288 +1,445 @@
 # Catalyst\Framework\Auth
 
-## Class: UserProvider
-**File**: `app/Framework/Auth/UserProvider.php`  
-**Namespace**: `Catalyst\Framework\Auth`  
-**Type**: Class  
-**Pattern**: Singleton (`SingletonTrait`)  
-**Purpose**: Database-level user lookups and mutation. Single source of truth for the `users` and `user_social_accounts` tables, plus MFA fields stored on `users`.
+## Purpose
 
-### Methods
-- `findByEmail(string $email): ?array` — **public** — Returns an active, email-verified user (`active=1`, `email_verified=1`)
-- `findByEmailAny(string $email): ?array` — **public** — Returns user by email without active/verified filters (used by registration/login prechecks)
-- `findById(int $id): ?array` — **public** — Returns an active user by ID (`active=1`)
-- `findBySocialAccount(string $provider, string $providerUserId): ?array` — **public** — Resolves an active row in `user_social_accounts`, then loads the user via `findById()`
-- `create(string $name, string $email, string $password, string $role = 'user', bool $emailVerified = false): int` — **public** — Inserts a user, hashes password internally, and attempts role assignment through `roles` + `user_roles`
-- `updateLastLogin(int $userId): void` — **public** — Sets `last_login`
-- `markEmailVerified(int $userId): void` — **public** — Sets `email_verified = 1`
-- `updatePassword(int $userId, string $plainPassword): void` — **public** — Hashes and updates `password`
-- `linkSocialAccount(int $userId, string $provider, string $providerUserId): void` — **public** — Inserts or re-activates a row in `user_social_accounts`
-- `verifyPassword(string $plain, string $hash): bool` — **public** — `password_verify()` wrapper
-- `getMfaData(int $userId): ?array` — **public** — Returns `mfa_secret`, `mfa_enabled`, `mfa_backup_codes`
-- `enableMfa(int $userId, string $secret, array $backupCodes): void` — **public** — Persists confirmed TOTP secret and hashed backup codes
-- `disableMfa(int $userId): void` — **public** — Clears MFA secret and backup codes, sets `mfa_enabled = 0`
-- `updateMfaBackupCodes(int $userId, array $codes): void` — **public** — Persists remaining backup codes after one is consumed; runtime stores hashes, not clear-text codes
+Document authentication primitives: users, sessions, remember-me, MFA and OAuth support.
 
-### Password hashing
-- Bcrypt cost is read from `security.security.bcrypt_rounds` when available.
-- Runtime clamps the configured cost to PHP-supported bounds and defaults to `12`.
+## Runtime Owners
 
-### No-Delete Rule
-- `users.active`: `1 = active`, `0 = deactivated`
-- `user_social_accounts.active`: `1 = linked`, `0 = unlinked`
-- Social links are re-activated instead of physically re-inserted when possible
+| Concern | Owner |
+|---|---|
+| Guard redirect targets, auth tokens, MFA codes and password-policy checks at auth boundaries. | `Catalyst\Framework\Auth\AuthInputGuard` |
+| Orchestrate user authentication state through SessionManager, RememberMe and tenant-aware user context. | `Catalyst\Framework\Auth\AuthManager` |
+| Generate MFA credentials, verify submitted codes and hash backup codes for persistence. | `Catalyst\Framework\Auth\MfaManager` |
+| Create provider redirects, validate callback state and normalize provider users. | `Catalyst\Framework\Auth\OAuthManager` |
+| Supply GitHub endpoints, scopes, headers, error handling and normalized OAuth users. | `Catalyst\Framework\Auth\OAuth\GitHubProvider` |
+| Supply Google endpoints, scopes, error handling and normalized OAuth users. | `Catalyst\Framework\Auth\OAuth\GoogleProvider` |
+| Expose provider identity, display name, email and raw payload through one resource-owner interface. | `Catalyst\Framework\Auth\OAuth\OAuthUser` |
+| Issue, resolve and invalidate remember-me tokens without storing raw token values. | `Catalyst\Framework\Auth\RememberMe` |
+| Create, consume and invalidate user recovery tokens without persisting raw token values. | `Catalyst\Framework\Auth\TokenRepository` |
+| Provide tenant-scoped user summaries, select options and admin listings. | `Catalyst\Framework\Auth\UserDirectoryRepository` |
+| Resolve users, manage credentials, link OAuth accounts and persist MFA state. | `Catalyst\Framework\Auth\UserProvider` |
+| Represents the subject passed to resource-level authorization checks. | `Catalyst\Framework\Authorization\AbilitySubject` |
+| Evaluates authorization abilities through registered closures and policy classes. | `Catalyst\Framework\Authorization\Gate` |
+| Bridges module permission metadata with Gate and RoleRepository checks. | `Catalyst\Framework\Authorization\PermissionRegistry` |
+| Lets concrete policies short-circuit ability checks before can* methods run. | `Catalyst\Framework\Authorization\Policy` |
+| Normalizes role and permission changes into audit operations. | `Catalyst\Framework\Authorization\RbacAuditLogger` |
+| Clears user-scoped and global cache entries after RBAC mutations. | `Catalyst\Framework\Authorization\RbacCacheInvalidator` |
+| Constrains user-provided sort options to repository-approved SQL fragments. | `Catalyst\Framework\Authorization\RbacSortResolver` |
+| Authorizes AbilitySubject instances through resource permission definitions. | `Catalyst\Framework\Authorization\ResourcePolicy` |
+| Provides the database boundary for role and permission reads and mutations. | `Catalyst\Framework\Authorization\RoleRepository` |
 
----
+## Current Behavior
 
-## Class: RememberMe
-**File**: `app/Framework/Auth/RememberMe.php`  
-**Namespace**: `Catalyst\Framework\Auth`  
-**Type**: Class  
-**Pattern**: Singleton (`SingletonTrait`)  
-**Purpose**: Persistent login via remember-me cookie backed by `remember_tokens`.
+This file is regenerated from current PHP docblocks and the runtime inventory scope for `Catalyst\Framework\Auth`. It intentionally replaces stale historical API notes with the classes and methods that exist in code now.
 
-### Constants
-- `COOKIE_NAME = 'catalyst_remember'`
-- `COOKIE_DAYS = 30`
+## API From Docblocks
 
-### Methods
-- `create(int $userId): void` — **public** — Generates raw token, stores `sha256` hash, sets HttpOnly/SameSite cookie, and marks it `Secure` when the effective request is HTTPS (including reverse-proxy headers)
-- `resolve(): ?int` — **public** — Resolves cookie token to active, non-expired `user_id`
-- `invalidate(int $userId): void` — **public** — Sets `active = 0` on remember tokens for the user
-- `hasToken(): bool` — **public** — Checks whether the remember-me cookie is present
+### `Catalyst\Framework\Auth\AuthInputGuard`
 
-### No-Delete Rule
-- `remember_tokens.active`: `1 = valid`, `0 = invalidated`
+- File: `app/Framework/Auth/AuthInputGuard.php`
+- Kind: `class`
+- Summary: Validates and normalizes public authentication inputs.
+- Responsibility: Guard redirect targets, auth tokens, MFA codes and password-policy checks at auth boundaries.
 
----
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `localRedirect()` | `public` | Return a safe local redirect target. External URLs, protocol-relative URLs, control characters and backslash-based browser ambiguities fall back safely. | n/a |
+| `isRawToken()` | `public` | Checks whether a token matches the expected raw 64-character hex format. | n/a |
+| `normalizeMfaCode()` | `public` | Trims and uppercases an MFA code candidate before validation or comparison. | n/a |
+| `isMfaCodeCandidate()` | `public` | Checks whether input could be a TOTP code or backup MFA code. | n/a |
+| `passwordPolicy()` | `public` | Password policy is intentionally backwards-compatible: defaults mirror the existing min:8 behavior unless security.json opts into stricter flags. | n/a |
+| `passwordPolicyErrors()` | `public` | Builds translated password-policy validation errors for the supplied password. | n/a |
+| `fallbackPath()` | `private` | Normalizes redirect fallback values to local absolute paths. | n/a |
+| `boolean()` | `private` | Converts config-style boolean values into strict booleans. | n/a |
 
-## Class: AuthManager
-**File**: `app/Framework/Auth/AuthManager.php`  
-**Namespace**: `Catalyst\Framework\Auth`  
-**Type**: Class  
-**Pattern**: Singleton (`SingletonTrait`)  
-**Purpose**: Central authentication facade. Composes `UserProvider`, `RememberMe`, `SessionManager`, and role resolution.
+### `Catalyst\Framework\Auth\AuthManager`
 
-### Authenticated session keys
-| Key | Type | Content |
-|-----|------|---------|
-| `_auth_logged_in` | bool | `true` when authenticated |
-| `_auth_user_id` | int | User ID |
-| `_auth_user_email` | string | User email |
-| `_auth_user_name` | string | User display name |
-| `_auth_user_role` | string | Primary role slug |
+- File: `app/Framework/Auth/AuthManager.php`
+- Kind: `class`
+- Summary: Manages authenticated sessions, remember-me restoration and MFA pending states.
+- Responsibility: Orchestrate user authentication state through SessionManager, RememberMe and tenant-aware user context.
 
-### Pending MFA challenge keys
-| Key | Type | Content |
-|-----|------|---------|
-| `_mfa_pending_user_id` | int | User that passed credentials and must solve MFA |
-| `_mfa_pending_remember` | bool | Whether remember-me should be issued after MFA |
-| `_mfa_pending_redirect` | string | Safe post-login redirect |
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `__construct()` | `protected` | Initializes authentication storage, session and logging collaborators. | Initializes authentication storage, session and logging collaborators. |
+| `login()` | `public` | Attempt to log in a user with email and password. | Attempt to log in a user with email and password. |
+| `loginUser()` | `public` | Log in a user directly from their data array (used after OAuth / registration). Does NOT issue a remember-me token. | Log in a user directly from their data array (used after OAuth / registration). Does NOT issue a remember-me token. |
+| `loginFromUser()` | `public` | Create a full authenticated session from a pre-verified user row. Optionally issues a remember-me token. Used by LoginController after MFA-aware credential check and by MfaController after successful TOTP/backup verification (via completeMfaLogin()). | Create a full authenticated session from a pre-verified user row. Optionally issues a remember-me token. Used by LoginController after MFA-aware credential check and by MfaController after successful TOTP/backup verification (via completeMfaLogin()). |
+| `loginFromRemember()` | `public` | Attempt to restore a session from a remember-me cookie. | Attempt to restore a session from a remember-me cookie. |
+| `logout()` | `public` | Destroy the current authenticated session and remember-me token. | Destroy the current authenticated session and remember-me token. |
+| `check()` | `public` | Check whether a user is currently authenticated. | Check whether a user is currently authenticated. |
+| `user()` | `public` | Get the authenticated user's data array. | Exposes the authenticated user payload stored in the active session. |
+| `id()` | `public` | Get the authenticated user's ID. | Exposes the authenticated user identifier from the active session payload. |
+| `beginScopedUser()` | `public` | Scope an authenticated user to the current request without mutating the session. Used by non-session guards such as bearer API tokens so Gate, middleware and audit logging can keep consuming AuthManager as the single auth boundary. | Scope an authenticated user to the current request without mutating the session. Used by non-session guards such as bearer API tokens so Gate, middleware and audit logging can keep consuming AuthManager as the single auth boundary. |
+| `clearScopedUser()` | `public` | Clears the request-only authenticated user context. | Clears the request-only authenticated user context. |
+| `setPendingMfa()` | `public` | Store a pending-MFA state after successful credential verification. The full session is NOT created yet — it will be completed by completeMfaLogin(). Session keys written: _mfa_pending_user_id — int _mfa_pending_remember — bool _mfa_pending_redirect — string. | Store a pending-MFA state after successful credential verification. The full session is NOT created yet — it will be completed by completeMfaLogin(). Session keys written: _mfa_pending_user_id — int _mfa_pending_remember — bool _mfa_pending_redirect — string. |
+| `hasMfaPending()` | `public` | Check whether a pending MFA challenge is in progress. | Check whether a pending MFA challenge is in progress. |
+| `getMfaPendingUserId()` | `public` | Return the user ID stored in the pending MFA state, or null if absent. | Return the user ID stored in the pending MFA state, or null if absent. |
+| `getMfaPendingRemember()` | `public` | Return the remember flag stored in the pending MFA state. | Return the remember flag stored in the pending MFA state. |
+| `getMfaPendingRedirect()` | `public` | Return the redirect path stored in the pending MFA state. | Return the redirect path stored in the pending MFA state. |
+| `completeMfaLogin()` | `public` | Complete the MFA challenge: create full auth session and clear pending state. | Complete the MFA challenge: create full auth session and clear pending state. |
+| `clearPendingMfa()` | `public` | Remove all pending MFA session keys. | Remove all pending MFA session keys. |
+| `setPendingMfaSetup()` | `public` | Store a pending-MFA-setup state after successful credential verification. Used when MFA is globally on and the user has never configured it. | Store a pending-MFA-setup state after successful credential verification. Used when MFA is globally on and the user has never configured it. |
+| `hasMfaSetupPending()` | `public` | Check whether a forced-MFA-setup flow is in progress. | Check whether a forced-MFA-setup flow is in progress. |
+| `getMfaSetupPendingUserId()` | `public` | Returns the user ID stored in the pending MFA setup state, or null if absent. | Returns the user ID stored in the pending MFA setup state, or null if absent. |
+| `getMfaSetupPendingRemember()` | `public` | Returns the remember flag stored in the pending MFA setup state. | Returns the remember flag stored in the pending MFA setup state. |
+| `getMfaSetupPendingRedirect()` | `public` | Returns the safe redirect path stored in the pending MFA setup state. | Returns the safe redirect path stored in the pending MFA setup state. |
+| `completeMfaSetupLogin()` | `public` | Complete a forced-setup login: create full session, issue remember-me if needed, and clear the pending-setup state. | Complete a forced-setup login: create full session, issue remember-me if needed, and clear the pending-setup state. |
+| `clearMfaSetupPending()` | `public` | Remove all pending-MFA-setup session keys. | Remove all pending-MFA-setup session keys. |
+| `createSession()` | `private` | Creates the tenant-aware session keys for a fully authenticated user. | Creates the tenant-aware session keys for a fully authenticated user. |
+| `tenantMatches()` | `private` | Checks whether a user row belongs to the active tenant context. | Checks whether a user row belongs to the active tenant context. |
 
-### Pending forced-setup keys
-| Key | Type | Content |
-|-----|------|---------|
-| `_mfa_setup_pending_user_id` | int | User that passed credentials but must configure MFA first |
-| `_mfa_setup_pending_remember` | bool | Whether remember-me should be issued after setup |
-| `_mfa_setup_pending_redirect` | string | Safe post-setup redirect |
+### `Catalyst\Framework\Auth\MfaManager`
 
-### Methods
-- `login(string $email, string $password, bool $remember = false): bool` — **public** — Legacy direct credential path; creates full session immediately when credentials pass
-- `loginUser(array $user): void` — **public** — Direct session creation without remember-me issuance
-- `loginFromUser(array $user, bool $remember = false): void` — **public** — MFA-aware full login path from a pre-verified user row
-- `logout(): void` — **public** — Invalidates remember-me and removes `_auth_*` session keys
-- `check(): bool` — **public** — Returns `_auth_logged_in`
-- `user(): ?array` — **public** — Returns session user data (`id`, `email`, `name`, `role`)
-- `id(): ?int` — **public** — Returns authenticated user ID
-- `loginFromRemember(): bool` — **public** — Restores a session from `RememberMe`
-- `setPendingMfa(int $userId, bool $remember, string $redirect): void` — **public** — Stores pending challenge state
-- `hasMfaPending(): bool` — **public** — Whether challenge flow is active
-- `getMfaPendingUserId(): ?int` — **public** — Pending MFA user ID
-- `getMfaPendingRemember(): bool` — **public** — Pending MFA remember flag
-- `getMfaPendingRedirect(): string` — **public** — Pending MFA redirect path
-- `completeMfaLogin(): bool` — **public** — Creates full session from pending MFA state and clears it
-- `clearPendingMfa(): void` — **public** — Removes `_mfa_pending_*` keys
-- `setPendingMfaSetup(int $userId, bool $remember, string $redirect): void` — **public** — Stores forced setup state
-- `hasMfaSetupPending(): bool` — **public** — Whether forced setup flow is active
-- `getMfaSetupPendingUserId(): ?int` — **public** — Pending setup user ID
-- `getMfaSetupPendingRemember(): bool` — **public** — Pending setup remember flag
-- `getMfaSetupPendingRedirect(): string` — **public** — Pending setup redirect path
-- `completeMfaSetupLogin(): bool` — **public** — Creates full session after MFA setup and clears pending setup state
-- `clearMfaSetupPending(): void` — **public** — Removes `_mfa_setup_pending_*` keys
+- File: `app/Framework/Auth/MfaManager.php`
+- Kind: `class`
+- Summary: Provides TOTP secrets, verification and one-time backup code handling.
+- Responsibility: Generate MFA credentials, verify submitted codes and hash backup codes for persistence.
 
-### Runtime notes
-- Primary role is resolved from `RoleRepository::getUserRoles()` and stored as `_auth_user_role`.
-- LoginController uses the MFA-aware flow directly: credentials are validated first, then it branches to full login, MFA challenge, or forced setup.
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `generateSecret()` | `public` | Generate a cryptographically random base32 TOTP secret. 20 bytes of entropy → 32-character base32 string. | Generate a cryptographically random base32 TOTP secret. 20 bytes of entropy → 32-character base32 string. |
+| `generateQrUri()` | `public` | Build the otpauth:// URI used by authenticator apps (Google Authenticator, Aegis, etc.). | Build the otpauth:// URI used by authenticator apps (Google Authenticator, Aegis, etc.). |
+| `verifyCode()` | `public` | Verify a 6-digit TOTP code with a ±window step tolerance. Default window=1 allows codes from the previous and next 30-second windows, accommodating minor clock drift between client and server. | Verify a 6-digit TOTP code with a ±window step tolerance. Default window=1 allows codes from the previous and next 30-second windows, accommodating minor clock drift between client and server. |
+| `normalizeTotpCode()` | `public` | Removes formatting and accepts only fixed-width numeric TOTP codes. | Removes formatting and accepts only fixed-width numeric TOTP codes. |
+| `normalizeBackupCode()` | `public` | Removes separators and uppercases a backup code for hashing or comparison. | Removes separators and uppercases a backup code for hashing or comparison. |
+| `generateBackupCodes()` | `public` | Generate $count one-time backup codes. Format: XXXX-XXXX (4 uppercase hex + dash + 4 uppercase hex). | Generate $count one-time backup codes. Format: XXXX-XXXX (4 uppercase hex + dash + 4 uppercase hex). |
+| `hashBackupCodes()` | `public` | Hash backup codes before persistence so DB rows never store them in clear text. | Hash backup codes before persistence so DB rows never store them in clear text. |
+| `verifyBackupCode()` | `public` | Verify a backup code against the stored list. Removes the matching code on success (one-time use). The $codes array is modified in-place; the caller must persist the updated list. | Verify a backup code against the stored list. Removes the matching code on success (one-time use). The $codes array is modified in-place; the caller must persist the updated list. |
+| `computeTotp()` | `private` | Compute the TOTP code for a given binary key and counter value. Algorithm: 1. Pack counter as 8-byte big-endian unsigned integer 2. HMAC-SHA1(key, counter_bytes) 3. Dynamic truncation → 31-bit integer 4. Modulo 10^DIGITS → zero-pad to DIGITS. | Compute the TOTP code for a given binary key and counter value. Algorithm: 1. Pack counter as 8-byte big-endian unsigned integer 2. HMAC-SHA1(key, counter_bytes) 3. Dynamic truncation → 31-bit integer 4. Modulo 10^DIGITS → zero-pad to DIGITS. |
+| `base32Encode()` | `private` | Encode a binary string to base32 (RFC 4648, no padding). | Encode a binary string to base32 (RFC 4648, no padding). |
+| `base32Decode()` | `private` | Decode a base32 string to binary. Silently skips invalid characters and strips '=' padding. | Decode a base32 string to binary. Silently skips invalid characters and strips '=' padding. |
+| `hashBackupCode()` | `private` | Hashes a normalized backup code for database storage. | Hashes a normalized backup code for database storage. |
+| `isHashedBackupCode()` | `private` | Checks whether a stored backup-code value is already a SHA-256 hash. | Checks whether a stored backup-code value is already a SHA-256 hash. |
 
----
+### `Catalyst\Framework\Auth\OAuthManager`
 
-## Class: TokenRepository
-**File**: `app/Framework/Auth/TokenRepository.php`  
-**Namespace**: `Catalyst\Framework\Auth`  
-**Type**: Class  
-**Pattern**: Singleton (`SingletonTrait`)  
-**Purpose**: Email verification and password reset token lifecycle.
+- File: `app/Framework/Auth/OAuthManager.php`
+- Kind: `class`
+- Summary: Orchestrates OAuth authorization-code login for configured providers.
+- Responsibility: Create provider redirects, validate callback state and normalize provider users.
 
-### Constants
-- `TTL_SECONDS = 3600`
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `__construct()` | `protected` | Initializes session and logging collaborators for OAuth flows. | Initializes session and logging collaborators for OAuth flows. |
+| `getAuthorizationUrl()` | `public` | Get the authorization URL for the given provider and store CSRF state. | Builds the provider authorization URL while storing OAuth CSRF state in the session. |
+| `handleCallback()` | `public` | Handle the OAuth callback: validate state, exchange code, return OAuthUser. | Handle the OAuth callback: validate state, exchange code, return OAuthUser. |
+| `isConfigured()` | `public` | Check whether a provider is configured (has client ID/secret in env). | Check whether a provider is configured (has client ID/secret in env). |
+| `getProvider()` | `private` | Get (or build and cache) a provider instance. | Get (or build and cache) a provider instance. |
+| `buildProvider()` | `private` | Build a provider from env configuration. | Build a provider from env configuration. |
 
-### Methods
-- `createVerificationToken(int $userId): string` — **public** — Invalidates prior active tokens, stores hashed token, returns raw token
-- `createPasswordResetToken(int $userId): string` — **public** — Same pattern for password reset tokens
-- `consumeVerificationToken(string $rawToken): ?int` — **public** — Validates, consumes, and returns `user_id`
-- `consumePasswordResetToken(string $rawToken): ?int` — **public** — Validates, consumes, and returns `user_id`
+### `Catalyst\Framework\Auth\OAuth\GitHubProvider`
 
-### No-Delete Rule
-- Token tables are consumed by `active = 0`, not by physical delete
+- File: `app/Framework/Auth/OAuth/GitHubProvider.php`
+- Kind: `class`
+- Summary: Implements the GitHub OAuth2 provider contract.
+- Responsibility: Supply GitHub endpoints, scopes, headers, error handling and normalized OAuth users.
 
----
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `getBaseAuthorizationUrl()` | `public` | Returns the GitHub authorization endpoint. | Returns the GitHub authorization endpoint. |
+| `getBaseAccessTokenUrl()` | `public` | Returns the GitHub token exchange endpoint. | Returns the GitHub token exchange endpoint. |
+| `getResourceOwnerDetailsUrl()` | `public` | Returns the GitHub user profile endpoint. | Returns the GitHub user profile endpoint. |
+| `getDefaultScopes()` | `protected` | Provides the default GitHub scopes required for user email access. | Provides the default GitHub scopes required for user email access. |
+| `getScopeSeparator()` | `protected` | Uses the GitHub-supported space separator for OAuth scopes. | Uses the GitHub-supported space separator for OAuth scopes. |
+| `getDefaultHeaders()` | `protected` | Provides default GitHub API headers for resource-owner requests. | Provides default GitHub API headers for resource-owner requests. |
+| `checkResponse()` | `protected` | Converts GitHub OAuth and API errors into identity-provider exceptions. | Converts GitHub OAuth and API errors into identity-provider exceptions. |
+| `createResourceOwner()` | `protected` | Wraps the GitHub resource-owner response in the framework OAuth user type. | Wraps the GitHub resource-owner response in the framework OAuth user type. |
 
-## Class: OAuthManager
-**File**: `app/Framework/Auth/OAuthManager.php`  
-**Namespace**: `Catalyst\Framework\Auth`  
-**Type**: Class  
-**Pattern**: Singleton (`SingletonTrait`)  
-**Purpose**: OAuth2 Authorization Code Flow orchestration for supported providers.
+### `Catalyst\Framework\Auth\OAuth\GoogleProvider`
 
-### Supported Providers
-| Provider | Env Vars Required |
-|----------|------------------|
-| `google` | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` |
-| `github` | `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` |
+- File: `app/Framework/Auth/OAuth/GoogleProvider.php`
+- Kind: `class`
+- Summary: Implements the Google OAuth2 provider contract.
+- Responsibility: Supply Google endpoints, scopes, error handling and normalized OAuth users.
 
-### Methods
-- `getAuthorizationUrl(string $provider): string` — **public** — Generates URL and stores `_oauth_state_{provider}`
-- `handleCallback(string $provider, string $code, string $state): ?OAuthUser` — **public** — Validates state, exchanges code, resolves normalized user or returns `null` on CSRF/provider failure
-- `isConfigured(string $provider): bool` — **public** — Checks provider env vars
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `getBaseAuthorizationUrl()` | `public` | Returns the Google authorization endpoint. | Returns the Google authorization endpoint. |
+| `getBaseAccessTokenUrl()` | `public` | Returns the Google token exchange endpoint. | Returns the Google token exchange endpoint. |
+| `getResourceOwnerDetailsUrl()` | `public` | Returns the Google user-info endpoint. | Returns the Google user-info endpoint. |
+| `getDefaultScopes()` | `protected` | Provides the default Google scopes required for identity and email. | Provides the default Google scopes required for identity and email. |
+| `getScopeSeparator()` | `protected` | Uses the Google-required space separator for OAuth scopes. | Uses the Google-required space separator for OAuth scopes. |
+| `checkResponse()` | `protected` | Converts Google error payloads into identity-provider exceptions. | Converts Google error payloads into identity-provider exceptions. |
+| `createResourceOwner()` | `protected` | Wraps the Google resource-owner response in the framework OAuth user type. | Wraps the Google resource-owner response in the framework OAuth user type. |
 
-### Internal methods
-- `getProvider(string $provider): AbstractProvider` — **private** — Lazy provider factory/cache
-- `buildProvider(string $provider): AbstractProvider` — **private** — Instantiates Google/GitHub providers
-- `buildRedirectUri(string $provider): string` — **private** — Builds callback URL from effective app config or `.env`
+### `Catalyst\Framework\Auth\OAuth\OAuthUser`
 
-### CSRF Protection
-- OAuth state is stored per provider in `_oauth_state_{provider}` and validated with `hash_equals()`
+- File: `app/Framework/Auth/OAuth/OAuthUser.php`
+- Kind: `class`
+- Summary: Normalizes OAuth provider resource-owner payloads.
+- Responsibility: Expose provider identity, display name, email and raw payload through one resource-owner interface.
 
----
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `__construct()` | `public` | Initializes the object with the collaborators or state required for its responsibility. | Initializes the object with the collaborators or state required for its responsibility. |
+| `getId()` | `public` | Returns the provider's unique user ID. | Returns the provider's unique user ID. |
+| `getEmail()` | `public` | Returns the user's email address. | Returns the user's email address. |
+| `getName()` | `public` | Returns the user's display name. | Returns the user's display name. |
+| `getProvider()` | `public` | Returns the provider identifier. | Returns the provider identifier. |
+| `toArray()` | `public` | Returns the complete raw provider response payload. | Returns the complete raw provider response payload. |
 
-## Namespace: Catalyst\Framework\Auth\OAuth
+### `Catalyst\Framework\Auth\RememberMe`
 
-### Class: OAuthUser
-**File**: `app/Framework/Auth/OAuth/OAuthUser.php`  
-**Namespace**: `Catalyst\Framework\Auth\OAuth`  
-**Type**: Class  
-**Implements**: `League\OAuth2\Client\Provider\ResourceOwnerInterface`  
-**Purpose**: Unified OAuth user wrapper across providers.
+- File: `app/Framework/Auth/RememberMe.php`
+- Kind: `class`
+- Summary: Manages persistent login cookies backed by hashed remember tokens.
+- Responsibility: Issue, resolve and invalidate remember-me tokens without storing raw token values.
 
-#### Methods
-- `getId(): string` — Returns provider identifier (`id` or `sub`)
-- `getName(): ?string` — Returns display name (`name` or `login`) or `null`
-- `getEmail(): ?string` — Returns email when provider supplies it, otherwise `null`
-- `getProvider(): string` — Returns provider slug
-- `toArray(): array` — Returns raw provider payload
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `__construct()` | `protected` | Initializes database and logging collaborators for remember-token storage. | Initializes database and logging collaborators for remember-token storage. |
+| `create()` | `public` | Create a remember-me token for a user and set the cookie. | Create a remember-me token for a user and set the cookie. |
+| `resolve()` | `public` | Resolve a remember-me cookie to a user ID. Returns the user_id if the token is active and not expired, otherwise null. | Resolve a remember-me cookie to a user ID. Returns the user_id if the token is active and not expired, otherwise null. |
+| `invalidate()` | `public` | Invalidate all active remember-me tokens for a user. Sets active=0 — never physically deletes rows. | Invalidate all active remember-me tokens for a user. Sets active=0 — never physically deletes rows. |
+| `hasToken()` | `public` | Check whether a remember-me cookie is present on the request. | Check whether a remember-me cookie is present on the request. |
+| `clearCookie()` | `private` | Delete the remember-me cookie from the client. | Delete the remember-me cookie from the client. |
+| `isSecureRequest()` | `private` | Detects HTTPS requests, including common reverse-proxy headers, for secure cookies. | Detects HTTPS requests, including common reverse-proxy headers, for secure cookies. |
 
----
+### `Catalyst\Framework\Auth\TokenRepository`
 
-### Class: GoogleProvider
-**File**: `app/Framework/Auth/OAuth/GoogleProvider.php`  
-**Namespace**: `Catalyst\Framework\Auth\OAuth`  
-**Type**: Class  
-**Extends**: `League\OAuth2\Client\Provider\AbstractProvider`
+- File: `app/Framework/Auth/TokenRepository.php`
+- Kind: `class`
+- Summary: Stores email-verification and password-reset tokens as one-time hashes.
+- Responsibility: Create, consume and invalidate user recovery tokens without persisting raw token values.
 
-#### Endpoints
-- Auth: `https://accounts.google.com/o/oauth2/v2/auth`
-- Token: `https://oauth2.googleapis.com/token`
-- User Info: `https://www.googleapis.com/oauth2/v3/userinfo`
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `__construct()` | `protected` | Initializes database and logging collaborators for token storage. | Initializes database and logging collaborators for token storage. |
+| `createVerificationToken()` | `public` | Create a new email-verification token for a user. Invalidates any existing active tokens for that user first. | Create a new email-verification token for a user. Invalidates any existing active tokens for that user first. |
+| `consumeVerificationToken()` | `public` | Consume an email-verification token. Returns the user_id on success, null if invalid/expired/already used. | Consume an email-verification token. Returns the user_id on success, null if invalid/expired/already used. |
+| `createPasswordResetToken()` | `public` | Create a new password-reset token for a user. Invalidates any existing active tokens for that user first. | Create a new password-reset token for a user. Invalidates any existing active tokens for that user first. |
+| `consumePasswordResetToken()` | `public` | Consume a password-reset token. Returns the user_id on success, null if invalid/expired/already used. | Consume a password-reset token. Returns the user_id on success, null if invalid/expired/already used. |
+| `invalidatePrevious()` | `private` | Invalidate all active tokens for a user in the given table. | Invalidate all active tokens for a user in the given table. |
 
-#### Scopes
-- `['openid', 'email', 'profile']`
+### `Catalyst\Framework\Auth\UserDirectoryRepository`
 
----
+- File: `app/Framework/Auth/UserDirectoryRepository.php`
+- Kind: `class`
+- Summary: Read-side repository for administration surfaces that need user directory data.
+- Responsibility: Provide tenant-scoped user summaries, select options and admin listings.
 
-### Class: GitHubProvider
-**File**: `app/Framework/Auth/OAuth/GitHubProvider.php`  
-**Namespace**: `Catalyst\Framework\Auth\OAuth`  
-**Type**: Class  
-**Extends**: `League\OAuth2\Client\Provider\AbstractProvider`
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `__construct()` | `protected` | Initializes database and logging collaborators for user directory reads. | Initializes database and logging collaborators for user directory reads. |
+| `findActiveSummary()` | `public` | Returns a compact active-user summary for display and lookup surfaces. | Returns a compact active-user summary for display and lookup surfaces. |
+| `activeUserOptions()` | `public` | Builds active-user select options for tenant-scoped forms. | Builds active-user select options for tenant-scoped forms. |
+| `searchAdminUsers()` | `public` | Searches users for administration grids with filters, roles and pagination. | Searches users for administration grids with filters, roles and pagination. |
+| `resolveUserSort()` | `private` | Restricts requested user sort columns to safe SQL expressions. | Restricts requested user sort columns to safe SQL expressions. |
+| `resolveUserDirection()` | `private` | Normalizes requested user sort direction to SQL ASC or DESC. | Normalizes requested user sort direction to SQL ASC or DESC. |
+| `currentTenantId()` | `private` | Resolves the required tenant identifier for user directory queries. | Resolves the required tenant identifier for user directory queries. |
 
-#### Endpoints
-- Auth: `https://github.com/login/oauth/authorize`
-- Token: `https://github.com/login/oauth/access_token`
-- User Info: `https://api.github.com/user`
+### `Catalyst\Framework\Auth\UserProvider`
 
-#### Scopes
-- `['user:email']`
+- File: `app/Framework/Auth/UserProvider.php`
+- Kind: `class`
+- Summary: Provides user lookup and mutation operations used by authentication flows.
+- Responsibility: Resolve users, manage credentials, link OAuth accounts and persist MFA state.
 
----
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `__construct()` | `protected` | Initializes database and logging collaborators for user auth storage. | Initializes database and logging collaborators for user auth storage. |
+| `findByEmail()` | `public` | Find an active, email-verified user by email address. | Find an active, email-verified user by email address. |
+| `findById()` | `public` | Find an active user by ID (does not require email_verified). | Find an active user by ID (does not require email_verified). |
+| `findByEmailAny()` | `public` | Find a user by email regardless of verified/active status (used during registration). | Find a user by email regardless of verified/active status (used during registration). |
+| `bcryptCost()` | `private` | Read bcrypt cost from security.json (primary) or default to 12. Clamped to PHP's supported range (4–31); practical minimum is 10. | Read bcrypt cost from security.json (primary) or default to 12. Clamped to PHP's supported range (4–31); practical minimum is 10. |
+| `verifyPassword()` | `public` | Verify a plain-text password against a stored bcrypt hash. | Verify a plain-text password against a stored bcrypt hash. |
+| `updateLastLogin()` | `public` | Update last_login timestamp for the given user. | Update last_login timestamp for the given user. |
+| `create()` | `public` | Create a new user and return their ID. | Create a new user and return their ID. |
+| `updatePassword()` | `public` | Update password for a user. | Update password for a user. |
+| `markEmailVerified()` | `public` | Mark a user as email-verified. | Mark a user as email-verified. |
+| `linkSocialAccount()` | `public` | Link a social provider account to an existing user. Uses active=1; never physically deletes rows. | Link a social provider account to an existing user. Uses active=1; never physically deletes rows. |
+| `findBySocialAccount()` | `public` | Find a user by social provider account (active only). | Find a user by social provider account (active only). |
+| `getMfaData()` | `public` | Return the MFA fields for a user (mfa_secret, mfa_enabled, mfa_backup_codes). Returns null if the user doesn't exist. | Return the MFA fields for a user (mfa_secret, mfa_enabled, mfa_backup_codes). Returns null if the user doesn't exist. |
+| `enableMfa()` | `public` | Activate MFA for a user: store the confirmed secret and backup codes. | Activate MFA for a user: store the confirmed secret and backup codes. |
+| `disableMfa()` | `public` | Deactivate MFA for a user: clear secret and backup codes. | Deactivate MFA for a user: clear secret and backup codes. |
+| `updateMfaBackupCodes()` | `public` | Persist an updated backup-codes list after one has been consumed. | Persist an updated backup-codes list after one has been consumed. |
+| `currentTenantId()` | `private` | Resolves the required tenant identifier for user authentication queries. | Resolves the required tenant identifier for user authentication queries. |
 
-## Namespace: Catalyst\Framework\Middleware
+### `Catalyst\Framework\Authorization\AbilitySubject`
 
-### Class: AuthMiddleware
-**File**: `app/Framework/Middleware/AuthMiddleware.php`  
-**Namespace**: `Catalyst\Framework\Middleware`  
-**Type**: Class  
-**Extends**: `CoreMiddleware`  
-**Implements**: `MiddlewareInterface`  
-**Purpose**: Route guard for authenticated routes.
+- File: `app/Framework/Authorization/AbilitySubject.php`
+- Kind: `class`
+- Summary: Carries the resource, record, and context used by resource authorization policies.
+- Responsibility: Represents the subject passed to resource-level authorization checks.
 
-#### process() logic
-1. `AuthManager::check()` succeeds → pass through
-2. `AuthManager::loginFromRemember()` succeeds → pass through
-3. JSON request → `401` JSON unauthenticated response
-4. HTML request → redirect to `/login?redirect=...`
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `__construct()` | `public` | Stores the target resource, optional record, and contextual authorization data. | Stores the target resource, optional record, and contextual authorization data. |
+| `make()` | `public` | Builds an authorization subject for a resource ability check. | n/a |
+| `resource()` | `public` | Returns the canonical resource name being authorized. | Returns the canonical resource name being authorized. |
+| `record()` | `public` | Returns the optional record attached to the authorization subject. | Returns the optional record attached to the authorization subject. |
+| `context()` | `public` | Returns additional data used by permission condition matching. | Returns additional data used by permission condition matching. |
 
----
+### `Catalyst\Framework\Authorization\Gate`
 
-### Class: GuestMiddleware
-**File**: `app/Framework/Middleware/GuestMiddleware.php`  
-**Namespace**: `Catalyst\Framework\Middleware`  
-**Type**: Class  
-**Extends**: `CoreMiddleware`  
-**Implements**: `MiddlewareInterface`  
-**Purpose**: Redirects authenticated users away from guest-only routes to `/`.
+- File: `app/Framework/Authorization/Gate.php`
+- Kind: `class`
+- Summary: Resolves named gates and model policies for the current or scoped user.
+- Responsibility: Evaluates authorization abilities through registered closures and policy classes.
 
-#### process() logic
-1. `AuthManager::check()` succeeds → redirect to `/` (fixed root redirect, not a dynamic entry point)
-2. Otherwise → pass through
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `define()` | `public` | Registers a closure callback for a named ability. | Registers a closure callback for a named ability. |
+| `policy()` | `public` | Registers the policy class responsible for a model class. | Registers the policy class responsible for a model class. |
+| `allows()` | `public` | Checks whether the resolved user is allowed to perform an ability. | Checks whether the resolved user is allowed to perform an ability. |
+| `denies()` | `public` | Checks whether the resolved user is denied an ability. | Checks whether the resolved user is denied an ability. |
+| `authorize()` | `public` | Enforces an ability and raises a forbidden exception when it is denied. | Enforces an ability and raises a forbidden exception when it is denied. |
+| `forUser()` | `public` | Returns a cloned gate instance scoped to an explicit user payload. | Returns a cloned gate instance scoped to an explicit user payload. |
+| `resolveUser()` | `private` | Resolves the explicit scoped user or the authenticated session user. | Resolves the explicit scoped user or the authenticated session user. |
+| `check()` | `private` | Evaluates an ability through a registered gate closure or matching policy. | Evaluates an ability through a registered gate closure or matching policy. |
+| `findPolicyForArg()` | `private` | Finds the registered policy class for an object, class string, parent, or interface. | Finds the registered policy class for an object, class string, parent, or interface. |
+| `callPolicy()` | `private` | Instantiates a policy and evaluates its before hook and ability method. | Instantiates a policy and evaluates its before hook and ability method. |
 
----
+### `Catalyst\Framework\Authorization\PermissionRegistry`
 
-### Interface: FeatureFlagInterface
-**File**: `app/Framework/Middleware/FeatureFlagInterface.php`  
-**Namespace**: `Catalyst\Framework\Middleware`  
-**Type**: Interface  
-**Purpose**: Contract for middleware that can be disabled by config.
+- File: `app/Framework/Authorization/PermissionRegistry.php`
+- Kind: `class`
+- Summary: Loads permission definitions and evaluates role, permission, and resource abilities.
+- Responsibility: Bridges module permission metadata with Gate and RoleRepository checks.
 
-#### Methods
-- `isEnabled(): bool`
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `all()` | `public` | Returns all module-declared permission definitions cached for the request. | Returns all module-declared permission definitions cached for the request. |
+| `flushCache()` | `public` | Clears cached permission definitions so module metadata can be reloaded. | Clears cached permission definitions so module metadata can be reloaded. |
+| `forModule()` | `public` | Returns permission definitions declared by a module key. | Returns permission definitions declared by a module key. |
+| `find()` | `public` | Finds a permission definition by slug. | Finds a permission definition by slug. |
+| `registerGateDefinitions()` | `public` | Registers permission slugs and resource policies on the given gate instance. | Registers permission slugs and resource policies on the given gate instance. |
+| `userHasRole()` | `public` | Checks whether the resolved user has a specific role slug. | Checks whether the resolved user has a specific role slug. |
+| `userHasAnyRole()` | `public` | Checks whether the resolved user has at least one role slug. | Checks whether the resolved user has at least one role slug. |
+| `userHasPermission()` | `public` | Checks whether the resolved user has a permission and satisfies its conditions. | Checks whether the resolved user has a permission and satisfies its conditions. |
+| `userHasAnyPermission()` | `public` | Checks whether the resolved user has at least one permission slug. | Checks whether the resolved user has at least one permission slug. |
+| `userHasResourceAbility()` | `public` | Checks whether the resolved user has a permission matching a resource ability. | Checks whether the resolved user has a permission matching a resource ability. |
+| `resourceAbilityDefinitions()` | `public` | Returns permission definitions matching a resource and ability pair. | Returns permission definitions matching a resource and ability pair. |
+| `matchesConditions()` | `private` | Validates record ownership, state, and delegated policy constraints. | Validates record ownership, state, and delegated policy constraints. |
+| `definitionMatchesResource()` | `private` | Checks whether a permission definition applies to the requested resource. | Checks whether a permission definition applies to the requested resource. |
+| `definitionMatchesAbility()` | `private` | Checks whether a permission definition applies to the requested ability. | Checks whether a permission definition applies to the requested ability. |
+| `abilityActionAliases()` | `private` | Returns action aliases accepted for a generic resource ability. | Returns action aliases accepted for a generic resource ability. |
+| `resolveUserId()` | `private` | Resolves the numeric user ID from an authorization user payload. | Resolves the numeric user ID from an authorization user payload. |
+| `extractValue()` | `private` | Extracts a field value from an array, object property, or getter method. | Extracts a field value from an array, object property, or getter method. |
 
-#### Implementations
-- `CorsMiddleware`
-- `WebSocketBootMiddleware`
+### `Catalyst\Framework\Authorization\Policy`
 
----
+- File: `app/Framework/Authorization/Policy.php`
+- Kind: `class`
+- Summary: Provides the base hook for policy-based authorization decisions.
+- Responsibility: Lets concrete policies short-circuit ability checks before can* methods run.
 
-### Class: CorsMiddleware
-**File**: `app/Framework/Middleware/CorsMiddleware.php`  
-**Namespace**: `Catalyst\Framework\Middleware`  
-**Type**: Class  
-**Extends**: `CoreMiddleware`  
-**Implements**: `FeatureFlagInterface`  
-**Traits**: `LoadsFeatureConfigTrait`  
-**Purpose**: Config-driven CORS middleware.
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `before()` | `public` | Optionally grants, denies, or defers an ability before the concrete policy method runs. | Optionally grants, denies, or defers an ability before the concrete policy method runs. |
 
-#### Configuration (`cors.json`)
-| Key | Default | Description |
-|-----|---------|-------------|
-| `enabled` | `true` | Enable/disable middleware |
-| `allowed_origins` | `['*']` | Allowed origins |
-| `allowed_methods` | `['GET','POST','PUT','PATCH','DELETE','OPTIONS']` | Allowed methods |
-| `allowed_headers` | `['Content-Type','Authorization','X-Requested-With','X-CSRF-TOKEN']` | Allowed headers |
-| `exposed_headers` | `[]` | Headers exposed to browser |
-| `allow_credentials` | `false` | Allow credentials |
-| `max_age` | `86400` | Preflight cache TTL |
+### `Catalyst\Framework\Authorization\RbacAuditLogger`
 
-#### Behaviour
-- Requests without `Origin` header pass through unchanged
-- `OPTIONS` preflight returns `204`
-- Wildcard origin plus credentials is downgraded to the actual origin
+- File: `app/Framework/Authorization/RbacAuditLogger.php`
+- Kind: `class`
+- Summary: Writes RBAC mutation entries to the framework audit log.
+- Responsibility: Normalizes role and permission changes into audit operations.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `record()` | `public` | Records a role, permission, or assignment mutation with before and after state. | Records a role, permission, or assignment mutation with before and after state. |
+
+### `Catalyst\Framework\Authorization\RbacCacheInvalidator`
+
+- File: `app/Framework/Authorization/RbacCacheInvalidator.php`
+- Kind: `class`
+- Summary: Invalidates in-memory and persistent RBAC assignment caches.
+- Responsibility: Clears user-scoped and global cache entries after RBAC mutations.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `flushAll()` | `public` | Clears all request-local RBAC cache entries and advances the persistent cache version. | Clears all request-local RBAC cache entries and advances the persistent cache version. |
+| `flushUser()` | `public` | Clears request-local and persistent RBAC cache entries for a single user. | Clears request-local and persistent RBAC cache entries for a single user. |
+
+### `Catalyst\Framework\Authorization\RbacSortResolver`
+
+- File: `app/Framework/Authorization/RbacSortResolver.php`
+- Kind: `class`
+- Summary: Resolves safe sort columns and directions for RBAC listing queries.
+- Responsibility: Constrains user-provided sort options to repository-approved SQL fragments.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `column()` | `public` | Resolves the requested sort key to an allowed SQL column. | Resolves the requested sort key to an allowed SQL column. |
+| `direction()` | `public` | Normalizes the requested sort direction to ASC or DESC. | Normalizes the requested sort direction to ASC or DESC. |
+
+### `Catalyst\Framework\Authorization\ResourcePolicy`
+
+- File: `app/Framework/Authorization/ResourcePolicy.php`
+- Kind: `class`
+- Summary: Maps generic resource abilities to permission registry checks.
+- Responsibility: Authorizes AbilitySubject instances through resource permission definitions.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `canViewAny()` | `public` | Checks whether the user can view a resource collection. | Checks whether the user can view a resource collection. |
+| `canView()` | `public` | Checks whether the user can view a resource record. | Checks whether the user can view a resource record. |
+| `canCreate()` | `public` | Checks whether the user can create a resource record. | Checks whether the user can create a resource record. |
+| `canUpdate()` | `public` | Checks whether the user can update a resource record. | Checks whether the user can update a resource record. |
+| `canDelete()` | `public` | Checks whether the user can delete a resource record. | Checks whether the user can delete a resource record. |
+| `canRestore()` | `public` | Checks whether the user can restore a resource record. | Checks whether the user can restore a resource record. |
+| `canExport()` | `public` | Checks whether the user can export resource data. | Checks whether the user can export resource data. |
+| `canRun()` | `public` | Checks whether the user can run a resource operation. | Checks whether the user can run a resource operation. |
+| `canRevoke()` | `public` | Checks whether the user can revoke a resource credential or grant. | Checks whether the user can revoke a resource credential or grant. |
+| `canBulkDelete()` | `public` | Checks whether the user can bulk delete resource records. | Checks whether the user can bulk delete resource records. |
+| `canBulkRestore()` | `public` | Checks whether the user can bulk restore resource records. | Checks whether the user can bulk restore resource records. |
+| `canAssign()` | `public` | Checks whether the user can assign a resource relationship. | Checks whether the user can assign a resource relationship. |
+| `canSync()` | `public` | Checks whether the user can synchronize resource data. | Checks whether the user can synchronize resource data. |
+| `canManage()` | `public` | Checks whether the user can manage a resource. | Checks whether the user can manage a resource. |
+| `allows()` | `private` | Delegates a resource ability decision to the permission registry. | Delegates a resource ability decision to the permission registry. |
+
+### `Catalyst\Framework\Authorization\RoleRepository`
+
+- File: `app/Framework/Authorization/RoleRepository.php`
+- Kind: `class`
+- Summary: Manages tenant-scoped roles, permissions, assignments, RBAC cache, and audit entries.
+- Responsibility: Provides the database boundary for role and permission reads and mutations.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `__construct()` | `protected` | Initializes database, logging, cache invalidation, audit, and sort collaborators. | Initializes database, logging, cache invalidation, audit, and sort collaborators. |
+| `conn()` | `private` | Returns the active database connection used by RBAC queries. | Returns the active database connection used by RBAC queries. |
+| `getUserRoles()` | `public` | Returns tenant-scoped roles assigned to a user with request and persistent caching. | Returns tenant-scoped roles assigned to a user with request and persistent caching. |
+| `getUserPermissions()` | `public` | Returns tenant-scoped permissions inherited through a user's roles. | Returns tenant-scoped permissions inherited through a user's roles. |
+| `userHasRole()` | `public` | Checks whether a user has a specific role slug. | Checks whether a user has a specific role slug. |
+| `userHasAnyRole()` | `public` | Checks whether a user has at least one role slug. | Checks whether a user has at least one role slug. |
+| `userHasPermission()` | `public` | Checks whether a user has a specific permission slug. | Checks whether a user has a specific permission slug. |
+| `userHasAnyPermission()` | `public` | Checks whether a user has at least one permission slug. | Checks whether a user has at least one permission slug. |
+| `allRoles()` | `public` | Returns all roles for the current tenant. | Returns all roles for the current tenant. |
+| `createRole()` | `public` | Creates a role for the current tenant and records the mutation. | Creates a role for the current tenant and records the mutation. |
+| `updateRole()` | `public` | Updates a role for the current tenant and records before and after state. | Updates a role for the current tenant and records before and after state. |
+| `deleteRole()` | `public` | Deletes a role from the current tenant and records the removed state. | Deletes a role from the current tenant and records the removed state. |
+| `findRole()` | `public` | Finds a role by ID within the current tenant. | Finds a role by ID within the current tenant. |
+| `findRoleBySlug()` | `public` | Finds a role by slug within the current tenant. | Finds a role by slug within the current tenant. |
+| `searchRoles()` | `public` | Searches current-tenant roles using filters, pagination, and safe sorting. | Searches current-tenant roles using filters, pagination, and safe sorting. |
+| `allPermissions()` | `public` | Returns all permissions for the current tenant. | Returns all permissions for the current tenant. |
+| `createPermission()` | `public` | Creates a permission for the current tenant and records the mutation. | Creates a permission for the current tenant and records the mutation. |
+| `updatePermission()` | `public` | Updates a permission for the current tenant and records before and after state. | Updates a permission for the current tenant and records before and after state. |
+| `deletePermission()` | `public` | Deletes a permission from the current tenant and records the removed state. | Deletes a permission from the current tenant and records the removed state. |
+| `findPermission()` | `public` | Finds a permission by ID within the current tenant. | Finds a permission by ID within the current tenant. |
+| `searchPermissions()` | `public` | Searches current-tenant permissions using filters, pagination, and safe sorting. | Searches current-tenant permissions using filters, pagination, and safe sorting. |
+| `permissionPrefixes()` | `public` | Returns unique permission slug prefixes available in the current tenant. | Returns unique permission slug prefixes available in the current tenant. |
+| `getRolePermissions()` | `public` | Returns permissions assigned to a role within the current tenant. | Returns permissions assigned to a role within the current tenant. |
+| `assignPermissionToRole()` | `public` | Assigns a permission to a role and records the assignment. | Assigns a permission to a role and records the assignment. |
+| `removePermissionFromRole()` | `public` | Removes a permission from a role and records the removed assignment. | Removes a permission from a role and records the removed assignment. |
+| `assignRoleToUser()` | `public` | Assigns a role to a user and clears that user's RBAC cache. | Assigns a role to a user and clears that user's RBAC cache. |
+| `assignRoleSlugToUser()` | `public` | Resolves a role slug and assigns the matching role to a user. | Resolves a role slug and assigns the matching role to a user. |
+| `removeRoleFromUser()` | `public` | Removes a role from a user and clears that user's RBAC cache. | Removes a role from a user and clears that user's RBAC cache. |
+| `clearCache()` | `public` | Clears all in-memory and persistent RBAC assignment caches. | Clears all in-memory and persistent RBAC assignment caches. |
+| `clearUserCache()` | `public` | Clears in-memory and persistent RBAC assignment caches for one user. | Clears in-memory and persistent RBAC assignment caches for one user. |
+| `persistentCacheKey()` | `private` | Builds a tenant-scoped persistent cache key for user RBAC assignments. | Builds a tenant-scoped persistent cache key for user RBAC assignments. |
+| `persistentCacheVersion()` | `private` | Returns the persistent RBAC cache version, initializing it when absent. | Returns the persistent RBAC cache version, initializing it when absent. |
+| `memoryCacheKey()` | `private` | Builds a tenant-scoped request-memory cache key for user RBAC assignments. | Builds a tenant-scoped request-memory cache key for user RBAC assignments. |
+| `currentTenantId()` | `private` | Returns the active tenant ID required for RBAC queries. | Returns the active tenant ID required for RBAC queries. |
+
+## Operational Notes
+
+When PHP symbols or method contracts in this namespace change, refresh this document from docblocks and run `php public/cli.php docs:inventory --json`.
+
+## Related Documentation
+
+- `docs/runtime-inventory.md`
+- `docs/runtime-module-catalog.md`
+- `docs/harness-context-map.md`

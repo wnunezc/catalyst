@@ -1,376 +1,276 @@
-# `Catalyst\Repository\DevTools`
-
-## Overview
-
-The DevTools module is the framework's live test harness and architecture viewer.
-It currently exposes these user-facing surfaces:
-
-- `GET /test-features` - consolidated interactive harness
-- `GET /test-features/ui-showcase` - compact admin shell + UI component showcase
-- `GET /uml` - architecture reference viewer
-
-Legacy compatibility aliases remain under `/test-features/module-designer*`, but the canonical Module Designer now lives in `Repository/Framework/Operations/` at `GET /operations/module-designer`.
-
-`GET /test-layout` remains a protected smoke route, but it is not a primary sidebar entry. Opening it directly keeps DevTools context active through the `Test Features` domain.
-
-The current module is controller-per-domain plus one consolidated harness view. It is not the older partial orchestrator described by historical docs.
-
-## Access control
-
-- `GET /test-layout`, `GET /uml`, and every `/test-features*` route are protected by `DevToolsGuardMiddleware`.
-- `DevToolsGuardMiddleware` enforces:
-  - outside development -> `403`
-  - development without login -> framework-standard auth behavior (`401` JSON or redirect to `/login`)
-  - development with authenticated user lacking access -> `403`
-  - development with `admin` role or explicit permission `access-devtools` -> allowed
-  - generated or custom DevTools surfaces may supply extra module permissions through the middleware constructor without opening a parallel access system
-
-## Controllers
-
-### RouteTestController
-
-**File**: `Repository/Framework/DevTools/Controllers/RouteTestController.php`
-
-Purpose: compatibility redirect helper for legacy root aliases only.
-
-Public methods:
-
-- `index(): Response`
-- `redirectToRoot(): RedirectResponse`
-
-Live behavior:
-
-- `GET /` is now owned by `Repository/App/Surface/Home` and resolves through `ApplicationEntryService`
-- `RouteTestController` only keeps `/index` and `/index.php` compatibility redirects pointed at `/`
-- canonical app entry routes live under `Repository/App/Surface/*`
-- las peticiones con casing conocido como `/Home`, `/Landing`, `/Dashboard` y `/Store` ya se normalizan por `CanonicalPathRedirectMiddleware` + `CanonicalPathRedirector`; no deben tratarse como rutas propias de DevTools ni como entradas runtime del módulo
-- `/Setup` ya no permanece como ruta de compatibilidad viva en el runtime actual
-
-### UmlController
-
-**File**: `Repository/Framework/DevTools/Controllers/UmlController.php`
-
-Purpose: render the Mermaid-based architecture reference at `GET /uml` inside the admin/showcase chrome.
-
-Public methods:
-
-- `index(Request $request): Response`
-
-Notes:
-
-- reads `ConfigManager::all()`, `isConfigured()`, and `getEnvironment()`
-- renders through layout `admin`
-- page styling and behavior now publish through `Repository/Framework/DevTools/front/*` to `/assets/*/work/devtools/`
-- Mermaid is orchestrated by the DevTools work script instead of per-view manual asset injection
-
-### TestFeaturesController
-
-**File**: `Repository/Framework/DevTools/Controllers/TestFeaturesController.php`
-
-Purpose: render the consolidated harness page at `GET /test-features`.
-
-Public methods:
-
-- `index(): Response`
-
-Notes:
-
-- page styling and behavior now publish through `Repository/Framework/DevTools/front/*` to `/assets/*/work/devtools/`
-- passes `authCheck` and `authUser` to the view
-
-### ModuleDesignerController (legacy alias bridge)
-
-**File**: `Repository/Framework/Operations/Controllers/ModuleDesignerController.php`
-
-Purpose: the canonical technical UI for `RM-18` now lives in Operations; DevTools only preserves legacy aliases and guard-compatible POST endpoints.
-
-Public methods:
-
-- `legacyIndex(Request $request): Response`
-- `legacyPreviewEntry(Request $request): Response`
-- `legacyGenerateEntry(Request $request): Response`
-- `preview(Request $request): Response`
-- `generate(Request $request): Response`
-
-Notes:
-
-- reuses `ModuleScaffoldService`, `ModuleInspector` and `ModuleLinter`
-- preview and generation share the same blueprint engine used by `make:module`
-- generation writes `module.php`, guard-aware routes, base navigation metadata and publishes initial `work/{slug}` assets immediately
-- the canonical administrative surface is `GET /operations/module-designer`
-- `GET /test-features/module-designer*` now redirects to the Operations surface instead of rendering inside DevTools
-
-### InfraTestController
-
-**File**: `Repository/Framework/DevTools/Controllers/InfraTestController.php`
-
-Purpose: infrastructure smoke tests and envelope demos.
-
-Public methods:
-
-- `index(): Response` - redirects to `/test-features`
-- `uiShowcase(): Response`
-- `testEscapeHelper(): JsonResponse`
-- `testLayout(): Response`
-- `testJson(): JsonResponse`
-- `testJsonSuccess(): JsonResponse`
-- `testJsonError(): JsonResponse`
-- `testValidationError(): JsonResponse`
-- `testApiResponse(): JsonResponse`
-- `testLoggerEmail(): JsonResponse`
-- `testCorsHeaders(): JsonResponse`
-- `testRouteCache(): JsonResponse`
-
-### FlashTestController
-
-**File**: `Repository/Framework/DevTools/Controllers/FlashTestController.php`
-
-Public methods:
-
-- `triggerFlash(string $type): Response`
-- `triggerFlashPersistent(string $type): Response`
-- `clearFlash(): Response`
-
-### ToasterTestController
-
-**File**: `Repository/Framework/DevTools/Controllers/ToasterTestController.php`
-
-Public methods:
-
-- `apiToasterSuccess(): JsonResponse`
-- `apiToasterError(): JsonResponse`
-- `apiToasterWarning(): JsonResponse`
-- `apiToasterInfo(): JsonResponse`
-- `apiMultipleToasters(): JsonResponse`
-- `apiModalTrigger(): JsonResponse`
-- `apiJsEnhancementPartialRefresh(): JsonResponse`
-
-### ModalTestController
-
-**File**: `Repository/Framework/DevTools/Controllers/ModalTestController.php`
-
-Public methods:
-
-- `modalSampleContent(): Response`
-- `modalFormContent(): Response`
-- `modalFormSubmit(): JsonResponse`
-
-### FormEventTestController
-
-**File**: `Repository/Framework/DevTools/Controllers/FormEventTestController.php`
-
-Traits:
-
-- `HandlesFormEventsTrait`
-
-Public methods:
-
-- `formDemoStore(): Response`
-
-Protected event handlers:
-
-- `onSave(): JsonResponse`
-- `onValidate(): JsonResponse`
-- `onRefresh(): JsonResponse`
-- `onRedirect(): JsonResponse`
-
-### DatabaseTestController
-
-**File**: `Repository/Framework/DevTools/Controllers/DatabaseTestController.php`
-
-Public methods:
-
-- `testDbConnection(): JsonResponse`
-
-### DatabaseResetController
-
-**File**: `Repository/Framework/DevTools/Controllers/DatabaseResetController.php`
-
-Purpose: dev-only destructive reset for the framework demo schema.
-
-Public methods:
-
-- `reset(): Response`
-
-Notes:
-
-- bound to `POST /test-features/db-reset`
-- only available when `IS_DEVELOPMENT === true`
-- delegates destructive SQL orchestration to `Repository/Framework/DevTools/Services/DatabaseResetService.php` so the controller remains a thin HTTP boundary
-- drops known tables, then replays `boot-core/database/create-catalyst-db.sql`
-- when present, replays `boot-core/database/create-catalyst-db.development.sql` immediately after the canonical schema to restore the local development auth/RBAC/social-account snapshot
-- the overlay can now be regenerated from the live development DB with `php public/cli.php dev:export-overlay`; when host CLI cannot resolve the WSDD DB target, the command falls back to the running WSDD web container
-
-### I18nTestController
-
-**File**: `Repository/Framework/DevTools/Controllers/I18nTestController.php`
-
-Public methods:
-
-- `testI18n(): JsonResponse`
-- `setLocale(): JsonResponse`
-
-### ValidatorTestController
-
-**File**: `Repository/Framework/DevTools/Controllers/ValidatorTestController.php`
-
-Public methods:
-
-- `validatorTest(): JsonResponse`
-- `validatorUniqueTest(): JsonResponse`
-
-### UploadTestController
-
-**File**: `Repository/Framework/DevTools/Controllers/UploadTestController.php`
-
-Public methods:
-
-- `upload(): JsonResponse`
-
-### MailTestController
-
-**File**: `Repository/Framework/DevTools/Controllers/MailTestController.php`
-
-Public methods:
-
-- `mailTest(): JsonResponse`
-
-### RbacTestController
-
-**File**: `Repository/Framework/DevTools/Controllers/RbacTestController.php`
-
-Public methods:
-
-- `rbacStatus(): JsonResponse`
-- `makeAdmin(): JsonResponse`
-
-### OrmTestController
-
-**File**: `Repository/Framework/DevTools/Controllers/OrmTestController.php`
-
-Public methods:
-
-- `ormStatus(): JsonResponse`
-- `ormCreate(): JsonResponse`
-- `ormUpdate(): JsonResponse`
-- `ormDeleteLatest(): JsonResponse`
-- `ormFindOrFail(): JsonResponse`
-- `ormUserDemo(): JsonResponse`
-
-## Active routes
-
-### Entry and architecture
-
-- `GET /test-layout` -> `InfraTestController::testLayout()`
-- `GET /uml` -> `UmlController::index()`
-- `GET /test-features` -> `TestFeaturesController::index()`
-- `GET /test-features/infra` -> `InfraTestController::index()`
-- `GET /test-features/module-designer` -> `Operations\ModuleDesignerController::legacyIndex()`
-- `POST /test-features/module-designer/preview` -> `Operations\ModuleDesignerController::preview()`
-- `POST /test-features/module-designer/generate` -> `Operations\ModuleDesignerController::generate()`
-- `GET /test-features/ui-showcase` -> `InfraTestController::uiShowcase()`
-
-### Infrastructure / response envelopes
-
-- `GET /test-features/e-helper`
-- `GET /test-features/layout-test`
-- `GET /test-features/ui-showcase`
-- `GET /test-features/json`
-- `GET /test-features/json-success`
-- `GET /test-features/json-error`
-- `GET /test-features/validation-error`
-- `GET /test-features/api-response`
-- `GET /test-features/logger-email`
-- `GET /test-features/route-cache`
-- `GET /test-features/cors-headers`
-
-### Flash, toaster, and modal demos
-
-- `GET /test-features/flash/clear`
-- `GET /test-features/flash/{type}`
-- `GET /test-features/flash/{type}/persistent`
-- `GET /test-features/api/toaster-success`
-- `GET /test-features/api/toaster-error`
-- `GET /test-features/api/toaster-warning`
-- `GET /test-features/api/toaster-info`
-- `GET /test-features/api/multiple-toasters`
-- `GET /test-features/api/modal-trigger`
-- `GET /test-features/api/js-enhancements/partial-refresh`
-- `GET /test-features/modal/sample-content`
-- `GET /test-features/modal/form-content`
-- `POST /test-features/modal/form-submit`
-
-### Form, DB, i18n, validator, upload
-
-- `POST /test-features/form-demo`
-- `GET /test-features/db-connection`
-- `POST /test-features/db-reset`
-- `GET /test-features/i18n`
-- `POST /test-features/i18n/set-locale`
-- `POST /test-features/api/validator-test`
-- `POST /test-features/api/validator-unique`
-- `POST /test-features/upload`
-
-### Mail, RBAC, ORM
-
-- `POST /test-features/mail-test`
-- `GET /test-features/rbac-status`
-- `POST /test-features/make-admin`
-- `GET /test-features/orm/status`
-- `GET /test-features/orm/find-or-fail`
-- `GET /test-features/orm/user-demo`
-- `POST /test-features/orm/create`
-- `POST /test-features/orm/update`
-- `POST /test-features/orm/delete-latest`
-
-## Views
-
-Top-level views:
-
-- `Views/pages/route-test.phtml`
-- `Views/pages/layout-test.phtml`
-- `Views/pages/module-designer.phtml`
-- `Views/pages/test-features.phtml`
-- `Views/pages/ui-showcase.phtml`
-- `Views/pages/uml.phtml`
-
-Harness partials used by `Views/pages/test-features.phtml`:
-
-- `Views/partials/_tf-header.phtml`
-- `Views/partials/_tf-flash.phtml`
-- `Views/partials/_tf-toasters.phtml`
-- `Views/partials/_tf-modals.phtml`
-- `Views/partials/_tf-js-enhancements.phtml`
-- `Views/partials/_tf-form-events.phtml`
-- `Views/partials/_tf-json-inspection.phtml`
-- `Views/partials/_tf-database.phtml`
-- `Views/partials/_tf-infrastructure.phtml`
-- `Views/partials/_tf-system-info.phtml`
-- `Views/partials/_tf-i18n.phtml`
-- `Views/partials/_tf-validator.phtml`
-- `Views/partials/_tf-file-upload.phtml`
-- `Views/partials/_tf-mail.phtml`
-- `Views/partials/_tf-auth.phtml`
-- `Views/partials/_tf-rbac.phtml`
-- `Views/partials/_tf-orm.phtml`
-- `Views/partials/_tf-endpoints.phtml`
-
-## Published assets actually used
-
-- Source:
-  - `Repository/Framework/DevTools/front/style.css`
-  - `Repository/Framework/DevTools/front/script.js`
-- Runtime publish targets:
-  - `public/assets/css/work/devtools/style.css`
-  - `public/assets/js/work/devtools/script.js`
-
-This module now follows the project-wide work-asset rule through `Controller::view()` + `FrontResourceTrait`.
-
-## Models
-
-- `Repository/Framework/DevTools/Models/DemoEmail.php` -> table `validator_demo_emails`
-
-## Related docs
-
-- `D:/OpsZone/DevWorkspace/Projects/Web/catalyst/Repository/Framework/DevTools/Views/pages/uml.phtml`
-- `D:/OpsZone/DevWorkspace/Projects/Web/catalyst/docs/framework-database.md`
+# Catalyst\Repository\DevTools
+
+## Purpose
+
+Document DevTools controllers and local diagnostic services.
+
+## Runtime Owners
+
+| Concern | Owner |
+|---|---|
+| Delegates destructive test-database resets to the reset service. | `Catalyst\Repository\DevTools\Controllers\DatabaseResetController` |
+| Reports connection health and configuration source for DevTools. | `Catalyst\Repository\DevTools\Controllers\DatabaseTestController` |
+| Creates, persists and clears test flash messages. | `Catalyst\Repository\DevTools\Controllers\FlashTestController` |
+| Returns deterministic save, validation, refresh and redirect test responses. | `Catalyst\Repository\DevTools\Controllers\FormEventTestController` |
+| Reports translation samples and switches the active test locale. | `Catalyst\Repository\DevTools\Controllers\I18nTestController` |
+| Exercises response envelopes, escaping, logging, CORS and route caching. | `Catalyst\Repository\DevTools\Controllers\InfraTestController` |
+| Validates demo mail fields and reports the mail-manager result. | `Catalyst\Repository\DevTools\Controllers\MailTestController` |
+| Supplies modal content and validates the modal form harness. | `Catalyst\Repository\DevTools\Controllers\ModalTestController` |
+| Validates CRUD, collection, pagination and exception flows against demo data. | `Catalyst\Repository\DevTools\Controllers\OrmTestController` |
+| Reports current RBAC state and assigns the demo administrator role. | `Catalyst\Repository\DevTools\Controllers\RbacTestController` |
+| Maps configured application entries to their canonical paths. | `Catalyst\Repository\DevTools\Controllers\RouteTestController` |
+| Supplies authentication and navigation state to the DevTools workspace. | `Catalyst\Repository\DevTools\Controllers\TestFeaturesController` |
+| Returns deterministic toaster, modal and partial-refresh responses. | `Catalyst\Repository\DevTools\Controllers\ToasterTestController` |
+| Supplies configuration diagnostics to the trusted UML renderer. | `Catalyst\Repository\DevTools\Controllers\UmlController` |
+| Validates, stores and reports uploaded DevTools attachments. | `Catalyst\Repository\DevTools\Controllers\UploadTestController` |
+| Returns deterministic validation and uniqueness-check responses. | `Catalyst\Repository\DevTools\Controllers\ValidatorTestController` |
+| Provides disposable model data for CRUD and collection tests. | `Catalyst\Repository\DevTools\Models\DemoEmail` |
+| Orchestrates destructive DevTools database reset operations. | `Catalyst\Repository\DevTools\Services\DatabaseResetService` |
+
+## Current Behavior
+
+This file is regenerated from current PHP docblocks and the runtime inventory scope for `Catalyst\Repository\DevTools`. It intentionally replaces stale historical API notes with the classes and methods that exist in code now.
+
+## API From Docblocks
+
+### `Catalyst\Repository\DevTools\Controllers\DatabaseResetController`
+
+- File: `Repository/Framework/DevTools/Controllers/DatabaseResetController.php`
+- Kind: `class`
+- Summary: Exposes the development-only database reset endpoint.
+- Responsibility: Delegates destructive test-database resets to the reset service.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `reset()` | `public` | Resets the development database and redirects with the operation result. | Resets the development database and redirects with the operation result. |
+
+### `Catalyst\Repository\DevTools\Controllers\DatabaseTestController`
+
+- File: `Repository/Framework/DevTools/Controllers/DatabaseTestController.php`
+- Kind: `class`
+- Summary: Exposes a development diagnostic for the configured database connection.
+- Responsibility: Reports connection health and configuration source for DevTools.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `testDbConnection()` | `public` | Tests the active database connection and returns diagnostic metadata. | Tests the active database connection and returns diagnostic metadata. |
+
+### `Catalyst\Repository\DevTools\Controllers\FlashTestController`
+
+- File: `Repository/Framework/DevTools/Controllers/FlashTestController.php`
+- Kind: `class`
+- Summary: Exposes development endpoints for exercising flash-message behavior.
+- Responsibility: Creates, persists and clears test flash messages.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `triggerFlash()` | `public` | Adds a one-time flash message of the requested supported type. | Adds a one-time flash message of the requested supported type. |
+| `triggerFlashPersistent()` | `public` | Adds a persistent flash message of the requested supported type. | Adds a persistent flash message of the requested supported type. |
+| `clearFlash()` | `public` | Clears all queued flash messages. | Clears all queued flash messages. |
+
+### `Catalyst\Repository\DevTools\Controllers\FormEventTestController`
+
+- File: `Repository/Framework/DevTools/Controllers/FormEventTestController.php`
+- Kind: `class`
+- Summary: Exercises the form-event response helpers used by interactive forms.
+- Responsibility: Returns deterministic save, validation, refresh and redirect test responses.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `formDemoStore()` | `public` | Dispatches the submitted demo form event to its handler. | Dispatches the submitted demo form event to its handler. |
+| `onSave()` | `protected` | Validates demo contact fields and returns a successful save response. | Validates demo contact fields and returns a successful save response. |
+| `onValidate()` | `protected` | Returns deterministic field-validation errors for the demo harness. | Returns deterministic field-validation errors for the demo harness. |
+| `onRefresh()` | `protected` | Returns a response that schedules a client refresh. | Returns a response that schedules a client refresh. |
+| `onRedirect()` | `protected` | Returns a response that schedules a client redirect. | Returns a response that schedules a client redirect. |
+
+### `Catalyst\Repository\DevTools\Controllers\I18nTestController`
+
+- File: `Repository/Framework/DevTools/Controllers/I18nTestController.php`
+- Kind: `class`
+- Summary: Exposes development diagnostics for translation and locale behavior.
+- Responsibility: Reports translation samples and switches the active test locale.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `testI18n()` | `public` | Returns translation, catalog and date-format diagnostics for the active locale. | Returns translation, catalog and date-format diagnostics for the active locale. |
+| `setLocale()` | `public` | Validates and activates a supported locale for the current session. | Validates and activates a supported locale for the current session. |
+
+### `Catalyst\Repository\DevTools\Controllers\InfraTestController`
+
+- File: `Repository/Framework/DevTools/Controllers/InfraTestController.php`
+- Kind: `class`
+- Summary: Exposes development diagnostics for shared HTTP and infrastructure helpers.
+- Responsibility: Exercises response envelopes, escaping, logging, CORS and route caching.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `index()` | `public` | Redirects the infrastructure diagnostic entry point to the DevTools harness. | Redirects the infrastructure diagnostic entry point to the DevTools harness. |
+| `testEscapeHelper()` | `public` | Returns representative escaped values produced by the HTML helper. | Returns representative escaped values produced by the HTML helper. |
+| `testLayout()` | `public` | Renders the layout smoke-test page with escaping tokens. | Renders the layout smoke-test page with escaping tokens. |
+| `uiShowcase()` | `public` | Renders the shared UI showcase page. | Renders the shared UI showcase page. |
+| `testJson()` | `public` | Returns a raw JSON response envelope. | Returns a raw JSON response envelope. |
+| `testJsonSuccess()` | `public` | Returns a successful JSON response envelope. | Returns a successful JSON response envelope. |
+| `testJsonError()` | `public` | Returns an error JSON response envelope. | Returns an error JSON response envelope. |
+| `testValidationError()` | `public` | Returns a validation-error JSON response envelope. | Returns a validation-error JSON response envelope. |
+| `testApiResponse()` | `public` | Returns a legacy API response envelope with pagination metadata. | Returns a legacy API response envelope with pagination metadata. |
+| `testLoggerEmail()` | `public` | Writes an email audit entry and returns its expected log path. | Writes an email audit entry and returns its expected log path. |
+| `testCorsHeaders()` | `public` | Returns normalized CORS configuration diagnostics. | Returns normalized CORS configuration diagnostics. |
+| `testRouteCache()` | `public` | Builds, loads and clears a route cache to validate the cache lifecycle. | Builds, loads and clears a route cache to validate the cache lifecycle. |
+
+### `Catalyst\Repository\DevTools\Controllers\MailTestController`
+
+- File: `Repository/Framework/DevTools/Controllers/MailTestController.php`
+- Kind: `class`
+- Summary: Exposes a development endpoint for validating outbound mail delivery.
+- Responsibility: Validates demo mail fields and reports the mail-manager result.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `mailTest()` | `public` | Sends a validated test message through the configured mail manager. | Sends a validated test message through the configured mail manager. |
+
+### `Catalyst\Repository\DevTools\Controllers\ModalTestController`
+
+- File: `Repository/Framework/DevTools/Controllers/ModalTestController.php`
+- Kind: `class`
+- Summary: Exposes partial HTML and submission responses for modal UI diagnostics.
+- Responsibility: Supplies modal content and validates the modal form harness.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `modalSampleContent()` | `public` | Returns trusted sample HTML for a dynamically loaded modal. | Returns trusted sample HTML for a dynamically loaded modal. |
+| `modalFormContent()` | `public` | Returns trusted HTML for the modal form partial. | Returns trusted HTML for the modal form partial. |
+| `modalFormSubmit()` | `public` | Validates modal form fields and returns the submission result. | Validates modal form fields and returns the submission result. |
+
+### `Catalyst\Repository\DevTools\Controllers\OrmTestController`
+
+- File: `Repository/Framework/DevTools/Controllers/OrmTestController.php`
+- Kind: `class`
+- Summary: Exposes development endpoints that exercise ORM model behavior.
+- Responsibility: Validates CRUD, collection, pagination and exception flows against demo data.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `uniqueOrmEmail()` | `private` | Builds a unique demo email address for ORM write operations. | Builds a unique demo email address for ORM write operations. |
+| `ormStatus()` | `public` | Returns collection and pagination diagnostics for demo email records. | Returns collection and pagination diagnostics for demo email records. |
+| `ormCreate()` | `public` | Creates a demo email record and reports its persisted state. | Creates a demo email record and reports its persisted state. |
+| `ormUpdate()` | `public` | Updates the latest demo email record and reports dirty-state behavior. | Updates the latest demo email record and reports dirty-state behavior. |
+| `ormDeleteLatest()` | `public` | Deletes the latest matching demo email record. | Deletes the latest matching demo email record. |
+| `ormFindOrFail()` | `public` | Verifies model-not-found exception handling with a missing record. | Verifies model-not-found exception handling with a missing record. |
+| `ormUserDemo()` | `public` | Returns ORM casting and hidden-field diagnostics for user records. | Returns ORM casting and hidden-field diagnostics for user records. |
+
+### `Catalyst\Repository\DevTools\Controllers\RbacTestController`
+
+- File: `Repository/Framework/DevTools/Controllers/RbacTestController.php`
+- Kind: `class`
+- Summary: Exposes development diagnostics for role and permission behavior.
+- Responsibility: Reports current RBAC state and assigns the demo administrator role.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `rbacStatus()` | `public` | Returns role, permission and gate diagnostics for the authenticated user. | Returns role, permission and gate diagnostics for the authenticated user. |
+| `makeAdmin()` | `public` | Assigns the administrator role to the authenticated development user. | Assigns the administrator role to the authenticated development user. |
+
+### `Catalyst\Repository\DevTools\Controllers\RouteTestController`
+
+- File: `Repository/Framework/DevTools/Controllers/RouteTestController.php`
+- Kind: `class`
+- Summary: Resolves the development route-test entry page and configured redirects.
+- Responsibility: Maps configured application entries to their canonical paths.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `index()` | `public` | Redirects configured projects or renders the route-test landing page. | Redirects configured projects or renders the route-test landing page. |
+| `redirectToRoot()` | `public` | Redirects the legacy route-test endpoint to the application root. | Redirects the legacy route-test endpoint to the application root. |
+| `resolveConfiguredEntryTarget()` | `private` | Resolves the configured primary or authenticated secondary entry path. | Resolves the configured primary or authenticated secondary entry path. |
+| `mapEntryToPath()` | `private` | Maps an application entry identifier to its configured path. | Maps an application entry identifier to its configured path. |
+
+### `Catalyst\Repository\DevTools\Controllers\TestFeaturesController`
+
+- File: `Repository/Framework/DevTools/Controllers/TestFeaturesController.php`
+- Kind: `class`
+- Summary: Presents the development feature-test harness.
+- Responsibility: Supplies authentication and navigation state to the DevTools workspace.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `index()` | `public` | Renders the DevTools harness with current authentication state. | Renders the DevTools harness with current authentication state. |
+
+### `Catalyst\Repository\DevTools\Controllers\ToasterTestController`
+
+- File: `Repository/Framework/DevTools/Controllers/ToasterTestController.php`
+- Kind: `class`
+- Summary: Exposes notification-envelope variants for client toaster diagnostics.
+- Responsibility: Returns deterministic toaster, modal and partial-refresh responses.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `apiToasterSuccess()` | `public` | Returns a successful response with a success toaster. | Returns a successful response with a success toaster. |
+| `apiToasterError()` | `public` | Returns an error response with an error toaster. | Returns an error response with an error toaster. |
+| `apiToasterWarning()` | `public` | Returns a partial-success response with a warning toaster. | Returns a partial-success response with a warning toaster. |
+| `apiToasterInfo()` | `public` | Returns a successful response with an informational toaster. | Returns a successful response with an informational toaster. |
+| `apiMultipleToasters()` | `public` | Returns a response carrying multiple queued toasters. | Returns a response carrying multiple queued toasters. |
+| `apiModalTrigger()` | `public` | Returns a response that instructs the client to load a modal. | Returns a response that instructs the client to load a modal. |
+| `apiJsEnhancementPartialRefresh()` | `public` | Returns refreshed partial HTML and its update notification. | Returns refreshed partial HTML and its update notification. |
+
+### `Catalyst\Repository\DevTools\Controllers\UmlController`
+
+- File: `Repository/Framework/DevTools/Controllers/UmlController.php`
+- Kind: `class`
+- Summary: Presents the development UML and runtime architecture workspace.
+- Responsibility: Supplies configuration diagnostics to the trusted UML renderer.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `index()` | `public` | Renders UML diagnostics with loaded configuration metadata. | Renders UML diagnostics with loaded configuration metadata. |
+
+### `Catalyst\Repository\DevTools\Controllers\UploadTestController`
+
+- File: `Repository/Framework/DevTools/Controllers/UploadTestController.php`
+- Kind: `class`
+- Summary: Exposes a development endpoint for validating file uploads.
+- Responsibility: Validates, stores and reports uploaded DevTools attachments.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `upload()` | `public` | Validates and stores an uploaded attachment for the harness. | Validates and stores an uploaded attachment for the harness. |
+
+### `Catalyst\Repository\DevTools\Controllers\ValidatorTestController`
+
+- File: `Repository/Framework/DevTools/Controllers/ValidatorTestController.php`
+- Kind: `class`
+- Summary: Exposes development endpoints for validator rule diagnostics.
+- Responsibility: Returns deterministic validation and uniqueness-check responses.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `validatorTest()` | `public` | Validates representative form fields or a forced invalid payload. | Validates representative form fields or a forced invalid payload. |
+| `validatorUniqueTest()` | `public` | Verifies uniqueness validation for a submitted demo email address. | Verifies uniqueness validation for a submitted demo email address. |
+
+### `Catalyst\Repository\DevTools\Models\DemoEmail`
+
+- File: `Repository/Framework/DevTools/Models/DemoEmail.php`
+- Kind: `class`
+- Summary: Represents isolated email records used by ORM diagnostics.
+- Responsibility: Provides disposable model data for CRUD and collection tests.
+
+### `Catalyst\Repository\DevTools\Services\DatabaseResetService`
+
+- File: `Repository/Framework/DevTools/Services/DatabaseResetService.php`
+- Kind: `class`
+- Summary: Rebuilds the development database from canonical SQL and migrations.
+- Responsibility: Orchestrates destructive DevTools database reset operations.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `reset()` | `public` | Drops current tables and replays the canonical development schema. | Drops current tables and replays the canonical development schema. |
+| `executeSqlFile()` | `private` | Executes a Catalyst-controlled SQL file against the active connection. | Executes a Catalyst-controlled SQL file against the active connection. |
+
+## Operational Notes
+
+When PHP symbols or method contracts in this namespace change, refresh this document from docblocks and run `php public/cli.php docs:inventory --json`.
+
+## Related Documentation
+
+- `docs/runtime-inventory.md`
+- `docs/runtime-module-catalog.md`
+- `docs/harness-context-map.md`

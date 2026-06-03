@@ -1,61 +1,101 @@
 # Catalyst\Helpers\Config
 
-## Class: ConfigManager
-**File**: `app/Helpers/Config/ConfigManager.php`  
-**Namespace**: `Catalyst\Helpers\Config`  
-**Type**: Class  
-**Pattern**: Singleton (`SingletonTrait`)
-
 ## Purpose
-Resolved runtime configuration for JSON-backed framework features.
 
-- `.env` is still the bootstrap source for concerns that must exist before autoload + config classes are available, especially environment detection.
-- After `error-catcher.php` finishes bootstrapping, `ConfigManager::getInstance()` is created early and mirrored into `$GLOBALS['APP_CONFIGURATION']`.
-- Runtime consumers should prefer `ConfigManager` or `$GLOBALS['APP_CONFIGURATION']` over reading `.env` directly when the section is managed by `/configuration/environment-setup`.
+Document JSON-backed configuration and managed secret helpers.
 
-## Runtime Priority
-1. JSON file in `boot-core/config/{environment}/*.json`
-2. Companion secret store in `boot-core/config/{environment}/secrets.json` for managed secret keys (`project_key`, `db_password`, `mail_password`, `ftp_password`)
-3. `.env`-derived defaults compiled by `readDefaults()`
-4. Hard-coded fallback inside the consumer when the section is absent
+## Runtime Owners
 
-## Template Configs
+| Concern | Owner |
+|---|---|
+| Supplies selectable entry labels, keys and route paths for configured surfaces. | `Catalyst\Helpers\Config\AppEntryCatalog` |
+| Loads, exposes and persists environment configuration while isolating secret values. | `Catalyst\Helpers\Config\ConfigManager` |
+| Splits, merges and audits secret values for managed configuration sections. | `Catalyst\Helpers\Config\ConfigSecretCatalog` |
+| Loads, writes, merges and audits secrets for one runtime environment. | `Catalyst\Helpers\Config\ConfigSecretStore` |
 
-Safe starter JSON files live in `boot-core/config/templates/*.json`.
+## Current Behavior
 
-- Templates are not read by the runtime.
-- Runtime still reads `boot-core/config/{environment}/*.json`.
-- `boot-core/config/development/*.json` remains the local WSDD baseline for this repository.
-- `boot-core/config/{environment}/secrets.json`, `boot-core/config/env/.env` and DKIM keys remain local-only and must not be committed.
-- New developers can copy templates into a concrete environment directory or use the setup wizard to write runtime JSON.
+This file is regenerated from current PHP docblocks and the runtime inventory scope for `Catalyst\Helpers\Config`. It intentionally replaces stale historical API notes with the classes and methods that exist in code now.
 
-## Public API
-- `get(string $key, mixed $default = null): mixed`  
-  Dot-notation access, for example `app.project.project_name`.
-- `has(string $key): bool`
-- `section(string $section): ?array`  
-  Returns the raw section, for example `mail` or `session`.
-- `all(): array`
-- `defaults(string $section): array`  
-  Returns the `.env`-derived default payload for one section.
-- `entry(string $section, string $entry, ?array $defaults = null): array`  
-  Returns one named entry merged over defaults. Typical pairs:
-  - `app / project`
-  - `db / db1`
-  - `mail / mail1`
-  - `session / session`
-  - `cache / cache`
-  - `logging / logging`
-  - `security / security`
-  - `websocket / websocket`
-  - `cors / cors`
-- `writeSection(string $section, array $data): void`
-- `isConfigured(): bool`
-- `getEnvironment(): string`
-- `secretStore(): ConfigSecretStore`
+## API From Docblocks
 
-## Notes
-- `ConfigManager` is authoritative for JSON-backed runtime configuration, not for every bootstrap concern in the whole framework.
-- First boot is still valid: if a JSON section does not exist yet, consumers fall back to `.env` defaults through `entry()`/`defaults()`.
-- Managed secret keys are stripped from public section files on write and persisted into `secrets.json`; runtime consumers still read them transparently through `ConfigManager`.
-- Secret migration / normalization is available through `php public/cli.php config:secrets:sync`.
+### `Catalyst\Helpers\Config\AppEntryCatalog`
+
+- File: `app/Helpers/Config/AppEntryCatalog.php`
+- Kind: `class`
+- Summary: Catalogs the application entry points exposed by setup configuration.
+- Responsibility: Supplies selectable entry labels, keys and route paths for configured surfaces.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `primaryLabels()` | `public` | Returns labels accepted as primary application entries. | n/a |
+| `secondaryLabels()` | `public` | Returns labels accepted as secondary application entries. | n/a |
+| `primaryKeys()` | `public` | Returns keys accepted as primary application entries. | n/a |
+| `secondaryKeys()` | `public` | Returns keys accepted as secondary application entries. | n/a |
+| `requiresSecondary()` | `public` | Determines whether the primary entry requires a secondary selection. | n/a |
+| `resolvePath()` | `public` | Resolves the route path assigned to an entry key. | n/a |
+| `labels()` | `private` | Filters catalog labels by visibility and secondary-entry rules. | n/a |
+
+### `Catalyst\Helpers\Config\ConfigManager`
+
+- File: `app/Helpers/Config/ConfigManager.php`
+- Kind: `class`
+- Summary: Framework configuration manager
+- Responsibility: Loads, exposes and persists environment configuration while isolating secret values.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `__construct()` | `protected` | Initializes the object with the collaborators or state required for its responsibility. | Initializes the object with the collaborators or state required for its responsibility. |
+| `get()` | `public` | Retrieve a config value by dot-notation key. Examples: get('db.db1.db_host') → 'localhost' get('mail.mail1.mail_port') → 587 get('app.project.project_name', 'Catalyst') → value or default. | Retrieve a config value by dot-notation key. Examples: get('db.db1.db_host') → 'localhost' get('mail.mail1.mail_port') → 587 get('app.project.project_name', 'Catalyst') → value or default. |
+| `has()` | `public` | Check whether a dot-notation key exists and is non-null. | Check whether a dot-notation key exists and is non-null. |
+| `section()` | `public` | Return all instances within a section (e.g. 'db' → ['db1'=>[...], 'db2'=>[...]]). Returns null when the section does not exist. | Return all instances within a section (e.g. 'db' → ['db1'=>[...], 'db2'=>[...]]). Returns null when the section does not exist. |
+| `all()` | `public` | Return the full config array (all sections). | Return the full config array (all sections). |
+| `defaults()` | `public` | Return .env-derived defaults for a single section. | Return .env-derived defaults for a single section. |
+| `entry()` | `public` | Return one named entry inside a section, merged over .env-derived defaults. Typical mappings: app → project session → session cache → cache logging → logging security → security websocket → websocket cors → cors db → db1 mail → mail1. | Return one named entry inside a section, merged over .env-derived defaults. Typical mappings: app → project session → session cache → cache logging → logging security → security websocket → websocket cors → cors db → db1 mail → mail1. |
+| `isConfigured()` | `public` | True when the Setup Wizard has run and app.json is present with project_config = true. False on first boot. | True when the Setup Wizard has run and app.json is present with project_config = true. False on first boot. |
+| `getEnvironment()` | `public` | Return the resolved environment name (development \| staging \| testing \| production). | Return the resolved environment name (development \| staging \| testing \| production). |
+| `writeSection()` | `public` | Persist a config section to disk and update the in-memory cache. Writes (or overwrites) boot-core/config/{environment}/{section}.json. Creates the config directory if it does not exist. Re-evaluates isConfigured() after the write. | Persist a config section to disk and update the in-memory cache. Writes (or overwrites) boot-core/config/{environment}/{section}.json. Creates the config directory if it does not exist. Re-evaluates isConfigured() after the write. |
+
+### `Catalyst\Helpers\Config\ConfigSecretCatalog`
+
+- File: `app/Helpers/Config/ConfigSecretCatalog.php`
+- Kind: `class`
+- Summary: Catalogs configuration fields that must be stored outside public JSON files.
+- Responsibility: Splits, merges and audits secret values for managed configuration sections.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `managedSections()` | `public` | Returns configuration sections with managed secrets. | n/a |
+| `managesSection()` | `public` | Determines whether a configuration section contains managed secrets. | n/a |
+| `sensitiveKeys()` | `public` | Returns sensitive keys managed for a configuration section. | n/a |
+| `splitSection()` | `public` | Separates public values from secrets before persisting a section. | n/a |
+| `mergeSection()` | `public` | Merges persisted secrets into an in-memory public section. | n/a |
+| `containsPublicSecrets()` | `public` | Determines whether a public section still contains secret values. | n/a |
+
+### `Catalyst\Helpers\Config\ConfigSecretStore`
+
+- File: `app/Helpers/Config/ConfigSecretStore.php`
+- Kind: `class`
+- Summary: Persists environment-specific configuration secrets separately from public JSON.
+- Responsibility: Loads, writes, merges and audits secrets for one runtime environment.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `__construct()` | `public` | Initializes the Config Secret Store instance. | Initializes the Config Secret Store instance. |
+| `path()` | `public` | Returns the secrets file path. | Returns the secrets file path. |
+| `exists()` | `public` | Determines whether the secrets file exists. | Determines whether the secrets file exists. |
+| `load()` | `public` | Loads the persisted secrets payload. | Loads the persisted secrets payload. |
+| `persist()` | `public` | Persists or removes the environment secrets payload. | Persists or removes the environment secrets payload. |
+| `mergeIntoConfig()` | `public` | Merges persisted secrets into an in-memory configuration array. | Merges persisted secrets into an in-memory configuration array. |
+| `persistSection()` | `public` | Replaces the persisted secrets for one configuration section. | Replaces the persisted secrets for one configuration section. |
+| `publicSecretLeaks()` | `public` | Returns public configuration sections that still expose secret values. | Returns public configuration sections that still expose secret values. |
+
+## Operational Notes
+
+When PHP symbols or method contracts in this namespace change, refresh this document from docblocks and run `php public/cli.php docs:inventory --json`.
+
+## Related Documentation
+
+- `docs/runtime-inventory.md`
+- `docs/runtime-module-catalog.md`
+- `docs/harness-context-map.md`

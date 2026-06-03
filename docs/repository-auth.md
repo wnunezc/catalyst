@@ -1,164 +1,179 @@
-# Catalyst\Repository\Auth\Controllers
+# Catalyst\Repository\Auth
 
-**Module location**: `Repository/Framework/Auth/`  
-**Module structure**:
-```text
-Auth/
-├── Controllers/    ← 7 controllers
-├── front/          ← module work assets published automatically to /assets/*/work/auth/
-├── Views/
-│   ├── pages/      ← login, register, verify-email, forgot-password, reset-password, mfa-setup, mfa-challenge
-│   ├── partials/   ← auth reusable fragments
-│   └── scope/      ← presentation-only scope companions
-├── lang/           ← en/ and es/ auth.json
-└── routes.php      ← loaded by Kernel glob
-```
+## Purpose
 
-## Class: LoginController
-**File**: `Repository/Framework/Auth/Controllers/LoginController.php`  
-**Namespace**: `Catalyst\Repository\Auth\Controllers`  
-**Extends**: `Controller`
+Document framework Auth module controllers, model and request payload boundaries.
 
-### Methods
-- `showForm(Request $request): Response` — Renders `auth.login`; `GuestMiddleware` handles redirect for already-authenticated users
-- `login(Request $request): Response` — Validates fields, normalizes redirect targets through `RedirectTarget`, checks user status, and branches to full login, forced MFA setup, or MFA challenge depending on framework MFA state
+## Runtime Owners
 
-### MFA-aware login flow
-- Invalid credentials return a generic failure message
-- Unverified email blocks login before session creation
-- Inactive users are rejected
-- Global MFA enabled + `mfa_enabled=0` → pending setup state + redirect to `/mfa/setup`
-- Global MFA enabled + `mfa_enabled=1` → pending challenge state + redirect to `/mfa/challenge`
-- Global MFA disabled → `AuthManager::loginFromUser(...)`
+| Concern | Owner |
+|---|---|
+| Validates verification tokens, consumes active token records, and marks matching users as verified. | `Catalyst\Repository\Auth\Controllers\EmailVerificationController` |
+| Validates login input, protects account state checks, and creates either pending MFA state or a full session. | `Catalyst\Repository\Auth\Controllers\LoginController` |
+| Invalidates the active auth state and returns the user to a same-origin destination with feedback. | `Catalyst\Repository\Auth\Controllers\LogoutController` |
+| Enforces MFA access rules, provisions TOTP secrets, persists backup-code state, and completes pending logins. | `Catalyst\Repository\Auth\Controllers\MfaController` |
+| Issues password reset emails without account enumeration and updates credentials after token validation. | `Catalyst\Repository\Auth\Controllers\PasswordResetController` |
+| Validates registration input, creates unverified users, and sends one-time verification links. | `Catalyst\Repository\Auth\Controllers\RegisterController` |
+| Starts provider authorization, validates callback data, links OAuth identities, and signs in local users. | `Catalyst\Repository\Auth\Controllers\SocialAuthController` |
+| Represents authenticated application users for ORM reads and writes while hiding credential data. | `Catalyst\Repository\Auth\Models\User` |
+| Normalizes token input and rejects values that cannot match a 64-character verification token. | `Catalyst\Repository\Auth\Requests\EmailVerificationTokenRequest` |
+| Accepts TOTP codes and, when allowed, backup-code input before controllers verify the secret. | `Catalyst\Repository\Auth\Requests\MfaCodeRequest` |
 
----
+## Current Behavior
 
-## Class: LogoutController
-**File**: `Repository/Framework/Auth/Controllers/LogoutController.php`  
-**Namespace**: `Catalyst\Repository\Auth\Controllers`  
-**Extends**: `Controller`
+This file is regenerated from current PHP docblocks and the runtime inventory scope for `Catalyst\Repository\Auth`. It intentionally replaces stale historical API notes with the classes and methods that exist in code now.
 
-### Methods
-- `logout(Request $request): Response` — Calls `AuthManager::logout()`, queues success flash, redirects to `/login`
+## API From Docblocks
 
----
+### `Catalyst\Repository\Auth\Controllers\EmailVerificationController`
 
-## Class: RegisterController
-**File**: `Repository/Framework/Auth/Controllers/RegisterController.php`  
-**Namespace**: `Catalyst\Repository\Auth\Controllers`  
-**Extends**: `Controller`
+- File: `Repository/Framework/Auth/Controllers/EmailVerificationController.php`
+- Kind: `class`
+- Summary: Handles manual and link-based account email verification.
+- Responsibility: Validates verification tokens, consumes active token records, and marks matching users as verified.
 
-### Methods
-- `showForm(Request $request): Response` — Renders `auth.register`
-- `register(Request $request): Response` — Validates input, checks uniqueness, creates user with `UserProvider::create(...)`, creates verification token, sends verification email
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `showManualForm()` | `public` | Renders the guest form where users can paste a verification token manually. | Renders the guest form where users can paste a verification token manually. |
+| `manualVerify()` | `public` | Validates the submitted manual verification token before consuming it. | Validates the submitted manual verification token before consuming it. |
+| `verify()` | `public` | Validates a URL verification token and activates the matching account. | Validates a URL verification token and activates the matching account. |
+| `consumeToken()` | `private` | Consumes a valid verification token, marks the account as verified, and redirects to login. | Consumes a valid verification token, marks the account as verified, and redirects to login. |
 
----
+### `Catalyst\Repository\Auth\Controllers\LoginController`
 
-## Class: EmailVerificationController
-**File**: `Repository/Framework/Auth/Controllers/EmailVerificationController.php`  
-**Namespace**: `Catalyst\Repository\Auth\Controllers`  
-**Extends**: `Controller`
+- File: `Repository/Framework/Auth/Controllers/LoginController.php`
+- Kind: `class`
+- Summary: Handles credential login and MFA-aware authentication branching.
+- Responsibility: Validates login input, protects account state checks, and creates either pending MFA state or a full session.
 
-### Methods
-- `showManualForm(): Response` — Renders `auth.verify-email` for manual token activation when the email link cannot be opened directly
-- `manualVerify(Request $request): Response` — Validates a pasted 64-character hexadecimal token through `EmailVerificationTokenRequest` and consumes it
-- `verify(Request $request, string $token): Response` — Validates the URL token format, consumes the verification token, marks email as verified, redirects to `/login`
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `showForm()` | `public` | Renders the guest login form with sanitized redirect and preserved email input. | Renders the guest login form with sanitized redirect and preserved email input. |
+| `login()` | `public` | Validates credentials, enforces account status, and routes the user through MFA or session creation. | Validates credentials, enforces account status, and routes the user through MFA or session creation. |
 
----
+### `Catalyst\Repository\Auth\Controllers\LogoutController`
 
-## Class: PasswordResetController
-**File**: `Repository/Framework/Auth/Controllers/PasswordResetController.php`  
-**Namespace**: `Catalyst\Repository\Auth\Controllers`  
-**Extends**: `Controller`
+- File: `Repository/Framework/Auth/Controllers/LogoutController.php`
+- Kind: `class`
+- Summary: Handles authenticated session termination.
+- Responsibility: Invalidates the active auth state and returns the user to a same-origin destination with feedback.
 
-### Methods
-- `showRequestForm(Request $request): Response` — Renders `auth.forgot-password`
-- `sendResetLink(Request $request): Response` — Anti-enumeration response; sends email only when user exists
-- `showResetForm(Request $request, string $token): Response` — Renders `auth.reset-password`
-- `reset(Request $request, string $token): Response` — Validates password input, consumes reset token, updates password
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `logout()` | `public` | Destroy the session and redirect back (or to / if Referer is absent). Public pages: stay on same page, show success toaster. Protected pages: AuthMiddleware will catch the next request and redirect to /login, where the toaster will render after that redirect. | Destroy the session and redirect back (or to / if Referer is absent). Public pages: stay on same page, show success toaster. Protected pages: AuthMiddleware will catch the next request and redirect to /login, where the toaster will render after that redirect. |
 
----
+### `Catalyst\Repository\Auth\Controllers\MfaController`
 
-## Class: SocialAuthController
-**File**: `Repository/Framework/Auth/Controllers/SocialAuthController.php`  
-**Namespace**: `Catalyst\Repository\Auth\Controllers`  
-**Extends**: `Controller`
+- File: `Repository/Framework/Auth/Controllers/MfaController.php`
+- Kind: `class`
+- Summary: Handles MFA setup, recovery-code use, and login challenge completion.
+- Responsibility: Enforces MFA access rules, provisions TOTP secrets, persists backup-code state, and completes pending logins.
 
-### Methods
-- `redirect(Request $request, string $provider): Response` — Checks provider configuration and redirects to OAuth provider
-- `callback(Request $request, string $provider): Response` — Resolves provider user, links or creates local account, marks OAuth-created emails as verified, logs user in
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `setup()` | `public` | Show the MFA setup page with a QR code to scan. Accessible in two modes: - Normal: user is already authenticated and wants to enable MFA. - Forced: MFA is globally required; user arrived here via login with no MFA configured yet (hasMfaSetupPending = true, no auth session). | Show the MFA setup page with a QR code to scan. Accessible in two modes: - Normal: user is already authenticated and wants to enable MFA. - Forced: MFA is globally required; user arrived here via login with no MFA configured yet (hasMfaSetupPending = true, no auth session). |
+| `enable()` | `public` | Confirm the first TOTP code and permanently activate MFA. If the user arrived via the forced-setup flow (hasMfaSetupPending), the full login session is created here after successful activation. | Confirm the first TOTP code and permanently activate MFA. If the user arrived via the forced-setup flow (hasMfaSetupPending), the full login session is created here after successful activation. |
+| `disable()` | `public` | Disable MFA after verifying the user's current password. | Disable MFA after verifying the user's current password. |
+| `challenge()` | `public` | Show the MFA challenge form during a pending login. | Show the MFA challenge form during a pending login. |
+| `verify()` | `public` | Verify TOTP code (or backup code) and complete the pending login session. | Verify TOTP code (or backup code) and complete the pending login session. |
+| `isMfaGloballyEnabled()` | `private` | True when the framework-level MFA toggle is on in security.json. | n/a |
+| `resolveUser()` | `private` | Resolve the user row from either the active session or the forced-setup pending state. | Resolve the user row from either the active session or the forced-setup pending state. |
+| `resolveIssuer()` | `private` | Resolve the application name for the otpauth:// URI issuer field. | Resolve the application name for the otpauth:// URI issuer field. |
 
-### Account linking
-- Existing local account with same email: social account is linked to that user
-- New social account: user is created and treated as email-verified
+### `Catalyst\Repository\Auth\Controllers\PasswordResetController`
 
----
+- File: `Repository/Framework/Auth/Controllers/PasswordResetController.php`
+- Kind: `class`
+- Summary: Handles forgot-password and reset-token credential replacement.
+- Responsibility: Issues password reset emails without account enumeration and updates credentials after token validation.
 
-## Class: MfaController
-**File**: `Repository/Framework/Auth/Controllers/MfaController.php`  
-**Namespace**: `Catalyst\Repository\Auth\Controllers`  
-**Extends**: `Controller`
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `showRequestForm()` | `public` | Show the forgot-password form. | Show the forgot-password form. |
+| `sendResetLink()` | `public` | Send a password-reset link to the given email address. Always returns a success message to prevent user enumeration. | Send a password-reset link to the given email address. Always returns a success message to prevent user enumeration. |
+| `showResetForm()` | `public` | Show the password-reset form for a given token. | Show the password-reset form for a given token. |
+| `reset()` | `public` | Apply the new password if the token is valid. | Apply the new password if the token is valid. |
+| `sendResetEmail()` | `private` | Send the password-reset email. | Send the password-reset email. |
+| `resolveAppUrl()` | `private` | Resolves the public application URL used to build password-reset links. | Resolves the public application URL used to build password-reset links. |
 
-### Methods
-- `setup(Request $request): Response` — Renders QR provisioning page; accepts authenticated users or forced-setup pending state
-- `enable(Request $request): Response` — Validates the setup code through `MfaCodeRequest`, verifies first TOTP code, enables MFA, returns backup codes once to the user, and persists only their hashes
-- `disable(Request $request): Response` — Verifies current password and disables MFA for an authenticated user
-- `challenge(Request $request): Response` — Renders login challenge form when pending MFA state exists
-- `verify(Request $request): Response` — Validates the submitted MFA format through `MfaCodeRequest`, verifies TOTP or backup code, updates the persisted hashed backup-code set when one is consumed, and completes the pending login session
+### `Catalyst\Repository\Auth\Controllers\RegisterController`
 
-### Access rules
-- `setup()` / `enable()` — authenticated session or pending forced-setup flow
-- `disable()` — authenticated session only
-- `challenge()` / `verify()` — pending MFA challenge only
+- File: `Repository/Framework/Auth/Controllers/RegisterController.php`
+- Kind: `class`
+- Summary: Handles self-service account registration and email verification delivery.
+- Responsibility: Validates registration input, creates unverified users, and sends one-time verification links.
 
----
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `showForm()` | `public` | Show the registration form. | Show the registration form. |
+| `register()` | `public` | Process registration and send email verification link. | Process registration and send email verification link. |
+| `sendVerificationEmail()` | `private` | Send the email-verification message. | Send the email-verification message. |
+| `resolveAppUrl()` | `private` | Resolves the public application URL used to build verification links. | Resolves the public application URL used to build verification links. |
 
-## Auth Routes (`Repository/Framework/Auth/routes.php`)
+### `Catalyst\Repository\Auth\Controllers\SocialAuthController`
 
-| Method | Path | Controller | Middleware |
-|--------|------|-----------|-----------|
-| GET | `/login` | `LoginController::showForm` | `GuestMiddleware` |
-| POST | `/login` | `LoginController::login` | `GuestMiddleware`, `LoginThrottleMiddleware` |
-| GET | `/register` | `RegisterController::showForm` | `GuestMiddleware` |
-| POST | `/register` | `RegisterController::register` | `GuestMiddleware`, `LoginThrottleMiddleware` |
-| GET | `/forgot-password` | `PasswordResetController::showRequestForm` | `GuestMiddleware` |
-| POST | `/forgot-password` | `PasswordResetController::sendResetLink` | `GuestMiddleware` |
-| GET | `/reset-password/{token}` | `PasswordResetController::showResetForm` | `GuestMiddleware` |
-| POST | `/reset-password/{token}` | `PasswordResetController::reset` | `GuestMiddleware` |
-| GET | `/verify-email` | `EmailVerificationController::showManualForm` | `GuestMiddleware` |
-| POST | `/verify-email` | `EmailVerificationController::manualVerify` | `GuestMiddleware`, throttle `auth_recovery` |
-| GET | `/verify-email/{token}` | `EmailVerificationController::verify` | — |
-| POST | `/logout` | `LogoutController::logout` | — |
-| GET | `/auth/social/{provider}` | `SocialAuthController::redirectToProvider` | `RouteFeatureMiddleware('social_auth')` |
-| GET | `/auth/social/callback/{provider}` | `SocialAuthController::callback` | `RouteFeatureMiddleware('social_auth')` |
-| GET | `/mfa/setup` | `MfaController::setup` | `RouteFeatureMiddleware('mfa')` |
-| POST | `/mfa/enable` | `MfaController::enable` | `RouteFeatureMiddleware('mfa')`, throttle `mfa_challenge` |
-| POST | `/mfa/disable` | `MfaController::disable` | `AuthMiddleware`, `RouteFeatureMiddleware('mfa')`, throttle `mfa_challenge` |
-| GET | `/mfa/challenge` | `MfaController::challenge` | `RouteFeatureMiddleware('mfa')` |
-| POST | `/mfa/verify` | `MfaController::verify` | `RouteFeatureMiddleware('mfa')`, throttle `mfa_challenge` |
+- File: `Repository/Framework/Auth/Controllers/SocialAuthController.php`
+- Kind: `class`
+- Summary: Handles OAuth provider redirects and callbacks for social login.
+- Responsibility: Starts provider authorization, validates callback data, links OAuth identities, and signs in local users.
 
-### Route notes
-- Login redirect targets are normalized by `Catalyst\Framework\Http\RedirectTarget` to local paths only. Absolute URLs, protocol-relative URLs and ambiguous backslash paths fall back to `/`.
-- `LoginThrottleMiddleware` is bypassed entirely when `IS_DEVELOPMENT` is `true`; lockouts apply only outside local development
-- `/mfa/setup` and `/mfa/enable` intentionally do **not** use `AuthMiddleware` because forced first-time setup happens before a full auth session exists
-- `/mfa/challenge` and `/mfa/verify` are guarded by pending MFA state inside the controller, not by `AuthMiddleware`
-- `/mfa/verify` uses the dedicated `mfa_challenge` throttle only; it does not reuse `LoginThrottleMiddleware`, so a correctable MFA formatting error does not poison the normal login throttle bucket
-- Auth views no longer rely on inline page scripts for password policy or QR provisioning; route-specific behavior now enters through `Repository/Framework/Auth/front/script.js`
-- `/verify-email/{token}` remains link-compatible and middleware-free because the one-time token is consumed as the identity proof; `/verify-email` is the guest manual activation surface for copy/paste recovery
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `redirectToProvider()` | `public` | Redirect the user to the OAuth provider's authorization page. | Redirect the user to the OAuth provider's authorization page. |
+| `callback()` | `public` | Handle the OAuth provider callback, find or create the user, and log them in. | Handle the OAuth provider callback, find or create the user, and log them in. |
 
----
+### `Catalyst\Repository\Auth\Models\User`
 
-## Auth Database Tables
+- File: `Repository/Framework/Auth/Models/User.php`
+- Kind: `class`
+- Summary: User entity — maps to the `users` table.
+- Responsibility: Represents authenticated application users for ORM reads and writes while hiding credential data.
 
-| Table | Purpose | No-Delete column |
-|-------|---------|-----------------|
-| `users` | User accounts + MFA fields | `active` |
-| `remember_tokens` | Persistent login cookies | `active` |
-| `email_verification_tokens` | Account activation | `active` |
-| `password_reset_tokens` | Password reset flow | `active` |
-| `user_social_accounts` | OAuth linked accounts | `active` |
+### `Catalyst\Repository\Auth\Requests\EmailVerificationTokenRequest`
 
-### MFA fields stored on `users`
-- `mfa_secret`
-- `mfa_enabled`
-- `mfa_backup_codes`
+- File: `Repository/Framework/Auth/Requests/EmailVerificationTokenRequest.php`
+- Kind: `class`
+- Summary: Validates manually submitted email verification tokens.
+- Responsibility: Normalizes token input and rejects values that cannot match a 64-character verification token.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `only()` | `public` | Limits validation data to the pasted verification token. | Limits validation data to the pasted verification token. |
+| `rules()` | `public` | Requires the verification token field and constrains its accepted length. | Requires the verification token field and constrains its accepted length. |
+| `labels()` | `public` | Provides the translated field label used in validation feedback. | Provides the translated field label used in validation feedback. |
+| `validationMessage()` | `public` | Returns the generic message displayed when verification token validation fails. | Returns the generic message displayed when verification token validation fails. |
+| `validated()` | `public` | Returns normalized data, resolving validation once when needed. | Returns normalized data, resolving validation once when needed. |
+| `validateResolved()` | `public` | Authorizes and validates the request, then stores the normalized token payload. | Authorizes and validates the request, then stores the normalized token payload. |
+| `validationData()` | `protected` | Builds validation data from the request using the trimmed token value. | Builds validation data from the request using the trimmed token value. |
+| `tokenErrors()` | `private` | Adds token format errors after the base validator confirms a value is present. | Adds token format errors after the base validator confirms a value is present. |
+| `isWellFormedToken()` | `public` | Checks that the token is exactly 64 hexadecimal characters. | n/a |
+| `normalizeToken()` | `private` | Trims surrounding whitespace from a submitted verification token. | Trims surrounding whitespace from a submitted verification token. |
+
+### `Catalyst\Repository\Auth\Requests\MfaCodeRequest`
+
+- File: `Repository/Framework/Auth/Requests/MfaCodeRequest.php`
+- Kind: `class`
+- Summary: Validates MFA challenge and setup confirmation codes.
+- Responsibility: Accepts TOTP codes and, when allowed, backup-code input before controllers verify the secret.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `__construct()` | `public` | Captures whether backup-code format is allowed for this MFA request. | Captures whether backup-code format is allowed for this MFA request. |
+| `only()` | `public` | Limits validation data to the MFA code field. | Limits validation data to the MFA code field. |
+| `rules()` | `public` | Requires the MFA code field and constrains the accepted input length. | Requires the MFA code field and constrains the accepted input length. |
+| `labels()` | `public` | Provides the translated field label used in validation feedback. | Provides the translated field label used in validation feedback. |
+| `validationMessage()` | `public` | Returns the generic message displayed when MFA code validation fails. | Returns the generic message displayed when MFA code validation fails. |
+| `validated()` | `public` | Returns normalized data, resolving validation once when needed. | Returns normalized data, resolving validation once when needed. |
+| `validateResolved()` | `public` | Authorizes and validates the request, then stores the normalized MFA code payload. | Authorizes and validates the request, then stores the normalized MFA code payload. |
+| `validationData()` | `protected` | Builds validation data from the request using the trimmed MFA code value. | Builds validation data from the request using the trimmed MFA code value. |
+| `codeErrors()` | `private` | Rejects codes that match neither TOTP format nor an allowed backup-code format. | Rejects codes that match neither TOTP format nor an allowed backup-code format. |
+
+## Operational Notes
+
+When PHP symbols or method contracts in this namespace change, refresh this document from docblocks and run `php public/cli.php docs:inventory --json`.
+
+## Related Documentation
+
+- `docs/runtime-inventory.md`
+- `docs/runtime-module-catalog.md`
+- `docs/harness-context-map.md`

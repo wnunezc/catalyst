@@ -1,175 +1,150 @@
 # Catalyst\Framework\Argument
 
-## Class: Argument
-**File**: app/Framework/Argument/Argument.php
-**Namespace**: Catalyst\Framework\Argument
-**Type**: Class
-**Purpose**: Main CLI argument handling facade with Singleton pattern
+## Purpose
 
-### Traits Used
-- `Catalyst\Framework\Traits\SingletonTrait`
+Document CLI argument and option parsing primitives.
 
-### Properties
-- `$bag: ?ArgumentBag` - **private** - Parsed argument bag
-- `$parser: ArgumentParser` - **private** - Argument parser instance
-- `$validator: Validator` - **private** - Argument validator instance
-- `$definedOptions: array` - **private** - Predefined options schema
+## Runtime Owners
 
-### Public Methods
-- `getArguments(): array` - **public** - Returns all arguments as associative array (compatible with FileOutput.php)
-- `has(string $name): bool` - **public** - Checks if an option exists
-- `get(string $name, mixed $default = null): mixed` - **public** - Gets option value with default fallback
-- `getParameter(int $position, mixed $default = null): mixed` - **public** - Gets parameter value by position
-- `getAllOptions(): array` - **public** - Returns all Option objects
-- `getAllParameters(): array` - **public** - Returns all Parameter objects
-- `defineOption(Option $option): self` - **public** - Defines an option schema
-- `defineOptions(array $options): self` - **public** - Defines multiple option schemas
-- `validate(): bool` - **public** - Validates arguments against schema
-- `getValidationErrors(): array` - **public** - Gets validation errors
-- `getValidator(): Validator` - **public** - Gets validator instance
-- `getParser(): ArgumentParser` - **public** - Gets parser instance
-- `getBag(): ?ArgumentBag` - **public** - Gets argument bag
-- `getRaw(): array` - **public** - Gets raw argv array
-- `isCli(): bool` - **public static** - Checks if running in CLI mode
-- `getScriptName(): string` - **public** - Gets script name
+| Concern | Owner |
+|---|---|
+| Maintains parser, validator, parsed bag, and optional option schema for command-line consumers. | `Catalyst\Framework\Argument\Argument` |
+| Provides lookup, existence checks, counts, and array conversion for parsed command-line input. | `Catalyst\Framework\Argument\ArgumentBag` |
+| Recognizes long options, short options, combined short flags, option values, and positional parameters. | `Catalyst\Framework\Argument\ArgumentParser` |
+| Stores option names, value/default state, required metadata, description, and value acceptance rules. | `Catalyst\Framework\Argument\Option` |
+| Stores parameter position, current/default value, required metadata, name, and description. | `Catalyst\Framework\Argument\Parameter` |
+| Tracks validation errors, checks required inputs, validates scalar types, and casts option values. | `Catalyst\Framework\Argument\Validator` |
 
-### Protected Methods
-- `__construct(): void` - **protected** - Constructor with auto-parse
-- `parse(?array $argv = null): self` - **public** - Parses command line arguments
+## Current Behavior
 
-### Used By
-- `Catalyst\Helpers\IO\FileOutput` - Uses `getArguments()` for file output detection
+This file is regenerated from current PHP docblocks and the runtime inventory scope for `Catalyst\Framework\Argument`. It intentionally replaces stale historical API notes with the classes and methods that exist in code now.
 
----
+## API From Docblocks
 
-## Class: ArgumentParser
-**File**: app/Framework/Argument/ArgumentParser.php
-**Namespace**: Catalyst\Framework\Argument
-**Type**: Class
-**Purpose**: Parses raw $argv into structured Option and Parameter objects
+### `Catalyst\Framework\Argument\Argument`
 
-### Public Methods
-- `parse(array $argv): ArgumentBag` - **public** - Parses argv array into ArgumentBag
-- `parseWithSchema(array $argv, array $definedOptions): ArgumentBag` - **public** - Parses with predefined options schema
+- File: `app/Framework/Argument/Argument.php`
+- Kind: `class`
+- Summary: Provides the shared entry point for parsing and querying CLI arguments.
+- Responsibility: Maintains parser, validator, parsed bag, and optional option schema for command-line consumers.
 
-### Private Methods
-- `parseLongOption(array $args, int $index, ArgumentBag $bag): int` - **private** - Parses long options (--option)
-- `parseShortOption(array $args, int $index, ArgumentBag $bag): int` - **private** - Parses short options (-o) and combined flags (-abc)
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `__construct()` | `protected` | Initializes parsing and validation services, then parses the current CLI input. | Initializes parsing and validation services, then parses the current CLI input. |
+| `parse()` | `public` | Parses raw command-line input into the internal argument bag. | Parses raw command-line input into the internal argument bag. |
+| `getArguments()` | `public` | Returns parsed options and positional parameters as a flat associative array. | Returns parsed options and positional parameters as a flat associative array. |
+| `has()` | `public` | Checks whether a parsed option is present by short or long name. | Checks whether a parsed option is present by short or long name. |
+| `get()` | `public` | Returns a parsed option value or the supplied default when the option is absent. | Returns a parsed option value or the supplied default when the option is absent. |
+| `getParameter()` | `public` | Returns a positional parameter value or the supplied default when absent. | Returns a positional parameter value or the supplied default when absent. |
+| `getAllOptions()` | `public` | Returns every parsed option object indexed by primary name. | Returns every parsed option object indexed by primary name. |
+| `getAllParameters()` | `public` | Returns every parsed positional parameter indexed by position. | Returns every parsed positional parameter indexed by position. |
+| `defineOption()` | `public` | Registers a single option definition for schema-aware parsing and validation. | Registers a single option definition for schema-aware parsing and validation. |
+| `defineOptions()` | `public` | Registers multiple option definitions for schema-aware parsing and validation. | Registers multiple option definitions for schema-aware parsing and validation. |
+| `validate()` | `public` | Validates the current parsed bag against all required defined options. | Validates the current parsed bag against all required defined options. |
+| `getValidationErrors()` | `public` | Returns validation error messages collected by the validator. | Returns validation error messages collected by the validator. |
+| `getValidator()` | `public` | Returns the validator used by this argument facade. | Returns the validator used by this argument facade. |
+| `getParser()` | `public` | Returns the parser used by this argument facade. | Returns the parser used by this argument facade. |
+| `getBag()` | `public` | Returns the current parsed argument bag, if parsing has produced one. | Returns the current parsed argument bag, if parsing has produced one. |
+| `getRaw()` | `public` | Returns the original argv array stored in the parsed bag. | Returns the original argv array stored in the parsed bag. |
+| `isCli()` | `public` | Determines whether the current PHP process is running in CLI mode. | n/a |
+| `getScriptName()` | `public` | Returns the executable script basename from the current argv array. | Returns the executable script basename from the current argv array. |
 
-### Supported Formats
-- Short options: `-f value`, `-f=value`
-- Long options: `--file value`, `--file=value`
-- Boolean flags: `--verbose`, `-v`
-- Combined short: `-abc` expands to `-a -b -c`
-- Positional parameters: Arguments without flags
+### `Catalyst\Framework\Argument\ArgumentBag`
 
----
+- File: `app/Framework/Argument/ArgumentBag.php`
+- Kind: `class`
+- Summary: Stores parsed CLI options, positional parameters, and the original argv array.
+- Responsibility: Provides lookup, existence checks, counts, and array conversion for parsed command-line input.
 
-## Class: ArgumentBag
-**File**: app/Framework/Argument/ArgumentBag.php
-**Namespace**: Catalyst\Framework\Argument
-**Type**: Class
-**Purpose**: Container for parsed CLI arguments
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `__construct()` | `public` | Captures the original argv array before options and parameters are added. | Captures the original argv array before options and parameters are added. |
+| `addOption()` | `public` | Adds an option to the bag using its primary short or long name. | Adds an option to the bag using its primary short or long name. |
+| `addParameter()` | `public` | Adds a positional parameter to the bag by its declared position. | Adds a positional parameter to the bag by its declared position. |
+| `getOption()` | `public` | Finds a parsed option by direct key, short name, or long name. | Finds a parsed option by direct key, short name, or long name. |
+| `getParameter()` | `public` | Returns the positional parameter stored at the requested index. | Returns the positional parameter stored at the requested index. |
+| `hasOption()` | `public` | Checks whether a parsed option exists by short or long name. | Checks whether a parsed option exists by short or long name. |
+| `hasParameter()` | `public` | Checks whether a positional parameter exists at the requested index. | Checks whether a positional parameter exists at the requested index. |
+| `getOptionValue()` | `public` | Returns a parsed option value or the supplied default when absent. | Returns a parsed option value or the supplied default when absent. |
+| `getParameterValue()` | `public` | Returns a positional parameter value or the supplied default when absent. | Returns a positional parameter value or the supplied default when absent. |
+| `getAllOptions()` | `public` | Returns all parsed options indexed by primary name. | Returns all parsed options indexed by primary name. |
+| `getAllParameters()` | `public` | Returns all parsed positional parameters indexed by position. | Returns all parsed positional parameters indexed by position. |
+| `toArray()` | `public` | Converts parsed options and parameters into the flat array format used by legacy CLI consumers. | Converts parsed options and parameters into the flat array format used by legacy CLI consumers. |
+| `getRaw()` | `public` | Returns the original argv array captured by the bag. | Returns the original argv array captured by the bag. |
+| `countOptions()` | `public` | Counts parsed options currently stored in the bag. | Counts parsed options currently stored in the bag. |
+| `countParameters()` | `public` | Counts parsed positional parameters currently stored in the bag. | Counts parsed positional parameters currently stored in the bag. |
 
-### Properties
-- `$options: array` - **private** - Options indexed by name
-- `$parameters: array` - **private** - Parameters indexed by position
-- `$raw: array` - **private** - Raw argv array
+### `Catalyst\Framework\Argument\ArgumentParser`
 
-### Public Methods
-- `__construct(array $raw = []): void` - **public** - Constructor
-- `addOption(Option $option): self` - **public** - Adds an option
-- `addParameter(Parameter $parameter): self` - **public** - Adds a parameter
-- `getOption(string $name): ?Option` - **public** - Gets option by name
-- `getParameter(int $position): ?Parameter` - **public** - Gets parameter by position
-- `hasOption(string $name): bool` - **public** - Checks if option exists
-- `hasParameter(int $position): bool` - **public** - Checks if parameter exists
-- `getOptionValue(string $name, mixed $default = null): mixed` - **public** - Gets option value
-- `getParameterValue(int $position, mixed $default = null): mixed` - **public** - Gets parameter value
-- `getAllOptions(): array` - **public** - Gets all options
-- `getAllParameters(): array` - **public** - Gets all parameters
-- `toArray(): array` - **public** - Converts to associative array (for FileOutput compatibility)
-- `getRaw(): array` - **public** - Gets raw argv
-- `countOptions(): int` - **public** - Counts options
-- `countParameters(): int` - **public** - Counts parameters
+- File: `app/Framework/Argument/ArgumentParser.php`
+- Kind: `class`
+- Summary: Parses raw CLI argv input into structured option and parameter objects.
+- Responsibility: Recognizes long options, short options, combined short flags, option values, and positional parameters.
 
----
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `parse()` | `public` | Parses an argv array into an argument bag, skipping the executable script name. | Parses an argv array into an argument bag, skipping the executable script name. |
+| `parseLongOption()` | `private` | Parses a long option token and stores it in the provided bag. | Parses a long option token and stores it in the provided bag. |
+| `parseShortOption()` | `private` | Parses a short option token or combined short flags and stores them in the bag. | Parses a short option token or combined short flags and stores them in the bag. |
+| `parseWithSchema()` | `public` | Parses argv and overlays predefined option objects onto matching parsed options. | Parses argv and overlays predefined option objects onto matching parsed options. |
 
-## Class: Option
-**File**: app/Framework/Argument/Option.php
-**Namespace**: Catalyst\Framework\Argument
-**Type**: Class
-**Purpose**: Represents a CLI option/flag (-f, --file)
+### `Catalyst\Framework\Argument\Option`
 
-### Properties
-- `$shortName: ?string` - **private** - Short name (single character)
-- `$longName: ?string` - **private** - Long name
-- `$value: mixed` - **private** - Option value
-- `$required: bool` - **private** - Whether required
-- `$default: mixed` - **private** - Default value
-- `$description: string` - **private** - Description
-- `$acceptsValue: bool` - **private** - Whether accepts a value
+- File: `app/Framework/Argument/Option.php`
+- Kind: `class`
+- Summary: Represents a parsed or predefined command-line option.
+- Responsibility: Stores option names, value/default state, required metadata, description, and value acceptance rules.
 
-### Public Methods
-- `__construct(?string $shortName, ?string $longName, mixed $default, bool $required, string $description, bool $acceptsValue): void` - **public** - Constructor
-- `getShortName(): ?string` - **public** - Gets short name
-- `getLongName(): ?string` - **public** - Gets long name
-- `setValue(mixed $value): self` - **public** - Sets value
-- `getValue(): mixed` - **public** - Gets value
-- `isRequired(): bool` - **public** - Checks if required
-- `getDefault(): mixed` - **public** - Gets default value
-- `getDescription(): string` - **public** - Gets description
-- `acceptsValue(): bool` - **public** - Checks if accepts value
-- `isSet(): bool` - **public** - Checks if option has been set
-- `matches(string $name): bool` - **public** - Checks if name matches (short or long)
-- `getPrimaryName(): ?string` - **public** - Gets primary name (long preferred)
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `__construct()` | `public` | Creates an option definition or parsed option with its default value applied. | Creates an option definition or parsed option with its default value applied. |
+| `getShortName()` | `public` | Returns the configured short option name. | Returns the configured short option name. |
+| `getLongName()` | `public` | Returns the configured long option name. | Returns the configured long option name. |
+| `setValue()` | `public` | Updates the current parsed value for the option. | Updates the current parsed value for the option. |
+| `getValue()` | `public` | Returns the current parsed or default value. | Returns the current parsed or default value. |
+| `isRequired()` | `public` | Reports whether validation requires this option. | Reports whether validation requires this option. |
+| `getDefault()` | `public` | Returns the fallback value assigned to the option. | Returns the fallback value assigned to the option. |
+| `getDescription()` | `public` | Returns the human-readable option description. | Returns the human-readable option description. |
+| `acceptsValue()` | `public` | Reports whether this option accepts an explicit value. | Reports whether this option accepts an explicit value. |
+| `matches()` | `public` | Checks whether a supplied name matches the short or long option name. | Checks whether a supplied name matches the short or long option name. |
+| `getPrimaryName()` | `public` | Returns the long option name when available, otherwise the short name. | Returns the long option name when available, otherwise the short name. |
 
----
+### `Catalyst\Framework\Argument\Parameter`
 
-## Class: Parameter
-**File**: app/Framework/Argument/Parameter.php
-**Namespace**: Catalyst\Framework\Argument
-**Type**: Class
-**Purpose**: Represents a positional CLI parameter
+- File: `app/Framework/Argument/Parameter.php`
+- Kind: `class`
+- Summary: Represents a positional command-line parameter.
+- Responsibility: Stores parameter position, current/default value, required metadata, name, and description.
 
-### Properties
-- `$position: int` - **private** - Position index
-- `$value: mixed` - **private** - Parameter value
-- `$required: bool` - **private** - Whether required
-- `$default: mixed` - **private** - Default value
-- `$name: string` - **private** - Name/identifier
-- `$description: string` - **private** - Description
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `__construct()` | `public` | Creates a positional parameter with parsed value, validation metadata, and fallback value. | Creates a positional parameter with parsed value, validation metadata, and fallback value. |
+| `getPosition()` | `public` | Returns the positional index assigned to this parameter. | Returns the positional index assigned to this parameter. |
+| `setValue()` | `public` | Updates the current value stored for this parameter. | Updates the current value stored for this parameter. |
+| `getValue()` | `public` | Returns the current parsed or default parameter value. | Returns the current parsed or default parameter value. |
+| `isRequired()` | `public` | Reports whether validation requires this parameter. | Reports whether validation requires this parameter. |
+| `getDefault()` | `public` | Returns the fallback value assigned to this parameter. | Returns the fallback value assigned to this parameter. |
+| `getName()` | `public` | Returns the parameter name used for identification and validation messages. | Returns the parameter name used for identification and validation messages. |
+| `getDescription()` | `public` | Returns the human-readable parameter description. | Returns the human-readable parameter description. |
+| `hasValue()` | `public` | Reports whether the parameter currently stores any value. | Reports whether the parameter currently stores any value. |
 
-### Public Methods
-- `__construct(int $position, mixed $value, bool $required, mixed $default, string $name, string $description): void` - **public** - Constructor
-- `getPosition(): int` - **public** - Gets position
-- `setValue(mixed $value): self` - **public** - Sets value
-- `getValue(): mixed` - **public** - Gets value
-- `isRequired(): bool` - **public** - Checks if required
-- `getDefault(): mixed` - **public** - Gets default value
-- `getName(): string` - **public** - Gets name
-- `getDescription(): string` - **public** - Gets description
-- `isSet(): bool` - **public** - Checks if parameter has been set
-- `hasValue(): bool` - **public** - Checks if parameter has a value
+### `Catalyst\Framework\Argument\Validator`
 
----
+- File: `app/Framework/Argument/Validator.php`
+- Kind: `class`
+- Summary: Validates parsed CLI options and positional parameters.
+- Responsibility: Tracks validation errors, checks required inputs, validates scalar types, and casts option values.
 
-## Class: Validator
-**File**: app/Framework/Argument/Validator.php
-**Namespace**: Catalyst\Framework\Argument
-**Type**: Class
-**Purpose**: Validates CLI arguments against requirements and types
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `validateOption()` | `public` | Validates required and value-bearing constraints for a single option. | Validates required and value-bearing constraints for a single option. |
 
-### Properties
-- `$errors: array` - **private** - Validation errors
+## Operational Notes
 
-### Public Methods
-- `validateOption(Option $option): bool` - **public** - Validates a single option
-- `validateParameter(Parameter $parameter): bool` - **public** - Validates a single parameter
-- `validateBag(ArgumentBag $bag, array $requiredOptions = []): bool` - **public** - Validates entire argument bag
-- `getErrors(): array` - **public** - Gets validation errors
-- `hasErrors(): bool` - **public** - Checks if there are errors
-- `getErrorsAsString(string $separator = "\n"): string` - **public** - Gets errors as formatted string
-- `clearErrors(): void` - **public** - Clears validation errors
-- `validateType(mixed $value, string $expectedType): bool` - **public** - Validates value type (string, int, float, bool, array)
-- `castValue(mixed $value, string $type): mixed` - **public** - Casts value to specified type
+When PHP symbols or method contracts in this namespace change, refresh this document from docblocks and run `php public/cli.php docs:inventory --json`.
+
+## Related Documentation
+
+- `docs/runtime-inventory.md`
+- `docs/runtime-module-catalog.md`
+- `docs/harness-context-map.md`

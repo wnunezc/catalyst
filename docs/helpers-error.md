@@ -1,170 +1,102 @@
-# `Catalyst\Helpers\Error`
+# Catalyst\Helpers\Error
 
-## Overview
+## Purpose
 
-The error stack is display-and-log oriented. It does **not** convert PHP errors into thrown exceptions. File writing, channel routing and rotation are delegated to the central `Logger`, `LoggerWriter` and `LogRotator` pipeline.
+Document runtime error capture, logging and output helpers.
 
-The live flow is:
+## Runtime Owners
 
-1. `ErrorCatcher` initializes the handlers and output buffering.
-2. PHP errors go to `ErrorHandler`.
-3. Uncaught exceptions go to `ExceptionHandler`.
-4. Fatal shutdown errors go to `ShutdownHandler`.
-5. All formatted outputs pass through `ErrorOutput`, which logs first via `ErrorLogger` and then renders CLI or web output.
+| Concern | Owner |
+|---|---|
+| Registers shutdown, exception and PHP error handlers once per request. | `Catalyst\Helpers\Error\ErrorCatcher` |
+| Converts reportable PHP errors into Catalyst diagnostic output. | `Catalyst\Helpers\Error\ErrorHandler` |
+| Maps captured errors to logger levels and writes structured error context. | `Catalyst\Helpers\Error\ErrorLogger` |
+| Formats caught errors for CLI boxes or web error templates. | `Catalyst\Helpers\Error\ErrorOutput` |
+| Converts framework exceptions into HTTP, JSON or diagnostic error responses. | `Catalyst\Helpers\Error\ExceptionHandler` |
+| Captures fatal shutdown errors and renders them through the shared error output path. | `Catalyst\Helpers\Error\ShutdownHandler` |
 
-## Class: ErrorCatcher
+## Current Behavior
 
-**File**: `app/Helpers/Error/ErrorCatcher.php`
+This file is regenerated from current PHP docblocks and the runtime inventory scope for `Catalyst\Helpers\Error`. It intentionally replaces stale historical API notes with the classes and methods that exist in code now.
 
-### Purpose
+## API From Docblocks
 
-Bootstraps the error system once per request/process.
+### `Catalyst\Helpers\Error\ErrorCatcher`
 
-### Traits used
+- File: `app/Helpers/Error/ErrorCatcher.php`
+- Kind: `class`
+- Summary: Class that handles capturing and displaying errors in the application.
+- Responsibility: Registers shutdown, exception and PHP error handlers once per request.
 
-- `SingletonTrait`
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `initialize()` | `public` | Initialize the error handling system. | Initialize the error handling system. |
+| `configureErrorDisplay()` | `private` | Configure PHP error display settings based on the environment. | Configure PHP error display settings based on the environment. |
 
-### Public API
+### `Catalyst\Helpers\Error\ErrorHandler`
 
-- `initialize(): void`
+- File: `app/Helpers/Error/ErrorHandler.php`
+- Kind: `class`
+- Summary: Class that handles registered Errors.
+- Responsibility: Converts reportable PHP errors into Catalyst diagnostic output.
 
-### Runtime behavior
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `handle()` | `public` | Error handler. Captures and handles errors generated in the application. | Error handler. Captures and handles errors generated in the application. |
 
-- configures `display_errors` / `display_startup_errors` from `IS_DEVELOPMENT`
-- registers:
-  - `register_shutdown_function([ShutdownHandler::getInstance(), 'handle'])`
-  - `set_exception_handler([ExceptionHandler::getInstance(), 'handle'])`
-  - `set_error_handler([ErrorHandler::getInstance(), 'handle'])`
-- starts output buffering when no buffer exists
-- auto-initializes at file load time after defining `INITIALIZED_BUG_CATCHER`
+### `Catalyst\Helpers\Error\ErrorLogger`
 
-## Class: ErrorHandler
+- File: `app/Helpers/Error/ErrorLogger.php`
+- Kind: `class`
+- Summary: Class to handle logging of errors caught by BugCatcher
+- Responsibility: Maps captured errors to logger levels and writes structured error context.
 
-**File**: `app/Helpers/Error/ErrorHandler.php`
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `logError()` | `public` | Log an error caught by BugCatcher | n/a |
+| `determineLogLevel()` | `private` | Determine the appropriate log level based on a PHP error type | n/a |
 
-### Traits used
+### `Catalyst\Helpers\Error\ErrorOutput`
 
-- `SingletonTrait`
-- `OutputCleanerTrait`
-- `ErrorTypeTrait`
+- File: `app/Helpers/Error/ErrorOutput.php`
+- Kind: `class`
+- Summary: Class to handle output of errors caught by BugCatcher
+- Responsibility: Formats caught errors for CLI boxes or web error templates.
 
-### Public API
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `display()` | `public` | Output the error information based on environment (CLI or Web). | Output the error information based on environment (CLI or Web). |
+| `displayCLI()` | `private` | Display error information in CLI mode. | Display error information in CLI mode. |
+| `formatCliOutput()` | `private` | Format error data for CLI output. | Format error data for CLI output. |
 
-- `handle(int $errorLevel, string $errorDesc, string $errorFile, int $errorLine): bool`
+### `Catalyst\Helpers\Error\ExceptionHandler`
 
-### Important correction
+- File: `app/Helpers/Error/ExceptionHandler.php`
+- Kind: `class`
+- Summary: Class that handles registered Exceptions.
+- Responsibility: Converts framework exceptions into HTTP, JSON or diagnostic error responses.
 
-This handler does **not** throw or convert errors into exceptions. It:
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `handle()` | `public` | Exception handler. Captures and handles exceptions thrown in the application. | Exception handler. Captures and handles exceptions thrown in the application. |
 
-- respects `error_reporting()`
-- cleans buffered output
-- formats error metadata
-- delegates rendering to `ErrorOutput`
-- returns `true` to suppress PHP's default handler when it handled the error
+### `Catalyst\Helpers\Error\ShutdownHandler`
 
-If the error is masked by `error_reporting()`, it returns `false`.
+- File: `app/Helpers/Error/ShutdownHandler.php`
+- Kind: `class`
+- Summary: Class that handles registered Shutdowns.
+- Responsibility: Captures fatal shutdown errors and renders them through the shared error output path.
 
-## Class: ExceptionHandler
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `handle()` | `public` | Shutdown handler. Captures fatal errors that would otherwise not be caught. | Shutdown handler. Captures fatal errors that would otherwise not be caught. |
 
-**File**: `app/Helpers/Error/ExceptionHandler.php`
+## Operational Notes
 
-### Traits used
+When PHP symbols or method contracts in this namespace change, refresh this document from docblocks and run `php public/cli.php docs:inventory --json`.
 
-- `SingletonTrait`
-- `OutputCleanerTrait`
+## Related Documentation
 
-### Public API
-
-- `handle(Throwable $exception): void`
-
-### Runtime behavior
-
-- `ForbiddenException`
-  - AJAX / JSON request: emits `403` JSON
-  - browser request: flashes an error and redirects to `/`
-- `ValidationException`
-  - emits `422` JSON with `errors`
-- all other exceptions
-  - set HTTP `500` in web mode
-  - delegate formatted rendering to `ErrorOutput`
-
-## Class: ShutdownHandler
-
-**File**: `app/Helpers/Error/ShutdownHandler.php`
-
-### Traits used
-
-- `SingletonTrait`
-- `OutputCleanerTrait`
-- `ErrorTypeTrait`
-
-### Public API
-
-- `handle(): void`
-
-### Runtime behavior
-
-- inspects `error_get_last()`
-- only reacts to fatal types:
-  - `E_ERROR`
-  - `E_PARSE`
-  - `E_CORE_ERROR`
-  - `E_COMPILE_ERROR`
-  - `E_USER_ERROR`
-  - `E_RECOVERABLE_ERROR`
-- avoids re-rendering warnings/notices already handled by `ErrorHandler`
-
-## Class: ErrorLogger
-
-**File**: `app/Helpers/Error/ErrorLogger.php`
-
-### Public API
-
-- `logError(array $errorData): void`
-
-### Runtime behavior
-
-- delegates persistence to `Logger::log(...)`
-- derives the log level from the PHP error type / label
-- stores context such as `ticket`, `error_type`, `file`, `line`, and formatted trace
-
-### Important correction
-
-`ErrorLogger` does not manage log files directly. File layout, channels, rotation and retention belong to the central `Logger`, `LoggerWriter` and `LogRotator` pipeline.
-
-## Class: ErrorOutput
-
-**File**: `app/Helpers/Error/ErrorOutput.php`
-
-### Traits used
-
-- `SingletonTrait`
-
-### Public API
-
-- `display(array $errorData): void`
-- `formatBacktrace(array $errorData): string`
-
-### Runtime behavior
-
-- assigns `micro_time`
-- logs through `ErrorLogger` before rendering
-- CLI mode:
-  - formats the error with `DrawBox`
-- web mode:
-  - renders `boot-core/template/errors/handler_error.phtml` in development
-  - renders `boot-core/template/errors/handler_error_no.phtml` outside development
-  - includes a source-code snippet only in development
-
-### Internal helpers
-
-- `displayCLI(array $errorData): void`
-- `formatCliOutput(array $errorData): string`
-- `displayWeb(array $errorData): void`
-- `getCodeSnippet(string $file, int $line, int $contextLines = 5): string`
-- `formatArguments(array $args): string`
-- `getRouteDescription(array $track): string`
-
-## Related traits
-
-- `D:/OpsZone/DevWorkspace/Projects/Web/catalyst/docs/framework-traits.md`
+- `docs/runtime-inventory.md`
+- `docs/runtime-module-catalog.md`
+- `docs/harness-context-map.md`

@@ -1,200 +1,70 @@
-# `Catalyst\Framework\Concurrency`
-
-## Overview
-
-`PA-01` is now closed in runtime through two canonical layers plus one controller/view adoption layer:
-
-1. optimistic locking on ORM models through `HasOptimisticLockingTrait`
-2. expirables claims by `resource_key + record_id` through `RecordClaimManager`
-3. canonical controller/view integration through `InteractsWithRecordClaimsTrait` and `_record-claim-banner.phtml`
-
-This does not replace workflow, audit, CRUD, or WebSocket. It extends them from the existing framework core.
-
-## Optimistic locking
-
-### Trait: `HasOptimisticLockingTrait`
-
-**File**: `app/Framework/Traits/HasOptimisticLockingTrait.php`
-
-### Purpose
-
-Opt-in model trait that activates a `lock_version` compare-and-swap update contract.
-
-### Contract
-
-- requires a `lock_version` integer column
-- seeds `lock_version=1` on insert when empty
-- `Model::save()` updates by `primary_key + lock_version`
-- successful updates increment the version automatically
-- stale writes throw `OptimisticLockException`
-
-### Notes
-
-- this is model-level protection, not a second lock manager
-- existing modules only get it when their entity adopts the trait
-- `make:crud` now supports `--optimistic-locking=1` for generated modules
-
-## Claiming
-
-### Entity: `RecordClaim`
-
-**File**: `app/Entities/RecordClaim.php`
-
-Backs the `record_claims` table with:
-
-- `resource_key`
-- `record_id`
-- `claim_token`
-- `claimed_by`
-- `claimed_by_label`
-- `claimed_at`
-- `expires_at`
-- `released_at`
-- `release_reason`
-- `metadata`
-- `lock_version`
-
-### Repository: `RecordClaimRepository`
-
-**File**: `app/Framework/Concurrency/RecordClaimRepository.php`
-
-### Live public API
-
-- `findByResource(string $resourceKey, int $recordId): ?RecordClaim`
-- `lockByResource(string $resourceKey, int $recordId): ?RecordClaim`
-- `search(array $filters = []): array`
-- `decorateRow(array $row): array`
-
-### Runtime behavior
-
-- `lockByResource()` uses `FOR UPDATE` on the canonical row
-- `search()` can filter by `resource_key`, `record_id`, `actor_id` and `active`
-- rows are normalized with computed `status`:
-  - `active`
-  - `expired`
-  - `released`
-
-### Manager: `RecordClaimManager`
-
-**File**: `app/Framework/Concurrency/RecordClaimManager.php`
-
-### Live public API
-
-- `acquire(string $resourceKey, int $recordId, ?int $actorId = null, ?string $actorLabel = null, int $ttlSeconds = 900, array $metadata = []): array`
-- `release(string $resourceKey, int $recordId, ?int $actorId = null, ?string $reason = null, ?string $claimToken = null, bool $force = false): bool`
-- `snapshot(string $resourceKey, int $recordId): ?array`
-- `actor(?int $actorId = null, ?string $actorLabel = null): array`
-- `owns(array $snapshot, ?int $actorId = null, ?string $actorLabel = null): bool`
-- `assertAvailable(string $resourceKey, int $recordId, ?int $actorId = null, ?string $actorLabel = null, ?string $claimToken = null): ?array`
-
-### Runtime behavior
-
-- claims are unique per `resource_key + record_id`
-- active claims block another actor until expiry or explicit release
-- expired claims can be reclaimed without opening another ownership subsystem
-- semantic claim events are audited through `AuditLogManager` on channel `concurrency`
-- the backing row also keeps regular model audit/version increments
-
-## Controller adoption
-
-### Trait: `InteractsWithRecordClaimsTrait`
-
-**File**: `app/Framework/Traits/InteractsWithRecordClaimsTrait.php`
-
-### Purpose
-
-Standardizes claim acquire/check/release flows for framework controllers without creating a second ownership subsystem.
-
-### Live helper API
-
-- `acquireRecordClaim(string $resourceKey, int $recordId, array $metadata = []): array`
-- `assertRecordClaimAvailable(string $resourceKey, int $recordId, Request $request): ?array`
-- `releaseRecordClaim(string $resourceKey, int $recordId, Request $request, ?string $reason = null): void`
-- `buildRecordClaimContext(?array $claim): ?array`
-- `concurrencyHiddenFields(?array $claim, ?int $lockVersion = null): array`
-- `rememberConcurrencyConflict(Request $request, RuntimeException $e, string $bag = 'default'): void`
-
-### Shared view primitive
-
-- `boot-core/template/components/_record-claim-banner.phtml`
-
-The banner exposes current owner, status and expiry while hidden fields keep `claim_token` and `lock_version` on canonical admin forms.
-
-`buildRecordClaimContext()` is now tenant-aware and exposes:
-
-- `tenant_id`
-- `tenant_key`
-- `claimed_by`
-- `seconds_to_expiry`
-
-This keeps shared-db tenancy and claim-derived presence on the same canonical record boundary.
-
-## Presence over claims
-
-`PA-08` extends the same claim row instead of opening a parallel presence table or a second realtime transport.
-
-### Manager: `PresenceManager`
-
-**File**: `app/Framework/Presence/PresenceManager.php`
-
-Live helpers:
-
-- `snapshot(string $resourceKey, int $recordId): ?array`
-- `heartbeat(string $resourceKey, int $recordId, ?int $ttlSeconds = null): ?array`
-- `publishClaimSnapshot(?array $claim): void`
-
-Runtime behavior:
-
-- owner pages keep the claim warm through heartbeat
-- follower pages render conflict from the same claim snapshot
-- reclaim still happens on the same canonical claim row after release or expiry
-- the browser fallback stays server render + owner heartbeat when WS is unavailable
-
-### Browser-facing adoption
-
-- banner partial: `boot-core/template/components/_record-claim-banner.phtml`
-- owner heartbeat route: `POST /api/presence/{resourceKey}/{recordId}/heartbeat`
-- runtime modules:
-  - `public/assets/js/catalyst/modules/status-bar.js`
-  - `public/assets/js/catalyst/modules/record-presence.js`
-
-## Live adopted surfaces
-
-`PA-01` is no longer only scaffold-ready. The canonical framework runtime now applies claims and optimistic locking to:
-
-- `Repository/Framework/Documents/`
-- `Repository/Framework/Automation/`
-- `Repository/Framework/Media/`
-- `Repository/Framework/Roles/`
-
-This covers document templates, automation rules, media items, metadata field definitions, roles and permissions.
-
-## CLI surface
-
-Canonical operational commands:
-
-- `php public/cli.php claims:list`
-- `php public/cli.php claims:release --resource=<key> --record-id=<id>`
-- `php public/cli.php concurrency:smoke`
-- `php public/cli.php presence:smoke`
-
-`concurrency:smoke` is the canonical DB-backed probe for:
-
-- stale write detection
-- claim expiry + reclaim
-- cleanup release
-
-`presence:smoke` is the canonical DB-backed probe for:
-
-- owner-visible claim snapshots
-- conflict snapshots for a second actor
-- heartbeat-driven refresh
-- release / reclaim on the same canonical row
-
-## Related docs
-
-- `D:/OpsZone/DevWorkspace/Projects/Web/catalyst/docs/framework-database.md`
-- `D:/OpsZone/DevWorkspace/Projects/Web/catalyst/docs/framework-geo.md`
-- `D:/OpsZone/DevWorkspace/Projects/Web/catalyst/docs/framework-traits.md`
-- `D:/OpsZone/DevWorkspace/Projects/Web/catalyst/docs/framework-websocket.md`
-- `D:/OpsZone/DevWorkspace/Projects/Web/catalyst/TERMINAL.md`
+# Catalyst\Framework\Concurrency
+
+## Purpose
+
+Document reusable optimistic locking and record-claim primitives.
+
+## Runtime Owners
+
+| Concern | Owner |
+|---|---|
+| Acquires, renews, releases, validates, audits, and broadcasts record claim state. | `Catalyst\Framework\Concurrency\RecordClaimManager` |
+| Reads, locks, searches, and decorates record claims for concurrency workflows. | `Catalyst\Framework\Concurrency\RecordClaimRepository` |
+
+## Current Behavior
+
+This file is regenerated from current PHP docblocks and the runtime inventory scope for `Catalyst\Framework\Concurrency`. It intentionally replaces stale historical API notes with the classes and methods that exist in code now.
+
+## API From Docblocks
+
+### `Catalyst\Framework\Concurrency\RecordClaimManager`
+
+- File: `app/Framework/Concurrency/RecordClaimManager.php`
+- Kind: `class`
+- Summary: Manager for concurrent record ownership claims.
+- Responsibility: Acquires, renews, releases, validates, audits, and broadcasts record claim state.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `__construct()` | `protected` | Initializes claim persistence and database transaction collaborators. | Initializes claim persistence and database transaction collaborators. |
+| `acquire()` | `public` | Acquires or renews a claim for a tenant resource record. | Acquires or renews a claim for a tenant resource record. |
+| `release()` | `public` | Releases an active claim when owned by the actor or forced. | Releases an active claim when owned by the actor or forced. |
+| `snapshot()` | `public` | Returns the decorated claim snapshot for a resource record. | Returns the decorated claim snapshot for a resource record. |
+| `actor()` | `public` | Resolves the current claim actor identity. | Resolves the current claim actor identity. |
+| `owns()` | `public` | Determines whether a claim snapshot belongs to the resolved actor. | Determines whether a claim snapshot belongs to the resolved actor. |
+| `assertAvailable()` | `public` | Asserts that a resource is unclaimed or claimed by the current actor. | Asserts that a resource is unclaimed or claimed by the current actor. |
+| `resolveActor()` | `private` | Resolves actor id and label from explicit input, session user, or runtime fallback. | Resolves actor id and label from explicit input, session user, or runtime fallback. |
+| `createOrRecoverClaim()` | `private` | Creates a new claim row or recovers the row created by a concurrent transaction. | Creates a new claim row or recovers the row created by a concurrent transaction. |
+| `isOwnedBy()` | `private` | Determines whether a claim entity belongs to the supplied actor. | Determines whether a claim entity belongs to the supplied actor. |
+| `audit()` | `private` | Writes an audit record for claim lifecycle changes. | Writes an audit record for claim lifecycle changes. |
+| `normalizeClaim()` | `private` | Decorates a claim entity as the public claim snapshot shape. | Decorates a claim entity as the public claim snapshot shape. |
+| `now()` | `private` | Returns the current timestamp for claim calculations. | Returns the current timestamp for claim calculations. |
+| `secondsBetween()` | `private` | Calculates the non-negative number of seconds between timestamps. | Calculates the non-negative number of seconds between timestamps. |
+
+### `Catalyst\Framework\Concurrency\RecordClaimRepository`
+
+- File: `app/Framework/Concurrency/RecordClaimRepository.php`
+- Kind: `class`
+- Summary: Repository for tenant-scoped record claim rows.
+- Responsibility: Reads, locks, searches, and decorates record claims for concurrency workflows.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `__construct()` | `protected` | Initializes database and logging collaborators for claim persistence. | Initializes database and logging collaborators for claim persistence. |
+| `findByResource()` | `public` | Finds the claim for a tenant resource record. | Finds the claim for a tenant resource record. |
+| `lockByResource()` | `public` | Locks and returns the claim row for a resource inside an active transaction. | Locks and returns the claim row for a resource inside an active transaction. |
+| `search()` | `public` | Searches claim rows using tenant, resource, record, actor, and active filters. | Searches claim rows using tenant, resource, record, actor, and active filters. |
+| `decorateRow()` | `public` | Adds status and expiry metadata to a raw claim row. | Adds status and expiry metadata to a raw claim row. |
+| `parseDateTime()` | `private` | Parses a database datetime string into an immutable timestamp. | Parses a database datetime string into an immutable timestamp. |
+| `now()` | `private` | Returns the current timestamp for claim status decoration. | Returns the current timestamp for claim status decoration. |
+| `currentTenantId()` | `private` | Resolves the active tenant id for all claim queries. | Resolves the active tenant id for all claim queries. |
+
+## Operational Notes
+
+When PHP symbols or method contracts in this namespace change, refresh this document from docblocks and run `php public/cli.php docs:inventory --json`.
+
+## Related Documentation
+
+- `docs/runtime-inventory.md`
+- `docs/runtime-module-catalog.md`
+- `docs/harness-context-map.md`

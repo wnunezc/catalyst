@@ -1,166 +1,171 @@
 # Catalyst\Framework\Session
 
-## Overview
+## Purpose
 
-La capa de sesion del framework separa tres responsabilidades:
+Document session, flash and toast queue primitives.
 
-- `SessionManager` administra el almacenamiento PHP session.
-- `FlashBag` mantiene la estructura interna de flashes regulares/persistentes, historial y dismiss.
-- `FlashMessage` expone la API publica orientada a controladores y templates.
-- `ToastQueue` maneja toasts efimeros para el siguiente page load.
+## Runtime Owners
 
-## Class: SessionManager
-**File**: `app/Framework/Session/SessionManager.php`  
-**Namespace**: `Catalyst\Framework\Session`  
-**Type**: Singleton
+| Concern | Owner |
+|---|---|
+| Implements database-backed session reads, writes, cleanup and table bootstrap. | `Catalyst\Framework\Session\DatabaseSessionHandler` |
+| Persists, consumes and deduplicates flash-message state in the session. | `Catalyst\Framework\Session\FlashBag` |
+| Exposes the controller-facing API for one-shot and persistent flash messages. | `Catalyst\Framework\Session\FlashMessage` |
+| Initializes PHP sessions and provides storage, migration and form-state helpers. | `Catalyst\Framework\Session\SessionManager` |
+| Buffers one-shot toast notifications and drains them on the next read. | `Catalyst\Framework\Session\ToastQueue` |
 
-### Runtime Config Source
-La configuracion efectiva de sesion se resuelve asi:
-1. `/configuration/environment-setup` JSON via `ConfigManager` (`session.json`, entry `session`)
-2. `.env` defaults
+## Current Behavior
 
-### Effective Keys
-- `session_driver`
-- `session_connection`
-- `session_table`
-- `session_name`
-- `session_lifetime`
-- `session_activity_timeout`
-- `session_use_activity_timeout`
-- `session_secure`
-- `session_http_only`
-- `session_same_site`
-- `session_domain`
+This file is regenerated from current PHP docblocks and the runtime inventory scope for `Catalyst\Framework\Session`. It intentionally replaces stale historical API notes with the classes and methods that exist in code now.
 
-### Notes
-- `SessionManager` usa la referencia temprana `$GLOBALS['APP_CONFIGURATION']` cuando ya existe.
-- `/configuration/environment-setup/session` ya no guarda configuracion fantasma: esas claves son consumidas por el runtime real.
-- El runtime soporta `session_driver=file|database`; en `database` registra `DatabaseSessionHandler` y autoprovisiona la tabla configurada.
-- El manager ahora tambien transporta estado de validacion HTML entre redirect y render:
-  - `flashOldInput(array $input)`
-  - `consumeOldInput()`
-  - `flashValidationErrors(array $errors, string $bag = 'default')`
-  - `consumeValidationErrors()`
-  - `clearFormState()`
-- Las vistas leen ese bridge via helpers globales:
-  - `old('field', $default)`
-  - `validation_errors()`
-  - `validation_error('field')`
+## API From Docblocks
 
-## Class: DatabaseSessionHandler
-**File**: `app/Framework/Session/DatabaseSessionHandler.php`
-**Namespace**: `Catalyst\Framework\Session`
-**Type**: Class
+### `Catalyst\Framework\Session\DatabaseSessionHandler`
 
-### Purpose
-Persistencia de sesiones en base de datos usando una conexion nombrada del framework.
+- File: `app/Framework/Session/DatabaseSessionHandler.php`
+- Kind: `class`
+- Summary: Stores PHP session payloads in the configured database table.
+- Responsibility: Implements database-backed session reads, writes, cleanup and table bootstrap.
 
-### Runtime Behavior
-- Se registra desde `SessionManager` cuando `session_driver=database`.
-- Resuelve PDO via `DatabaseManager::connection($session_connection)`.
-- Crea automaticamente la tabla configurada (`session_table`) si no existe.
-- Guarda `payload`, `last_activity`, `ip_address` y `user_agent`.
-- `gc()` limpia filas expiradas usando `session.gc_maxlifetime`.
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `__construct()` | `public` | Initializes the Database Session Handler instance. | Initializes the Database Session Handler instance. |
+| `open()` | `public` | Prepares the database table when PHP opens the session handler. | Prepares the database table when PHP opens the session handler. |
+| `close()` | `public` | Completes a database-backed session handling cycle. | Completes a database-backed session handling cycle. |
+| `read()` | `public` | Reads the requested value. | Reads the requested value. |
+| `write()` | `public` | Writes the requested value. | Writes the requested value. |
+| `destroy()` | `public` | Deletes a persisted session payload. | Deletes a persisted session payload. |
+| `gc()` | `public` | Deletes sessions older than the configured lifetime. | Deletes sessions older than the configured lifetime. |
+| `ensureTable()` | `private` | Creates the session table on demand and reports whether it is ready. | Creates the session table on demand and reports whether it is ready. |
+| `pdo()` | `private` | Returns the configured PDO connection. | Returns the configured PDO connection. |
+| `clientIp()` | `private` | Resolves the client IP address stored with a session. | Resolves the client IP address stored with a session. |
+| `userAgent()` | `private` | Resolves the bounded user-agent value stored with a session. | Resolves the bounded user-agent value stored with a session. |
 
----
+### `Catalyst\Framework\Session\FlashBag`
 
-## Class: FlashBag
-**File**: `app/Framework/Session/FlashBag.php`  
-**Namespace**: `Catalyst\Framework\Session`  
-**Type**: Class  
-**Purpose**: Bolsa interna de flashes. Encapsula session keys, validacion de estructura, TTL del historial y dismiss de mensajes persistentes.
+- File: `app/Framework/Session/FlashBag.php`
+- Kind: `class`
+- Summary: FlashBag — low-level storage for regular and persistent flash messages.
+- Responsibility: Persists, consumes and deduplicates flash-message state in the session.
 
-### Session Keys
-- `FLASH_KEY` → `_flash_messages`
-- `PERSISTENT_KEY` → `_flash_persistent`
-- `HISTORY_KEY` → `_flash_history`
-- `DISMISSED_KEY` → `_flash_dismissed`
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `__construct()` | `public` | Initializes the Flash Bag instance. | Initializes the Flash Bag instance. |
+| `add()` | `public` | Adds a one-shot flash message unless it was already displayed. | Adds a one-shot flash message unless it was already displayed. |
+| `addPersistent()` | `public` | Adds a persistent flash message unless it was dismissed. | Adds a persistent flash message unless it was dismissed. |
+| `dismiss()` | `public` | Dismisses a persistent message and removes it from the active list. | Dismisses a persistent message and removes it from the active list. |
+| `all()` | `public` | Consumes unread one-shot messages grouped by type. | Consumes unread one-shot messages grouped by type. |
+| `allPersistent()` | `public` | Returns visible persistent messages. | Returns visible persistent messages. |
+| `get()` | `public` | Consumes unread messages of a selected type. | Consumes unread messages of a selected type. |
+| `has()` | `public` | Determines whether unread one-shot messages remain. | Determines whether unread one-shot messages remain. |
+| `hasPersistent()` | `public` | Determines whether visible persistent messages remain. | Determines whether visible persistent messages remain. |
+| `clear()` | `public` | Clears one-shot messages. | Clears one-shot messages. |
+| `clearPersistent()` | `public` | Clears persistent messages. | Clears persistent messages. |
+| `clearHistory()` | `public` | Clears the displayed-message history. | Clears the displayed-message history. |
+| `clearDismissed()` | `public` | Clears the dismissed-message identifiers. | Clears the dismissed-message identifiers. |
+| `reset()` | `public` | Clears all flash-message storage. | Clears all flash-message storage. |
+| `peek()` | `public` | Returns queued one-shot messages without consuming them. | Returns queued one-shot messages without consuming them. |
+| `count()` | `public` | Counts unread and visible flash messages. | Counts unread and visible flash messages. |
+| `initializeStorage()` | `private` | Initializes and validates flash-message session storage. | Initializes and validates flash-message session storage. |
+| `isValidMessage()` | `private` | Determines whether a stored message has the expected shape. | Determines whether a stored message has the expected shape. |
+| `generateMessageId()` | `private` | Generates a unique identifier for a flash message. | Generates a unique identifier for a flash message. |
+| `isDisplayed()` | `private` | Determines whether a message was already displayed. | Determines whether a message was already displayed. |
+| `isDismissed()` | `private` | Determines whether a persistent message was dismissed. | Determines whether a persistent message was dismissed. |
+| `markAsDisplayed()` | `private` | Records a message as displayed and bounds history size. | Records a message as displayed and bounds history size. |
+| `cleanupHistory()` | `private` | Removes expired displayed-message history entries. | Removes expired displayed-message history entries. |
 
-### Public Methods
-- `add(string $type, string $message, ?string $customId = null): void`
-- `addPersistent(string $type, string $message, ?string $customId = null): void`
-- `dismiss(string $id): void`
-- `all(): array`
-- `allPersistent(): array`
-- `get(string $type): array`
-- `has(?string $type = null): bool`
-- `hasPersistent(?string $type = null): bool`
-- `clear(): void`
-- `clearPersistent(): void`
-- `clearHistory(): void`
-- `clearDismissed(): void`
-- `reset(): void`
-- `peek(): array`
-- `count(): int`
+### `Catalyst\Framework\Session\FlashMessage`
 
-### Notes
-- IDs unicos via `xxh3`.
-- Historial maximo: `100`.
-- TTL de historial: `3600` segundos.
-- Los mensajes persistentes se descartan desde frontend via `POST /flash/dismiss`.
+- File: `app/Framework/Session/FlashMessage.php`
+- Kind: `class`
+- Summary: FlashMessage — high-level facade for inline banner messages.
+- Responsibility: Exposes the controller-facing API for one-shot and persistent flash messages.
 
----
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `__construct()` | `protected` | Initializes the Flash Message instance. | Initializes the Flash Message instance. |
+| `add()` | `public` | Adds a one-shot flash message. | Adds a one-shot flash message. |
+| `addPersistent()` | `public` | Adds a persistent flash message. | Adds a persistent flash message. |
+| `dismiss()` | `public` | Dismisses a persistent flash message by identifier. | Dismisses a persistent flash message by identifier. |
+| `success()` | `public` | Adds a one-shot success message. | Adds a one-shot success message. |
+| `successPersistent()` | `public` | Adds a persistent success message. | Adds a persistent success message. |
+| `error()` | `public` | Adds a one-shot error message. | Adds a one-shot error message. |
+| `errorPersistent()` | `public` | Adds a persistent error message. | Adds a persistent error message. |
+| `warning()` | `public` | Adds a one-shot warning message. | Adds a one-shot warning message. |
+| `warningPersistent()` | `public` | Adds a persistent warning message. | Adds a persistent warning message. |
+| `info()` | `public` | Adds a one-shot informational message. | Adds a one-shot informational message. |
+| `infoPersistent()` | `public` | Adds a persistent informational message. | Adds a persistent informational message. |
+| `all()` | `public` | Consumes grouped one-shot flash messages. | Consumes grouped one-shot flash messages. |
+| `allPersistent()` | `public` | Returns visible persistent messages. | Returns visible persistent messages. |
+| `get()` | `public` | Consumes unread messages of a selected type. | Consumes unread messages of a selected type. |
+| `has()` | `public` | Determines whether unread one-shot messages remain. | Determines whether unread one-shot messages remain. |
+| `hasPersistent()` | `public` | Determines whether has Persistent. | Determines whether has Persistent. |
+| `clear()` | `public` | Clears one-shot messages. | Clears one-shot messages. |
+| `clearPersistent()` | `public` | Clears persistent messages. | Clears persistent messages. |
+| `clearHistory()` | `public` | Clears displayed-message history. | Clears displayed-message history. |
+| `clearDismissed()` | `public` | Clears dismissed-message identifiers. | Clears dismissed-message identifiers. |
+| `reset()` | `public` | Clears all flash-message state. | Clears all flash-message state. |
+| `peek()` | `public` | Returns queued one-shot messages without consuming them. | Returns queued one-shot messages without consuming them. |
+| `count()` | `public` | Counts unread and visible flash messages. | Counts unread and visible flash messages. |
 
-## Class: FlashMessage
-**File**: `app/Framework/Session/FlashMessage.php`  
-**Namespace**: `Catalyst\Framework\Session`  
-**Type**: Class  
-**Purpose**: Fachada publica del sistema de flashes. Delega almacenamiento y bookkeeping a `FlashBag`.
+### `Catalyst\Framework\Session\SessionManager`
 
-### Traits Used
-- `Catalyst\Framework\Traits\SingletonTrait`
+- File: `app/Framework/Session/SessionManager.php`
+- Kind: `class`
+- Summary: SessionManager class for managing application sessions
+- Responsibility: Initializes PHP sessions and provides storage, migration and form-state helpers.
 
-### Public Methods
-- `add(string $type, string $message, ?string $customId = null): self`
-- `addPersistent(string $type, string $message, ?string $customId = null): self`
-- `dismiss(string $id): self`
-- `success(string $message, ?string $id = null): self`
-- `successPersistent(string $message, ?string $id = null): self`
-- `error(string $message, ?string $id = null): self`
-- `errorPersistent(string $message, ?string $id = null): self`
-- `warning(string $message, ?string $id = null): self`
-- `warningPersistent(string $message, ?string $id = null): self`
-- `info(string $message, ?string $id = null): self`
-- `infoPersistent(string $message, ?string $id = null): self`
-- `all(): array`
-- `allPersistent(): array`
-- `get(string $type): array`
-- `has(?string $type = null): bool`
-- `hasPersistent(?string $type = null): bool`
-- `clear(): self`
-- `clearPersistent(): self`
-- `clearHistory(): self`
-- `clearDismissed(): self`
-- `reset(): self`
-- `peek(): array`
-- `count(): int`
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `getConfig()` | `public` | Get the session configuration. | Exposes the session configuration used to start and manage session state. |
+| `setConfig()` | `public` | Set the session configuration. | Stores session configuration before the session manager starts runtime state. |
+| `init()` | `public` | Initialize the session with provided configuration. | Initialize the session with provided configuration. |
+| `has()` | `public` | Check if a session variable exists. | Check if a session variable exists. |
+| `get()` | `public` | Returns and removes validation-error bags. Get a session variable. | Returns and removes validation-error bags. Get a session variable. |
+| `set()` | `public` | Set a session variable. | Set a session variable. |
+| `remove()` | `public` | Remove a session variable. | Remove a session variable. |
+| `all()` | `public` | Get all session data. | Get all session data. |
+| `clear()` | `public` | Clear all session data. | Clear all session data. |
+| `destroy()` | `public` | Destroy the current session. | Destroy the current session. |
+| `regenerateId()` | `public` | Regenerate the session ID. | Regenerate the session ID. |
+| `isInitialized()` | `public` | Check if the session is initialized. | Check if the session is initialized. |
+| `seedActiveSession()` | `public` | Seeds the active session payload into a target persistence driver. | Seeds the active session payload into a target persistence driver. |
+| `flashOldInput()` | `public` | Stores sanitized old form input for the next request. | Stores sanitized old form input for the next request. |
+| `peekOldInput()` | `public` | Returns stored old form input without consuming it. | Returns stored old form input without consuming it. |
+| `consumeOldInput()` | `public` | Returns and removes stored old form input. | Returns and removes stored old form input. |
+| `flashValidationErrors()` | `public` | Stores normalized validation errors for the next request. | Stores normalized validation errors for the next request. |
+| `peekValidationErrors()` | `public` | Returns validation-error bags without consuming them. | Returns validation-error bags without consuming them. |
+| `consumeValidationErrors()` | `public` | Returns and removes validation-error bags. | Returns and removes validation-error bags. |
+| `clearFormState()` | `public` | Clears old input and validation-error state from the session. | Clears old input and validation-error state from the session. |
+| `resolveSecureDefault()` | `protected` | Resolve the secure cookie default based on environment (G11). Development: false (HTTP allowed). Production/Staging: true (HTTPS required). Production warning is logged in init() after full config merge. | Resolve the secure cookie default based on environment (G11). Development: false (HTTP allowed). Production/Staging: true (HTTPS required). Production warning is logged in init() after full config merge. |
+| `configureSessionHandler()` | `private` | Configures the requested session persistence driver. | Configures the requested session persistence driver. |
+| `ensureInitialized()` | `protected` | Ensure the session is initialized. | Ensure the session is initialized. |
+| `sanitizeSessionTable()` | `private` | Sanitizes the provided value. | Sanitizes the provided value. |
+| `writeNativeSessionFile()` | `private` | Writes the requested value. | Writes the requested value. |
+| `sanitizeOldInput()` | `private` | Removes sensitive fields from recursively stored old input. | Removes sensitive fields from recursively stored old input. |
+| `sanitizeOldInputValue()` | `private` | Sanitizes the provided value. | Sanitizes the provided value. |
+| `normalizeValidationErrors()` | `private` | Normalizes validation errors into field-to-message arrays. | Normalizes validation errors into field-to-message arrays. |
 
-### Usage
-```php
-$flash = FlashMessage::getInstance();
+### `Catalyst\Framework\Session\ToastQueue`
 
-$flash->success('Record saved.');
-$flash->warningPersistent('Please review your setup.', 'setup_warning');
+- File: `app/Framework/Session/ToastQueue.php`
+- Kind: `class`
+- Summary: ToastQueue — ephemeral toast notifications queued for the next page load.
+- Responsibility: Buffers one-shot toast notifications and drains them on the next read.
 
-$regular = $flash->all();
-$persistent = $flash->allPersistent();
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `__construct()` | `protected` | Initializes the object with the collaborators or state required for its responsibility. | Initializes the object with the collaborators or state required for its responsibility. |
+| `push()` | `public` | Queue a toast notification for the next page load. | Queue a toast notification for the next page load. |
+| `all()` | `public` | Consume all pending toasts (clears the queue). | Consume all pending toasts (clears the queue). |
+| `clear()` | `public` | Clear the queue without consuming. | Clear the queue without consuming. |
 
-$flash->dismiss('setup_warning');
-```
+## Operational Notes
 
----
+When PHP symbols or method contracts in this namespace change, refresh this document from docblocks and run `php public/cli.php docs:inventory --json`.
 
-## Class: ToastQueue
-**File**: `app/Framework/Session/ToastQueue.php`  
-**Namespace**: `Catalyst\Framework\Session`  
-**Type**: Class  
-**Purpose**: Cola de toasts efimeros consumidos por el siguiente render.
+## Related Documentation
 
-### Public Methods
-- `push(string $type, string $message): self`
-- `all(): array`
-- `clear(): self`
-
-### Difference vs FlashMessage
-- `FlashMessage` sirve banners inline y persistentes, con IDs e historial.
-- `ToastQueue` solo bufferiza popups one-shot para el siguiente page load.
+- `docs/runtime-inventory.md`
+- `docs/runtime-module-catalog.md`
+- `docs/harness-context-map.md`

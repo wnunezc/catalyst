@@ -1,117 +1,70 @@
 # Catalyst\Framework\WebSocket
 
-Directory: `app/Framework/WebSocket/`
-
 ## Purpose
 
-This subsystem provides the realtime transport used by the shared status bar:
+Document websocket token, server and publisher primitives.
 
-- short-lived browser auth tokens
-- authenticated browser connection to `/ws`
-- optional internal HTTP publish path into the WS server
-- resource-scoped presence fanout over the same authenticated socket
+## Runtime Owners
 
-It is transport infrastructure, not the notification UI itself.
+| Concern | Owner |
+|---|---|
+| Sends notification and resource payloads to the internal WebSocket publisher endpoint. | `Catalyst\Framework\WebSocket\WebSocketPublisher` |
+| Authenticates connections, manages subscriptions and broadcasts user or resource payloads. | `Catalyst\Framework\WebSocket\WebSocketServer` |
+| Issues and verifies stateless WebSocket authentication tokens with tenant context. | `Catalyst\Framework\WebSocket\WebSocketToken` |
 
-## Runtime Config Source
+## Current Behavior
 
-Effective WebSocket config is resolved in this order:
+This file is regenerated from current PHP docblocks and the runtime inventory scope for `Catalyst\Framework\WebSocket`. It intentionally replaces stale historical API notes with the classes and methods that exist in code now.
 
-1. `/configuration/environment-setup` JSON config via `ConfigManager` (`websocket.json`, entry `websocket`)
-2. `.env` defaults
+## API From Docblocks
 
-The same effective config is consumed by:
+### `Catalyst\Framework\WebSocket\WebSocketPublisher`
 
-- `WebSocketBootMiddleware`
-- `WebSocketPublisher`
-- `WebSocketToken`
-- `boot-core/bin/websocket-server.php`
+- File: `app/Framework/WebSocket/WebSocketPublisher.php`
+- Kind: `class`
+- Summary: Internal HTTP adapter for pushing notification payloads into the WS server.
+- Responsibility: Sends notification and resource payloads to the internal WebSocket publisher endpoint.
 
-## Browser-Facing Runtime
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `publish()` | `public` | POST a notification payload to the WS server's internal publisher. | POST a notification payload to the WS server's internal publisher. |
+| `publishToResource()` | `public` | Publishes a presence payload for a tenant resource. | Publishes a presence payload for a tenant resource. |
+| `dispatchPayload()` | `private` | Sends a payload to the internal WebSocket publisher endpoint. | Sends a payload to the internal WebSocket publisher endpoint. |
+| `publisherUrl()` | `private` | Resolves the configured internal WebSocket publisher URL. | Resolves the configured internal WebSocket publisher URL. |
 
-Shared UI integration lives outside this directory:
+### `Catalyst\Framework\WebSocket\WebSocketServer`
 
-- `boot-core/template/components/_status-bar.phtml`
-- `public/assets/js/catalyst/modules/status-bar.js`
+- File: `app/Framework/WebSocket/WebSocketServer.php`
+- Kind: `class`
+- Summary: Ratchet WebSocket server — manages connections and per-user broadcasts.
+- Responsibility: Authenticates connections, manages subscriptions and broadcasts user or resource payloads.
 
-Runtime flow:
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `__construct()` | `public` | Initializes the Web Socket Server instance. | Initializes the Web Socket Server instance. |
+| `onOpen()` | `public` | Registers a newly opened WebSocket connection. | Registers a newly opened WebSocket connection. |
+| `onMessage()` | `public` | Processes authentication, subscription and heartbeat client messages. | Processes authentication, subscription and heartbeat client messages. |
 
-1. `_status-bar.phtml` injects `window.__catalystWs` for authenticated users.
-2. If `wsAvailable=true`, the browser connects to `/ws`.
-3. `StatusBarManager` sends `{ action: "auth", token }`.
-4. After auth, the same client may subscribe/unsubscribe to `{ tenant_id, resource_key, record_id }` presence scopes.
-5. If the token expires or is rejected, the client refreshes it through `GET /api/ws-token`.
-6. If `wsAvailable=false` or the host is not browser-usable, the shared status bar degrades to REST unread polling via `/api/notifications/unread-count`.
+### `Catalyst\Framework\WebSocket\WebSocketToken`
 
-For claim-derived presence, the browser fallback remains:
+- File: `app/Framework/WebSocket/WebSocketToken.php`
+- Kind: `class`
+- Summary: Generates and verifies HMAC-signed WebSocket authentication tokens.
+- Responsibility: Issues and verifies stateless WebSocket authentication tokens with tenant context.
 
-- initial server-side claim snapshot
-- owner heartbeat through `POST /api/presence/{resourceKey}/{recordId}/heartbeat`
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `generate()` | `public` | Generate a signed WS auth token for the given user. | n/a |
+| `verify()` | `public` | Verify a WS auth token and return the user ID, or null on failure. | n/a |
+| `verifyContext()` | `public` | Verifies a token and returns its user and tenant context. | n/a |
+| `key()` | `private` | Read APP_KEY from environment. | n/a |
 
-No second realtime transport is introduced when WS is unavailable.
+## Operational Notes
 
-`/api/ws-token` is therefore a live app entry point tied to the WS transport.
+When PHP symbols or method contracts in this namespace change, refresh this document from docblocks and run `php public/cli.php docs:inventory --json`.
 
-## Important Runtime Flags
+## Related Documentation
 
-- `enabled`
-  - `false`: middleware skips boot and `boot-core/bin/websocket-server.php` exits without starting the server
-  - `true`: runtime may auto-boot or publish as usual
-- `ws_host`
-- `ws_port`
-- `ws_internal_port`
-- `ws_publisher_url`
-
-## Core Classes
-
-### `WebSocketToken`
-
-- issues and verifies short-lived auth tokens
-- uses the effective application key from `app.project.project_key` when available
-- carries tenant context and verifies it before joining authenticated scopes
-
-### `WebSocketServer`
-
-- Ratchet server handling `/ws`
-- authenticates clients through `WebSocketToken`
-- broadcasts notification payloads to connected users
-- handles `subscribe` / `unsubscribe` actions for resource-scoped presence rooms
-- emits `type: "presence"` envelopes keyed by `tenant_id + resource_key + record_id`
-
-### `WebSocketPublisher`
-
-- internal HTTP adapter that POSTs to the WS server's publisher endpoint
-- reads the effective `ws_publisher_url`
-- returns `false` silently when the WS server is unavailable
-- can publish both notification payloads and resource-scoped presence payloads
-
-Current audit conclusion:
-
-- keep `WebSocketPublisher` as a supported low-level adapter
-- do not present it as proof of active business producers in the repo
-- current evidence only confirms the structural chain `NotificationManager -> WebSocketPublisher`
-
-The publisher endpoint is internal transport plumbing, not a public browser route.
-
-## Operational Entry Point
-
-Standalone server process:
-
-```powershell
-php boot-core/bin/websocket-server.php
-```
-
-## What This Doc Does Not Claim
-
-- it does not claim that business modules actively emit notifications today
-- it does not claim that REST notification reads are handled here; those belong to `Repository/Framework/Notification/`
-- it does not claim that REST fallback replaces the WS transport; unread-count polling is only the browser-side degradation path when WS is unavailable
-
-## Summary
-
-- WS transport is alive
-- `/api/ws-token` is part of the live runtime contract
-- resource-scoped presence reuse lives on the same authenticated WS transport
-- unread-count REST polling exists as browser fallback outside this subsystem's core transport classes
-- browser UI lives in the shared status bar, not in this framework directory
-- `WebSocketPublisher` remains available, but producer-side adoption is still unproven beyond framework self-wiring
+- `docs/runtime-inventory.md`
+- `docs/runtime-module-catalog.md`
+- `docs/harness-context-map.md`

@@ -1,295 +1,200 @@
-# `Catalyst\Framework\Traits`
+# Catalyst\Framework\Traits
+
+## Purpose
+
+Document reusable traits mixed into models, controllers and framework services.
+
+## Runtime Owners
 
-This file inventories the traits that actually live under `app/Framework/Traits/` and clarifies their real consumers.
-
-## Trait: SingletonTrait
-
-**File**: `app/Framework/Traits/SingletonTrait.php`
-
-### Purpose
-
-Provides a shared `getInstance()` pattern for framework singletons.
-
-### Public API
-
-- `getInstance(mixed ...$args): static`
-- `setInstance(object $instance): void`
-- `resetInstance(): void`
-- `__wakeup(): void`
-
-### Protected / private internals
-
-- `__construct()`
-- `getArguments(): array`
-- `__clone()`
-
-### Notes
-
-- `setInstance()` is guarded against production usage.
-- This trait is widely used across the framework: `Kernel`, `Router`, `Request`, `View`, `Logger`, `ConfigManager`, `DatabaseManager`, `SessionManager`, `AuthManager`, `NotificationManager`, `Translator`, and the error stack.
-
-## Trait: OutputCleanerTrait
-
-**File**: `app/Framework/Traits/OutputCleanerTrait.php`
-
-### Purpose
-
-Normalizes output buffers before error rendering so partial HTML/JSON does not leak into the final error response.
-
-### API
-
-- `cleanOutput(): void`
-
-### Live consumers
-
-- `ErrorHandler`
-- `ExceptionHandler`
-- `ShutdownHandler`
-
-## Trait: ErrorTypeTrait
-
-**File**: `app/Framework/Traits/ErrorTypeTrait.php`
-
-### Purpose
-
-Maps PHP error constants to readable labels.
-
-### API
-
-- `getErrorType(int $errorLevel): string`
-
-### Live consumers
-
-- `ErrorHandler`
-- `ShutdownHandler`
-
-## Trait: HandlesFormEventsTrait
-
-**File**: `app/Framework/Traits/HandlesFormEventsTrait.php`
-
-### Purpose
-
-Routes a POST `_event` value to a protected controller method named `on{Event}`.
-
-### API
-
-- `dispatchEvent(): Response`
-- `onDefault(): Response`
-- `eventName(): ?string`
-
-### Runtime behavior
-
-- Unknown events return a `400` JSON response.
-- The trait does not auto-wire any route by itself; a controller action must call `dispatchEvent()`.
-
-### Confirmed live consumer
-
-- `Repository/Framework/DevTools/Controllers/FormEventTestController.php`
-
-## Trait: FrontResourceTrait
-
-**File**: `app/Framework/Traits/FrontResourceTrait.php`
-
-### Purpose
-
-Copies module-local `front/script.js` and `front/style.css` files into the public work asset tree and exposes the module slug to the view layer.
-
-### API
-
-- `resolveSlug(): string`
-- `deployFrontAssets(): void`
-
-### Runtime behavior
-
-- Source files:
-  - `{Module}/front/script.js`
-  - `{Module}/front/style.css`
-- Published destinations:
-  - `public/assets/js/work/{slug}/script.js`
-  - `public/assets/css/work/{slug}/style.css`
-- Missing source files are skipped silently.
-- `Controller::view()` now calls `deployFrontAssets()` automatically before rendering.
-- The shared slug is reset on every render so controllers without a `front/`
-  directory cannot leak a previous module's work assets into the next response.
-- Publishing compares file hashes, not only file size, so same-length edits still deploy.
-
-### Project rule
-
-- Module- or view-specific CSS/JS belongs in the module-local `front/` directory.
-- Shared framework shell assets (`boot-core/template` layouts, status bar, auth/admin shell)
-  may remain in their canonical global paths.
-- Third-party remote vendors required at runtime are allowed only when the module work
-  script orchestrates them explicitly and no approved local copy exists.
-
-## Trait: LoadsFeatureConfigTrait
-
-**File**: `app/Framework/Traits/LoadsFeatureConfigTrait.php`
-
-### Purpose
-
-Loads one named config section through `ConfigManager`, merges it with defaults, and degrades gracefully when JSON is missing or malformed.
-
-### API
-
-- `loadFeatureSection(string $section, array $defaults = []): array`
-- `warnMissingConfig(string $section): void`
-
-### Runtime behavior
-
-- caches the resolved section per instance
-- logs warnings/errors instead of breaking the request
-- injects `'enabled' => true` when the key is absent
-
-### Confirmed live consumers
-
-- `CorsMiddleware`
-- `WebSocketBootMiddleware`
-
-## Trait: HasTimestampsTrait
-
-**File**: `app/Framework/Traits/HasTimestampsTrait.php`
-
-### Purpose
-
-Registers ORM lifecycle hooks that stamp `created_at` and `updated_at`.
-
-### API
-
-- `bootHasTimestampsTrait(): void`
-- `setCreatedAt(): void`
-- `setUpdatedAt(): void`
-- `freshTimestamp(): string`
-- `touch(): bool`
-
-### Runtime behavior
-
-- hooks into `Model::bootIfNeeded()`
-- writes string timestamps for storage
-- relies on model casts when reading back as `DateTimeImmutable`
-
-### Current status
-
-Supported framework extension point, but no confirmed repository model currently uses it. `User` explicitly relies on MySQL-managed timestamp columns instead.
-
-## Trait: HasAuditLogTrait
-
-**File**: `app/Framework/Traits/HasAuditLogTrait.php`
-
-### Purpose
-
-Stamps `created_by`, `updated_by`, and `deleted_by` from the current session user through ORM hooks.
-
-### API
-
-- `bootHasAuditLogTrait(): void`
-- `stampCreatedBy(): void`
-- `stampUpdatedBy(): void`
-- `stampDeletedBy(): void`
-- `createdBy(): ?int`
-- `updatedBy(): ?int`
-- `deletedBy(): ?int`
-- `resolveCurrentUserId(): ?int`
-
-### Runtime behavior
-
-- participates in `inserting`, `updating`, and `deleting` hooks
-- cooperates with `HasSoftDeletesTrait` so `deleted_by` can be persisted during soft delete
-
-### Current status
-
-Supported framework extension point, but no confirmed repository model currently uses it in the active runtime.
-
-## Trait: HasSoftDeletesTrait
-
-**File**: `app/Framework/Traits/HasSoftDeletesTrait.php`
-
-### Purpose
-
-Overrides `Model::delete()` to set `deleted_at` instead of hard-deleting, and exposes soft-delete query helpers.
-
-### Constants
-
-- `SOFT_DELETES = true`
-- `DELETED_AT = 'deleted_at'`
-
-### API
-
-- `bootHasSoftDeletesTrait(): void`
-- `delete(): bool`
-- `forceDelete(): bool`
-- `restore(): bool`
-- `trashed(): bool`
-- `withTrashed(): ModelQueryBuilder`
-- `onlyTrashed(): ModelQueryBuilder`
-
-### Important corrections
-
-- The hard-delete bypass method is `forceDelete()`, not `permanentDelete()`.
-- `ModelQueryBuilder` reads the trait constants directly to decide whether to auto-apply the `deleted_at IS NULL` scope.
-
-### Current status
-
-Supported framework extension point, but no confirmed repository model currently uses it in the active runtime.
-
-## Trait: HasOptimisticLockingTrait
-
-**File**: `app/Framework/Traits/HasOptimisticLockingTrait.php`
-
-### Purpose
-
-Activates model-level optimistic locking through a `lock_version` column.
-
-### Constants
-
-- `OPTIMISTIC_LOCKING = true`
-- `LOCK_VERSION = 'lock_version'`
-
-### API
-
-- `bootHasOptimisticLockingTrait(): void`
-- `currentLockVersion(): ?int`
-
-### Runtime behavior
-
-- seeds `lock_version=1` on insert when absent
-- enables compare-and-swap updates inside `Model::save()`
-- stale updates throw `OptimisticLockException`
-- intended for shared entities or generated CRUD resources that need conflict detection
-
-### Confirmed live consumers
-
-- `RecordClaim`
-- `DocumentTemplate`
-- `AutomationRule`
-- `MediaItem`
-- `MetadataFieldDefinition`
-
-## Trait: InteractsWithRecordClaimsTrait
-
-**File**: `app/Framework/Traits/InteractsWithRecordClaimsTrait.php`
-
-### Purpose
-
-Provides the canonical controller helpers for claim acquire, owner/token enforcement, release and conflict state hydration.
-
-### API
-
-- `acquireRecordClaim(string $resourceKey, int $recordId, array $metadata = []): array`
-- `assertRecordClaimAvailable(string $resourceKey, int $recordId, Request $request): ?array`
-- `releaseRecordClaim(string $resourceKey, int $recordId, Request $request, ?string $reason = null): void`
-- `buildRecordClaimContext(?array $claim): ?array`
-- `concurrencyHiddenFields(?array $claim, ?int $lockVersion = null): array`
-- `rememberConcurrencyConflict(Request $request, RuntimeException $e, string $bag = 'default'): void`
-
-### Confirmed live consumers
-
-- `DocumentTemplateController`
-- `AutomationRuleController`
-- `MediaLibraryController`
-- `MetadataFieldController`
-- `RolesController`
-- `PermissionsController`
-
-## Scope note
-
-`SetupAccessTrait` is not part of this inventory because it lives under `app/Framework/Middleware/`, not under `app/Framework/Traits/`.
+| Concern | Owner |
+|---|---|
+| Stamps missing tenant identifiers and rejects cross-tenant inserts. | `Catalyst\Framework\Traits\BelongsToTenantTrait` |
+| Maps PHP error-level constants to readable labels. | `Catalyst\Framework\Traits\ErrorTypeTrait` |
+| Publishes module-scoped frontend assets and exposes their module slug to views. | `Catalyst\Framework\Traits\FrontResourceTrait` |
+| Routes submitted form event names to controller handler methods. | `Catalyst\Framework\Traits\HandlesFormEventsTrait` |
+| Stamps actor identifiers and records model lifecycle mutations. | `Catalyst\Framework\Traits\HasAuditLogTrait` |
+| Rejects stale writes and increments optimistic lock versions. | `Catalyst\Framework\Traits\HasOptimisticLockingTrait` |
+| Replaces destructive model deletion with restorable timestamp markers. | `Catalyst\Framework\Traits\HasSoftDeletesTrait` |
+| Maintains creation and update timestamps through model lifecycle hooks. | `Catalyst\Framework\Traits\HasTimestampsTrait` |
+| Acquires, validates, releases and exposes concurrency claim state. | `Catalyst\Framework\Traits\InteractsWithRecordClaimsTrait` |
+| Loads feature configuration once per instance with resilient defaults. | `Catalyst\Framework\Traits\LoadsFeatureConfigTrait` |
+| Resets output buffering before framework error rendering. | `Catalyst\Framework\Traits\OutputCleanerTrait` |
+| Provides controlled singleton instantiation, replacement and reset behavior. | `Catalyst\Framework\Traits\SingletonTrait` |
+
+## Current Behavior
+
+This file is regenerated from current PHP docblocks and the runtime inventory scope for `Catalyst\Framework\Traits`. It intentionally replaces stale historical API notes with the classes and methods that exist in code now.
+
+## API From Docblocks
+
+### `Catalyst\Framework\Traits\BelongsToTenantTrait`
+
+- File: `app/Framework/Traits/BelongsToTenantTrait.php`
+- Kind: `trait`
+- Summary: Applies tenant ownership to tenant-scoped models before insertion.
+- Responsibility: Stamps missing tenant identifiers and rejects cross-tenant inserts.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `bootBelongsToTenantTrait()` | `protected` | Registers the model hook that enforces tenant ownership on insert. | n/a |
+
+### `Catalyst\Framework\Traits\ErrorTypeTrait`
+
+- File: `app/Framework/Traits/ErrorTypeTrait.php`
+- Kind: `trait`
+- Summary: Trait ErrorTypeTrait
+- Responsibility: Maps PHP error-level constants to readable labels.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `getErrorType()` | `private` | Map PHP error level to text description. | Map PHP error level to text description. |
+
+### `Catalyst\Framework\Traits\FrontResourceTrait`
+
+- File: `app/Framework/Traits/FrontResourceTrait.php`
+- Kind: `trait`
+- Summary: FrontResourceTrait — on-demand front asset deployment
+- Responsibility: Publishes module-scoped frontend assets and exposes their module slug to views.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `resolveSlug()` | `protected` | Derive a lowercase slug from the module segment of the class namespace. Namespace convention: …\{Module}\Controllers\{ClassName} The segment immediately before "Controllers" is used as the slug. Examples: Catalyst\Repository\DevTools\Controllers\Foo → "devtools" App\Invoices\Controllers\Bar → "invoices" Falls back to the lowercased class basename when the convention is not met. | Derive a lowercase slug from the module segment of the class namespace. Namespace convention: …\{Module}\Controllers\{ClassName} The segment immediately before "Controllers" is used as the slug. Examples: Catalyst\Repository\DevTools\Controllers\Foo → "devtools" App\Invoices\Controllers\Bar → "invoices" Falls back to the lowercased class basename when the convention is not met. |
+| `deployFrontAssets()` | `protected` | Copy front/script.js and front/style.css to their public destinations if the source filesize differs from the currently published file. Also shares the resolved slug as $moduleSlug with the View layer so that _catalyst-init.phtml can conditionally load the published assets. | Copy front/script.js and front/style.css to their public destinations if the source filesize differs from the currently published file. Also shares the resolved slug as $moduleSlug with the View layer so that _catalyst-init.phtml can conditionally load the published assets. |
+
+### `Catalyst\Framework\Traits\HandlesFormEventsTrait`
+
+- File: `app/Framework/Traits/HandlesFormEventsTrait.php`
+- Kind: `trait`
+- Summary: HandlesFormEventsTrait — Event-driven form routing for controllers
+- Responsibility: Routes submitted form event names to controller handler methods.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `dispatchEvent()` | `protected` | Dispatch the incoming POST event to the appropriate handler method. Reads `_event` from POST input and calls `on{EventName}()` on `$this`. Event name is ucfirst'd: event "saveUser" → method "onSaveUser()". | Dispatch the incoming POST event to the appropriate handler method. Reads `_event` from POST input and calls `on{EventName}()` on `$this`. Event name is ucfirst'd: event "saveUser" → method "onSaveUser()". |
+
+### `Catalyst\Framework\Traits\HasAuditLogTrait`
+
+- File: `app/Framework/Traits/HasAuditLogTrait.php`
+- Kind: `trait`
+- Summary: HIPAA-compliant audit trail for Model subclasses.
+- Responsibility: Stamps actor identifiers and records model lifecycle mutations.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `bootHasAuditLogTrait()` | `protected` | Called once per class by Model::bootIfNeeded(). | n/a |
+| `stampCreatedBy()` | `public` | Set created_by if not already set (preserves explicit overrides). | Set created_by if not already set (preserves explicit overrides). |
+| `stampUpdatedBy()` | `public` | Refresh updated_by on every update. | Refresh updated_by on every update. |
+| `stampDeletedBy()` | `public` | Set deleted_by before the row is soft-deleted or hard-deleted. For hard deletes the column value is never persisted — this is a no-op. | Set deleted_by before the row is soft-deleted or hard-deleted. For hard deletes the column value is never persisted — this is a no-op. |
+| `createdBy()` | `public` | Returns the user identifier that created the model. | Returns the user identifier that created the model. |
+| `updatedBy()` | `public` | Returns the user identifier that last updated the model. | Returns the user identifier that last updated the model. |
+| `deletedBy()` | `public` | Returns the user identifier that deleted the model. | Returns the user identifier that deleted the model. |
+| `resolveCurrentUserId()` | `protected` | Resolve the current authenticated user ID from the session. Returns null when: - PHP session is not active - No user is logged in (user_id absent in session) Override this method in your model to use a different resolution strategy (e.g. reading from a request context object, JWT claim, etc.). | Resolve the current authenticated user ID from the session. Returns null when: - PHP session is not active - No user is logged in (user_id absent in session) Override this method in your model to use a different resolution strategy (e.g. reading from a request context object, JWT claim, etc.). |
+
+### `Catalyst\Framework\Traits\HasOptimisticLockingTrait`
+
+- File: `app/Framework/Traits/HasOptimisticLockingTrait.php`
+- Kind: `trait`
+- Summary: Adds lock-version checks to model updates.
+- Responsibility: Rejects stale writes and increments optimistic lock versions.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `bootHasOptimisticLockingTrait()` | `protected` | Registers the update hook that validates and increments lock versions. | n/a |
+| `currentLockVersion()` | `public` | Returns the model's current lock version. | Returns the model's current lock version. |
+
+### `Catalyst\Framework\Traits\HasSoftDeletesTrait`
+
+- File: `app/Framework/Traits/HasSoftDeletesTrait.php`
+- Kind: `trait`
+- Summary: Soft-delete support for Model subclasses.
+- Responsibility: Replaces destructive model deletion with restorable timestamp markers.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `bootHasSoftDeletesTrait()` | `protected` | Declares the soft-delete trait boot hook. | n/a |
+| `delete()` | `public` | Soft-delete the model by setting the deleted_at column. Fires the deleting / deleted hooks so other traits (e.g. HasAuditLogTrait) can inject fields (deleted_by) before the UPDATE is executed. | Soft-delete the model by setting the deleted_at column. Fires the deleting / deleted hooks so other traits (e.g. HasAuditLogTrait) can inject fields (deleted_by) before the UPDATE is executed. |
+| `forceDelete()` | `public` | Permanently remove the row from the database. | Permanently remove the row from the database. |
+| `restore()` | `public` | Restore a soft-deleted model by clearing deleted_at (and deleted_by). | Restore a soft-deleted model by clearing deleted_at (and deleted_by). |
+| `trashed()` | `public` | Check whether this model has been soft-deleted. | Check whether this model has been soft-deleted. |
+| `withTrashed()` | `public` | Start a query that includes soft-deleted rows. | n/a |
+| `onlyTrashed()` | `public` | Start a query that returns only soft-deleted rows. | n/a |
+
+### `Catalyst\Framework\Traits\HasTimestampsTrait`
+
+- File: `app/Framework/Traits/HasTimestampsTrait.php`
+- Kind: `trait`
+- Summary: Automatic timestamp management for Model subclasses.
+- Responsibility: Maintains creation and update timestamps through model lifecycle hooks.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `bootHasTimestampsTrait()` | `protected` | Called once per class by Model::bootIfNeeded(). Registers inserting and updating hooks. | n/a |
+| `setCreatedAt()` | `public` | Set created_at only if not already present. Allows explicit creation timestamps to be preserved. | Set created_at only if not already present. Allows explicit creation timestamps to be preserved. |
+| `setUpdatedAt()` | `public` | Always refresh updated_at on every update. | Always refresh updated_at on every update. |
+| `freshTimestamp()` | `public` | Return the current timestamp string in the format expected by the DB. | Return the current timestamp string in the format expected by the DB. |
+| `touch()` | `public` | Convenience: update updated_at and save. | Convenience: update updated_at and save. |
+
+### `Catalyst\Framework\Traits\InteractsWithRecordClaimsTrait`
+
+- File: `app/Framework/Traits/InteractsWithRecordClaimsTrait.php`
+- Kind: `trait`
+- Summary: Adds record-claim coordination helpers to mutation controllers.
+- Responsibility: Acquires, validates, releases and exposes concurrency claim state.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `acquireRecordClaim()` | `protected` | Acquires a claim for a resource record. | Acquires a claim for a resource record. |
+| `assertRecordClaimAvailable()` | `protected` | Verifies that a record claim permits the requested mutation. | Verifies that a record claim permits the requested mutation. |
+| `releaseRecordClaim()` | `protected` | Releases a record claim after a mutation. | Releases a record claim after a mutation. |
+| `buildRecordClaimContext()` | `protected` | Normalizes a record claim for view consumption. | Normalizes a record claim for view consumption. |
+| `concurrencyHiddenFields()` | `protected` | Builds hidden form fields required for concurrency checks. | Builds hidden form fields required for concurrency checks. |
+| `rememberConcurrencyConflict()` | `protected` | Stores a concurrency conflict as a validation error. | Stores a concurrency conflict as a validation error. |
+
+### `Catalyst\Framework\Traits\LoadsFeatureConfigTrait`
+
+- File: `app/Framework/Traits/LoadsFeatureConfigTrait.php`
+- Kind: `trait`
+- Summary: LoadsFeatureConfigTrait — JSON config loader with graceful degradation.
+- Responsibility: Loads feature configuration once per instance with resilient defaults.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `loadFeatureSection()` | `protected` | Load a config section, merging JSON values over $defaults. Cached per instance: subsequent calls return the same array. | Load a config section, merging JSON values over $defaults. Cached per instance: subsequent calls return the same array. |
+
+### `Catalyst\Framework\Traits\OutputCleanerTrait`
+
+- File: `app/Framework/Traits/OutputCleanerTrait.php`
+- Kind: `trait`
+- Summary: Trait that provides output buffer cleaning functionality
+- Responsibility: Resets output buffering before framework error rendering.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `cleanOutput()` | `protected` | Clean any output that might have been sent before an error occurred. | Clean any output that might have been sent before an error occurred. |
+
+### `Catalyst\Framework\Traits\SingletonTrait`
+
+- File: `app/Framework/Traits/SingletonTrait.php`
+- Kind: `trait`
+- Summary: Trait that handles: Singleton Instance
+- Responsibility: Provides controlled singleton instantiation, replacement and reset behavior.
+
+| Method | Visibility | Summary | Responsibility |
+|---|---|---|---|
+| `__construct()` | `protected` | Protected constructor to prevent direct instantiation. | Protected constructor to prevent direct instantiation. |
+| `getInstance()` | `public` | Get the singleton instance of the class | n/a |
+| `setInstance()` | `public` | Set a specific instance (for mocking/testing only). Not available in production environments. | n/a |
+| `getArguments()` | `protected` | Get constructor arguments | n/a |
+| `resetInstance()` | `public` | Reset the singleton instance | n/a |
+| `__clone()` | `private` | Prevent cloning of the instance. | Prevent cloning of the instance. |
+| `__wakeup()` | `public` | Prevent unserialization of the instance. | Prevent unserialization of the instance. |
+
+## Operational Notes
+
+When PHP symbols or method contracts in this namespace change, refresh this document from docblocks and run `php public/cli.php docs:inventory --json`.
+
+## Related Documentation
+
+- `docs/runtime-inventory.md`
+- `docs/runtime-module-catalog.md`
+- `docs/harness-context-map.md`
