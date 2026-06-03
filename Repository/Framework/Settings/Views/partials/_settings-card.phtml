@@ -1,22 +1,22 @@
 <div class="card settings-config-card h-100">
     <div class="card-header settings-config-card__header">
         <div class="settings-config-card__title">
-            <span class="settings-config-card__icon"><i class="{{ icon }}"></i></span>
-            <h6 class="mb-0 fw-semibold">{{ title }}</h6>
+            <span class="settings-config-card__icon"><i class="{{ this.icon }}"></i></span>
+            <h6 class="mb-0 fw-semibold">{{ this.title }}</h6>
         </div>
-        {{#if modalId}}
-            <button class="btn btn-outline-secondary btn-sm settings-config-card__action" data-bs-toggle="modal" data-bs-target="#{{ modalId }}">
-                <i class="{{ actionIcon }}"></i><span>{{ actionLabel }}</span>
+        {{#if this.modalId}}
+            <button class="btn btn-outline-secondary btn-sm settings-config-card__action" data-bs-toggle="modal" data-bs-target="#{{ this.modalId }}">
+                <i class="{{ this.actionIcon }}"></i><span>{{ this.actionLabel }}</span>
             </button>
         {{/if}}
     </div>
-    {{#if notice}}
+    {{#if this.notice}}
         <div class="settings-config-card__notice">
-            <div class="alert alert-warning py-2 px-2 small mb-0">{{ notice }}</div>
+            <div class="alert alert-warning py-2 px-2 small mb-0">{{ this.notice }}</div>
         </div>
     {{/if}}
     <ul class="list-group list-group-flush settings-kv-list">
-        {{#each rows}}
+        {{#each this.rows}}
             {{> ./_settings-row }}
         {{/each}}
     </ul>

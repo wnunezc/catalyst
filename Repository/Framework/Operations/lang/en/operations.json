@@ -119,7 +119,9 @@
       "flags": "Flags",
       "plugins": "Plugins",
       "runs": "Runs",
-      "locales": "Locales"
+      "locales": "Locales",
+      "deployments": "Deployments",
+      "tenancy": "Tenancy"
     },
     "boundaries": {
       "title": "Canonical boundaries",
@@ -258,6 +260,10 @@
         "mfa": {
           "label": "MFA",
           "description": "Enable MFA setup and challenge surfaces for session authentication."
+        },
+        "auth_registration_enabled": {
+          "label": "Public registration",
+          "description": "Enable public self-service account registration routes and login links."
         },
         "notifications": {
           "label": "Notifications",

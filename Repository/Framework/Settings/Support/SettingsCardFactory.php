@@ -41,7 +41,7 @@ final class SettingsCardFactory
     /**
      * Initializes the Settings Card Factory instance.
      *
-     * Responsibility: Initializes the Settings Card Factory instance.
+     * Responsibility: Binds required collaborators or immutable state without executing the main workflow.
      */
     public function __construct(
         private readonly SettingsDisplayFactory $display
@@ -51,7 +51,7 @@ final class SettingsCardFactory
     /**
      * Builds read-only overview cards for every supported configuration section.
      *
-     * Responsibility: Builds read-only overview cards for every supported configuration section.
+     * Responsibility: Composes derived framework data from validated inputs while keeping persistence and rendering separate.
      * @return array<int, array<string, mixed>>
      */
     public function build(SettingsPageViewContext $context): array
@@ -202,6 +202,21 @@ final class SettingsCardFactory
             ],
             [
                 'colClass' => 'col-xl-4 col-md-6',
+                'icon' => 'fa-solid fa-sliders',
+                'title' => $context->t('settings.sections.features'),
+                'modalId' => 'modal-features',
+                'actionLabel' => __('ui.actions.edit'),
+                'actionIcon' => 'fa-solid fa-pen me-1',
+                'notice' => $context->t('settings.notices.features'),
+                'rows' => [
+                    $this->display->displayRow($context->t('settings.labels.public_registration'), 'd-features-auth_registration_enabled', $context->featureEnabled('auth.registration_enabled', true), false, true),
+                    $this->display->displayRow($context->t('settings.labels.mfa_routes'), 'd-features-mfa', $context->featureEnabled('mfa', true), false, true),
+                    $this->display->displayRow($context->t('settings.labels.social_auth'), 'd-features-social_auth', $context->featureEnabled('social_auth', true), false, true),
+                    $this->display->displayRow($context->t('settings.labels.notifications'), 'd-features-notifications', $context->featureEnabled('notifications', true), false, true),
+                ],
+            ],
+            [
+                'colClass' => 'col-xl-4 col-md-6',
                 'icon' => 'fa-solid fa-file-lines',
                 'title' => $context->t('settings.sections.logging'),
                 'modalId' => 'modal-logging',
@@ -294,7 +309,7 @@ final class SettingsCardFactory
     /**
      * Builds compact executive groups for the settings overview.
      *
-     * Responsibility: Builds compact executive groups for the settings overview.
+     * Responsibility: Composes derived framework data from validated inputs while keeping persistence and rendering separate.
      * @return array<int, array<string, mixed>>
      */
     public function buildGroups(SettingsPageViewContext $context): array
@@ -316,7 +331,7 @@ final class SettingsCardFactory
                 $context->t('settings.groups.runtime.title'),
                 $context->t('settings.groups.runtime.description'),
                 $cards,
-                [4, 5, 8]
+                [4, 5, 9]
             ),
             $this->group(
                 'security',
@@ -324,7 +339,7 @@ final class SettingsCardFactory
                 $context->t('settings.groups.security.title'),
                 $context->t('settings.groups.security.description'),
                 $cards,
-                [6, 10],
+                [6, 7, 11],
                 true
             ),
             $this->group(
@@ -333,7 +348,7 @@ final class SettingsCardFactory
                 $context->t('settings.groups.operations.title'),
                 $context->t('settings.groups.operations.description'),
                 $cards,
-                [3, 7, 9]
+                [3, 8, 10]
             ),
         ];
     }
@@ -341,7 +356,7 @@ final class SettingsCardFactory
     /**
      * Selects overview cards for a named executive group.
      *
-     * Responsibility: Selects overview cards for a named executive group.
+     * Responsibility: Composes derived framework data from validated inputs while keeping persistence and rendering separate.
      * @param array<int, array<string, mixed>> $cards
      * @param array<int, int> $indexes
      * @return array<string, mixed>

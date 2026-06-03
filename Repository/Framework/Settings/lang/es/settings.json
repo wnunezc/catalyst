@@ -57,6 +57,7 @@
         "cache": "Caché y Rutas",
         "logging": "Registro (Logging)",
         "security": "Seguridad",
+        "features": "Características",
         "websocket": "WebSocket",
         "devtools": "Herramientas de Desarrollador",
         "cors": "CORS",
@@ -106,7 +107,8 @@
         "ftp": "Superficie de ejecución mantenida para futura inclusión en despliegue. Aquí pueden guardarse credenciales y la preprueba de subida valida conectividad real por FTP, FTPS o SFTP, aunque todavía no exista un consumidor de despliegue conectado.",
         "cache_runtime": "La caché se configura solo desde este panel. La aplicación solo puede consumirla cuando el entorno real es producción y el interruptor maestro está habilitado aquí.",
         "cache_locked": "La caché está bloqueada en este entorno. Puedes inspeccionar la configuración, pero la activación está bloqueada fuera de producción.",
-        "devtools": "Superficie de compatibilidad mantenida para futura inclusión. Hoy solo refleja el modo debug y la visualización de logs de Aplicación y Logging."
+        "devtools": "Superficie de compatibilidad mantenida para futura inclusión. Hoy solo refleja el modo debug y la visualización de logs de Aplicación y Logging.",
+        "features": "Interruptores base de capacidades para esta instalación. Las sobrescrituras avanzadas en ejecución siguen viviendo en Banderas de funcionalidad después del setup."
     },
     "modal_titles": {
         "app": "Configuración de Aplicación",
@@ -117,6 +119,7 @@
         "cache": "Configuración de Caché y Rutas",
         "logging": "Configuración de Logging",
         "security": "Configuración de Seguridad",
+        "features": "Configuración de Características",
         "websocket": "Configuración de WebSocket",
         "devtools": "Configuración de Herramientas de Desarrollador",
         "cors": "Configuración de CORS"
@@ -160,6 +163,10 @@
         "route_cache": "Caché de rutas",
         "bcrypt_rounds": "Rondas Bcrypt",
         "mfa_enabled": "MFA habilitado",
+        "public_registration": "Registro público",
+        "mfa_routes": "Rutas MFA",
+        "social_auth": "Autenticación social",
+        "notifications": "Notificaciones",
         "channel": "Canal",
         "level": "Nivel",
         "display_logs": "Mostrar logs",
@@ -200,6 +207,10 @@
         "display_logs_on_screen": "Mostrar logs en pantalla",
         "bcrypt_rounds_range": "Rondas Bcrypt (10-16)",
         "enable_mfa_framework_wide": "Habilitar MFA / autenticación de dos factores (framework completo)",
+        "allow_public_registration": "Permitir registro público autogestionado",
+        "enable_mfa_routes": "Habilitar rutas de setup y challenge MFA",
+        "enable_social_auth": "Habilitar rutas de autenticación social",
+        "enable_notifications": "Habilitar endpoints de notificaciones",
         "enable_websocket_server": "Habilitar servidor WebSocket",
         "internal_http_port": "Puerto HTTP interno",
         "enable_cors": "Habilitar CORS",
@@ -229,7 +240,8 @@
         "ftp_pretest": "Usa la preprueba de subida para validar las credenciales guardadas contra un endpoint remoto real antes de conectar esta superficie a un flujo de despliegue.",
         "cache_supported_activation": "Esta es la única ruta soportada para activar la caché del framework. La aplicación sigue dependiendo del entorno de producción y del interruptor maestro de abajo.",
         "cache_blocked_outside_production": "La activación de caché está bloqueada fuera de producción. El backend también rechazará cualquier intento de habilitar estas flags desde entornos no productivos.",
-        "devtools_compatibility": "Superficie de compatibilidad mantenida para futura inclusión. Los cambios aquí solo reflejan el modo debug de Aplicación y la visualización de logs de Logging. La activación de caché vive exclusivamente en Caché y Rutas."
+        "devtools_compatibility": "Superficie de compatibilidad mantenida para futura inclusión. Los cambios aquí solo reflejan el modo debug de Aplicación y la visualización de logs de Logging. La activación de caché vive exclusivamente en Caché y Rutas.",
+        "features_setup": "Estos interruptores escriben los valores base de instalación en features.json. Usa Banderas de funcionalidad después para sobrescrituras por rol o usuario."
     },
     "completion": {
         "title": "Finalizar configuración",
@@ -266,25 +278,6 @@
         "reset_description": "Reabre el asistente de finalización. Los valores de configuración existentes se conservan — solo se borra el indicador de configurado. Úsalo si necesitas volver a ejecutar el asistente o crear una nueva cuenta de administrador.",
         "reset_button": "Restablecer configuración",
         "reset_success": "Configuración restablecida. Redirigiendo al asistente..."
-    },
-    "runtime_surfaces": {
-        "title": "Superficies canónicas de la aplicación",
-        "description": "Separa bootstrap, control plane y diagnóstico para evitar configuraciones paralelas o responsabilidades mezcladas.",
-        "open_operations": "Abrir Operaciones",
-        "cards": {
-            "setup": {
-                "eyebrow": "Configuración inicial",
-                "description": "Bootstrap y configuración base de la aplicación. Mantiene caché, seguridad, sesiones, correo, BD, entradas y parámetros del proyecto."
-            },
-            "operations": {
-                "eyebrow": "Operaciones",
-                "description": "Superficie canónica posterior a la configuración inicial para banderas de funcionalidad, plugins, despliegue y estrategia de segmentación por tenant. Centraliza Gobierno operativo."
-            },
-            "devtools": {
-                "eyebrow": "DevTools",
-                "description": "Harness técnico y probes de desarrollo. No es la superficie oficial para activar capacidades de plataforma en producción."
-            }
-        }
     },
     "health": {
         "title": "Salud del Framework",

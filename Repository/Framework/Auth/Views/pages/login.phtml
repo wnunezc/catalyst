@@ -70,11 +70,13 @@
 
         <div class="auth-link-row auth-link-row--stack mb-0">
             <p class="mb-0">
+                {{#if registration_enabled}}
                 {{ t:auth.login.no_account }}
                 <a href="/register" class="text-decoration-none">
                     {{ t:auth.login.create_account }}
                 </a>
                 <span class="auth-link-separator" aria-hidden="true">·</span>
+                {{/if}}
                 <a href="/verify-email" class="text-decoration-none">
                     {{ t:auth.login.verify_email }}
                 </a>

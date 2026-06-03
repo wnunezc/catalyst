@@ -1,0 +1,34 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{NamespaceRoot}}\Services;
+
+use {{RepositoryUse}};
+
+/**
+ * Coordinates business operations for this module.
+ *
+ * Responsibility: Coordinates business operations for this module.
+ */
+final class {{ServiceClass}}
+{
+    /**
+     * Initializes the service with persistence collaborators.
+     *
+     * Responsibility: Binds required collaborators or immutable state without executing the main workflow.
+     */
+    public function __construct(private readonly ?{{RepositoryClass}} $repository = null)
+    {
+    }
+
+    /**
+     * Returns the repository used by module business logic.
+     *
+     * Responsibility: Provides read-only access to normalized state without mutating framework runtime.
+     */
+    private function repository(): {{RepositoryClass}}
+    {
+        return $this->repository ?? new {{RepositoryClass}}();
+    }
+}

@@ -28,8 +28,20 @@ declare(strict_types=1);
  *
  */
 
-return static function (array $scope): array {
-    return [
-        'operationsUrl' => (string) ($scope['operationsUrl'] ?? '/operations'),
-    ];
-};
+namespace Catalyst\Framework\Sequence;
+
+/**
+ * Storage boundary for scoped sequence counters.
+ *
+ * @package Catalyst\Framework\Sequence
+ * Responsibility: Defines the atomic operation required to advance a scoped sequence counter.
+ */
+interface SequenceStoreInterface
+{
+    /**
+     * Atomically advances and returns the next sequence number.
+     *
+     * Responsibility: Owns concurrency-safe increment semantics for scoped sequence counters.
+     */
+    public function next(int $tenantId, string $scopeKey, string $sequenceKey, int $startAt = 1, int $step = 1): int;
+}

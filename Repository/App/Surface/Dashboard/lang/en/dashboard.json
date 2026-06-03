@@ -38,5 +38,52 @@
     "mfa_disabled_hint": "Setup recommended",
     "recovery": "Requests",
     "recovery_hint": "Open recovery cases"
+  },
+  "surface": {
+    "title": "Operations Dashboard",
+    "eyebrow": "Operational view",
+    "badge": "Live demo",
+    "headline": "A focused dashboard surface for complex applications.",
+    "lead": "Shows how Catalyst can present metrics, pipelines, modules and activity without coupling the framework to a specific business domain.",
+    "period_label": "Current period",
+    "metrics": {
+      "revenue": "Revenue",
+      "orders": "Orders",
+      "fulfillment": "Fulfillment",
+      "alerts": "Alerts"
+    },
+    "pipeline_title": "Pipeline",
+    "pipeline_badge": "Tracked",
+    "pipeline": {
+      "orders": "Orders",
+      "billing": "Billing",
+      "inventory": "Inventory",
+      "support": "Support"
+    },
+    "modules_title": "Modules",
+    "modules": {
+      "sales": {
+        "title": "Sales",
+        "body": "Commercial activity and order intake summary.",
+        "status": "Active"
+      },
+      "warehouse": {
+        "title": "Warehouse",
+        "body": "Stock movement and fulfillment indicators.",
+        "status": "Stable"
+      },
+      "finance": {
+        "title": "Finance",
+        "body": "Billing status and revenue visibility.",
+        "status": "Review"
+      }
+    },
+    "activity_title": "Recent activity",
+    "activity_badge": "Today",
+    "activity": {
+      "invoice": "Invoice batch generated",
+      "stock": "Stock threshold reviewed",
+      "ticket": "Support ticket escalated"
+    }
   }
 }

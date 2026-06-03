@@ -48,7 +48,7 @@ final class ModuleLinter
     /**
      * Runs every module consistency check and returns the aggregated report.
      *
-     * Responsibility: Runs every module consistency check and returns the aggregated report.
+     * Responsibility: Runs a read-only inspection step and reports deterministic findings for quality gates.
      * @return array<string, mixed>
      */
     public function lint(): array
@@ -60,10 +60,15 @@ final class ModuleLinter
         $routeContract = (array) ($inspection['route_contract'] ?? []);
         $modules = (array) ($inspection['modules'] ?? []);
         $issues = [];
+        $appBoundary = (new AppBoundaryLinter())->lint();
 
         $checks = [
             'module_registration' => $this->lintModuleRegistration($modules, $issues),
             'plugin_manifests' => $this->lintPluginManifests($modules, $issues),
+            'app_boundary' => [
+                'ok' => (bool) ($appBoundary['ok'] ?? false),
+                'checked' => (int) ($appBoundary['checked'] ?? 0),
+            ],
             'registry_route_drift' => $this->lintRegistryRouteDrift($modules, $issues),
             'assets_contract' => $this->lintAssetsContract($modules, $issues),
             'slug_coherence' => $this->lintSlugCoherence($modules, $issues),
@@ -75,6 +80,14 @@ final class ModuleLinter
                 'checked' => (int) ($routeContract['issue_count'] ?? 0),
             ],
         ];
+
+        foreach ((array) ($appBoundary['issues'] ?? []) as $issue) {
+            $issues[] = [
+                'type' => (string) ($issue['type'] ?? 'app-boundary-issue'),
+                'module' => $issue['module'] ?? null,
+                'message' => (string) ($issue['message'] ?? 'Application boundary issue detected.'),
+            ];
+        }
 
         foreach ((array) ($routeContract['issues'] ?? []) as $issue) {
             $issues[] = [
@@ -95,7 +108,7 @@ final class ModuleLinter
     /**
      * Ensures CLI route definitions are loaded before linting.
      *
-     * Responsibility: Ensures CLI route definitions are loaded before linting.
+     * Responsibility: Runs a read-only inspection step and reports deterministic findings for quality gates.
      */
     private function ensureRoutesLoaded(): void
     {
@@ -107,7 +120,7 @@ final class ModuleLinter
     /**
      * Checks module manifests and required route files.
      *
-     * Responsibility: Checks module manifests and required route files.
+     * Responsibility: Runs a read-only inspection step and reports deterministic findings for quality gates.
      * @param array<int, array<string, mixed>> $modules
      * @param array<int, array<string, mixed>> $issues
      * @return array<string, int|bool>
@@ -150,7 +163,7 @@ final class ModuleLinter
     /**
      * Detects drift between declared routes and runtime-owned routes.
      *
-     * Responsibility: Detects drift between declared routes and runtime-owned routes.
+     * Responsibility: Runs a read-only inspection step and reports deterministic findings for quality gates.
      * @param array<int, array<string, mixed>> $modules
      * @param array<int, array<string, mixed>> $issues
      * @return array<string, int|bool>
@@ -233,7 +246,7 @@ final class ModuleLinter
     /**
      * Checks generated asset availability for modules that expose views.
      *
-     * Responsibility: Checks generated asset availability for modules that expose views.
+     * Responsibility: Runs a read-only inspection step and reports deterministic findings for quality gates.
      * @param array<int, array<string, mixed>> $modules
      * @param array<int, array<string, mixed>> $issues
      * @return array<string, int|bool>
@@ -279,7 +292,7 @@ final class ModuleLinter
     /**
      * Checks consistency between module names, slugs, and view namespaces.
      *
-     * Responsibility: Checks consistency between module names, slugs, and view namespaces.
+     * Responsibility: Runs a read-only inspection step and reports deterministic findings for quality gates.
      * @param array<int, array<string, mixed>> $modules
      * @param array<int, array<string, mixed>> $issues
      * @return array<string, int|bool>
@@ -321,7 +334,7 @@ final class ModuleLinter
     /**
      * Checks that declared guarded routes expose their required middleware. Checks that permission declarations bridge into registries and navigation.
      *
-     * Responsibility: Checks that declared guarded routes expose their required middleware. Checks that permission declarations bridge into registries and navigation.
+     * Responsibility: Runs a read-only inspection step and reports deterministic findings for quality gates.
      * @param array<int, array<string, mixed>> $modules
      * @param array<int, array<string, mixed>> $issues
      * @return array<string, int|bool>
@@ -378,7 +391,7 @@ final class ModuleLinter
     /**
      * Checks that permission declarations bridge into registries and navigation.
      *
-     * Responsibility: Checks that permission declarations bridge into registries and navigation.
+     * Responsibility: Runs a read-only inspection step and reports deterministic findings for quality gates.
      * @param array<int, array<string, mixed>> $modules
      * @param array<int, array<string, mixed>> $issues
      * @return array<string, int|bool>
@@ -494,7 +507,7 @@ final class ModuleLinter
     /**
      * Checks navigation targets, breadcrumbs, and duplicate links.
      *
-     * Responsibility: Checks navigation targets, breadcrumbs, and duplicate links.
+     * Responsibility: Runs a read-only inspection step and reports deterministic findings for quality gates.
      * @param array<int, array<string, mixed>> $modules
      * @param array<int, array<string, mixed>> $issues
      * @return array<string, int|bool>
@@ -647,7 +660,7 @@ final class ModuleLinter
     /**
      * Determines whether a route matches any declared guard pattern.
      *
-     * Responsibility: Determines whether a route matches any declared guard pattern.
+     * Responsibility: Evaluates an authorization, feature or matching predicate without changing application state.
      * @param string[] $patterns
      */
     private function matchesGuardPatterns(string $routePattern, array $patterns): bool
@@ -672,7 +685,7 @@ final class ModuleLinter
     /**
      * Checks plugin manifests and module ownership references.
      *
-     * Responsibility: Checks plugin manifests and module ownership references.
+     * Responsibility: Runs a read-only inspection step and reports deterministic findings for quality gates.
      * @param array<int, array<string, mixed>> $modules
      * @param array<int, array<string, mixed>> $issues
      * @return array<string, int|bool>
@@ -743,7 +756,7 @@ final class ModuleLinter
     /**
      * Finds a module report entry by runtime key.
      *
-     * Responsibility: Finds a module report entry by runtime key.
+     * Responsibility: Runs a read-only inspection step and reports deterministic findings for quality gates.
      * @param array<int, array<string, mixed>> $modules
      * @return array<string, mixed>|null
      */
@@ -761,7 +774,7 @@ final class ModuleLinter
     /**
      * Determines whether an issue list contains a specific issue type.
      *
-     * Responsibility: Determines whether an issue list contains a specific issue type.
+     * Responsibility: Evaluates an authorization, feature or matching predicate without changing application state.
      * @param array<int, array<string, mixed>> $issues
      */
     private function hasIssuePrefix(array $issues, string $prefix): bool

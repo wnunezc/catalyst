@@ -1,26 +1,26 @@
 # Runtime Inventory
 
 > Auto-generated from filesystem and PHP tokens. Run `php public/cli.php docs:inventory` to refresh.
-> Last generated: 2026-06-03 03:05:57
+> Last generated: 2026-06-03 08:39:07
 
 ## Summary
 
-- Symbols: 625
-- Templates: 230
+- Symbols: 667
+- Templates: 228
 - Scripts: 54
 
 ## Symbol Roots
 
 | Root | Count |
 |---|---:|
-| `Repository` | 168 |
-| `app` | 457 |
+| `Repository` | 172 |
+| `app` | 495 |
 
 ## Template Roots
 
 | Root | Count |
 |---|---:|
-| `Repository views` | 159 |
+| `Repository views` | 157 |
 | `boot-core/template` | 71 |
 
 ## Script Roots
@@ -110,7 +110,10 @@
 | `Catalyst\Framework\Argument\Parameter` | `class` | `app/Framework/Argument/Parameter.php` | 39 |
 | `Catalyst\Framework\Argument\Validator` | `class` | `app/Framework/Argument/Validator.php` | 39 |
 | `Catalyst\Framework\Attachment\AttachmentManager` | `class` | `app/Framework/Attachment/AttachmentManager.php` | 47 |
+| `Catalyst\Framework\Attachment\AttachmentPolicy` | `class` | `app/Framework/Attachment/AttachmentPolicy.php` | 39 |
+| `Catalyst\Framework\Attachment\AttachmentPolicyValidator` | `class` | `app/Framework/Attachment/AttachmentPolicyValidator.php` | 39 |
 | `Catalyst\Framework\Attachment\AttachmentRepository` | `class` | `app/Framework/Attachment/AttachmentRepository.php` | 43 |
+| `Catalyst\Framework\Attachment\AttachmentVerificationSigner` | `class` | `app/Framework/Attachment/AttachmentVerificationSigner.php` | 41 |
 | `Catalyst\Framework\Audit\AuditLogManager` | `class` | `app/Framework/Audit/AuditLogManager.php` | 50 |
 | `Catalyst\Framework\Audit\AuditLogRepository` | `class` | `app/Framework/Audit/AuditLogRepository.php` | 45 |
 | `Catalyst\Framework\Auth\AuthInputGuard` | `class` | `app/Framework/Auth/AuthInputGuard.php` | 41 |
@@ -143,6 +146,10 @@
 | `Catalyst\Framework\Cache\CacheStoreInterface` | `interface` | `app/Framework/Cache/CacheStoreInterface.php` | 39 |
 | `Catalyst\Framework\Cache\FileCacheStore` | `class` | `app/Framework/Cache/FileCacheStore.php` | 41 |
 | `Catalyst\Framework\Cache\NullCacheStore` | `class` | `app/Framework/Cache/NullCacheStore.php` | 39 |
+| `Catalyst\Framework\Calendar\CalendarEvent` | `class` | `app/Framework/Calendar/CalendarEvent.php` | 13 |
+| `Catalyst\Framework\Calendar\CalendarManager` | `class` | `app/Framework/Calendar/CalendarManager.php` | 15 |
+| `Catalyst\Framework\Calendar\CalendarProviderInterface` | `interface` | `app/Framework/Calendar/CalendarProviderInterface.php` | 13 |
+| `Catalyst\Framework\Calendar\CalendarQuery` | `class` | `app/Framework/Calendar/CalendarQuery.php` | 16 |
 | `Catalyst\Framework\Catalog\CatalogItemAvailabilityDecorator` | `class` | `app/Framework/Catalog/CatalogItemAvailabilityDecorator.php` | 41 |
 | `Catalyst\Framework\Catalog\CatalogManager` | `class` | `app/Framework/Catalog/CatalogManager.php` | 50 |
 | `Catalyst\Framework\Catalog\CatalogOptionMapBuilder` | `class` | `app/Framework/Catalog/CatalogOptionMapBuilder.php` | 39 |
@@ -154,16 +161,19 @@
 | `Catalyst\Framework\Cli\CommandRegistry` | `class` | `app/Framework/Cli/CommandRegistry.php` | 42 |
 | `Catalyst\Framework\Cli\Commands\ApiTokensSmokeCommand` | `class` | `app/Framework/Cli/Commands/ApiTokensSmokeCommand.php` | 49 |
 | `Catalyst\Framework\Cli\Commands\AttachmentsListCommand` | `class` | `app/Framework/Cli/Commands/AttachmentsListCommand.php` | 45 |
+| `Catalyst\Framework\Cli\Commands\AttachmentsPolicySmokeCommand` | `class` | `app/Framework/Cli/Commands/AttachmentsPolicySmokeCommand.php` | 47 |
 | `Catalyst\Framework\Cli\Commands\AttachmentsSmokeCommand` | `class` | `app/Framework/Cli/Commands/AttachmentsSmokeCommand.php` | 55 |
 | `Catalyst\Framework\Cli\Commands\AutomationMvcRegressionCommand` | `class` | `app/Framework/Cli/Commands/AutomationMvcRegressionCommand.php` | 43 |
 | `Catalyst\Framework\Cli\Commands\CacheBuildCommand` | `class` | `app/Framework/Cli/Commands/CacheBuildCommand.php` | 49 |
 | `Catalyst\Framework\Cli\Commands\CacheClearCommand` | `class` | `app/Framework/Cli/Commands/CacheClearCommand.php` | 46 |
+| `Catalyst\Framework\Cli\Commands\CalendarSmokeCommand` | `class` | `app/Framework/Cli/Commands/CalendarSmokeCommand.php` | 23 |
 | `Catalyst\Framework\Cli\Commands\CatalogsSmokeCommand` | `class` | `app/Framework/Cli/Commands/CatalogsSmokeCommand.php` | 55 |
 | `Catalyst\Framework\Cli\Commands\ClaimsListCommand` | `class` | `app/Framework/Cli/Commands/ClaimsListCommand.php` | 45 |
 | `Catalyst\Framework\Cli\Commands\ClaimsReleaseCommand` | `class` | `app/Framework/Cli/Commands/ClaimsReleaseCommand.php` | 46 |
 | `Catalyst\Framework\Cli\Commands\ConcurrencySmokeCommand` | `class` | `app/Framework/Cli/Commands/ConcurrencySmokeCommand.php` | 49 |
 | `Catalyst\Framework\Cli\Commands\ConfigSecretsSyncCommand` | `class` | `app/Framework/Cli/Commands/ConfigSecretsSyncCommand.php` | 45 |
 | `Catalyst\Framework\Cli\Commands\ConfigShowCommand` | `class` | `app/Framework/Cli/Commands/ConfigShowCommand.php` | 46 |
+| `Catalyst\Framework\Cli\Commands\DeletionSmokeCommand` | `class` | `app/Framework/Cli/Commands/DeletionSmokeCommand.php` | 46 |
 | `Catalyst\Framework\Cli\Commands\DeployListCommand` | `class` | `app/Framework/Cli/Commands/DeployListCommand.php` | 46 |
 | `Catalyst\Framework\Cli\Commands\DeployRunCommand` | `class` | `app/Framework/Cli/Commands/DeployRunCommand.php` | 46 |
 | `Catalyst\Framework\Cli\Commands\DevToolsDisableCommand` | `class` | `app/Framework/Cli/Commands/DevToolsDisableCommand.php` | 45 |
@@ -207,8 +217,10 @@
 | `Catalyst\Framework\Cli\Commands\QueueFailedCommand` | `class` | `app/Framework/Cli/Commands/QueueFailedCommand.php` | 45 |
 | `Catalyst\Framework\Cli\Commands\QueueRetryCommand` | `class` | `app/Framework/Cli/Commands/QueueRetryCommand.php` | 46 |
 | `Catalyst\Framework\Cli\Commands\QueueWorkCommand` | `class` | `app/Framework/Cli/Commands/QueueWorkCommand.php` | 45 |
+| `Catalyst\Framework\Cli\Commands\ReferencesSmokeCommand` | `class` | `app/Framework/Cli/Commands/ReferencesSmokeCommand.php` | 47 |
 | `Catalyst\Framework\Cli\Commands\ReportingRunCommand` | `class` | `app/Framework/Cli/Commands/ReportingRunCommand.php` | 45 |
 | `Catalyst\Framework\Cli\Commands\ReportingSmokeCommand` | `class` | `app/Framework/Cli/Commands/ReportingSmokeCommand.php` | 53 |
+| `Catalyst\Framework\Cli\Commands\ReportsContractSmokeCommand` | `class` | `app/Framework/Cli/Commands/ReportsContractSmokeCommand.php` | 53 |
 | `Catalyst\Framework\Cli\Commands\RetentionRunCommand` | `class` | `app/Framework/Cli/Commands/RetentionRunCommand.php` | 45 |
 | `Catalyst\Framework\Cli\Commands\RetentionSmokeCommand` | `class` | `app/Framework/Cli/Commands/RetentionSmokeCommand.php` | 54 |
 | `Catalyst\Framework\Cli\Commands\RolesMvcRegressionCommand` | `class` | `app/Framework/Cli/Commands/RolesMvcRegressionCommand.php` | 43 |
@@ -217,11 +229,14 @@
 | `Catalyst\Framework\Cli\Commands\RouteClearCommand` | `class` | `app/Framework/Cli/Commands/RouteClearCommand.php` | 44 |
 | `Catalyst\Framework\Cli\Commands\RouteLintCommand` | `class` | `app/Framework/Cli/Commands/RouteLintCommand.php` | 45 |
 | `Catalyst\Framework\Cli\Commands\RouteListCommand` | `class` | `app/Framework/Cli/Commands/RouteListCommand.php` | 47 |
+| `Catalyst\Framework\Cli\Commands\ScaffoldAppSmokeCommand` | `class` | `app/Framework/Cli/Commands/ScaffoldAppSmokeCommand.php` | 47 |
 | `Catalyst\Framework\Cli\Commands\ScheduleListCommand` | `class` | `app/Framework/Cli/Commands/ScheduleListCommand.php` | 45 |
 | `Catalyst\Framework\Cli\Commands\ScheduleRunCommand` | `class` | `app/Framework/Cli/Commands/ScheduleRunCommand.php` | 46 |
 | `Catalyst\Framework\Cli\Commands\SecurityCheckCommand` | `class` | `app/Framework/Cli/Commands/SecurityCheckCommand.php` | 46 |
 | `Catalyst\Framework\Cli\Commands\SecurityRegressionCommand` | `class` | `app/Framework/Cli/Commands/SecurityRegressionCommand.php` | 60 |
 | `Catalyst\Framework\Cli\Commands\SensitivitySmokeCommand` | `class` | `app/Framework/Cli/Commands/SensitivitySmokeCommand.php` | 47 |
+| `Catalyst\Framework\Cli\Commands\SequencesSmokeCommand` | `class` | `app/Framework/Cli/Commands/SequencesSmokeCommand.php` | 47 |
+| `Catalyst\Framework\Cli\Commands\SettingsLocalizationSmokeCommand` | `class` | `app/Framework/Cli/Commands/SettingsLocalizationSmokeCommand.php` | 47 |
 | `Catalyst\Framework\Cli\Commands\StatusCommand` | `class` | `app/Framework/Cli/Commands/StatusCommand.php` | 45 |
 | `Catalyst\Framework\Cli\Commands\StorageCleanCommand` | `class` | `app/Framework/Cli/Commands/StorageCleanCommand.php` | 45 |
 | `Catalyst\Framework\Cli\Commands\TemporalSmokeCommand` | `class` | `app/Framework/Cli/Commands/TemporalSmokeCommand.php` | 47 |
@@ -230,6 +245,7 @@
 | `Catalyst\Framework\Cli\Commands\TimelineSmokeCommand` | `class` | `app/Framework/Cli/Commands/TimelineSmokeCommand.php` | 49 |
 | `Catalyst\Framework\Cli\Commands\UpdateCheckCommand` | `class` | `app/Framework/Cli/Commands/UpdateCheckCommand.php` | 17 |
 | `Catalyst\Framework\Cli\Commands\VersionCommand` | `class` | `app/Framework/Cli/Commands/VersionCommand.php` | 44 |
+| `Catalyst\Framework\Cli\Commands\WorkflowSmokeCommand` | `class` | `app/Framework/Cli/Commands/WorkflowSmokeCommand.php` | 46 |
 | `Catalyst\Framework\Cli\ScaffoldManager` | `class` | `app/Framework/Cli/ScaffoldManager.php` | 43 |
 | `Catalyst\Framework\Cli\Support\PhpValueExporter` | `class` | `app/Framework/Cli/Support/PhpValueExporter.php` | 40 |
 | `Catalyst\Framework\Cli\Support\RouteContractInspector` | `class` | `app/Framework/Cli/Support/RouteContractInspector.php` | 48 |
@@ -261,6 +277,10 @@
 | `Catalyst\Framework\Database\Relations\Relation` | `class` | `app/Framework/Database/Relations/Relation.php` | 44 |
 | `Catalyst\Framework\Database\SqlReference` | `class` | `app/Framework/Database/SqlReference.php` | 41 |
 | `Catalyst\Framework\Database\Transaction` | `class` | `app/Framework/Database/Transaction.php` | 47 |
+| `Catalyst\Framework\Deletion\ReverseCascadeDeletePlan` | `class` | `app/Framework/Deletion/ReverseCascadeDeletePlan.php` | 39 |
+| `Catalyst\Framework\Deletion\ReverseCascadeDeleteResult` | `class` | `app/Framework/Deletion/ReverseCascadeDeleteResult.php` | 39 |
+| `Catalyst\Framework\Deletion\ReverseCascadeDeleteService` | `class` | `app/Framework/Deletion/ReverseCascadeDeleteService.php` | 42 |
+| `Catalyst\Framework\Deletion\ReverseCascadeDeleteStep` | `class` | `app/Framework/Deletion/ReverseCascadeDeleteStep.php` | 39 |
 | `Catalyst\Framework\Deployment\DeploymentManager` | `class` | `app/Framework/Deployment/DeploymentManager.php` | 50 |
 | `Catalyst\Framework\Deployment\DeploymentRunRepository` | `class` | `app/Framework/Deployment/DeploymentRunRepository.php` | 44 |
 | `Catalyst\Framework\Document\DocumentTemplateManager` | `class` | `app/Framework/Document/DocumentTemplateManager.php` | 51 |
@@ -336,9 +356,10 @@
 | `Catalyst\Framework\Middleware\TenancyContextMiddleware` | `class` | `app/Framework/Middleware/TenancyContextMiddleware.php` | 45 |
 | `Catalyst\Framework\Middleware\ThrottleProfileCatalog` | `class` | `app/Framework/Middleware/ThrottleProfileCatalog.php` | 41 |
 | `Catalyst\Framework\Middleware\WebSocketBootMiddleware` | `class` | `app/Framework/Middleware/WebSocketBootMiddleware.php` | 53 |
+| `Catalyst\Framework\Module\AppBoundaryLinter` | `class` | `app/Framework/Module/AppBoundaryLinter.php` | 39 |
 | `Catalyst\Framework\Module\BuiltInModuleDeclarations` | `class` | `app/Framework/Module/BuiltInModuleDeclarations.php` | 39 |
 | `Catalyst\Framework\Module\ModuleAssetPublisher` | `class` | `app/Framework/Module/ModuleAssetPublisher.php` | 42 |
-| `Catalyst\Framework\Module\ModuleBlueprintFactory` | `class` | `app/Framework/Module/ModuleBlueprintFactory.php` | 42 |
+| `Catalyst\Framework\Module\ModuleBlueprintFactory` | `class` | `app/Framework/Module/ModuleBlueprintFactory.php` | 43 |
 | `Catalyst\Framework\Module\ModuleDiscovery` | `class` | `app/Framework/Module/ModuleDiscovery.php` | 41 |
 | `Catalyst\Framework\Module\ModuleFileFactory` | `class` | `app/Framework/Module/ModuleFileFactory.php` | 42 |
 | `Catalyst\Framework\Module\ModuleHarnessInspector` | `class` | `app/Framework/Module/ModuleHarnessInspector.php` | 47 |
@@ -372,9 +393,20 @@
 | `Catalyst\Framework\Queue\QueueSettings` | `class` | `app/Framework/Queue/QueueSettings.php` | 41 |
 | `Catalyst\Framework\Queue\QueueWorker` | `class` | `app/Framework/Queue/QueueWorker.php` | 42 |
 | `Catalyst\Framework\Queue\QueueableJobInterface` | `interface` | `app/Framework/Queue/QueueableJobInterface.php` | 39 |
+| `Catalyst\Framework\Reference\EntityReference` | `class` | `app/Framework/Reference/EntityReference.php` | 41 |
+| `Catalyst\Framework\Reference\EntityReferenceRegistry` | `class` | `app/Framework/Reference/EntityReferenceRegistry.php` | 41 |
 | `Catalyst\Framework\Release\ReleaseMetadata` | `class` | `app/Framework/Release/ReleaseMetadata.php` | 10 |
+| `Catalyst\Framework\Reporting\AttachmentReportProvider` | `class` | `app/Framework/Reporting/AttachmentReportProvider.php` | 43 |
+| `Catalyst\Framework\Reporting\DataGridReportExporter` | `class` | `app/Framework/Reporting/DataGridReportExporter.php` | 42 |
 | `Catalyst\Framework\Reporting\Jobs\RunReportJob` | `class` | `app/Framework/Reporting/Jobs/RunReportJob.php` | 42 |
-| `Catalyst\Framework\Reporting\ReportingManager` | `class` | `app/Framework/Reporting/ReportingManager.php` | 50 |
+| `Catalyst\Framework\Reporting\ReportDefinition` | `class` | `app/Framework/Reporting/ReportDefinition.php` | 41 |
+| `Catalyst\Framework\Reporting\ReportExportResult` | `class` | `app/Framework/Reporting/ReportExportResult.php` | 39 |
+| `Catalyst\Framework\Reporting\ReportExporterInterface` | `interface` | `app/Framework/Reporting/ReportExporterInterface.php` | 39 |
+| `Catalyst\Framework\Reporting\ReportFormat` | `class` | `app/Framework/Reporting/ReportFormat.php` | 41 |
+| `Catalyst\Framework\Reporting\ReportProviderInterface` | `interface` | `app/Framework/Reporting/ReportProviderInterface.php` | 39 |
+| `Catalyst\Framework\Reporting\ReportProviderRegistry` | `class` | `app/Framework/Reporting/ReportProviderRegistry.php` | 41 |
+| `Catalyst\Framework\Reporting\ReportingManager` | `class` | `app/Framework/Reporting/ReportingManager.php` | 49 |
+| `Catalyst\Framework\Reporting\SimplePdfReportExporter` | `class` | `app/Framework/Reporting/SimplePdfReportExporter.php` | 42 |
 | `Catalyst\Framework\Retention\Jobs\RunRetentionPoliciesJob` | `class` | `app/Framework/Retention/Jobs/RunRetentionPoliciesJob.php` | 42 |
 | `Catalyst\Framework\Retention\RetentionManager` | `class` | `app/Framework/Retention/RetentionManager.php` | 50 |
 | `Catalyst\Framework\Route\CanonicalPathRedirector` | `class` | `app/Framework/Route/CanonicalPathRedirector.php` | 39 |
@@ -397,6 +429,10 @@
 | `Catalyst\Framework\Security\SignedSerializedPayload` | `class` | `app/Framework/Security/SignedSerializedPayload.php` | 41 |
 | `Catalyst\Framework\Sensitivity\DataClassificationRegistry` | `class` | `app/Framework/Sensitivity/DataClassificationRegistry.php` | 41 |
 | `Catalyst\Framework\Sensitivity\SensitiveDataPolicy` | `class` | `app/Framework/Sensitivity/SensitiveDataPolicy.php` | 42 |
+| `Catalyst\Framework\Sequence\DatabaseSequenceStore` | `class` | `app/Framework/Sequence/DatabaseSequenceStore.php` | 42 |
+| `Catalyst\Framework\Sequence\InMemorySequenceStore` | `class` | `app/Framework/Sequence/InMemorySequenceStore.php` | 39 |
+| `Catalyst\Framework\Sequence\SequenceManager` | `class` | `app/Framework/Sequence/SequenceManager.php` | 42 |
+| `Catalyst\Framework\Sequence\SequenceStoreInterface` | `interface` | `app/Framework/Sequence/SequenceStoreInterface.php` | 39 |
 | `Catalyst\Framework\Session\DatabaseSessionHandler` | `class` | `app/Framework/Session/DatabaseSessionHandler.php` | 45 |
 | `Catalyst\Framework\Session\FlashBag` | `class` | `app/Framework/Session/FlashBag.php` | 43 |
 | `Catalyst\Framework\Session\FlashMessage` | `class` | `app/Framework/Session/FlashMessage.php` | 44 |
@@ -441,6 +477,8 @@
 | `Catalyst\Framework\Workflow\WorkflowDefinitionRegistry` | `class` | `app/Framework/Workflow/WorkflowDefinitionRegistry.php` | 41 |
 | `Catalyst\Framework\Workflow\WorkflowManager` | `class` | `app/Framework/Workflow/WorkflowManager.php` | 51 |
 | `Catalyst\Framework\Workflow\WorkflowRepository` | `class` | `app/Framework/Workflow/WorkflowRepository.php` | 47 |
+| `Catalyst\Framework\Workflow\WorkflowTransitionDecision` | `class` | `app/Framework/Workflow/WorkflowTransitionDecision.php` | 39 |
+| `Catalyst\Framework\Workflow\WorkflowTransitionEvaluator` | `class` | `app/Framework/Workflow/WorkflowTransitionEvaluator.php` | 39 |
 | `Catalyst\Helpers\Config\AppEntryCatalog` | `class` | `app/Helpers/Config/AppEntryCatalog.php` | 39 |
 | `Catalyst\Helpers\Config\ConfigManager` | `class` | `app/Helpers/Config/ConfigManager.php` | 85 |
 | `Catalyst\Helpers\Config\ConfigSecretCatalog` | `class` | `app/Helpers/Config/ConfigSecretCatalog.php` | 39 |
@@ -511,6 +549,7 @@
 | `Catalyst\Helpers\Validation\Validator` | `class` | `app/Helpers/Validation/Validator.php` | 39 |
 | `Catalyst\Kernel` | `class` | `app/Kernel.php` | 68 |
 | `Catalyst\Repository\ApiPlatform\Controllers\ApiPlatformController` | `class` | `Repository/Framework/ApiPlatform/Controllers/ApiPlatformController.php` | 52 |
+| `Catalyst\Repository\ApiPlatform\Controllers\CalendarApiController` | `class` | `Repository/Framework/ApiPlatform/Controllers/CalendarApiController.php` | 23 |
 | `Catalyst\Repository\ApiPlatform\Controllers\VersionApiController` | `class` | `Repository/Framework/ApiPlatform/Controllers/VersionApiController.php` | 50 |
 | `Catalyst\Repository\ApiPlatform\Controllers\WorkflowApiController` | `class` | `Repository/Framework/ApiPlatform/Controllers/WorkflowApiController.php` | 49 |
 | `Catalyst\Repository\ApiPlatform\Requests\ApiTokenRequest` | `class` | `Repository/Framework/ApiPlatform/Requests/ApiTokenRequest.php` | 48 |
@@ -622,6 +661,7 @@
 | `Catalyst\Repository\Settings\Controllers\DbConfigSaveController` | `class` | `Repository/Framework/Settings/Controllers/DbConfigSaveController.php` | 46 |
 | `Catalyst\Repository\Settings\Controllers\DevToolsConfigSaveController` | `class` | `Repository/Framework/Settings/Controllers/DevToolsConfigSaveController.php` | 44 |
 | `Catalyst\Repository\Settings\Controllers\DkimController` | `class` | `Repository/Framework/Settings/Controllers/DkimController.php` | 45 |
+| `Catalyst\Repository\Settings\Controllers\FeaturesConfigSaveController` | `class` | `Repository/Framework/Settings/Controllers/FeaturesConfigSaveController.php` | 44 |
 | `Catalyst\Repository\Settings\Controllers\FtpConfigController` | `class` | `Repository/Framework/Settings/Controllers/FtpConfigController.php` | 46 |
 | `Catalyst\Repository\Settings\Controllers\HealthController` | `class` | `Repository/Framework/Settings/Controllers/HealthController.php` | 44 |
 | `Catalyst\Repository\Settings\Controllers\LoggingConfigSaveController` | `class` | `Repository/Framework/Settings/Controllers/LoggingConfigSaveController.php` | 44 |
@@ -635,6 +675,7 @@
 | `Catalyst\Repository\Settings\Requests\CacheConfigRequest` | `class` | `Repository/Framework/Settings/Requests/CacheConfigRequest.php` | 44 |
 | `Catalyst\Repository\Settings\Requests\DbConfigRequest` | `class` | `Repository/Framework/Settings/Requests/DbConfigRequest.php` | 39 |
 | `Catalyst\Repository\Settings\Requests\DevToolsConfigRequest` | `class` | `Repository/Framework/Settings/Requests/DevToolsConfigRequest.php` | 39 |
+| `Catalyst\Repository\Settings\Requests\FeaturesConfigRequest` | `class` | `Repository/Framework/Settings/Requests/FeaturesConfigRequest.php` | 39 |
 | `Catalyst\Repository\Settings\Requests\LoggingConfigRequest` | `class` | `Repository/Framework/Settings/Requests/LoggingConfigRequest.php` | 39 |
 | `Catalyst\Repository\Settings\Requests\MailConfigRequest` | `class` | `Repository/Framework/Settings/Requests/MailConfigRequest.php` | 39 |
 | `Catalyst\Repository\Settings\Requests\SecurityConfigRequest` | `class` | `Repository/Framework/Settings/Requests/SecurityConfigRequest.php` | 39 |
@@ -649,6 +690,7 @@
 | `Catalyst\Repository\Settings\Support\DbConfigWriter` | `class` | `Repository/Framework/Settings/Support/DbConfigWriter.php` | 41 |
 | `Catalyst\Repository\Settings\Support\DbConnectivityProbe` | `class` | `Repository/Framework/Settings/Support/DbConnectivityProbe.php` | 43 |
 | `Catalyst\Repository\Settings\Support\DevToolsConfigWriter` | `class` | `Repository/Framework/Settings/Support/DevToolsConfigWriter.php` | 41 |
+| `Catalyst\Repository\Settings\Support\FeaturesConfigWriter` | `class` | `Repository/Framework/Settings/Support/FeaturesConfigWriter.php` | 41 |
 | `Catalyst\Repository\Settings\Support\FtpConnectionProbe` | `class` | `Repository/Framework/Settings/Support/FtpConnectionProbe.php` | 41 |
 | `Catalyst\Repository\Settings\Support\LoggingConfigWriter` | `class` | `Repository/Framework/Settings/Support/LoggingConfigWriter.php` | 41 |
 | `Catalyst\Repository\Settings\Support\MailConfigWriter` | `class` | `Repository/Framework/Settings/Support/MailConfigWriter.php` | 41 |
@@ -887,12 +929,10 @@
 | `Repository/Framework/Settings/Views/partials/_settings-modal.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/Settings/Views/partials/_settings-modals.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/Settings/Views/partials/_settings-row.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Settings/Views/partials/_settings-runtime-surfaces.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/Settings/Views/partials/_settings-setup-actions.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/Settings/Views/scope/pages/health.php` | `Repository views` | `php` |
 | `Repository/Framework/Settings/Views/scope/pages/index.php` | `Repository views` | `php` |
 | `Repository/Framework/Settings/Views/scope/partials/_settings-dkim-card.php` | `Repository views` | `php` |
-| `Repository/Framework/Settings/Views/scope/partials/_settings-runtime-surfaces.php` | `Repository views` | `php` |
 | `Repository/Framework/Settings/Views/scope/partials/_settings-setup-actions.php` | `Repository views` | `php` |
 
 ## Scripts

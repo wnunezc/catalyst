@@ -1,21 +1,21 @@
 <div class="settings-command-grid">
     {{#each settingsGroups}}
-        <section class="settings-command-section mb-3" id="settings-group-{{ id }}">
+        <section class="settings-command-section mb-3" id="settings-group-{{ this.id }}">
             <div class="settings-command-section__header">
                 <div>
-                    <div class="settings-command-section__eyebrow">{{ eyebrow }}</div>
-                    <h5 class="settings-command-section__title">{{ title }}</h5>
+                    <div class="settings-command-section__eyebrow">{{ this.eyebrow }}</div>
+                    <h5 class="settings-command-section__title">{{ this.title }}</h5>
                 </div>
-                <p class="settings-command-section__description">{{ description }}</p>
+                <p class="settings-command-section__description">{{ this.description }}</p>
             </div>
             <div class="row g-2 settings-card-grid">
-                {{#each cards}}
-                    <div class="{{ colClass }}">
+                {{#each this.cards}}
+                    <div class="{{ this.colClass }}">
                         {{> ./_settings-card }}
                     </div>
                 {{/each}}
 
-                {{#if includesDkim}}
+                {{#if this.includesDkim}}
                     <div class="col-xxl-4 col-xl-4 col-lg-6">
                         {{> ./_settings-dkim-card }}
                     </div>

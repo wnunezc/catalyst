@@ -29,6 +29,7 @@ declare(strict_types=1);
  */
 
 use Catalyst\Framework\Auth\OAuthManager;
+use Catalyst\Framework\FeatureFlag\FeatureFlagManager;
 use Catalyst\Framework\View\TrustedHtml;
 use Catalyst\Helpers\Security\CsrfProtection;
 
@@ -50,6 +51,7 @@ return static function (array $scope): array {
         'password_error' => (string) ($passwordError ?? ''),
         'password_invalid_class' => $passwordError !== null ? ' is-invalid' : '',
         'remember_checked_attr' => old('remember', '0') === '1' ? ' checked' : '',
+        'registration_enabled' => FeatureFlagManager::getInstance()->isRuntimeEnabled('auth.registration_enabled'),
         'has_social_login' => $googleEnabled || $githubEnabled,
         'google_enabled' => $googleEnabled,
         'github_enabled' => $githubEnabled,

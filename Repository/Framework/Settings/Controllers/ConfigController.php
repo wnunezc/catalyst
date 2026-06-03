@@ -48,7 +48,7 @@ class ConfigController extends Controller
     /**
      * Initializes the Config Controller instance.
      *
-     * Responsibility: Initializes the Config Controller instance.
+     * Responsibility: Binds required collaborators or immutable state without executing the main workflow.
      */
     public function __construct(
         private readonly AdminReadinessProbe $adminReadinessProbe = new AdminReadinessProbe()
@@ -59,7 +59,7 @@ class ConfigController extends Controller
     /**
      * Display the framework settings panel.
      *
-     * Responsibility: Display the framework settings panel.
+     * Responsibility: Defines the focused behavior owned by this method and keeps side effects limited to its caller contract.
      * @param Request $request
      * @return Response
      */
@@ -92,6 +92,9 @@ class ConfigController extends Controller
         // -- Security ---------------------------------------------------------
         $security = $cfg->entry('security', 'security');
 
+        // -- Feature switches -------------------------------------------------
+        $features = $cfg->section('features')['catalog'] ?? $cfg->section('features');
+
         // -- WebSocket --------------------------------------------------------
         $websocket = $cfg->entry('websocket', 'websocket');
 
@@ -112,7 +115,6 @@ class ConfigController extends Controller
             'pageTitle'   => __('settings.settings.title'),
             'configured'  => $cfg->isConfigured(),
             'adminReady'  => $adminReady,
-            'operationsUrl' => '/operations',
             'app'         => $app,
             'db'          => $db,
             'mail'        => $mail,
@@ -121,6 +123,7 @@ class ConfigController extends Controller
             'cache'       => $cache,
             'logging'     => $logging,
             'security'    => $security,
+            'features'    => is_array($features) ? $features : [],
             'websocket'   => $websocket,
             'devtools'    => $devtools,
             'cors'        => $cors,
@@ -130,7 +133,7 @@ class ConfigController extends Controller
     /**
      * Redirects legacy setup entry requests to the canonical route.
      *
-     * Responsibility: Redirects legacy setup entry requests to the canonical route.
+     * Responsibility: Defines the focused behavior owned by this method and keeps side effects limited to its caller contract.
      */
     public function redirectCanonical(): RedirectResponse
     {

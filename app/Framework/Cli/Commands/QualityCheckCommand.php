@@ -67,6 +67,11 @@ final class QualityCheckCommand extends AbstractCommand
             'blocker' => true,
         ],
         [
+            'label' => 'I18n usage lint',
+            'command' => 'php public/cli.php i18n:usage-lint',
+            'blocker' => true,
+        ],
+        [
             'label' => 'Security regression scan',
             'command' => 'php public/cli.php security:check',
             'blocker' => true,
@@ -81,7 +86,7 @@ final class QualityCheckCommand extends AbstractCommand
     /**
      * Returns the command name registered in the CLI registry.
      *
-     * Responsibility: Returns the command name registered in the CLI registry.
+     * Responsibility: Provides the stable command identifier consumed by CommandRegistry.
      */
     public function getName(): string
     {
@@ -91,7 +96,7 @@ final class QualityCheckCommand extends AbstractCommand
     /**
      * Returns the short help text shown for this command.
      *
-     * Responsibility: Returns the short help text shown for this command.
+     * Responsibility: Keeps command discovery text separate from execution logic.
      */
     public function getDescription(): string
     {
@@ -101,7 +106,7 @@ final class QualityCheckCommand extends AbstractCommand
     /**
      * Runs the command workflow using parsed CLI arguments.
      *
-     * Responsibility: Runs the command workflow using parsed CLI arguments.
+     * Responsibility: Coordinates the smoke scenario and returns a process exit code without hidden side effects.
      */
     public function execute(ArgumentBag $args): int
     {

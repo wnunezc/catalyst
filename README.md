@@ -118,6 +118,11 @@ Application work should live primarily under:
 Repository/App/
 ```
 
+The framework/application boundary is documented in `docs/app-boundary.md`.
+Run `php public/cli.php inspect:lint` to detect common boundary violations such
+as application modules under `app/`, unsupported `Repository/*` roots or source
+assets placed directly under `public/assets/app`.
+
 Framework-owned updates normally come from:
 
 ```text
@@ -176,13 +181,20 @@ runtime secrets and private artifacts.
 - HTTP middleware, sessions, CSRF, CSP nonce support and trusted rendering
   boundaries.
 - Auth with password reset, remember-me invalidation, MFA/TOTP, email
-  verification, throttling, RBAC and resource policies.
+  verification, configurable public registration, throttling, RBAC and resource
+  policies with ownership, visibility and context constraints.
 - ORM, QueryBuilder, migrations and database tooling.
 - Framework modules for API Platform, Audit, Auth, Automation, Catalogs,
   DevTools, Documents, Media, Notification, Operations, Roles and Settings.
 - Admin building blocks: CRUD scaffold, `FormBuilder`, `DataGrid`, resource
   abilities, audit log, metadata, media library, document templates, workflows,
   automations and API tokens.
+- Reusable framework contracts for app boundary linting, update safety, safe
+  reverse cascade deletes, generic entity references, transactional sequences,
+  attachment policy and QR verification tokens, dynamic workflow approvals,
+  calendar providers, report providers and complex app scaffolding.
+- Guidance for adapting large product specs into Catalyst apps without creating
+  app-owned routers, kernels or framework forks.
 - CLI quality gates, inspectors, module catalog generation and runtime
   inventory generation.
 

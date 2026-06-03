@@ -50,7 +50,7 @@ final class PermissionRegistry
     /**
      * Returns all module-declared permission definitions cached for the request.
      *
-     * Responsibility: Returns all module-declared permission definitions cached for the request.
+     * Responsibility: Provides read-only access to normalized state without mutating framework runtime.
      * @return array<int, array<string, mixed>>
      */
     public function all(): array
@@ -65,7 +65,7 @@ final class PermissionRegistry
     /**
      * Clears cached permission definitions so module metadata can be reloaded.
      *
-     * Responsibility: Clears cached permission definitions so module metadata can be reloaded.
+     * Responsibility: Updates framework registry state through an explicit, bounded mutation point.
      */
     public function flushCache(): void
     {
@@ -75,7 +75,7 @@ final class PermissionRegistry
     /**
      * Returns permission definitions declared by a module key.
      *
-     * Responsibility: Returns permission definitions declared by a module key.
+     * Responsibility: Provides read-only access to normalized state without mutating framework runtime.
      * @return array<int, array<string, mixed>>
      */
     public function forModule(string $moduleKey): array
@@ -89,7 +89,7 @@ final class PermissionRegistry
     /**
      * Finds a permission definition by slug.
      *
-     * Responsibility: Finds a permission definition by slug.
+     * Responsibility: Provides read-only access to normalized state without mutating framework runtime.
      * @return array<string, mixed>|null
      */
     public function find(string $slug): ?array
@@ -106,7 +106,7 @@ final class PermissionRegistry
     /**
      * Registers permission slugs and resource policies on the given gate instance.
      *
-     * Responsibility: Registers permission slugs and resource policies on the given gate instance.
+     * Responsibility: Updates framework registry state through an explicit, bounded mutation point.
      */
     public function registerGateDefinitions(Gate $gate): void
     {
@@ -129,7 +129,7 @@ final class PermissionRegistry
     /**
      * Checks whether the resolved user has a specific role slug.
      *
-     * Responsibility: Checks whether the resolved user has a specific role slug.
+     * Responsibility: Evaluates an authorization, feature or matching predicate without changing application state.
      */
     public function userHasRole(?array $user, string $roleSlug): bool
     {
@@ -144,7 +144,7 @@ final class PermissionRegistry
     /**
      * Checks whether the resolved user has at least one role slug.
      *
-     * Responsibility: Checks whether the resolved user has at least one role slug.
+     * Responsibility: Evaluates an authorization, feature or matching predicate without changing application state.
      * @param string[] $roleSlugs
      */
     public function userHasAnyRole(?array $user, array $roleSlugs): bool
@@ -160,9 +160,9 @@ final class PermissionRegistry
     /**
      * Checks whether the resolved user has a permission and satisfies its conditions.
      *
-     * Responsibility: Checks whether the resolved user has a permission and satisfies its conditions.
+     * Responsibility: Evaluates an authorization, feature or matching predicate without changing application state.
      */
-    public function userHasPermission(?array $user, string $slug, mixed $record = null): bool
+    public function userHasPermission(?array $user, string $slug, mixed $record = null, array $context = []): bool
     {
         $userId = $this->resolveUserId($user);
         if ($userId === null) {
@@ -187,19 +187,19 @@ final class PermissionRegistry
 
         return $definition === null
             ? true
-            : $this->matchesConditions($user, $definition, $record);
+            : $this->matchesConditions($user, $definition, $record, $context);
     }
 
     /**
      * Checks whether the resolved user has at least one permission slug.
      *
-     * Responsibility: Checks whether the resolved user has at least one permission slug.
+     * Responsibility: Evaluates an authorization, feature or matching predicate without changing application state.
      * @param string[] $slugs
      */
-    public function userHasAnyPermission(?array $user, array $slugs, mixed $record = null): bool
+    public function userHasAnyPermission(?array $user, array $slugs, mixed $record = null, array $context = []): bool
     {
         foreach ($slugs as $slug) {
-            if ($this->userHasPermission($user, (string)$slug, $record)) {
+            if ($this->userHasPermission($user, (string)$slug, $record, $context)) {
                 return true;
             }
         }
@@ -210,7 +210,7 @@ final class PermissionRegistry
     /**
      * Checks whether the resolved user has a permission matching a resource ability.
      *
-     * Responsibility: Checks whether the resolved user has a permission matching a resource ability.
+     * Responsibility: Evaluates an authorization, feature or matching predicate without changing application state.
      * @param array<string, mixed> $context
      */
     public function userHasResourceAbility(
@@ -234,7 +234,7 @@ final class PermissionRegistry
             }
 
             $subjectRecord = $context['record'] ?? $record;
-            if ($this->userHasPermission($user, $slug, $subjectRecord)) {
+            if ($this->userHasPermission($user, $slug, $subjectRecord, $context)) {
                 return true;
             }
         }
@@ -243,9 +243,25 @@ final class PermissionRegistry
     }
 
     /**
+     * Checks whether a subject satisfies a permission definition's declarative constraints.
+     *
+     * Responsibility: Evaluates an authorization, feature or matching predicate without changing application state.
+     * @param array<string, mixed>|null $user
+     * @param array<string, mixed> $definition
+     */
+    public function subjectSatisfiesDefinition(?array $user, array $definition, AbilitySubject $subject): bool
+    {
+        if ($user === null) {
+            return false;
+        }
+
+        return $this->matchesConditions($user, $definition, $subject->record(), $subject->context());
+    }
+
+    /**
      * Returns permission definitions matching a resource and ability pair.
      *
-     * Responsibility: Returns permission definitions matching a resource and ability pair.
+     * Responsibility: Provides a focused helper boundary used by the owning service without widening external API ownership.
      * @return array<int, array<string, mixed>>
      */
     public function resourceAbilityDefinitions(string $resource, string $ability): array
@@ -270,11 +286,11 @@ final class PermissionRegistry
     /**
      * Validates record ownership, state, and delegated policy constraints.
      *
-     * Responsibility: Validates record ownership, state, and delegated policy constraints.
+     * Responsibility: Evaluates an authorization, feature or matching predicate without changing application state.
      * @param array<string, mixed> $user
      * @param array<string, mixed> $definition
      */
-    private function matchesConditions(array $user, array $definition, mixed $record): bool
+    private function matchesConditions(array $user, array $definition, mixed $record, array $context = []): bool
     {
         $recordRequired = (bool)($definition['record_required'] ?? false);
         if ($recordRequired && $record === null) {
@@ -282,8 +298,12 @@ final class PermissionRegistry
         }
 
         $ownerField = (string)($definition['owner_field'] ?? '');
-        if ($ownerField !== '' && $record !== null) {
-            $ownerId = $this->extractValue($record, $ownerField);
+        $ownerContextKey = (string)($definition['owner_context_key'] ?? '');
+        if ($ownerField !== '' || $ownerContextKey !== '') {
+            $ownerId = $ownerField !== '' && $record !== null
+                ? $this->extractValue($record, $ownerField)
+                : $this->extractContextValue($context, $ownerContextKey);
+
             if ((string)$ownerId !== (string)($user['id'] ?? '')) {
                 return false;
             }
@@ -298,6 +318,18 @@ final class PermissionRegistry
             }
         }
 
+        if (!$this->matchesVisibilityCondition($definition, $record, $context)) {
+            return false;
+        }
+
+        if (!$this->matchesScopeCondition($definition, $context)) {
+            return false;
+        }
+
+        if (!$this->matchesContextConditions($definition, $context)) {
+            return false;
+        }
+
         $policyAbility = (string)($definition['policy_ability'] ?? '');
         if ($policyAbility !== '' && $record !== null) {
             return Gate::getInstance()->forUser($user)->allows($policyAbility, $record);
@@ -307,9 +339,80 @@ final class PermissionRegistry
     }
 
     /**
+     * Validates record or context visibility constraints declared by a permission.
+     *
+     * Responsibility: Evaluates an authorization, feature or matching predicate without changing application state.
+     * @param array<string, mixed> $definition
+     * @param array<string, mixed> $context
+     */
+    private function matchesVisibilityCondition(array $definition, mixed $record, array $context): bool
+    {
+        $values = $this->normalizedStringList($definition['visibility_any'] ?? []);
+        if ($values === []) {
+            return true;
+        }
+
+        $field = (string)($definition['visibility_field'] ?? '');
+        $contextKey = (string)($definition['visibility_context_key'] ?? 'visibility');
+        $visibility = $field !== '' && $record !== null
+            ? $this->extractValue($record, $field)
+            : $this->extractContextValue($context, $contextKey);
+
+        return in_array((string)$visibility, $values, true);
+    }
+
+    /**
+     * Validates a contextual scope constraint declared by a permission.
+     *
+     * Responsibility: Evaluates an authorization, feature or matching predicate without changing application state.
+     * @param array<string, mixed> $definition
+     * @param array<string, mixed> $context
+     */
+    private function matchesScopeCondition(array $definition, array $context): bool
+    {
+        $values = $this->normalizedStringList($definition['scopes_any'] ?? []);
+        if ($values === []) {
+            return true;
+        }
+
+        $contextKey = (string)($definition['scope_context_key'] ?? 'scope');
+        $scope = $this->extractContextValue($context, $contextKey);
+
+        return in_array((string)$scope, $values, true);
+    }
+
+    /**
+     * Validates generic context key constraints declared by a permission.
+     *
+     * Responsibility: Evaluates an authorization, feature or matching predicate without changing application state.
+     * @param array<string, mixed> $definition
+     * @param array<string, mixed> $context
+     */
+    private function matchesContextConditions(array $definition, array $context): bool
+    {
+        $conditions = $definition['context_any'] ?? [];
+        if (!is_array($conditions) || $conditions === []) {
+            return true;
+        }
+
+        foreach ($conditions as $key => $allowedValues) {
+            if (!is_string($key) || trim($key) === '') {
+                return false;
+            }
+
+            $value = $this->extractContextValue($context, $key);
+            if (!in_array((string)$value, $this->normalizedStringList($allowedValues), true)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Checks whether a permission definition applies to the requested resource.
      *
-     * Responsibility: Checks whether a permission definition applies to the requested resource.
+     * Responsibility: Evaluates an authorization, feature or matching predicate without changing application state.
      * @param array<string, mixed> $definition
      */
     private function definitionMatchesResource(array $definition, string $resource): bool
@@ -326,7 +429,7 @@ final class PermissionRegistry
     /**
      * Checks whether a permission definition applies to the requested ability.
      *
-     * Responsibility: Checks whether a permission definition applies to the requested ability.
+     * Responsibility: Evaluates an authorization, feature or matching predicate without changing application state.
      * @param array<string, mixed> $definition
      */
     private function definitionMatchesAbility(array $definition, string $ability): bool
@@ -352,7 +455,7 @@ final class PermissionRegistry
     /**
      * Returns action aliases accepted for a generic resource ability.
      *
-     * Responsibility: Returns action aliases accepted for a generic resource ability.
+     * Responsibility: Provides a focused helper boundary used by the owning service without widening external API ownership.
      * @return string[]
      */
     private function abilityActionAliases(string $ability): array
@@ -373,9 +476,23 @@ final class PermissionRegistry
     }
 
     /**
+     * Normalizes a scalar or list into non-empty string values.
+     *
+     * Responsibility: Converts caller or catalog input into the canonical shape required by downstream services.
+     * @return string[]
+     */
+    private function normalizedStringList(mixed $values): array
+    {
+        return array_values(array_filter(array_map(
+            static fn (mixed $value): string => trim((string)$value),
+            is_array($values) ? $values : [$values]
+        ), static fn (string $value): bool => $value !== ''));
+    }
+
+    /**
      * Resolves the numeric user ID from an authorization user payload.
      *
-     * Responsibility: Resolves the numeric user ID from an authorization user payload.
+     * Responsibility: Provides a focused helper boundary used by the owning service without widening external API ownership.
      */
     private function resolveUserId(?array $user): ?int
     {
@@ -388,12 +505,50 @@ final class PermissionRegistry
     }
 
     /**
+     * Extracts a value from contextual authorization data.
+     *
+     * Responsibility: Provides a focused helper boundary used by the owning service without widening external API ownership.
+     * @param array<string, mixed> $context
+     */
+    private function extractContextValue(array $context, string $key): mixed
+    {
+        $key = trim($key);
+        if ($key === '') {
+            return null;
+        }
+
+        return $this->extractValue($context, $key);
+    }
+
+    /**
      * Extracts a field value from an array, object property, or getter method.
      *
-     * Responsibility: Extracts a field value from an array, object property, or getter method.
+     * Responsibility: Provides a focused helper boundary used by the owning service without widening external API ownership.
      */
     private function extractValue(mixed $record, string $field): mixed
     {
+        $field = trim($field);
+        if ($field === '') {
+            return null;
+        }
+
+        if (str_contains($field, '.')) {
+            $value = $record;
+            foreach (explode('.', $field) as $segment) {
+                $segment = trim($segment);
+                if ($segment === '') {
+                    return null;
+                }
+
+                $value = $this->extractValue($value, $segment);
+                if ($value === null) {
+                    return null;
+                }
+            }
+
+            return $value;
+        }
+
         if (is_array($record)) {
             return $record[$field] ?? null;
         }

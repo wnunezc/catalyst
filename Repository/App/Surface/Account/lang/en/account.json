@@ -61,6 +61,22 @@
     "title": "Recent Activity",
     "lead": "Lists recovery and security events related to your account."
   },
+  "recovery": {
+    "eyebrow": "Recovery options",
+    "title": "Account recovery",
+    "lead": "Choose the recovery path that matches the account access problem.",
+    "password_title": "Password recovery",
+    "password_body": "Use the standard password reset flow when the account email is still available.",
+    "mfa_title": "MFA recovery",
+    "mfa_body": "Request a secure recovery link when the password is known but the second factor is unavailable.",
+    "support_title": "Assisted support",
+    "support_body": "Create a reviewed case when email access is lost or unauthorized access is suspected."
+  },
+  "security": {
+    "eyebrow": "Account protection",
+    "title": "Security",
+    "lead": "Review the account security surfaces without mixing them with administrative configuration."
+  },
   "recovery_public": {
     "eyebrow": "Safe recovery",
     "start_title": "Need to recover your account?",

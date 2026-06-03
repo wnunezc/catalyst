@@ -1,0 +1,38 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{NamespaceRoot}}\Support;
+
+use Catalyst\Framework\Calendar\CalendarEvent;
+use Catalyst\Framework\Calendar\CalendarProviderInterface;
+use Catalyst\Framework\Calendar\CalendarQuery;
+
+/**
+ * Contributes module events to the framework calendar contract.
+ *
+ * Responsibility: Contributes module events to the framework calendar contract.
+ */
+final class {{CalendarProviderClass}} implements CalendarProviderInterface
+{
+    /**
+     * Returns the provider key.
+     *
+     * Responsibility: Provides read-only access to normalized state without mutating framework runtime.
+     */
+    public function key(): string
+    {
+        return '{{ProviderKey}}';
+    }
+
+    /**
+     * Returns events visible for the query window.
+     *
+     * Responsibility: Defines the focused behavior owned by this method and keeps side effects limited to its caller contract.
+     * @return CalendarEvent[]
+     */
+    public function events(CalendarQuery $query): array
+    {
+        return [];
+    }
+}

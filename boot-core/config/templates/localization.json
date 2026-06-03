@@ -5,13 +5,11 @@
         "default_locale": "en",
         "supported_locales": [
             "en",
-            "es",
-            "fr"
+            "es"
         ],
         "locale_labels": {
             "en": "English",
-            "es": "Español",
-            "fr": "Francais"
+            "es": "Español"
         }
     }
 }

@@ -55,23 +55,25 @@ final class WorkflowManager
     private WorkflowRepository $repository;
     private WorkflowDefinitionRegistry $definitions;
     private EventBus $events;
+    private WorkflowTransitionEvaluator $evaluator;
 
     /**
      * Initializes the Workflow Manager instance.
      *
-     * Responsibility: Initializes the Workflow Manager instance.
+     * Responsibility: Binds required collaborators or immutable state without executing the main workflow.
      */
     protected function __construct()
     {
         $this->repository = WorkflowRepository::getInstance();
         $this->definitions = WorkflowDefinitionRegistry::getInstance();
         $this->events = EventBus::getInstance();
+        $this->evaluator = new WorkflowTransitionEvaluator();
     }
 
     /**
      * Returns or initializes the workflow instance for a resource record.
      *
-     * Responsibility: Returns or initializes the workflow instance for a resource record.
+     * Responsibility: Coordinates the state-changing workflow after validation and returns the outcome to the caller.
      * @param array<string, mixed> $context
      * @return array<string, mixed>
      */
@@ -109,7 +111,7 @@ final class WorkflowManager
     /**
      * Applies an allowed transition to a resource workflow instance.
      *
-     * Responsibility: Applies an allowed transition to a resource workflow instance.
+     * Responsibility: Coordinates the state-changing workflow after validation and returns the outcome to the caller.
      * @param array<string, mixed> $context
      * @return array<string, mixed>
      */
@@ -131,41 +133,31 @@ final class WorkflowManager
         }
 
         $currentState = (string) ($instanceData['current_state'] ?? $definition->initialState);
-        $transition = $definition->transition($transitionKey, $currentState);
-        if ($transition === null) {
-            throw new RuntimeException(sprintf(
-                'Transition "%s" is not available from state "%s".',
-                $transitionKey,
-                $currentState
-            ));
-        }
-
         $actor = $actor ?? AuthManager::getInstance()->user();
         $record = $record ?? $this->resolveRecord($resourceKey, $recordId);
 
-        $ability = trim((string) ($transition['ability'] ?? ''));
-        if (
-            $ability !== ''
-            && !($context['system'] ?? false)
-            && !PermissionRegistry::getInstance()->userHasResourceAbility($actor, $resourceKey, $ability, $record, $context)
-        ) {
-            throw new RuntimeException(sprintf(
-                'The current actor cannot execute transition "%s" on resource "%s".',
-                $transitionKey,
-                $resourceKey
-            ));
+        $decision = $this->evaluator->evaluate(
+            $definition,
+            $currentState,
+            $transitionKey,
+            $record,
+            $context,
+            $actor,
+            fn (string $ability, mixed $targetRecord, array $transitionContext, ?array $transitionActor): bool =>
+                PermissionRegistry::getInstance()->userHasResourceAbility(
+                    $transitionActor,
+                    $resourceKey,
+                    $ability,
+                    $targetRecord,
+                    $transitionContext
+                )
+            ,
+            $instanceData
+        );
+        if (!$decision->allowed) {
+            throw new RuntimeException($decision->reason);
         }
-
-        $guard = $transition['guard'] ?? null;
-        if (is_callable($guard)) {
-            $guardResult = $guard($record, $instanceData, $context, $actor);
-            if ($guardResult === false) {
-                throw new RuntimeException('Workflow guard blocked the transition.');
-            }
-            if (is_string($guardResult) && trim($guardResult) !== '') {
-                throw new RuntimeException($guardResult);
-            }
-        }
+        $transition = $decision->transition ?? [];
 
         $this->events->dispatch('framework.workflow.transition-requested', [
             'definition_key' => $definition->key,
@@ -223,7 +215,7 @@ final class WorkflowManager
     /**
      * Lists transitions visible to the current actor for a resource.
      *
-     * Responsibility: Lists transitions visible to the current actor for a resource.
+     * Responsibility: Defines the focused behavior owned by this method and keeps side effects limited to its caller contract.
      * @param array<string, mixed>|null $actor
      * @return array<int, array<string, mixed>>
      */
@@ -232,21 +224,37 @@ final class WorkflowManager
         string $resourceKey,
         int $recordId,
         mixed $record = null,
-        ?array $actor = null
+        ?array $actor = null,
+        array $context = []
     ): array {
         $definition = $this->definition($definitionKey);
-        $instance = $this->ensureInstance($definition->key, $resourceKey, $recordId);
+        $instance = $this->ensureInstance($definition->key, $resourceKey, $recordId, $context);
         $currentState = (string) ($instance['current_state'] ?? $definition->initialState);
         $record = $record ?? $this->resolveRecord($resourceKey, $recordId);
         $actor = $actor ?? AuthManager::getInstance()->user();
 
         $available = [];
         foreach ($definition->availableTransitions($currentState) as $transition) {
-            $ability = trim((string) ($transition['ability'] ?? ''));
-            $allowed = $ability === ''
-                ? true
-                : PermissionRegistry::getInstance()->userHasResourceAbility($actor, $resourceKey, $ability, $record);
-            $transition['allowed'] = $allowed;
+            $decision = $this->evaluator->evaluate(
+                $definition,
+                $currentState,
+                (string) ($transition['key'] ?? ''),
+                $record,
+                $context,
+                $actor,
+                fn (string $ability, mixed $targetRecord, array $transitionContext, ?array $transitionActor): bool =>
+                    PermissionRegistry::getInstance()->userHasResourceAbility(
+                        $transitionActor,
+                        $resourceKey,
+                        $ability,
+                        $targetRecord,
+                        $transitionContext
+                    )
+                ,
+                $instance
+            );
+            $transition['allowed'] = $decision->allowed;
+            $transition['reason'] = $decision->reason;
             $available[] = $transition;
         }
 
@@ -256,7 +264,7 @@ final class WorkflowManager
     /**
      * Applies a workflow transition requested by an event envelope.
      *
-     * Responsibility: Applies a workflow transition requested by an event envelope.
+     * Responsibility: Coordinates the state-changing workflow after validation and returns the outcome to the caller.
      * @param array<string, mixed> $eventPayload
      */
     public function transitionFromEvent(EventEnvelope $event, array $eventPayload): ?array
@@ -287,7 +295,7 @@ final class WorkflowManager
     /**
      * Returns a registered workflow definition or fails explicitly.
      *
-     * Responsibility: Returns a registered workflow definition or fails explicitly.
+     * Responsibility: Provides read-only access to normalized state without mutating framework runtime.
      */
     private function definition(string $definitionKey): WorkflowDefinition
     {
@@ -302,7 +310,7 @@ final class WorkflowManager
     /**
      * Resolves the model associated with a workflow resource.
      *
-     * Responsibility: Resolves the model associated with a workflow resource.
+     * Responsibility: Defines the focused behavior owned by this method and keeps side effects limited to its caller contract.
      */
     private function resolveRecord(string $resourceKey, int $recordId): mixed
     {

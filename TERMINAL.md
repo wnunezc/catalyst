@@ -142,6 +142,9 @@ php public/cli.php schedule:run --task=framework.queue.prune-history --force
 - Prefer `help` and per-command `--help` as the authoritative source for options.
 - `migrate:status` may fail from the Windows host when the DB hostname only exists inside WSDD/Docker. That is an environment boundary, not a CLI parser bug.
 - DB-backed `fixtures:auth` actions can hit the same host boundary when the Windows host cannot resolve `WSDD-MySql-Server`; in that case run the same CLI through the WSDD PHP container instead of treating it as a command bug.
+- For Catalyst mounted in WSDD, the local DB-backed CLI pattern is:
+  `docker exec -w /var/www/html/catalyst.dock WSDD-Web-Server-PHP8.4 php public/cli.php reporting:smoke --json`.
+  This keeps the verification outside committed project configuration.
 - Auth-focused runtime smoke should prefer `fixtures:auth` probes over ad-hoc SQL for email verification, password-reset and token-count assertions.
 - `inspect:harness` and `docs:sync-runtime` are the canonical human-facing surfaces for the RM-21/RM-23 runtime matrix; they should be preferred over ad-hoc spreadsheets or duplicated docs.
 - `make:crud` is the canonical admin CRUD scaffold over the current framework stack; it now emits the guarded module, entity, request, migration, bulk/soft-delete flow and audit-ready wiring from `public/cli.php`.

@@ -38,5 +38,52 @@
     "mfa_disabled_hint": "Recomendado configurar",
     "recovery": "Solicitudes",
     "recovery_hint": "Casos abiertos de recuperación"
+  },
+  "surface": {
+    "title": "Dashboard operativo",
+    "eyebrow": "Vista operativa",
+    "badge": "Demo activo",
+    "headline": "Una superficie de dashboard enfocada para aplicaciones complejas.",
+    "lead": "Muestra cómo Catalyst puede presentar métricas, pipelines, módulos y actividad sin acoplar el framework a un dominio de negocio específico.",
+    "period_label": "Periodo actual",
+    "metrics": {
+      "revenue": "Ingresos",
+      "orders": "Órdenes",
+      "fulfillment": "Cumplimiento",
+      "alerts": "Alertas"
+    },
+    "pipeline_title": "Pipeline",
+    "pipeline_badge": "Monitoreado",
+    "pipeline": {
+      "orders": "Órdenes",
+      "billing": "Facturación",
+      "inventory": "Inventario",
+      "support": "Soporte"
+    },
+    "modules_title": "Módulos",
+    "modules": {
+      "sales": {
+        "title": "Ventas",
+        "body": "Resumen de actividad comercial y entrada de órdenes.",
+        "status": "Activo"
+      },
+      "warehouse": {
+        "title": "Almacén",
+        "body": "Indicadores de movimiento de stock y cumplimiento.",
+        "status": "Estable"
+      },
+      "finance": {
+        "title": "Finanzas",
+        "body": "Estado de facturación y visibilidad de ingresos.",
+        "status": "Revisión"
+      }
+    },
+    "activity_title": "Actividad reciente",
+    "activity_badge": "Hoy",
+    "activity": {
+      "invoice": "Lote de facturas generado",
+      "stock": "Umbral de stock revisado",
+      "ticket": "Ticket de soporte escalado"
+    }
   }
 }

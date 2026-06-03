@@ -50,7 +50,7 @@ class MakeModuleCommand extends AbstractCommand
     /**
      * Returns the command name registered in the CLI registry.
      *
-     * Responsibility: Returns the command name registered in the CLI registry.
+     * Responsibility: Provides the stable command identifier consumed by CommandRegistry.
      */
     public function getName(): string
     {
@@ -60,7 +60,7 @@ class MakeModuleCommand extends AbstractCommand
     /**
      * Returns the short help text shown for this command.
      *
-     * Responsibility: Returns the short help text shown for this command.
+     * Responsibility: Keeps command discovery text separate from execution logic.
      */
     public function getDescription(): string
     {
@@ -70,7 +70,7 @@ class MakeModuleCommand extends AbstractCommand
     /**
      * Defines the accepted option schema for this command.
      *
-     * Responsibility: Defines the accepted option schema for this command.
+     * Responsibility: Exposes CLI parser metadata only; command behavior stays inside execute().
      * @return Option[]
      */
     public function getOptions(): array
@@ -89,13 +89,18 @@ class MakeModuleCommand extends AbstractCommand
             new Option(null, 'permission', '', false, 'Optional permission slug to declare in the manifest', true),
             new Option(null, 'settings', '', false, 'Comma-separated settings sections for the manifest', true),
             new Option(null, 'feature-flags', '', false, 'Comma-separated feature flags for the manifest', true),
+            new Option(null, 'preset', 'basic', false, 'Scaffold preset: basic or complex', true),
+            new Option(null, 'capabilities', '', false, 'Comma-separated capabilities to add to the module scaffold', true),
+            new Option(null, 'table', '', false, 'Optional table name for complex module migration', true),
+            new Option(null, 'soft-deletes', '0', false, 'Add deleted_at to generated complex module migration (1/0)', true),
+            new Option(null, 'auditable', '1', false, 'Add audit columns to generated complex module migration (1/0)', true),
         ];
     }
 
     /**
      * Defines the accepted positional parameter schema for this command.
      *
-     * Responsibility: Defines the accepted positional parameter schema for this command.
+     * Responsibility: Exposes stable metadata consumed by the framework registry or CLI parser.
      * @return Parameter[]
      */
     public function getParameters(): array
@@ -115,7 +120,7 @@ class MakeModuleCommand extends AbstractCommand
     /**
      * Runs the command workflow using parsed CLI arguments.
      *
-     * Responsibility: Runs the command workflow using parsed CLI arguments.
+     * Responsibility: Coordinates the smoke scenario and returns a process exit code without hidden side effects.
      */
     public function execute(ArgumentBag $args): int
     {
@@ -130,10 +135,15 @@ class MakeModuleCommand extends AbstractCommand
                 'permission_slug' => (string) ($args->getOptionValue('permission') ?? ''),
                 'settings' => (string) ($args->getOptionValue('settings') ?? ''),
                 'feature_flags' => (string) ($args->getOptionValue('feature-flags') ?? ''),
+                'preset' => (string) ($args->getOptionValue('preset') ?? 'basic'),
+                'capabilities' => (string) ($args->getOptionValue('capabilities') ?? ''),
+                'table' => (string) ($args->getOptionValue('table') ?? ''),
+                'soft_deletes' => in_array((string) ($args->getOptionValue('soft-deletes') ?? '0'), ['1', 'true', 'yes'], true),
+                'auditable' => in_array((string) ($args->getOptionValue('auditable') ?? '1'), ['1', 'true', 'yes'], true),
             ]);
         } catch (InvalidArgumentException|RuntimeException $e) {
             $this->error($e->getMessage());
-            $this->line('Usage: php cli.php make:module <Name> [--space=App] [--surface=public]');
+            $this->line('Usage: php cli.php make:module <Name> [--space=App] [--surface=public] [--preset=complex]');
 
             return 1;
         }
@@ -144,6 +154,8 @@ class MakeModuleCommand extends AbstractCommand
         $this->line('  Namespace  : ' . $result['namespace_root']);
         $this->line('  Route      : /' . $result['route_uri']);
         $this->line('  View key   : ' . $result['view_namespace']);
+        $this->line('  Preset     : ' . $result['preset']);
+        $this->line('  Capabilities: ' . implode(', ', (array) ($result['capabilities'] ?? [])));
         $this->line('  Manifest   : ' . $result['base_dir'] . DS . 'module.php');
         $this->line('');
 

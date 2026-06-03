@@ -40,6 +40,7 @@ use Catalyst\Repository\Settings\Controllers\DbConfigSaveController;
 use Catalyst\Repository\Settings\Controllers\DkimController;
 use Catalyst\Repository\Settings\Controllers\DevToolsConfigSaveController;
 use Catalyst\Repository\Settings\Controllers\FtpConfigController;
+use Catalyst\Repository\Settings\Controllers\FeaturesConfigSaveController;
 use Catalyst\Repository\Settings\Controllers\HealthController;
 use Catalyst\Repository\Settings\Controllers\LoggingConfigSaveController;
 use Catalyst\Repository\Settings\Controllers\MailConfigSaveController;
@@ -87,6 +88,8 @@ $router->post('/configuration/environment-setup/cache', [CacheConfigSaveControll
 $router->post('/configuration/environment-setup/logging', [LoggingConfigSaveController::class, 'saveLogging'])->middleware($guard)->throttle('setup_mutation');
 
 $router->post('/configuration/environment-setup/security', [SecurityConfigSaveController::class, 'saveSecurity'])->middleware($guard)->throttle('setup_mutation');
+
+$router->post('/configuration/environment-setup/features', [FeaturesConfigSaveController::class, 'saveFeatures'])->middleware($guard)->throttle('setup_mutation');
 
 $router->post('/configuration/environment-setup/websocket', [WebSocketConfigSaveController::class, 'saveWebSocket'])->middleware($guard)->throttle('setup_mutation');
 

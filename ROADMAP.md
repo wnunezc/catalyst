@@ -28,6 +28,17 @@ application inside `Repository/App/`.
   guidance.
 - Quality gate and runtime documentation generation remain the pre-release
   validation baseline.
+- Framework/app boundary linting protects derived apps from placing application
+  modules in framework-owned folders.
+- Public registration can be configured without patching auth controllers.
+- Permissions are strengthened independently from strong tenancy.
+- Reusable contracts are available for safe reverse cascade deletes, generic
+  references, transactional sequences, attachment policies, QR verification
+  tokens, workflow approvals, calendar providers and report providers.
+- `make:module --preset=complex` can start a large `Repository/App` module with
+  request, policy, service, repository, provider and migration extension points.
+- Large product specs can be mapped into Catalyst modules through
+  `docs/spec-to-catalyst-guide.md`.
 
 ## Required Before Tagging 0.1.0-rc.1
 
@@ -38,7 +49,9 @@ application inside `Repository/App/`.
 4. Confirm setup wizard can configure app URL, database, mail, security and DKIM
    values without maintainer-local assumptions.
 5. Produce release notes with known constraints and verification commands.
-6. Publish a tag matching `catalyst.json`.
+6. Produce release artifacts and checksums from a reviewed tree.
+7. Publish a pre-release tag matching `catalyst.json`.
+8. Verify the public GitHub Release, assets and checksum downloads.
 
 ## Expected 0.1.0 Feedback
 
@@ -59,3 +72,9 @@ application inside `Repository/App/`.
   artifacts.
 - Formal external support policy beyond the current proprietary project
   contract.
+- Optional XLSX exporter using `phpoffice/phpspreadsheet`, pending explicit
+  dependency approval.
+- Optional advanced HTML-to-PDF exporter using `dompdf/dompdf`, pending explicit
+  dependency approval.
+- FullCalendar asset distribution and Google Calendar sync drivers, pending
+  asset/dependency/provider decisions.

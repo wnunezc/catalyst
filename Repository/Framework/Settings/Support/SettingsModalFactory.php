@@ -41,7 +41,7 @@ final class SettingsModalFactory
     /**
      * Initializes the Settings Modal Factory instance.
      *
-     * Responsibility: Initializes the Settings Modal Factory instance.
+     * Responsibility: Binds required collaborators or immutable state without executing the main workflow.
      */
     public function __construct(
         private readonly SettingsDisplayFactory $display
@@ -51,7 +51,7 @@ final class SettingsModalFactory
     /**
      * Builds editable modals for every supported configuration section.
      *
-     * Responsibility: Builds editable modals for every supported configuration section.
+     * Responsibility: Composes derived framework data from validated inputs while keeping persistence and rendering separate.
      * @return array<int, array<string, mixed>>
      */
     public function build(SettingsPageViewContext $context): array
@@ -230,6 +230,19 @@ final class SettingsModalFactory
                 [
                     $this->display->inputField('security', 'bcrypt_rounds', $context->t('settings.labels.bcrypt_rounds_range'), $security['bcrypt_rounds'] ?? 12, 'number', $context->t('settings.hints.bcrypt_rounds')),
                     $this->display->checkboxField('mfa_enabled', $context->t('settings.labels.enable_mfa_framework_wide'), (bool) ($security['mfa_enabled'] ?? false)),
+                ]
+            ),
+            $this->display->modal(
+                'modal-features',
+                'fa-solid fa-sliders',
+                $context->t('settings.modal_titles.features'),
+                'features',
+                [
+                    $this->display->alertField($context->t('settings.alerts.features_setup')),
+                    $this->display->checkboxField('auth_registration_enabled', $context->t('settings.labels.allow_public_registration'), $context->featureEnabled('auth.registration_enabled', true)),
+                    $this->display->checkboxField('mfa', $context->t('settings.labels.enable_mfa_routes'), $context->featureEnabled('mfa', true)),
+                    $this->display->checkboxField('social_auth', $context->t('settings.labels.enable_social_auth'), $context->featureEnabled('social_auth', true)),
+                    $this->display->checkboxField('notifications', $context->t('settings.labels.enable_notifications'), $context->featureEnabled('notifications', true)),
                 ]
             ),
             $this->display->modal(

@@ -84,6 +84,11 @@ final class SettingsPageViewContext
     /**
      * @var array<string, mixed>
      */
+    private array $features;
+
+    /**
+     * @var array<string, mixed>
+     */
     private array $websocket;
 
     /**
@@ -99,7 +104,7 @@ final class SettingsPageViewContext
     /**
      * Initializes the Settings Page View Context instance.
      *
-     * Responsibility: Initializes the Settings Page View Context instance.
+     * Responsibility: Binds required collaborators or immutable state without executing the main workflow.
      */
     public function __construct(array $scope)
     {
@@ -111,6 +116,7 @@ final class SettingsPageViewContext
         $this->cache = (array) ($scope['cache'] ?? []);
         $this->logging = (array) ($scope['logging'] ?? []);
         $this->security = (array) ($scope['security'] ?? []);
+        $this->features = (array) ($scope['features'] ?? []);
         $this->websocket = (array) ($scope['websocket'] ?? []);
         $this->devtools = (array) ($scope['devtools'] ?? []);
         $this->cors = (array) ($scope['cors'] ?? []);
@@ -119,7 +125,7 @@ final class SettingsPageViewContext
     /**
      * Translates a settings label with optional replacements.
      *
-     * Responsibility: Translates a settings label with optional replacements.
+     * Responsibility: Defines the focused behavior owned by this method and keeps side effects limited to its caller contract.
      */
     public function t(string $key, array $replace = []): string
     {
@@ -129,7 +135,7 @@ final class SettingsPageViewContext
     /**
      * Returns application settings.
      *
-     * Responsibility: Returns application settings.
+     * Responsibility: Defines the focused behavior owned by this method and keeps side effects limited to its caller contract.
      * @return array<string, mixed>
      */
     public function app(): array
@@ -140,7 +146,7 @@ final class SettingsPageViewContext
     /**
      * Returns database settings.
      *
-     * Responsibility: Returns database settings.
+     * Responsibility: Defines the focused behavior owned by this method and keeps side effects limited to its caller contract.
      * @return array<string, mixed>
      */
     public function db(): array
@@ -151,7 +157,7 @@ final class SettingsPageViewContext
     /**
      * Returns mail settings.
      *
-     * Responsibility: Returns mail settings.
+     * Responsibility: Defines the focused behavior owned by this method and keeps side effects limited to its caller contract.
      * @return array<string, mixed>
      */
     public function mail(): array
@@ -162,7 +168,7 @@ final class SettingsPageViewContext
     /**
      * Returns transfer settings.
      *
-     * Responsibility: Returns transfer settings.
+     * Responsibility: Defines the focused behavior owned by this method and keeps side effects limited to its caller contract.
      * @return array<string, mixed>
      */
     public function ftp(): array
@@ -173,7 +179,7 @@ final class SettingsPageViewContext
     /**
      * Returns session settings.
      *
-     * Responsibility: Returns session settings.
+     * Responsibility: Defines the focused behavior owned by this method and keeps side effects limited to its caller contract.
      * @return array<string, mixed>
      */
     public function session(): array
@@ -184,7 +190,7 @@ final class SettingsPageViewContext
     /**
      * Returns cache settings.
      *
-     * Responsibility: Returns cache settings.
+     * Responsibility: Defines the focused behavior owned by this method and keeps side effects limited to its caller contract.
      * @return array<string, mixed>
      */
     public function cache(): array
@@ -195,7 +201,7 @@ final class SettingsPageViewContext
     /**
      * Returns logging settings.
      *
-     * Responsibility: Returns logging settings.
+     * Responsibility: Defines the focused behavior owned by this method and keeps side effects limited to its caller contract.
      * @return array<string, mixed>
      */
     public function logging(): array
@@ -206,7 +212,7 @@ final class SettingsPageViewContext
     /**
      * Returns security settings.
      *
-     * Responsibility: Returns security settings.
+     * Responsibility: Defines the focused behavior owned by this method and keeps side effects limited to its caller contract.
      * @return array<string, mixed>
      */
     public function security(): array
@@ -215,9 +221,36 @@ final class SettingsPageViewContext
     }
 
     /**
+     * Returns feature switch settings.
+     *
+     * Responsibility: Defines the focused behavior owned by this method and keeps side effects limited to its caller contract.
+     * @return array<string, mixed>
+     */
+    public function features(): array
+    {
+        return $this->features;
+    }
+
+    /**
+     * Returns whether a feature switch is enabled.
+     *
+     * Responsibility: Evaluates an authorization, feature or matching predicate without changing application state.
+     */
+    public function featureEnabled(string $flagKey, bool $default = false): bool
+    {
+        $definition = $this->features[$flagKey] ?? null;
+
+        if (!is_array($definition)) {
+            return $default;
+        }
+
+        return (bool) ($definition['enabled'] ?? $default);
+    }
+
+    /**
      * Returns WebSocket settings.
      *
-     * Responsibility: Returns WebSocket settings.
+     * Responsibility: Defines the focused behavior owned by this method and keeps side effects limited to its caller contract.
      * @return array<string, mixed>
      */
     public function websocket(): array
@@ -228,7 +261,7 @@ final class SettingsPageViewContext
     /**
      * Returns developer-tool compatibility settings.
      *
-     * Responsibility: Returns developer-tool compatibility settings.
+     * Responsibility: Defines the focused behavior owned by this method and keeps side effects limited to its caller contract.
      * @return array<string, mixed>
      */
     public function devtools(): array
@@ -239,7 +272,7 @@ final class SettingsPageViewContext
     /**
      * Returns CORS settings.
      *
-     * Responsibility: Returns CORS settings.
+     * Responsibility: Defines the focused behavior owned by this method and keeps side effects limited to its caller contract.
      * @return array<string, mixed>
      */
     public function cors(): array
@@ -250,7 +283,7 @@ final class SettingsPageViewContext
     /**
      * Determines whether development-only entry points may be selected.
      *
-     * Responsibility: Determines whether development-only entry points may be selected.
+     * Responsibility: Evaluates an authorization, feature or matching predicate without changing application state.
      */
     public function isDevelopmentEntryEnv(): bool
     {
@@ -260,7 +293,7 @@ final class SettingsPageViewContext
     /**
      * Determines whether production-only runtime options may be configured.
      *
-     * Responsibility: Determines whether production-only runtime options may be configured.
+     * Responsibility: Evaluates an authorization, feature or matching predicate without changing application state.
      */
     public function isProductionRuntimeEnv(): bool
     {
@@ -270,7 +303,7 @@ final class SettingsPageViewContext
     /**
      * Returns translated environment options.
      *
-     * Responsibility: Returns translated environment options.
+     * Responsibility: Composes derived framework data from validated inputs while keeping persistence and rendering separate.
      * @return array<string, string>
      */
     public function envMap(): array
@@ -286,7 +319,7 @@ final class SettingsPageViewContext
     /**
      * Returns available locale labels.
      *
-     * Responsibility: Returns available locale labels.
+     * Responsibility: Composes derived framework data from validated inputs while keeping persistence and rendering separate.
      * @return array<string, string>
      */
     public function langMap(): array
@@ -297,7 +330,7 @@ final class SettingsPageViewContext
     /**
      * Returns mail encryption options.
      *
-     * Responsibility: Returns mail encryption options.
+     * Responsibility: Composes derived framework data from validated inputs while keeping persistence and rendering separate.
      * @return array<string, string>
      */
     public function encMap(): array
@@ -313,7 +346,7 @@ final class SettingsPageViewContext
     /**
      * Returns session SameSite options.
      *
-     * Responsibility: Returns session SameSite options.
+     * Responsibility: Composes derived framework data from validated inputs while keeping persistence and rendering separate.
      * @return array<string, string>
      */
     public function siteMap(): array
@@ -328,7 +361,7 @@ final class SettingsPageViewContext
     /**
      * Returns cache driver options.
      *
-     * Responsibility: Returns cache driver options.
+     * Responsibility: Composes derived framework data from validated inputs while keeping persistence and rendering separate.
      * @return array<string, string>
      */
     public function drvMap(): array
@@ -343,7 +376,7 @@ final class SettingsPageViewContext
     /**
      * Returns logging channel options.
      *
-     * Responsibility: Returns logging channel options.
+     * Responsibility: Composes derived framework data from validated inputs while keeping persistence and rendering separate.
      * @return array<string, string>
      */
     public function chanMap(): array
@@ -358,7 +391,7 @@ final class SettingsPageViewContext
     /**
      * Returns logging severity options.
      *
-     * Responsibility: Returns logging severity options.
+     * Responsibility: Composes derived framework data from validated inputs while keeping persistence and rendering separate.
      * @return array<string, string>
      */
     public function lvlMap(): array
@@ -378,7 +411,7 @@ final class SettingsPageViewContext
     /**
      * Returns allowed primary application entry points.
      *
-     * Responsibility: Returns allowed primary application entry points.
+     * Responsibility: Composes derived framework data from validated inputs while keeping persistence and rendering separate.
      * @return array<string, string>
      */
     public function entryMap(): array
@@ -389,7 +422,7 @@ final class SettingsPageViewContext
     /**
      * Returns allowed secondary application entry points.
      *
-     * Responsibility: Returns allowed secondary application entry points.
+     * Responsibility: Composes derived framework data from validated inputs while keeping persistence and rendering separate.
      * @return array<string, string>
      */
     public function entrySecondaryMap(): array
@@ -401,7 +434,7 @@ final class SettingsPageViewContext
     /**
      * Returns the transfer-configuration notice.
      *
-     * Responsibility: Returns the transfer-configuration notice.
+     * Responsibility: Composes derived framework data from validated inputs while keeping persistence and rendering separate.
      */
     public function ftpNotice(): string
     {
@@ -411,7 +444,7 @@ final class SettingsPageViewContext
     /**
      * Returns the cache notice appropriate for the runtime environment.
      *
-     * Responsibility: Returns the cache notice appropriate for the runtime environment.
+     * Responsibility: Composes derived framework data from validated inputs while keeping persistence and rendering separate.
      */
     public function cacheNotice(): string
     {
@@ -423,7 +456,7 @@ final class SettingsPageViewContext
     /**
      * Returns the developer-tools compatibility notice.
      *
-     * Responsibility: Returns the developer-tools compatibility notice.
+     * Responsibility: Composes derived framework data from validated inputs while keeping persistence and rendering separate.
      */
     public function devtoolsNotice(): string
     {
@@ -433,7 +466,7 @@ final class SettingsPageViewContext
     /**
      * Returns a masked application-key preview.
      *
-     * Responsibility: Returns a masked application-key preview.
+     * Responsibility: Composes derived framework data from validated inputs while keeping persistence and rendering separate.
      */
     public function appKeyPreview(): string
     {
@@ -445,7 +478,7 @@ final class SettingsPageViewContext
     /**
      * Returns configured CORS origins as a comma-separated string.
      *
-     * Responsibility: Returns configured CORS origins as a comma-separated string.
+     * Responsibility: Composes derived framework data from validated inputs while keeping persistence and rendering separate.
      */
     public function corsOrigins(): string
     {

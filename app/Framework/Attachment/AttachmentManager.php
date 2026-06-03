@@ -53,23 +53,25 @@ final class AttachmentManager
     private AttachmentRepository $repository;
     private MediaManager $media;
     private DocumentTemplateManager $documents;
+    private AttachmentPolicyValidator $policyValidator;
 
     /**
      * Initializes the Attachment Manager instance.
      *
-     * Responsibility: Initializes the Attachment Manager instance.
+     * Responsibility: Binds required collaborators or immutable state without executing the main workflow.
      */
     protected function __construct()
     {
         $this->repository = AttachmentRepository::getInstance();
         $this->media = MediaManager::getInstance();
         $this->documents = DocumentTemplateManager::getInstance();
+        $this->policyValidator = new AttachmentPolicyValidator();
     }
 
     /**
      * Lists attachments for a resource record, optionally including detached rows.
      *
-     * Responsibility: Lists attachments for a resource record, optionally including detached rows.
+     * Responsibility: Defines the focused behavior owned by this method and keeps side effects limited to its caller contract.
      * @return array<int, array<string, mixed>>
      */
     public function listForResource(string $resourceKey, int $recordId, bool $includeDetached = false): array
@@ -80,7 +82,7 @@ final class AttachmentManager
     /**
      * Creates an attachment row that links a media library item to a resource record.
      *
-     * Responsibility: Creates an attachment row that links a media library item to a resource record.
+     * Responsibility: Coordinates the state-changing workflow after validation and returns the outcome to the caller.
      */
     public function attachMedia(
         string $resourceKey,
@@ -88,16 +90,20 @@ final class AttachmentManager
         MediaItem $mediaItem,
         string $purpose = 'attachment',
         string $attachmentType = 'file',
-        bool $isPrimary = false
+        bool $isPrimary = false,
+        ?AttachmentPolicy $policy = null
     ): ResourceAttachment {
         $this->assertResourceTarget($resourceKey, $recordId);
+        $purpose = $this->normalizePurpose($purpose);
+        $attachmentType = $this->normalizeType($attachmentType);
+        $this->assertMediaPolicy($mediaItem, $policy, $purpose, $attachmentType);
 
         return ResourceAttachment::create([
             'resource_key' => $resourceKey,
             'record_id' => $recordId,
             'media_item_id' => (int) $mediaItem->getKey(),
-            'purpose' => $this->normalizePurpose($purpose),
-            'attachment_type' => $this->normalizeType($attachmentType),
+            'purpose' => $purpose,
+            'attachment_type' => $attachmentType,
             'is_primary' => $isPrimary ? 1 : 0,
         ]);
     }
@@ -105,7 +111,7 @@ final class AttachmentManager
     /**
      * Creates an attachment row that links a document artifact to a resource record.
      *
-     * Responsibility: Creates an attachment row that links a document artifact to a resource record.
+     * Responsibility: Coordinates the state-changing workflow after validation and returns the outcome to the caller.
      */
     public function attachArtifact(
         string $resourceKey,
@@ -113,16 +119,20 @@ final class AttachmentManager
         DocumentArtifact $artifact,
         string $purpose = 'attachment',
         string $attachmentType = 'artifact',
-        bool $isPrimary = false
+        bool $isPrimary = false,
+        ?AttachmentPolicy $policy = null
     ): ResourceAttachment {
         $this->assertResourceTarget($resourceKey, $recordId);
+        $purpose = $this->normalizePurpose($purpose);
+        $attachmentType = $this->normalizeType($attachmentType);
+        $this->assertArtifactPolicy($artifact, $policy, $purpose, $attachmentType);
 
         return ResourceAttachment::create([
             'resource_key' => $resourceKey,
             'record_id' => $recordId,
             'document_artifact_id' => (int) $artifact->getKey(),
-            'purpose' => $this->normalizePurpose($purpose),
-            'attachment_type' => $this->normalizeType($attachmentType),
+            'purpose' => $purpose,
+            'attachment_type' => $attachmentType,
             'is_primary' => $isPrimary ? 1 : 0,
         ]);
     }
@@ -130,14 +140,15 @@ final class AttachmentManager
     /**
      * Updates the media asset behind an attachment and optionally changes attachment metadata.
      *
-     * Responsibility: Updates the media asset behind an attachment and optionally changes attachment metadata.
+     * Responsibility: Coordinates the state-changing workflow after validation and returns the outcome to the caller.
      * @param array<string, mixed> $payload
      */
     public function replaceMediaAttachment(
         ResourceAttachment $attachment,
         array $payload,
         ?string $purpose = null,
-        ?string $attachmentType = null
+        ?string $attachmentType = null,
+        ?AttachmentPolicy $policy = null
     ): ResourceAttachment {
         $snapshot = $attachment->toArray();
         $mediaItemId = (int) ($snapshot['media_item_id'] ?? 0);
@@ -150,6 +161,10 @@ final class AttachmentManager
         if ($mediaItem === null) {
             throw new RuntimeException('Linked media asset no longer exists.');
         }
+
+        $nextPurpose = $purpose !== null ? $this->normalizePurpose($purpose) : (string) ($snapshot['purpose'] ?? 'attachment');
+        $nextAttachmentType = $attachmentType !== null ? $this->normalizeType($attachmentType) : (string) ($snapshot['attachment_type'] ?? 'file');
+        $this->assertMediaPayloadPolicy($mediaItem, $payload, $policy, $nextPurpose, $nextAttachmentType);
 
         if (array_key_exists('generated_contents', $payload)) {
             $this->media->replaceGenerated(
@@ -167,6 +182,16 @@ final class AttachmentManager
             $this->media->update($mediaItem, $payload);
         }
 
+        $updatedMediaItem = MediaItem::find($mediaItemId);
+        if ($updatedMediaItem instanceof MediaItem) {
+            $this->assertMediaPolicy(
+                $updatedMediaItem,
+                $policy,
+                $nextPurpose,
+                $nextAttachmentType
+            );
+        }
+
         if ($purpose !== null || $attachmentType !== null) {
             $attachment->fill([
                 'purpose' => $purpose !== null ? $this->normalizePurpose($purpose) : ($snapshot['purpose'] ?? 'attachment'),
@@ -181,7 +206,7 @@ final class AttachmentManager
     /**
      * Marks an attachment as detached and optionally deletes unreferenced linked assets.
      *
-     * Responsibility: Marks an attachment as detached and optionally deletes unreferenced linked assets.
+     * Responsibility: Coordinates the state-changing workflow after validation and returns the outcome to the caller.
      */
     public function detach(ResourceAttachment $attachment, bool $deleteAsset = false): void
     {
@@ -222,7 +247,7 @@ final class AttachmentManager
     /**
      * Rejects empty resource keys and invalid record identifiers before attachment writes.
      *
-     * Responsibility: Rejects empty resource keys and invalid record identifiers before attachment writes.
+     * Responsibility: Enforces framework invariants before data crosses into persistence, execution or rendering boundaries.
      */
     private function assertResourceTarget(string $resourceKey, int $recordId): void
     {
@@ -232,9 +257,82 @@ final class AttachmentManager
     }
 
     /**
+     * Applies a policy to a media attachment before linking it.
+     *
+     * Responsibility: Enforces framework invariants before data crosses into persistence, execution or rendering boundaries.
+     */
+    private function assertMediaPolicy(MediaItem $mediaItem, ?AttachmentPolicy $policy, string $purpose, string $attachmentType): void
+    {
+        if ($policy === null) {
+            return;
+        }
+
+        $errors = $this->policyValidator->validateMedia($mediaItem->toArray(), $policy, $purpose, $attachmentType);
+        if ($errors !== []) {
+            throw new RuntimeException('Attachment policy rejected media: ' . implode(' ', $errors));
+        }
+    }
+
+    /**
+     * Applies a policy to replacement media metadata before storage mutation when possible.
+     *
+     * Responsibility: Enforces framework invariants before data crosses into persistence, execution or rendering boundaries.
+     * @param array<string, mixed> $payload
+     */
+    private function assertMediaPayloadPolicy(
+        MediaItem $mediaItem,
+        array $payload,
+        ?AttachmentPolicy $policy,
+        string $purpose,
+        string $attachmentType
+    ): void {
+        if ($policy === null) {
+            return;
+        }
+
+        $snapshot = $mediaItem->toArray();
+        $file = $payload['asset_file'] ?? null;
+        if ($file instanceof \Catalyst\Framework\Http\UploadedFile) {
+            $snapshot['mime_type'] = $file->getMimeType();
+            $snapshot['extension'] = $file->getExtension();
+            $snapshot['size_bytes'] = $file->getSize();
+            $snapshot['disk'] = trim((string) ($payload['disk'] ?? ($snapshot['disk'] ?? 'local'))) ?: 'local';
+            $snapshot['public_url'] = $snapshot['disk'] === 'runtime' ? '' : '/media-library/pending';
+        } elseif (array_key_exists('generated_contents', $payload)) {
+            $snapshot['mime_type'] = (string) ($payload['mime_type'] ?? ($snapshot['mime_type'] ?? 'text/plain'));
+            $snapshot['extension'] = (string) ($payload['extension'] ?? ($snapshot['extension'] ?? 'txt'));
+            $snapshot['size_bytes'] = strlen((string) ($payload['generated_contents'] ?? ''));
+            $snapshot['disk'] = trim((string) ($payload['disk'] ?? ($snapshot['disk'] ?? 'local'))) ?: 'local';
+            $snapshot['public_url'] = $snapshot['disk'] === 'runtime' ? '' : '/generated-media/pending';
+        }
+
+        $errors = $this->policyValidator->validateMedia($snapshot, $policy, $purpose, $attachmentType);
+        if ($errors !== []) {
+            throw new RuntimeException('Attachment policy rejected media: ' . implode(' ', $errors));
+        }
+    }
+
+    /**
+     * Applies a policy to a document artifact before linking it.
+     *
+     * Responsibility: Enforces framework invariants before data crosses into persistence, execution or rendering boundaries.
+     */
+    private function assertArtifactPolicy(DocumentArtifact $artifact, ?AttachmentPolicy $policy, string $purpose, string $attachmentType): void
+    {
+        if ($policy === null) {
+            return;
+        }
+
+        $errors = $this->policyValidator->validateArtifact($artifact->toArray(), $policy, $purpose, $attachmentType);
+        if ($errors !== []) {
+            throw new RuntimeException('Attachment policy rejected artifact: ' . implode(' ', $errors));
+        }
+    }
+
+    /**
      * Trims and bounds the attachment purpose with a default fallback.
      *
-     * Responsibility: Trims and bounds the attachment purpose with a default fallback.
+     * Responsibility: Converts caller or catalog input into the canonical shape required by downstream services.
      */
     private function normalizePurpose(string $value): string
     {
@@ -246,7 +344,7 @@ final class AttachmentManager
     /**
      * Trims and bounds the attachment type with a default fallback.
      *
-     * Responsibility: Trims and bounds the attachment type with a default fallback.
+     * Responsibility: Converts caller or catalog input into the canonical shape required by downstream services.
      */
     private function normalizeType(string $value): string
     {

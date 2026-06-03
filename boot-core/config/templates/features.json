@@ -6,6 +6,12 @@
             "enabled": true,
             "scope": "capability"
         },
+        "auth.registration_enabled": {
+            "label": "Public registration",
+            "description": "Enable public self-service account registration routes and login links.",
+            "enabled": true,
+            "scope": "auth"
+        },
         "module.framework.apiplatform": {
             "label": "API Platform module",
             "description": "Load the versioned API admin and bearer-token runtime surfaces.",

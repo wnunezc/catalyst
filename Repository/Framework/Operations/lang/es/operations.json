@@ -119,7 +119,9 @@
       "flags": "Banderas",
       "plugins": "Plugins",
       "runs": "Ejecuciones",
-      "locales": "Idiomas"
+      "locales": "Idiomas",
+      "deployments": "Despliegues",
+      "tenancy": "Tenancy"
     },
     "boundaries": {
       "title": "Límites canónicos",
@@ -258,6 +260,10 @@
         "mfa": {
           "label": "MFA",
           "description": "Habilita las superficies de setup y challenge MFA para autenticación de sesión."
+        },
+        "auth_registration_enabled": {
+          "label": "Registro público",
+          "description": "Habilita rutas de registro público autogestionado y enlaces de registro en login."
         },
         "notifications": {
           "label": "Notificaciones",

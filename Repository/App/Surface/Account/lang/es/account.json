@@ -61,6 +61,22 @@
     "title": "Actividad reciente",
     "lead": "Lista eventos de recuperación y seguridad relacionados con tu cuenta."
   },
+  "recovery": {
+    "eyebrow": "Opciones de recuperación",
+    "title": "Recuperación de cuenta",
+    "lead": "Elige el flujo de recuperación que corresponde al problema de acceso de la cuenta.",
+    "password_title": "Recuperación de contraseña",
+    "password_body": "Usa el flujo estándar de cambio de contraseña cuando todavía tienes acceso al correo de la cuenta.",
+    "mfa_title": "Recuperación MFA",
+    "mfa_body": "Solicita un enlace seguro de recuperación cuando conoces la contraseña, pero no tienes disponible el segundo factor.",
+    "support_title": "Soporte asistido",
+    "support_body": "Crea un caso revisado cuando perdiste acceso al correo o sospechas acceso no autorizado."
+  },
+  "security": {
+    "eyebrow": "Protección de cuenta",
+    "title": "Seguridad",
+    "lead": "Revisa las superficies de seguridad de cuenta sin mezclarlas con la configuración administrativa."
+  },
   "recovery_public": {
     "eyebrow": "Recuperación segura",
     "start_title": "¿Necesitas recuperar tu cuenta?",

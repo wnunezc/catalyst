@@ -40,6 +40,7 @@ return [
         ],
         'api' => [
             '/api/v1/catalog',
+            '/api/v1/calendar/events',
             '/api/v1/workflows',
             '/api/v1/workflows/{id}/transition',
             '/api/v1/versions/{resourceKey}/{recordId}',
@@ -49,6 +50,7 @@ return [
         'prefixes' => [
             '/api-platform',
             '/api/v1/catalog',
+            '/api/v1/calendar',
             '/api/v1/workflows',
             '/api/v1/versions',
         ],
@@ -62,7 +64,7 @@ return [
             ],
         ],
         [
-            'patterns' => ['/api/v1/catalog', '/api/v1/workflows', '/api/v1/versions'],
+            'patterns' => ['/api/v1/catalog', '/api/v1/calendar', '/api/v1/workflows', '/api/v1/versions'],
             'middleware_all' => [
                 ApiTokenMiddleware::class,
             ],

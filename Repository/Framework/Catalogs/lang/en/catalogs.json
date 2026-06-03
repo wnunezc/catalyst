@@ -155,6 +155,7 @@
       "key": "Key",
       "workflow": "Workflow",
       "items": "Items",
+      "enabled": "Enabled",
       "timeline": "Timeline"
     },
     "workflow": {
@@ -177,6 +178,7 @@
     "items": {
       "title": "Catalog items",
       "description": "Governed options with temporal validity, availability and auxiliary metadata.",
+      "create": "Create item",
       "add_item": "Add item",
       "columns": {
         "item": "Item",

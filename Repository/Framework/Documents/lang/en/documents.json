@@ -132,6 +132,9 @@
       "format": "Format",
       "slug": "Slug"
     },
+    "common": {
+      "system": "system"
+    },
     "workflow": {
       "title": "Workflow actions",
       "description": "Real inspection and operation of the reusable workflow adopted by this template.",

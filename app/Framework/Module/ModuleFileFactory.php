@@ -46,7 +46,7 @@ final class ModuleFileFactory
     /**
      * Initializes the factory with scaffold and manifest rendering support.
      *
-     * Responsibility: Initializes the factory with scaffold and manifest rendering support.
+     * Responsibility: Binds required collaborators or immutable state without executing the main workflow.
      */
     public function __construct(
         private readonly ScaffoldManager $manager,
@@ -59,7 +59,7 @@ final class ModuleFileFactory
     /**
      * Builds every file definition required by a module blueprint.
      *
-     * Responsibility: Builds every file definition required by a module blueprint.
+     * Responsibility: Composes derived framework data from validated inputs while keeping persistence and rendering separate.
      * @param array<string, mixed> $blueprint
      * @return array<int, array<string, string>>
      */
@@ -77,7 +77,7 @@ final class ModuleFileFactory
         $layout = $blueprint['layout'] ?? null;
         $manifest = (array) ($blueprint['manifest'] ?? []);
 
-        return [
+        $files = [
             [
                 'path' => $baseDir . DS . 'Controllers' . DS . $controllerName . '.php',
                 'contents' => $this->manager->renderStub('module-controller.php.stub', [
@@ -142,10 +142,146 @@ final class ModuleFileFactory
                 'contents' => $this->manifestBuilder->render($manifest),
             ],
         ];
+
+        return array_merge($files, $this->buildCapabilityFiles($blueprint));
+    }
+
+    /**
+     * Builds optional files for complex app module capabilities.
+     *
+     * Responsibility: Composes derived framework data from validated inputs while keeping persistence and rendering separate.
+     * @param array<string, mixed> $blueprint
+     * @return array<int, array<string, string>>
+     */
+    private function buildCapabilityFiles(array $blueprint): array
+    {
+        $capabilities = (array) ($blueprint['capabilities'] ?? []);
+        if ($capabilities === []) {
+            return [];
+        }
+
+        $baseDir = (string) ($blueprint['base_dir'] ?? '');
+        $namespaceRoot = (string) ($blueprint['namespace_root'] ?? '');
+        $module = (string) ($blueprint['module'] ?? '');
+        $routeUri = (string) ($blueprint['route_uri'] ?? '');
+        $resourceKey = $routeUri;
+        $files = [];
+
+        if (in_array('request', $capabilities, true)) {
+            $files[] = [
+                'path' => $baseDir . DS . 'Requests' . DS . (string) ($blueprint['request_class'] ?? $module . 'IndexRequest') . '.php',
+                'contents' => $this->manager->renderStub('module-request.php.stub', [
+                    'NamespaceRoot' => $namespaceRoot,
+                    'RequestClass' => (string) ($blueprint['request_class'] ?? $module . 'IndexRequest'),
+                    'ResourceKey' => $resourceKey,
+                ]),
+            ];
+        }
+
+        if (in_array('policy', $capabilities, true)) {
+            $files[] = [
+                'path' => $baseDir . DS . 'Policies' . DS . (string) ($blueprint['policy_class'] ?? $module . 'Policy') . '.php',
+                'contents' => $this->manager->renderStub('module-policy.php.stub', [
+                    'NamespaceRoot' => $namespaceRoot,
+                    'PolicyClass' => (string) ($blueprint['policy_class'] ?? $module . 'Policy'),
+                ]),
+            ];
+        }
+
+        if (in_array('repository', $capabilities, true)) {
+            $files[] = [
+                'path' => $baseDir . DS . 'Repositories' . DS . (string) ($blueprint['repository_class'] ?? $module . 'Repository') . '.php',
+                'contents' => $this->manager->renderStub('module-repository.php.stub', [
+                    'NamespaceRoot' => $namespaceRoot,
+                    'RepositoryClass' => (string) ($blueprint['repository_class'] ?? $module . 'Repository'),
+                    'ResourceKey' => $resourceKey,
+                ]),
+            ];
+        }
+
+        if (in_array('service', $capabilities, true)) {
+            $files[] = [
+                'path' => $baseDir . DS . 'Services' . DS . (string) ($blueprint['service_class'] ?? $module . 'Service') . '.php',
+                'contents' => $this->manager->renderStub('module-service.php.stub', [
+                    'NamespaceRoot' => $namespaceRoot,
+                    'ServiceClass' => (string) ($blueprint['service_class'] ?? $module . 'Service'),
+                    'RepositoryClass' => (string) ($blueprint['repository_class'] ?? $module . 'Repository'),
+                    'RepositoryUse' => $namespaceRoot . '\\Repositories\\' . (string) ($blueprint['repository_class'] ?? $module . 'Repository'),
+                ]),
+            ];
+        }
+
+        if (in_array('reports', $capabilities, true)) {
+            $files[] = [
+                'path' => $baseDir . DS . 'Support' . DS . (string) ($blueprint['report_provider_class'] ?? $module . 'ReportProvider') . '.php',
+                'contents' => $this->manager->renderStub('module-report-provider.php.stub', [
+                    'NamespaceRoot' => $namespaceRoot,
+                    'ReportProviderClass' => (string) ($blueprint['report_provider_class'] ?? $module . 'ReportProvider'),
+                    'ReportKey' => $resourceKey . '.report',
+                    'ReportLabel' => $module . ' Report',
+                    'ReportFilename' => $resourceKey . '-report',
+                    'ResourceKey' => $resourceKey,
+                ]),
+            ];
+        }
+
+        if (in_array('calendar', $capabilities, true)) {
+            $files[] = [
+                'path' => $baseDir . DS . 'Support' . DS . (string) ($blueprint['calendar_provider_class'] ?? $module . 'CalendarProvider') . '.php',
+                'contents' => $this->manager->renderStub('module-calendar-provider.php.stub', [
+                    'NamespaceRoot' => $namespaceRoot,
+                    'CalendarProviderClass' => (string) ($blueprint['calendar_provider_class'] ?? $module . 'CalendarProvider'),
+                    'ProviderKey' => $resourceKey,
+                    'ResourceKey' => $resourceKey,
+                ]),
+            ];
+        }
+
+        if (in_array('workflow', $capabilities, true)) {
+            $files[] = [
+                'path' => $baseDir . DS . 'Support' . DS . (string) ($blueprint['workflow_class'] ?? $module . 'Workflow') . '.php',
+                'contents' => $this->manager->renderStub('module-workflow.php.stub', [
+                    'NamespaceRoot' => $namespaceRoot,
+                    'WorkflowClass' => (string) ($blueprint['workflow_class'] ?? $module . 'Workflow'),
+                    'WorkflowKey' => $resourceKey . '.lifecycle',
+                    'ResourceKey' => $resourceKey,
+                    'WorkflowLabel' => $module . ' Lifecycle',
+                ]),
+            ];
+        }
+
+        if (in_array('delete-policy', $capabilities, true)) {
+            $files[] = [
+                'path' => $baseDir . DS . 'Support' . DS . (string) ($blueprint['delete_plan_factory_class'] ?? $module . 'DeletePlanFactory') . '.php',
+                'contents' => $this->manager->renderStub('module-delete-plan-factory.php.stub', [
+                    'NamespaceRoot' => $namespaceRoot,
+                    'DeletePlanFactoryClass' => (string) ($blueprint['delete_plan_factory_class'] ?? $module . 'DeletePlanFactory'),
+                    'ResourceKey' => $resourceKey,
+                ]),
+            ];
+        }
+
+        if (in_array('migration', $capabilities, true)) {
+            $files[] = [
+                'path' => (string) ($blueprint['migration_path'] ?? ''),
+                'contents' => $this->manager->renderStub('module-migration.php.stub', [
+                    'version' => (string) ($blueprint['migration_version'] ?? ''),
+                    'Table' => (string) ($blueprint['table'] ?? ''),
+                    'SoftDeleteColumn' => !empty($blueprint['soft_deletes']) ? "    `deleted_at` DATETIME NULL DEFAULT NULL,\n" : '',
+                    'AuditColumns' => !empty($blueprint['auditable'])
+                        ? "    `created_by` INT UNSIGNED NULL DEFAULT NULL,\n    `updated_by` INT UNSIGNED NULL DEFAULT NULL,\n"
+                        : '',
+                ]),
+            ];
+        }
+
+        return $files;
     }
 
     /**
      * Builds the controller response statement used by the module controller stub.
+     *
+     * Responsibility: Emits view-return code while keeping generated controllers aligned with MVC rendering rules.
      */
     private function buildControllerViewCall(string $view, ?string $layout): string
     {
@@ -161,6 +297,7 @@ final class ModuleFileFactory
     /**
      * Builds a PD-relative path expression for generated route files.
      *
+     * Responsibility: Converts generated path segments into portable PHP code for scaffolded route files.
      * @param string[] $segments
      */
     private function buildPathExpression(array $segments): string
@@ -176,6 +313,7 @@ final class ModuleFileFactory
     /**
      * Returns repository path segments below PD for a generated module.
      *
+     * Responsibility: Preserves the framework/app ownership boundary when scaffolding module files.
      * @return string[]
      */
     private function repositorySegments(string $space, string $module): array
@@ -189,6 +327,8 @@ final class ModuleFileFactory
 
     /**
      * Returns the controller namespace for the generated route file.
+     *
+     * Responsibility: Maps scaffold ownership space to the namespace consumed by generated routes.
      */
     private function controllerNamespace(string $space, string $module): string
     {
@@ -201,6 +341,8 @@ final class ModuleFileFactory
 
     /**
      * Builds optional middleware imports for guarded module surfaces.
+     *
+     * Responsibility: Adds only the route guard imports required by the selected generated surface.
      */
     private function buildMiddlewareImports(string $surface): string
     {
@@ -220,6 +362,8 @@ final class ModuleFileFactory
 
     /**
      * Builds optional middleware setup for guarded module surfaces.
+     *
+     * Responsibility: Generates authentication, role or devtools guard setup without embedding RTM-specific policy.
      */
     private function buildMiddlewareSetup(string $surface, string $permissionSlug): string
     {
@@ -245,6 +389,8 @@ final class ModuleFileFactory
 
     /**
      * Builds the optional middleware chain for the generated route.
+     *
+     * Responsibility: Appends middleware wiring only for generated surfaces that require protected routing.
      */
     private function buildRouteMiddlewareChain(string $surface): string
     {

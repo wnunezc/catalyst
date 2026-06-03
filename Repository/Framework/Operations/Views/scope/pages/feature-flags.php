@@ -33,6 +33,7 @@ use Catalyst\Helpers\Security\CsrfProtection;
 
 return static function (array $scope): array {
     $catalogRows = [];
+    $summary = (array) ($scope['summary'] ?? []);
 
     foreach ((array) ($scope['catalogRows'] ?? []) as $row) {
         $row = is_array($row) ? $row : [];

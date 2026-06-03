@@ -1,0 +1,37 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{NamespaceRoot}}\Policies;
+
+use Catalyst\Framework\Authorization\Policy;
+
+/**
+ * Authorizes module-level actions.
+ *
+ * Responsibility: Authorizes module-level actions.
+ */
+final class {{PolicyClass}} extends Policy
+{
+    /**
+     * Grants administrators by default and lets app-specific methods decide the rest.
+     *
+     * Responsibility: Provides a focused helper boundary used by the owning service without widening external API ownership.
+     * @param array<string, mixed> $user
+     */
+    public function before(array $user, string $ability): ?bool
+    {
+        return ($user['role'] ?? null) === 'admin' ? true : null;
+    }
+
+    /**
+     * Authorizes module viewing.
+     *
+     * Responsibility: Provides a focused helper boundary used by the owning service without widening external API ownership.
+     * @param array<string, mixed> $user
+     */
+    public function canView(array $user, mixed $record = null): bool
+    {
+        return false;
+    }
+}

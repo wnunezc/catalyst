@@ -1,0 +1,67 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{NamespaceRoot}}\Requests;
+
+use Catalyst\Framework\Http\FormRequest;
+
+/**
+ * Validates list and filter input for this module.
+ *
+ * Responsibility: Validates list and filter input for this module.
+ */
+final class {{RequestClass}} extends FormRequest
+{
+    /**
+     * Limits accepted listing inputs.
+     *
+     * Responsibility: Provides a focused helper boundary used by the owning service without widening external API ownership.
+     * @return string[]
+     */
+    public function only(): array
+    {
+        return ['q', 'page', 'per_page', 'sort', 'direction'];
+    }
+
+    /**
+     * Returns validation rules for supported listing inputs.
+     *
+     * Responsibility: Provides a focused helper boundary used by the owning service without widening external API ownership.
+     * @return array<string, string|array<int, string>>
+     */
+    public function rules(): array
+    {
+        return [
+            'q' => 'nullable|string|max:120',
+            'page' => 'nullable|integer|min:1',
+            'per_page' => 'nullable|integer|min:1|max:100',
+            'sort' => 'nullable|string|max:64',
+            'direction' => 'nullable|in:asc,desc',
+        ];
+    }
+
+    /**
+     * Returns validation labels for supported listing inputs.
+     *
+     * Responsibility: Provides a focused helper boundary used by the owning service without widening external API ownership.
+     * @return array<string, string>
+     */
+    public function labels(): array
+    {
+        return [
+            'q' => 'Search',
+            'per_page' => 'Page size',
+        ];
+    }
+
+    /**
+     * Returns the sensitivity policy used for failed validation old input.
+     *
+     * Responsibility: Provides a focused helper boundary used by the owning service without widening external API ownership.
+     */
+    protected function sensitiveResourceKey(): ?string
+    {
+        return '{{ResourceKey}}';
+    }
+}

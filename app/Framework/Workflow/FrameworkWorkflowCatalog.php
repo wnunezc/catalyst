@@ -44,6 +44,8 @@ final class FrameworkWorkflowCatalog
 
     /**
      * Registers built-in definitions once per runtime.
+     *
+     * Responsibility: Seeds reusable framework workflow examples without creating application-specific workflows.
      */
     public static function registerDefaults(WorkflowDefinitionRegistry $registry): void
     {
@@ -68,6 +70,7 @@ final class FrameworkWorkflowCatalog
                     'label' => 'Submit for review',
                     'from' => ['draft'],
                     'to' => 'in_review',
+                    'kind' => 'submit',
                     'ability' => 'submit-review',
                 ],
                 [
@@ -75,6 +78,7 @@ final class FrameworkWorkflowCatalog
                     'label' => 'Approve',
                     'from' => ['in_review'],
                     'to' => 'approved',
+                    'kind' => 'approve',
                     'ability' => 'approve',
                 ],
                 [
@@ -82,6 +86,7 @@ final class FrameworkWorkflowCatalog
                     'label' => 'Reject back to draft',
                     'from' => ['in_review'],
                     'to' => 'draft',
+                    'kind' => 'reject',
                     'ability' => 'reject',
                 ],
                 [
@@ -89,6 +94,7 @@ final class FrameworkWorkflowCatalog
                     'label' => 'Archive',
                     'from' => ['draft', 'approved'],
                     'to' => 'archived',
+                    'kind' => 'archive',
                     'ability' => 'archive',
                 ],
                 [
@@ -96,6 +102,7 @@ final class FrameworkWorkflowCatalog
                     'label' => 'Reopen draft',
                     'from' => ['archived'],
                     'to' => 'draft',
+                    'kind' => 'resubmit',
                     'ability' => 'restore',
                 ],
             ]
@@ -118,6 +125,7 @@ final class FrameworkWorkflowCatalog
                     'label' => 'Activate',
                     'from' => ['draft', 'paused'],
                     'to' => 'active',
+                    'kind' => 'approve',
                     'ability' => 'activate',
                     'after' => static function (mixed $record): void {
                         self::syncRuleEnabledState($record, true);
@@ -128,6 +136,7 @@ final class FrameworkWorkflowCatalog
                     'label' => 'Pause',
                     'from' => ['active'],
                     'to' => 'paused',
+                    'kind' => 'return',
                     'ability' => 'pause',
                     'after' => static function (mixed $record): void {
                         self::syncRuleEnabledState($record, false);
@@ -138,6 +147,7 @@ final class FrameworkWorkflowCatalog
                     'label' => 'Archive',
                     'from' => ['draft', 'active', 'paused'],
                     'to' => 'archived',
+                    'kind' => 'archive',
                     'ability' => 'archive',
                     'after' => static function (mixed $record): void {
                         self::syncRuleEnabledState($record, false);
@@ -148,6 +158,7 @@ final class FrameworkWorkflowCatalog
                     'label' => 'Restore to draft',
                     'from' => ['archived'],
                     'to' => 'draft',
+                    'kind' => 'resubmit',
                     'ability' => 'restore',
                     'after' => static function (mixed $record): void {
                         self::syncRuleEnabledState($record, false);
@@ -172,6 +183,7 @@ final class FrameworkWorkflowCatalog
                     'label' => 'Activate',
                     'from' => ['draft'],
                     'to' => 'active',
+                    'kind' => 'approve',
                     'ability' => 'activate',
                 ],
                 [
@@ -179,6 +191,7 @@ final class FrameworkWorkflowCatalog
                     'label' => 'Archive',
                     'from' => ['draft', 'active'],
                     'to' => 'archived',
+                    'kind' => 'archive',
                     'ability' => 'archive',
                 ],
                 [
@@ -186,6 +199,7 @@ final class FrameworkWorkflowCatalog
                     'label' => 'Restore to draft',
                     'from' => ['archived'],
                     'to' => 'draft',
+                    'kind' => 'resubmit',
                     'ability' => 'restore',
                 ],
             ]
@@ -196,6 +210,8 @@ final class FrameworkWorkflowCatalog
 
     /**
      * Synchronizes an automation rule enabled flag with its workflow state.
+     *
+     * Responsibility: Keeps the framework automation fixture consistent after lifecycle transitions.
      */
     private static function syncRuleEnabledState(mixed $record, bool $enabled): void
     {

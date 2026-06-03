@@ -35,6 +35,7 @@ use Catalyst\Framework\Route\Router;
 use Catalyst\Framework\View\View;
 use Catalyst\Helpers\I18n\Translator;
 use Catalyst\Repository\ApiPlatform\Controllers\ApiPlatformController;
+use Catalyst\Repository\ApiPlatform\Controllers\CalendarApiController;
 use Catalyst\Repository\ApiPlatform\Controllers\VersionApiController;
 use Catalyst\Repository\ApiPlatform\Controllers\WorkflowApiController;
 
@@ -68,6 +69,9 @@ $router->get('/api/v1/catalog', [ApiPlatformController::class, 'apiCatalog'])
     ->middleware($apiMiddleware);
 
 $router->get('/api/v1/workflows', [WorkflowApiController::class, 'index'])
+    ->middleware($apiMiddleware);
+
+$router->get('/api/v1/calendar/events', [CalendarApiController::class, 'events'])
     ->middleware($apiMiddleware);
 
 $router->post('/api/v1/workflows/{id}/transition', [WorkflowApiController::class, 'transition'])

@@ -1,0 +1,27 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{NamespaceRoot}}\Repositories;
+
+/**
+ * Encapsulates persistence for this module.
+ *
+ * Responsibility: Encapsulates persistence for this module.
+ */
+final class {{RepositoryClass}}
+{
+    public const RESOURCE_KEY = '{{ResourceKey}}';
+
+    /**
+     * Returns bounded rows for module list views or reports.
+     *
+     * Responsibility: Provides a focused helper boundary used by the owning service without widening external API ownership.
+     * @param array<string, mixed> $criteria
+     * @return array<int, array<string, mixed>>
+     */
+    public function list(array $criteria = []): array
+    {
+        return [];
+    }
+}

@@ -155,6 +155,7 @@
       "key": "Clave",
       "workflow": "Flujo",
       "items": "Items",
+      "enabled": "Habilitados",
       "timeline": "Línea de tiempo"
     },
     "workflow": {
@@ -177,6 +178,7 @@
     "items": {
       "title": "Items del catálogo",
       "description": "Opciones gobernadas con vigencia temporal, disponibilidad y metadatos auxiliares.",
+      "create": "Crear item",
       "add_item": "Agregar item",
       "columns": {
         "item": "Item",

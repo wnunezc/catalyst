@@ -57,6 +57,7 @@
         "cache": "Cache & Routes",
         "logging": "Logging",
         "security": "Security",
+        "features": "Features",
         "websocket": "WebSocket",
         "devtools": "Developer Tools",
         "cors": "CORS",
@@ -106,7 +107,8 @@
         "ftp": "Maintained runtime surface for future deployment inclusion. Credentials can be stored here and the upload pretest validates live FTP, FTPS or SFTP connectivity, even though no downstream deployment consumer is attached yet.",
         "cache_runtime": "Cache is configured only from this panel. Runtime consumption is allowed only when the real environment is production and the cache master switch is enabled here.",
         "cache_locked": "Cache is locked in this environment. You can inspect the settings, but activation is blocked outside production.",
-        "devtools": "Maintained compatibility surface for future inclusion. Today it mirrors runtime debug mode and display logs from Application and Logging only."
+        "devtools": "Maintained compatibility surface for future inclusion. Today it mirrors runtime debug mode and display logs from Application and Logging only.",
+        "features": "Base capability switches for this installation. Advanced runtime overrides still live under Feature Flags after setup."
     },
     "modal_titles": {
         "app": "Application Settings",
@@ -117,6 +119,7 @@
         "cache": "Cache & Routes Settings",
         "logging": "Logging Settings",
         "security": "Security Settings",
+        "features": "Feature Settings",
         "websocket": "WebSocket Settings",
         "devtools": "Developer Tools Settings",
         "cors": "CORS Settings"
@@ -160,6 +163,10 @@
         "route_cache": "Route Cache",
         "bcrypt_rounds": "Bcrypt Rounds",
         "mfa_enabled": "MFA Enabled",
+        "public_registration": "Public registration",
+        "mfa_routes": "MFA routes",
+        "social_auth": "Social auth",
+        "notifications": "Notifications",
         "channel": "Channel",
         "level": "Level",
         "display_logs": "Display Logs",
@@ -200,6 +207,10 @@
         "display_logs_on_screen": "Display Logs on Screen",
         "bcrypt_rounds_range": "Bcrypt Rounds (10-16)",
         "enable_mfa_framework_wide": "Enable MFA / Two-Factor Authentication (framework-wide)",
+        "allow_public_registration": "Allow public self-service registration",
+        "enable_mfa_routes": "Enable MFA setup and challenge routes",
+        "enable_social_auth": "Enable social authentication routes",
+        "enable_notifications": "Enable notification endpoints",
         "enable_websocket_server": "Enable WebSocket Server",
         "internal_http_port": "Internal HTTP Port",
         "enable_cors": "Enable CORS",
@@ -229,7 +240,8 @@
         "ftp_pretest": "Use Pretest Upload to validate the saved credentials against a real remote endpoint before wiring this surface into a deploy flow.",
         "cache_supported_activation": "This is the only supported activation path for framework cache. Runtime consumption still depends on the production environment and the master switch below.",
         "cache_blocked_outside_production": "Cache activation is blocked outside production. The backend will also reject any attempt to enable these flags from non-production environments.",
-        "devtools_compatibility": "Maintained compatibility surface for future inclusion. Changes here mirror Application debug mode and Logging display logs only. Cache activation lives exclusively in Cache & Routes."
+        "devtools_compatibility": "Maintained compatibility surface for future inclusion. Changes here mirror Application debug mode and Logging display logs only. Cache activation lives exclusively in Cache & Routes.",
+        "features_setup": "These switches write the installation defaults in features.json. Use Feature Flags later for role or user overrides."
     },
     "completion": {
         "title": "Finalize Configuration",
@@ -265,25 +277,6 @@
             "admin_create_failed": "Could not create the administrator account.",
             "admin_required": "Finalize is blocked until an active administrator account exists.",
             "admin_email_exists": "A user with this email address already exists."
-        }
-    },
-    "runtime_surfaces": {
-        "title": "Canonical Runtime Surfaces",
-        "description": "Separate bootstrap, control plane and diagnostics to avoid parallel configuration or mixed ownership.",
-        "open_operations": "Open Operations",
-        "cards": {
-            "setup": {
-                "eyebrow": "Setup",
-                "description": "Bootstrap and baseline runtime configuration. Keeps cache, security, sessions, mail, DB, entry points and project parameters."
-            },
-            "operations": {
-                "eyebrow": "Operations",
-                "description": "Canonical post-setup surface for feature flags, plugins, deployment and tenancy decisions. Centralizes Runtime governance."
-            },
-            "devtools": {
-                "eyebrow": "DevTools",
-                "description": "Technical harness and development probes. It is not the official surface to activate production platform capabilities."
-            }
         }
     },
     "health": {

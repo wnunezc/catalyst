@@ -1,0 +1,48 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{NamespaceRoot}}\Support;
+
+use Catalyst\Framework\Reporting\ReportDefinition;
+use Catalyst\Framework\Reporting\ReportFormat;
+use Catalyst\Framework\Reporting\ReportProviderInterface;
+
+/**
+ * Exposes module rows through the framework reporting contract.
+ *
+ * Responsibility: Exposes module rows through the framework reporting contract.
+ */
+final class {{ReportProviderClass}} implements ReportProviderInterface
+{
+    /**
+     * Returns the report definition.
+     *
+     * Responsibility: Provides read-only access to normalized state without mutating framework runtime.
+     */
+    public function definition(): ReportDefinition
+    {
+        return new ReportDefinition(
+            key: '{{ReportKey}}',
+            label: '{{ReportLabel}}',
+            filename: '{{ReportFilename}}',
+            resourceKey: '{{ResourceKey}}',
+            columns: [
+                ['key' => 'id', 'label' => 'ID'],
+            ],
+            formats: [ReportFormat::CSV, ReportFormat::XLS, ReportFormat::PDF]
+        );
+    }
+
+    /**
+     * Returns rows for export.
+     *
+     * Responsibility: Provides a focused helper boundary used by the owning service without widening external API ownership.
+     * @param array<string, mixed> $criteria
+     * @return array<int, array<string, mixed>>
+     */
+    public function rows(array $criteria): array
+    {
+        return [];
+    }
+}

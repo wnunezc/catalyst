@@ -1,7 +1,7 @@
 # Runtime Module Catalog
 
 > Auto-generated from `ModuleRegistry`, `PermissionRegistry`, `NavigationRegistry`, `ModuleInspector`, `ModuleHarnessInspector` and `ModuleLinter`.
-> Last generated: 2026-06-02 02:18:25
+> Last generated: 2026-06-03 06:26:55
 
 ## Runtime Summary
 
@@ -325,7 +325,7 @@ _No mutation routes declared for harness._
 | `/login` | `GET,HEAD` | `200` | `root` | `root` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\GuestMiddleware` |
 | `/mfa/challenge` | `GET,HEAD` | `login` | `root` | `root` | `pending_mfa=200` | `n/a` | `Catalyst\Framework\Middleware\RouteFeatureMiddleware` |
 | `/mfa/setup` | `GET,HEAD` | `login` | `200` | `200` | `pending_setup=200` | `n/a` | `Catalyst\Framework\Middleware\RouteFeatureMiddleware` |
-| `/register` | `GET,HEAD` | `200` | `root` | `root` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\GuestMiddleware` |
+| `/register` | `GET,HEAD` | `200` | `root` | `root` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\RouteFeatureMiddleware`, `Catalyst\Framework\Middleware\GuestMiddleware` |
 | `/reset-password/{token}` | `GET,HEAD` | `200` | `root` | `root` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\GuestMiddleware` |
 | `/verify-email` | `GET,HEAD` | `200` | `root` | `root` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\GuestMiddleware` |
 | `/verify-email/{token}` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
@@ -344,7 +344,7 @@ _No JSON routes declared for harness._
 | `/mfa/disable` | `POST` | `401` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RouteFeatureMiddleware` |
 | `/mfa/enable` | `POST` | `200` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\RouteFeatureMiddleware` |
 | `/mfa/verify` | `POST` | `200` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\RouteFeatureMiddleware` |
-| `/register` | `POST` | `200` | `409` | `409` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\GuestMiddleware`, `Catalyst\Framework\Middleware\LoginThrottleMiddleware` |
+| `/register` | `POST` | `200` | `409` | `409` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\RouteFeatureMiddleware`, `Catalyst\Framework\Middleware\GuestMiddleware`, `Catalyst\Framework\Middleware\LoginThrottleMiddleware` |
 | `/reset-password/{token}` | `POST` | `200` | `409` | `409` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\GuestMiddleware` |
 | `/verify-email` | `POST` | `200` | `409` | `409` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\GuestMiddleware` |
 

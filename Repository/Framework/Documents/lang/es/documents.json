@@ -132,6 +132,9 @@
       "format": "Formato",
       "slug": "Slug"
     },
+    "common": {
+      "system": "sistema"
+    },
     "workflow": {
       "title": "Acciones de flujo",
       "description": "Inspección y operación real del flujo reutilizable adoptado por esta plantilla.",

@@ -31,7 +31,6 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Reporting;
 
 use Catalyst\Entities\ReportRun;
-use Catalyst\Framework\Admin\Grid\DataGrid;
 use Catalyst\Framework\Attachment\AttachmentManager;
 use Catalyst\Framework\Attachment\AttachmentRepository;
 use Catalyst\Framework\Media\MediaManager;
@@ -53,24 +52,60 @@ final class ReportingManager
 
     private MediaManager $media;
     private AttachmentManager $attachments;
-    private AttachmentRepository $attachmentRepository;
+    private ReportProviderRegistry $providers;
+    /**
+     * @var array<string, ReportExporterInterface>
+     */
+    private array $exporters = [];
 
     /**
      * Initializes the Reporting Manager instance.
      *
-     * Responsibility: Initializes the Reporting Manager instance.
+     * Responsibility: Binds required collaborators or immutable state without executing the main workflow.
      */
     protected function __construct()
     {
         $this->media = MediaManager::getInstance();
         $this->attachments = AttachmentManager::getInstance();
-        $this->attachmentRepository = AttachmentRepository::getInstance();
+        $this->providers = new ReportProviderRegistry();
+        $this->registerDefaults();
+    }
+
+    /**
+     * Registers a report provider.
+     *
+     * Responsibility: Updates framework registry state through an explicit, bounded mutation point.
+     */
+    public function registerProvider(ReportProviderInterface $provider): void
+    {
+        $this->providers->register($provider);
+    }
+
+    /**
+     * Registers a report exporter.
+     *
+     * Responsibility: Updates framework registry state through an explicit, bounded mutation point.
+     */
+    public function registerExporter(ReportExporterInterface $exporter): void
+    {
+        $this->exporters[$exporter->format()] = $exporter;
+    }
+
+    /**
+     * Returns registered report definitions.
+     *
+     * Responsibility: Provides read-only access to normalized state without mutating framework runtime.
+     * @return array<string, ReportDefinition>
+     */
+    public function definitions(): array
+    {
+        return $this->providers->definitions();
     }
 
     /**
      * Creates a pending report run and dispatches its generation job.
      *
-     * Responsibility: Creates a pending report run and dispatches its generation job.
+     * Responsibility: Coordinates the state-changing workflow after validation and returns the outcome to the caller.
      * @param array<string, mixed> $criteria
      * @param array<string, mixed>|null $attachTo
      */
@@ -80,9 +115,11 @@ final class ReportingManager
         string $format = 'csv',
         ?array $attachTo = null
     ): ReportRun {
-        $format = strtolower(trim($format)) ?: 'csv';
-        if (!in_array($format, ['csv', 'xls'], true)) {
-            throw new RuntimeException('Unsupported report format. Allowed formats: csv, xls.');
+        $format = ReportFormat::normalize($format);
+        $definition = $this->definition(trim($reportKey));
+
+        if (!$definition->supportsFormat($format)) {
+            throw new RuntimeException('Report definition does not support format: ' . $format);
         }
 
         $run = ReportRun::create([
@@ -104,7 +141,7 @@ final class ReportingManager
     /**
      * Generates the requested report output and records its final state.
      *
-     * Responsibility: Generates the requested report output and records its final state.
+     * Responsibility: Coordinates the state-changing workflow after validation and returns the outcome to the caller.
      */
     public function process(int $reportRunId): ReportRun
     {
@@ -129,36 +166,19 @@ final class ReportingManager
             $definition = $this->definition((string) ($snapshot['report_key'] ?? ''));
             $criteria = is_array($snapshot['criteria_json'] ?? null) ? $snapshot['criteria_json'] : [];
             $rows = $this->rowsForDefinition((string) ($snapshot['report_key'] ?? ''), $criteria);
+            $format = ReportFormat::normalize((string) ($snapshot['format'] ?? 'csv'));
 
-            $grid = DataGrid::make()
-                ->columns((array) ($definition['columns'] ?? []))
-                ->resourceKey((string) ($definition['resource_key'] ?? ''))
-                ->exportFormats([
-                    'csv' => [
-                        'label' => (string) __('ui.datagrid.export_csv'),
-                        'icon' => 'fa-solid fa-file-csv',
-                    ],
-                    'xls' => [
-                        'label' => (string) __('ui.datagrid.export_xls'),
-                        'icon' => 'fa-solid fa-file-excel',
-                    ],
-                ], (string) ($definition['filename'] ?? 'report'))->printEnabled(true, (string) __('ui.datagrid.print'));
-
-            $format = strtolower(trim((string) ($snapshot['format'] ?? 'csv'))) ?: 'csv';
-            if (!in_array($format, ['csv', 'xls'], true)) {
-                throw new RuntimeException('Unsupported report format. Allowed formats: csv, xls.');
+            if (!$definition->supportsFormat($format)) {
+                throw new RuntimeException('Report definition does not support format: ' . $format);
             }
 
-            $export = $format === 'xls'
-                ? $grid->exportXlsRows($rows)
-                : $grid->exportCsvRows($rows);
-            $mimeType = $format === 'xls' ? 'application/vnd.ms-excel' : 'text/csv';
+            $export = $this->exporter($format)->export($definition, $rows);
             $media = $this->media->createGenerated(
-                name: (string) ($definition['label'] ?? 'Report export') . '.' . $format,
-                contents: (string) ($export['contents'] ?? ''),
+                name: $export->filename,
+                contents: $export->contents,
                 options: [
-                    'mime_type' => $mimeType,
-                    'extension' => $format,
+                    'mime_type' => $export->mimeType,
+                    'extension' => $export->extension,
                     'path_prefix' => 'generated-reports/' . trim((string) ($snapshot['report_key'] ?? 'report')),
                 ]
             );
@@ -203,63 +223,51 @@ final class ReportingManager
     /**
      * Resolves report rows for a registered report definition.
      *
-     * Responsibility: Resolves report rows for a registered report definition.
+     * Responsibility: Provides a focused helper boundary used by the owning service without widening external API ownership.
      * @param array<string, mixed> $criteria
      * @return array<int, array<string, mixed>>
      */
     private function rowsForDefinition(string $reportKey, array $criteria): array
     {
-        return match ($reportKey) {
-            'framework.attachments.by-resource' => $this->attachmentRows($criteria),
-            default => throw new RuntimeException('Unknown report definition: ' . $reportKey),
-        };
-    }
-
-    /**
-     * Loads attachment rows for the resource-attachment report.
-     *
-     * Responsibility: Loads attachment rows for the resource-attachment report.
-     * @param array<string, mixed> $criteria
-     * @return array<int, array<string, mixed>>
-     */
-    private function attachmentRows(array $criteria): array
-    {
-        $resourceKey = trim((string) ($criteria['resource_key'] ?? ''));
-        $recordId = (int) ($criteria['record_id'] ?? 0);
-
-        if ($resourceKey === '' || $recordId <= 0) {
-            throw new RuntimeException('Attachment report requires resource_key and record_id.');
-        }
-
-        return $this->attachmentRepository->reportRows($criteria);
+        return $this->providers->require($reportKey)->rows($criteria);
     }
 
     /**
      * Returns the registered definition for a report key.
      *
-     * Responsibility: Returns the registered definition for a report key.
-     * @return array<string, mixed>
+     * Responsibility: Provides read-only access to normalized state without mutating framework runtime.
      */
-    private function definition(string $reportKey): array
+    private function definition(string $reportKey): ReportDefinition
     {
-        return match ($reportKey) {
-            'framework.attachments.by-resource' => [
-                'label' => 'Resource attachments',
-                'filename' => 'resource-attachments-report',
-                'resource_key' => AttachmentManager::RESOURCE_KEY,
-                'columns' => [
-                    ['key' => 'resource_key', 'label' => 'Resource'],
-                    ['key' => 'record_id', 'label' => 'Record ID'],
-                    ['key' => 'purpose', 'label' => 'Purpose'],
-                    ['key' => 'attachment_type', 'label' => 'Type'],
-                    ['key' => 'attachment_kind', 'label' => 'Kind'],
-                    ['key' => 'asset_name', 'label' => 'Asset'],
-                    ['key' => 'active', 'label' => 'Active'],
-                    ['key' => 'detached_at', 'label' => 'Detached At'],
-                    ['key' => 'created_at', 'label' => 'Attached At'],
-                ],
-            ],
-            default => throw new RuntimeException('Unknown report definition: ' . $reportKey),
-        };
+        return $this->providers->require($reportKey)->definition();
+    }
+
+    /**
+     * Returns the exporter for a normalized format.
+     *
+     * Responsibility: Provides read-only access to normalized state without mutating framework runtime.
+     */
+    private function exporter(string $format): ReportExporterInterface
+    {
+        $format = ReportFormat::normalize($format);
+
+        if (!isset($this->exporters[$format])) {
+            throw new RuntimeException('Report exporter is not registered for format: ' . $format);
+        }
+
+        return $this->exporters[$format];
+    }
+
+    /**
+     * Registers framework-provided report providers and exporters.
+     *
+     * Responsibility: Updates framework registry state through an explicit, bounded mutation point.
+     */
+    private function registerDefaults(): void
+    {
+        $this->registerProvider(new AttachmentReportProvider(AttachmentRepository::getInstance()));
+        $this->registerExporter(new DataGridReportExporter(ReportFormat::CSV));
+        $this->registerExporter(new DataGridReportExporter(ReportFormat::XLS));
+        $this->registerExporter(new SimplePdfReportExporter());
     }
 }

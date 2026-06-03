@@ -1,0 +1,51 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{NamespaceRoot}}\Support;
+
+use Catalyst\Framework\Workflow\WorkflowDefinition;
+
+/**
+ * Defines the module lifecycle workflow.
+ *
+ * Responsibility: Defines the module lifecycle workflow.
+ */
+final class {{WorkflowClass}}
+{
+    /**
+     * Returns the workflow definition for this module.
+     *
+     * Responsibility: Provides read-only access to normalized state without mutating framework runtime.
+     */
+    public static function definition(): WorkflowDefinition
+    {
+        return new WorkflowDefinition(
+            key: '{{WorkflowKey}}',
+            resourceKey: '{{ResourceKey}}',
+            label: '{{WorkflowLabel}}',
+            initialState: 'draft',
+            states: [
+                'draft' => 'Draft',
+                'active' => 'Active',
+                'archived' => 'Archived',
+            ],
+            transitions: [
+                [
+                    'key' => 'activate',
+                    'label' => 'Activate',
+                    'from' => ['draft'],
+                    'to' => 'active',
+                    'kind' => 'approve',
+                ],
+                [
+                    'key' => 'archive',
+                    'label' => 'Archive',
+                    'from' => ['draft', 'active'],
+                    'to' => 'archived',
+                    'kind' => 'archive',
+                ],
+            ]
+        );
+    }
+}

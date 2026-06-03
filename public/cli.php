@@ -62,10 +62,13 @@ use Catalyst\Framework\Cli\Commands\IdempotencySmokeCommand;
 use Catalyst\Framework\Cli\Commands\I18nInitLocaleCommand;
 use Catalyst\Framework\Cli\Commands\I18nStatusCommand;
 use Catalyst\Framework\Cli\Commands\I18nSyncCommand;
+use Catalyst\Framework\Cli\Commands\I18nUsageLintCommand;
 use Catalyst\Framework\Cli\Commands\AttachmentsListCommand;
+use Catalyst\Framework\Cli\Commands\AttachmentsPolicySmokeCommand;
 use Catalyst\Framework\Cli\Commands\AttachmentsSmokeCommand;
 use Catalyst\Framework\Cli\Commands\ApiTokensSmokeCommand;
 use Catalyst\Framework\Cli\Commands\AutomationMvcRegressionCommand;
+use Catalyst\Framework\Cli\Commands\CalendarSmokeCommand;
 use Catalyst\Framework\Cli\Commands\DocumentsMvcRegressionCommand;
 use Catalyst\Framework\Cli\Commands\MediaMvcRegressionCommand;
 use Catalyst\Framework\Cli\Commands\ModuleLocalizationRegressionCommand;
@@ -98,7 +101,9 @@ use Catalyst\Framework\Cli\Commands\ClaimsListCommand;
 use Catalyst\Framework\Cli\Commands\ClaimsReleaseCommand;
 use Catalyst\Framework\Cli\Commands\ConfigSecretsSyncCommand;
 use Catalyst\Framework\Cli\Commands\ConcurrencySmokeCommand;
+use Catalyst\Framework\Cli\Commands\DeletionSmokeCommand;
 use Catalyst\Framework\Cli\Commands\QueueFailedCommand;
+use Catalyst\Framework\Cli\Commands\ReferencesSmokeCommand;
 use Catalyst\Framework\Cli\Commands\QueueRetryCommand;
 use Catalyst\Framework\Cli\Commands\QueueWorkCommand;
 use Catalyst\Framework\Cli\Commands\QualityCheckCommand;
@@ -107,8 +112,13 @@ use Catalyst\Framework\Cli\Commands\RouteBootstrapRegressionCommand;
 use Catalyst\Framework\Cli\Commands\RouteClearCommand;
 use Catalyst\Framework\Cli\Commands\RouteLintCommand;
 use Catalyst\Framework\Cli\Commands\RouteListCommand;
+use Catalyst\Framework\Cli\Commands\ScaffoldAppSmokeCommand;
 use Catalyst\Framework\Cli\Commands\SecurityRegressionCommand;
+use Catalyst\Framework\Cli\Commands\SequencesSmokeCommand;
+use Catalyst\Framework\Cli\Commands\SettingsLocalizationSmokeCommand;
 use Catalyst\Framework\Cli\Commands\CatalogsSmokeCommand;
+use Catalyst\Framework\Cli\Commands\WorkflowSmokeCommand;
+use Catalyst\Framework\Cli\Commands\ReportsContractSmokeCommand;
 use Catalyst\Framework\Cli\Commands\ReportingRunCommand;
 use Catalyst\Framework\Cli\Commands\ReportingSmokeCommand;
 use Catalyst\Framework\Cli\Commands\RetentionRunCommand;
@@ -153,10 +163,13 @@ $registry
     ->register(new I18nStatusCommand())
     ->register(new I18nInitLocaleCommand())
     ->register(new I18nSyncCommand())
+    ->register(new I18nUsageLintCommand())
     ->register(new AttachmentsListCommand())
+    ->register(new AttachmentsPolicySmokeCommand())
     ->register(new AttachmentsSmokeCommand())
     ->register(new ApiTokensSmokeCommand())
     ->register(new AutomationMvcRegressionCommand())
+    ->register(new CalendarSmokeCommand())
     ->register(new DocumentsMvcRegressionCommand())
     ->register(new MediaMvcRegressionCommand())
     ->register(new ModuleLocalizationRegressionCommand())
@@ -190,13 +203,16 @@ $registry
     ->register(new ClaimsReleaseCommand())
     ->register(new ConfigSecretsSyncCommand())
     ->register(new ConcurrencySmokeCommand())
+    ->register(new DeletionSmokeCommand())
     ->register(new ConfigShowCommand())
     ->register(new DevToolsDisableCommand())
     ->register(new KeyGenerateCommand())
     ->register(new QueueWorkCommand())
     ->register(new QueueFailedCommand())
+    ->register(new ReferencesSmokeCommand())
     ->register(new QueueRetryCommand())
     ->register(new QualityCheckCommand())
+    ->register(new ReportsContractSmokeCommand())
     ->register(new ReportingRunCommand())
     ->register(new ReportingSmokeCommand())
     ->register(new RetentionRunCommand())
@@ -206,6 +222,7 @@ $registry
     ->register(new RouteClearCommand())
     ->register(new RouteLintCommand())
     ->register(new RouteListCommand())
+    ->register(new ScaffoldAppSmokeCommand())
     ->register(new ScheduleRunCommand())
     ->register(new ScheduleListCommand())
     ->register(new StorageCleanCommand())
@@ -222,7 +239,10 @@ $registry
     ->register(new MigrateRollbackCommand())
     ->register(new MigrateStatusCommand())
     ->register(new SensitivitySmokeCommand())
+    ->register(new SequencesSmokeCommand())
+    ->register(new SettingsLocalizationSmokeCommand())
     ->register(new TemporalSmokeCommand())
+    ->register(new WorkflowSmokeCommand())
     ->register(new SecurityCheckCommand())
     ->register(new SecurityRegressionCommand());
 

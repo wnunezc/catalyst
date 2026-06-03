@@ -47,9 +47,12 @@ The architecture uses separated owners instead of single large classes: routes a
 | `docs/deployment.md` | Deployment Guide |
 | `docs/documentation-contract.md` | Documentation Contract |
 | `docs/entry-points.md` | Entry Points |
+| `docs/entity-references.md` | Entity References |
 | `docs/framework-appearance.md` | Catalyst Framework Appearance |
 | `docs/framework-argument.md` | Catalyst\Framework\Argument |
+| `docs/framework-attachments.md` | Catalyst Framework Attachments |
 | `docs/framework-auth.md` | Catalyst\Framework\Auth |
+| `docs/framework-calendar.md` | Catalyst Framework Calendar |
 | `docs/framework-concurrency.md` | Catalyst\Framework\Concurrency |
 | `docs/framework-controllers.md` | Catalyst\Framework\Controllers |
 | `docs/framework-database.md` | Catalyst\Framework\Database |
@@ -60,11 +63,14 @@ The architecture uses separated owners instead of single large classes: routes a
 | `docs/framework-mail.md` | Catalyst\Framework\Mail |
 | `docs/framework-notification.md` | Catalyst\Framework\Notification |
 | `docs/framework-queue.md` | Catalyst\Framework\Queue |
+| `docs/framework-reporting.md` | Catalyst Framework Reporting |
 | `docs/framework-schedule.md` | Catalyst\Framework\Schedule |
+| `docs/framework-scaffolding.md` | Catalyst Framework Scaffolding |
 | `docs/framework-session.md` | Catalyst\Framework\Session |
 | `docs/framework-traits.md` | Catalyst\Framework\Traits |
 | `docs/framework-view.md` | Catalyst\Framework\View |
 | `docs/framework-websocket.md` | Catalyst\Framework\WebSocket |
+| `docs/framework-workflow.md` | Catalyst Framework Workflow |
 | `docs/harness-context-map.md` | Catalyst Harness Context Map |
 | `docs/helpers-config.md` | Catalyst\Helpers\Config |
 | `docs/helpers-debug.md` | Catalyst\Helpers\Debug |
@@ -77,15 +83,19 @@ The architecture uses separated owners instead of single large classes: routes a
 | `docs/kernel.md` | Kernel |
 | `docs/middleware.md` | Middleware Index |
 | `docs/modules.md` | Module Index |
+| `docs/app-boundary.md` | App Boundary |
 | `docs/quality-gate.md` | Quality Gate |
 | `docs/repository-auth.md` | Catalyst\Repository\Auth |
 | `docs/repository-devtools.md` | Catalyst\Repository\DevTools |
 | `docs/repository-notification.md` | Catalyst\Repository\Notification |
+| `docs/reverse-cascade-delete.md` | Reverse Cascade Delete |
 | `docs/routing.md` | Routing Index |
 | `docs/runtime-inventory.md` | Runtime Inventory |
 | `docs/runtime-model.md` | Runtime Model |
 | `docs/runtime-module-catalog.md` | Runtime Module Catalog |
 | `docs/security-conventions.md` | Security Conventions |
+| `docs/sequences.md` | Transactional Sequences |
+| `docs/spec-to-catalyst-guide.md` | Spec To Catalyst Guide |
 | `docs/testing.md` | Testing Guide |
 | `docs/ui/admin-surface-contract.md` | Admin surface contract |
 | `docs/ui/datagrid-visual-guidelines.md` | Lineamientos visuales del DataGrid |
@@ -97,6 +107,7 @@ The architecture uses separated owners instead of single large classes: routes a
 | `docs/views.md` | Views Index |
 | `docs/workflow/first-run.md` | First Run Workflow |
 | `docs/workflow/patch-intake.md` | Patch Intake Workflow |
+| `docs/workflow/release-rc-checklist.md` | Release Candidate Checklist |
 | `docs/workflow/reusable-base-install.md` | Reusable Base Install Workflow |
 
 ## Operational Notes

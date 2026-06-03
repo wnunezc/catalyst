@@ -112,6 +112,16 @@ Use the actual target tag instead of `v0.1.1`. `update:check` does not modify
 files, branches or remotes; it only reports version information and suggested
 commands.
 
+Before and after merging an upstream release, run:
+
+```powershell
+php public/cli.php inspect:lint
+```
+
+The `app_boundary` check protects derived projects from placing app-owned code
+or source assets outside `Repository/App`. See `docs/app-boundary.md` for the
+full ownership contract and update checklist.
+
 Keep application-specific implementation inside `Repository/App/` whenever
 possible. Framework updates are expected to touch `app/`, `Repository/Framework/`,
 `boot-core/`, shared `public/assets/*/catalyst/` files and current documentation.

@@ -1,0 +1,31 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{NamespaceRoot}}\Support;
+
+use Catalyst\Framework\Deletion\ReverseCascadeDeletePlan;
+use Catalyst\Framework\Deletion\ReverseCascadeDeleteService;
+
+/**
+ * Builds safe delete previews for this module.
+ *
+ * Responsibility: Builds safe delete previews for this module.
+ */
+final class {{DeletePlanFactoryClass}}
+{
+    /**
+     * Builds a reverse cascade delete preview.
+     *
+     * Responsibility: Composes derived framework data from validated inputs while keeping persistence and rendering separate.
+     * @param array<int, array<string, mixed>> $dependencies
+     */
+    public function preview(string|int $recordId, array $dependencies = []): ReverseCascadeDeletePlan
+    {
+        return ReverseCascadeDeleteService::getInstance()->preview(
+            '{{ResourceKey}}',
+            $recordId,
+            $dependencies
+        );
+    }
+}

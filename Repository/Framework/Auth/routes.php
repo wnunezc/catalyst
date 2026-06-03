@@ -68,9 +68,11 @@ $router->post('/login', [LoginController::class, 'login'])
        ->middleware(LoginThrottleMiddleware::class);
 
 $router->get('/register', [RegisterController::class, 'showForm'])
+       ->middleware(new RouteFeatureMiddleware('auth.registration_enabled', '/login'))
        ->middleware(GuestMiddleware::class);
 
 $router->post('/register', [RegisterController::class, 'register'])
+       ->middleware(new RouteFeatureMiddleware('auth.registration_enabled', '/login'))
        ->middleware(GuestMiddleware::class)
        ->middleware(LoginThrottleMiddleware::class);
 

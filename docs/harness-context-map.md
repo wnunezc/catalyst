@@ -23,10 +23,14 @@ Este archivo enruta la documentacion vigente de `catalyst` para que el contexto 
 | Routing | `docs/routing.md` |
 | Middleware | `docs/middleware.md` |
 | Modulos | `docs/modules.md` |
+| Frontera app/framework | `docs/app-boundary.md` |
 | Vistas | `docs/views.md`, `docs/framework-view.md` |
 | Seguridad/CSP | `docs/security-conventions.md` |
 | Auth | `docs/auth.md`, `docs/framework-auth.md`, `docs/repository-auth.md` |
 | Database/ORM | `docs/database.md`, `docs/framework-database.md` |
+| Referencias genericas | `docs/entity-references.md` |
+| Reverse cascade delete | `docs/reverse-cascade-delete.md` |
+| Secuencias transaccionales | `docs/sequences.md` |
 | Queue/event/schedule | `docs/framework-event.md`, `docs/framework-queue.md`, `docs/framework-schedule.md` |
 | UI actual | `docs/ui/*.md` vigente |
 | Operacion/calidad | `docs/testing.md`, `docs/quality-gate.md`, `docs/deployment.md` |
@@ -39,11 +43,14 @@ Este archivo enruta la documentacion vigente de `catalyst` para que el contexto 
 |---|---|
 | auth, MFA, reset, verification, OAuth | `docs/framework-auth.md`, `docs/repository-auth.md` |
 | db, query builder, ORM, relations | `docs/framework-database.md`, `STRUCTURE.md` |
+| referencias genericas, cascadas, secuencias | `docs/entity-references.md`, `docs/reverse-cascade-delete.md`, `docs/sequences.md` |
 | events, jobs, scheduler, runtime async | `docs/framework-event.md`, `docs/framework-queue.md`, `docs/framework-schedule.md`, `STRUCTURE.md` |
 | vistas, CSP, scripts inline, `data-*` | `docs/framework-view.md`, `docs/security-conventions.md` |
 | bootstrap, routing, kernel, entry points | `docs/architecture.md`, `docs/entry-points.md`, `docs/kernel.md`, `docs/routing.md` |
 | setup/config | `docs/checklists/setup-completion-e2e.md`, `docs/helpers-config.md` |
 | modulos, navegacion, permisos, assets | `docs/modules.md`, `docs/runtime-module-catalog.md`, `docs/ui/sidebar-navigation.md` |
+| frontera app/framework, updates upstream | `docs/app-boundary.md`, `docs/workflow/reusable-base-install.md` |
+| specs grandes, apps derivadas, mapeo de producto | `docs/spec-to-catalyst-guide.md`, `docs/framework-scaffolding.md`, `docs/app-boundary.md` |
 | clases existentes o nuevas | `STRUCTURE.md`, `docs/runtime-inventory.md` |
 | contrato documental | `docs/documentation-contract.md`, `docs/runtime-inventory.md`, `docs/runtime-module-catalog.md` |
 | API rapida de subsistemas | `API.md` |

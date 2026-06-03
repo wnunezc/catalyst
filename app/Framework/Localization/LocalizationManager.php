@@ -52,7 +52,7 @@ final class LocalizationManager
     /**
      * Initializes configuration access for localization settings.
      *
-     * Responsibility: Initializes configuration access for localization settings.
+     * Responsibility: Binds required collaborators or immutable state without executing the main workflow.
      */
     protected function __construct()
     {
@@ -62,7 +62,7 @@ final class LocalizationManager
     /**
      * Returns runtime localization settings merged with defaults.
      *
-     * Responsibility: Returns runtime localization settings merged with defaults.
+     * Responsibility: Provides read-only access to normalized state without mutating framework runtime.
      * @return array<string, mixed>
      */
     public function settings(): array
@@ -76,7 +76,7 @@ final class LocalizationManager
     /**
      * Returns the configured default locale with base fallback.
      *
-     * Responsibility: Returns the configured default locale with base fallback.
+     * Responsibility: Provides read-only access to normalized state without mutating framework runtime.
      */
     public function defaultLocale(): string
     {
@@ -89,7 +89,7 @@ final class LocalizationManager
     /**
      * Returns labels for all available locales.
      *
-     * Responsibility: Returns labels for all available locales.
+     * Responsibility: Provides read-only access to normalized state without mutating framework runtime.
      * @return array<string, string>
      */
     public function localeLabels(): array
@@ -112,25 +112,14 @@ final class LocalizationManager
     /**
      * Discovers locales from configured support and language catalog roots.
      *
-     * Responsibility: Discovers locales from configured support and language catalog roots.
+     * Responsibility: Provides read-only access to normalized state without mutating framework runtime.
      * @return array<int, string>
      */
     public function availableLocales(): array
     {
         $locales = [];
-
-        foreach ($this->languageRoots() as $root) {
-            if (!is_dir($root['path'])) {
-                continue;
-            }
-
-            $directories = glob($root['path'] . DIRECTORY_SEPARATOR . '*', GLOB_ONLYDIR) ?: [];
-            foreach ($directories as $directory) {
-                $locales[] = strtolower((string) basename($directory));
-            }
-        }
-
         $settings = $this->settings();
+
         foreach ((array) ($settings['supported_locales'] ?? []) as $locale) {
             $locales[] = strtolower(trim((string) $locale));
         }
@@ -149,7 +138,7 @@ final class LocalizationManager
     /**
      * Persists runtime localization settings and updates the app language setting.
      *
-     * Responsibility: Persists runtime localization settings and updates the app language setting.
+     * Responsibility: Coordinates the state-changing workflow after validation and returns the outcome to the caller.
      * @param array<string, mixed> $payload
      */
     public function writeRuntimeSettings(array $payload): void
@@ -188,7 +177,7 @@ final class LocalizationManager
     /**
      * Returns all language catalog root directories managed by the framework.
      *
-     * Responsibility: Returns all language catalog root directories managed by the framework.
+     * Responsibility: Provides read-only access to normalized state without mutating framework runtime.
      * @return array<int, array<string, mixed>>
      */
     public function languageRoots(): array
@@ -226,7 +215,7 @@ final class LocalizationManager
     /**
      * Builds catalog coverage and missing-key details for a locale.
      *
-     * Responsibility: Builds catalog coverage and missing-key details for a locale.
+     * Responsibility: Defines the focused behavior owned by this method and keeps side effects limited to its caller contract.
      * @return array<string, mixed>
      */
     public function localeReport(string $locale): array
@@ -307,7 +296,7 @@ final class LocalizationManager
     /**
      * Initializes missing locale catalog files from the base locale.
      *
-     * Responsibility: Initializes missing locale catalog files from the base locale.
+     * Responsibility: Coordinates the state-changing workflow after validation and returns the outcome to the caller.
      * @return array<string, mixed>
      */
     public function initializeLocale(string $locale, string $label, bool $dryRun = false): array
@@ -374,7 +363,7 @@ final class LocalizationManager
     /**
      * Synchronizes a locale catalog set with missing base-locale keys.
      *
-     * Responsibility: Synchronizes a locale catalog set with missing base-locale keys.
+     * Responsibility: Coordinates the state-changing workflow after validation and returns the outcome to the caller.
      * @return array<string, mixed>
      */
     public function synchronizeLocale(string $locale, bool $dryRun = false): array
@@ -436,7 +425,7 @@ final class LocalizationManager
     /**
      * Normalizes and validates a locale code.
      *
-     * Responsibility: Normalizes and validates a locale code.
+     * Responsibility: Converts caller or catalog input into the canonical shape required by downstream services.
      */
     private function normalizeLocaleCode(string $locale): string
     {
@@ -452,7 +441,7 @@ final class LocalizationManager
     /**
      * Returns default localization runtime settings.
      *
-     * Responsibility: Returns default localization runtime settings.
+     * Responsibility: Provides a focused helper boundary used by the owning service without widening external API ownership.
      * @return array<string, mixed>
      */
     private function defaults(): array
@@ -474,7 +463,7 @@ final class LocalizationManager
     /**
      * Flattens nested locale catalog values into dotted leaf keys.
      *
-     * Responsibility: Flattens nested locale catalog values into dotted leaf keys.
+     * Responsibility: Converts caller or catalog input into the canonical shape required by downstream services.
      * @param array<string, mixed> $data
      * @return array<string, mixed>
      */
@@ -499,7 +488,7 @@ final class LocalizationManager
     /**
      * Reads and decodes a locale JSON file.
      *
-     * Responsibility: Reads and decodes a locale JSON file.
+     * Responsibility: Provides a focused helper boundary used by the owning service without widening external API ownership.
      * @return array<string, mixed>
      */
     private function readJsonFile(string $path): array
@@ -524,7 +513,7 @@ final class LocalizationManager
     /**
      * Recursively merges missing base values into the target catalog.
      *
-     * Responsibility: Recursively merges missing base values into the target catalog.
+     * Responsibility: Converts caller or catalog input into the canonical shape required by downstream services.
      * @param array<string, mixed> $target
      * @param array<string, mixed> $base
      * @return array{merged: array<string, mixed>, missing_keys: array<int, string>}
@@ -559,7 +548,7 @@ final class LocalizationManager
     /**
      * Recursively merges override values without replacing unrelated nested keys.
      *
-     * Responsibility: Recursively merges override values without replacing unrelated nested keys.
+     * Responsibility: Converts caller or catalog input into the canonical shape required by downstream services.
      * @param array<string, mixed> $base
      * @param array<string, mixed> $overrides
      * @return array<string, mixed>
@@ -581,7 +570,7 @@ final class LocalizationManager
     /**
      * Normalizes labels for all supported locales.
      *
-     * Responsibility: Normalizes labels for all supported locales.
+     * Responsibility: Converts caller or catalog input into the canonical shape required by downstream services.
      * @param array<string, mixed> $labels
      * @param array<int, string> $supportedLocales
      * @return array<string, string>
@@ -602,7 +591,7 @@ final class LocalizationManager
     /**
      * Returns a readable label for a locale code.
      *
-     * Responsibility: Returns a readable label for a locale code.
+     * Responsibility: Provides a focused helper boundary used by the owning service without widening external API ownership.
      */
     private function guessLocaleLabel(string $locale): string
     {
