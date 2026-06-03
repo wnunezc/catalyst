@@ -120,3 +120,22 @@ Date: 2026-06-02
 |---|---|---|
 | `docs/audit-remediation-promptd.md` | Historical remediation prompt is current documentation. | H1 marks it historical/obsolete; no runtime owner. |
 | `docs/ui/migration-ui-*.md` | Migration UI cutover plans are current UI contracts. | Current module is `framework.demoui`; live evidence is `docs/runtime-module-catalog.md`. |
+## Final Verification
+
+| Command | Result | Notes |
+|---|---|---|
+| `php public/cli.php docs:inventory --json` | PASS | 623 symbols, 230 templates, 54 scripts. |
+| `php public/cli.php docs:sync-runtime --stdout` | PASS | Runtime module catalog generated; 18 modules, structural lint OK. |
+| `php public/cli.php route:list --json` | PASS | 273 routes returned as JSON. |
+| `php public/cli.php inspect:lint` | PASS | Structural lint is coherent. |
+| `php public/cli.php route:lint` | PASS | Route contract is coherent. |
+| `php public/cli.php quality:check` | PASS | Quality gate passed. Status warnings are environment/config-bound: host Windows DB DNS for queue/scheduler, dev feature flag/OAuth notices; overall Ready. |
+| `git diff --check` | PASS | No whitespace errors. |
+
+## Product Readiness Notes
+
+- Inline PHP docblocks are aligned with responsibility-oriented review.
+- `/docs` canonical files are aligned with current framework runtime behavior.
+- Duplicated responsibilities are classified as confirmed duplicate, overlap, facade, naming drift or no action.
+- Historical and obsolete documentation is removed from the project after classification.
+- `docs/architecture.md` is the current architecture map and central `/docs` index.
