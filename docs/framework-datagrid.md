@@ -36,7 +36,7 @@ El objetivo no fue fragmentar por estilo, sino convertir `DataGrid.php` en el pu
 | Acciones por fila | Resolución e interpolación embebidas | `DataGridRowActionNormalizer` normaliza acciones e interpolaciones |
 | Bulk actions | Preparación en la clase principal | `DataGridBulkActionNormalizer` normaliza acciones masivas y preserva query útil |
 | Paginación | Metadata y navegación dentro del grid | `DataGridPaginationBuilder` construye metadata y URLs incluyendo `First` y `Last` |
-| Export CSV | Lógica mezclada con el grid | `DataGridCsvExporter` genera el stream CSV físico |
+| Export CSV/XLS | Lógica mezclada con el grid | `DataGridCsvExporter` genera el stream CSV físico y `DataGridHtmlExportRenderer` renderiza el XLS HTML desde template tokenizado |
 | Export tools | Botones y formatos acoplados | `DataGridExportNormalizer` prepara opciones de export y `print`; el dropdown final se arma en scope/template |
 | Template | Header más cargado | Header solo de identidad; toolbars arriba y abajo |
 | JS | Riesgo de handlers inline | `admin-grid.js` activa `print`, `per_page` y bulk behavior desde JS externo |
@@ -52,6 +52,7 @@ app/Framework/Admin/Grid/
 ├── DataGridColumnNormalizer.php
 ├── DataGridCsvExporter.php
 ├── DataGridExportNormalizer.php
+├── DataGridHtmlExportRenderer.php
 ├── DataGridFilterNormalizer.php
 ├── DataGridPaginationBuilder.php
 ├── DataGridRowActionNormalizer.php
@@ -467,7 +468,9 @@ La exportación `xls` actual no es `XLSX` nativo. El código genera una tabla HT
 Puntos confirmados:
 
 - el archivo generado termina en `.xls`;
-- las celdas exportadas pasan por `strip_tags()` y luego por `htmlspecialchars(..., ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')`;
+- las celdas exportadas pasan por `strip_tags()` y luego se renderizan con tokens escapados por `ViewTokenRenderer`;
+- el HTML final vive en `boot-core/template/exports/admin-datagrid-xls.phtml`, que no ejecuta PHP;
+- `DataGridHtmlExportRenderer` rechaza templates faltantes, ilegibles o con tags PHP;
 - no existe integración actual con `PhpSpreadsheet`.
 
 ### Print

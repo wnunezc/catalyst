@@ -86,6 +86,8 @@ final class DataGrid
 
     private DataGridCsvExporter $csvExporter;
 
+    private DataGridHtmlExportRenderer $htmlExportRenderer;
+
     private DataGridStateResolver $stateResolver;
 
     private DataGridFilterNormalizer $filterNormalizer;
@@ -111,6 +113,7 @@ final class DataGrid
         ?DataGridUrlBuilder $urlBuilder = null,
         ?DataGridTextFormatter $textFormatter = null,
         ?DataGridCsvExporter $csvExporter = null,
+        ?DataGridHtmlExportRenderer $htmlExportRenderer = null,
         ?DataGridStateResolver $stateResolver = null,
         ?DataGridFilterNormalizer $filterNormalizer = null,
         ?DataGridExportNormalizer $exportNormalizer = null,
@@ -123,6 +126,7 @@ final class DataGrid
         $this->urlBuilder = $urlBuilder ?? new DataGridUrlBuilder();
         $this->textFormatter = $textFormatter ?? new DataGridTextFormatter();
         $this->csvExporter = $csvExporter ?? new DataGridCsvExporter();
+        $this->htmlExportRenderer = $htmlExportRenderer ?? new DataGridHtmlExportRenderer();
         $this->stateResolver = $stateResolver ?? new DataGridStateResolver();
 
         $this->filterNormalizer = $filterNormalizer
@@ -591,30 +595,18 @@ final class DataGrid
             'query' => [],
         ], $state);
 
-        $columns = $this->normalizeColumns($state);
+        $columns = array_map(
+            static fn (array $column): array => [
+                'label' => (string) ($column['label'] ?? ''),
+            ],
+            $this->normalizeColumns($state)
+        );
 
-        $html = [];
-        $html[] = '<!DOCTYPE html>';
-        $html[] = '<html>';
-        $html[] = '<head>';
-        $html[] = '<meta charset="UTF-8">';
-        $html[] = '</head>';
-        $html[] = '<body>';
-        $html[] = '<table border="1">';
-        $html[] = '<thead>';
-        $html[] = '<tr>';
-
-        foreach ($columns as $column) {
-            $html[] = '<th>' . htmlspecialchars((string) ($column['label'] ?? ''), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . '</th>';
-        }
-
-        $html[] = '</tr>';
-        $html[] = '</thead>';
-        $html[] = '<tbody>';
+        $exportRows = [];
 
         foreach ($rows as $row) {
             $row = $this->rowNormalizer->sanitizeExportRow((array) $row, $this->config);
-            $html[] = '<tr>';
+            $cells = [];
 
             foreach ((array) ($this->config['columns'] ?? []) as $column) {
                 $value = $this->rowNormalizer->resolveCellValue(
@@ -627,26 +619,21 @@ final class DataGrid
                     $value = $this->rowNormalizer->stringifyStructuredValue($value);
                 }
 
-                $html[] = '<td>' . htmlspecialchars(
-                        strip_tags((string) ($value ?? '')),
-                        ENT_QUOTES | ENT_SUBSTITUTE,
-                        'UTF-8'
-                    ) . '</td>';
+                $cells[] = [
+                    'value' => strip_tags((string) ($value ?? '')),
+                ];
             }
 
-            $html[] = '</tr>';
+            $exportRows[] = [
+                'cells' => $cells,
+            ];
         }
-
-        $html[] = '</tbody>';
-        $html[] = '</table>';
-        $html[] = '</body>';
-        $html[] = '</html>';
 
         return [
             'filename' => $this->textFormatter->slugify(
                     (string) ($this->config['export_filename'] ?? 'grid-export')
                 ) . '.xls',
-            'contents' => implode(PHP_EOL, $html),
+            'contents' => $this->htmlExportRenderer->render($columns, $exportRows),
         ];
     }
 

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<table border="1">
+    <thead>
+    <tr>
+        {{#each columns}}
+            <th>{{ label }}</th>
+        {{/each}}
+    </tr>
+    </thead>
+    <tbody>
+    {{#each rows}}
+        <tr>
+            {{#each cells}}
+                <td>{{ value }}</td>
+            {{/each}}
+        </tr>
+    {{/each}}
+    </tbody>
+</table>
+</body>
+</html>
