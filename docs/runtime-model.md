@@ -1,25 +1,32 @@
 # Runtime Model
 
-This file is a thin navigation index for Catalyst's runtime model.
+## Purpose
 
-It exists to satisfy the generic Phase 4 target and to keep the canonical runtime statements discoverable through a dedicated broad entry point.
+Provide the high-level runtime map for Catalyst and route readers to the specific canonical documents that own each concern.
 
-## Canonical statements
+## Runtime Owners
 
-- Web requests run through `public/index.php` and execute `Kernel::bootstrap()->run()` once per request.
-- CLI commands run through `public/cli.php` once per invocation.
-- Singletons are an accepted design choice in Catalyst's current request-response / short-lived CLI model.
-- Catalyst is not currently documented as a general long-running HTTP runtime.
-- The Ratchet WebSocket server is a separate CLI process boundary and does not make the main HTTP stack worker-safe.
+| Concern | Owner |
+|---|---|
+| Web entry point | `public/index.php` |
+| CLI entry point | `public/cli.php` |
+| Kernel lifecycle | `Catalyst\Kernel` |
+| Route collection and dispatch | `Catalyst\Framework\Route\Router`, `Catalyst\Framework\Route\RouteDispatcher` |
+| Module runtime catalog | `Catalyst\Framework\Module\ModuleInspector`, `Catalyst\Framework\Module\ModuleHarnessInspector`, `Catalyst\Framework\Module\ModuleLinter` |
+| CLI commands | `Catalyst\Framework\Cli\CommandRegistry` |
 
-## Canonical references
+## Current Behavior
 
-- Architecture overview and runtime boundary: `docs/architecture.md`
-- Entry point split (`index.php` / `cli.php`): `docs/entry-points.md`
-- Bootstrap and request dispatch details: `docs/kernel.md`
-- CLI surface and operational commands: `TERMINAL.md`
+The runtime starts from explicit entry points. HTTP requests bootstrap the kernel and dispatch routes. CLI requests bootstrap the command kernel and execute registered command classes. Module and route documentation is generated from runtime registries, so `docs/runtime-module-catalog.md` and `route:list --json` are the live source for routes, guards, permissions and representative module surfaces.
 
-## Usage note
+## Operational Notes
 
-Use this file when a task starts from the broad label `runtime model`.
-The detailed runtime wording still lives primarily in `docs/architecture.md`.
+Do not use historical route snapshots as live truth. For a current read, run the CLI commands and compare with generated docs. If module registration, route guards, work assets or permissions change, regenerate the runtime module catalog before closing the work.
+
+## Related Documentation
+
+- `docs/architecture.md`
+- `docs/entry-points.md`
+- `docs/kernel.md`
+- `docs/runtime-module-catalog.md`
+- `docs/runtime-inventory.md`

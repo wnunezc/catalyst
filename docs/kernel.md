@@ -1,40 +1,30 @@
 # Kernel
 
-## Namespace: Catalyst
+## Purpose
 
-### Class: Kernel
-**File**: `app/Kernel.php`  
-**Purpose**: Bootstraps the framework, applies effective runtime configuration, loads routes and dispatches every HTTP request.
+Define the runtime owner for HTTP bootstrap, service wiring, route loading and dispatch.
 
-## Main Responsibilities
-- Initialize `Logger` and `Request`
-- Apply effective runtime config from `ConfigManager`
-  - `app.project_debug`
-  - `app.project_timezone`
-  - `logging.log_channel`
-  - `logging.log_level`
-  - `logging.display_logs`
-- Initialize `SessionManager`
-- Initialize `Translator` using the effective app language
-- Load routes, optionally using cached routes when production + setup-owned cache flags are enabled
-- Register global middleware and module view namespaces before route cache lookup
-- Run every request through `SecurityHeadersMiddleware` and then the router/middleware pipeline
+## Runtime Owners
 
-## Public Methods
-- `bootstrap(): self`
-- `run(): void`
+| Concern | Owner |
+|---|---|
+| Kernel bootstrap | `Catalyst\Kernel` |
+| Route loading | `Catalyst\Framework\Route\Router` |
+| Dispatch | `Catalyst\Framework\Route\RouteDispatcher` |
+| Global middleware registration | `Catalyst\Framework\Route\GlobalMiddlewareRegistrar` |
+| Module view path registration | `Catalyst\Framework\View\ModuleViewPathRegistrar` |
 
-## Important Protected Methods
-- `dispatchRequest(Request $request): Response`
-- `loadRoutes(): void`
-- `buildNotFoundResponse(RouteNotFoundException $e): Response`
-- `buildMethodNotAllowedResponse(MethodNotAllowedException $e): Response`
-- `buildServerErrorResponse(string $ticket): Response`
-- `applyRuntimeConfiguration(): void`
+## Current Behavior
 
-## Notes
-- `Kernel::run()` always dispatches the request after bootstrap. It no longer gates dispatch behind environment-specific branches.
-- Cache activation is resolved only from `boot-core/config/{env}/cache.json`.
-- Runtime cache consumption is allowed only when the real environment is `production` and `cache.cache.cache_enabled = true`.
-- When route cache is enabled but the artifact is missing, `Kernel::loadRoutes()` performs a cold route bootstrap and regenerates the route cache file best-effort.
-- `GlobalMiddlewareRegistrar` and `ModuleViewPathRegistrar` run before the cache branch so a cache hit cannot omit middleware or view namespaces.
+`Catalyst\Kernel` bootstraps runtime services, loads routes and dispatches HTTP requests. Route and middleware behavior is validated by `route:lint`, `route:bootstrap-regression` and `inspect:lint`. The kernel does not own domain behavior; controllers, managers, repositories, requests and module services own feature-specific work.
+
+## Operational Notes
+
+Bootstrap/cache paths must keep route order, middleware registration and module view paths coherent. When editing routing or bootstrap behavior, run `php public/cli.php route:bootstrap-regression`, `php public/cli.php route:list --json`, `php public/cli.php inspect:lint` and `php public/cli.php route:lint`.
+
+## Related Documentation
+
+- `docs/entry-points.md`
+- `docs/routing.md`
+- `docs/middleware.md`
+- `docs/framework-view.md`

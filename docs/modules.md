@@ -1,45 +1,35 @@
 # Module Index
 
-This file is a thin navigation index for Catalyst's module model.
+## Purpose
 
-It exists to satisfy the generic Phase 4 target without merging the split repository docs back into one monolith.
+Route readers to the current module model and generated module catalog.
 
-## Runtime module model
+## Runtime Owners
 
-- Framework-owned modules live under `Repository/Framework/{Module}/`
-- Application-owned modules live under `Repository/App/Surface/{Module}/`
-- A module may include `Controllers/`, `Models/`, `Views/pages`, `Views/partials`, `Views/components`, `Views/scope`, `front/`, `lang/`, and `routes.php`
-- `ModuleRegistry`, `NavigationRegistry` y `PermissionRegistry` son los mapas canonicos de metadata, navegacion y acceso de cada modulo
-- Las entradas administrativas que aparecen en el sidebar deben declarar `context`, `group`, `group_label` y `group_order`; la taxonomia vigente vive en `docs/navigation-route-refactor-plan.md`
+| Concern | Owner |
+|---|---|
+| Built-in declarations | `Catalyst\Framework\Module\BuiltInModuleDeclarations` |
+| Module registry | `Catalyst\Framework\Module\ModuleRegistry` |
+| Module discovery | `Catalyst\Framework\Module\ModuleDiscovery` |
+| Module inspection | `Catalyst\Framework\Module\ModuleInspector` |
+| Harness inspection | `Catalyst\Framework\Module\ModuleHarnessInspector` |
+| Module lint | `Catalyst\Framework\Module\ModuleLinter` |
+| Navigation | `Catalyst\Framework\Navigation\NavigationRegistry` |
+| Permissions | `Catalyst\Framework\Authorization\PermissionRegistry` |
 
-## Canonical references
+## Current Behavior
 
-- Module architecture and loading model: `docs/architecture.md`
-- Public API index by subsystem/module: `API.md`
-- Full class and directory dictionary: `STRUCTURE.md`
-- Runtime surface truth: `docs/runtime-module-catalog.md`
-- Navigation and route taxonomy: `docs/navigation-route-refactor-plan.md`
-- Complete route matrix: `docs/navigation-route-matrix-222.md`
-- CLI/runtime inspection: `TERMINAL.md`
+The generated runtime module catalog currently reports 18 modules with structural lint OK. It records surfaces, representative routes, permissions, assets, settings, feature flags and route guard behavior. Module docs should treat that generated catalog as live truth.
 
-## Framework modules with dedicated docs
+Module code is split between `Repository/App/Surface/*` for app surfaces and `Repository/Framework/*` for framework-owned modules. Core framework primitives remain under `app/Framework/*`.
 
-- Auth: `docs/repository-auth.md`
-- DevTools: `docs/repository-devtools.md`
-- Notification: `docs/repository-notification.md`
+## Operational Notes
 
-## Framework modules documented through runtime maps
+Run `php public/cli.php docs:sync-runtime --stdout` after module registration, routes, assets, permissions, settings or harness behavior changes. Do not preserve static route inventories as current module documentation.
 
-- Settings: `STRUCTURE.md`, `docs/checklists/setup-completion-e2e.md`
-- Roles / Permissions: `STRUCTURE.md`
-- Audit: `STRUCTURE.md`, `docs/runtime-module-catalog.md`
-- Operations: `STRUCTURE.md`, `docs/runtime-module-catalog.md`, `TERMINAL.md`
-- Media: `STRUCTURE.md`, `docs/runtime-module-catalog.md`, `TERMINAL.md`
-- Documents: `STRUCTURE.md`, `docs/runtime-module-catalog.md`, `TERMINAL.md`
-- Automation: `STRUCTURE.md`, `docs/runtime-module-catalog.md`, `TERMINAL.md`
-- API Platform: `STRUCTURE.md`, `docs/runtime-module-catalog.md`, `TERMINAL.md`
+## Related Documentation
 
-## Usage note
-
-Use this file when a task starts from the broad label `modules`.
-Detailed contracts stay in the split docs and the structure dictionary.
+- `docs/runtime-module-catalog.md`
+- `docs/runtime-inventory.md`
+- `docs/routing.md`
+- `docs/harness-context-map.md`

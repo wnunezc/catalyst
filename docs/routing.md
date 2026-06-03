@@ -1,30 +1,32 @@
 # Routing Index
 
-This file is a thin navigation index for Catalyst's routing and dispatch model.
+## Purpose
 
-It exists to satisfy the generic Phase 4 target without duplicating the runtime story already split across architecture, kernel, and module docs.
+Route readers to the live routing sources and define the split between route registration, collection, matching, dispatch and URL generation.
 
-## Canonical references
+## Runtime Owners
 
-- Route loading order and runtime model: `docs/architecture.md`
-- Bootstrap, dispatch, route cache, and global middleware entry: `docs/kernel.md`
-- Web and CLI entry points: `docs/entry-points.md`
-- Base controller request/response helpers: `docs/framework-controllers.md`
-- Module route surfaces:
-  - Auth: `docs/repository-auth.md`
-  - DevTools: `docs/repository-devtools.md`
-  - Notification: `docs/repository-notification.md`
-- Navigation and route ownership taxonomy: `docs/navigation-route-refactor-plan.md`
-- Living runtime route truth: `php public/cli.php route:list --json`, `php public/cli.php docs:sync-runtime`, `docs/runtime-module-catalog.md`
-- Historical route matrix snapshot: `docs/navigation-route-matrix-222.md`
+| Concern | Owner |
+|---|---|
+| Route registration | `Catalyst\Framework\Route\Router` |
+| Route storage | `Catalyst\Framework\Route\RouteCollection` |
+| Route compilation | `Catalyst\Framework\Route\RouteCompiler` |
+| Dispatch | `Catalyst\Framework\Route\RouteDispatcher` |
+| Groups | `Catalyst\Framework\Route\RouteGroup` |
+| Canonical redirects | `Catalyst\Framework\Route\CanonicalPathRedirector` |
+| Route CLI truth | `php public/cli.php route:list --json` |
 
-## Scope note
+## Current Behavior
 
-The project does not keep a separate long-form generic routing manual.
-The canonical routing story is intentionally split by concern: architecture, kernel bootstrap, and module route surfaces.
+Routes are declared by framework and app modules, loaded through the kernel, and exposed through `route:list`. The current runtime has app public surfaces, auth-flow routes, authenticated workspace/admin modules, authenticated API routes and DevTools routes. Route guards are validated by `inspect:lint`; route casing, aliases and work asset publication are validated by `route:lint`.
 
-Route visibility is separate from route existence. Canonical sidebar entries, contextual CRUD routes, technical helpers, callbacks and normalization behavior are classified in `docs/navigation-route-refactor-plan.md`; the living router universe should be read from `route:list --json` and `docs/runtime-module-catalog.md`.
+## Operational Notes
 
-## Usage note
+Do not rely on `docs/navigation-route-matrix-222.md` or `docs/ui/route-inventory-99.md` for live route truth. Those snapshots are superseded by `route:list --json` and `docs/runtime-module-catalog.md`.
 
-Use this file when a task starts from the broad label `routing`.
+## Related Documentation
+
+- `docs/kernel.md`
+- `docs/middleware.md`
+- `docs/runtime-module-catalog.md`
+- `docs/modules.md`
