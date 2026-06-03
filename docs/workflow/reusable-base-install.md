@@ -55,25 +55,68 @@ Do not carry over:
 1. Choose the target site root and host name.
 2. Copy the reviewed base contents into the target site root. For XAMPP this can
    be `htdocs` itself; do not require a wrapper folder named `catalyst`.
-3. Run:
+3. Initialize the application repository and keep Catalyst as upstream:
+
+```powershell
+git remote rename origin upstream
+git remote add origin <your-application-repository-url>
+git fetch upstream --tags
+```
+
+If the application repository was already initialized, keep `origin` pointing to
+the application repository and add Catalyst separately:
+
+```powershell
+git remote add upstream https://github.com/wnunezc/catalyst.git
+git fetch upstream --tags
+```
+
+4. Run:
 
 ```powershell
 composer install
 composer dump-autoload
 ```
 
-4. Create local `.env` and config from templates.
-5. Set project-specific:
+5. Create local `.env` and config from templates.
+6. Set project-specific:
    - app name/URL;
    - DB database/user/password;
    - mail credentials;
    - OAuth credentials if used;
    - storage credentials if used.
-6. Configure the web server:
+7. Configure the web server:
    - preferred: point the VirtualHost document root to `public/`;
    - fallback: allow the root `.htaccess` to forward project-root requests to
      `public/` transparently.
-7. Run the setup wizard and create the initial admin.
+8. Run the setup wizard and create the initial admin.
+
+## Update Workflow
+
+Check local version metadata:
+
+```powershell
+php public/cli.php version
+php public/cli.php update:check
+```
+
+When a new Catalyst release is available, update manually through Git:
+
+```powershell
+git fetch upstream --tags
+git merge v0.1.1
+php public/cli.php quality:check
+```
+
+Use the actual target tag instead of `v0.1.1`. `update:check` does not modify
+files, branches or remotes; it only reports version information and suggested
+commands.
+
+Keep application-specific implementation inside `Repository/App/` whenever
+possible. Framework updates are expected to touch `app/`, `Repository/Framework/`,
+`boot-core/`, shared `public/assets/*/catalyst/` files and current documentation.
+If a release needs to change the application boundary, the release notes must
+call that out explicitly.
 
 ## Baseline Verification
 
@@ -118,3 +161,5 @@ Each new project should retain:
 - list of any base modules intentionally disabled.
 - configured web URL and whether Apache serves `public/` directly or via the
   root `.htaccess` fallback.
+- configured `origin` and `upstream` remotes.
+- current `php public/cli.php version` output.

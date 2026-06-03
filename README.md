@@ -101,6 +101,55 @@ security, WebSocket and DKIM values as needed. Database credentials, mail
 credentials, OAuth secrets, FTP credentials and DKIM keys belong to the
 developer's environment, not to the distributed base.
 
+## Project Repositories And Updates
+
+A derived application should keep the full Catalyst project in its own Git
+repository. For example, an ERP project can use `origin` for the application
+repository and keep Catalyst as `upstream`:
+
+```powershell
+git remote add upstream https://github.com/wnunezc/catalyst.git
+git fetch upstream --tags
+```
+
+Application work should live primarily under:
+
+```text
+Repository/App/
+```
+
+Framework-owned updates normally come from:
+
+```text
+app/
+Repository/Framework/
+boot-core/
+public/assets/js/catalyst/
+public/assets/css/catalyst/
+docs/
+```
+
+To check the installed Catalyst version:
+
+```powershell
+php public/cli.php version
+php public/cli.php update:check
+```
+
+`update:check` is informational. It does not merge code or modify the working
+tree. When a newer release is available, review release notes and update through
+Git:
+
+```powershell
+git fetch upstream --tags
+git merge v0.1.1
+php public/cli.php quality:check
+```
+
+Resolve conflicts carefully. In a healthy derived project, most application
+conflicts should stay inside `Repository/App/`; framework updates should avoid
+overwriting application-specific code.
+
 ## Configuration Baseline
 
 Portable starter configuration lives in:

@@ -22,6 +22,10 @@ application inside `Repository/App/`.
   mail accounts, DKIM keys and secrets are not distribution defaults.
 - First-run and reusable-base workflows use templates, `.env` and the setup
   wizard as the configuration path.
+- Derived projects keep their own `origin` remote and add Catalyst as `upstream`
+  for tagged release updates.
+- `version` and `update:check` expose local release metadata and manual update
+  guidance.
 - Quality gate and runtime documentation generation remain the pre-release
   validation baseline.
 
@@ -34,6 +38,7 @@ application inside `Repository/App/`.
 4. Confirm setup wizard can configure app URL, database, mail, security and DKIM
    values without maintainer-local assumptions.
 5. Produce release notes with known constraints and verification commands.
+6. Publish a tag matching `boot-core/version.json`.
 
 ## Expected 0.1.0 Feedback
 
@@ -43,6 +48,8 @@ application inside `Repository/App/`.
 - Whether additional CLI commands are needed for clean project initialization.
 - Any runtime path assumptions that still depend on maintainer-local folders or
   URLs.
+- Whether the `origin`/`upstream` update flow is clear enough for derived
+  application repositories.
 
 ## Deferred
 

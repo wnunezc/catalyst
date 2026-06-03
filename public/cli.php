@@ -89,6 +89,7 @@ use Catalyst\Framework\Cli\Commands\PresenceSmokeCommand;
 use Catalyst\Framework\Cli\Commands\TenancySmokeCommand;
 use Catalyst\Framework\Cli\Commands\TenancyStatusCommand;
 use Catalyst\Framework\Cli\Commands\TimelineSmokeCommand;
+use Catalyst\Framework\Cli\Commands\UpdateCheckCommand;
 use Catalyst\Framework\Cli\Commands\VersionCommand;
 use Catalyst\Framework\Cli\Commands\StatusCommand;
 use Catalyst\Framework\Cli\Commands\CacheBuildCommand;
@@ -180,6 +181,7 @@ $registry
     ->register(new TenancySmokeCommand())
     ->register(new TenancyStatusCommand())
     ->register(new TimelineSmokeCommand())
+    ->register(new UpdateCheckCommand())
     ->register(new VersionCommand())
     ->register(new StatusCommand())
     ->register(new CacheBuildCommand())

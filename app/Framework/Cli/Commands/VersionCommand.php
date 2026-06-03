@@ -32,6 +32,7 @@ namespace Catalyst\Framework\Cli\Commands;
 
 use Catalyst\Framework\Argument\ArgumentBag;
 use Catalyst\Framework\Cli\AbstractCommand;
+use Catalyst\Framework\Release\ReleaseMetadata;
 
 /**
  * version CLI command.
@@ -42,8 +43,6 @@ use Catalyst\Framework\Cli\AbstractCommand;
  */
 class VersionCommand extends AbstractCommand
 {
-    private const FRAMEWORK_VERSION = '1.0.0-dev';
-
     /**
      * Returns the command name registered in the CLI registry.
      *
@@ -71,8 +70,17 @@ class VersionCommand extends AbstractCommand
      */
     public function execute(ArgumentBag $args): int
     {
+        try {
+            $release = ReleaseMetadata::local();
+        } catch (\Throwable $e) {
+            $this->error('Unable to read release metadata: ' . $e->getMessage());
+            return 1;
+        }
+
         $this->line('');
-        $this->info('Catalyst PHP Framework v' . self::FRAMEWORK_VERSION);
+        $this->info('Catalyst PHP Framework v' . $release['version']);
+        $this->line('Channel     : ' . $release['channel']);
+        $this->line('Source      : ' . $release['source']);
         $this->line('PHP Version : ' . PHP_VERSION);
         $this->line('Platform    : ' . PHP_OS);
         $this->line('SAPI        : ' . PHP_SAPI);

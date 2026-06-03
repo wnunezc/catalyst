@@ -126,6 +126,8 @@ php public/cli.php fixtures:auth --user qa-admin --set-mfa-enabled 0 --json
 php public/cli.php route:list --json
 php public/cli.php config:show app --json
 php public/cli.php key:generate --show
+php public/cli.php version
+php public/cli.php update:check
 php public/cli.php storage:clean --dry-run
 php public/cli.php devtools:disable --dry-run
 php public/cli.php make:crud Catalog CatalogItem --fields="name:text!,slug:text!,description:textarea" --soft-deletes=1 --auditable=1

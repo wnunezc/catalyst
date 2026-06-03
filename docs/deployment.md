@@ -41,6 +41,19 @@ deployment defaults. Project URL, database, mail, DKIM, OAuth and storage values
 belong to the target environment and must be configured by the developer or
 operator.
 
+For derived projects, keep the application's Git remote as `origin` and Catalyst
+as `upstream`. Release updates should be merged from tags after reviewing release
+notes:
+
+```powershell
+git fetch upstream --tags
+git merge v0.1.1
+php public/cli.php quality:check
+```
+
+Use `php public/cli.php version` and `php public/cli.php update:check` to inspect
+local release metadata before updating.
+
 ## Related Documentation
 
 - `docs/quality-gate.md`
