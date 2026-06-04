@@ -103,6 +103,7 @@ use Catalyst\Framework\Cli\Commands\CacheClearCommand;
 use Catalyst\Framework\Cli\Commands\ClaimsListCommand;
 use Catalyst\Framework\Cli\Commands\ClaimsReleaseCommand;
 use Catalyst\Framework\Cli\Commands\ConfigSecretsSyncCommand;
+use Catalyst\Framework\Cli\Commands\ConfigContractSmokeCommand;
 use Catalyst\Framework\Cli\Commands\ConcurrencySmokeCommand;
 use Catalyst\Framework\Cli\Commands\DeletionSmokeCommand;
 use Catalyst\Framework\Cli\Commands\QueueFailedCommand;
@@ -143,6 +144,7 @@ use Catalyst\Framework\Cli\Commands\MigrateCommand;
 use Catalyst\Framework\Cli\Commands\MigrateRollbackCommand;
 use Catalyst\Framework\Cli\Commands\MigrateStatusCommand;
 use Catalyst\Framework\Cli\Commands\ConfigShowCommand;
+use Catalyst\Framework\Cli\Commands\ConfigSyncCommand;
 use Catalyst\Framework\Cli\Commands\DevToolsDisableCommand;
 use Catalyst\Framework\Cli\Commands\KeyGenerateCommand;
 use Catalyst\Framework\Cli\Commands\SecurityCheckCommand;
@@ -207,10 +209,12 @@ $registry
     ->register(new CacheClearCommand())
     ->register(new ClaimsListCommand())
     ->register(new ClaimsReleaseCommand())
+    ->register(new ConfigContractSmokeCommand())
     ->register(new ConfigSecretsSyncCommand())
     ->register(new ConcurrencySmokeCommand())
     ->register(new DeletionSmokeCommand())
     ->register(new ConfigShowCommand())
+    ->register(new ConfigSyncCommand())
     ->register(new DevToolsDisableCommand())
     ->register(new KeyGenerateCommand())
     ->register(new QueueWorkCommand())

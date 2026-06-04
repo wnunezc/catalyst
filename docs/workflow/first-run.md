@@ -32,6 +32,9 @@ composer dump-autoload
 3. Prepare local environment files:
    - copy from safe templates under `boot-core/config/templates/`;
    - create `boot-core/config/env/.env` locally;
+   - allow `ConfigManager` or `php public/cli.php config:sync` to create
+     `boot-core/config/development/app.json`, `db.json` and `session.json`
+     from their tracked `.example.json` templates when missing;
    - do not commit `.env`, DKIM private keys or runtime storage.
 4. Configure Apache so the effective document root is `public/`.
    - Preferred: point the VirtualHost `DocumentRoot` directly at `public/`.
@@ -43,6 +46,7 @@ composer dump-autoload
 ```powershell
 php public/cli.php help
 php public/cli.php status
+php public/cli.php config:sync
 ```
 
 6. Open the setup wizard when the project is not configured:
@@ -80,6 +84,7 @@ composer validate --strict
 composer audit
 php public/cli.php route:lint
 php public/cli.php inspect:lint
+php public/cli.php config:contract-smoke --json
 php public/cli.php security:check
 php public/cli.php quality:check
 php public/cli.php route:list --json
@@ -103,4 +108,6 @@ A fresh checkout is ready for development when:
   for setup testing;
 - quality gate passes;
 - local secrets remain untracked.
+- active development config remains untracked while `.example.json` templates
+  remain versioned.
 - the browser URL does not require a `/catalyst` path segment.

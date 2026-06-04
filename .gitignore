@@ -12,6 +12,12 @@ boot-core/config/env/.env
 boot-core/config/env/.env.*
 !boot-core/config/env/.env.example
 !boot-core/config/env/.env.ver
+/boot-core/config/development/app.json
+/boot-core/config/development/db.json
+/boot-core/config/development/session.json
+!/boot-core/config/development/app.example.json
+!/boot-core/config/development/db.example.json
+!/boot-core/config/development/session.example.json
 
 #------------------------------------------------------------------------------
 # Dependencies
@@ -109,6 +115,7 @@ Temporary Items
 *.swo
 *~
 *.bak
+*.bak-*
 *.old
 
 #------------------------------------------------------------------------------

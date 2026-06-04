@@ -46,6 +46,7 @@ declare(strict_types=1);
  *   - Catalyst\Helpers\Exceptions\  → app/Helpers/Exceptions
  *   - Catalyst\Framework\Argument\  → app/Framework/Argument
  *   - Catalyst\Framework\Cache\     → app/Framework/Cache
+ *   - Catalyst\Framework\Config\    → app/Framework/Config
  *   - Catalyst\Framework\Sensitivity\ → app/Framework/Sensitivity
  */
 
@@ -64,6 +65,7 @@ spl_autoload_register(function (string $class): bool {
         'Catalyst\\Helpers\\Exceptions\\'   => 'app/Helpers/Exceptions',
         'Catalyst\\Framework\\Argument\\'   => 'app/Framework/Argument',
         'Catalyst\\Framework\\Cache\\'      => 'app/Framework/Cache',
+        'Catalyst\\Framework\\Config\\'     => 'app/Framework/Config',
         'Catalyst\\Framework\\Sensitivity\\' => 'app/Framework/Sensitivity',
     ];
 

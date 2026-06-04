@@ -41,6 +41,8 @@ php public/cli.php claims:list --active
 - `docs:sync-runtime` - generate or print the living runtime module catalog; supports `--stdout`, `--path`
 - `route:list` - list resolved routes; supports `--json`
 - `config:show <section>` - show effective configuration; supports `--json`
+- `config:sync` - create missing local config files and merge new template keys without replacing local values; supports `--json`
+- `config:contract-smoke` - verify local config examples, ignore rules and derived-update preservation; supports `--json`
 - `security:check` - scan for CSP/frontend security hotspots
 - `migrate:status` - list discovered migrations and applied state
 - `feature-flags:list` - inspect the runtime feature flag catalog and effective states; supports `--json`
@@ -70,6 +72,7 @@ php public/cli.php claims:list --active
 - `concurrency:smoke` - canonical PA-01 DB-backed smoke for optimistic locking plus claim reclaim; supports `--json`
 - `timeline:smoke` - canonical PA-09 DB-backed smoke for timeline start/stop/milestone semantics plus workflow capture; supports `--json`
 - `catalogs:smoke` - canonical PA-11 DB-backed smoke for governed catalogs plus metadata form/grid consumption; supports `--json`
+- `admin-navigation:smoke` - verify admin sidebar projection, canonical surfaces and derived app extension tolerance; supports `--json`
 
 ### Database
 
@@ -125,6 +128,9 @@ php public/cli.php fixtures:auth --user qa-auth --token-counts --json
 php public/cli.php fixtures:auth --user qa-admin --set-mfa-enabled 0 --json
 php public/cli.php route:list --json
 php public/cli.php config:show app --json
+php public/cli.php config:sync --json
+php public/cli.php config:contract-smoke --json
+php public/cli.php admin-navigation:smoke --json
 php public/cli.php key:generate --show
 php public/cli.php version
 php public/cli.php update:check
@@ -140,6 +146,10 @@ php public/cli.php schedule:run --task=framework.queue.prune-history --force
 ## Operational Notes
 
 - Prefer `help` and per-command `--help` as the authoritative source for options.
+- `config:sync` is safe for derived projects: it writes backups before adding
+  missing keys and does not replace app URL, DB credentials or session names.
+- `admin-navigation:smoke` validates that Catalyst canonical sidebar surfaces
+  remain present while allowing valid app-owned entries in canonical groups.
 - `migrate:status` may fail from the Windows host when the DB hostname only exists inside WSDD/Docker. That is an environment boundary, not a CLI parser bug.
 - DB-backed `fixtures:auth` actions can hit the same host boundary when the Windows host cannot resolve `WSDD-MySql-Server`; in that case run the same CLI through the WSDD PHP container instead of treating it as a command bug.
 - For Catalyst mounted in WSDD, the local DB-backed CLI pattern is:

@@ -84,6 +84,7 @@ final class AdminNavigationSmokeCommand extends AbstractCommand
         $expectedHrefs = $this->adminHrefs($definitions);
         $actualHrefs = $this->sidebarHrefs($sidebar);
         $missingHrefs = array_values(array_diff($expectedHrefs, $actualHrefs));
+        $missingCanonicalHrefs = array_values(array_diff(AdminShellNavigationPresenter::canonicalHrefs(), $actualHrefs));
         $organizationItem = $this->findSidebarItem($sidebar, '/users/organization-hierarchy');
         $usersGroup = $this->findSidebarGroup($sidebar, 'Users');
         $configurationGroup = $this->findSidebarGroup($sidebar, 'Configuration');
@@ -92,16 +93,17 @@ final class AdminNavigationSmokeCommand extends AbstractCommand
 
         $checks = [
             'all_admin_hrefs_projected' => $missingHrefs === [],
+            'canonical_hrefs_present' => $missingCanonicalHrefs === [],
             'canonical_titles_once' => $titles === ['Framework Configuration', 'Framework Operations'],
             'canonical_groups_present' => $groupLabels === ['Configuration', 'Workspaces', 'Operations', 'Users', 'Devtools'],
-            'configuration_surfaces_preserved' => $this->groupLabelsMatch($configurationGroup, [
+            'configuration_surfaces_preserved' => $this->groupContainsLabelsInOrder($configurationGroup, [
                 'Environment Setup',
                 'Application Health',
                 'Platform Appearance',
                 'Feature Flags',
                 'Plugins Management',
             ]),
-            'workspaces_surfaces_preserved' => $this->groupLabelsMatch($this->findSidebarGroup($sidebar, 'Workspaces'), [
+            'workspaces_surfaces_preserved' => $this->groupContainsLabelsInOrder($this->findSidebarGroup($sidebar, 'Workspaces'), [
                 'Catalogs',
                 'Module Designer',
                 'Media and Documents Fields',
@@ -109,14 +111,14 @@ final class AdminNavigationSmokeCommand extends AbstractCommand
                 'Document Template',
                 'Locale Tools',
             ]),
-            'operations_surfaces_preserved' => $this->groupLabelsMatch($this->findSidebarGroup($sidebar, 'Operations'), [
+            'operations_surfaces_preserved' => $this->groupContainsLabelsInOrder($this->findSidebarGroup($sidebar, 'Operations'), [
                 'Deployments',
                 'Tenancy',
                 'Audit Log',
                 'API Platform',
                 'Automation Rules',
             ]),
-            'users_surfaces_preserved' => $this->groupLabelsMatch($usersGroup, [
+            'users_surfaces_preserved' => $this->groupContainsLabelsInOrder($usersGroup, [
                 'User Management',
                 'User Role',
                 'User Permissions',
@@ -124,12 +126,13 @@ final class AdminNavigationSmokeCommand extends AbstractCommand
                 'Organization Hierarchy',
                 'Account Recovery',
             ]),
-            'devtools_surfaces_preserved' => $this->groupLabelsMatch($this->findSidebarGroup($sidebar, 'Devtools'), [
+            'devtools_surfaces_preserved' => $this->groupContainsLabelsInOrder($this->findSidebarGroup($sidebar, 'Devtools'), [
                 'Test Features',
                 'UI Showcase',
                 'UML / Architecture',
                 'Demo UI',
             ]),
+            'derived_group_entries_allowed' => $this->derivedOperationsEntriesAllowed(),
             'no_nested_users_item' => !$this->groupContainsLabel($usersGroup, 'Users'),
             'no_operations_inside_configuration' => !$this->groupContainsLabel($configurationGroup, 'Operations'),
             'account_recovery_under_users' => $this->groupContainsHref($usersGroup, '/admin/account-recovery'),
@@ -145,6 +148,7 @@ final class AdminNavigationSmokeCommand extends AbstractCommand
             'success' => $success,
             'checks' => $checks,
             'missing_hrefs' => $missingHrefs,
+            'missing_canonical_hrefs' => $missingCanonicalHrefs,
             'titles' => $titles,
             'groups' => $groupLabels,
         ];
@@ -163,6 +167,9 @@ final class AdminNavigationSmokeCommand extends AbstractCommand
         }
         if ($missingHrefs !== []) {
             $this->line('  Missing hrefs: ' . implode(', ', $missingHrefs));
+        }
+        if ($missingCanonicalHrefs !== []) {
+            $this->line('  Missing canonical hrefs: ' . implode(', ', $missingCanonicalHrefs));
         }
         $this->line(str_repeat('-', 74));
         $success ? $this->success('Admin navigation projection is coherent.') : $this->error('Admin navigation projection has issues.');
@@ -328,12 +335,12 @@ final class AdminNavigationSmokeCommand extends AbstractCommand
     }
 
     /**
-     * Checks whether group item labels match exactly.
+     * Checks whether canonical group item labels are present in order.
      *
      * @param array<string, mixed>|null $group
      * @param string[] $expectedLabels
      */
-    private function groupLabelsMatch(?array $group, array $expectedLabels): bool
+    private function groupContainsLabelsInOrder(?array $group, array $expectedLabels): bool
     {
         if ($group === null) {
             return false;
@@ -346,7 +353,41 @@ final class AdminNavigationSmokeCommand extends AbstractCommand
             }
         }
 
-        return $labels === $expectedLabels;
+        $offset = 0;
+        foreach ($expectedLabels as $expected) {
+            $index = array_search($expected, array_slice($labels, $offset), true);
+            if ($index === false) {
+                return false;
+            }
+
+            $offset += $index + 1;
+        }
+
+        return true;
+    }
+
+    /**
+     * Simulates derived app entries in a canonical group.
+     */
+    private function derivedOperationsEntriesAllowed(): bool
+    {
+        return $this->groupContainsLabelsInOrder([
+            'items' => [
+                ['label' => 'Deployments', 'href' => '/operations/deployments'],
+                ['label' => 'Tenancy', 'href' => '/operations/tenancy'],
+                ['label' => 'Audit Log', 'href' => '/operations/audit-log'],
+                ['label' => 'API Platform', 'href' => '/operations/api-platform'],
+                ['label' => 'Automation Rules', 'href' => '/operations/automation-rules'],
+                ['label' => 'RTM Profile', 'href' => '/rtm/profile'],
+                ['label' => 'RTM Radio', 'href' => '/rtm/radio'],
+            ],
+        ], [
+            'Deployments',
+            'Tenancy',
+            'Audit Log',
+            'API Platform',
+            'Automation Rules',
+        ]);
     }
 
     /**

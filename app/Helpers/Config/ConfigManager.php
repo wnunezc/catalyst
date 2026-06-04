@@ -32,6 +32,7 @@ namespace Catalyst\Helpers\Config;
 
 use Catalyst\Framework\Cache\BootstrapCacheManager;
 use Catalyst\Framework\Cache\CacheSettings;
+use Catalyst\Framework\Config\LocalConfigManager;
 use Catalyst\Framework\Traits\SingletonTrait;
 use Exception;
 
@@ -388,14 +389,18 @@ class ConfigManager
      */
     private function load(): void
     {
+        $configDir = implode(DS, [PD, 'boot-core', 'config', $this->environment]);
+
+        if (is_dir($configDir)) {
+            (new LocalConfigManager())->ensureActiveFiles($this->environment);
+        }
+
         $cachedConfig = BootstrapCacheManager::loadConfigCache();
         if (is_array($cachedConfig) && $cachedConfig !== []) {
             $this->config = $cachedConfig;
             $this->configured = $this->detectConfigured();
             return;
         }
-
-        $configDir = implode(DS, [PD, 'boot-core', 'config', $this->environment]);
 
         if (!is_dir($configDir)) {
             return;
@@ -404,6 +409,10 @@ class ConfigManager
         $files = glob($configDir . DS . '*.json') ?: [];
 
         foreach ($files as $file) {
+            if (str_ends_with(strtolower(basename($file)), '.example.json')) {
+                continue;
+            }
+
             if (strtolower(pathinfo($file, PATHINFO_FILENAME)) === 'secrets') {
                 continue;
             }

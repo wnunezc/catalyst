@@ -5,7 +5,7 @@ Composer package. It is meant to be copied or cloned as the starting point for a
 web application, then configured through local environment files and the setup
 wizard.
 
-Current distribution target: `0.1.0-rc.4`.
+Current distribution target: `0.1.0-rc.5`.
 
 ## Runtime Model
 
@@ -171,9 +171,18 @@ boot-core/config/{environment}/*.json
 boot-core/config/env/.env
 ```
 
-The setup wizard materializes project-specific configuration. Treat tracked
-development configuration as a local baseline only; release exports must exclude
-runtime secrets and private artifacts.
+For development, `app.json`, `db.json` and `session.json` are local-only active
+files. Catalyst tracks `app.example.json`, `db.example.json` and
+`session.example.json` as first-run templates, then creates or syncs the active
+files without overwriting local values:
+
+```powershell
+php public/cli.php config:sync
+php public/cli.php config:contract-smoke --json
+```
+
+The setup wizard materializes project-specific configuration. Release exports
+must exclude runtime secrets, active local config, private artifacts and storage.
 
 ## Platform Capabilities
 
@@ -268,11 +277,11 @@ API.md                    Subsystem index
 
 ## Distribution Status
 
-`0.1.0-rc.4` is intended as the fourth distribution candidate for developers who
-will use Catalyst as a project base. It supersedes `0.1.0-rc.3` by restoring the
-curated admin sidebar taxonomy while keeping registry-backed discovery for
-module-declared surfaces. It is not a public Composer package and is not
-intended to be installed into another project's `vendor/` directory.
+`0.1.0-rc.5` is intended as the fifth distribution candidate for developers who
+will use Catalyst as a project base. It supersedes `0.1.0-rc.4` by protecting
+local development config in derived projects while preserving the RC4 admin
+sidebar taxonomy. It is not a public Composer package and is not intended to be
+installed into another project's `vendor/` directory.
 
 Before a release artifact is published, generate it from a clean checkout and
 exclude local secrets, DKIM keys, runtime storage, uploads, logs, ad-hoc zips and

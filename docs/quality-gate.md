@@ -11,6 +11,8 @@ Define the local pre-commit/pre-push quality check for Catalyst.
 | Quality gate orchestration | `Catalyst\Framework\Cli\Commands\QualityCheckCommand` |
 | Route contract | `Catalyst\Framework\Cli\Commands\RouteLintCommand` |
 | Structural contract | `Catalyst\Framework\Cli\Commands\InspectLintCommand` |
+| Local config contract | `Catalyst\Framework\Cli\Commands\ConfigContractSmokeCommand` |
+| Admin navigation projection | `Catalyst\Framework\Cli\Commands\AdminNavigationSmokeCommand` |
 | Security scan | `Catalyst\Framework\Cli\Commands\SecurityCheckCommand` |
 | Status report | `Catalyst\Framework\Cli\Commands\StatusCommand` |
 | Docblock responsibility review | Maintainer release review |
@@ -23,7 +25,7 @@ Run:
 php public/cli.php quality:check
 ```
 
-The gate runs Composer validation/audit, route lint, structural lint, security check and status. Route, structural and security failures block. Local `status` warnings can be environment-bound when host Windows cannot resolve Docker-only service names.
+The gate runs Composer validation/audit, route lint, structural lint, local config contract smoke, admin navigation projection smoke, security check and status. Route, structural, config, navigation and security failures block. Local `status` warnings can be environment-bound when host Windows cannot resolve Docker-only service names.
 
 For release work, PHP classes and methods changed by the RC must have docblocks
 with a real `Responsibility:` line. The responsibility must not be a copy of the

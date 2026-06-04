@@ -67,6 +67,11 @@ final class QualityCheckCommand extends AbstractCommand
             'blocker' => true,
         ],
         [
+            'label' => 'Configuration contract',
+            'command' => 'php public/cli.php config:contract-smoke --json',
+            'blocker' => true,
+        ],
+        [
             'label' => 'Admin navigation projection',
             'command' => 'php public/cli.php admin-navigation:smoke --json',
             'blocker' => true,

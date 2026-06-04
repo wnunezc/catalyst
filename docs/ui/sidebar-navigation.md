@@ -97,7 +97,9 @@ El smoke especifico para este contrato es:
 php public/cli.php admin-navigation:smoke --json
 ```
 
-Este smoke comprueba que las entradas `navigation.admin` se proyectan al modelo de sidebar sin romper la taxonomia completa: superficies esperadas por grupo, `/users/organization-hierarchy` y `/admin/account-recovery` bajo `Users`, `Test Features`, `UI Showcase`, `UML / Architecture` y `Demo UI` bajo `Devtools`, sin `Users` anidado, sin `Operations` dentro de `Configuration` y sin `Devtools` duplicado.
+Este smoke comprueba que las entradas `navigation.admin` se proyectan al modelo de sidebar sin romper la taxonomia completa: hrefs canonicos presentes, superficies esperadas por grupo en orden, `/users/organization-hierarchy` y `/admin/account-recovery` bajo `Users`, `Test Features`, `UI Showcase`, `UML / Architecture` y `Demo UI` bajo `Devtools`, sin `Users` anidado, sin `Operations` dentro de `Configuration` y sin `Devtools` duplicado.
+
+El smoke permite entradas adicionales declaradas por modulos de aplicaciones derivadas dentro de grupos canonicos. La regla es preservacion, no igualdad exacta: Catalyst debe conservar sus superficies base en orden y proyectar todos los hrefs declarados, pero una app puede agregar rutas como `/rtm/profile` o `/rtm/radio` bajo `Operations` sin fallar `quality:check`.
 
 ## Entradas tecnicas y aliases
 
