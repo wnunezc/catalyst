@@ -1,11 +1,11 @@
 # Runtime Inventory
 
 > Auto-generated from filesystem and PHP tokens. Run `php public/cli.php docs:inventory` to refresh.
-> Last generated: 2026-06-04 05:09:51
+> Last generated: 2026-06-04 06:26:50
 
 ## Summary
 
-- Symbols: 674
+- Symbols: 676
 - Templates: 230
 - Scripts: 54
 
@@ -14,7 +14,7 @@
 | Root | Count |
 |---|---:|
 | `Repository` | 173 |
-| `app` | 501 |
+| `app` | 503 |
 
 ## Template Roots
 
@@ -159,6 +159,7 @@
 | `Catalyst\Framework\Cli\CliRouteLoader` | `class` | `app/Framework/Cli/CliRouteLoader.php` | 44 |
 | `Catalyst\Framework\Cli\CommandInterface` | `interface` | `app/Framework/Cli/CommandInterface.php` | 44 |
 | `Catalyst\Framework\Cli\CommandRegistry` | `class` | `app/Framework/Cli/CommandRegistry.php` | 42 |
+| `Catalyst\Framework\Cli\Commands\AdminNavigationSmokeCommand` | `class` | `app/Framework/Cli/Commands/AdminNavigationSmokeCommand.php` | 46 |
 | `Catalyst\Framework\Cli\Commands\ApiTokensSmokeCommand` | `class` | `app/Framework/Cli/Commands/ApiTokensSmokeCommand.php` | 49 |
 | `Catalyst\Framework\Cli\Commands\AttachmentsListCommand` | `class` | `app/Framework/Cli/Commands/AttachmentsListCommand.php` | 45 |
 | `Catalyst\Framework\Cli\Commands\AttachmentsPolicySmokeCommand` | `class` | `app/Framework/Cli/Commands/AttachmentsPolicySmokeCommand.php` | 47 |
@@ -376,6 +377,7 @@
 | `Catalyst\Framework\Module\ModuleRuntimeDocsGenerator` | `class` | `app/Framework/Module/ModuleRuntimeDocsGenerator.php` | 39 |
 | `Catalyst\Framework\Module\ModuleRuntimeStateDecorator` | `class` | `app/Framework/Module/ModuleRuntimeStateDecorator.php` | 43 |
 | `Catalyst\Framework\Module\ModuleScaffoldService` | `class` | `app/Framework/Module/ModuleScaffoldService.php` | 42 |
+| `Catalyst\Framework\Navigation\AdminShellNavigationPresenter` | `class` | `app/Framework/Navigation/AdminShellNavigationPresenter.php` | 41 |
 | `Catalyst\Framework\Navigation\NavigationRegistry` | `class` | `app/Framework/Navigation/NavigationRegistry.php` | 44 |
 | `Catalyst\Framework\Notification\Notification` | `class` | `app/Framework/Notification/Notification.php` | 45 |
 | `Catalyst\Framework\Notification\NotificationBag` | `class` | `app/Framework/Notification/NotificationBag.php` | 42 |

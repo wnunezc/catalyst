@@ -81,11 +81,23 @@ Este limite evita mezclar:
 - configuracion operacional;
 - acciones personales del usuario.
 
-Desde el refactor de navegacion, los grupos administrativos deben venir de metadata declarativa de modulo (`group`, `group_label`, `group_order`) y no solo de heuristicas por path. El fallback por path se conserva para compatibilidad, pero no debe ser el mecanismo normal para nuevos modulos.
+Desde `v0.1.0-rc.3`, el sidebar administrativo consume `NavigationRegistry::adminShell()` mediante `AdminShellNavigationPresenter`. Las entradas primarias declaradas por modulos activos en `navigation.admin` son la fuente canonica del sidebar real.
+
+La capa visual conserva el view model historico `demo_ui_nav_groups`, pero este ya no debe mantener listas hardcodeadas para superficies administrativas del framework o de la aplicacion. Los bloques demo de componentes siguen separados y solo aparecen dentro de `/demo-ui`.
+
+Los grupos administrativos deben venir de metadata declarativa de modulo (`context`, `group`, `group_label`, `group_order`, `order`, `matches`, `icon`, `visibility`) y no de duplicar rutas en `_demo-product-shell.php`.
 
 Para evitar duplicidad, el contexto activo no se renderiza otra vez como link en el sidebar. La tarjeta de contexto y el titulo del bloque indican el dominio actual; el bloque `Otras áreas` contiene solo saltos a dominios inactivos.
 
-`inspect:lint` ahora valida hijos de navegacion y duplica hrefs por bucket/contexto mediante `navigation-duplicate-href`.
+`inspect:lint` ahora valida hijos de navegacion, duplica hrefs por bucket/contexto mediante `navigation-duplicate-href` y falla con `admin-shell-navigation-not-registry-driven` si el shell vuelve a desconectarse de `NavigationRegistry`.
+
+El smoke especifico para este contrato es:
+
+```powershell
+php public/cli.php admin-navigation:smoke --json
+```
+
+Este smoke comprueba que las entradas `navigation.admin` se proyectan al modelo de sidebar, incluyendo `/users/organization-hierarchy` bajo `Users` y su estado activo.
 
 ## Entradas tecnicas y aliases
 

@@ -1,0 +1,263 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
+namespace Catalyst\Framework\Cli\Commands;
+
+use Catalyst\Framework\Argument\ArgumentBag;
+use Catalyst\Framework\Argument\Option;
+use Catalyst\Framework\Cli\AbstractCommand;
+use Catalyst\Framework\Navigation\AdminShellNavigationPresenter;
+use Catalyst\Framework\Navigation\NavigationRegistry;
+
+/**
+ * admin-navigation:smoke CLI command.
+ *
+ * Responsibility: Verifies that module-declared admin navigation reaches the sidebar view model.
+ *
+ * @package Catalyst\Framework\Cli\Commands
+ */
+final class AdminNavigationSmokeCommand extends AbstractCommand
+{
+    /**
+     * Defines the accepted option schema for this command.
+     *
+     * @return Option[]
+     */
+    public function getOptions(): array
+    {
+        return [
+            new Option(null, 'json', false, false, 'Render as JSON', false),
+        ];
+    }
+
+    /**
+     * Returns the command name registered in the CLI registry.
+     */
+    public function getName(): string
+    {
+        return 'admin-navigation:smoke';
+    }
+
+    /**
+     * Returns the short help text shown for this command.
+     */
+    public function getDescription(): string
+    {
+        return 'Verify admin sidebar projection for module-declared navigation';
+    }
+
+    /**
+     * Runs the command workflow using parsed CLI arguments.
+     */
+    public function execute(ArgumentBag $args): int
+    {
+        $json = (bool)($args->getOptionValue('json') ?? false);
+        $definitions = (array)(NavigationRegistry::getInstance()->allDefinitions()['admin'] ?? []);
+        $sidebar = AdminShellNavigationPresenter::fromAdminDefinitions($definitions, '/users/organization-hierarchy');
+        $expectedHrefs = $this->adminHrefs($definitions);
+        $actualHrefs = $this->sidebarHrefs($sidebar);
+        $missingHrefs = array_values(array_diff($expectedHrefs, $actualHrefs));
+        $organizationItem = $this->findSidebarItem($sidebar, '/users/organization-hierarchy');
+        $usersGroup = $this->findSidebarGroup($sidebar, 'Users');
+
+        $checks = [
+            'all_admin_hrefs_projected' => $missingHrefs === [],
+            'organization_hierarchy_projected' => $organizationItem !== null,
+            'organization_hierarchy_under_users' => $this->groupContainsHref($usersGroup, '/users/organization-hierarchy'),
+            'organization_hierarchy_active' => (bool)($organizationItem['is_active'] ?? false),
+            'registry_presenter_wired' => $this->adminShellConsumesRegistryPresenter(),
+        ];
+        $success = !in_array(false, $checks, true);
+        $payload = [
+            'success' => $success,
+            'checks' => $checks,
+            'missing_hrefs' => $missingHrefs,
+        ];
+
+        if ($json) {
+            $this->line((string)json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+
+            return $success ? 0 : 1;
+        }
+
+        $this->line('');
+        $this->info('Admin Navigation Smoke');
+        $this->line(str_repeat('-', 74));
+        foreach ($checks as $name => $passed) {
+            $this->line(sprintf('  %-42s %s', ucwords(str_replace('_', ' ', $name)), $passed ? 'OK' : 'ISSUES'));
+        }
+        if ($missingHrefs !== []) {
+            $this->line('  Missing hrefs: ' . implode(', ', $missingHrefs));
+        }
+        $this->line(str_repeat('-', 74));
+        $success ? $this->success('Admin navigation projection is coherent.') : $this->error('Admin navigation projection has issues.');
+        $this->line('');
+
+        return $success ? 0 : 1;
+    }
+
+    /**
+     * Extracts expected top-level and child hrefs from admin declarations.
+     *
+     * @param array<int, array<string, mixed>> $definitions
+     * @return string[]
+     */
+    private function adminHrefs(array $definitions): array
+    {
+        $hrefs = [];
+        foreach ($definitions as $item) {
+            if (!is_array($item)) {
+                continue;
+            }
+
+            $href = trim((string)($item['href'] ?? ''));
+            if ($href !== '') {
+                $hrefs[] = $href;
+            }
+
+            foreach ((array)($item['children'] ?? []) as $child) {
+                if (!is_array($child)) {
+                    continue;
+                }
+
+                $childHref = trim((string)($child['href'] ?? ''));
+                if ($childHref !== '') {
+                    $hrefs[] = $childHref;
+                }
+            }
+        }
+
+        return array_values(array_unique($hrefs));
+    }
+
+    /**
+     * Extracts hrefs from the rendered sidebar view model.
+     *
+     * @param array<int, array<string, mixed>> $sidebar
+     * @return string[]
+     */
+    private function sidebarHrefs(array $sidebar): array
+    {
+        $hrefs = [];
+        foreach ($sidebar as $group) {
+            foreach ((array)($group['items'] ?? []) as $item) {
+                if (!is_array($item)) {
+                    continue;
+                }
+
+                $href = trim((string)($item['href'] ?? ''));
+                if ($href !== '') {
+                    $hrefs[] = $href;
+                }
+
+                foreach ((array)($item['children'] ?? []) as $child) {
+                    if (!is_array($child)) {
+                        continue;
+                    }
+
+                    $childHref = trim((string)($child['href'] ?? ''));
+                    if ($childHref !== '') {
+                        $hrefs[] = $childHref;
+                    }
+                }
+            }
+        }
+
+        return array_values(array_unique($hrefs));
+    }
+
+    /**
+     * Finds one sidebar item by href.
+     *
+     * @param array<int, array<string, mixed>> $sidebar
+     * @return array<string, mixed>|null
+     */
+    private function findSidebarItem(array $sidebar, string $href): ?array
+    {
+        foreach ($sidebar as $group) {
+            foreach ((array)($group['items'] ?? []) as $item) {
+                if (is_array($item) && (string)($item['href'] ?? '') === $href) {
+                    return $item;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Finds one sidebar collapse group by label.
+     *
+     * @param array<int, array<string, mixed>> $sidebar
+     * @return array<string, mixed>|null
+     */
+    private function findSidebarGroup(array $sidebar, string $label): ?array
+    {
+        foreach ($sidebar as $group) {
+            if (is_array($group) && (string)($group['label'] ?? '') === $label) {
+                return $group;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Checks whether a sidebar collapse group contains a direct item href.
+     *
+     * @param array<string, mixed>|null $group
+     */
+    private function groupContainsHref(?array $group, string $href): bool
+    {
+        if ($group === null) {
+            return false;
+        }
+
+        foreach ((array)($group['items'] ?? []) as $item) {
+            if (is_array($item) && (string)($item['href'] ?? '') === $href) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks the runtime shell bridge source.
+     */
+    private function adminShellConsumesRegistryPresenter(): bool
+    {
+        $path = PD . DS . 'boot-core' . DS . 'template' . DS . 'scope' . DS . 'layouts' . DS . '_demo-product-shell.php';
+        $source = is_file($path) ? (string)file_get_contents($path) : '';
+
+        return str_contains($source, 'NavigationRegistry::getInstance()->adminShell')
+            && str_contains($source, 'AdminShellNavigationPresenter::fromAdminShell');
+    }
+}

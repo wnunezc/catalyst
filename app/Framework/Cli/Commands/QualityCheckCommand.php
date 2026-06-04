@@ -67,6 +67,11 @@ final class QualityCheckCommand extends AbstractCommand
             'blocker' => true,
         ],
         [
+            'label' => 'Admin navigation projection',
+            'command' => 'php public/cli.php admin-navigation:smoke --json',
+            'blocker' => true,
+        ],
+        [
             'label' => 'I18n usage lint',
             'command' => 'php public/cli.php i18n:usage-lint',
             'blocker' => true,

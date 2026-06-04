@@ -148,8 +148,57 @@ final class NavigationRegistry
                 'icon' => $activeMeta['icon'],
                 'items' => $activeItems,
             ],
+            'groups' => $this->adminGroupsFromItems($itemsByContext, $activeContext),
             'contexts' => $contexts,
         ];
+    }
+
+    /**
+     * Builds all visible administrative context groups for sidebar rendering.
+     *
+     * Responsibility: Preserves registry-declared item metadata while exposing the full shell tree.
+     * @param array<string, array<int, array<string, mixed>>> $itemsByContext
+     * @return array<int, array<string, mixed>>
+     */
+    private function adminGroupsFromItems(array $itemsByContext, string $activeContext): array
+    {
+        $groups = [];
+        $orderedContextKeys = array_values(array_unique(array_merge(
+            array_keys(self::ADMIN_CONTEXTS),
+            array_keys($itemsByContext)
+        )));
+
+        foreach ($orderedContextKeys as $key) {
+            $items = $itemsByContext[$key] ?? [];
+            if ($items === []) {
+                continue;
+            }
+
+            $meta = self::ADMIN_CONTEXTS[$key] ?? [
+                'label_key' => (string)($items[0]['group_label'] ?? ucfirst(str_replace('-', ' ', (string)$key))),
+                'description_key' => '',
+                'icon' => (string)($items[0]['icon'] ?? 'ti ti-layout-sidebar'),
+                'order' => (int)($items[0]['group_order'] ?? 999),
+            ];
+
+            $groups[] = [
+                'key' => (string)$key,
+                'label' => $this->translateContextMeta((string)$meta['label_key']),
+                'description' => $this->translateContextMeta((string)$meta['description_key']),
+                'icon' => (string)$meta['icon'],
+                'order' => (int)($meta['order'] ?? 999),
+                'href' => (string)($items[0]['href'] ?? '/'),
+                'active' => $key === $activeContext,
+                'items' => $items,
+            ];
+        }
+
+        usort($groups, static function (array $left, array $right): int {
+            return [(int)($left['order'] ?? 999), (string)($left['label'] ?? '')]
+                <=> [(int)($right['order'] ?? 999), (string)($right['label'] ?? '')];
+        });
+
+        return $groups;
     }
 
     /**

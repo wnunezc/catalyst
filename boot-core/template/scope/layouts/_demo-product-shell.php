@@ -30,6 +30,8 @@ declare(strict_types=1);
 
 use Catalyst\Framework\Appearance\PlatformAppearanceManager;
 use Catalyst\Framework\Auth\AuthManager;
+use Catalyst\Framework\Navigation\AdminShellNavigationPresenter;
+use Catalyst\Framework\Navigation\NavigationRegistry;
 use Catalyst\Framework\View\InlineJson;
 use Catalyst\Framework\View\TrustedHtml;
 use Catalyst\Helpers\Security\CspNonce;
@@ -42,6 +44,7 @@ return static function (array $scope): array {
     $appearanceRuntime = $appearanceManager->runtimeViewModel();
     $adminCustomizerEnabled = !array_key_exists('adminCustomizerEnabled', $appearanceRuntime)
         || (bool) $appearanceRuntime['adminCustomizerEnabled'];
+    $authUser = AuthManager::getInstance()->user() ?? [];
 
     $styleLinks = [];
     $scriptLinks = [];
@@ -184,35 +187,7 @@ $appendStyle('/assets/css/catalyst/inspinia-runtime-compat.css?v=' . rawurlencod
         ];
     };
 
-    $sections = [
-        'framework-configuration' => [
-            $makeItem('Environment Setup', '/configuration/environment-setup', 'ti ti-adjustments-cog'),
-            $makeItem('Application Health', '/configuration/application-health', 'ti ti-heartbeat'),
-            $makeItem('Platform Appearance', '/configuration/platform-appearance', 'ti ti-palette'),
-            $makeItem('Feature Flags', '/configuration/feature-flags', 'ti ti-flag-3'),
-            $makeItem('Plugins Management', '/configuration/plugins', 'ti ti-plug-connected'),
-        ],
-        'framework-workspaces' => [
-            $makeItem('Catalogs', '/workspaces/catalogs', 'ti ti-books'),
-            $makeItem('Module Designer', '/workspaces/module-designer', 'ti ti-template'),
-            $makeItem('Media and Documents Fields', '/workspaces/media-fields', 'ti ti-list-details'),
-            $makeItem('Media and Documents Library', '/workspaces/media-library', 'ti ti-photo'),
-            $makeItem('Document Template', '/workspaces/document-templates', 'ti ti-file-description'),
-            $makeItem('Locale Tools', '/workspaces/locale-tools', 'ti ti-language'),
-        ],
-        'framework-operations' => [
-            $makeItem('Deployments', '/operations/deployments', 'ti ti-rocket'),
-            $makeItem('Tenancy', '/operations/tenancy', 'ti ti-building-community'),
-            $makeItem('Audit Log', '/audit-log', 'ti ti-history'),
-            $makeItem('API Platform', '/api-platform', 'ti ti-api'),
-            $makeItem('Automation Rules', '/automation-rules', 'ti ti-bolt'),
-        ],
-        'framework-users' => [
-            $makeItem('User Management', '/users', 'ti ti-user-cog', [], false),
-            $makeItem('User Role', '/users/roles', 'ti ti-shield-check'),
-            $makeItem('User Permissions', '/users/permissions', 'ti ti-key'),
-            $makeItem('User Enroll', '/users/enroll', 'ti ti-user-plus'),
-        ],
+    $demoSections = [
         'base-ui' => [
             $makeItem('Accordions', '/demo-ui/accordions', 'ti ti-point'),
             $makeItem('Alerts', '/demo-ui/alerts', 'ti ti-point', ['/demo-ui']),
@@ -266,15 +241,9 @@ $appendStyle('/assets/css/catalyst/inspinia-runtime-compat.css?v=' . rawurlencod
 
     $showDemoComponents = $currentPath === '/demo-ui' || str_starts_with($currentPath, '/demo-ui/');
 
-    $definitions = [
-        ['kind' => 'title', 'label' => 'Framework Configuration'],
-        ['kind' => 'collapse', 'key' => 'framework-configuration', 'label' => 'Configuration', 'icon' => 'ti ti-settings-cog'],
-        ['kind' => 'title', 'label' => 'Framework Operations'],
-        ['kind' => 'collapse', 'key' => 'framework-workspaces', 'label' => 'Workspaces', 'icon' => 'ti ti-layout-grid'],
-        ['kind' => 'collapse', 'key' => 'framework-operations', 'label' => 'Operations', 'icon' => 'ti ti-briefcase-2'],
-        ['kind' => 'collapse', 'key' => 'framework-users', 'label' => 'Users', 'icon' => 'ti ti-users'],
-        ['kind' => 'title', 'label' => 'Devtools'],
-    ];
+    $registryShell = NavigationRegistry::getInstance()->adminShell($currentPath, $authUser !== [] ? $authUser : null);
+    $navGroups = AdminShellNavigationPresenter::fromAdminShell($registryShell);
+    $definitions = [];
 
     if ($showDemoComponents) {
         $definitions[] = ['kind' => 'title', 'label' => 'Components'];
@@ -284,7 +253,6 @@ $appendStyle('/assets/css/catalyst/inspinia-runtime-compat.css?v=' . rawurlencod
         $definitions[] = ['kind' => 'collapse', 'key' => 'tables', 'label' => 'Tables', 'icon' => 'ti ti-table-options'];
     }
 
-    $navGroups = [];
     foreach ($definitions as $definition) {
         if (($definition['kind'] ?? '') === 'title') {
             $navGroups[] = [
@@ -295,7 +263,7 @@ $appendStyle('/assets/css/catalyst/inspinia-runtime-compat.css?v=' . rawurlencod
         }
 
         $key = (string) ($definition['key'] ?? '');
-        $items = $sections[$key] ?? [];
+        $items = $demoSections[$key] ?? [];
         $isActive = false;
         foreach ($items as $item) {
             $isActive = $isActive || !empty($item['is_active']);
@@ -316,7 +284,6 @@ $appendStyle('/assets/css/catalyst/inspinia-runtime-compat.css?v=' . rawurlencod
         ];
     }
 
-    $authUser = AuthManager::getInstance()->user() ?? [];
     $authName = trim((string) ($scope['auth_name'] ?? ($authUser['name'] ?? '')));
     $authEmail = trim((string) ($scope['auth_email'] ?? ($authUser['email'] ?? '')));
 

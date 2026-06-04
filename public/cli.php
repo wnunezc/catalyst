@@ -66,6 +66,7 @@ use Catalyst\Framework\Cli\Commands\I18nUsageLintCommand;
 use Catalyst\Framework\Cli\Commands\AttachmentsListCommand;
 use Catalyst\Framework\Cli\Commands\AttachmentsPolicySmokeCommand;
 use Catalyst\Framework\Cli\Commands\AttachmentsSmokeCommand;
+use Catalyst\Framework\Cli\Commands\AdminNavigationSmokeCommand;
 use Catalyst\Framework\Cli\Commands\ApiTokensSmokeCommand;
 use Catalyst\Framework\Cli\Commands\AutomationMvcRegressionCommand;
 use Catalyst\Framework\Cli\Commands\CalendarSmokeCommand;
@@ -169,6 +170,7 @@ $registry
     ->register(new AttachmentsListCommand())
     ->register(new AttachmentsPolicySmokeCommand())
     ->register(new AttachmentsSmokeCommand())
+    ->register(new AdminNavigationSmokeCommand())
     ->register(new ApiTokensSmokeCommand())
     ->register(new AutomationMvcRegressionCommand())
     ->register(new CalendarSmokeCommand())

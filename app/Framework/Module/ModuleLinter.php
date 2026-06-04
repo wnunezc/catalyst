@@ -649,12 +649,36 @@ final class ModuleLinter
             }
         }
 
+        $checked++;
+        if (!$this->adminShellConsumesNavigationRegistry()) {
+            $issues[] = [
+                'type' => 'admin-shell-navigation-not-registry-driven',
+                'module' => null,
+                'message' => 'The admin shell must consume NavigationRegistry::adminShell() through AdminShellNavigationPresenter so module-declared admin navigation reaches the sidebar.',
+            ];
+        }
+
         return [
             'ok' => !$this->hasIssuePrefix($issues, 'navigation-route-missing')
                 && !$this->hasIssuePrefix($issues, 'breadcrumb-route-missing')
-                && !$this->hasIssuePrefix($issues, 'navigation-duplicate-href'),
+                && !$this->hasIssuePrefix($issues, 'navigation-duplicate-href')
+                && !$this->hasIssuePrefix($issues, 'admin-shell-navigation-not-registry-driven'),
             'checked' => $checked,
         ];
+    }
+
+    /**
+     * Checks that the rendered admin shell is wired to the navigation registry.
+     *
+     * Responsibility: Prevents hardcoded sidebar lists from drifting away from module manifests.
+     */
+    private function adminShellConsumesNavigationRegistry(): bool
+    {
+        $path = PD . DS . 'boot-core' . DS . 'template' . DS . 'scope' . DS . 'layouts' . DS . '_demo-product-shell.php';
+        $source = is_file($path) ? (string)file_get_contents($path) : '';
+
+        return str_contains($source, 'NavigationRegistry::getInstance()->adminShell')
+            && str_contains($source, 'AdminShellNavigationPresenter::fromAdminShell');
     }
 
     /**
