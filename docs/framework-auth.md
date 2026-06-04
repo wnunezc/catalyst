@@ -36,6 +36,9 @@ This file is regenerated from current PHP docblocks and the runtime inventory sc
 Public self-service registration is controlled by the `auth.registration_enabled` feature flag. The installation default is managed from `/configuration/environment-setup` in the Features card, which writes `features.json` under `boot-core/config/{environment}` through the Settings module. Advanced runtime governance remains available from `/configuration/feature-flags` for post-setup review and overrides. When disabled, `/register` GET and POST are blocked by `RouteFeatureMiddleware` and the login screen hides the create-account link. Login, logout, password reset, MFA and email verification remain separate auth surfaces.
 
 Role records may carry optional organization hierarchy metadata through `hierarchy_scope_id`, `hierarchy_level_id` and `role_organization_units`. This metadata is used for classification, badges, reports and institutional context only. It does not change role membership, permission checks, `RoleMiddleware`, policies or gate evaluation.
+The Roles admin form manages this metadata directly: scope and level are single
+selectors, while `role_organization_units` is synchronized from the horizontal
+organization unit multi-select.
 
 Resource permissions are declared in module metadata and evaluated by `PermissionRegistry` through `AbilitySubject`. Apps should pass domain records and contextual data through `authorizeResource()` or `canResource()` instead of embedding authorization shortcuts in controllers. Supported declarative constraints include `record_required`, `owner_field`, `owner_context_key`, `state_field` with `states_any`, `visibility_field` or `visibility_context_key` with `visibility_any`, `scope_context_key` with `scopes_any`, generic `context_any` maps, and optional `policy_ability` delegation. This keeps ownership, visibility and workflow-scope checks separate from strong tenancy requirements.
 

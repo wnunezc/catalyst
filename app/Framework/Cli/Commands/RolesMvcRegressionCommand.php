@@ -72,6 +72,10 @@ final class RolesMvcRegressionCommand extends AbstractCommand
         $users = $this->contents('Repository/Framework/Roles/Controllers/UserManagementController.php');
         $roles = $this->contents('Repository/Framework/Roles/Controllers/RolesController.php');
         $permissions = $this->contents('Repository/Framework/Roles/Controllers/PermissionsController.php');
+        $roleRequest = $this->contents('Repository/Framework/Roles/Requests/RolePayloadRequest.php');
+        $formBuilder = $this->contents('app/Framework/Admin/Form/FormBuilder.php');
+        $formScope = $this->contents('boot-core/template/scope/components/_admin-form-builder.php');
+        $formControl = $this->contents('boot-core/template/components/admin-form-builder/_field-control.phtml');
         $checks = [
             'enrollment_request_centralized' => class_exists(\Catalyst\Repository\Roles\Requests\UserEnrollmentRequest::class)
                 && str_contains($users, 'new UserEnrollmentRequest($request)'),
@@ -83,6 +87,18 @@ final class RolesMvcRegressionCommand extends AbstractCommand
                 && str_contains($permissions, 'new PermissionBulkSelectionRequest($request)'),
             'permission_sync_request_centralized' => class_exists(\Catalyst\Repository\Roles\Requests\RolePermissionSyncRequest::class)
                 && str_contains($roles, 'new RolePermissionSyncRequest($request)'),
+            'role_units_payload_centralized' => str_contains($roleRequest, 'organization_unit_ids')
+                && str_contains($roleRequest, 'normalizeOrganizationUnitIds'),
+            'role_units_create_synced' => str_contains($roles, 'createRole(')
+                && str_contains($roles, "positiveIntList(\$payload['organization_unit_ids'] ?? [])"),
+            'role_units_update_synced' => str_contains($roles, 'updateRole(')
+                && str_contains($roles, "positiveIntList(\$payload['organization_unit_ids'] ?? [])")
+                && !str_contains($roles, 'getRoleOrganizationUnitIds($roleId)'),
+            'role_units_form_preselected' => str_contains($roles, "model['organization_unit_ids']")
+                && str_contains($roles, 'organizationUnitOptions()'),
+            'form_builder_multiple_select' => str_contains($formBuilder, "'multiple' => \$multiple")
+                && str_contains($formScope, '$isMultipleSelect')
+                && str_contains($formControl, 'name="{{ base_name }}" value=""'),
         ];
         $ok = !in_array(false, $checks, true);
 

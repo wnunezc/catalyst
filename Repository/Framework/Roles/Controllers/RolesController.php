@@ -218,7 +218,8 @@ class RolesController extends Controller
             trim((string) ($payload['slug'] ?? '')),
             $this->normalizeDescription($payload['description'] ?? null),
             $this->nullablePositiveInt($payload['hierarchy_scope_id'] ?? null),
-            $this->nullablePositiveInt($payload['hierarchy_level_id'] ?? null)
+            $this->nullablePositiveInt($payload['hierarchy_level_id'] ?? null),
+            $this->positiveIntList($payload['organization_unit_ids'] ?? [])
         );
 
         return $this->postActionSuccessRedirect('/users/roles', (string) __('roles.roles.created'));
@@ -281,7 +282,7 @@ class RolesController extends Controller
                 $this->normalizeDescription($payload['description'] ?? null),
                 $this->nullablePositiveInt($payload['hierarchy_scope_id'] ?? null),
                 $this->nullablePositiveInt($payload['hierarchy_level_id'] ?? null),
-                $this->repo->getRoleOrganizationUnitIds($roleId)
+                $this->positiveIntList($payload['organization_unit_ids'] ?? [])
             );
             $this->releaseRecordClaim('roles', $roleId, $request->request(), 'role updated');
         } catch (RuntimeException $e) {
@@ -421,6 +422,11 @@ class RolesController extends Controller
         $action = $role === null
             ? '/users/roles'
             : '/users/roles/' . (int) $role['id'];
+        $model = $role ?? [];
+
+        if ($role !== null) {
+            $model['organization_unit_ids'] = $this->repo->getRoleOrganizationUnitIds((int) $role['id']);
+        }
 
         $fields = array_merge(
             $this->concurrencyHiddenFields($claim),
@@ -461,13 +467,22 @@ class RolesController extends Controller
                     'empty_option_label' => (string) __('roles.organization.no_level'),
                     'help' => (string) __('roles.organization.level_help'),
                 ],
+                'organization_unit_ids' => [
+                    'type' => 'select',
+                    'multiple' => true,
+                    'label' => (string) __('roles.organization.units') . ' (' . (string) __('roles.common.optional') . ')',
+                    'section' => 'organization',
+                    'options' => $this->organizationUnitOptions(),
+                    'help' => (string) __('roles.organization.units_help'),
+                    'attributes' => ['size' => 6],
+                ],
             ]
         );
 
         $form = FormBuilder::make()
             ->action($action)
             ->method('POST')
-            ->model($role)
+            ->model($model)
             ->sections([
                 'identity' => [
                     'title' => (string) __('roles.form.sections.identity.title'),
@@ -535,6 +550,29 @@ class RolesController extends Controller
     }
 
     /**
+     * Converts submitted positive integer lists.
+     *
+     * Responsibility: Keeps optional horizontal organization unit links normalized before repository sync.
+     * @return array<int, int>
+     */
+    private function positiveIntList(mixed $value): array
+    {
+        if (!is_array($value)) {
+            return [];
+        }
+
+        $ids = [];
+        foreach ($value as $candidate) {
+            $id = (int) $candidate;
+            if ($id > 0) {
+                $ids[] = $id;
+            }
+        }
+
+        return array_values(array_unique($ids));
+    }
+
+    /**
      * Builds hierarchy scope select options.
      *
      * Responsibility: Reads configured organization scopes for role classification without affecting RBAC behavior.
@@ -570,6 +608,32 @@ class RolesController extends Controller
                     'label' => (string) ($row['label'] ?? $row['code'] ?? ''),
                 ],
                 (new OrganizationRepository())->levelOptions()
+            );
+        } catch (\Throwable) {
+            return [];
+        }
+    }
+
+    /**
+     * Builds horizontal organization unit multi-select options.
+     *
+     * Responsibility: Reads configured organization units for role metadata without affecting RBAC behavior.
+     * @return array<int, array{value:string,label:string}>
+     */
+    private function organizationUnitOptions(): array
+    {
+        try {
+            return array_map(
+                static function (array $row): array {
+                    $label = (string) ($row['label'] ?? $row['code'] ?? '');
+                    $code = trim((string) ($row['code'] ?? ''));
+
+                    return [
+                        'value' => (string) ($row['id'] ?? ''),
+                        'label' => $code === '' ? $label : trim($label . ' (' . $code . ')'),
+                    ];
+                },
+                (new OrganizationRepository())->unitOptions()
             );
         } catch (\Throwable) {
             return [];

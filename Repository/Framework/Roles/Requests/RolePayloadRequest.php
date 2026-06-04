@@ -33,6 +33,9 @@ namespace Catalyst\Repository\Roles\Requests;
 use Catalyst\Framework\Auth\AuthManager;
 use Catalyst\Framework\Authorization\PermissionRegistry;
 use Catalyst\Framework\Http\FormRequest;
+use Catalyst\Helpers\Exceptions\ForbiddenException;
+use Catalyst\Helpers\Exceptions\ValidationException;
+use Catalyst\Helpers\Validation\Validator;
 
 /**
  * Validates role create and update payloads.
@@ -42,6 +45,11 @@ use Catalyst\Framework\Http\FormRequest;
  */
 class RolePayloadRequest extends FormRequest
 {
+    /**
+     * @var array<string, mixed>|null
+     */
+    private ?array $resolvedData = null;
+
     /**
      * Determines whether the current user may create or update a role.
      *
@@ -64,7 +72,7 @@ class RolePayloadRequest extends FormRequest
      */
     public function only(): array
     {
-        return ['name', 'slug', 'description', 'hierarchy_scope_id', 'hierarchy_level_id'];
+        return ['name', 'slug', 'description', 'hierarchy_scope_id', 'hierarchy_level_id', 'organization_unit_ids'];
     }
 
     /**
@@ -107,6 +115,88 @@ class RolePayloadRequest extends FormRequest
             'description' => __('roles.common.description'),
             'hierarchy_scope_id' => __('roles.organization.scope'),
             'hierarchy_level_id' => __('roles.organization.level'),
+            'organization_unit_ids' => __('roles.organization.units'),
         ];
+    }
+
+    /**
+     * Returns the validated role payload, including normalized organization unit ids.
+     *
+     * Responsibility: Returns the validated role payload, including normalized organization unit ids.
+     * @return array<string, mixed>
+     */
+    public function validated(): array
+    {
+        if ($this->resolvedData === null) {
+            $this->validateResolved();
+        }
+
+        return $this->resolvedData ?? [];
+    }
+
+    /**
+     * Authorizes and validates role payload data plus custom array input.
+     *
+     * Responsibility: Keeps optional organization unit links validated before controller persistence.
+     * @throws ValidationException
+     * @throws ForbiddenException
+     */
+    public function validateResolved(): void
+    {
+        if (!$this->authorize()) {
+            throw ForbiddenException::forbidden(__('messages.request_not_authorized'));
+        }
+
+        $this->prepareForValidation();
+        $data = $this->validationData();
+        $validator = new Validator($data, $this->rules(), $this->labels());
+        $errors = $validator->fails() ? $validator->errors() : [];
+
+        [$organizationUnitIds, $unitErrors] = $this->normalizeOrganizationUnitIds($data['organization_unit_ids'] ?? null);
+        $errors = array_merge_recursive($errors, $unitErrors);
+
+        if ($errors !== []) {
+            throw ValidationException::withErrors(
+                $errors,
+                $this->validationMessage(),
+                $this->safeOldInput($data)
+            );
+        }
+
+        $data['organization_unit_ids'] = $organizationUnitIds;
+        $this->resolvedData = $data;
+    }
+
+    /**
+     * Normalizes optional role-to-organization-unit identifiers.
+     *
+     * Responsibility: Accepts the multi-select payload while rejecting non-positive or non-numeric identifiers.
+     * @return array{0:array<int,int>,1:array<string,string[]>}
+     */
+    private function normalizeOrganizationUnitIds(mixed $value): array
+    {
+        if ($value === null || $value === '') {
+            return [[], []];
+        }
+
+        if (!is_array($value)) {
+            return [[], ['organization_unit_ids' => [(string) __('roles.organization.units_invalid')]]];
+        }
+
+        $ids = [];
+        foreach ($value as $candidate) {
+            if ($candidate === null || $candidate === '') {
+                continue;
+            }
+
+            $candidate = trim((string) $candidate);
+            if ($candidate === '' || !ctype_digit($candidate) || (int) $candidate <= 0) {
+                return [[], ['organization_unit_ids' => [(string) __('roles.organization.units_invalid')]]];
+            }
+
+            $ids[] = (int) $candidate;
+        }
+
+        return [array_values(array_unique($ids)), []];
     }
 }

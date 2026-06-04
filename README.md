@@ -5,7 +5,7 @@ Composer package. It is meant to be copied or cloned as the starting point for a
 web application, then configured through local environment files and the setup
 wizard.
 
-Current distribution target: `0.1.0-rc.5`.
+Current distribution target: `0.1.0-rc.6`.
 
 ## Runtime Model
 
@@ -277,11 +277,12 @@ API.md                    Subsystem index
 
 ## Distribution Status
 
-`0.1.0-rc.5` is intended as the fifth distribution candidate for developers who
-will use Catalyst as a project base. It supersedes `0.1.0-rc.4` by protecting
-local development config in derived projects while preserving the RC4 admin
-sidebar taxonomy. It is not a public Composer package and is not intended to be
-installed into another project's `vendor/` directory.
+`0.1.0-rc.6` is intended as the sixth distribution candidate for developers who
+will use Catalyst as a project base. It supersedes `0.1.0-rc.5` by completing
+role administration for horizontal organization units while preserving local
+development config protection and the admin sidebar taxonomy. It is not a public
+Composer package and is not intended to be installed into another project's
+`vendor/` directory.
 
 Before a release artifact is published, generate it from a clean checkout and
 exclude local secrets, DKIM keys, runtime storage, uploads, logs, ad-hoc zips and

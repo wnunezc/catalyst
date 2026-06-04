@@ -103,10 +103,13 @@
     "section_description": "Optional institutional metadata for display, reporting and future catalogs. Permissions still decide access.",
     "scope": "Hierarchy scope",
     "level": "Hierarchy level",
+    "units": "Organization units",
     "no_scope": "No hierarchy scope",
     "no_level": "No hierarchy level",
     "scope_help": "Classifies the role in a configured institutional axis such as authority, training or readiness.",
-    "level_help": "Select the configured level, rank or grade used for badges and organizational context."
+    "level_help": "Select the configured level, rank or grade used for badges and organizational context.",
+    "units_help": "Select one or more horizontal units, such as departments, teams, services or regions.",
+    "units_invalid": "Select valid organization units."
   },
   "organization_admin": {
     "title": "Organization Hierarchy",

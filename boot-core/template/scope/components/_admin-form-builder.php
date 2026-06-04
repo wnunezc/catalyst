@@ -76,6 +76,8 @@ return static function (array $scope): array {
         $fieldName = $nameOverride ?? (string) ($field['name'] ?? '');
         $fieldId = $idOverride ?? (string) ($field['id'] ?? $fieldName);
         $fieldValue = $hasValueOverride ? $valueOverride : ($field['value'] ?? null);
+        $isMultipleSelect = $fieldType === 'select' && !empty($field['multiple']);
+        $renderedFieldName = $isMultipleSelect && !str_ends_with($fieldName, '[]') ? $fieldName . '[]' : $fieldName;
         $error = $nameOverride === null ? (string) ($field['error'] ?? '') : '';
         $help = (string) ($field['help'] ?? '');
         $wrapperClasses = trim((string) (($field['col_class'] ?? 'col-12') . ' ' . ($field['wrapper_class'] ?? '')));
@@ -95,8 +97,19 @@ return static function (array $scope): array {
             $wrapperAttributes = trim($wrapperAttributes . $dependencyAttrs);
         }
 
+        if ($isMultipleSelect) {
+            $selectedValues = is_array($fieldValue)
+                ? array_values(array_map('strval', $fieldValue))
+                : (($fieldValue === null || $fieldValue === '') ? [] : [(string) $fieldValue]);
+        } else {
+            $selectedValues = [(string) ($fieldValue ?? '')];
+        }
+
+        $scalarFieldValue = is_array($fieldValue) ? '' : (string) ($fieldValue ?? '');
+
         $normalized = [
-            'name' => $fieldName,
+            'name' => $renderedFieldName,
+            'base_name' => $fieldName,
             'id' => $fieldId,
             'label' => (string) ($field['label'] ?? __('ui.form_builder.field')),
             'help' => $help,
@@ -114,14 +127,15 @@ return static function (array $scope): array {
             'is_repeater' => $fieldType === 'repeater',
             'is_textarea' => $fieldType === 'textarea',
             'is_select' => $fieldType === 'select',
+            'is_multiple' => $isMultipleSelect,
             'is_checkbox' => $fieldType === 'checkbox',
             'is_file' => $fieldType === 'file',
             'input_type' => $fieldType,
             'invalid_class' => $error !== '' ? ' is-invalid' : '',
             'placeholder' => (string) ($field['placeholder'] ?? ''),
             'attributes_html' => TrustedHtml::fromString((string) ($field['html_attributes'] ?? '')),
-            'value' => $fieldType === 'file' ? '' : (string) ($fieldValue ?? ''),
-            'textarea_value' => (string) ($fieldValue ?? ''),
+            'value' => $fieldType === 'file' ? '' : $scalarFieldValue,
+            'textarea_value' => $scalarFieldValue,
             'checkbox_hidden_value' => (string) ($field['hidden_value'] ?? '0'),
             'checkbox_checked_value' => (string) ($field['checked_value'] ?? '1'),
             'checkbox_checked' => (string) ($fieldValue ?? '') === (string) ($field['checked_value'] ?? '1'),
@@ -146,7 +160,7 @@ return static function (array $scope): array {
                 $options[] = [
                     'value' => $optionValue,
                     'label' => (string) ($option['label'] ?? ''),
-                    'selected' => (string) ($fieldValue ?? '') === $optionValue,
+                    'selected' => in_array($optionValue, $selectedValues, true),
                 ];
             }
 

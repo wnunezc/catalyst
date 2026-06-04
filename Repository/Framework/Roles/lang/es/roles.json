@@ -103,10 +103,13 @@
     "section_description": "Metadatos institucionales opcionales para visualización, reportes y catálogos futuros. Los permisos siguen decidiendo el acceso.",
     "scope": "Ámbito jerárquico",
     "level": "Nivel jerárquico",
+    "units": "Unidades organizacionales",
     "no_scope": "Sin ámbito jerárquico",
     "no_level": "Sin nivel jerárquico",
     "scope_help": "Clasifica el rol en un eje institucional configurado como autoridad, formación o disponibilidad operativa.",
-    "level_help": "Selecciona el nivel, rango o grado configurado para badges y contexto organizacional."
+    "level_help": "Selecciona el nivel, rango o grado configurado para badges y contexto organizacional.",
+    "units_help": "Selecciona una o más unidades horizontales, como departamentos, equipos, servicios o regiones.",
+    "units_invalid": "Selecciona unidades organizacionales válidas."
   },
   "organization_admin": {
     "title": "Jerarquía Organizacional",

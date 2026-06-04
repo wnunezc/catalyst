@@ -91,6 +91,7 @@ final class OrganizationSmokeCommand extends AbstractCommand
             'classification_presenter' => class_exists(OrganizationClassificationPresenter::class),
             'organization_migration' => is_file(PD . DS . 'boot-core' . DS . 'database' . DS . 'migrations' . DS . '20260604010000_create_organization_hierarchy_tables.php'),
             'role_repository_integration' => $this->roleRepositoryHasOrganizationIntegration(),
+            'role_admin_unit_form_integration' => $this->roleAdminHasOrganizationUnitIntegration(),
         ];
 
         $classification = null;
@@ -161,5 +162,23 @@ final class OrganizationSmokeCommand extends AbstractCommand
         return str_contains($contents, 'hierarchy_scope_id')
             && str_contains($contents, 'hierarchy_level_id')
             && str_contains($contents, 'syncRoleOrganizationUnits');
+    }
+
+    /**
+     * Confirms the Roles admin UI exposes and submits horizontal unit links.
+     *
+     * Responsibility: Protects role organization unit editing from regressing to repository-only storage.
+     */
+    private function roleAdminHasOrganizationUnitIntegration(): bool
+    {
+        $controllerPath = PD . DS . 'Repository' . DS . 'Framework' . DS . 'Roles' . DS . 'Controllers' . DS . 'RolesController.php';
+        $requestPath = PD . DS . 'Repository' . DS . 'Framework' . DS . 'Roles' . DS . 'Requests' . DS . 'RolePayloadRequest.php';
+        $controller = is_file($controllerPath) ? (string)file_get_contents($controllerPath) : '';
+        $request = is_file($requestPath) ? (string)file_get_contents($requestPath) : '';
+
+        return str_contains($controller, 'organization_unit_ids')
+            && str_contains($controller, 'organizationUnitOptions')
+            && str_contains($controller, "positiveIntList(\$payload['organization_unit_ids'] ?? [])")
+            && str_contains($request, 'normalizeOrganizationUnitIds');
     }
 }

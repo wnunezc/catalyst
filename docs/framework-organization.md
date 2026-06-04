@@ -31,9 +31,14 @@ Use the UI in this order:
 2. Create one or more hierarchy scopes for that organization.
 3. Create hierarchy levels under each scope.
 4. Optionally create organization units.
-5. Create or edit roles and select the configured scope/level from the role form.
+5. Create or edit roles and select the configured scope, level and one or more
+   organization units from the role form.
 
-The role form remains valid when no organization metadata exists. In that state the hierarchy selectors render with empty/default choices and roles continue to behave normally.
+The role form remains valid when no organization metadata exists. In that state
+the hierarchy selectors render with empty/default choices, the organization unit
+selector renders empty, and roles continue to behave normally. Clearing all
+selected units in the role form synchronizes `role_organization_units` back to an
+empty set.
 
 ## Runtime Owners
 
@@ -79,4 +84,9 @@ For an end-to-end local verification, use the browser or HTTP session against th
 3. Create an organization, scope and level.
 4. Open `/users/roles/create`.
 5. Confirm the new scope and level appear as options.
-6. Create a role with those values and verify `roles.hierarchy_scope_id` and `roles.hierarchy_level_id` are persisted.
+6. Create a role with those values and one unit, then verify
+   `roles.hierarchy_scope_id`, `roles.hierarchy_level_id` and one
+   `role_organization_units` row are persisted.
+7. Edit the same role and confirm the unit is preselected.
+8. Remove every selected unit, save, and verify the role has no
+   `role_organization_units` rows.

@@ -126,7 +126,7 @@ When a new Catalyst release is available, update manually through Git:
 
 ```powershell
 git fetch upstream --tags
-git merge v0.1.0-rc.5
+git merge v0.1.0-rc.6
 composer install
 php public/cli.php config:sync
 php public/cli.php config:contract-smoke --json
@@ -136,11 +136,11 @@ php public/cli.php admin-navigation:smoke --json
 php public/cli.php quality:check
 ```
 
-Use the actual target tag instead of `v0.1.0-rc.5`. `update:check` does not modify
+Use the actual target tag instead of `v0.1.0-rc.6`. `update:check` does not modify
 files, branches or remotes; it only reports version information and suggested
 commands.
 
-For `v0.1.0-rc.5`, expect framework-owned changes in:
+For `v0.1.0-rc.6`, expect framework-owned changes in:
 
 - reusable-base first-run JSON templates under `boot-core/config/development/*.example.json`;
 - local config protection rules in `.gitignore`;
@@ -148,6 +148,7 @@ For `v0.1.0-rc.5`, expect framework-owned changes in:
 - the local config merge service under `app/Framework/Config/`;
 - migration contracts and new organization hierarchy tables under `boot-core/database/migrations/`;
 - RBAC/role administration surfaces under `Repository/Framework/Roles/`;
+- shared admin form multi-select rendering under `app/Framework/Admin/Form/` and `boot-core/template/components/admin-form-builder/`;
 - organization hierarchy primitives under `app/Framework/Organization/`;
 - admin navigation projection under `app/Framework/Navigation/`;
 - structural lint guard under `app/Framework/Module/ModuleLinter.php`;

@@ -65,6 +65,9 @@
                       placeholder="{{ placeholder }}"{{{ attributes_html }}}>{{ textarea_value }}</textarea>
         {{else}}
             {{#if is_select}}
+                {{#if is_multiple}}
+                    <input type="hidden" name="{{ base_name }}" value="">
+                {{/if}}
                 <select id="{{ id }}"
                         name="{{ name }}"
                         class="form-select{{ invalid_class }}"{{{ attributes_html }}}>

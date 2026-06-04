@@ -303,6 +303,11 @@ final class FormBuilder
         $attributes = $this->normalizeAttributes((array) ($field['attributes'] ?? []));
         $wrapperAttributes = $this->normalizeAttributes((array) ($field['wrapper_attributes'] ?? []));
         $dependsValues = $field['depends_values'] ?? $field['depends_value'] ?? null;
+        $multiple = $type === 'select' && (bool) ($field['multiple'] ?? false);
+
+        if ($multiple) {
+            $attributes['multiple'] = true;
+        }
 
         if (!is_array($dependsValues)) {
             $dependsValues = $dependsValues === null || $dependsValues === ''
@@ -328,6 +333,7 @@ final class FormBuilder
             'help' => (string) ($field['help'] ?? $field['hint'] ?? ''),
             'placeholder' => (string) ($field['placeholder'] ?? ''),
             'options' => $options,
+            'multiple' => $multiple,
             'error' => $error,
             'attributes' => $attributes,
             'wrapper_attributes' => $wrapperAttributes,
