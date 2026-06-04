@@ -29,6 +29,7 @@ declare(strict_types=1);
  */
 
 use Catalyst\Framework\Auth\AuthManager;
+use Catalyst\Framework\FeatureFlag\FeatureFlagManager;
 use Catalyst\Framework\Http\RedirectTarget;
 use Catalyst\Framework\Notification\NotificationRepository;
 use Catalyst\Framework\Appearance\PlatformAppearanceManager;
@@ -119,6 +120,7 @@ return static function (array $scope = []): array {
     $authName = trim((string) ($authUser['name'] ?? ''));
     $authEmail = trim((string) ($authUser['email'] ?? ''));
     $loginHref = RedirectTarget::loginUrl($currentUri);
+    $showRegistrationLink = FeatureFlagManager::getInstance()->isRuntimeEnabled('auth.registration_enabled');
 
     $wsUrl = '';
     if ($wsAvailable) {
@@ -176,6 +178,7 @@ return static function (array $scope = []): array {
         'account_menu_aria_label' => $isAuth ? __('ui.status_bar.open_account_menu') : __('ui.status_bar.open_session_menu'),
         'account_menu_title' => $isAuth ? __('ui.status_bar.account_menu') : __('ui.status_bar.session_menu'),
         'login_href' => $loginHref,
+        'show_registration_link' => $showRegistrationLink,
         'unread_count' => $unreadCount,
         'show_notifications' => $isAuth,
         'notification_badge_hidden' => $unreadCount === 0,

@@ -1,13 +1,13 @@
 {
-    "project": {
-        "project_config": true,
-        "project_name": "Catalyst Framework",
-        "project_url": "https:\/\/catalyst.dock",
-        "project_env": "development",
-        "project_lang": "en",
-        "project_timezone": "UTC",
-        "project_entry": "User-Access",
-        "project_entry_secondary": "Dashboard",
-        "project_debug": true
-    }
+  "project": {
+    "project_config": false,
+    "project_name": "Catalyst Framework",
+    "project_url": "",
+    "project_env": "development",
+    "project_lang": "en",
+    "project_timezone": "UTC",
+    "project_entry": "User-Access",
+    "project_entry_secondary": "Dashboard",
+    "project_debug": false
+  }
 }

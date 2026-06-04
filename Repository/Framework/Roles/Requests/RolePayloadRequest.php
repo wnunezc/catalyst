@@ -64,7 +64,7 @@ class RolePayloadRequest extends FormRequest
      */
     public function only(): array
     {
-        return ['name', 'slug', 'description'];
+        return ['name', 'slug', 'description', 'hierarchy_scope_id', 'hierarchy_level_id'];
     }
 
     /**
@@ -88,6 +88,8 @@ class RolePayloadRequest extends FormRequest
             'name' => $nameRule,
             'slug' => $slugRule,
             'description' => 'max:255',
+            'hierarchy_scope_id' => 'max:20',
+            'hierarchy_level_id' => 'max:20',
         ];
     }
 
@@ -103,6 +105,8 @@ class RolePayloadRequest extends FormRequest
             'name' => __('roles.common.name'),
             'slug' => __('roles.common.slug'),
             'description' => __('roles.common.description'),
+            'hierarchy_scope_id' => __('roles.organization.scope'),
+            'hierarchy_level_id' => __('roles.organization.level'),
         ];
     }
 }

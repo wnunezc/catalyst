@@ -36,6 +36,7 @@ use Catalyst\Framework\Authorization\RoleRepository;
 use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
+use Catalyst\Framework\Organization\OrganizationRepository;
 use Catalyst\Framework\Traits\InteractsWithRecordClaimsTrait;
 use Catalyst\Repository\Roles\Support\RbacLabelPresenter;
 use RuntimeException;
@@ -215,7 +216,9 @@ class RolesController extends Controller
         $this->repo->createRole(
             trim((string) ($payload['name'] ?? '')),
             trim((string) ($payload['slug'] ?? '')),
-            $this->normalizeDescription($payload['description'] ?? null)
+            $this->normalizeDescription($payload['description'] ?? null),
+            $this->nullablePositiveInt($payload['hierarchy_scope_id'] ?? null),
+            $this->nullablePositiveInt($payload['hierarchy_level_id'] ?? null)
         );
 
         return $this->postActionSuccessRedirect('/users/roles', (string) __('roles.roles.created'));
@@ -275,7 +278,10 @@ class RolesController extends Controller
                 $roleId,
                 trim((string) ($payload['name'] ?? '')),
                 trim((string) ($payload['slug'] ?? '')),
-                $this->normalizeDescription($payload['description'] ?? null)
+                $this->normalizeDescription($payload['description'] ?? null),
+                $this->nullablePositiveInt($payload['hierarchy_scope_id'] ?? null),
+                $this->nullablePositiveInt($payload['hierarchy_level_id'] ?? null),
+                $this->repo->getRoleOrganizationUnitIds($roleId)
             );
             $this->releaseRecordClaim('roles', $roleId, $request->request(), 'role updated');
         } catch (RuntimeException $e) {
@@ -439,6 +445,22 @@ class RolesController extends Controller
                     'section' => 'details',
                     'attributes' => ['maxlength' => 255],
                 ],
+                'hierarchy_scope_id' => [
+                    'type' => 'select',
+                    'label' => (string) __('roles.organization.scope') . ' (' . (string) __('roles.common.optional') . ')',
+                    'section' => 'organization',
+                    'options' => $this->organizationScopeOptions(),
+                    'empty_option_label' => (string) __('roles.organization.no_scope'),
+                    'help' => (string) __('roles.organization.scope_help'),
+                ],
+                'hierarchy_level_id' => [
+                    'type' => 'select',
+                    'label' => (string) __('roles.organization.level') . ' (' . (string) __('roles.common.optional') . ')',
+                    'section' => 'organization',
+                    'options' => $this->organizationLevelOptions(),
+                    'empty_option_label' => (string) __('roles.organization.no_level'),
+                    'help' => (string) __('roles.organization.level_help'),
+                ],
             ]
         );
 
@@ -454,6 +476,10 @@ class RolesController extends Controller
                 'details' => [
                     'title' => (string) __('roles.form.sections.details.title'),
                     'description' => (string) __('roles.form.sections.details.description'),
+                ],
+                'organization' => [
+                    'title' => (string) __('roles.organization.section_title'),
+                    'description' => (string) __('roles.organization.section_description'),
                 ],
             ])
             ->autosave()
@@ -494,5 +520,59 @@ class RolesController extends Controller
         $value = trim((string) ($description ?? ''));
 
         return $value === '' ? null : $value;
+    }
+
+    /**
+     * Converts optional positive integer payload values.
+     *
+     * Responsibility: Keeps blank organization classification selectors as null before repository persistence.
+     */
+    private function nullablePositiveInt(mixed $value): ?int
+    {
+        $id = (int) $value;
+
+        return $id > 0 ? $id : null;
+    }
+
+    /**
+     * Builds hierarchy scope select options.
+     *
+     * Responsibility: Reads configured organization scopes for role classification without affecting RBAC behavior.
+     * @return array<int, array{value:string,label:string}>
+     */
+    private function organizationScopeOptions(): array
+    {
+        try {
+            return array_map(
+                static fn (array $row): array => [
+                    'value' => (string) ($row['id'] ?? ''),
+                    'label' => (string) ($row['label'] ?? $row['scope_key'] ?? ''),
+                ],
+                (new OrganizationRepository())->scopeOptions()
+            );
+        } catch (\Throwable) {
+            return [];
+        }
+    }
+
+    /**
+     * Builds hierarchy level select options.
+     *
+     * Responsibility: Reads configured organization levels for role classification without affecting RBAC behavior.
+     * @return array<int, array{value:string,label:string}>
+     */
+    private function organizationLevelOptions(): array
+    {
+        try {
+            return array_map(
+                static fn (array $row): array => [
+                    'value' => (string) ($row['id'] ?? ''),
+                    'label' => (string) ($row['label'] ?? $row['code'] ?? ''),
+                ],
+                (new OrganizationRepository())->levelOptions()
+            );
+        } catch (\Throwable) {
+            return [];
+        }
     }
 }

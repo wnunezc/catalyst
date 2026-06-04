@@ -249,13 +249,13 @@ class RoleRepository
      * Returns all roles for the current tenant.
      *
      * Responsibility: Returns all roles for the current tenant.
-     * @return array<int, array{id: int, name: string, slug: string, description: string|null}>
+     * @return array<int, array{id: int, name: string, slug: string, description: string|null, hierarchy_scope_id:?int, hierarchy_level_id:?int}>
      */
     public function allRoles(): array
     {
         try {
             return $this->conn()->select(
-                'SELECT id, name, slug, description
+                'SELECT id, name, slug, description, hierarchy_scope_id, hierarchy_level_id
                  FROM roles
                  WHERE tenant_id = ?
                  ORDER BY name',
@@ -272,14 +272,24 @@ class RoleRepository
      *
      * Responsibility: Creates a role for the current tenant and records the mutation.
      */
-    public function createRole(string $name, string $slug, ?string $description = null): int
+    public function createRole(
+        string $name,
+        string $slug,
+        ?string $description = null,
+        ?int $hierarchyScopeId = null,
+        ?int $hierarchyLevelId = null,
+        array $organizationUnitIds = []
+    ): int
     {
         $roleId = $this->conn()->insert('roles', [
             'tenant_id'   => $this->currentTenantId(),
             'name'        => $name,
             'slug'        => $slug,
             'description' => $description,
+            'hierarchy_scope_id' => $hierarchyScopeId,
+            'hierarchy_level_id' => $hierarchyLevelId,
         ]);
+        $this->syncRoleOrganizationUnits($roleId, $organizationUnitIds);
 
         $this->auditLogger->record(
             action: 'created',
@@ -292,6 +302,9 @@ class RoleRepository
                 'name' => $name,
                 'slug' => $slug,
                 'description' => $description,
+                'hierarchy_scope_id' => $hierarchyScopeId,
+                'hierarchy_level_id' => $hierarchyLevelId,
+                'organization_unit_ids' => array_values(array_map('intval', $organizationUnitIds)),
             ],
             metadata: ['repository' => self::class]
         );
@@ -306,17 +319,26 @@ class RoleRepository
      *
      * Responsibility: Updates a role for the current tenant and records before and after state.
      */
-    public function updateRole(int $id, string $name, string $slug, ?string $description): void
+    public function updateRole(
+        int $id,
+        string $name,
+        string $slug,
+        ?string $description,
+        ?int $hierarchyScopeId = null,
+        ?int $hierarchyLevelId = null,
+        array $organizationUnitIds = []
+    ): void
     {
         $before = $this->findRole($id);
 
         $this->conn()->execute(
             'UPDATE roles
-             SET name = ?, slug = ?, description = ?
+             SET name = ?, slug = ?, description = ?, hierarchy_scope_id = ?, hierarchy_level_id = ?
              WHERE id = ?
                AND tenant_id = ?',
-            [$name, $slug, $description, $id, $this->currentTenantId()]
+            [$name, $slug, $description, $hierarchyScopeId, $hierarchyLevelId, $id, $this->currentTenantId()]
         );
+        $this->syncRoleOrganizationUnits($id, $organizationUnitIds);
 
         $this->auditLogger->record(
             action: 'updated',
@@ -329,6 +351,9 @@ class RoleRepository
                 'name' => $name,
                 'slug' => $slug,
                 'description' => $description,
+                'hierarchy_scope_id' => $hierarchyScopeId,
+                'hierarchy_level_id' => $hierarchyLevelId,
+                'organization_unit_ids' => array_values(array_map('intval', $organizationUnitIds)),
             ],
             metadata: ['repository' => self::class]
         );
@@ -371,7 +396,7 @@ class RoleRepository
     {
         try {
             return $this->conn()->selectOne(
-                'SELECT id, name, slug, description
+                'SELECT id, name, slug, description, hierarchy_scope_id, hierarchy_level_id
                  FROM roles
                  WHERE id = ?
                    AND tenant_id = ?',
@@ -386,7 +411,7 @@ class RoleRepository
      * Finds a role by slug within the current tenant.
      *
      * Responsibility: Finds a role by slug within the current tenant.
-     * @return array{id:int,name:string,slug:string,description:string|null}|null
+     * @return array{id:int,name:string,slug:string,description:string|null,hierarchy_scope_id:?int,hierarchy_level_id:?int}|null
      */
     public function findRoleBySlug(string $slug): ?array
     {
@@ -398,7 +423,7 @@ class RoleRepository
 
         try {
             return $this->conn()->selectOne(
-                'SELECT id, name, slug, description
+                'SELECT id, name, slug, description, hierarchy_scope_id, hierarchy_level_id
                  FROM roles
                  WHERE slug = ?
                    AND tenant_id = ?',
@@ -464,7 +489,7 @@ class RoleRepository
                 $bindings
             );
             $rows = $this->conn()->select(
-                'SELECT id, name, slug, description FROM roles'
+                'SELECT id, name, slug, description, hierarchy_scope_id, hierarchy_level_id FROM roles'
                 . $whereSql
                 . ' ORDER BY ' . $sort . ' ' . $direction
                 . ' LIMIT ? OFFSET ?',
@@ -479,6 +504,61 @@ class RoleRepository
             $this->logger->warning('RoleRepository::searchRoles failed', ['error' => $e->getMessage()]);
 
             return ['rows' => [], 'total' => 0];
+        }
+    }
+
+    /**
+     * Returns organization unit identifiers linked to a role.
+     *
+     * Responsibility: Reads role classification metadata without affecting RBAC permission evaluation.
+     * @return int[]
+     */
+    public function getRoleOrganizationUnitIds(int $roleId): array
+    {
+        try {
+            $rows = $this->conn()->select(
+                'SELECT unit_id
+                 FROM role_organization_units
+                 WHERE role_id = ?
+                   AND tenant_id = ?
+                 ORDER BY unit_id ASC',
+                [$roleId, $this->currentTenantId()]
+            ) ?: [];
+        } catch (Exception $e) {
+            $this->logger->warning('RoleRepository::getRoleOrganizationUnitIds failed', ['error' => $e->getMessage()]);
+
+            return [];
+        }
+
+        return array_map(static fn (array $row): int => (int)$row['unit_id'], $rows);
+    }
+
+    /**
+     * Synchronizes horizontal organization unit links for a role.
+     *
+     * Responsibility: Persists classification metadata only; permissions and role membership remain unchanged.
+     * @param int[] $unitIds
+     */
+    public function syncRoleOrganizationUnits(int $roleId, array $unitIds): void
+    {
+        $unitIds = array_values(array_unique(array_filter(
+            array_map('intval', $unitIds),
+            static fn (int $id): bool => $id > 0
+        )));
+
+        $this->conn()->execute(
+            'DELETE FROM role_organization_units
+             WHERE role_id = ?
+               AND tenant_id = ?',
+            [$roleId, $this->currentTenantId()]
+        );
+
+        foreach ($unitIds as $unitId) {
+            $this->conn()->execute(
+                'INSERT INTO role_organization_units (tenant_id, role_id, unit_id, created_at)
+                 VALUES (?, ?, ?, NOW())',
+                [$this->currentTenantId(), $roleId, $unitId]
+            );
         }
     }
 

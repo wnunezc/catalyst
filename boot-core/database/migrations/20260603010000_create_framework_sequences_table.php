@@ -11,6 +11,16 @@ use Catalyst\Framework\Database\Migration;
  */
 return new class extends Migration {
     /**
+     * Returns the migration version identifier.
+     *
+     * Responsibility: Exposes the timestamp contract consumed by migration discovery and status tooling.
+     */
+    public function getVersion(): string
+    {
+        return '20260603010000';
+    }
+
+    /**
      * Creates the sequence counter table.
      *
      * Responsibility: Defines the database structure required by transactional sequence storage.

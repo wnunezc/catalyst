@@ -34,6 +34,7 @@ use Catalyst\Framework\Route\Router;
 use Catalyst\Framework\View\View;
 use Catalyst\Helpers\I18n\Translator;
 use Catalyst\Repository\Roles\Controllers\PermissionsController;
+use Catalyst\Repository\Roles\Controllers\OrganizationHierarchyController;
 use Catalyst\Repository\Roles\Controllers\RolesController;
 use Catalyst\Repository\Roles\Controllers\UserRolesController;
 use Catalyst\Repository\Roles\Controllers\UserManagementController;
@@ -57,6 +58,12 @@ $router->post('/users/roles/{id}/delete', [RolesController::class, 'destroy'])->
 $router->post('/users/roles/{id}', [RolesController::class, 'update'])->middleware($manageRolesMiddleware)->throttle('admin_mutation');
 $router->get('/users/roles/{id}/permissions', [RolesController::class, 'permissions'])->middleware($manageRolesMiddleware);
 $router->post('/users/roles/{id}/permissions', [RolesController::class, 'syncPermissions'])->middleware($manageRolesMiddleware)->throttle('admin_mutation');
+
+$router->get('/users/organization-hierarchy', [OrganizationHierarchyController::class, 'index'])->middleware($manageRolesMiddleware);
+$router->post('/users/organization-hierarchy/organizations', [OrganizationHierarchyController::class, 'storeOrganization'])->middleware($manageRolesMiddleware)->throttle('admin_mutation');
+$router->post('/users/organization-hierarchy/units', [OrganizationHierarchyController::class, 'storeUnit'])->middleware($manageRolesMiddleware)->throttle('admin_mutation');
+$router->post('/users/organization-hierarchy/scopes', [OrganizationHierarchyController::class, 'storeScope'])->middleware($manageRolesMiddleware)->throttle('admin_mutation');
+$router->post('/users/organization-hierarchy/levels', [OrganizationHierarchyController::class, 'storeLevel'])->middleware($manageRolesMiddleware)->throttle('admin_mutation');
 
 $router->get('/users/permissions/create', [PermissionsController::class, 'create'])->middleware($manageRolesMiddleware);
 $router->post('/users/permissions', [PermissionsController::class, 'store'])->middleware($manageRolesMiddleware)->throttle('admin_mutation');

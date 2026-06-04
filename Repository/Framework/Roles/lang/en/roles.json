@@ -98,6 +98,48 @@
       }
     }
   },
+  "organization": {
+    "section_title": "Organization classification",
+    "section_description": "Optional institutional metadata for display, reporting and future catalogs. Permissions still decide access.",
+    "scope": "Hierarchy scope",
+    "level": "Hierarchy level",
+    "no_scope": "No hierarchy scope",
+    "no_level": "No hierarchy level",
+    "scope_help": "Classifies the role in a configured institutional axis such as authority, training or readiness.",
+    "level_help": "Select the configured level, rank or grade used for badges and organizational context."
+  },
+  "organization_admin": {
+    "title": "Organization Hierarchy",
+    "nav_hint": "Institutional scopes, levels and units",
+    "eyebrow": "Organization engine",
+    "description": "Configure organizations, horizontal units, hierarchy scopes and levels used by role classification.",
+    "organizations": "Organizations",
+    "organizations_help": "Create the institutional container before adding scopes, levels or units.",
+    "organization_count": "%d configured",
+    "organization": "Organization",
+    "scopes": "Hierarchy scopes",
+    "levels": "Hierarchy levels",
+    "units": "Organization units",
+    "scope": "Scope",
+    "scope_key": "Scope key",
+    "label": "Label",
+    "code": "Code",
+    "unit_type": "Unit type",
+    "visual_token": "Visual token",
+    "color": "Color",
+    "order": "Order",
+    "save": "Save",
+    "messages": {
+      "organization_saved": "Organization saved.",
+      "unit_saved": "Organization unit saved.",
+      "scope_saved": "Hierarchy scope saved.",
+      "level_saved": "Hierarchy level saved.",
+      "invalid_payload": "Review the organization hierarchy payload.",
+      "invalid_key": "Use lowercase letters, numbers and hyphens for keys.",
+      "invalid_color": "Use a hex color like #1f7a8c.",
+      "save_failed": "Organization hierarchy metadata could not be saved."
+    }
+  },
   "permissions": {
     "title": "Permissions",
     "catalog_eyebrow": "Permissions catalog",

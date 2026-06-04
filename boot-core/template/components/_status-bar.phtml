@@ -63,10 +63,12 @@
                     <i class="ti ti-login-2 me-2"></i>
                     <span>{{ t:ui.status_bar.log_in }}</span>
                 </a>
+                {{#if show_registration_link}}
                 <a href="/register" class="dropdown-item status-account-menu__item">
                     <i class="ti ti-user-plus me-2"></i>
                     <span>{{ t:ui.status_bar.create_account }}</span>
                 </a>
+                {{/if}}
                 <a href="/verify-email" class="dropdown-item status-account-menu__item">
                     <i class="ti ti-mail-check me-2"></i>
                     <span>{{ t:ui.status_bar.verify_email }}</span>

@@ -62,6 +62,7 @@ The architecture uses separated owners instead of single large classes: routes a
 | `docs/framework-geo.md` | Catalyst\Framework\Geo |
 | `docs/framework-mail.md` | Catalyst\Framework\Mail |
 | `docs/framework-notification.md` | Catalyst\Framework\Notification |
+| `docs/framework-organization.md` | Catalyst Framework Organization |
 | `docs/framework-queue.md` | Catalyst\Framework\Queue |
 | `docs/framework-reporting.md` | Catalyst Framework Reporting |
 | `docs/framework-schedule.md` | Catalyst\Framework\Schedule |

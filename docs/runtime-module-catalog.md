@@ -1,7 +1,7 @@
 # Runtime Module Catalog
 
 > Auto-generated from `ModuleRegistry`, `PermissionRegistry`, `NavigationRegistry`, `ModuleInspector`, `ModuleHarnessInspector` and `ModuleLinter`.
-> Last generated: 2026-06-03 06:26:55
+> Last generated: 2026-06-04 05:09:50
 
 ## Runtime Summary
 
@@ -15,7 +15,7 @@
 | `app.surface.home` | `public` | 2 | 1 | 0 | `ok` | `n/a` | `n/a` | `n/a` |
 | `app.surface.landing` | `public` | 1 | 1 | 0 | `ok` | `n/a` | `n/a` | `n/a` |
 | `app.surface.store` | `public` | 1 | 1 | 0 | `ok` | `n/a` | `n/a` | `n/a` |
-| `framework.apiplatform` | `authenticated` | 1 | 3 | 4 | `ok` | `manage-api-platform` | `n/a` | `n/a` |
+| `framework.apiplatform` | `authenticated` | 1 | 4 | 4 | `ok` | `manage-api-platform` | `n/a` | `n/a` |
 | `framework.audit` | `authenticated` | 2 | 0 | 0 | `ok` | `manage-audit-log` | `n/a` | `n/a` |
 | `framework.auth` | `auth-flow` | 10 | 0 | 9 | `ok` | `n/a` | `n/a` | `n/a` |
 | `framework.automation` | `authenticated` | 4 | 2 | 7 | `ok` | `manage-automation-rules` | `n/a` | `n/a` |
@@ -26,8 +26,8 @@
 | `framework.media` | `authenticated` | 6 | 0 | 7 | `ok` | `manage-media-library`, `manage-media-metadata` | `n/a` | `n/a` |
 | `framework.notification` | `authenticated-api` | 0 | 3 | 3 | `n/a` | `n/a` | `n/a` | `n/a` |
 | `framework.operations` | `authenticated` | 10 | 0 | 11 | `ok` | `manage-platform-operations` | `n/a` | `n/a` |
-| `framework.roles` | `administration` | 10 | 0 | 12 | `ok` | `manage-roles`, `manage-users` | `n/a` | `n/a` |
-| `framework.settings` | `workspace` | 4 | 0 | 16 | `ok` | `n/a` | `n/a` | `n/a` |
+| `framework.roles` | `administration` | 11 | 0 | 16 | `ok` | `manage-roles`, `manage-users` | `n/a` | `n/a` |
+| `framework.settings` | `workspace` | 4 | 0 | 17 | `ok` | `n/a` | `n/a` | `n/a` |
 
 ## Module Detail
 
@@ -251,6 +251,7 @@ _No mutation routes declared for harness._
 
 | Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
 |---|---|---|---|---|---|---|---|
+| `/api/v1/calendar/events` | `GET,HEAD` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
 | `/api/v1/catalog` | `GET,HEAD` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
 | `/api/v1/versions/{resourceKey}/{recordId}` | `GET,HEAD` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
 | `/api/v1/workflows` | `GET,HEAD` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
@@ -797,6 +798,7 @@ _No JSON routes declared for harness._
 |---|---|---|---|---|---|---|---|
 | `/users` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-users` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
 | `/users/enroll` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-users` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/users/organization-hierarchy` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-roles` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
 | `/users/permissions` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-roles` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
 | `/users/permissions/create` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-roles` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
 | `/users/permissions/{id}/edit` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-roles` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
@@ -815,6 +817,10 @@ _No JSON routes declared for harness._
 | Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
 |---|---|---|---|---|---|---|---|
 | `/users/enroll` | `POST` | `401` | `403` | `200` | `n/a` | `manage-users` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/users/organization-hierarchy/levels` | `POST` | `401` | `403` | `200` | `n/a` | `manage-roles` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/users/organization-hierarchy/organizations` | `POST` | `401` | `403` | `200` | `n/a` | `manage-roles` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/users/organization-hierarchy/scopes` | `POST` | `401` | `403` | `200` | `n/a` | `manage-roles` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/users/organization-hierarchy/units` | `POST` | `401` | `403` | `200` | `n/a` | `manage-roles` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
 | `/users/permissions` | `POST` | `401` | `403` | `200` | `n/a` | `manage-roles` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
 | `/users/permissions/bulk-delete` | `POST` | `401` | `403` | `200` | `n/a` | `manage-roles` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
 | `/users/permissions/{id}` | `POST` | `401` | `403` | `200` | `n/a` | `manage-roles` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
@@ -870,6 +876,7 @@ _No JSON routes declared for harness._
 | `/configuration/environment-setup/db` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
 | `/configuration/environment-setup/devtools` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
 | `/configuration/environment-setup/dkim/generate` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
+| `/configuration/environment-setup/features` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
 | `/configuration/environment-setup/ftp` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
 | `/configuration/environment-setup/ftp/pretest` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
 | `/configuration/environment-setup/logging` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |

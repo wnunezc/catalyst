@@ -70,9 +70,11 @@ use Catalyst\Framework\Cli\Commands\ApiTokensSmokeCommand;
 use Catalyst\Framework\Cli\Commands\AutomationMvcRegressionCommand;
 use Catalyst\Framework\Cli\Commands\CalendarSmokeCommand;
 use Catalyst\Framework\Cli\Commands\DocumentsMvcRegressionCommand;
+use Catalyst\Framework\Cli\Commands\DistributionSmokeCommand;
 use Catalyst\Framework\Cli\Commands\MediaMvcRegressionCommand;
 use Catalyst\Framework\Cli\Commands\ModuleLocalizationRegressionCommand;
 use Catalyst\Framework\Cli\Commands\OperationsRequestsRegressionCommand;
+use Catalyst\Framework\Cli\Commands\OrganizationSmokeCommand;
 use Catalyst\Framework\Cli\Commands\RolesMvcRegressionCommand;
 use Catalyst\Framework\Cli\Commands\DocsInventoryCommand;
 use Catalyst\Framework\Cli\Commands\DocsSyncRuntimeCommand;
@@ -171,9 +173,11 @@ $registry
     ->register(new AutomationMvcRegressionCommand())
     ->register(new CalendarSmokeCommand())
     ->register(new DocumentsMvcRegressionCommand())
+    ->register(new DistributionSmokeCommand())
     ->register(new MediaMvcRegressionCommand())
     ->register(new ModuleLocalizationRegressionCommand())
     ->register(new OperationsRequestsRegressionCommand())
+    ->register(new OrganizationSmokeCommand())
     ->register(new RolesMvcRegressionCommand())
     ->register(new DocsInventoryCommand())
     ->register(new FeatureFlagsListCommand())

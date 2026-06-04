@@ -32,6 +32,7 @@ Este archivo enruta la documentacion vigente de `catalyst` para que el contexto 
 | Reverse cascade delete | `docs/reverse-cascade-delete.md` |
 | Secuencias transaccionales | `docs/sequences.md` |
 | Queue/event/schedule | `docs/framework-event.md`, `docs/framework-queue.md`, `docs/framework-schedule.md` |
+| Organization hierarchy | `docs/framework-organization.md` |
 | UI actual | `docs/ui/*.md` vigente |
 | Operacion/calidad | `docs/testing.md`, `docs/quality-gate.md`, `docs/deployment.md` |
 | Setup/workflow | `docs/checklists/setup-completion-e2e.md`, `docs/workflow/*.md` |
@@ -49,6 +50,7 @@ Este archivo enruta la documentacion vigente de `catalyst` para que el contexto 
 | bootstrap, routing, kernel, entry points | `docs/architecture.md`, `docs/entry-points.md`, `docs/kernel.md`, `docs/routing.md` |
 | setup/config | `docs/checklists/setup-completion-e2e.md`, `docs/helpers-config.md` |
 | modulos, navegacion, permisos, assets | `docs/modules.md`, `docs/runtime-module-catalog.md`, `docs/ui/sidebar-navigation.md` |
+| organizaciones, jerarquias, unidades, clasificacion visual | `docs/framework-organization.md`, `docs/framework-auth.md` |
 | frontera app/framework, updates upstream | `docs/app-boundary.md`, `docs/workflow/reusable-base-install.md` |
 | specs grandes, apps derivadas, mapeo de producto | `docs/spec-to-catalyst-guide.md`, `docs/framework-scaffolding.md`, `docs/app-boundary.md` |
 | clases existentes o nuevas | `STRUCTURE.md`, `docs/runtime-inventory.md` |

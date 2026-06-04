@@ -1,0 +1,185 @@
+<div class="admin-surface admin-surface-shell rbac-page">
+    {{> "components._admin-page-header" }}
+
+    <section class="rbac-section card mb-3">
+        <div class="card-header">
+            <div class="rbac-section__head">
+                <div>
+                    <h2 class="rbac-section__title mb-1">{{ t:roles.organization_admin.organizations }}</h2>
+                    <p class="rbac-section__subtitle mb-0">{{ t:roles.organization_admin.organizations_help }}</p>
+                </div>
+                <span class="rbac-chip">{{ organizationCountLabel }}</span>
+            </div>
+        </div>
+        <div class="card-body">
+            <form data-catalyst="form" method="POST" action="/users/organization-hierarchy/organizations" class="row g-3 mb-4">
+                {{{ csrfField }}}
+                <div class="col-md-4">
+                    <label class="form-label" for="org-name">{{ t:roles.common.name }}</label>
+                    <input class="form-control" id="org-name" name="name" maxlength="160" required>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" for="org-slug">{{ t:roles.common.slug }}</label>
+                    <input class="form-control" id="org-slug" name="slug" maxlength="120" pattern="[a-z0-9][a-z0-9-]*" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label" for="org-description">{{ t:roles.common.description_optional }}</label>
+                    <input class="form-control" id="org-description" name="description" maxlength="255">
+                </div>
+                <div class="col-md-1 d-flex align-items-end">
+                    <button class="btn btn-primary w-100" type="submit">{{ t:roles.organization_admin.save }}</button>
+                </div>
+            </form>
+            {{#if organizationRows}}
+                <div class="table-responsive">
+                    <table class="table table-sm align-middle">
+                        <thead><tr><th>{{ t:roles.common.name }}</th><th>{{ t:roles.common.slug }}</th><th>{{ t:roles.common.description }}</th></tr></thead>
+                        <tbody>
+                        {{#each organizationRows}}
+                            <tr><td>{{ name }}</td><td><code>{{ slug }}</code></td><td class="text-muted">{{ description }}</td></tr>
+                        {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            {{/if}}
+        </div>
+    </section>
+
+    <section class="rbac-section card mb-3">
+        <div class="card-header"><h2 class="rbac-section__title mb-0">{{ t:roles.organization_admin.scopes }}</h2></div>
+        <div class="card-body">
+            <form data-catalyst="form" method="POST" action="/users/organization-hierarchy/scopes" class="row g-3 mb-4">
+                {{{ csrfField }}}
+                <div class="col-md-3">
+                    <label class="form-label" for="scope-organization">{{ t:roles.organization_admin.organization }}</label>
+                    <select class="form-select" id="scope-organization" name="organization_id" required>
+                        {{#each organizationOptions}}<option value="{{ value }}">{{ label }}</option>{{/each}}
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label" for="scope-key">{{ t:roles.organization_admin.scope_key }}</label>
+                    <input class="form-control" id="scope-key" name="scope_key" maxlength="120" pattern="[a-z0-9][a-z0-9-]*" required>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" for="scope-label">{{ t:roles.organization_admin.label }}</label>
+                    <input class="form-control" id="scope-label" name="label" maxlength="160" required>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label" for="scope-token">{{ t:roles.organization_admin.visual_token }}</label>
+                    <input class="form-control" id="scope-token" name="visual_token" maxlength="80" pattern="[a-z0-9][a-z0-9-]*">
+                </div>
+                <div class="col-md-1">
+                    <label class="form-label" for="scope-color">{{ t:roles.organization_admin.color }}</label>
+                    <input class="form-control" id="scope-color" name="color" maxlength="7" placeholder="#1f7a8c">
+                </div>
+                <div class="col-md-1 d-flex align-items-end">
+                    <button class="btn btn-primary w-100" type="submit">{{ t:roles.organization_admin.save }}</button>
+                </div>
+            </form>
+            {{#if scopeRows}}
+                <div class="table-responsive">
+                    <table class="table table-sm align-middle">
+                        <thead><tr><th>{{ t:roles.organization_admin.organization }}</th><th>{{ t:roles.organization_admin.scope_key }}</th><th>{{ t:roles.organization_admin.label }}</th></tr></thead>
+                        <tbody>
+                        {{#each scopeRows}}
+                            <tr><td>{{ organization_name }}</td><td><code>{{ scope_key }}</code></td><td>{{ label }}</td></tr>
+                        {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            {{/if}}
+        </div>
+    </section>
+
+    <section class="rbac-section card mb-3">
+        <div class="card-header"><h2 class="rbac-section__title mb-0">{{ t:roles.organization_admin.levels }}</h2></div>
+        <div class="card-body">
+            <form data-catalyst="form" method="POST" action="/users/organization-hierarchy/levels" class="row g-3 mb-4">
+                {{{ csrfField }}}
+                <div class="col-md-3">
+                    <label class="form-label" for="level-scope">{{ t:roles.organization_admin.scope }}</label>
+                    <select class="form-select" id="level-scope" name="scope_id" required>
+                        {{#each scopeOptions}}<option value="{{ value }}">{{ label }}</option>{{/each}}
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label" for="level-code">{{ t:roles.organization_admin.code }}</label>
+                    <input class="form-control" id="level-code" name="code" maxlength="80" pattern="[a-z0-9][a-z0-9-]*" required>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" for="level-label">{{ t:roles.organization_admin.label }}</label>
+                    <input class="form-control" id="level-label" name="label" maxlength="160" required>
+                </div>
+                <div class="col-md-1">
+                    <label class="form-label" for="level-order">{{ t:roles.organization_admin.order }}</label>
+                    <input class="form-control" id="level-order" name="level_order" type="number" value="10">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label" for="level-token">{{ t:roles.organization_admin.visual_token }}</label>
+                    <input class="form-control" id="level-token" name="visual_token" maxlength="80" pattern="[a-z0-9][a-z0-9-]*">
+                </div>
+                <div class="col-md-1 d-flex align-items-end">
+                    <button class="btn btn-primary w-100" type="submit">{{ t:roles.organization_admin.save }}</button>
+                </div>
+            </form>
+            {{#if levelRows}}
+                <div class="table-responsive">
+                    <table class="table table-sm align-middle">
+                        <thead><tr><th>{{ t:roles.organization_admin.scope }}</th><th>{{ t:roles.organization_admin.code }}</th><th>{{ t:roles.organization_admin.label }}</th><th>{{ t:roles.organization_admin.order }}</th></tr></thead>
+                        <tbody>
+                        {{#each levelRows}}
+                            <tr><td>{{ scope_label }}</td><td><code>{{ code }}</code></td><td>{{ label }}</td><td>{{ level_order }}</td></tr>
+                        {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            {{/if}}
+        </div>
+    </section>
+
+    <section class="rbac-section card">
+        <div class="card-header"><h2 class="rbac-section__title mb-0">{{ t:roles.organization_admin.units }}</h2></div>
+        <div class="card-body">
+            <form data-catalyst="form" method="POST" action="/users/organization-hierarchy/units" class="row g-3 mb-4">
+                {{{ csrfField }}}
+                <div class="col-md-3">
+                    <label class="form-label" for="unit-organization">{{ t:roles.organization_admin.organization }}</label>
+                    <select class="form-select" id="unit-organization" name="organization_id" required>
+                        {{#each organizationOptions}}<option value="{{ value }}">{{ label }}</option>{{/each}}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label" for="unit-name">{{ t:roles.common.name }}</label>
+                    <input class="form-control" id="unit-name" name="name" maxlength="160" required>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label" for="unit-code">{{ t:roles.organization_admin.code }}</label>
+                    <input class="form-control" id="unit-code" name="code" maxlength="80" pattern="[a-z0-9][a-z0-9-]*" required>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label" for="unit-type">{{ t:roles.organization_admin.unit_type }}</label>
+                    <input class="form-control" id="unit-type" name="unit_type" maxlength="80">
+                </div>
+                <div class="col-md-1">
+                    <label class="form-label" for="unit-order">{{ t:roles.organization_admin.order }}</label>
+                    <input class="form-control" id="unit-order" name="sort_order" type="number" value="10">
+                </div>
+                <div class="col-md-1 d-flex align-items-end">
+                    <button class="btn btn-primary w-100" type="submit">{{ t:roles.organization_admin.save }}</button>
+                </div>
+            </form>
+            {{#if unitRows}}
+                <div class="table-responsive">
+                    <table class="table table-sm align-middle">
+                        <thead><tr><th>{{ t:roles.organization_admin.organization }}</th><th>{{ t:roles.common.name }}</th><th>{{ t:roles.organization_admin.code }}</th><th>{{ t:roles.organization_admin.unit_type }}</th></tr></thead>
+                        <tbody>
+                        {{#each unitRows}}
+                            <tr><td>{{ organization_name }}</td><td>{{ name }}</td><td><code>{{ code }}</code></td><td>{{ unit_type }}</td></tr>
+                        {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            {{/if}}
+        </div>
+    </section>
+</div>

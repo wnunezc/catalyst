@@ -187,15 +187,50 @@ class DatabaseManager
         $dbSection = ConfigManager::getInstance()->section('db');
 
         if (!empty($dbSection)) {
-            $this->configs           = $dbSection;
-            $this->defaultConnection = array_key_first($this->configs);
-            $this->logger->debug('DatabaseManager: config loaded from JSON', [
-                'connections' => array_keys($this->configs),
-            ]);
-            return;
+            $configs = $this->configuredConnections($dbSection);
+            if ($configs !== []) {
+                $this->configs           = $configs;
+                $this->defaultConnection = array_key_first($this->configs);
+                $this->logger->debug('DatabaseManager: config loaded from JSON', [
+                    'connections' => array_keys($this->configs),
+                ]);
+                return;
+            }
+
+            $this->logger->debug('DatabaseManager: JSON DB config exists but contains no complete connections');
         }
 
         $this->loadFromEnvFallback();
+    }
+
+    /**
+     * Filters JSON DB entries to complete connection definitions.
+     *
+     * Responsibility: Prevents first-run template placeholders from being treated as live database connections.
+     * @param array<string, mixed> $dbSection
+     * @return array<string, array<string, mixed>>
+     */
+    private function configuredConnections(array $dbSection): array
+    {
+        $configs = [];
+
+        foreach ($dbSection as $name => $config) {
+            if (!is_string($name) || !is_array($config)) {
+                continue;
+            }
+
+            $host = trim((string)($config['db_host'] ?? ''));
+            $database = trim((string)($config['db_database'] ?? $config['db_name'] ?? ''));
+            $username = trim((string)($config['db_username'] ?? $config['db_user'] ?? ''));
+
+            if ($host === '' || $database === '' || $username === '') {
+                continue;
+            }
+
+            $configs[$name] = $config;
+        }
+
+        return $configs;
     }
 
     /**

@@ -42,6 +42,7 @@ return [
             '/users/roles/create',
             '/users/roles/{id}/edit',
             '/users/roles/{id}/permissions',
+            '/users/organization-hierarchy',
             '/users/permissions',
             '/users/permissions/create',
         ],
@@ -50,6 +51,7 @@ return [
         'prefixes' => [
             '/users',
             '/users/roles',
+            '/users/organization-hierarchy',
             '/users/permissions',
         ],
     ],
@@ -148,6 +150,21 @@ return [
                     ['permissions_any' => ['manage-roles']],
                 ],
             ],
+            [
+                'context' => 'users',
+                'label' => __('roles.organization_admin.title'),
+                'href' => '/users/organization-hierarchy',
+                'icon' => 'ti ti-building-hierarchy',
+                'matches' => ['/users/organization-hierarchy'],
+                'group' => 'users',
+                'group_label' => __('ui.shell.group_access'),
+                'group_order' => 10,
+                'hint' => __('roles.organization_admin.nav_hint'),
+                'order' => 40,
+                'visibility' => [
+                    ['permissions_any' => ['manage-roles']],
+                ],
+            ],
         ],
         'breadcrumbs' => [
             [
@@ -202,6 +219,13 @@ return [
                 'trail' => [
                     ['label' => __('roles.permissions.title'), 'href' => '/users/permissions'],
                     ['label' => __('roles.module.create_permission_breadcrumb'), 'href' => null],
+                ],
+            ],
+            [
+                'pattern' => '/users/organization-hierarchy',
+                'trail' => [
+                    ['label' => __('roles.roles.title'), 'href' => '/users/roles'],
+                    ['label' => __('roles.organization_admin.title'), 'href' => null],
                 ],
             ],
             [

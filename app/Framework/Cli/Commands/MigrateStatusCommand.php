@@ -79,6 +79,9 @@ class MigrateStatusCommand extends AbstractCommand
         } catch (Throwable $e) {
             $this->error('Unable to inspect migration status because the configured database is unreachable.');
             $this->line('Hint: in this workspace, run migrate:* inside the WSDD/Docker runtime when DB_HOST only resolves there.');
+            $this->line('Hint: on a clean derived install with an empty database, run the setup bootstrap first:');
+            $this->line('php -r "require \'boot-core/requirement-loader/error-catcher.php\'; require \'vendor/autoload.php\'; Catalyst\\Repository\\Settings\\Services\\SetupDatabaseService::make()->open();"');
+            $this->line('Then run: php public/cli.php migrate');
             $this->line('Detail: ' . $e->getMessage());
             $this->line('');
 
@@ -110,6 +113,9 @@ class MigrateStatusCommand extends AbstractCommand
 
         if (!$status['repository_exists']) {
             $this->warn('The migrations tracking table does not exist yet. Run "php cli.php migrate" to initialise it.');
+            $this->line('For a clean derived install with an empty database, bootstrap the setup SQL first:');
+            $this->line('php -r "require \'boot-core/requirement-loader/error-catcher.php\'; require \'vendor/autoload.php\'; Catalyst\\Repository\\Settings\\Services\\SetupDatabaseService::make()->open();"');
+            $this->line('Then run: php public/cli.php migrate');
         }
 
         $pending = array_filter(

@@ -1,26 +1,26 @@
 # Runtime Inventory
 
 > Auto-generated from filesystem and PHP tokens. Run `php public/cli.php docs:inventory` to refresh.
-> Last generated: 2026-06-03 08:39:07
+> Last generated: 2026-06-04 05:09:51
 
 ## Summary
 
-- Symbols: 667
-- Templates: 228
+- Symbols: 674
+- Templates: 230
 - Scripts: 54
 
 ## Symbol Roots
 
 | Root | Count |
 |---|---:|
-| `Repository` | 172 |
-| `app` | 495 |
+| `Repository` | 173 |
+| `app` | 501 |
 
 ## Template Roots
 
 | Root | Count |
 |---|---:|
-| `Repository views` | 157 |
+| `Repository views` | 159 |
 | `boot-core/template` | 71 |
 
 ## Script Roots
@@ -177,6 +177,7 @@
 | `Catalyst\Framework\Cli\Commands\DeployListCommand` | `class` | `app/Framework/Cli/Commands/DeployListCommand.php` | 46 |
 | `Catalyst\Framework\Cli\Commands\DeployRunCommand` | `class` | `app/Framework/Cli/Commands/DeployRunCommand.php` | 46 |
 | `Catalyst\Framework\Cli\Commands\DevToolsDisableCommand` | `class` | `app/Framework/Cli/Commands/DevToolsDisableCommand.php` | 45 |
+| `Catalyst\Framework\Cli\Commands\DistributionSmokeCommand` | `class` | `app/Framework/Cli/Commands/DistributionSmokeCommand.php` | 44 |
 | `Catalyst\Framework\Cli\Commands\DocsInventoryCommand` | `class` | `app/Framework/Cli/Commands/DocsInventoryCommand.php` | 46 |
 | `Catalyst\Framework\Cli\Commands\DocsSyncRuntimeCommand` | `class` | `app/Framework/Cli/Commands/DocsSyncRuntimeCommand.php` | 46 |
 | `Catalyst\Framework\Cli\Commands\DocumentsMvcRegressionCommand` | `class` | `app/Framework/Cli/Commands/DocumentsMvcRegressionCommand.php` | 43 |
@@ -189,6 +190,7 @@
 | `Catalyst\Framework\Cli\Commands\I18nInitLocaleCommand` | `class` | `app/Framework/Cli/Commands/I18nInitLocaleCommand.php` | 46 |
 | `Catalyst\Framework\Cli\Commands\I18nStatusCommand` | `class` | `app/Framework/Cli/Commands/I18nStatusCommand.php` | 45 |
 | `Catalyst\Framework\Cli\Commands\I18nSyncCommand` | `class` | `app/Framework/Cli/Commands/I18nSyncCommand.php` | 46 |
+| `Catalyst\Framework\Cli\Commands\I18nUsageLintCommand` | `class` | `app/Framework/Cli/Commands/I18nUsageLintCommand.php` | 47 |
 | `Catalyst\Framework\Cli\Commands\IdempotencySmokeCommand` | `class` | `app/Framework/Cli/Commands/IdempotencySmokeCommand.php` | 51 |
 | `Catalyst\Framework\Cli\Commands\InspectHarnessCommand` | `class` | `app/Framework/Cli/Commands/InspectHarnessCommand.php` | 45 |
 | `Catalyst\Framework\Cli\Commands\InspectLintCommand` | `class` | `app/Framework/Cli/Commands/InspectLintCommand.php` | 45 |
@@ -210,6 +212,7 @@
 | `Catalyst\Framework\Cli\Commands\MigrateStatusCommand` | `class` | `app/Framework/Cli/Commands/MigrateStatusCommand.php` | 47 |
 | `Catalyst\Framework\Cli\Commands\ModuleLocalizationRegressionCommand` | `class` | `app/Framework/Cli/Commands/ModuleLocalizationRegressionCommand.php` | 44 |
 | `Catalyst\Framework\Cli\Commands\OperationsRequestsRegressionCommand` | `class` | `app/Framework/Cli/Commands/OperationsRequestsRegressionCommand.php` | 43 |
+| `Catalyst\Framework\Cli\Commands\OrganizationSmokeCommand` | `class` | `app/Framework/Cli/Commands/OrganizationSmokeCommand.php` | 46 |
 | `Catalyst\Framework\Cli\Commands\PluginListCommand` | `class` | `app/Framework/Cli/Commands/PluginListCommand.php` | 45 |
 | `Catalyst\Framework\Cli\Commands\PluginToggleCommand` | `class` | `app/Framework/Cli/Commands/PluginToggleCommand.php` | 46 |
 | `Catalyst\Framework\Cli\Commands\PresenceSmokeCommand` | `class` | `app/Framework/Cli/Commands/PresenceSmokeCommand.php` | 48 |
@@ -380,6 +383,9 @@
 | `Catalyst\Framework\Notification\NotificationPosition` | `enum` | `app/Framework/Notification/NotificationPosition.php` | 41 |
 | `Catalyst\Framework\Notification\NotificationRepository` | `class` | `app/Framework/Notification/NotificationRepository.php` | 45 |
 | `Catalyst\Framework\Notification\NotificationType` | `enum` | `app/Framework/Notification/NotificationType.php` | 42 |
+| `Catalyst\Framework\Organization\OrganizationClassification` | `class` | `app/Framework/Organization/OrganizationClassification.php` | 15 |
+| `Catalyst\Framework\Organization\OrganizationClassificationPresenter` | `class` | `app/Framework/Organization/OrganizationClassificationPresenter.php` | 13 |
+| `Catalyst\Framework\Organization\OrganizationRepository` | `class` | `app/Framework/Organization/OrganizationRepository.php` | 19 |
 | `Catalyst\Framework\Plugin\PluginManager` | `class` | `app/Framework/Plugin/PluginManager.php` | 48 |
 | `Catalyst\Framework\Plugin\PluginRegistry` | `class` | `app/Framework/Plugin/PluginRegistry.php` | 41 |
 | `Catalyst\Framework\Presence\PresenceManager` | `class` | `app/Framework/Presence/PresenceManager.php` | 43 |
@@ -642,8 +648,9 @@
 | `Catalyst\Repository\Operations\Requests\LocaleSyncRequest` | `class` | `Repository/Framework/Operations/Requests/LocaleSyncRequest.php` | 42 |
 | `Catalyst\Repository\Operations\Requests\LocalizationSettingsRequest` | `class` | `Repository/Framework/Operations/Requests/LocalizationSettingsRequest.php` | 41 |
 | `Catalyst\Repository\Operations\Requests\ModuleDesignerRequest` | `class` | `Repository/Framework/Operations/Requests/ModuleDesignerRequest.php` | 41 |
+| `Catalyst\Repository\Roles\Controllers\OrganizationHierarchyController` | `class` | `Repository/Framework/Roles/Controllers/OrganizationHierarchyController.php` | 20 |
 | `Catalyst\Repository\Roles\Controllers\PermissionsController` | `class` | `Repository/Framework/Roles/Controllers/PermissionsController.php` | 51 |
-| `Catalyst\Repository\Roles\Controllers\RolesController` | `class` | `Repository/Framework/Roles/Controllers/RolesController.php` | 52 |
+| `Catalyst\Repository\Roles\Controllers\RolesController` | `class` | `Repository/Framework/Roles/Controllers/RolesController.php` | 53 |
 | `Catalyst\Repository\Roles\Controllers\UserManagementController` | `class` | `Repository/Framework/Roles/Controllers/UserManagementController.php` | 52 |
 | `Catalyst\Repository\Roles\Controllers\UserRolesController` | `class` | `Repository/Framework/Roles/Controllers/UserRolesController.php` | 46 |
 | `Catalyst\Repository\Roles\Requests\PermissionBulkSelectionRequest` | `class` | `Repository/Framework/Roles/Requests/PermissionBulkSelectionRequest.php` | 41 |
@@ -906,6 +913,7 @@
 | `Repository/Framework/Operations/Views/scope/partials/_nav.php` | `Repository views` | `php` |
 | `Repository/Framework/Roles/Views/pages/form.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/Roles/Views/pages/index.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Roles/Views/pages/organization-hierarchy.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/Roles/Views/pages/permission-form.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/Roles/Views/pages/permissions-list.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/Roles/Views/pages/permissions.phtml` | `Repository views` | `phtml` |
@@ -914,6 +922,7 @@
 | `Repository/Framework/Roles/Views/pages/users-index.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/Roles/Views/scope/pages/form.php` | `Repository views` | `php` |
 | `Repository/Framework/Roles/Views/scope/pages/index.php` | `Repository views` | `php` |
+| `Repository/Framework/Roles/Views/scope/pages/organization-hierarchy.php` | `Repository views` | `php` |
 | `Repository/Framework/Roles/Views/scope/pages/permission-form.php` | `Repository views` | `php` |
 | `Repository/Framework/Roles/Views/scope/pages/permissions-list.php` | `Repository views` | `php` |
 | `Repository/Framework/Roles/Views/scope/pages/permissions.php` | `Repository views` | `php` |

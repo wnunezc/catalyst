@@ -1,6 +1,6 @@
 {
   "name": "catalyst/framework",
-  "version": "0.1.0-rc.1",
+  "version": "0.1.0-rc.2",
   "channel": "rc",
   "source": "https://github.com/wnunezc/catalyst",
   "release_manifest": "https://raw.githubusercontent.com/wnunezc/catalyst/main/catalyst.json"

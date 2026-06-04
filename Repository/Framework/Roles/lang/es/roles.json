@@ -98,6 +98,48 @@
       }
     }
   },
+  "organization": {
+    "section_title": "Clasificación organizacional",
+    "section_description": "Metadatos institucionales opcionales para visualización, reportes y catálogos futuros. Los permisos siguen decidiendo el acceso.",
+    "scope": "Ámbito jerárquico",
+    "level": "Nivel jerárquico",
+    "no_scope": "Sin ámbito jerárquico",
+    "no_level": "Sin nivel jerárquico",
+    "scope_help": "Clasifica el rol en un eje institucional configurado como autoridad, formación o disponibilidad operativa.",
+    "level_help": "Selecciona el nivel, rango o grado configurado para badges y contexto organizacional."
+  },
+  "organization_admin": {
+    "title": "Jerarquía Organizacional",
+    "nav_hint": "Ámbitos, niveles y unidades institucionales",
+    "eyebrow": "Motor organizacional",
+    "description": "Configura organizaciones, unidades horizontales, ámbitos jerárquicos y niveles usados por la clasificación de roles.",
+    "organizations": "Organizaciones",
+    "organizations_help": "Crea el contenedor institucional antes de agregar ámbitos, niveles o unidades.",
+    "organization_count": "%d configuradas",
+    "organization": "Organización",
+    "scopes": "Ámbitos jerárquicos",
+    "levels": "Niveles jerárquicos",
+    "units": "Unidades organizacionales",
+    "scope": "Ámbito",
+    "scope_key": "Clave del ámbito",
+    "label": "Etiqueta",
+    "code": "Código",
+    "unit_type": "Tipo de unidad",
+    "visual_token": "Token visual",
+    "color": "Color",
+    "order": "Orden",
+    "save": "Guardar",
+    "messages": {
+      "organization_saved": "Organización guardada.",
+      "unit_saved": "Unidad organizacional guardada.",
+      "scope_saved": "Ámbito jerárquico guardado.",
+      "level_saved": "Nivel jerárquico guardado.",
+      "invalid_payload": "Revisa los datos de jerarquía organizacional.",
+      "invalid_key": "Usa minúsculas, números y guiones para las claves.",
+      "invalid_color": "Usa un color hexadecimal como #1f7a8c.",
+      "save_failed": "No se pudo guardar la metadata de jerarquía organizacional."
+    }
+  },
   "permissions": {
     "title": "Permisos",
     "catalog_eyebrow": "Catálogo de permisos",

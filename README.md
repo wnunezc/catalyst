@@ -5,7 +5,7 @@ Composer package. It is meant to be copied or cloned as the starting point for a
 web application, then configured through local environment files and the setup
 wizard.
 
-Current distribution target: `0.1.0-rc.1`.
+Current distribution target: `0.1.0-rc.2`.
 
 ## Runtime Model
 
@@ -268,9 +268,12 @@ API.md                    Subsystem index
 
 ## Distribution Status
 
-`0.1.0-rc.1` is intended as the first distribution candidate for developers who
-will use Catalyst as a project base. It is not a public Composer package and is
-not intended to be installed into another project's `vendor/` directory.
+`0.1.0-rc.2` is intended as the second distribution candidate for developers who
+will use Catalyst as a project base. It closes the first issue batch after
+`0.1.0-rc.1`, including first-run config hardening, migration bootstrap
+guidance, registration menu guards and the administrator-driven organization
+hierarchy UI. It is not a public Composer package and is not intended to be
+installed into another project's `vendor/` directory.
 
 Before a release artifact is published, generate it from a clean checkout and
 exclude local secrets, DKIM keys, runtime storage, uploads, logs, ad-hoc zips and

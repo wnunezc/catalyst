@@ -78,6 +78,9 @@ class MigrateCommand extends AbstractCommand
         } catch (Throwable $e) {
             $this->error('Unable to connect to the configured database for migrations.');
             $this->line('Hint: in this workspace, run migration commands inside the WSDD/Docker runtime when DB_HOST only resolves there.');
+            $this->line('Hint: on a clean derived install with an empty database, run the setup bootstrap first:');
+            $this->line('php -r "require \'boot-core/requirement-loader/error-catcher.php\'; require \'vendor/autoload.php\'; Catalyst\\Repository\\Settings\\Services\\SetupDatabaseService::make()->open();"');
+            $this->line('Then run: php public/cli.php migrate');
             $this->line('Detail: ' . $e->getMessage());
             $this->line('');
 
