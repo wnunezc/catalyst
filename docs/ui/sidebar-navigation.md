@@ -81,11 +81,11 @@ Este limite evita mezclar:
 - configuracion operacional;
 - acciones personales del usuario.
 
-Desde `v0.1.0-rc.3`, el sidebar administrativo consume `NavigationRegistry::adminShell()` mediante `AdminShellNavigationPresenter`. Las entradas primarias declaradas por modulos activos en `navigation.admin` son la fuente canonica del sidebar real.
+Desde `v0.1.0-rc.4`, el sidebar administrativo consume `NavigationRegistry::adminShell()` mediante `AdminShellNavigationPresenter`, pero conserva la taxonomia curada del shell administrativo: `Configuration`, `Workspaces`, `Operations`, `Users` y `Devtools`. Las entradas primarias declaradas por modulos activos en `navigation.admin` son fuente de descubrimiento, no autorizan a reordenar dominios visuales por si solas.
 
 La capa visual conserva el view model historico `demo_ui_nav_groups`, pero este ya no debe mantener listas hardcodeadas para superficies administrativas del framework o de la aplicacion. Los bloques demo de componentes siguen separados y solo aparecen dentro de `/demo-ui`.
 
-Los grupos administrativos deben venir de metadata declarativa de modulo (`context`, `group`, `group_label`, `group_order`, `order`, `matches`, `icon`, `visibility`) y no de duplicar rutas en `_demo-product-shell.php`.
+Los grupos administrativos deben respetar la taxonomia curada y usar metadata declarativa de modulo (`context`, `group`, `group_label`, `group_order`, `order`, `matches`, `icon`, `visibility`) para descubrir superficies faltantes, permisos, iconos y active state. No se deben duplicar rutas en `_demo-product-shell.php`, pero tampoco se debe permitir que manifests incompletos destruyan la organizacion visual del menu.
 
 Para evitar duplicidad, el contexto activo no se renderiza otra vez como link en el sidebar. La tarjeta de contexto y el titulo del bloque indican el dominio actual; el bloque `Otras áreas` contiene solo saltos a dominios inactivos.
 
@@ -97,7 +97,7 @@ El smoke especifico para este contrato es:
 php public/cli.php admin-navigation:smoke --json
 ```
 
-Este smoke comprueba que las entradas `navigation.admin` se proyectan al modelo de sidebar, incluyendo `/users/organization-hierarchy` bajo `Users` y su estado activo.
+Este smoke comprueba que las entradas `navigation.admin` se proyectan al modelo de sidebar sin romper la taxonomia completa: superficies esperadas por grupo, `/users/organization-hierarchy` y `/admin/account-recovery` bajo `Users`, `Test Features`, `UI Showcase`, `UML / Architecture` y `Demo UI` bajo `Devtools`, sin `Users` anidado, sin `Operations` dentro de `Configuration` y sin `Devtools` duplicado.
 
 ## Entradas tecnicas y aliases
 

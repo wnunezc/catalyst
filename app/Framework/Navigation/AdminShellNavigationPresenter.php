@@ -33,116 +33,185 @@ namespace Catalyst\Framework\Navigation;
 use Catalyst\Framework\Module\ModuleRegistry;
 
 /**
- * Maps registry navigation payloads into the Inspinia sidebar view model.
+ * Maps admin navigation to the curated Inspinia sidebar model.
  *
  * @package Catalyst\Framework\Navigation
- * Responsibility: Keeps admin sidebar rendering registry-driven without coupling templates to module manifests.
+ * Responsibility: Keeps the admin sidebar organization stable while allowing manifests to expose missing surfaces.
  */
 final class AdminShellNavigationPresenter
 {
     /**
+     * @var array<string, array{title:string,label:string,icon:string,items:array<int, array{label:string,href:string,icon:string,aliases?:string[]}>}>
+     */
+    private const CANONICAL_GROUPS = [
+        'configuration' => [
+            'title' => 'Framework Configuration',
+            'label' => 'Configuration',
+            'icon' => 'ti ti-settings-cog',
+            'items' => [
+                ['label' => 'Environment Setup', 'href' => '/configuration/environment-setup', 'icon' => 'ti ti-adjustments-cog'],
+                ['label' => 'Application Health', 'href' => '/configuration/application-health', 'icon' => 'ti ti-heartbeat'],
+                ['label' => 'Platform Appearance', 'href' => '/configuration/platform-appearance', 'icon' => 'ti ti-palette'],
+                ['label' => 'Feature Flags', 'href' => '/configuration/feature-flags', 'icon' => 'ti ti-flag-3'],
+                ['label' => 'Plugins Management', 'href' => '/configuration/plugins', 'icon' => 'ti ti-plug-connected'],
+            ],
+        ],
+        'workspaces' => [
+            'title' => 'Framework Operations',
+            'label' => 'Workspaces',
+            'icon' => 'ti ti-layout-grid',
+            'items' => [
+                ['label' => 'Catalogs', 'href' => '/workspaces/catalogs', 'icon' => 'ti ti-books'],
+                ['label' => 'Module Designer', 'href' => '/workspaces/module-designer', 'icon' => 'ti ti-template'],
+                ['label' => 'Media and Documents Fields', 'href' => '/workspaces/media-fields', 'icon' => 'ti ti-list-details'],
+                ['label' => 'Media and Documents Library', 'href' => '/workspaces/media-library', 'icon' => 'ti ti-photo'],
+                ['label' => 'Document Template', 'href' => '/workspaces/document-templates', 'icon' => 'ti ti-file-description'],
+                ['label' => 'Locale Tools', 'href' => '/workspaces/locale-tools', 'icon' => 'ti ti-language'],
+            ],
+        ],
+        'operations' => [
+            'title' => 'Framework Operations',
+            'label' => 'Operations',
+            'icon' => 'ti ti-briefcase-2',
+            'items' => [
+                ['label' => 'Deployments', 'href' => '/operations/deployments', 'icon' => 'ti ti-rocket'],
+                ['label' => 'Tenancy', 'href' => '/operations/tenancy', 'icon' => 'ti ti-building-community'],
+                ['label' => 'Audit Log', 'href' => '/audit-log', 'icon' => 'ti ti-history'],
+                ['label' => 'API Platform', 'href' => '/api-platform', 'icon' => 'ti ti-api'],
+                ['label' => 'Automation Rules', 'href' => '/automation-rules', 'icon' => 'ti ti-bolt'],
+            ],
+        ],
+        'users' => [
+            'title' => 'Framework Operations',
+            'label' => 'Users',
+            'icon' => 'ti ti-users',
+            'items' => [
+                ['label' => 'User Management', 'href' => '/users', 'icon' => 'ti ti-user-cog', 'aliases' => []],
+                ['label' => 'User Role', 'href' => '/users/roles', 'icon' => 'ti ti-shield-check'],
+                ['label' => 'User Permissions', 'href' => '/users/permissions', 'icon' => 'ti ti-key'],
+                ['label' => 'User Enroll', 'href' => '/users/enroll', 'icon' => 'ti ti-user-plus'],
+                ['label' => 'Organization Hierarchy', 'href' => '/users/organization-hierarchy', 'icon' => 'ti ti-building-hierarchy'],
+                ['label' => 'Account Recovery', 'href' => '/admin/account-recovery', 'icon' => 'ti ti-lifebuoy'],
+            ],
+        ],
+        'devtools' => [
+            'title' => 'Devtools',
+            'label' => 'Devtools',
+            'icon' => 'ti ti-flask',
+            'items' => [
+                ['label' => 'Test Features', 'href' => '/test-features', 'icon' => 'ti ti-flask'],
+                ['label' => 'UI Showcase', 'href' => '/test-features/ui-showcase', 'icon' => 'ti ti-layout-dashboard'],
+                ['label' => 'UML / Architecture', 'href' => '/uml', 'icon' => 'ti ti-route'],
+                ['label' => 'Demo UI', 'href' => '/demo-ui', 'icon' => 'ti ti-components'],
+            ],
+        ],
+    ];
+
+    /**
      * Builds sidebar groups from NavigationRegistry::adminShell().
      *
-     * Responsibility: Adapts visible runtime navigation to the template contract.
      * @return array<int, array<string, mixed>>
      */
-    public static function fromAdminShell(array $shell): array
+    public static function fromAdminShell(array $shell, ?string $currentPath = null): array
     {
-        return self::groupsToSidebar((array)($shell['groups'] ?? []));
+        return self::buildSidebar(self::flattenShellItems($shell), self::currentPath($currentPath));
     }
 
     /**
-     * Builds a permission-agnostic sidebar projection from raw admin definitions.
+     * Builds a permission-agnostic projection from raw admin definitions.
      *
-     * Responsibility: Supports smoke/lint checks without requiring a database-backed user session.
      * @param array<int, array<string, mixed>> $definitions
      * @return array<int, array<string, mixed>>
      */
     public static function fromAdminDefinitions(array $definitions, string $currentPath = '/'): array
     {
-        $itemsByContext = [];
-        foreach ($definitions as $item) {
-            if (!is_array($item)) {
-                continue;
-            }
-
-            $context = (string)($item['context'] ?? 'workspaces');
-            $matches = array_values(array_filter((array)($item['matches'] ?? [$item['href'] ?? '/']), 'is_string'));
-            $item['matches'] = $matches;
-            $item['active'] = self::matchesAny($currentPath, $matches);
-            $itemsByContext[$context][] = $item;
-        }
-
-        foreach ($itemsByContext as &$items) {
-            usort($items, static function (array $left, array $right): int {
-                return [(int)($left['order'] ?? 999), (string)($left['label'] ?? '')]
-                    <=> [(int)($right['order'] ?? 999), (string)($right['label'] ?? '')];
-            });
-        }
-        unset($items);
-
-        $groups = [];
-        foreach ($itemsByContext as $context => $items) {
-            $groups[] = [
-                'key' => (string)$context,
-                'label' => self::contextLabel((string)$context, (string)($items[0]['group_label'] ?? '')),
-                'icon' => (string)($items[0]['icon'] ?? 'ti ti-layout-sidebar'),
-                'order' => (int)($items[0]['group_order'] ?? 999),
-                'active' => in_array(true, array_column($items, 'active'), true),
-                'items' => $items,
-            ];
-        }
-
-        usort($groups, static function (array $left, array $right): int {
-            return [(int)($left['order'] ?? 999), (string)($left['label'] ?? '')]
-                <=> [(int)($right['order'] ?? 999), (string)($right['label'] ?? '')];
-        });
-
-        return self::groupsToSidebar($groups);
+        return self::buildSidebar(self::flattenDefinitionItems($definitions), $currentPath);
     }
 
     /**
-     * Converts grouped navigation payloads to the legacy demo_ui_nav_groups shape.
+     * Returns canonical hrefs that must remain visible in the admin shell.
      *
-     * Responsibility: Preserves the current template API while removing hardcoded admin route lists.
-     * @param array<int, array<string, mixed>> $groups
+     * @return string[]
+     */
+    public static function canonicalHrefs(): array
+    {
+        $hrefs = [];
+        foreach (self::CANONICAL_GROUPS as $group) {
+            foreach ($group['items'] as $item) {
+                $hrefs[] = $item['href'];
+            }
+        }
+
+        return $hrefs;
+    }
+
+    /**
+     * Builds the current sidebar tree.
+     *
+     * @param array<string, array<string, mixed>> $registryItemsByHref
      * @return array<int, array<string, mixed>>
      */
-    private static function groupsToSidebar(array $groups): array
+    private static function buildSidebar(array $registryItemsByHref, string $currentPath): array
     {
         $navGroups = [];
         $currentTitle = '';
 
-        foreach ($groups as $group) {
-            if (!is_array($group)) {
-                continue;
+        foreach (self::CANONICAL_GROUPS as $key => $group) {
+            $items = [];
+            foreach ($group['items'] as $definition) {
+                $href = (string)$definition['href'];
+                $registryItem = $registryItemsByHref[$href] ?? [];
+                $items[] = self::makeItem(
+                    (string)$definition['label'],
+                    $href,
+                    (string)($registryItem['icon'] ?? $definition['icon']),
+                    $currentPath,
+                    (array)($registryItem['matches'] ?? ($definition['aliases'] ?? [])),
+                    $href !== '/users'
+                );
             }
 
-            $items = self::itemsToSidebar((array)($group['items'] ?? []));
+            foreach (self::unmappedRegistryItems($registryItemsByHref, self::canonicalHrefs()) as $item) {
+                if (self::canonicalGroupForItem($item) !== $key) {
+                    continue;
+                }
+
+                $href = (string)($item['href'] ?? '');
+                if ($href === '') {
+                    continue;
+                }
+
+                $items[] = self::makeItem(
+                    (string)($item['label'] ?? $href),
+                    $href,
+                    (string)($item['icon'] ?? 'ti ti-point'),
+                    $currentPath,
+                    (array)($item['matches'] ?? []),
+                    $href !== '/users'
+                );
+            }
+
             if ($items === []) {
                 continue;
             }
 
-            $title = self::sectionTitle((string)($group['key'] ?? ''));
-            if ($title !== '' && $title !== $currentTitle) {
+            if ($group['title'] !== $currentTitle && $group['title'] !== $group['label']) {
                 $navGroups[] = [
                     'is_title' => true,
-                    'label' => $title,
+                    'label' => $group['title'],
                 ];
-                $currentTitle = $title;
+                $currentTitle = $group['title'];
             }
 
             $isActive = in_array(true, array_column($items, 'is_active'), true);
-            $key = (string)($group['key'] ?? ('admin-' . count($navGroups)));
-
             $navGroups[] = [
                 'is_title' => false,
                 'is_link' => false,
                 'is_collapse' => true,
                 'key' => $key,
-                'label' => (string)($group['label'] ?? ucfirst(str_replace('-', ' ', $key))),
-                'icon' => (string)($group['icon'] ?? 'ti ti-layout-sidebar'),
-                'collapse_id' => 'admin-' . preg_replace('/[^a-z0-9_-]+/i', '-', $key),
+                'label' => $group['label'],
+                'icon' => $group['icon'],
+                'collapse_id' => 'admin-' . $key,
                 'is_active' => $isActive,
                 'expanded' => $isActive ? 'true' : 'false',
                 'show' => $isActive,
@@ -154,126 +223,180 @@ final class AdminShellNavigationPresenter
     }
 
     /**
-     * Maps declared navigation items and children into sidebar links.
+     * Builds one sidebar item with the preserved template shape.
      *
-     * Responsibility: Keeps item active state, href, icon, hint and nested children from module metadata.
-     * @param array<int, array<string, mixed>> $items
-     * @return array<int, array<string, mixed>>
+     * @param string[] $matches
+     * @return array<string, mixed>
      */
-    private static function itemsToSidebar(array $items): array
-    {
-        $navItems = [];
-        foreach ($items as $item) {
-            if (!is_array($item)) {
+    private static function makeItem(
+        string $label,
+        string $href,
+        string $icon,
+        string $currentPath,
+        array $matches = [],
+        bool $prefixMatch = true
+    ): array {
+        $patterns = array_values(array_unique(array_filter(array_merge([$href], $matches), 'is_string')));
+        $active = false;
+
+        foreach ($patterns as $pattern) {
+            if ($pattern === '/') {
+                $active = $active || $currentPath === '/';
                 continue;
             }
 
-            $children = self::childrenToSidebar((array)($item['children'] ?? []));
-            $isActive = (bool)($item['active'] ?? false)
-                || in_array(true, array_column($children, 'is_active'), true);
-            $hasChildren = $children !== [];
-
-            $navItems[] = [
-                'label' => (string)($item['label'] ?? ''),
-                'href' => (string)($item['href'] ?? '#'),
-                'icon' => (string)($item['icon'] ?? 'ti ti-point'),
-                'hint' => (string)($item['hint'] ?? ''),
-                'is_active' => $isActive,
-                'link_class' => $isActive ? 'side-nav-link active' : 'side-nav-link',
-                'is_nested_collapse' => $hasChildren,
-                'collapse_id' => $hasChildren ? self::collapseId((string)($item['href'] ?? ''), count($navItems)) : '',
-                'expanded' => $isActive ? 'true' : 'false',
-                'show' => $isActive,
-                'badge_label' => (string)($item['badge_label'] ?? ''),
-                'badge_class' => (string)($item['badge_class'] ?? ''),
-                'children' => $children,
-            ];
+            $active = $active
+                || $currentPath === $pattern
+                || ($prefixMatch && str_starts_with($currentPath, $pattern . '/'))
+                || ModuleRegistry::pathMatches($currentPath, $pattern);
         }
 
-        return $navItems;
+        return [
+            'label' => $label,
+            'href' => $href,
+            'icon' => $icon,
+            'is_active' => $active,
+            'link_class' => $active ? 'side-nav-link active' : 'side-nav-link',
+            'is_nested_collapse' => false,
+            'badge_label' => '',
+            'badge_class' => '',
+            'children' => [],
+        ];
     }
 
     /**
-     * Maps child navigation declarations to nested sidebar links.
+     * Flattens NavigationRegistry admin shell groups into href-indexed items.
      *
-     * Responsibility: Preserves child route visibility in the sidebar model.
-     * @param array<int, array<string, mixed>> $children
-     * @return array<int, array<string, mixed>>
+     * @return array<string, array<string, mixed>>
      */
-    private static function childrenToSidebar(array $children): array
+    private static function flattenShellItems(array $shell): array
     {
-        $navChildren = [];
-        foreach ($children as $child) {
+        $items = [];
+        foreach ((array)($shell['groups'] ?? []) as $group) {
+            foreach ((array)($group['items'] ?? []) as $item) {
+                self::collectItem($items, (array)$item);
+            }
+        }
+
+        return $items;
+    }
+
+    /**
+     * Flattens raw admin definitions into href-indexed items.
+     *
+     * @param array<int, array<string, mixed>> $definitions
+     * @return array<string, array<string, mixed>>
+     */
+    private static function flattenDefinitionItems(array $definitions): array
+    {
+        $items = [];
+        foreach ($definitions as $item) {
+            if (is_array($item)) {
+                self::collectItem($items, $item);
+            }
+        }
+
+        return $items;
+    }
+
+    /**
+     * Adds one item and its children to a href index.
+     *
+     * @param array<string, array<string, mixed>> $items
+     * @param array<string, mixed> $item
+     */
+    private static function collectItem(array &$items, array $item): void
+    {
+        $href = trim((string)($item['href'] ?? ''));
+        if ($href !== '' && !self::isConceptualParent($item)) {
+            $items[$href] = $item;
+        }
+
+        foreach ((array)($item['children'] ?? []) as $child) {
             if (!is_array($child)) {
                 continue;
             }
 
-            $matches = array_values(array_filter((array)($child['matches'] ?? [$child['href'] ?? '/']), 'is_string'));
-            $isActive = (bool)($child['active'] ?? false)
-                || self::matchesAny((string)(parse_url((string)($_SERVER['REQUEST_URI'] ?? '/'), PHP_URL_PATH) ?: '/'), $matches);
+            $childHref = trim((string)($child['href'] ?? ''));
+            if ($childHref === '') {
+                continue;
+            }
 
-            $navChildren[] = [
-                'label' => (string)($child['label'] ?? ''),
-                'href' => (string)($child['href'] ?? '#'),
-                'hint' => (string)($child['hint'] ?? ''),
-                'is_active' => $isActive,
-                'link_class' => $isActive ? 'side-nav-link active' : 'side-nav-link',
-            ];
+            $child['context'] = $item['context'] ?? null;
+            $items[$childHref] = $child;
         }
-
-        return $navChildren;
     }
 
     /**
-     * Assigns broad sidebar section titles compatible with the current shell.
-     */
-    private static function sectionTitle(string $context): string
-    {
-        return match ($context) {
-            'configuration' => 'Framework Configuration',
-            'workspaces', 'operations', 'users' => 'Framework Operations',
-            default => 'Devtools',
-        };
-    }
-
-    /**
-     * Returns the sidebar label for a registry context.
-     */
-    private static function contextLabel(string $context, string $fallback): string
-    {
-        return match ($context) {
-            'configuration' => 'Configuration',
-            'workspaces' => 'Workspaces',
-            'operations' => 'Operations',
-            'users' => 'Users',
-            'devtools' => 'Devtools',
-            default => $fallback !== '' ? $fallback : ucfirst(str_replace('-', ' ', $context)),
-        };
-    }
-
-    /**
-     * Creates stable collapse ids for nested item groups.
-     */
-    private static function collapseId(string $href, int $index): string
-    {
-        $slug = trim((string)preg_replace('/[^a-z0-9_-]+/i', '-', trim($href, '/')), '-');
-
-        return 'admin-item-' . ($slug !== '' ? $slug : (string)$index);
-    }
-
-    /**
-     * Determines whether a path matches any declared navigation pattern.
+     * Keeps conceptual grouping pages from becoming duplicate sidebar entries.
      *
-     * @param string[] $patterns
+     * @param array<string, mixed> $item
      */
-    private static function matchesAny(string $path, array $patterns): bool
+    private static function isConceptualParent(array $item): bool
     {
-        foreach ($patterns as $pattern) {
-            if (ModuleRegistry::pathMatches($path, (string)$pattern)) {
-                return true;
+        return (string)($item['href'] ?? '') === '/operations'
+            && (array)($item['children'] ?? []) !== [];
+    }
+
+    /**
+     * Returns registry items that are not already represented in the canonical menu.
+     *
+     * @param array<string, array<string, mixed>> $registryItemsByHref
+     * @param string[] $canonicalHrefs
+     * @return array<int, array<string, mixed>>
+     */
+    private static function unmappedRegistryItems(array $registryItemsByHref, array $canonicalHrefs): array
+    {
+        $items = [];
+        foreach ($registryItemsByHref as $href => $item) {
+            if (!in_array($href, $canonicalHrefs, true)) {
+                $items[] = $item;
             }
         }
 
-        return false;
+        return $items;
+    }
+
+    /**
+     * Maps non-canonical manifest items into the stable admin groups.
+     *
+     * @param array<string, mixed> $item
+     */
+    private static function canonicalGroupForItem(array $item): string
+    {
+        $href = (string)($item['href'] ?? '');
+        $context = (string)($item['context'] ?? '');
+
+        if ($context === 'account-recovery' || str_starts_with($href, '/admin/account-recovery')) {
+            return 'users';
+        }
+
+        if ($context === 'devtools'
+            || str_starts_with($href, '/test-features')
+            || str_starts_with($href, '/uml')
+            || str_starts_with($href, '/devtools')
+        ) {
+            return 'devtools';
+        }
+
+        return match ($context) {
+            'configuration' => 'configuration',
+            'workspaces' => 'workspaces',
+            'operations' => 'operations',
+            'users' => 'users',
+            default => str_starts_with($href, '/users') ? 'users' : 'operations',
+        };
+    }
+
+    /**
+     * Resolves the request path used for active state.
+     */
+    private static function currentPath(?string $currentPath): string
+    {
+        if ($currentPath !== null && trim($currentPath) !== '') {
+            return $currentPath;
+        }
+
+        return (string)(parse_url((string)($_SERVER['REQUEST_URI'] ?? '/'), PHP_URL_PATH) ?: '/');
     }
 }

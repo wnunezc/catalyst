@@ -5,7 +5,7 @@ Composer package. It is meant to be copied or cloned as the starting point for a
 web application, then configured through local environment files and the setup
 wizard.
 
-Current distribution target: `0.1.0-rc.3`.
+Current distribution target: `0.1.0-rc.4`.
 
 ## Runtime Model
 
@@ -268,12 +268,11 @@ API.md                    Subsystem index
 
 ## Distribution Status
 
-`0.1.0-rc.3` is intended as the third distribution candidate for developers who
-will use Catalyst as a project base. It keeps the RC2 organization hierarchy
-surface and fixes the admin sidebar so module-declared navigation entries are
-rendered from the runtime navigation registry. It is not a public Composer
-package and is not intended to be installed into another project's `vendor/`
-directory.
+`0.1.0-rc.4` is intended as the fourth distribution candidate for developers who
+will use Catalyst as a project base. It supersedes `0.1.0-rc.3` by restoring the
+curated admin sidebar taxonomy while keeping registry-backed discovery for
+module-declared surfaces. It is not a public Composer package and is not
+intended to be installed into another project's `vendor/` directory.
 
 Before a release artifact is published, generate it from a clean checkout and
 exclude local secrets, DKIM keys, runtime storage, uploads, logs, ad-hoc zips and

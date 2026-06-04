@@ -114,7 +114,7 @@ When a new Catalyst release is available, update manually through Git:
 
 ```powershell
 git fetch upstream --tags
-git merge v0.1.0-rc.3
+git merge v0.1.0-rc.4
 composer install
 php public/cli.php migrate:status
 php public/cli.php migrate
@@ -122,11 +122,11 @@ php public/cli.php admin-navigation:smoke --json
 php public/cli.php quality:check
 ```
 
-Use the actual target tag instead of `v0.1.0-rc.3`. `update:check` does not modify
+Use the actual target tag instead of `v0.1.0-rc.4`. `update:check` does not modify
 files, branches or remotes; it only reports version information and suggested
 commands.
 
-For `v0.1.0-rc.3`, expect framework-owned changes in:
+For `v0.1.0-rc.4`, expect framework-owned changes in:
 
 - reusable-base first-run JSON defaults under `boot-core/config/development/`;
 - migration contracts and new organization hierarchy tables under `boot-core/database/migrations/`;

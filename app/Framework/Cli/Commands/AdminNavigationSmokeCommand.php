@@ -86,9 +86,55 @@ final class AdminNavigationSmokeCommand extends AbstractCommand
         $missingHrefs = array_values(array_diff($expectedHrefs, $actualHrefs));
         $organizationItem = $this->findSidebarItem($sidebar, '/users/organization-hierarchy');
         $usersGroup = $this->findSidebarGroup($sidebar, 'Users');
+        $configurationGroup = $this->findSidebarGroup($sidebar, 'Configuration');
+        $titles = $this->sidebarTitles($sidebar);
+        $groupLabels = $this->sidebarGroupLabels($sidebar);
 
         $checks = [
             'all_admin_hrefs_projected' => $missingHrefs === [],
+            'canonical_titles_once' => $titles === ['Framework Configuration', 'Framework Operations'],
+            'canonical_groups_present' => $groupLabels === ['Configuration', 'Workspaces', 'Operations', 'Users', 'Devtools'],
+            'configuration_surfaces_preserved' => $this->groupLabelsMatch($configurationGroup, [
+                'Environment Setup',
+                'Application Health',
+                'Platform Appearance',
+                'Feature Flags',
+                'Plugins Management',
+            ]),
+            'workspaces_surfaces_preserved' => $this->groupLabelsMatch($this->findSidebarGroup($sidebar, 'Workspaces'), [
+                'Catalogs',
+                'Module Designer',
+                'Media and Documents Fields',
+                'Media and Documents Library',
+                'Document Template',
+                'Locale Tools',
+            ]),
+            'operations_surfaces_preserved' => $this->groupLabelsMatch($this->findSidebarGroup($sidebar, 'Operations'), [
+                'Deployments',
+                'Tenancy',
+                'Audit Log',
+                'API Platform',
+                'Automation Rules',
+            ]),
+            'users_surfaces_preserved' => $this->groupLabelsMatch($usersGroup, [
+                'User Management',
+                'User Role',
+                'User Permissions',
+                'User Enroll',
+                'Organization Hierarchy',
+                'Account Recovery',
+            ]),
+            'devtools_surfaces_preserved' => $this->groupLabelsMatch($this->findSidebarGroup($sidebar, 'Devtools'), [
+                'Test Features',
+                'UI Showcase',
+                'UML / Architecture',
+                'Demo UI',
+            ]),
+            'no_nested_users_item' => !$this->groupContainsLabel($usersGroup, 'Users'),
+            'no_operations_inside_configuration' => !$this->groupContainsLabel($configurationGroup, 'Operations'),
+            'account_recovery_under_users' => $this->groupContainsHref($usersGroup, '/admin/account-recovery'),
+            'single_devtools_section' => count(array_filter($groupLabels, static fn (string $label): bool => $label === 'Devtools')) === 1
+                && !in_array('Devtools', $titles, true),
             'organization_hierarchy_projected' => $organizationItem !== null,
             'organization_hierarchy_under_users' => $this->groupContainsHref($usersGroup, '/users/organization-hierarchy'),
             'organization_hierarchy_active' => (bool)($organizationItem['is_active'] ?? false),
@@ -99,6 +145,8 @@ final class AdminNavigationSmokeCommand extends AbstractCommand
             'success' => $success,
             'checks' => $checks,
             'missing_hrefs' => $missingHrefs,
+            'titles' => $titles,
+            'groups' => $groupLabels,
         ];
 
         if ($json) {
@@ -138,7 +186,7 @@ final class AdminNavigationSmokeCommand extends AbstractCommand
             }
 
             $href = trim((string)($item['href'] ?? ''));
-            if ($href !== '') {
+            if ($href !== '' && !$this->isConceptualParent($item)) {
                 $hrefs[] = $href;
             }
 
@@ -155,6 +203,17 @@ final class AdminNavigationSmokeCommand extends AbstractCommand
         }
 
         return array_values(array_unique($hrefs));
+    }
+
+    /**
+     * Identifies manifest parent nodes that should not become separate sidebar links.
+     *
+     * @param array<string, mixed> $item
+     */
+    private function isConceptualParent(array $item): bool
+    {
+        return (string)($item['href'] ?? '') === '/operations'
+            && (array)($item['children'] ?? []) !== [];
     }
 
     /**
@@ -221,12 +280,93 @@ final class AdminNavigationSmokeCommand extends AbstractCommand
     private function findSidebarGroup(array $sidebar, string $label): ?array
     {
         foreach ($sidebar as $group) {
-            if (is_array($group) && (string)($group['label'] ?? '') === $label) {
+            if (is_array($group)
+                && ($group['is_collapse'] ?? false) === true
+                && (string)($group['label'] ?? '') === $label
+            ) {
                 return $group;
             }
         }
 
         return null;
+    }
+
+    /**
+     * Extracts visible sidebar section titles.
+     *
+     * @param array<int, array<string, mixed>> $sidebar
+     * @return string[]
+     */
+    private function sidebarTitles(array $sidebar): array
+    {
+        $titles = [];
+        foreach ($sidebar as $group) {
+            if (is_array($group) && ($group['is_title'] ?? false) === true) {
+                $titles[] = (string)($group['label'] ?? '');
+            }
+        }
+
+        return $titles;
+    }
+
+    /**
+     * Extracts collapse group labels in render order.
+     *
+     * @param array<int, array<string, mixed>> $sidebar
+     * @return string[]
+     */
+    private function sidebarGroupLabels(array $sidebar): array
+    {
+        $labels = [];
+        foreach ($sidebar as $group) {
+            if (is_array($group) && ($group['is_collapse'] ?? false) === true) {
+                $labels[] = (string)($group['label'] ?? '');
+            }
+        }
+
+        return $labels;
+    }
+
+    /**
+     * Checks whether group item labels match exactly.
+     *
+     * @param array<string, mixed>|null $group
+     * @param string[] $expectedLabels
+     */
+    private function groupLabelsMatch(?array $group, array $expectedLabels): bool
+    {
+        if ($group === null) {
+            return false;
+        }
+
+        $labels = [];
+        foreach ((array)($group['items'] ?? []) as $item) {
+            if (is_array($item)) {
+                $labels[] = (string)($item['label'] ?? '');
+            }
+        }
+
+        return $labels === $expectedLabels;
+    }
+
+    /**
+     * Checks whether a group contains a direct item label.
+     *
+     * @param array<string, mixed>|null $group
+     */
+    private function groupContainsLabel(?array $group, string $label): bool
+    {
+        if ($group === null) {
+            return false;
+        }
+
+        foreach ((array)($group['items'] ?? []) as $item) {
+            if (is_array($item) && (string)($item['label'] ?? '') === $label) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

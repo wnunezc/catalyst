@@ -242,7 +242,7 @@ $appendStyle('/assets/css/catalyst/inspinia-runtime-compat.css?v=' . rawurlencod
     $showDemoComponents = $currentPath === '/demo-ui' || str_starts_with($currentPath, '/demo-ui/');
 
     $registryShell = NavigationRegistry::getInstance()->adminShell($currentPath, $authUser !== [] ? $authUser : null);
-    $navGroups = AdminShellNavigationPresenter::fromAdminShell($registryShell);
+    $navGroups = AdminShellNavigationPresenter::fromAdminShell($registryShell, $currentPath);
     $definitions = [];
 
     if ($showDemoComponents) {

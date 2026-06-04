@@ -108,6 +108,7 @@ The architecture uses separated owners instead of single large classes: routes a
 | `docs/views.md` | Views Index |
 | `docs/workflow/first-run.md` | First Run Workflow |
 | `docs/workflow/patch-intake.md` | Patch Intake Workflow |
+| `docs/workflow/release-v0.1.0-rc.4.md` | Catalyst v0.1.0-rc.4 Upgrade Notes |
 | `docs/workflow/release-v0.1.0-rc.3.md` | Catalyst v0.1.0-rc.3 Upgrade Notes |
 | `docs/workflow/release-rc-checklist.md` | Release Candidate Checklist |
 | `docs/workflow/reusable-base-install.md` | Reusable Base Install Workflow |
