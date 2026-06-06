@@ -2,7 +2,9 @@
 
 ## Purpose
 
-List the current verification commands that represent Catalyst runtime readiness.
+Define the standard Catalyst testing environment. Tests must be short,
+independent, resident inside the Catalyst project and executed through the
+workspace harness without ad hoc scripts.
 
 ## Runtime Owners
 
@@ -13,10 +15,13 @@ List the current verification commands that represent Catalyst runtime readiness
 | Route lint | `Catalyst\Framework\Cli\Commands\RouteLintCommand` |
 | Runtime docs inventory | `Catalyst\Framework\Cli\Commands\DocsInventoryCommand` |
 | Runtime module sync | `Catalyst\Framework\Cli\Commands\DocsSyncRuntimeCommand` |
+| PHP unit harness | `test/framework/UnitTest` |
+| Playwright specs | `test/framework/Playwright` |
+| Playwright runtime | `D:/OpsZone/DevWorkspace/Engines/Playwright` |
 
 ## Current Behavior
 
-The standard documentation/runtime verification set is:
+The standard documentation/runtime verification set remains:
 
 ```powershell
 php public/cli.php docs:inventory --json
@@ -29,6 +34,128 @@ php public/cli.php security:check
 php public/cli.php quality:check
 git diff --check
 ```
+
+## PHP Unit Tests
+
+Unit tests live in:
+
+```text
+test/framework/UnitTest
+```
+
+Run them with:
+
+```powershell
+php test\framework\UnitTest\run.php
+```
+
+Catalyst currently does not require PHPUnit or Pest. The local runner is
+intentionally small and dependency-free. Unit tests cover pure PHP logic:
+helpers, services, config normalization, validators, internal contracts and
+regressions that do not need a browser.
+
+## Playwright Tests
+
+Playwright specs live in:
+
+```text
+test/framework/Playwright
+```
+
+The Node/Playwright runtime lives in the workspace engine:
+
+```text
+D:/OpsZone/DevWorkspace/Engines/Playwright
+```
+
+Run all Catalyst Playwright specs from PowerShell:
+
+```powershell
+$env:CATALYST_PLAYWRIGHT_ENGINE = 'D:\OpsZone\DevWorkspace\Engines\Playwright'
+Push-Location $env:CATALYST_PLAYWRIGHT_ENGINE
+node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalyst
+Pop-Location
+```
+
+Run the modal suite:
+
+```powershell
+Push-Location D:\OpsZone\DevWorkspace\Engines\Playwright
+node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalyst --grep "@modals"
+Pop-Location
+```
+
+Specs must not live under the Playwright engine. The engine may provide runtime,
+local auth state, traces, screenshots and other machine-local artifacts.
+By default, Playwright output is written outside the Catalyst repo under the
+workspace engine: `D:/OpsZone/DevWorkspace/Engines/Playwright/test-results/catalyst`.
+Catalyst runs authenticated specs with one worker because the local test account
+and MFA service are shared. Do not enable concurrent authenticated workers
+without isolated accounts and isolated MFA service identities.
+
+## Browser E2E Protocol
+
+Before interacting with a page, every E2E test must:
+
+1. Navigate to the route.
+2. Confirm the real URL.
+3. Confirm whether the session landed in login or MFA.
+4. Confirm a title, heading or unique surface signal.
+5. Inspect visible relevant triggers.
+6. Choose the interaction from the visible DOM.
+7. Execute the interaction.
+8. Validate the result.
+9. Close or clean up using visible real UI.
+10. Validate that no UI residue remains.
+
+Do not use the in-app Browser for Catalyst E2E unless explicitly instructed.
+
+## Environment Interruptions
+
+Some tests require local applications such as WSDD, Docker, MFA-Forge or the
+workspace Playwright engine. If a required local dependency is missing, the test
+must report an environment interruption with the missing application/path and a
+replacement/configuration hint. That is not a Catalyst functional failure.
+
+Secrets, account identifiers and browser storage state belong to the local
+engine environment, not to the Catalyst repository. Authenticated Playwright
+runs read their local account values from
+`D:/OpsZone/DevWorkspace/Engines/Playwright/.secrets/catalyst.e2e.json`.
+Environment variables may override those engine-local values.
+
+Local machine data must not be committed:
+
+- Playwright `.auth`
+- traces, videos, screenshots and reports
+- generated upload artifacts
+- account identifiers, credentials, MFA secrets or storage state
+- WSDD-specific secrets
+
+## Required Coverage Rules
+
+For UI/API bugs, add or update a Playwright spec that covers the affected
+surface, a happy path and the relevant sad path or regression guard.
+
+For PHP bugs, add or update a unit test when the behavior is pure PHP. If the
+bug crosses config, CLI, database or browser boundaries, keep the unit test
+focused on the pure contract and cover the integration path with CLI smoke or
+Playwright.
+
+Name Playwright specs by surface, for example `settings-modals.spec.cjs`,
+`devtools-modals.spec.cjs`, `auth-mfa.spec.cjs` or `demo-ui.spec.cjs`. Name PHP
+tests after the class or contract under test.
+
+Maintain `test/framework/Playwright/SURFACES.md` as the progressive coverage
+registry. Generated files, inactive templates and legacy engine specs are not
+surfaces. Confirm the current runtime route and visible surface before adding
+E2E coverage.
+
+For modal-owning surfaces, an inventory contract is mandatory. It must list the
+active triggers expected on the real route and fail when a trigger is added or
+removed without updating coverage. Every active trigger or distinct chained
+transition must have an independent E2E interaction case. Rendered capabilities
+without a visible runtime consumer must be documented and must not be opened by
+bypassing the UI.
 
 ## Operational Notes
 
@@ -103,3 +230,4 @@ Paths remain part of the release evidence:
 - `docs/quality-gate.md`
 - `docs/documentation-contract.md`
 - `docs/runtime-module-catalog.md`
+- `docs/framework-modals.md`

@@ -1,0 +1,67 @@
+# Catalyst Playwright Harness
+
+## Purpose
+
+Playwright specs for Catalyst live in this project and run with the workspace
+engine at `D:\OpsZone\DevWorkspace\Engines\Playwright`.
+
+## Standard Command
+
+```powershell
+$env:CATALYST_PLAYWRIGHT_ENGINE = 'D:\OpsZone\DevWorkspace\Engines\Playwright'
+Push-Location $env:CATALYST_PLAYWRIGHT_ENGINE
+node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalyst
+Pop-Location
+```
+
+Use `--grep` for a single surface:
+
+```powershell
+node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalyst --grep "@modals"
+```
+
+## Environment
+
+- Default URL: `https://catalyst.dock`
+- Override with `CATALYST_E2E_BASE_URL`.
+- MFA uses `D:\OpsZone\DevWorkspace\Engines\MFA-Forge` by default.
+- Override with `CATALYST_MFA_FORGE`.
+- Authenticated runs read local secrets from
+  `D:\OpsZone\DevWorkspace\Engines\Playwright\.secrets\catalyst.e2e.json`.
+- The Catalyst harness uses one worker because authenticated tests share the
+  local account and MFA service; concurrent login challenges are not a stable
+  project contract.
+- `CATALYST_E2E_EMAIL`, `CATALYST_E2E_PASSWORD` and
+  `CATALYST_E2E_MFA_SERVICE` may override the engine-local values.
+- Do not commit account identifiers or credentials in this repo.
+
+If a local dependency such as WSDD, Docker, MFA-Forge, the Playwright engine or
+an OS-level application is missing, the spec must report the run as interrupted
+by environment, not as a Catalyst functional failure.
+
+## E2E Protocol
+
+Every browser test must:
+
+1. Navigate to the route.
+2. Confirm the real URL.
+3. Detect login/MFA and complete it only through approved helpers.
+4. Confirm a title, heading or surface signal.
+5. Inspect visible triggers.
+6. Choose interaction from the visible DOM.
+7. Execute the interaction.
+8. Validate the result.
+9. Close or clean up through visible UI.
+10. Validate no UI residue remains.
+
+## Layout
+
+- `helpers/`: reusable runtime helpers.
+- `specs/`: short independent specs by surface.
+- `fixtures/`: versionable static fixtures only.
+- `SURFACES.md`: progressive route/surface coverage registry.
+
+Do not keep `.auth`, traces, screenshots, videos, account identifiers,
+credentials, MFA secrets, storage state or test results in this repo. By
+default Playwright output goes to the workspace engine under
+`D:\OpsZone\DevWorkspace\Engines\Playwright\test-results\catalyst`.

@@ -42,6 +42,7 @@ export class ModalManager {
 
         // Ensure modal container exists
         this.ensureContainer();
+        document.addEventListener('hidden.bs.modal', () => this.cleanupModalResidue());
         this.initialized = true;
     }
 
@@ -378,10 +379,22 @@ export class ModalManager {
 
             document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.remove());
             document.body.classList.remove('modal-open');
+            document.body.style.removeProperty('overflow');
             document.body.style.removeProperty('padding-right');
 
             modal.dispatchEvent(new Event('hidden.bs.modal'));
         }, 250);
+    }
+
+    cleanupModalResidue() {
+        if (document.querySelector('.modal.show')) {
+            return;
+        }
+
+        document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.remove());
+        document.body.classList.remove('modal-open');
+        document.body.style.removeProperty('overflow');
+        document.body.style.removeProperty('padding-right');
     }
 
     /**

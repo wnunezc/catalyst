@@ -5,7 +5,7 @@ Composer package. It is meant to be copied or cloned as the starting point for a
 web application, then configured through local environment files and the setup
 wizard.
 
-Current distribution target: `0.1.0-rc.6`.
+Current distribution target: `0.1.0-rc.7`.
 
 ## Runtime Model
 
@@ -171,14 +171,15 @@ boot-core/config/{environment}/*.json
 boot-core/config/env/.env
 ```
 
-For development, `app.json`, `db.json` and `session.json` are local-only active
-files. Catalyst tracks `app.example.json`, `db.example.json` and
-`session.example.json` as first-run templates, then creates or syncs the active
+Environment directories such as `boot-core/config/development/` are local-only
+runtime state and are ignored by Git. Catalyst tracks neutral templates in
+`boot-core/config/templates/`, then creates or syncs the active environment
 files without overwriting local values:
 
 ```powershell
 php public/cli.php config:sync
 php public/cli.php config:contract-smoke --json
+php public/cli.php config:e2e-readiness --json
 ```
 
 The setup wizard materializes project-specific configuration. Release exports
@@ -206,6 +207,8 @@ must exclude runtime secrets, active local config, private artifacts and storage
   app-owned routers, kernels or framework forks.
 - CLI quality gates, inspectors, module catalog generation and runtime
   inventory generation.
+- Project-owned PHP unit and Playwright test harnesses with external local
+  Playwright runtime, secrets and results.
 
 ## Approved Composer Dependencies
 
@@ -277,12 +280,12 @@ API.md                    Subsystem index
 
 ## Distribution Status
 
-`0.1.0-rc.6` is intended as the sixth distribution candidate for developers who
-will use Catalyst as a project base. It supersedes `0.1.0-rc.5` by completing
-role administration for horizontal organization units while preserving local
-development config protection and the admin sidebar taxonomy. It is not a public
-Composer package and is not intended to be installed into another project's
-`vendor/` directory.
+`0.1.0-rc.7` is intended as the seventh distribution candidate for developers
+who will use Catalyst as a project base. It supersedes `0.1.0-rc.6` by making
+runtime configuration fully local and portable, fixing modal layering and
+cleanup, and introducing the normalized project-owned testing harness. It is
+not a public Composer package and is not intended to be installed into another
+project's `vendor/` directory.
 
 Before a release artifact is published, generate it from a clean checkout and
 exclude local secrets, DKIM keys, runtime storage, uploads, logs, ad-hoc zips and

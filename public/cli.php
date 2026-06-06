@@ -102,6 +102,7 @@ use Catalyst\Framework\Cli\Commands\CacheBuildCommand;
 use Catalyst\Framework\Cli\Commands\CacheClearCommand;
 use Catalyst\Framework\Cli\Commands\ClaimsListCommand;
 use Catalyst\Framework\Cli\Commands\ClaimsReleaseCommand;
+use Catalyst\Framework\Cli\Commands\ConfigE2eReadinessCommand;
 use Catalyst\Framework\Cli\Commands\ConfigSecretsSyncCommand;
 use Catalyst\Framework\Cli\Commands\ConfigContractSmokeCommand;
 use Catalyst\Framework\Cli\Commands\ConcurrencySmokeCommand;
@@ -210,6 +211,7 @@ $registry
     ->register(new ClaimsListCommand())
     ->register(new ClaimsReleaseCommand())
     ->register(new ConfigContractSmokeCommand())
+    ->register(new ConfigE2eReadinessCommand())
     ->register(new ConfigSecretsSyncCommand())
     ->register(new ConcurrencySmokeCommand())
     ->register(new DeletionSmokeCommand())

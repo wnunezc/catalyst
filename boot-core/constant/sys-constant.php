@@ -43,6 +43,11 @@ if (!defined('LOADED_SYS_CONSTANT')) {
         define('DS', DIRECTORY_SEPARATOR);
     }
 
+    // Shell null device for portable stderr redirection.
+    if (!defined('SHELL_NULL_DEVICE')) {
+        define('SHELL_NULL_DEVICE', PHP_OS_FAMILY === 'Windows' ? 'NUL' : '/dev/null');
+    }
+
     // Project root directory
     // boot-core/constant/ → boot-core/ → [project root]
     if (!defined('PD')) {
@@ -72,7 +77,7 @@ if (!defined('LOADED_SYS_CONSTANT')) {
             preg_match('/CON.*:(\n[^|]+?){3}(?<cols>\d+)/', (string) $output, $match);
             $termWidth = isset($match['cols']) ? (int) $match['cols'] : null;
         } elseif (function_exists('shell_exec')) {
-            $response = shell_exec('tput cols 2>/dev/null');
+            $response = shell_exec('tput cols 2>' . SHELL_NULL_DEVICE);
 
             if ($response !== null) {
                 $parsed = (int) trim($response);

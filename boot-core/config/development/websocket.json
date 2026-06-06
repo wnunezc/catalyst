@@ -1,9 +1,0 @@
-{
-    "websocket": {
-        "enabled": true,
-        "ws_port": 8080,
-        "ws_host": "127.0.0.1",
-        "ws_internal_port": 8181,
-        "ws_publisher_url": "http:\/\/127.0.0.1:8181\/publish"
-    }
-}

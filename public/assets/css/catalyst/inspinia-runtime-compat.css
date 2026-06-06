@@ -213,12 +213,10 @@ html[data-skin="grempa"] {
     --bs-alert-link-color: var(--theme-danger-text-emphasis);
 }
 
-body.demo-ui-shell-body .modal-backdrop,
 body.demo-ui-shell-body .offcanvas-backdrop {
     z-index: 1070;
 }
 
-body.demo-ui-shell-body .modal,
 body.demo-ui-shell-body .offcanvas {
     z-index: 1075;
 }
@@ -263,16 +261,43 @@ body.demo-ui-shell-body .form-floating > .form-select:focus {
 }
 
 
-/* Catalyst global overlay runtime: modals/offcanvas are hoisted to <body> so
-   they are not trapped by SimpleBar/content-page overflow contexts. */
-body > .modal[data-catalyst-modal-hoisted="1"],
-body > .offcanvas[data-catalyst-offcanvas-hoisted="1"] {
-    z-index: 1075;
+/* Catalyst global overlay runtime.
+ * Bootstrap modals may be rendered by Catalyst, Demo UI, or derived apps. Keep
+ * the z-index contract global so the backdrop never intercepts modal controls.
+ */
+:root {
+    --catalyst-zindex-modal-backdrop: 1070;
+    --catalyst-zindex-modal: 1075;
+    --catalyst-zindex-popover: 1080;
+    --catalyst-zindex-tooltip: 1085;
 }
 
 body > .modal-backdrop,
-body > .offcanvas-backdrop {
-    z-index: 1070;
+.modal-backdrop {
+    z-index: var(--catalyst-zindex-modal-backdrop);
+}
+
+body > .modal,
+.modal {
+    z-index: var(--catalyst-zindex-modal);
+}
+
+body > .offcanvas-backdrop,
+.offcanvas-backdrop {
+    z-index: var(--catalyst-zindex-modal-backdrop);
+}
+
+body > .offcanvas,
+.offcanvas {
+    z-index: var(--catalyst-zindex-modal);
+}
+
+.popover {
+    z-index: var(--catalyst-zindex-popover);
+}
+
+.tooltip {
+    z-index: var(--catalyst-zindex-tooltip);
 }
 
 body.demo-ui-shell-body.modal-open .content-page {

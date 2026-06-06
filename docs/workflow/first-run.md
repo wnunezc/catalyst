@@ -33,8 +33,8 @@ composer dump-autoload
    - copy from safe templates under `boot-core/config/templates/`;
    - create `boot-core/config/env/.env` locally;
    - allow `ConfigManager` or `php public/cli.php config:sync` to create
-     `boot-core/config/development/app.json`, `db.json` and `session.json`
-     from their tracked `.example.json` templates when missing;
+     `boot-core/config/{environment}/*.json` from tracked templates when
+     missing;
    - do not commit `.env`, DKIM private keys or runtime storage.
 4. Configure Apache so the effective document root is `public/`.
    - Preferred: point the VirtualHost `DocumentRoot` directly at `public/`.

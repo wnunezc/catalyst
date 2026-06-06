@@ -40,6 +40,22 @@ Uso local del workspace:
 - Web: `https://catalyst.dock/`
 - CLI: `php public/cli.php`
 
+## Testing
+
+- Unit tests PHP: `test/framework/UnitTest`.
+- Specs Playwright: `test/framework/Playwright`.
+- Ejecutar Playwright desde `D:/OpsZone/DevWorkspace/Engines/Playwright` con
+  `scripts/run-project-tests.js`.
+- Secretos, `.auth`, storage state, screenshots, traces y resultados viven solo
+  en el engine local, nunca en Catalyst.
+- Migrar pruebas legacy progresivamente tras confirmar la superficie real.
+- Las superficies con modals deben declarar inventario E2E y cubrir cada
+  trigger activo o transicion distinta de forma independiente.
+- Antes de interactuar: navegar, confirmar URL/login/MFA/señal visible,
+  inspeccionar triggers, interactuar desde DOM real, validar, limpiar y
+  confirmar ausencia de residuos.
+- No usar Browser in-app para E2E de Catalyst salvo instruccion explicita.
+
 ## Documentacion canonica
 
 - Estado breve: `D:/OpsZone/DevWorkspace/Knowledge/Obsidian-Vault/08-AI-Context/catalyst.md`
@@ -60,6 +76,7 @@ Uso local del workspace:
 | db, query builder, ORM, relations | `docs/framework-database.md`, `STRUCTURE.md` |
 | events, jobs, scheduler, runtime async | `docs/framework-event.md`, `docs/framework-queue.md`, `docs/framework-schedule.md`, `STRUCTURE.md` |
 | vistas, CSP, scripts inline, `data-*` | `docs/framework-view.md`, `docs/security-conventions.md` |
+| testing, Playwright, modals E2E | `docs/testing.md`, `docs/framework-modals.md`, `test/framework/Playwright/SURFACES.md` |
 | bootstrap, routing, kernel, entry points | `docs/architecture.md`, `docs/entry-points.md`, `docs/kernel.md`, `docs/routing.md` |
 | setup/config | `docs/checklists/setup-completion-e2e.md`, `docs/helpers-config.md` |
 | clases existentes o nuevas | `STRUCTURE.md`, `docs/runtime-inventory.md` |

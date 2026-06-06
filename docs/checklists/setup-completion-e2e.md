@@ -48,13 +48,15 @@ Usar esta checklist cuando cambien:
 ## Estado inicial esperado
 
 En un checkout fresco, los archivos activos locales se crean desde
-`boot-core/config/development/*.example.json` cuando corre `ConfigManager` o:
+`boot-core/config/templates/*.json` cuando corre `ConfigManager` o:
 
 ```powershell
 php public/cli.php config:sync
 ```
 
-`boot-core/config/development/app.json` debe existir localmente y tener:
+`boot-core/config/development/` es runtime local ignorado por Git. Para probar
+el setup incompleto, `boot-core/config/development/app.json` debe existir
+localmente y tener:
 
 ```json
 { "project": { "project_config": false } }
@@ -65,6 +67,7 @@ Verificación rápida:
 ```powershell
 Select-String -Path 'D:/OpsZone/DevWorkspace/Projects/Web/catalyst/boot-core/config/development/app.json' -Pattern '"project_config"\s*:\s*false'
 php public/cli.php config:contract-smoke --json
+php public/cli.php config:e2e-readiness --json
 ```
 
 ## Escenario A — Guardados parciales no finalizan setup

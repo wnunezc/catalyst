@@ -131,6 +131,10 @@ function cleanupOrphanBackdrops() {
         document.querySelectorAll('.offcanvas-backdrop').forEach((node) => node.remove());
     }
 
+    if (hasOpenModal) {
+        document.body.classList.add('modal-open');
+    }
+
     if (!hasOpenModal && !hasOpenOffcanvas) {
         document.body.classList.remove('modal-open');
         document.body.style.removeProperty('overflow');
@@ -196,9 +200,22 @@ function initModals(root, bootstrapApi) {
         }
 
         trigger.__catalystBootstrapModalBound = true;
-        trigger.addEventListener('click', () => {
+        trigger.addEventListener('click', (event) => {
+            const target = resolveTargetFromTrigger(trigger);
+            if (!(target instanceof HTMLElement)) {
+                return;
+            }
+
+            event.preventDefault();
+            event.stopPropagation();
+
             cleanupManagedArtifacts();
-            cleanupOrphanBackdrops();
+            const instance = bootstrapApi.Modal.getOrCreateInstance(target, {
+                backdrop: parseBootstrapOption(target.dataset.bsBackdrop, true),
+                keyboard: parseBootstrapOption(target.dataset.bsKeyboard, true) !== false,
+                focus: true,
+            });
+            instance.show(trigger);
         }, { capture: true });
     });
 }

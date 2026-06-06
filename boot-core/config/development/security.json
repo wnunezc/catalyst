@@ -1,6 +1,0 @@
-{
-    "security": {
-        "bcrypt_rounds": 12,
-        "mfa_enabled": true
-    }
-}

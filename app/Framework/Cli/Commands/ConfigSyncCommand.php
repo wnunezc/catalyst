@@ -38,7 +38,7 @@ use Catalyst\Framework\Config\LocalConfigManager;
 /**
  * config:sync CLI command.
  *
- * Responsibility: Adds missing local config keys from examples without resetting existing project values.
+ * Responsibility: Adds missing local config keys from templates without resetting existing project values.
  *
  * @package Catalyst\Framework\Cli\Commands
  */
@@ -61,7 +61,7 @@ final class ConfigSyncCommand extends AbstractCommand
 
     public function getDescription(): string
     {
-        return 'Merge missing local config keys from versioned examples';
+        return 'Merge missing local config keys from versioned templates';
     }
 
     public function execute(ArgumentBag $args): int

@@ -61,6 +61,7 @@ The architecture uses separated owners instead of single large classes: routes a
 | `docs/framework-event.md` | Catalyst\Framework\Event |
 | `docs/framework-geo.md` | Catalyst\Framework\Geo |
 | `docs/framework-mail.md` | Catalyst\Framework\Mail |
+| `docs/framework-modals.md` | Catalyst Framework Modals |
 | `docs/framework-notification.md` | Catalyst\Framework\Notification |
 | `docs/framework-organization.md` | Catalyst Framework Organization |
 | `docs/framework-queue.md` | Catalyst\Framework\Queue |
@@ -109,6 +110,7 @@ The architecture uses separated owners instead of single large classes: routes a
 | `docs/workflow/first-run.md` | First Run Workflow |
 | `docs/workflow/patch-intake.md` | Patch Intake Workflow |
 | `docs/workflow/release-v0.1.0-rc.6.md` | Catalyst v0.1.0-rc.6 Upgrade Notes |
+| `docs/workflow/release-v0.1.0-rc.7.md` | Catalyst v0.1.0-rc.7 Upgrade Notes |
 | `docs/workflow/release-v0.1.0-rc.5.md` | Catalyst v0.1.0-rc.5 Upgrade Notes |
 | `docs/workflow/release-v0.1.0-rc.4.md` | Catalyst v0.1.0-rc.4 Upgrade Notes |
 | `docs/workflow/release-v0.1.0-rc.3.md` | Catalyst v0.1.0-rc.3 Upgrade Notes |

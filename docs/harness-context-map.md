@@ -25,6 +25,7 @@ Este archivo enruta la documentacion vigente de `catalyst` para que el contexto 
 | Modulos | `docs/modules.md` |
 | Frontera app/framework | `docs/app-boundary.md` |
 | Vistas | `docs/views.md`, `docs/framework-view.md` |
+| Modals | `docs/framework-modals.md` |
 | Seguridad/CSP | `docs/security-conventions.md` |
 | Auth | `docs/auth.md`, `docs/framework-auth.md`, `docs/repository-auth.md` |
 | Database/ORM | `docs/database.md`, `docs/framework-database.md` |
@@ -47,6 +48,7 @@ Este archivo enruta la documentacion vigente de `catalyst` para que el contexto 
 | referencias genericas, cascadas, secuencias | `docs/entity-references.md`, `docs/reverse-cascade-delete.md`, `docs/sequences.md` |
 | events, jobs, scheduler, runtime async | `docs/framework-event.md`, `docs/framework-queue.md`, `docs/framework-schedule.md`, `STRUCTURE.md` |
 | vistas, CSP, scripts inline, `data-*` | `docs/framework-view.md`, `docs/security-conventions.md` |
+| modals, backdrops, dialogos, overlays | `docs/framework-modals.md`, `docs/framework-notification.md`, `docs/framework-view.md` |
 | bootstrap, routing, kernel, entry points | `docs/architecture.md`, `docs/entry-points.md`, `docs/kernel.md`, `docs/routing.md` |
 | setup/config | `docs/checklists/setup-completion-e2e.md`, `docs/helpers-config.md` |
 | modulos, navegacion, permisos, assets | `docs/modules.md`, `docs/runtime-module-catalog.md`, `docs/ui/sidebar-navigation.md` |

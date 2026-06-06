@@ -182,7 +182,10 @@ class DumperRenderer
         if (defined('TW')) {
             $terminalWidth = TW;
         } elseif (function_exists('exec')) {
-            @exec('tput cols 2>/dev/null', $columns);
+            $nullDevice = defined('SHELL_NULL_DEVICE')
+                ? SHELL_NULL_DEVICE
+                : (PHP_OS_FAMILY === 'Windows' ? 'NUL' : '/dev/null');
+            @exec('tput cols 2>' . $nullDevice, $columns);
             if (!empty($columns[0])) {
                 $terminalWidth = (int)$columns[0];
             }

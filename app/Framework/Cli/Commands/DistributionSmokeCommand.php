@@ -85,8 +85,8 @@ final class DistributionSmokeCommand extends AbstractCommand
     {
         $json = (bool)($args->getOptionValue('json') ?? false);
         $checks = [
-            'development_app_template_first_run' => $this->developmentAppIsFirstRun(),
-            'development_db_template_first_run' => $this->developmentDbIsFirstRun(),
+            'app_template_first_run' => $this->appTemplateIsFirstRun(),
+            'db_template_first_run' => $this->dbTemplateIsFirstRun(),
             'sequence_migration_contract' => $this->sequenceMigrationHasVersion(),
             'status_bar_registration_guard' => $this->statusBarHidesRegistrationLink(),
             'empty_database_bootstrap_guidance' => $this->migrationCommandsExplainSetupBootstrap(),
@@ -117,13 +117,13 @@ final class DistributionSmokeCommand extends AbstractCommand
     }
 
     /**
-     * Confirms development app config ships in first-run state.
+     * Confirms app config template ships in first-run state.
      *
      * Responsibility: Reads app.json and rejects local configured identity values.
      */
-    private function developmentAppIsFirstRun(): bool
+    private function appTemplateIsFirstRun(): bool
     {
-        $config = $this->jsonFile('boot-core/config/development/app.example.json');
+        $config = $this->jsonFile('boot-core/config/templates/app.json');
         $project = is_array($config['project'] ?? null) ? $config['project'] : [];
 
         return ($project['project_config'] ?? null) === false
@@ -132,13 +132,13 @@ final class DistributionSmokeCommand extends AbstractCommand
     }
 
     /**
-     * Confirms development DB config ships without project-specific database identity.
+     * Confirms DB config template ships without project-specific database identity.
      *
      * Responsibility: Reads db.json and rejects Catalyst-local development database defaults.
      */
-    private function developmentDbIsFirstRun(): bool
+    private function dbTemplateIsFirstRun(): bool
     {
-        $config = $this->jsonFile('boot-core/config/development/db.example.json');
+        $config = $this->jsonFile('boot-core/config/templates/db.json');
         $db = is_array($config['db1'] ?? null) ? $config['db1'] : [];
 
         return trim((string)($db['db_host'] ?? '')) === ''

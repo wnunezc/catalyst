@@ -48,6 +48,9 @@ use Exception;
  *
  * ## Directory layout
  *
+ *   boot-core/config/{environment}/       Runtime files, local-only and ignored
+ *   boot-core/config/templates/           Versioned neutral templates
+ *
  *   boot-core/config/{environment}/
  *   +-- db.json        → { "db1": {...}, "db2": {...} }
  *   +-- mail.json      → { "mail1": {...}, "mail2": {...} }
@@ -59,10 +62,10 @@ use Exception;
  *
  * ## Fallback on first boot
  *
- * If the config directory is absent or empty (Setup Wizard not yet run),
- * ConfigManager initialises with an empty config array and reports
- * isConfigured() = false. Each Manager (DatabaseManager, MailManager…)
- * is responsible for falling back to .env constants in that scenario.
+ * If the config directory is absent, ConfigManager materializes it from
+ * boot-core/config/templates/. The app remains unconfigured until app.json has
+ * project_config = true. Each Manager can still fall back to .env constants
+ * when a section is incomplete during first boot.
  *
  * ## Usage
  *
@@ -382,7 +385,7 @@ class ConfigManager
     // -------------------------------------------------------------------------
 
     /**
-     * Load all JSON files from boot-core/config/{environment}/. Fails silently when the directory does not exist (first boot). Throws on malformed JSON to surface configuration errors early.
+     * Load all JSON files from boot-core/config/{environment}/ after creating missing local files from templates. Throws on malformed JSON to surface configuration errors early.
      *
      * Responsibility: Load all JSON files from boot-core/config/{environment}/. Fails silently when the directory does not exist (first boot). Throws on malformed JSON to surface configuration errors early.
      * @throws Exception on invalid JSON
@@ -391,9 +394,7 @@ class ConfigManager
     {
         $configDir = implode(DS, [PD, 'boot-core', 'config', $this->environment]);
 
-        if (is_dir($configDir)) {
-            (new LocalConfigManager())->ensureActiveFiles($this->environment);
-        }
+        (new LocalConfigManager())->ensureActiveFiles($this->environment);
 
         $cachedConfig = BootstrapCacheManager::loadConfigCache();
         if (is_array($cachedConfig) && $cachedConfig !== []) {

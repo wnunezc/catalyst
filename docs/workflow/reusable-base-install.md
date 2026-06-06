@@ -39,10 +39,11 @@ Do not carry over:
 
 - `boot-core/config/env/.env`
 - real `boot-core/config/env/.env.*` variants
-- active local development config:
-  - `boot-core/config/development/app.json`
-  - `boot-core/config/development/db.json`
-  - `boot-core/config/development/session.json`
+- active local environment config:
+  - `boot-core/config/development/`
+  - `boot-core/config/testing/`
+  - `boot-core/config/staging/`
+  - `boot-core/config/production/`
 - `boot-core/config/*/secrets.json`
 - `boot-core/config/dkim/`
 - `boot-core/storage/logs/`
@@ -88,9 +89,9 @@ composer dump-autoload
 php public/cli.php config:sync
 ```
 
-   `config:sync` creates missing active development config from
-   `app.example.json`, `db.example.json` and `session.example.json`, then adds
-   any new template keys without replacing project-specific values.
+   `config:sync` creates missing active environment config from
+   `boot-core/config/templates/*.json`, then adds any new template keys without
+   replacing project-specific values.
 6. Set project-specific:
    - app name/URL;
    - DB database/user/password;
@@ -126,7 +127,7 @@ When a new Catalyst release is available, update manually through Git:
 
 ```powershell
 git fetch upstream --tags
-git merge v0.1.0-rc.6
+git merge v0.1.0-rc.7
 composer install
 php public/cli.php config:sync
 php public/cli.php config:contract-smoke --json
@@ -136,14 +137,14 @@ php public/cli.php admin-navigation:smoke --json
 php public/cli.php quality:check
 ```
 
-Use the actual target tag instead of `v0.1.0-rc.6`. `update:check` does not modify
+Use the actual target tag instead of `v0.1.0-rc.7`. `update:check` does not modify
 files, branches or remotes; it only reports version information and suggested
 commands.
 
-For `v0.1.0-rc.6`, expect framework-owned changes in:
+For `v0.1.0-rc.7`, expect framework-owned changes in:
 
-- reusable-base first-run JSON templates under `boot-core/config/development/*.example.json`;
-- local config protection rules in `.gitignore`;
+- reusable-base first-run JSON templates under `boot-core/config/templates/*.json`;
+- runtime environment protection rules in `.gitignore`;
 - local config sync and contract smoke commands under `app/Framework/Cli/Commands/`;
 - the local config merge service under `app/Framework/Config/`;
 - migration contracts and new organization hierarchy tables under `boot-core/database/migrations/`;
@@ -157,12 +158,13 @@ For `v0.1.0-rc.6`, expect framework-owned changes in:
 
 These changes should not require deleting local application work. Keep derived application changes in `Repository/App/` and resolve merge conflicts by preserving project-specific code there while accepting framework updates in `app/`, `boot-core/` and `Repository/Framework/`.
 
-After merging `v0.1.0-rc.5` or later, keep project-specific active config local.
-If Git reports deletions for `boot-core/config/development/app.json`,
-`db.json` or `session.json`, accept the upstream removal from the index but keep
-the files on disk. They are intentionally ignored and owned by the derived
-project. Run `php public/cli.php config:sync` after the merge to receive new
-default keys without resetting app URL, database credentials or session name.
+After merging releases that protect runtime config, keep project-specific active
+config local. If Git reports deletions for files below
+`boot-core/config/development/`, accept the upstream removal from the index but
+keep the files on disk. Runtime environment directories are intentionally
+ignored and owned by the derived project. Run `php public/cli.php config:sync`
+after the merge to receive new default keys without resetting app URL, database
+credentials, session name or E2E-local settings.
 
 After merging `v0.1.0-rc.2` or later, administrators must populate organization hierarchy metadata manually from:
 
@@ -221,6 +223,33 @@ For a reusable base, decide explicitly whether to keep or replace:
 Do not remove framework-owned modules as a cleanup shortcut. If a target project
 does not need a module, disable or hide it through the approved module/feature
 flag mechanisms first.
+
+## Derived Project Testing Harness
+
+Projects based on Catalyst keep their own tests inside the derived project:
+
+```text
+test/framework/UnitTest/
+test/framework/Playwright/
+```
+
+Use the shared workspace runtime without copying Node dependencies or secrets
+into the derived project:
+
+```powershell
+Push-Location D:\OpsZone\DevWorkspace\Engines\Playwright
+node .\scripts\run-project-tests.js D:\path\to\derived-project
+Pop-Location
+```
+
+The engine owns local secrets, `.auth`, browser storage state and generated test
+results. The derived project owns specs, versionable fixtures, helpers and its
+progressive surface registry.
+
+Do not bulk-copy Catalyst legacy specs into a derived app. Confirm each current
+route and visible surface, then migrate or create one independent test at a
+time. App-specific specs belong to the derived project and must not be added to
+Catalyst.
 
 ## Handoff Artifact
 

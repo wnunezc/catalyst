@@ -28,6 +28,31 @@ async function bootDemoUi() {
         themeStorageKey: '__THEME_CONFIG__',
         quickToggleSelector: '.catalyst-status-bar [data-demoui-theme-toggle]',
     });
+
+    initModalExamples(demoShell);
+}
+
+function initModalExamples(root) {
+    const varyingModal = root.querySelector('#exampleModal');
+    if (!(varyingModal instanceof HTMLElement) || varyingModal.dataset.demoUiVaryingModalBound === '1') {
+        return;
+    }
+
+    varyingModal.dataset.demoUiVaryingModalBound = '1';
+    varyingModal.addEventListener('show.bs.modal', (event) => {
+        const trigger = event.relatedTarget;
+        const recipient = trigger instanceof HTMLElement ? trigger.dataset.bsWhatever || '' : '';
+        const title = varyingModal.querySelector('.modal-title');
+        const input = varyingModal.querySelector('#recipient-name');
+
+        if (title) {
+            title.textContent = recipient !== '' ? `New message to ${recipient}` : 'New message';
+        }
+
+        if (input instanceof HTMLInputElement) {
+            input.value = recipient;
+        }
+    });
 }
 
 if (document.readyState === 'loading') {

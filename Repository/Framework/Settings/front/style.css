@@ -255,10 +255,6 @@ body.demo-ui-shell-body .modal-dialog.modal-dialog-scrollable {
     pointer-events: auto !important;
 }
 
-body.demo-ui-shell-body .container-fluid > .modal {
-    z-index: 1085 !important;
-}
-
 body.demo-ui-shell-body .modal-dialog.modal-dialog-scrollable .modal-content,
 body.demo-ui-shell-body .modal-dialog.modal-dialog-scrollable .modal-body,
 body.demo-ui-shell-body .modal-dialog.modal-dialog-scrollable .modal-footer {

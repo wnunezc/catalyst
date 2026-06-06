@@ -123,7 +123,7 @@ php public/cli.php deploy:run --profile=local-preview --dry-run
 php public/cli.php tenancy:status --json
 php public/cli.php fixtures:auth --json
 php public/cli.php fixtures:auth --user qa-auth --field email_verified --json
-php public/cli.php fixtures:auth --user qa-auth --password-check "*@Test123456" --json
+php public/cli.php fixtures:auth --user qa-auth --password-check "$env:CATALYST_E2E_PASSWORD" --json
 php public/cli.php fixtures:auth --user qa-auth --token-counts --json
 php public/cli.php fixtures:auth --user qa-admin --set-mfa-enabled 0 --json
 php public/cli.php route:list --json

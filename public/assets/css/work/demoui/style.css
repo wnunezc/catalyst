@@ -360,24 +360,6 @@ html[data-sidenav-size=condensed] .demo-ui-shell-body .content-page {
     box-shadow: -8px -12px 32px rgba(15, 23, 42, 0.16);
 }
 
-.demo-ui-shell-body .modal-backdrop,
-.demo-ui-shell-body .offcanvas-backdrop {
-    z-index: 1070;
-}
-
-.demo-ui-shell-body .modal,
-.demo-ui-shell-body .offcanvas {
-    z-index: 1075;
-}
-
-.demo-ui-shell-body .popover {
-    z-index: 1080;
-}
-
-.demo-ui-shell-body .tooltip {
-    z-index: 1085;
-}
-
 .demo-ui-shell-body .notif-panel-header {
     background: var(--bs-tertiary-bg);
 }

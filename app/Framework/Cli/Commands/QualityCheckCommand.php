@@ -72,6 +72,11 @@ final class QualityCheckCommand extends AbstractCommand
             'blocker' => true,
         ],
         [
+            'label' => 'Runtime config isolation',
+            'command' => 'php public/cli.php config:e2e-readiness --json',
+            'blocker' => true,
+        ],
+        [
             'label' => 'Admin navigation projection',
             'command' => 'php public/cli.php admin-navigation:smoke --json',
             'blocker' => true,

@@ -31,31 +31,28 @@ declare(strict_types=1);
 namespace Catalyst\Framework\Config;
 
 /**
- * Manages local-only runtime config files and their versioned examples.
+ * Manages local-only runtime config files and their versioned templates.
  *
  * @package Catalyst\Framework\Config
  * Responsibility: Preserves derived-project configuration while allowing Catalyst defaults to evolve safely.
  */
 final class LocalConfigManager
 {
-    /**
-     * @var string[]
-     */
-    private const LOCAL_SECTIONS = ['app', 'db', 'session'];
+    private const ENVIRONMENTS = ['development', 'testing', 'staging', 'production'];
 
     /**
-     * Copies missing active config files from examples without overwriting existing files.
+     * Copies missing active config files from templates without overwriting existing files.
      *
      * @return string[] Relative paths created.
      */
     public function ensureActiveFiles(string $environment): array
     {
         $created = [];
-        foreach (self::LOCAL_SECTIONS as $section) {
+        foreach ($this->sections() as $section) {
             $active = $this->activePath($environment, $section);
-            $example = $this->examplePath($environment, $section);
+            $template = $this->templatePath($section);
 
-            if (is_file($active) || !is_file($example)) {
+            if (is_file($active) || !is_file($template)) {
                 continue;
             }
 
@@ -64,7 +61,7 @@ final class LocalConfigManager
                 continue;
             }
 
-            if (copy($example, $active)) {
+            if (copy($template, $active)) {
                 $created[] = $this->relativePath($active);
             }
         }
@@ -73,7 +70,7 @@ final class LocalConfigManager
     }
 
     /**
-     * Merges missing keys from examples into active config files while preserving current values.
+     * Merges missing keys from templates into active config files while preserving current values.
      *
      * @return array<string, mixed>
      */
@@ -82,11 +79,11 @@ final class LocalConfigManager
         $created = $this->ensureActiveFiles($environment);
         $files = [];
 
-        foreach (self::LOCAL_SECTIONS as $section) {
+        foreach ($this->sections() as $section) {
             $active = $this->activePath($environment, $section);
-            $example = $this->examplePath($environment, $section);
+            $template = $this->templatePath($section);
 
-            if (!is_file($active) || !is_file($example)) {
+            if (!is_file($active) || !is_file($template)) {
                 $files[$section] = [
                     'status' => 'missing',
                     'added_keys' => [],
@@ -96,9 +93,9 @@ final class LocalConfigManager
             }
 
             $activeData = $this->readJson($active);
-            $exampleData = $this->readJson($example);
+            $templateData = $this->readJson($template);
             $added = [];
-            $merged = $this->mergeMissing($activeData, $exampleData, '', $added);
+            $merged = $this->mergeMissing($activeData, $templateData, '', $added);
 
             if ($added === []) {
                 $files[$section] = [
@@ -126,24 +123,25 @@ final class LocalConfigManager
     }
 
     /**
-     * Validates that local config files are examples-in-git and active-files-local-only.
+     * Validates that templates are in git and runtime environment config is local-only.
      *
      * @return array<string, mixed>
      */
     public function contract(string $environment): array
     {
         $checks = [];
-        foreach (self::LOCAL_SECTIONS as $section) {
+        foreach ($this->sections() as $section) {
             $activeRelative = $this->relativePath($this->activePath($environment, $section));
-            $exampleRelative = $this->relativePath($this->examplePath($environment, $section));
+            $templateRelative = $this->relativePath($this->templatePath($section));
 
-            $checks[$section . '_example_exists'] = is_file($this->examplePath($environment, $section));
+            $checks[$section . '_template_exists'] = is_file($this->templatePath($section));
             $checks[$section . '_active_ignored'] = $this->isIgnored($activeRelative);
             $checks[$section . '_active_not_tracked'] = !$this->isTracked($activeRelative);
-            $checks[$section . '_example_tracked'] = $this->isTracked($exampleRelative);
+            $checks[$section . '_template_tracked'] = $this->isTracked($templateRelative);
         }
 
         $checks['gitignore_rules_present'] = $this->gitignoreRulesPresent($environment);
+        $checks['environment_runtime_not_tracked'] = $this->trackedEnvironmentFiles($environment) === [];
         $checks['derived_merge_preserves_values'] = $this->derivedMergePreservesValues();
 
         return [
@@ -153,13 +151,25 @@ final class LocalConfigManager
     }
 
     /**
-     * Returns the local-only section names protected by this contract.
+     * Returns config sections available from versioned templates.
      *
      * @return string[]
      */
     public function sections(): array
     {
-        return self::LOCAL_SECTIONS;
+        $files = glob($this->templatesDir() . DS . '*.json') ?: [];
+        $sections = [];
+
+        foreach ($files as $file) {
+            $section = strtolower(pathinfo($file, PATHINFO_FILENAME));
+            if ($section !== '') {
+                $sections[] = $section;
+            }
+        }
+
+        sort($sections);
+
+        return $sections;
     }
 
     /**
@@ -276,11 +286,19 @@ final class LocalConfigManager
     }
 
     /**
-     * Returns example config path.
+     * Returns template config path.
      */
-    private function examplePath(string $environment, string $section): string
+    private function templatePath(string $section): string
     {
-        return implode(DS, [PD, 'boot-core', 'config', $environment, $section . '.example.json']);
+        return $this->templatesDir() . DS . $section . '.json';
+    }
+
+    /**
+     * Returns the versioned config templates directory.
+     */
+    private function templatesDir(): string
+    {
+        return implode(DS, [PD, 'boot-core', 'config', 'templates']);
     }
 
     /**
@@ -298,7 +316,12 @@ final class LocalConfigManager
      */
     private function isTracked(string $relativePath): bool
     {
-        $command = 'git -C ' . escapeshellarg(PD) . ' ls-files --error-unmatch -- ' . escapeshellarg($relativePath) . ' 2>NUL';
+        $nullDevice = defined('SHELL_NULL_DEVICE')
+            ? SHELL_NULL_DEVICE
+            : (PHP_OS_FAMILY === 'Windows' ? 'NUL' : '/dev/null');
+        $command = 'git -C ' . escapeshellarg(PD)
+            . ' ls-files --error-unmatch -- ' . escapeshellarg($relativePath)
+            . ' 2>' . $nullDevice;
         exec($command, $output, $exitCode);
 
         return $exitCode === 0;
@@ -323,14 +346,30 @@ final class LocalConfigManager
         $path = PD . DS . '.gitignore';
         $contents = is_file($path) ? (string)file_get_contents($path) : '';
 
-        foreach (self::LOCAL_SECTIONS as $section) {
-            if (!str_contains($contents, '/boot-core/config/' . $environment . '/' . $section . '.json')
-                || !str_contains($contents, '!/boot-core/config/' . $environment . '/' . $section . '.example.json')
-            ) {
+        foreach (self::ENVIRONMENTS as $name) {
+            if (!str_contains($contents, '/boot-core/config/' . $name . '/')) {
                 return false;
             }
         }
 
         return true;
+    }
+
+    /**
+     * Returns tracked files below a runtime environment directory.
+     *
+     * @return string[]
+     */
+    public function trackedEnvironmentFiles(string $environment): array
+    {
+        $relative = 'boot-core/config/' . trim($environment, '/\\') . '/';
+        $command = 'git -C ' . escapeshellarg(PD) . ' ls-files -- ' . escapeshellarg($relative);
+        exec($command, $output, $exitCode);
+
+        if ($exitCode !== 0) {
+            return [];
+        }
+
+        return array_values(array_filter(array_map('trim', $output), static fn (string $line): bool => $line !== ''));
     }
 }

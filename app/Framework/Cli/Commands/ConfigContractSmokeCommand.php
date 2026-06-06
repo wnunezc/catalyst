@@ -61,7 +61,7 @@ final class ConfigContractSmokeCommand extends AbstractCommand
 
     public function getDescription(): string
     {
-        return 'Verify local config examples, ignores and derived-update preservation';
+        return 'Verify config templates, runtime ignores and derived-update preservation';
     }
 
     public function execute(ArgumentBag $args): int
