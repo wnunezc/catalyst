@@ -16,7 +16,8 @@ workspace harness without ad hoc scripts.
 | Runtime docs inventory | `Catalyst\Framework\Cli\Commands\DocsInventoryCommand` |
 | Runtime module sync | `Catalyst\Framework\Cli\Commands\DocsSyncRuntimeCommand` |
 | PHP unit harness | `test/framework/UnitTest` |
-| Playwright specs | `test/framework/Playwright` |
+| Catalyst framework Playwright specs | `test/framework/Playwright` |
+| Derived application Playwright specs | `test/app/Playwright` |
 | Playwright runtime | `D:/OpsZone/DevWorkspace/Engines/Playwright` |
 
 ## Current Behavior
@@ -56,11 +57,19 @@ regressions that do not need a browser.
 
 ## Playwright Tests
 
-Playwright specs live in:
+Test ownership follows the same framework/application boundary as
+`Repository/Framework` and `Repository/App`:
 
 ```text
-test/framework/Playwright
+test/framework/Playwright/  Catalyst framework contracts
+test/app/Playwright/        Derived application behavior
 ```
+
+The Catalyst repository owns only the framework suite. A project based on
+Catalyst may retain that suite to verify the inherited framework, but all
+product-specific routes, workflows, APIs and UI belong in its own `test/app`
+suite. Never add derived application specs to Catalyst or mix them into
+`test/framework`.
 
 The Node/Playwright runtime lives in the workspace engine:
 
@@ -73,7 +82,7 @@ Run all Catalyst Playwright specs from PowerShell:
 ```powershell
 $env:CATALYST_PLAYWRIGHT_ENGINE = 'D:\OpsZone\DevWorkspace\Engines\Playwright'
 Push-Location $env:CATALYST_PLAYWRIGHT_ENGINE
-node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalyst
+node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalyst --suite framework
 Pop-Location
 ```
 
@@ -81,9 +90,22 @@ Run the modal suite:
 
 ```powershell
 Push-Location D:\OpsZone\DevWorkspace\Engines\Playwright
-node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalyst --grep "@modals"
+node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalyst --suite framework --grep "@modals"
 Pop-Location
 ```
+
+Run a derived application's own suite:
+
+```powershell
+Push-Location D:\OpsZone\DevWorkspace\Engines\Playwright
+node .\scripts\run-project-tests.js D:\path\to\derived-project --suite app
+Pop-Location
+```
+
+The selected suite must provide its own `Playwright/playwright.config.cjs`,
+`specs/`, versionable helpers/fixtures and `SURFACES.md`. The engine accepts only
+`framework` or `app`, controls `--config`, and does not execute legacy files
+from its own `tests/` directory.
 
 Specs must not live under the Playwright engine. The engine may provide runtime,
 local auth state, traces, screenshots and other machine-local artifacts.
@@ -145,10 +167,11 @@ Name Playwright specs by surface, for example `settings-modals.spec.cjs`,
 `devtools-modals.spec.cjs`, `auth-mfa.spec.cjs` or `demo-ui.spec.cjs`. Name PHP
 tests after the class or contract under test.
 
-Maintain `test/framework/Playwright/SURFACES.md` as the progressive coverage
-registry. Generated files, inactive templates and legacy engine specs are not
-surfaces. Confirm the current runtime route and visible surface before adding
-E2E coverage.
+Maintain the progressive coverage registry owned by the selected suite:
+`test/framework/Playwright/SURFACES.md` for Catalyst and
+`test/app/Playwright/SURFACES.md` for a derived application. Generated files,
+inactive templates and legacy engine specs are not surfaces. Confirm the
+current runtime route and visible surface before adding E2E coverage.
 
 For modal-owning surfaces, an inventory contract is mandatory. It must list the
 active triggers expected on the real route and fail when a trigger is added or

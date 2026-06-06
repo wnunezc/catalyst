@@ -2,22 +2,24 @@
 
 ## Purpose
 
-Playwright specs for Catalyst live in this project and run with the workspace
-engine at `D:\OpsZone\DevWorkspace\Engines\Playwright`.
+Playwright specs for Catalyst framework contracts live here and run with the
+workspace engine at `D:\OpsZone\DevWorkspace\Engines\Playwright`. Derived
+applications place their own product specs in `test/app/Playwright`; they must
+not add application behavior to this directory.
 
 ## Standard Command
 
 ```powershell
 $env:CATALYST_PLAYWRIGHT_ENGINE = 'D:\OpsZone\DevWorkspace\Engines\Playwright'
 Push-Location $env:CATALYST_PLAYWRIGHT_ENGINE
-node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalyst
+node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalyst --suite framework
 Pop-Location
 ```
 
 Use `--grep` for a single surface:
 
 ```powershell
-node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalyst --grep "@modals"
+node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalyst --suite framework --grep "@modals"
 ```
 
 ## Environment

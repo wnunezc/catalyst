@@ -229,8 +229,10 @@ flag mechanisms first.
 Projects based on Catalyst keep their own tests inside the derived project:
 
 ```text
-test/framework/UnitTest/
-test/framework/Playwright/
+test/framework/UnitTest/    Inherited Catalyst framework contracts
+test/framework/Playwright/  Inherited Catalyst framework E2E contracts
+test/app/UnitTest/          Derived application PHP behavior
+test/app/Playwright/        Derived application E2E behavior
 ```
 
 Use the shared workspace runtime without copying Node dependencies or secrets
@@ -238,9 +240,14 @@ into the derived project:
 
 ```powershell
 Push-Location D:\OpsZone\DevWorkspace\Engines\Playwright
-node .\scripts\run-project-tests.js D:\path\to\derived-project
+node .\scripts\run-project-tests.js D:\path\to\derived-project --suite app
 Pop-Location
 ```
+
+Use `--suite framework` only when verifying inherited Catalyst contracts.
+`--suite app` resolves exclusively
+`test/app/Playwright/playwright.config.cjs`; it cannot discover the framework
+suite or legacy engine tests.
 
 The engine owns local secrets, `.auth`, browser storage state and generated test
 results. The derived project owns specs, versionable fixtures, helpers and its
@@ -249,7 +256,7 @@ progressive surface registry.
 Do not bulk-copy Catalyst legacy specs into a derived app. Confirm each current
 route and visible surface, then migrate or create one independent test at a
 time. App-specific specs belong to the derived project and must not be added to
-Catalyst.
+Catalyst or to the derived project's `test/framework` tree.
 
 ## Handoff Artifact
 

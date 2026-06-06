@@ -44,8 +44,10 @@ Uso local del workspace:
 
 - Unit tests PHP: `test/framework/UnitTest`.
 - Specs Playwright: `test/framework/Playwright`.
+- En proyectos derivados, las pruebas propias de la aplicacion viven en
+  `test/app`; no se mezclan con contratos heredados de `test/framework`.
 - Ejecutar Playwright desde `D:/OpsZone/DevWorkspace/Engines/Playwright` con
-  `scripts/run-project-tests.js`.
+  `scripts/run-project-tests.js` y `--suite framework|app`.
 - Secretos, `.auth`, storage state, screenshots, traces y resultados viven solo
   en el engine local, nunca en Catalyst.
 - Migrar pruebas legacy progresivamente tras confirmar la superficie real.

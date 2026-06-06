@@ -207,7 +207,7 @@ must exclude runtime secrets, active local config, private artifacts and storage
   app-owned routers, kernels or framework forks.
 - CLI quality gates, inspectors, module catalog generation and runtime
   inventory generation.
-- Project-owned PHP unit and Playwright test harnesses with external local
+- Separate framework-owned and app-owned test boundaries with external local
   Playwright runtime, secrets and results.
 
 ## Approved Composer Dependencies
@@ -280,10 +280,10 @@ API.md                    Subsystem index
 
 ## Distribution Status
 
-`0.1.0-rc.7` is intended as the seventh distribution candidate for developers
-who will use Catalyst as a project base. It supersedes `0.1.0-rc.6` by making
-runtime configuration fully local and portable, fixing modal layering and
-cleanup, and introducing the normalized project-owned testing harness. It is
+`0.1.0-rc.8` is intended as the eighth distribution candidate for developers
+who will use Catalyst as a project base. It supersedes `0.1.0-rc.7` by
+formalizing separate `test/framework` and `test/app` ownership boundaries and
+the explicit Playwright suite selection required by derived applications. It is
 not a public Composer package and is not intended to be installed into another
 project's `vendor/` directory.
 

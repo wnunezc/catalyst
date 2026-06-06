@@ -83,7 +83,7 @@ Run the current modal suite from the Playwright engine:
 ```powershell
 $env:CATALYST_PLAYWRIGHT_ENGINE = 'D:\OpsZone\DevWorkspace\Engines\Playwright'
 Push-Location $env:CATALYST_PLAYWRIGHT_ENGINE
-node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalyst --grep "@modals"
+node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalyst --suite framework --grep "@modals"
 Pop-Location
 ```
 
