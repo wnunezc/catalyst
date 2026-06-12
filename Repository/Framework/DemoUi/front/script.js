@@ -1,62 +1,35 @@
 /**
  * Contract:
- * - Init: DOMContentLoaded or immediate boot when the DemoUi shell is present.
- * - DOM: `.demo-ui-shell-body`, `.app-topbar`, `.content-page` and status-bar theme toggle.
- * - Events/Payload: delegates shell behavior to `ui-runtime.js` with static options.
- * - CSP: dynamic import uses versioned local assets; no inline handlers.
+ * - Init: declarative registration through the shared Catalyst UI queue.
+ * - DOM: the `data-surface-context="demo-ui"` document and the varying-content modal example.
+ * - Events/Payload: registers Demo UI-only behavior with the shared Catalyst UI runtime.
+ * - CSP: no inline handlers or secondary runtime imports.
  */
-async function bootDemoUi() {
-    const demoShell = document.querySelector('.demo-ui-shell-body');
-    if (!(demoShell instanceof HTMLElement)) {
+import { registerUiEvent } from '../../catalyst/runtime/registration-queue.js';
+
+function handleVaryingModalShow(event) {
+    const varyingModal = event.target;
+    if (!(varyingModal instanceof HTMLElement) || varyingModal.id !== 'exampleModal') {
         return;
     }
 
-    const version = typeof window.__catalystModuleVersion === 'string' && window.__catalystModuleVersion !== ''
-        ? `?v=${encodeURIComponent(window.__catalystModuleVersion)}`
-        : '';
-    const { initShellRuntime } = await import(`/assets/js/catalyst/modules/ui-runtime.js${version}`);
+    const trigger = event.relatedTarget;
+    const recipient = trigger instanceof HTMLElement ? trigger.dataset.bsWhatever || '' : '';
+    const title = varyingModal.querySelector('.modal-title');
+    const input = varyingModal.querySelector('#recipient-name');
 
-    await initShellRuntime({
-        root: demoShell,
-        defaultDoc: 'ui-alerts.html',
-        mobileMaxWidth: 767,
-        noScrollClass: 'demo-ui-no-scroll',
-        backdropClass: 'demo-ui-backdrop',
-        topbarSelector: '.app-topbar',
-        scrollContainerSelector: '.content-page',
-        topbarActiveClass: 'topbar-active',
-        themeStorageKey: '__THEME_CONFIG__',
-        quickToggleSelector: '.catalyst-status-bar [data-demoui-theme-toggle]',
-    });
-
-    initModalExamples(demoShell);
-}
-
-function initModalExamples(root) {
-    const varyingModal = root.querySelector('#exampleModal');
-    if (!(varyingModal instanceof HTMLElement) || varyingModal.dataset.demoUiVaryingModalBound === '1') {
-        return;
+    if (title) {
+        title.textContent = recipient !== '' ? `New message to ${recipient}` : 'New message';
     }
 
-    varyingModal.dataset.demoUiVaryingModalBound = '1';
-    varyingModal.addEventListener('show.bs.modal', (event) => {
-        const trigger = event.relatedTarget;
-        const recipient = trigger instanceof HTMLElement ? trigger.dataset.bsWhatever || '' : '';
-        const title = varyingModal.querySelector('.modal-title');
-        const input = varyingModal.querySelector('#recipient-name');
-
-        if (title) {
-            title.textContent = recipient !== '' ? `New message to ${recipient}` : 'New message';
-        }
-
-        if (input instanceof HTMLInputElement) {
-            input.value = recipient;
-        }
-    });
+    if (input instanceof HTMLInputElement) {
+        input.value = recipient;
+    }
 }
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', bootDemoUi, { once: true });
-} else {
-    bootDemoUi();
-}
+registerUiEvent({
+    name: 'demo-ui.varying-modal',
+    target: 'document',
+    type: 'show.bs.modal',
+    listener: handleVaryingModalShow,
+});

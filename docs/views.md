@@ -16,7 +16,16 @@ Serve as the broad entry point for Catalyst view, template, frontend resource an
 
 ## Current Behavior
 
-Runtime inventory currently reports 230 templates and 54 scripts. Module-specific frontend assets belong in `Repository/{Framework|App}/{Module}/front/` and are published under `public/assets/*/work/{slug}/`. CSP and trusted HTML rules are documented in `docs/security-conventions.md`.
+Every complete view renders through `boot-core/template/document.phtml` and the
+shared `shell.phtml`. `Controller::view()` is the default complete-page API;
+`Controller::viewFragment()` is the explicit API for HTML that must not contain
+the document or shell. Catalyst does not expose layout profiles.
+
+Module-specific frontend assets belong in
+`Repository/{Framework|App}/{Module}/front/` and are published under
+`public/assets/*/work/{slug}/`. `DocumentScope` appends those assets to the
+shared head/body lists. CSP and trusted HTML rules are documented in
+`docs/security-conventions.md`.
 
 ## Operational Notes
 

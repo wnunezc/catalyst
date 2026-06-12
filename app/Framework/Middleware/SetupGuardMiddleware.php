@@ -42,7 +42,7 @@ use Closure;
 /**
  * SetupGuardMiddleware — dual-state access control for environment setup routes.
  *
- * SRP: this middleware is attached only to environment setup routes (Settings module).
+ * SRP: this middleware is attached only to environment setup routes (Configuration module).
  * The complementary SetupMiddleware runs globally and decides where
  * unconfigured requests go; this one decides who may enter setup itself.
  *

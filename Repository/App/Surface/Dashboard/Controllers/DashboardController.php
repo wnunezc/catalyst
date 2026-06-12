@@ -31,7 +31,7 @@ declare(strict_types=1);
 namespace App\Surface\Dashboard\Controllers;
 
 use App\Surface\Account\Services\AccountDashboardService;
-use App\Surface\Account\Support\AccountShellViewModel;
+use App\Surface\Account\Support\AccountSurfaceViewModel;
 use App\Support\PublicSurface\Support\PublicDemoCatalog;
 use Catalyst\Framework\Auth\AuthManager;
 use Catalyst\Framework\Controllers\Controller;
@@ -55,7 +55,7 @@ final class DashboardController extends Controller
     public function index(): Response
     {
         $auth = AuthManager::getInstance();
-        $shell = new AccountShellViewModel();
+        $shell = new AccountSurfaceViewModel();
 
         if (!$auth->check()) {
             return $this->view('dashboard.guest', $shell->guest([
@@ -63,7 +63,7 @@ final class DashboardController extends Controller
                 'meta' => [
                     'description' => __('dashboard.guest.lead'),
                 ],
-            ]), 200, 'account');
+            ]));
         }
 
         $service = new AccountDashboardService();
@@ -71,13 +71,18 @@ final class DashboardController extends Controller
         return $this->view('dashboard.index', $shell->authenticated([
             'title' => __('dashboard.index.title'),
             'pageTitle' => __('dashboard.index.title'),
+            'page_header' => [
+                'eyebrow' => __('dashboard.index.eyebrow'),
+                'title' => __('dashboard.index.title'),
+                'description' => __('dashboard.index.lead'),
+            ],
             'account_page' => $service->dashboard(),
             'breadcrumb_items' => [
                 ['label' => __('account.nav.account'), 'href' => '/dashboard'],
                 ['label' => __('account.nav.dashboard'), 'href' => '/dashboard', 'is_active' => true],
             ],
             'has_breadcrumbs' => true,
-        ]), 200, 'account');
+        ]));
     }
 
     /**

@@ -196,7 +196,7 @@ must exclude runtime secrets, active local config, private artifacts and storage
 - ORM, QueryBuilder, migrations and database tooling.
 - Framework modules for API Platform, Audit, Auth, Automation, Catalogs,
   DevTools, Documents, Media, Notification, Operations, Roles and Settings.
-- Admin building blocks: CRUD scaffold, `FormBuilder`, `DataGrid`, resource
+- Global building blocks: CRUD scaffolding, `FormBuilder`, `DataGrid`, resource
   abilities, audit log, metadata, media library, document templates, workflows,
   automations and API tokens.
 - Reusable framework contracts for app boundary linting, update safety, safe
@@ -272,6 +272,7 @@ API.md                    Subsystem index
 - [docs/workflow/reusable-base-install.md](docs/workflow/reusable-base-install.md) - reusable project base workflow
 - [docs/deployment.md](docs/deployment.md) - deployment and packaging boundaries
 - [docs/architecture.md](docs/architecture.md) - architecture and documentation index
+- [docs/ui/surface-architecture.md](docs/ui/surface-architecture.md) - document, shell, frontend runtime and surface ownership
 - [docs/runtime-module-catalog.md](docs/runtime-module-catalog.md) - live module and route catalog
 - [docs/runtime-inventory.md](docs/runtime-inventory.md) - generated class/template/script inventory
 - [docs/security-conventions.md](docs/security-conventions.md) - CSP, nonce and trusted HTML rules

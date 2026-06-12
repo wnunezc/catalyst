@@ -36,10 +36,9 @@ return [
     'description' => 'Mandatory operational core for auth, setup, RBAC and platform operations.',
     'modules' => [
         'framework.auth',
-        'framework.settings',
+        'framework.configuration',
         'framework.roles',
         'framework.audit',
         'framework.notification',
-        'framework.operations',
     ],
 ];

@@ -37,7 +37,7 @@ return static function (array $scope): array {
     $actions[] = ['label' => __('automation.form_page.actions.back_list'), 'href' => '/automation-rules', 'class' => 'btn btn-sm btn-outline-secondary', 'icon' => 'fa-solid fa-arrow-left'];
 
     return [
-        'admin_header' => [
+        'page_header' => [
             'eyebrow' => __('automation.form_page.eyebrow'),
             'title' => (string) ($scope['pageTitle'] ?? $scope['title'] ?? __('automation.form_page.create_title')),
             'description' => $rule !== null ? __('automation.form_page.hero_lede_edit') : __('automation.form_page.hero_lede_create'),

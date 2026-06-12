@@ -1,53 +1,17 @@
-.account-shell-body {
-    min-height: 100vh;
-    background: var(--bs-body-bg);
-}
-
-.account-shell-authenticated {
-    overflow: hidden;
-}
-
-.account-shell-authenticated .account-shell-wrapper {
-    min-height: calc(100vh - 32px);
-    height: calc(100vh - 32px);
-    overflow: hidden;
-}
-
-.account-shell-authenticated .account-sidenav {
-    display: flex;
-    flex-direction: column;
-    bottom: 32px;
-}
-
-.account-shell-authenticated .account-sidenav .scrollbar {
-    flex: 1 1 auto;
-    min-height: 0;
-}
-
-.account-shell-authenticated [data-simplebar][data-simplebar-auto-hide=false] .simplebar-scrollbar::before {
-    opacity: .5;
-}
-
-.account-shell-authenticated [data-simplebar][data-simplebar-auto-hide=false] .simplebar-track.simplebar-vertical .simplebar-scrollbar::before {
-    top: 2px;
-    bottom: 2px;
-}
-
-.account-shell-body .account-topbar,
-.account-shell-body .account-sidenav {
+.account-page-body .account-topbar {
     color: var(--theme-topbar-item-color, var(--bs-body-color));
 }
 
-.account-shell-body .account-topbar .topbar-link,
-.account-shell-body .account-topbar .account-menu-label,
-.account-shell-body .account-topbar .topbar-link-icon {
+.account-page-body .account-topbar .topbar-link,
+.account-page-body .account-topbar .account-menu-label,
+.account-page-body .account-topbar .topbar-link-icon {
     color: var(--theme-topbar-item-color, var(--bs-body-color));
 }
 
-.account-shell-body .account-topbar .topbar-link:hover,
-.account-shell-body .account-topbar .topbar-link:focus,
-.account-shell-body .account-topbar .topbar-link:hover .account-menu-label,
-.account-shell-body .account-topbar .topbar-link:focus .account-menu-label {
+.account-page-body .account-topbar .topbar-link:hover,
+.account-page-body .account-topbar .topbar-link:focus,
+.account-page-body .account-topbar .topbar-link:hover .account-menu-label,
+.account-page-body .account-topbar .topbar-link:focus .account-menu-label {
     color: var(--theme-topbar-item-hover-color, var(--bs-primary));
 }
 
@@ -101,22 +65,6 @@
     color: var(--bs-secondary-color);
 }
 
-.account-content-page,
-html[data-sidenav-size=condensed] .account-shell-authenticated .account-content-page {
-    height: calc(100vh - var(--theme-topbar-height, 70px) - 32px);
-    min-height: 0;
-    overflow-x: hidden;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    scrollbar-gutter: stable;
-    padding: 0 .625rem 4rem;
-}
-
-.account-content-page > .container-fluid {
-    max-width: 100%;
-    padding-bottom: 32px;
-}
-
 .account-breadcrumb {
     margin: 1rem 0 .25rem;
 }
@@ -150,21 +98,6 @@ html[data-sidenav-size=condensed] .account-shell-authenticated .account-content-
     padding: 1rem 0 3rem;
 }
 
-.account-page-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 1rem;
-}
-
-.account-page-header h1 {
-    margin: .15rem 0 .25rem;
-    font-size: clamp(1.55rem, 2vw, 2.15rem);
-    font-weight: 800;
-}
-
-.account-page-header p,
 .account-section-title p,
 .account-card p {
     margin-bottom: 0;
@@ -465,11 +398,11 @@ html[data-sidenav-size=condensed] .account-shell-authenticated .account-content-
     grid-column: 1 / -1;
 }
 
-.account-shell-body .side-nav .sub-menu .side-nav-link {
+.account-page-body .side-nav .sub-menu .side-nav-link {
     padding-left: 3.35rem;
 }
 
-.account-shell-body .side-nav .sub-menu .side-nav-item.active > .side-nav-link {
+.account-page-body .side-nav .sub-menu .side-nav-item.active > .side-nav-link {
     color: var(--theme-sidenav-item-hover-color);
 }
 
@@ -478,10 +411,6 @@ html[data-sidenav-size=condensed] .account-shell-authenticated .account-content-
 }
 
 @media (max-width: 991.98px) {
-    .account-page-header {
-        display: grid;
-    }
-
     .account-definition-list div,
     .account-form--grid,
     .account-recovery-options {

@@ -88,7 +88,7 @@ return [
         ],
     ],
     'navigation' => [
-        'admin' => [
+        'shell' => [
             [
                 'context' => 'workspaces',
                 'label' => __('media.module.library_navigation_label'),

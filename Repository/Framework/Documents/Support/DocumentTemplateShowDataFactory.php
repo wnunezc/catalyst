@@ -62,10 +62,10 @@ final class DocumentTemplateShowDataFactory
      *
      * Responsibility: Builds the complete detail-page payload for one document template.
      * @param array<string, mixed> $template
-     * @param array<string, mixed> $claimContext
+     * @param array<string, mixed> $recordPresence
      * @return array<string, mixed>
      */
-    public function build(array $template, int $templateId, array $claimContext): array
+    public function build(array $template, int $templateId, array $recordPresence): array
     {
         $state = $this->previewState->consume($templateId);
         $payloadJson = $state['payload_json'] ?? json_encode(
@@ -89,7 +89,7 @@ final class DocumentTemplateShowDataFactory
                 $templateId,
                 $template
             ),
-            'claimContext' => $claimContext,
+            'recordPresence' => $recordPresence,
         ];
     }
 }

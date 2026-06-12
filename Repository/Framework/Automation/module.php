@@ -90,7 +90,7 @@ return [
         ],
     ],
     'navigation' => [
-        'admin' => [
+        'shell' => [
             [
                 'context' => 'operations',
                 'label' => __('automation.module.navigation_label'),

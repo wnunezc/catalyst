@@ -30,7 +30,7 @@ declare(strict_types=1);
 
 namespace Catalyst\Repository\Roles\Support;
 
-use Catalyst\Framework\Admin\Form\FormBuilder;
+use Catalyst\Framework\Form\FormBuilder;
 use Catalyst\Framework\Authorization\RoleRepository;
 
 /**
@@ -64,7 +64,7 @@ final class UserEnrollmentFormFactory
         return FormBuilder::make()
             ->action('/users/enroll')
             ->method('POST')
-            ->wrapperClass('row g-3 admin-enrollment-form')
+            ->wrapperClass('row g-3 surface-enrollment-form')
             ->sections([
                 'identity' => ['title' => __('roles.users.enroll.sections.identity_title'), 'description' => __('roles.users.enroll.sections.identity_description')],
                 'security' => ['title' => __('roles.users.enroll.sections.security_title'), 'description' => __('roles.users.enroll.sections.security_description')],

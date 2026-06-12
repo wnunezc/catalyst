@@ -40,7 +40,7 @@ async function openSurface(page, expect, targetPath, options = {}) {
         await expect(page.locator('body')).toContainText(options.signal);
     }
 
-    const triggerSelector = options.triggerSelector || '[data-bs-toggle="modal"], [data-action*="modal"], [data-action="confirm-demo"], [data-action="alert-demo"]';
+    const triggerSelector = options.triggerSelector || '[data-bs-toggle="modal"], [data-devtools-action*="modal"], [data-devtools-action="confirm-demo"], [data-devtools-action="alert-demo"]';
     const triggers = page.locator(triggerSelector);
     const triggerCount = await visibleCount(triggers);
 

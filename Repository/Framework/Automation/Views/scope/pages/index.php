@@ -30,7 +30,7 @@ declare(strict_types=1);
 
 return static function (array $scope): array {
     return [
-        'admin_header' => [
+        'page_header' => [
             'eyebrow' => __('automation.show.eyebrow'),
             'title' => (string) ($scope['title'] ?? __('automation.index.title')),
             'description' => __('automation.index.hero_lede'),

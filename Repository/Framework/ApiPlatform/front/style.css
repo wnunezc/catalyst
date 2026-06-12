@@ -2,7 +2,7 @@
  * Published via FrontResourceTrait to /assets/css/work/apiplatform/style.css
  */
 
-.apiplatform-admin-page .apiplatform-hero {
+.apiplatform-page .apiplatform-hero {
     background: rgba(15, 23, 42, 0.96);
     color: #eef2f8;
     border: 1px solid rgba(var(--catalyst-brand-primary-rgb), 0.12);
@@ -48,7 +48,7 @@
 }
 
 /* Compact UI pass aligned with INSPINIA table/card rhythm. */
-.apiplatform-admin-page .apiplatform-hero {
+.apiplatform-page .apiplatform-hero {
     box-shadow: 0 1px 4px rgba(130, 143, 163, 0.16);
 }
 
@@ -76,14 +76,14 @@
     font-size: 0.78rem;
 }
 
-.apiplatform-admin-page .table {
+.apiplatform-page .table {
     font-size: 0.79rem;
 }
 
 
 /* Density correction v2: readable text scale with compact spacing. */
-.apiplatform-admin-page,
-.apiplatform-admin-page .table,
+.apiplatform-page,
+.apiplatform-page .table,
 .apiplatform-token-secret {
     font-size: 0.875rem;
 }

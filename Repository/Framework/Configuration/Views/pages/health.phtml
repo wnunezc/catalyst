@@ -1,0 +1,88 @@
+<div class="surface-page surface-page-shell surface-content-shell surface-content-shell--xl configuration-health-console">
+    {{> "components._page-header" }}
+
+    <section class="surface-section-card card mb-3">
+        <div class="card-header">
+            <div>
+                <h2 class="card-title">{{ t:settings.health.endpoints.title }}</h2>
+                <p class="small text-muted mb-0">{{ t:settings.health.endpoints.description }}</p>
+            </div>
+            <div class="d-flex flex-wrap gap-2">
+                <button type="button" class="btn btn-outline-secondary btn-sm" data-catalyst-href="/configuration/application-health/live"
+                        data-catalyst-target="_blank">{{ t:settings.health.endpoints.live }}</button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" data-catalyst-href="/configuration/application-health/ready"
+                        data-catalyst-target="_blank">{{ t:settings.health.endpoints.ready }}</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="surface-section-card card mb-3">
+        <div class="card-header">
+            <div>
+                <h2 class="card-title">{{ t:settings.health.route_contract.title }}</h2>
+                <p class="small text-muted mb-0">{{ t:settings.health.route_contract.no_issues }}</p>
+            </div>
+            <span class="badge {{ routeContract.badge_class }}">{{ routeContract.badge_label }}</span>
+        </div>
+        <div class="card-body">
+            <div class="surface-panel-grid mb-3">
+                {{#each routeContract.checks}}
+                    <div class="surface-panel-tile">
+                        <span class="surface-panel-tile__eyebrow">{{ label }}</span>
+                        <div class="d-flex justify-content-between align-items-center gap-2">
+                            <span class="small text-muted">{{ checked_label }}</span>
+                            <span class="badge {{ badge_class }}">{{ badge_label }}</span>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+
+            {{#if routeContract.issues}}
+                <div class="list-group list-group-flush border rounded">
+                    {{#each routeContract.issues}}
+                        <div class="list-group-item py-2 small">
+                            <strong>{{ type_label }}:</strong>
+                            {{ message }}
+                        </div>
+                    {{/each}}
+                </div>
+            {{else}}
+                <p class="mb-0 text-muted small">{{ t:settings.health.route_contract.no_issues }}</p>
+            {{/if}}
+        </div>
+    </section>
+
+    <div class="row g-3">
+        {{#each sectionsView}}
+            <div class="col-xl-6">
+                <section class="surface-section-card card h-100">
+                    <div class="card-header">
+                        <h2 class="card-title">{{ label }}</h2>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-sm table-striped align-middle mb-0">
+                                <thead class="thead-sm text-uppercase fs-xxs">
+                                <tr>
+                                    <th>{{ t:settings.health.table.check }}</th>
+                                    <th>{{ t:settings.health.table.status }}</th>
+                                    <th>{{ t:settings.health.table.detail }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#each checks}}
+                                    <tr>
+                                        <td class="fw-semibold">{{ label }}</td>
+                                        <td><span class="badge {{ badge_class }}">{{ status_label }}</span></td>
+                                        <td class="text-muted small">{{ detail }}</td>
+                                    </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        {{/each}}
+    </div>
+</div>

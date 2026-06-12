@@ -30,7 +30,7 @@ declare(strict_types=1);
 
 namespace Catalyst\Repository\Documents\Support;
 
-use Catalyst\Framework\Admin\Grid\DataGrid;
+use Catalyst\Framework\DataGrid\DataGrid;
 use Catalyst\Framework\Document\DocumentTemplateManager;
 use Catalyst\Framework\Document\DocumentTemplateRepository;
 

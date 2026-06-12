@@ -1,5 +1,5 @@
 /* ─── Catalyst Status Bar ───────────────────────────────────────────────── */
-/* Single framework component used by public, auth/error and admin shells. */
+/* Single framework component used by public, auth, error and application shells. */
 
 body {
     padding-bottom: 2rem;

@@ -369,7 +369,7 @@ final class RouteContractInspector
                 'has_views' => (bool)($module['views']['has_views'] ?? false),
                 'runtime_enabled' => (bool)($module['runtime_enabled'] ?? true),
                 'route_guards' => array_values((array) ($module['route_guards'] ?? [])),
-                'navigation_admin' => array_values((array) ($module['navigation']['admin'] ?? [])),
+                'navigation_shell' => array_values((array) ($module['navigation']['shell'] ?? [])),
                 'navigation_public' => array_values((array) ($module['navigation']['public'] ?? [])),
             ];
         }, $modules);

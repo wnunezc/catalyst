@@ -70,6 +70,20 @@ class DkimGenerator
     {
         $this->domain     = strtolower(trim($domain));
         $this->selector   = strtolower(trim($selector));
+        $connectionId     = strtolower(trim($connectionId));
+
+        if (filter_var($this->domain, FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME) === false) {
+            throw new RuntimeException('DkimGenerator: invalid DKIM domain');
+        }
+
+        if (preg_match('/^[a-z0-9](?:[a-z0-9_-]{0,61}[a-z0-9])?$/', $this->selector) !== 1) {
+            throw new RuntimeException('DkimGenerator: invalid DKIM selector');
+        }
+
+        if (preg_match('/^[a-z0-9](?:[a-z0-9_-]{0,62}[a-z0-9])?$/', $connectionId) !== 1) {
+            throw new RuntimeException('DkimGenerator: invalid mail connection identifier');
+        }
+
         $this->storageDir = $this->resolveStorageDir($this->domain, $connectionId);
 
         $this->ensureDirectory($this->storageDir);

@@ -85,7 +85,7 @@ return [
         ],
     ],
     'navigation' => [
-        'admin' => [
+        'shell' => [
             [
                 'context' => 'workspaces',
                 'label' => __('documents.module.navigation_label'),

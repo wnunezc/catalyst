@@ -33,7 +33,7 @@ test.describe('@modals @devtools-modals DevTools modal surface', () => {
             await runOrSkipForEnvironment(test, async () => {
                 await openDevTools(page);
 
-                const trigger = page.locator(`[data-action="${action}"]`);
+                const trigger = page.locator(`[data-devtools-action="${action}"]`);
                 await expect(trigger).toBeVisible();
                 await openModalFromTrigger(page, expect, trigger);
                 await closeActiveModal(page, expect);
@@ -47,7 +47,7 @@ test.describe('@modals @devtools-modals DevTools modal surface', () => {
             await runOrSkipForEnvironment(test, async () => {
                 await openDevTools(page);
 
-                const trigger = page.locator(`[data-action="load-modal"][data-url="${path}"]`);
+                const trigger = page.locator(`[data-devtools-action="load-modal"][data-url="${path}"]`);
                 await expect(trigger).toBeVisible();
                 const responsePromise = page.waitForResponse((response) =>
                     response.url().includes(path) && response.status() === 200
@@ -67,7 +67,7 @@ test.describe('@modals @devtools-modals DevTools modal surface', () => {
             await openDevTools(page);
 
             const path = '/test-features/api/modal-trigger';
-            const trigger = page.locator(`[data-action="api-call"][data-url="${path}"]`);
+            const trigger = page.locator(`[data-devtools-action="api-call"][data-url="${path}"]`);
             await expect(trigger).toBeVisible();
             const responsePromise = page.waitForResponse((response) =>
                 response.url().includes(path) && response.status() === 200
@@ -91,7 +91,7 @@ test.describe('@modals @devtools-modals DevTools modal surface', () => {
                 await route.continue();
             });
 
-            const trigger = page.locator(`[data-action="partial-refresh"][data-url="${path}"]`);
+            const trigger = page.locator(`[data-devtools-action="partial-refresh"][data-url="${path}"]`);
             await expect(trigger).toBeVisible();
             const responsePromise = page.waitForResponse((response) =>
                 response.url().includes(path) && response.status() === 200

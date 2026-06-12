@@ -63,7 +63,9 @@ Start complex modules with:
 php public/cli.php make:module {Module} --space=App --surface=administration --permission=manage-{module} --preset=complex
 ```
 
-Use `make:crud` only when the module is primarily an administrative CRUD surface.
+Use `make:crud` when the module is primarily a resource CRUD surface. Select
+`workspace` or `administration` explicitly and keep domain workflows outside
+the generated controller.
 
 ## Happy Path Template
 

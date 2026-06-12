@@ -58,7 +58,7 @@ return static function (array $scope): array {
     }
 
     return [
-        'admin_header' => [
+        'page_header' => [
             'eyebrow' => __('apiplatform.index.eyebrow'),
             'title' => (string) ($scope['title'] ?? __('apiplatform.index.title')),
             'description' => __('apiplatform.index.description'),

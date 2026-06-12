@@ -53,10 +53,58 @@ class TestFeaturesController extends Controller
 
         return $this->view('test-features', [
             'title' => __('devtools.harness.title'),
+            'document_title' => __('devtools.harness.title') . ' - Catalyst',
             'pageTitle' => __('devtools.harness.page_title'),
+            'page_header' => [
+                'eyebrow' => __('devtools.harness.eyebrow'),
+                'title' => __('devtools.harness.title'),
+                'description' => __('devtools.harness.description'),
+                'actions' => [
+                    [
+                        'label' => __('devtools.harness.actions.ui_showcase'),
+                        'href' => '/test-features/ui-showcase',
+                        'icon' => 'ti ti-layout-dashboard',
+                        'class' => 'btn btn-primary',
+                    ],
+                    [
+                        'label' => __('devtools.harness.actions.module_designer'),
+                        'href' => '/workspaces/module-designer',
+                        'icon' => 'ti ti-package-import',
+                    ],
+                    [
+                        'label' => __('devtools.harness.actions.operations'),
+                        'href' => '/operations',
+                        'icon' => 'ti ti-adjustments-horizontal',
+                    ],
+                    [
+                        'label' => __('devtools.harness.actions.clear_flash'),
+                        'href' => '/test-features/flash/clear',
+                        'icon' => 'ti ti-trash',
+                        'class' => 'btn btn-outline-danger',
+                    ],
+                ],
+            ],
             'authCheck' => $auth->check(),
             'authUser' => $auth->user(),
             'operationsUrl' => '/operations',
-        ], 200, 'admin');
+            'body_class' => 'catalyst-shell-body',
+            'surface_context' => 'devtools',
+            'surface_page' => 'test-features',
+            'show_topbar' => true,
+            'show_sidebar' => true,
+            'show_status_bar' => true,
+            'show_theme_customizer' => true,
+            'shell_class' => 'wrapper',
+            'topbar_class' => 'app-topbar',
+            'sidebar_class' => 'sidenav-menu',
+            'sidebar_label' => 'DevTools navigation',
+            'content_class' => 'content-page',
+            'status_bar_class' => 'catalyst-status-bar',
+            'status_bar_label' => 'Catalyst Test Features',
+            'status_bar_context' => 'devtools',
+            'brand_home_href' => '/test-features',
+            'account_href' => '/dashboard',
+            'account_label' => 'Account',
+        ]);
     }
 }

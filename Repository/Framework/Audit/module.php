@@ -53,7 +53,7 @@ return [
         ],
     ],
     'navigation' => [
-        'admin' => [
+        'shell' => [
             [
                 'context' => 'operations',
                 'label' => __('audit.module.navigation_label'),

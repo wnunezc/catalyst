@@ -30,7 +30,7 @@ declare(strict_types=1);
 
 namespace Catalyst\Repository\Media\Controllers;
 
-use Catalyst\Framework\Admin\Grid\DataGrid;
+use Catalyst\Framework\DataGrid\DataGrid;
 use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
@@ -219,7 +219,7 @@ final class MediaLibraryController extends Controller
             'title' => $t('media.library.index.title'),
             'pageTitle' => $t('media.library.index.title'),
             'grid' => $gridBuilder->resolve($request),
-        ], 200, 'admin');
+        ]);
     }
 
     /**
@@ -387,8 +387,8 @@ final class MediaLibraryController extends Controller
             'pageTitle' => $title,
             'media' => $media,
             'form' => $form,
-            'claimContext' => $this->buildRecordClaimContext($claim),
-        ], 200, 'admin');
+            'recordPresence' => $this->buildRecordPresenceContext($claim),
+        ]);
     }
 
     /**

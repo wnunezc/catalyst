@@ -66,10 +66,10 @@ final class AutomationRuleShowDataFactory
      *
      * Responsibility: Builds the complete detail-page payload for one automation rule.
      * @param array<string, mixed> $rule
-     * @param array<string, mixed> $claimContext
+     * @param array<string, mixed> $recordPresence
      * @return array<string, mixed>
      */
-    public function build(array $rule, int $ruleId, array $claimContext): array
+    public function build(array $rule, int $ruleId, array $recordPresence): array
     {
         $runState = $this->manualRunState->consume($ruleId);
         $contextJson = $runState['context_json'] ?? $this->jsonField([
@@ -95,7 +95,7 @@ final class AutomationRuleShowDataFactory
             'runContextJson' => $contextJson,
             'lastRunResult' => $runState['result'] ?? null,
             'runIdempotencyKey' => $this->executionService->generateKey(),
-            'claimContext' => $claimContext,
+            'recordPresence' => $recordPresence,
         ];
     }
 

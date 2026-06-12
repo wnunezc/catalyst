@@ -1,0 +1,13 @@
+.record-presence {
+    border-inline-start-width: .25rem;
+}
+
+.record-presence__timestamps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .25rem .75rem;
+}
+
+.record-presence__timestamps > span {
+    margin-inline-start: 0 !important;
+}

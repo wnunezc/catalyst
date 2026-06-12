@@ -8,7 +8,7 @@ use Catalyst\Helpers\Security\CsrfProtection;
 return static function (array $scope): array {
     $template = is_array($scope['template'] ?? null) ? $scope['template'] : [];
     $preview = is_array($scope['preview'] ?? null) ? $scope['preview'] : null;
-    $claimContext = is_array($scope['claimContext'] ?? null) ? $scope['claimContext'] : [];
+    $recordPresence = is_array($scope['recordPresence'] ?? null) ? $scope['recordPresence'] : [];
 
     $availableTransitions = [];
     foreach ((array) ($scope['availableTransitions'] ?? []) as $transition) {
@@ -58,7 +58,7 @@ return static function (array $scope): array {
     }
 
     return [
-        'admin_header' => [
+        'page_header' => [
             'eyebrow' => __('documents.show.eyebrow'),
             'title' => (string) ($template['name'] ?? 'Document Template'),
             'description' => (string) ($template['description'] ?? ''),
@@ -85,7 +85,7 @@ return static function (array $scope): array {
             'preview_url' => '/workspaces/document-templates/' . (int) ($template['id'] ?? 0) . '/preview',
             'export_url' => '/workspaces/document-templates/' . (int) ($template['id'] ?? 0) . '/export',
         ],
-        'claim_token' => (string) ($claimContext['claim_token'] ?? ''),
+        'claim_token' => (string) ($recordPresence['claim_token'] ?? ''),
         'csrfField' => TrustedHtml::fromString(CsrfProtection::getInstance()->getTokenField()),
         'available_transitions' => $availableTransitions,
         'transitions_rows' => $transitionsRows,

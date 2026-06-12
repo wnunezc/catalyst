@@ -1,0 +1,117 @@
+<div id="catalyst-status-bar" class="catalyst-status-bar" data-status-bar-context="{{ status_bar_context }}">
+    <div class="status-bar-left">
+        <span class="status-dot" id="ws-dot" title="{{ t:ui.status_bar.ws_status }}"></span>
+        <span class="status-text" id="ws-status">{{ status_text }}</span>
+    </div>
+    <div class="status-bar-right">
+        {{#if show_theme_toggle}}
+        <button type="button"
+                class="status-bar-btn"
+                data-catalyst-theme-control="scheme"
+                {{ theme_toggle_attribute }}
+                aria-label="{{ t:ui.status_bar.toggle_theme_aria }}"
+                title="{{ t:ui.status_bar.toggle_theme }}">
+            <i class="{{ theme_toggle_icon_class }}"></i>
+        </button>
+        {{/if}}
+        {{#if show_customizer_toggle}}
+        <button type="button"
+                class="status-bar-btn"
+                data-catalyst-theme-control="customizer"
+                {{ customizer_toggle_attribute }}
+                aria-label="{{ customizer_toggle_aria_label }}"
+                title="{{ customizer_toggle_title }}">
+            <i class="{{ customizer_toggle_icon_class }}"></i>
+        </button>
+        {{/if}}
+        <div class="dropdown dropup status-account-dropdown">
+            <button type="button"
+                    class="status-bar-btn status-account-toggle"
+                    id="status-account-toggle"
+                    data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside"
+                    aria-expanded="false"
+                    aria-label="{{ account_menu_aria_label }}"
+                    title="{{ account_menu_title }}">
+                <i class="ti ti-user-circle"></i>
+            </button>
+
+            <div class="dropdown-menu dropdown-menu-end status-account-menu" aria-labelledby="status-account-toggle">
+                {{#if is_auth}}
+                <span class="dropdown-item disabled status-account-menu__item" aria-disabled="true">
+                    <i class="ti ti-id-badge-2 me-2"></i>
+                    <span>{{ account_name }}</span>
+                </span>
+                {{#if has_account_role}}
+                <span class="dropdown-item disabled status-account-menu__item status-account-menu__item--muted" aria-disabled="true">
+                    <i class="ti ti-shield-check me-2"></i>
+                    <span>{{ account_role }}</span>
+                </span>
+                {{/if}}
+
+                <div class="dropdown-divider"></div>
+
+                <form method="POST" action="/logout" class="m-0" data-catalyst="form">
+                    {{{ logout_csrf_field }}}
+                    <button type="submit" class="dropdown-item status-account-menu__item status-account-menu__item--danger">
+                        <i class="ti ti-logout me-2"></i>
+                        <span>{{ t:ui.status_bar.log_out }}</span>
+                    </button>
+                </form>
+                {{else}}
+                <a href="{{ login_href }}" class="dropdown-item status-account-menu__item">
+                    <i class="ti ti-login-2 me-2"></i>
+                    <span>{{ t:ui.status_bar.log_in }}</span>
+                </a>
+                {{#if show_registration_link}}
+                <a href="/register" class="dropdown-item status-account-menu__item">
+                    <i class="ti ti-user-plus me-2"></i>
+                    <span>{{ t:ui.status_bar.create_account }}</span>
+                </a>
+                {{/if}}
+                <a href="/verify-email" class="dropdown-item status-account-menu__item">
+                    <i class="ti ti-mail-check me-2"></i>
+                    <span>{{ t:ui.status_bar.verify_email }}</span>
+                </a>
+                <a href="/forgot-password" class="dropdown-item status-account-menu__item">
+                    <i class="ti ti-key me-2"></i>
+                    <span>{{ t:ui.status_bar.recover_password }}</span>
+                </a>
+                {{/if}}
+            </div>
+        </div>
+        {{#if show_notifications}}
+        <button class="status-bar-btn" id="notif-bell-btn" aria-label="{{ t:ui.status_bar.notifications }}" title="{{ t:ui.status_bar.notifications }}">
+            <i class="ti ti-bell"></i>
+            <span class="notif-badge{{#if notification_badge_hidden}} d-none{{/if}}" id="notif-badge">
+                {{ notification_badge_label }}
+            </span>
+        </button>
+        {{/if}}
+    </div>
+</div>
+
+<!-- Notification Panel (slides up from status bar) -->
+{{#if is_auth}}
+<div id="notif-panel" class="notif-panel" aria-hidden="true">
+    <div class="notif-panel-header">
+        <span class="notif-panel-title">
+            <i class="ti ti-bell me-2"></i>{{ t:ui.status_bar.notifications }}
+            <span class="notif-panel-count" id="notif-panel-count">
+                {{ notification_panel_count }}
+            </span>
+        </span>
+        <button class="notif-panel-action" id="notif-mark-all" title="{{ t:ui.status_bar.mark_all_read }}">
+            <i class="ti ti-checks"></i> {{ t:ui.status_bar.mark_all_read }}
+        </button>
+    </div>
+    <div class="notif-list" id="notif-list">
+        <div class="notif-empty" id="notif-empty">
+            <i class="ti ti-bell-off"></i>
+            <p>{{ t:ui.status_bar.no_notifications }}</p>
+        </div>
+    </div>
+</div>
+{{/if}}
+
+<script type="application/json" id="catalyst-status-bar-config" nonce="{{ csp_nonce }}">{{{ ws_config_json }}}</script>

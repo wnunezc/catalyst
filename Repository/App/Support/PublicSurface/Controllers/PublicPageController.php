@@ -34,6 +34,7 @@ use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\RedirectResponse;
 use Catalyst\Framework\Http\Response;
 use Catalyst\Framework\Navigation\NavigationRegistry;
+use Catalyst\Framework\View\AssetUrl;
 
 /**
  * Base controller for public demo surface pages.
@@ -57,8 +58,7 @@ abstract class PublicPageController extends Controller
 
         if ($routeKey !== '') {
             $styles[] = $this->publicAsset(
-                '/assets/css/work/' . rawurlencode($routeKey) . '/style.css',
-                'public/assets/css/work/' . $routeKey . '/style.css'
+                '/assets/css/work/' . rawurlencode($routeKey) . '/style.css'
             );
         }
 
@@ -84,7 +84,17 @@ abstract class PublicPageController extends Controller
             'status_bar_customizer_toggle_title' => __('ui.status_bar.theme_customizer'),
             'status_bar_context' => 'public',
             'suppress_work_assets' => true,
-        ], 200, 'public');
+            'is_public_surface' => true,
+            'show_topbar' => true,
+            'show_sidebar' => false,
+            'show_status_bar' => true,
+            'show_theme_customizer' => true,
+            'show_auth_brand_panel' => false,
+            'body_class' => 'catalyst-public-shell-body',
+            'shell_class' => 'catalyst-public-shell',
+            'content_class' => 'catalyst-public-shell__main',
+            'surface_context' => 'public',
+        ]);
     }
 
     /**
@@ -102,11 +112,8 @@ abstract class PublicPageController extends Controller
      *
      * Responsibility: Builds a cache-busted public asset URL from a repository-relative file path.
      */
-    private function publicAsset(string $href, string $relativePath): string
+    private function publicAsset(string $href): string
     {
-        $filesystemPath = PD . DS . str_replace('/', DS, $relativePath);
-        $version = (string) (@filemtime($filesystemPath) ?: time());
-
-        return $href . '?v=' . rawurlencode($version);
+        return AssetUrl::versioned($href);
     }
 }

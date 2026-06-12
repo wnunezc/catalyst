@@ -1,4 +1,4 @@
-.media-admin-page .media-hero {
+.media-page .media-hero {
     background: rgba(15, 23, 42, 0.04);
     border-left: 4px solid var(--bs-primary);
     border-radius: 1.25rem;
@@ -65,7 +65,7 @@
 }
 
 /* Compact UI pass. */
-.media-admin-page .media-hero {
+.media-page .media-hero {
     border-radius: 0.42rem;
 }
 
@@ -91,7 +91,7 @@
 
 
 /* Density correction v2: readable text scale with compact spacing. */
-.media-admin-page {
+.media-page {
     font-size: 0.875rem;
 }
 

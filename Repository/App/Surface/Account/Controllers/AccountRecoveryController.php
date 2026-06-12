@@ -33,7 +33,7 @@ namespace App\Surface\Account\Controllers;
 use App\Surface\Account\Requests\MfaRecoveryRequest;
 use App\Surface\Account\Requests\SupportRecoveryRequest;
 use App\Surface\Account\Services\AccountRecoveryService;
-use App\Surface\Account\Support\AccountShellViewModel;
+use App\Surface\Account\Support\AccountSurfaceViewModel;
 use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
@@ -177,11 +177,11 @@ final class AccountRecoveryController extends Controller
      */
     private function guest(string $view, string $title, array $data = []): Response
     {
-        $shell = new AccountShellViewModel();
+        $shell = new AccountSurfaceViewModel();
 
         return $this->view('account.' . $view, $shell->guest(array_merge([
             'title' => $title,
             'pageTitle' => $title,
-        ], $data)), 200, 'account');
+        ], $data)));
     }
 }

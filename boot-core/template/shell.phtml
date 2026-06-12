@@ -1,0 +1,71 @@
+<div class="{{ shell_class }}">
+    {{#if show_auth_brand_panel}}
+    <div class="auth-layout-shell__content">
+    {{/if}}
+
+    {{#if show_auth_brand_panel}}
+    <aside class="auth-brand-panel" aria-label="{{ brand_name }}">
+        <div class="auth-brand-panel__header">
+            <span class="auth-brand-panel__mark"><span class="auth-brand-panel__monogram">C</span></span>
+            <div class="auth-brand-panel__copy">
+                <div class="auth-brand-panel__eyebrow">Administration console</div>
+                <div class="auth-brand-panel__name">{{ brand_name }}</div>
+                {{#if has_brand_tagline}}<div class="auth-brand-panel__tagline">{{ brand_tagline }}</div>{{/if}}
+            </div>
+        </div>
+    </aside>
+    {{/if}}
+
+    {{#if show_topbar}}
+    {{> "./_topbar" }}
+    {{/if}}
+
+    {{#if show_sidebar}}
+    {{> "./_sidebar" }}
+    {{/if}}
+
+    {{> "./_content" }}
+
+    {{#if show_auth_brand_panel}}
+    </div>
+    {{/if}}
+</div>
+
+{{#if show_theme_customizer}}
+<div class="offcanvas offcanvas-end overflow-hidden catalyst-theme-panel" tabindex="-1" id="theme-settings-offcanvas" aria-hidden="true">
+    <div class="d-flex justify-content-between gap-2 p-3 catalyst-theme-panel__header">
+        <div>
+            <h5 class="mb-1 fw-bold text-white text-uppercase">Theme Customizer</h5>
+            <p class="text-white text-opacity-75 fst-italic fw-medium mb-0">Theme, scheme, and color controls for Catalyst.</p>
+        </div>
+        <button type="button" class="btn btn-sm bg-white bg-opacity-25 text-white rounded-circle btn-icon" data-theme-customizer-close aria-label="Close customizer">
+            <i class="ti ti-x fs-lg"></i>
+        </button>
+    </div>
+    <div class="offcanvas-body theme-customizer-bar">
+        <div class="mb-4">
+            <h5 class="mb-3 fw-bold">Color Scheme</h5>
+            <div class="d-grid gap-2">
+                <label class="form-check"><input class="form-check-input" type="radio" name="data-bs-theme" value="light"> Light</label>
+                <label class="form-check"><input class="form-check-input" type="radio" name="data-bs-theme" value="dark"> Dark</label>
+                <label class="form-check"><input class="form-check-input" type="radio" name="data-bs-theme" value="system"> System</label>
+            </div>
+        </div>
+        <div>
+            <h5 class="mb-3 fw-bold">Sidebar Color</h5>
+            <div class="d-grid gap-2">
+                <label class="form-check"><input class="form-check-input" type="radio" name="data-menu-color" value="dark"> Dark</label>
+                <label class="form-check"><input class="form-check-input" type="radio" name="data-menu-color" value="light"> Light</label>
+                <label class="form-check"><input class="form-check-input" type="radio" name="data-menu-color" value="gray"> Gray</label>
+            </div>
+        </div>
+    </div>
+</div>
+{{/if}}
+
+<div id="catalyst-toaster-container" class="toast-container position-fixed top-0 end-0 p-3"></div>
+<div id="catalyst-modal-container"></div>
+
+{{#if show_status_bar}}
+{{> "./_status-bar" }}
+{{/if}}

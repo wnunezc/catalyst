@@ -30,7 +30,7 @@ declare(strict_types=1);
 
 namespace Catalyst\Repository\Media\Support;
 
-use Catalyst\Framework\Admin\Form\FormBuilder;
+use Catalyst\Framework\Form\FormBuilder;
 
 /**
  * Builds the administrative metadata field form schema.

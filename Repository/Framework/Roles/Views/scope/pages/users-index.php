@@ -59,7 +59,7 @@ return static function (array $scope): array {
     }
 
     return [
-        'admin_header' => [
+        'page_header' => [
             'eyebrow' => __('roles.users.eyebrow'),
             'title' => (string) ($scope['title'] ?? __('roles.users.title')),
             'description' => __('roles.users.hero_lede'),

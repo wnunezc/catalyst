@@ -43,7 +43,7 @@ final class OrganizationHierarchyController extends Controller
             'units' => $this->organizations->units(),
             'scopes' => $this->organizations->scopes(),
             'levels' => $this->organizations->levels(),
-        ], 200, 'admin');
+        ]);
     }
 
     /**

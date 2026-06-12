@@ -1,11 +1,11 @@
 # Runtime Module Catalog
 
 > Auto-generated from `ModuleRegistry`, `PermissionRegistry`, `NavigationRegistry`, `ModuleInspector`, `ModuleHarnessInspector` and `ModuleLinter`.
-> Last generated: 2026-06-04 06:52:08
+> Last generated: 2026-06-12 00:50:05
 
 ## Runtime Summary
 
-- Modules: 18
+- Modules: 17
 - Structural lint: OK
 
 | Key | Surface | HTML | JSON | Mutations | Assets | Permissions | Settings | Seeds |
@@ -20,14 +20,13 @@
 | `framework.auth` | `auth-flow` | 10 | 0 | 9 | `ok` | `n/a` | `n/a` | `n/a` |
 | `framework.automation` | `authenticated` | 4 | 2 | 7 | `ok` | `manage-automation-rules` | `n/a` | `n/a` |
 | `framework.catalogs` | `authenticated` | 6 | 0 | 8 | `ok` | `manage-catalogs` | `n/a` | `n/a` |
-| `framework.demoui` | `authenticated` | 40 | 0 | 0 | `ok` | `n/a` | `n/a` | `n/a` |
-| `framework.devtools` | `devtools` | 26 | 7 | 12 | `ok` | `access-devtools` | `n/a` | `n/a` |
+| `framework.configuration` | `workspace` | 7 | 0 | 22 | `ok` | `manage-platform-configuration` | `n/a` | `n/a` |
+| `framework.demoui` | `devtools` | 40 | 0 | 0 | `ok` | `n/a` | `n/a` | `n/a` |
+| `framework.devtools` | `devtools` | 25 | 7 | 12 | `ok` | `access-devtools` | `n/a` | `n/a` |
 | `framework.documents` | `authenticated` | 4 | 2 | 9 | `ok` | `manage-document-templates` | `n/a` | `n/a` |
 | `framework.media` | `authenticated` | 6 | 0 | 7 | `ok` | `manage-media-library`, `manage-media-metadata` | `n/a` | `n/a` |
 | `framework.notification` | `authenticated-api` | 0 | 3 | 3 | `n/a` | `n/a` | `n/a` | `n/a` |
-| `framework.operations` | `authenticated` | 10 | 0 | 11 | `ok` | `manage-platform-operations` | `n/a` | `n/a` |
 | `framework.roles` | `administration` | 11 | 0 | 16 | `ok` | `manage-roles`, `manage-users` | `n/a` | `n/a` |
-| `framework.settings` | `workspace` | 4 | 0 | 17 | `ok` | `n/a` | `n/a` | `n/a` |
 
 ## Module Detail
 
@@ -441,13 +440,74 @@ _No JSON routes declared for harness._
 | `/workspaces/catalogs/{id}/transition` | `POST` | `401` | `403` | `200` | `n/a` | `manage-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
 | `/workspaces/catalogs/{id}/versions/{versionId}/restore` | `POST` | `401` | `403` | `200` | `n/a` | `manage-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
 
+### framework.configuration
+
+- Scope: `Framework`
+- Surface: `workspace`
+- Runtime enabled: `yes`
+- Slug: `configuration`
+- Description: Setup, configuration and health surfaces.
+- Plugin: `framework.core`
+- Views: `yes`
+- Assets: `ok`
+- Settings: `n/a`
+- Permissions: `manage-platform-configuration`
+- Seeds: `n/a`
+- Feature flags: `n/a`
+- Module flag key: `module.framework.configuration`
+- Representative HTML: `/configuration/environment-setup`
+- Representative JSON: `n/a`
+
+#### HTML routes
+
+| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+|---|---|---|---|---|---|---|---|
+| `/configuration/application-health` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-platform-configuration` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/configuration/application-health/live` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/configuration/application-health/ready` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/configuration/environment-setup` | `GET,HEAD` | `login` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
+| `/configuration/feature-flags` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-platform-configuration` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/configuration/platform-appearance` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-platform-configuration` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/configuration/plugins` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-platform-configuration` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+
+#### JSON routes
+
+_No JSON routes declared for harness._
+
+#### Mutations
+
+| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+|---|---|---|---|---|---|---|---|
+| `/configuration/environment-setup/admin` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
+| `/configuration/environment-setup/app` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
+| `/configuration/environment-setup/cache` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
+| `/configuration/environment-setup/complete` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
+| `/configuration/environment-setup/cors` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
+| `/configuration/environment-setup/db` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
+| `/configuration/environment-setup/devtools` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
+| `/configuration/environment-setup/dkim/generate` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
+| `/configuration/environment-setup/features` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
+| `/configuration/environment-setup/ftp` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
+| `/configuration/environment-setup/ftp/pretest` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
+| `/configuration/environment-setup/logging` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
+| `/configuration/environment-setup/mail` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
+| `/configuration/environment-setup/reset` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
+| `/configuration/environment-setup/security` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
+| `/configuration/environment-setup/session` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
+| `/configuration/environment-setup/websocket` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
+| `/configuration/feature-flags/defaults/{flagKey}` | `POST` | `401` | `403` | `200` | `n/a` | `manage-platform-configuration` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/configuration/feature-flags/overrides` | `POST` | `401` | `403` | `200` | `n/a` | `manage-platform-configuration` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/configuration/feature-flags/overrides/{id}/delete` | `POST` | `401` | `403` | `200` | `n/a` | `manage-platform-configuration` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/configuration/platform-appearance` | `POST` | `401` | `403` | `200` | `n/a` | `manage-platform-configuration` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/configuration/plugins/{pluginKey}/toggle` | `POST` | `401` | `403` | `200` | `n/a` | `manage-platform-configuration` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+
 ### framework.demoui
 
 - Scope: `Framework`
-- Surface: `authenticated`
+- Surface: `devtools`
 - Runtime enabled: `yes`
 - Slug: `demoui`
-- Description: Authenticated frozen demo baseline surface for the INSPINIA UI reference work.
+- Description: Public frozen demo baseline surface for the INSPINIA UI reference work.
 - Plugin: `standalone`
 - Views: `yes`
 - Assets: `ok`
@@ -463,46 +523,46 @@ _No JSON routes declared for harness._
 
 | Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
 |---|---|---|---|---|---|---|---|
-| `/demo-ui` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/accordions` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/alerts` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/badges` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/basic-elements` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/breadcrumb` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/buttons` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/cards` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/carousel` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/charts/{family}/{page}` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/collapse` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/colors` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/dropdowns` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/file-uploads` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/grid-options` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/images` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/links` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/list-group` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/modals` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/notifications` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/offcanvas` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/pagination` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/pickers` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/placeholders` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/popovers` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/progress` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/range-slider` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/scrollspy` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/select` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/spinners` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/tables/datatables/{page}` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/tables/{page}` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/tabs` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/text-editors` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/tooltips` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/typography` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/utilities` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/validation` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/videos` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/demo-ui/wizard` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
+| `/demo-ui` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/accordions` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/alerts` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/badges` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/basic-elements` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/breadcrumb` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/buttons` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/cards` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/carousel` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/charts/{family}/{page}` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/collapse` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/colors` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/dropdowns` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/file-uploads` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/grid-options` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/images` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/links` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/list-group` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/modals` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/notifications` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/offcanvas` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/pagination` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/pickers` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/placeholders` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/popovers` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/progress` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/range-slider` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/scrollspy` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/select` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/spinners` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/tables/datatables/{page}` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/tables/{page}` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/tabs` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/text-editors` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/tooltips` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/typography` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/utilities` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/validation` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/videos` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/demo-ui/wizard` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
 
 #### JSON routes
 
@@ -527,7 +587,7 @@ _No mutation routes declared for harness._
 - Seeds: `n/a`
 - Feature flags: `project_debug`
 - Module flag key: `module.framework.devtools`
-- Representative HTML: `/test-layout`
+- Representative HTML: `/test-features`
 - Representative JSON: `/test-features/api/toaster-success`
 
 #### HTML routes
@@ -558,7 +618,6 @@ _No mutation routes declared for harness._
 | `/test-features/route-cache` | `GET,HEAD` | `login` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
 | `/test-features/ui-showcase` | `GET,HEAD` | `login` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
 | `/test-features/validation-error` | `GET,HEAD` | `login` | `403` | `422` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
-| `/test-layout` | `GET,HEAD` | `login` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
 | `/uml` | `GET,HEAD` | `login` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
 
 #### JSON routes
@@ -721,59 +780,6 @@ _No HTML routes declared for harness._
 | `/api/notifications/{id}/read` | `POST` | `401` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
 | `/api/presence/{resourceKey}/{recordId}/heartbeat` | `POST` | `401` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
 
-### framework.operations
-
-- Scope: `Framework`
-- Surface: `authenticated`
-- Runtime enabled: `yes`
-- Slug: `operations`
-- Description: Platform operations console for feature flags, plugins, deployment, localization, appearance and tenancy.
-- Plugin: `framework.core`
-- Views: `yes`
-- Assets: `ok`
-- Settings: `n/a`
-- Permissions: `manage-platform-operations`
-- Seeds: `n/a`
-- Feature flags: `module.framework.operations`
-- Module flag key: `module.framework.operations`
-- Representative HTML: `/operations`
-- Representative JSON: `n/a`
-
-#### HTML routes
-
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
-|---|---|---|---|---|---|---|---|
-| `/configuration/feature-flags` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-platform-operations` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/configuration/platform-appearance` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-platform-operations` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/configuration/plugins` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-platform-operations` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/operations` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-platform-operations` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/operations/deployments` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-platform-operations` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/operations/tenancy` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-platform-operations` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/locale-tools` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-platform-operations` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/module-designer` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-platform-operations` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/module-designer/generate` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-platform-operations` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/module-designer/preview` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-platform-operations` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-
-#### JSON routes
-
-_No JSON routes declared for harness._
-
-#### Mutations
-
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
-|---|---|---|---|---|---|---|---|
-| `/configuration/feature-flags/defaults/{flagKey}` | `POST` | `401` | `403` | `200` | `n/a` | `manage-platform-operations` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/configuration/feature-flags/overrides` | `POST` | `401` | `403` | `200` | `n/a` | `manage-platform-operations` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/configuration/feature-flags/overrides/{id}/delete` | `POST` | `401` | `403` | `200` | `n/a` | `manage-platform-operations` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/configuration/platform-appearance` | `POST` | `401` | `403` | `200` | `n/a` | `manage-platform-operations` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/configuration/plugins/{pluginKey}/toggle` | `POST` | `401` | `403` | `200` | `n/a` | `manage-platform-operations` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/operations/deployments/runs` | `POST` | `401` | `403` | `200` | `n/a` | `manage-platform-operations` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/locale-tools/create-locale` | `POST` | `401` | `403` | `200` | `n/a` | `manage-platform-operations` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/locale-tools/settings` | `POST` | `401` | `403` | `200` | `n/a` | `manage-platform-operations` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/locale-tools/sync-locale` | `POST` | `401` | `403` | `200` | `n/a` | `manage-platform-operations` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/module-designer/generate` | `POST` | `401` | `403` | `200` | `n/a` | `manage-platform-operations` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/module-designer/preview` | `POST` | `401` | `403` | `200` | `n/a` | `manage-platform-operations` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-
 ### framework.roles
 
 - Scope: `Framework`
@@ -832,57 +838,4 @@ _No JSON routes declared for harness._
 | `/users/roles/{id}/permissions` | `POST` | `401` | `403` | `200` | `n/a` | `manage-roles` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
 | `/users/{userId}/roles/{roleId}` | `POST` | `401` | `403` | `200` | `n/a` | `manage-users` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
 | `/users/{userId}/roles/{roleId}/remove` | `POST` | `401` | `403` | `200` | `n/a` | `manage-users` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-
-### framework.settings
-
-- Scope: `Framework`
-- Surface: `workspace`
-- Runtime enabled: `yes`
-- Slug: `settings`
-- Description: Setup, configuration and health surfaces.
-- Plugin: `framework.core`
-- Views: `yes`
-- Assets: `ok`
-- Settings: `n/a`
-- Permissions: `n/a`
-- Seeds: `n/a`
-- Feature flags: `n/a`
-- Module flag key: `module.framework.settings`
-- Representative HTML: `/configuration/environment-setup`
-- Representative JSON: `n/a`
-
-#### HTML routes
-
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
-|---|---|---|---|---|---|---|---|
-| `/configuration/application-health` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/configuration/application-health/live` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
-| `/configuration/application-health/ready` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
-| `/configuration/environment-setup` | `GET,HEAD` | `login` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
-
-#### JSON routes
-
-_No JSON routes declared for harness._
-
-#### Mutations
-
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
-|---|---|---|---|---|---|---|---|
-| `/configuration/environment-setup/admin` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
-| `/configuration/environment-setup/app` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
-| `/configuration/environment-setup/cache` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
-| `/configuration/environment-setup/complete` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
-| `/configuration/environment-setup/cors` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
-| `/configuration/environment-setup/db` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
-| `/configuration/environment-setup/devtools` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
-| `/configuration/environment-setup/dkim/generate` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
-| `/configuration/environment-setup/features` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
-| `/configuration/environment-setup/ftp` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
-| `/configuration/environment-setup/ftp/pretest` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
-| `/configuration/environment-setup/logging` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
-| `/configuration/environment-setup/mail` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
-| `/configuration/environment-setup/reset` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
-| `/configuration/environment-setup/security` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
-| `/configuration/environment-setup/session` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
-| `/configuration/environment-setup/websocket` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
 

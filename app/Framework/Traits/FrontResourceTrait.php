@@ -89,9 +89,9 @@ trait FrontResourceTrait
     }
 
     /**
-     * Copy front/script.js and front/style.css to their public destinations if the source filesize differs from the currently published file. Also shares the resolved slug as $moduleSlug with the View layer so that _catalyst-init.phtml can conditionally load the published assets.
+     * Copies module assets to their public destinations and shares the slug with the canonical document scope.
      *
-     * Responsibility: Copy front/script.js and front/style.css to their public destinations if the source filesize differs from the currently published file. Also shares the resolved slug as $moduleSlug with the View layer so that _catalyst-init.phtml can conditionally load the published assets.
+     * Responsibility: Publishes changed front assets and enables DocumentScope to append their CSS and JavaScript work links.
      * @return void
      */
     protected function deployFrontAssets(): void

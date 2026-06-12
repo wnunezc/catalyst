@@ -59,7 +59,7 @@ This file is regenerated from current PHP docblocks and the runtime inventory sc
 | Method | Visibility | Summary | Responsibility |
 |---|---|---|---|
 | `resolveSlug()` | `protected` | Derive a lowercase slug from the module segment of the class namespace. Namespace convention: …\{Module}\Controllers\{ClassName} The segment immediately before "Controllers" is used as the slug. Examples: Catalyst\Repository\DevTools\Controllers\Foo → "devtools" App\Invoices\Controllers\Bar → "invoices" Falls back to the lowercased class basename when the convention is not met. | Derive a lowercase slug from the module segment of the class namespace. Namespace convention: …\{Module}\Controllers\{ClassName} The segment immediately before "Controllers" is used as the slug. Examples: Catalyst\Repository\DevTools\Controllers\Foo → "devtools" App\Invoices\Controllers\Bar → "invoices" Falls back to the lowercased class basename when the convention is not met. |
-| `deployFrontAssets()` | `protected` | Copy front/script.js and front/style.css to their public destinations if the source filesize differs from the currently published file. Also shares the resolved slug as $moduleSlug with the View layer so that _catalyst-init.phtml can conditionally load the published assets. | Copy front/script.js and front/style.css to their public destinations if the source filesize differs from the currently published file. Also shares the resolved slug as $moduleSlug with the View layer so that _catalyst-init.phtml can conditionally load the published assets. |
+| `deployFrontAssets()` | `protected` | Copies module assets to their public destinations and shares the slug with the canonical document scope. | Publishes changed front assets and enables DocumentScope to append their CSS and JavaScript work links. |
 
 ### `Catalyst\Framework\Traits\HandlesFormEventsTrait`
 
@@ -146,7 +146,7 @@ This file is regenerated from current PHP docblocks and the runtime inventory sc
 | `acquireRecordClaim()` | `protected` | Acquires a claim for a resource record. | Acquires a claim for a resource record. |
 | `assertRecordClaimAvailable()` | `protected` | Verifies that a record claim permits the requested mutation. | Verifies that a record claim permits the requested mutation. |
 | `releaseRecordClaim()` | `protected` | Releases a record claim after a mutation. | Releases a record claim after a mutation. |
-| `buildRecordClaimContext()` | `protected` | Normalizes a record claim for view consumption. | Normalizes a record claim for view consumption. |
+| `buildRecordPresenceContext()` | `protected` | Normalizes a record claim for RecordPresence consumption. | Normalizes a record claim for RecordPresence consumption. |
 | `concurrencyHiddenFields()` | `protected` | Builds hidden form fields required for concurrency checks. | Builds hidden form fields required for concurrency checks. |
 | `rememberConcurrencyConflict()` | `protected` | Stores a concurrency conflict as a validation error. | Stores a concurrency conflict as a validation error. |
 

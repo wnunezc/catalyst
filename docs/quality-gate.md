@@ -12,7 +12,7 @@ Define the local pre-commit/pre-push quality check for Catalyst.
 | Route contract | `Catalyst\Framework\Cli\Commands\RouteLintCommand` |
 | Structural contract | `Catalyst\Framework\Cli\Commands\InspectLintCommand` |
 | Local config contract | `Catalyst\Framework\Cli\Commands\ConfigContractSmokeCommand` |
-| Admin navigation projection | `Catalyst\Framework\Cli\Commands\AdminNavigationSmokeCommand` |
+| Shell navigation projection | `Catalyst\Framework\Cli\Commands\ShellNavigationSmokeCommand` |
 | Security scan | `Catalyst\Framework\Cli\Commands\SecurityCheckCommand` |
 | Status report | `Catalyst\Framework\Cli\Commands\StatusCommand` |
 | Docblock responsibility review | Maintainer release review |

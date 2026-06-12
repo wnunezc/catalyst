@@ -19,7 +19,7 @@ Route readers to the current module model and generated module catalog.
 
 ## Current Behavior
 
-The generated runtime module catalog currently reports 18 modules with structural lint OK. It records surfaces, representative routes, permissions, assets, settings, feature flags and route guard behavior. Module docs should treat that generated catalog as live truth.
+The generated runtime module catalog currently reports 17 modules with structural lint OK. It records surfaces, representative routes, permissions, assets, settings, feature flags and route guard behavior. Module docs should treat that generated catalog as live truth.
 
 Module code is split between `Repository/App/Surface/*` for app surfaces and `Repository/Framework/*` for framework-owned modules. Core framework primitives remain under `app/Framework/*`.
 

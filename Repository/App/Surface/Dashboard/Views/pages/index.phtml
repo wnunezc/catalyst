@@ -1,11 +1,5 @@
 <div class="account-page" data-account-page="dashboard">
-    <div class="account-page-header">
-        <div>
-            <span class="account-eyebrow">{{ t:dashboard.index.eyebrow }}</span>
-            <h1>{{ t:dashboard.index.title }}</h1>
-            <p>{{ t:dashboard.index.lead }}</p>
-        </div>
-    </div>
+    {{> "components._page-header" }}
 
     <section class="row g-3 account-metric-grid" aria-label="{{ t:dashboard.index.security_summary }}">
         {{#each account_page.metrics}}

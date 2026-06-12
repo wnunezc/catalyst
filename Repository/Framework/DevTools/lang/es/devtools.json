@@ -755,7 +755,7 @@
                 "release_posture": "Postura de release"
             },
             "values": {
-                "display_name": "Catalyst Admin Shell",
+                "display_name": "Catalyst Shell",
                 "notes": "Base visual compacta para Catalyst: shell útil, filtros primero, listados densos y placeholders honestos."
             },
             "options": {

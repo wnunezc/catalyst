@@ -1,0 +1,108 @@
+{{#if is_public_surface}}
+<nav class="catalyst-public-nav" aria-label="Public routes">
+    <div class="container-fluid catalyst-public-nav__shell">
+        <a href="/" class="catalyst-public-brand" aria-label="{{ brand_name }}">
+            <span class="catalyst-public-brand__copy">
+                <span class="catalyst-public-brand__name">{{ brand_name }}</span>
+                {{#if has_brand_tagline}}<span class="catalyst-public-brand__tagline">{{ brand_tagline }}</span>{{/if}}
+            </span>
+        </a>
+        <div class="catalyst-public-nav__actions">
+            {{#each public_navigation_items}}
+            <a href="{{ href }}" class="{{ link_class }}"{{#if is_active}} aria-current="page"{{/if}}>{{ label }}</a>
+            {{/each}}
+        </div>
+    </div>
+</nav>
+{{else}}
+<header class="{{ topbar_class }}">
+    <div class="container-fluid topbar-menu">
+        <div class="d-flex align-items-center gap-2">
+            <div class="logo-topbar">
+                <a href="{{ brand_home_href }}" class="logo-light">
+                    <span class="logo-lg"><img src="/assets/vendor/inspinia/images/logo.png" alt="{{ brand_name }}"></span>
+                    <span class="logo-sm"><img src="/assets/vendor/inspinia/images/logo-sm.png" alt="{{ brand_name }}"></span>
+                </a>
+                <a href="{{ brand_home_href }}" class="logo-dark">
+                    <span class="logo-lg"><img src="/assets/vendor/inspinia/images/logo-black.png" alt="{{ brand_name }}"></span>
+                    <span class="logo-sm"><img src="/assets/vendor/inspinia/images/logo-sm.png" alt="{{ brand_name }}"></span>
+                </a>
+            </div>
+
+            {{#if topbar_is_account_surface}}
+            <div class="account-topbar-title d-none d-xl-flex">
+                <span>{{ topbar_workspace_label }}</span>
+                {{#if topbar_has_page_title}}<strong>{{ topbar_page_title }}</strong>{{/if}}
+            </div>
+            {{else}}
+            {{#if topbar_show_search}}
+            <div id="search-box" class="app-search d-none d-xl-flex">
+                <input type="search" class="form-control topbar-search" name="search" placeholder="{{ topbar_search_placeholder }}">
+                <i class="ti ti-search app-search-icon text-muted"></i>
+            </div>
+            {{/if}}
+            {{/if}}
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+            {{#if topbar_show_workspace_button}}
+            <div class="topbar-item">
+                <button class="topbar-link" type="button" aria-label="{{ topbar_workspace_button_label }}" title="{{ topbar_workspace_button_title }}">
+                    <i class="{{ topbar_workspace_icon_class }}"></i>
+                </button>
+            </div>
+            {{/if}}
+
+            <div id="simple-user-dropdown" class="topbar-item nav-user catalyst-user-dropdown{{#if topbar_is_account_surface}} account-user-dropdown{{/if}}">
+                <div class="dropdown">
+                    <a class="topbar-link dropdown-toggle drop-arrow-none px-2"
+                       data-bs-toggle="dropdown"
+                       role="button"
+                       tabindex="0"
+                       aria-haspopup="true"
+                       aria-expanded="false"
+                       aria-label="{{ topbar_account_menu_label }}"
+                       title="{{ topbar_account_menu_title }}">
+                        <img src="{{ auth_avatar_src }}" width="32" class="rounded-circle me-lg-2 d-flex" alt="user-image">
+                        <div class="d-lg-flex align-items-center gap-1 d-none">
+                            <h5 class="my-0 catalyst-account-label{{#if topbar_is_account_surface}} account-menu-label{{/if}}">{{ topbar_account_menu_label }}</h5>
+                            <i class="ti ti-chevron-down align-middle"></i>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end{{#if topbar_is_account_surface}} account-user-menu{{/if}}">
+                        <div class="dropdown-header catalyst-account-summary{{#if topbar_is_account_surface}} account-user-summary{{/if}}">
+                            <span class="catalyst-account-summary__name{{#if topbar_is_account_surface}} account-user-summary__name{{/if}}">{{ auth_name }}</span>
+                            {{#if has_auth_email}}
+                            <span class="catalyst-account-summary__email{{#if topbar_is_account_surface}} account-user-summary__email{{/if}}">{{ auth_email }}</span>
+                            {{/if}}
+                            {{#if has_auth_role}}
+                            <span class="catalyst-account-summary__email">{{ auth_role }}</span>
+                            {{/if}}
+                        </div>
+
+                        {{#if topbar_has_account_menu_items}}
+                        <div class="dropdown-divider"></div>
+                        {{#each topbar_account_menu_items}}
+                        <a href="{{ href }}" class="dropdown-item">
+                            <i class="{{ icon_class }} me-1 fs-lg align-middle"></i>
+                            <span class="align-middle">{{ label }}</span>
+                        </a>
+                        {{/each}}
+                        {{/if}}
+
+                        <div class="dropdown-divider"></div>
+
+                        <form method="POST" action="/logout" class="m-0" data-catalyst="form">
+                            {{{ logout_csrf_field }}}
+                            <button type="submit" class="dropdown-item text-danger fw-semibold">
+                                <i class="ti ti-logout me-1 fs-lg align-middle"></i>
+                                <span class="align-middle">{{ t:ui.status_bar.log_out }}</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{{/if}}

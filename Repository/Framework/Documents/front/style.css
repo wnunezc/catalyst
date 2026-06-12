@@ -2,7 +2,7 @@
  * Published via FrontResourceTrait to /assets/css/work/documents/style.css
  */
 
-.documents-admin-page .documents-hero {
+.documents-page .documents-hero {
     background: rgba(255, 255, 255, 0.96);
     border-left: 4px solid #0f766e;
 }
@@ -58,7 +58,7 @@
 
 
 /* Density correction v2: readable text scale with compact spacing. */
-.documents-admin-page {
+.documents-page {
     font-size: 0.875rem;
 }
 

@@ -54,7 +54,29 @@ return [
         ],
     ],
     'navigation' => [
-        'admin' => [],
+        'shell' => [],
+        'application' => [
+            [
+                'kind' => 'title',
+                'label' => __('account.nav.dashboard'),
+                'order' => 10,
+                'visibility' => [
+                    ['authenticated' => true],
+                ],
+            ],
+            [
+                'kind' => 'link',
+                'label' => __('account.nav.dashboard'),
+                'href' => '/dashboard',
+                'icon' => 'ti ti-layout-dashboard',
+                'hint' => __('account.nav_hints.dashboard'),
+                'matches' => ['/dashboard'],
+                'order' => 20,
+                'visibility' => [
+                    ['authenticated' => true],
+                ],
+            ],
+        ],
         'public' => [
             [
                 'label' => 'Dashboard',

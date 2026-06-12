@@ -11,7 +11,7 @@ return static function (array $scope): array {
     $actions[] = ['label' => __('documents.form_page.actions.back_list'), 'href' => '/workspaces/document-templates', 'class' => 'btn btn-sm btn-outline-secondary', 'icon' => 'fa-solid fa-arrow-left'];
 
     return [
-        'admin_header' => [
+        'page_header' => [
             'eyebrow' => __('documents.form_page.eyebrow'),
             'title' => (string) ($scope['pageTitle'] ?? $scope['title'] ?? __('documents.form_page.create_title')),
             'description' => $template !== null ? __('documents.form_page.hero_lede_edit') : __('documents.form_page.hero_lede_create'),

@@ -99,7 +99,16 @@ class MfaController extends Controller
             'issuer'       => $issuer,
             'mfaActive'    => $mfaActive,
             'forcedSetup'  => $setupPending,
-        ], 200, 'auth');
+            'show_topbar' => false,
+            'show_sidebar' => false,
+            'show_status_bar' => false,
+            'show_theme_customizer' => false,
+            'show_auth_brand_panel' => true,
+            'body_class' => 'catalyst-auth-body',
+            'shell_class' => 'auth-layout-shell',
+            'content_class' => 'auth-layout-shell__form',
+            'surface_context' => 'auth',
+        ]);
     }
 
     /**
@@ -237,7 +246,16 @@ class MfaController extends Controller
 
         return $this->view('auth.mfa-challenge', [
             'title' => __('auth.mfa.challenge_title'),
-        ], 200, 'auth');
+            'show_topbar' => false,
+            'show_sidebar' => false,
+            'show_status_bar' => false,
+            'show_theme_customizer' => false,
+            'show_auth_brand_panel' => true,
+            'body_class' => 'catalyst-auth-body',
+            'shell_class' => 'auth-layout-shell',
+            'content_class' => 'auth-layout-shell__form',
+            'surface_context' => 'auth',
+        ]);
     }
 
     /**

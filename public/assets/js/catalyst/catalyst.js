@@ -8,44 +8,38 @@
  * @version 1.0.0
  */
 
-import { ToasterManager } from './modules/toaster.js';
-import { ModalManager } from './modules/modal.js';
-import { NotificationHandler } from './modules/notification.js';
-import { FormHandler } from './modules/form-handler.js';
-import { PasswordManager } from './modules/password.js';
-import { HttpClient, getHttpClient } from './modules/http.js';
-import { setButtonLoading, clearButtonLoading } from './modules/loading.js';
+import { ToasterManager } from './notifications/toaster.js';
+import { ModalManager } from './notifications/modal.js';
+import { NotificationHandler } from './notifications/notification.js';
+import { FormHandler } from './forms/form-handler.js';
+import { PasswordManager } from './forms/password.js';
+import { HttpClient, getHttpClient } from './core/http.js';
+import { setButtonLoading, clearButtonLoading } from './core/loading.js';
+import { registerUiComponent, registerUiEvent } from './runtime/registration-queue.js';
 import { defaults } from './config/defaults.js';
 
 // Export individual modules for direct imports
-export { ToasterManager } from './modules/toaster.js';
-export { ModalManager } from './modules/modal.js';
-export { NotificationHandler } from './modules/notification.js';
-export { FormHandler } from './modules/form-handler.js';
-export { PasswordManager } from './modules/password.js';
-export { HttpClient, getHttpClient } from './modules/http.js';
-export { setButtonLoading, clearButtonLoading } from './modules/loading.js';
+export { ToasterManager } from './notifications/toaster.js';
+export { ModalManager } from './notifications/modal.js';
+export { NotificationHandler } from './notifications/notification.js';
+export { FormHandler } from './forms/form-handler.js';
+export { PasswordManager } from './forms/password.js';
+export { HttpClient, getHttpClient } from './core/http.js';
+export { setButtonLoading, clearButtonLoading } from './core/loading.js';
 export { defaults } from './config/defaults.js';
-export * from './modules/utils.js';
+export * from './core/utils.js';
 
-const catalystModuleUrl = new URL(import.meta.url);
-const catalystModuleVersion = catalystModuleUrl.searchParams.get('v') ?? '';
-const catalystModuleSuffix = catalystModuleVersion !== ''
-    ? `?v=${encodeURIComponent(catalystModuleVersion)}`
-    : '';
+const runtimeApi = {
+    initRuntime: async () => null,
+    scan: async () => null,
+    destroy: async () => null,
+};
 
-let uiRuntimeModulePromise = null;
-
-async function initShellRuntime(options = {}) {
-    if (uiRuntimeModulePromise === null) {
-        uiRuntimeModulePromise = import(`./modules/ui-runtime.js${catalystModuleSuffix}`);
-    }
-
-    const runtimeModule = await uiRuntimeModulePromise;
-    return runtimeModule.initShellRuntime(options);
+export function bindUiRuntimeApi(api = {}) {
+    Object.assign(runtimeApi, api);
 }
 
-export { initShellRuntime };
+export { registerUiComponent, registerUiEvent };
 
 
 /**
@@ -65,7 +59,11 @@ class CatalystNotificationSystem {
         this.initialized = false;
         this.config = {};
         this.ui = {
-            initShellRuntime,
+            initRuntime: (...args) => runtimeApi.initRuntime(...args),
+            scan: (...args) => runtimeApi.scan(...args),
+            destroy: (...args) => runtimeApi.destroy(...args),
+            register: registerUiComponent,
+            registerEvent: registerUiEvent,
         };
     }
 
@@ -115,7 +113,6 @@ class CatalystNotificationSystem {
 
         // Initialize password manager (strength meter) — always on
         this.passwords = new PasswordManager(config.password || {});
-        this.passwords.init();
 
         this.initialized = true;
 

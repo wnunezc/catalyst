@@ -30,7 +30,7 @@ declare(strict_types=1);
 
 namespace Catalyst\Repository\Catalogs\Support;
 
-use Catalyst\Framework\Admin\Grid\DataGrid;
+use Catalyst\Framework\DataGrid\DataGrid;
 use Catalyst\Framework\Catalog\CatalogManager;
 use Catalyst\Framework\Catalog\CatalogRepository;
 

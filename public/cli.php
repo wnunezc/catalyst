@@ -66,7 +66,7 @@ use Catalyst\Framework\Cli\Commands\I18nUsageLintCommand;
 use Catalyst\Framework\Cli\Commands\AttachmentsListCommand;
 use Catalyst\Framework\Cli\Commands\AttachmentsPolicySmokeCommand;
 use Catalyst\Framework\Cli\Commands\AttachmentsSmokeCommand;
-use Catalyst\Framework\Cli\Commands\AdminNavigationSmokeCommand;
+use Catalyst\Framework\Cli\Commands\ShellNavigationSmokeCommand;
 use Catalyst\Framework\Cli\Commands\ApiTokensSmokeCommand;
 use Catalyst\Framework\Cli\Commands\AutomationMvcRegressionCommand;
 use Catalyst\Framework\Cli\Commands\CalendarSmokeCommand;
@@ -74,7 +74,6 @@ use Catalyst\Framework\Cli\Commands\DocumentsMvcRegressionCommand;
 use Catalyst\Framework\Cli\Commands\DistributionSmokeCommand;
 use Catalyst\Framework\Cli\Commands\MediaMvcRegressionCommand;
 use Catalyst\Framework\Cli\Commands\ModuleLocalizationRegressionCommand;
-use Catalyst\Framework\Cli\Commands\OperationsRequestsRegressionCommand;
 use Catalyst\Framework\Cli\Commands\OrganizationSmokeCommand;
 use Catalyst\Framework\Cli\Commands\RolesMvcRegressionCommand;
 use Catalyst\Framework\Cli\Commands\DocsInventoryCommand;
@@ -82,6 +81,7 @@ use Catalyst\Framework\Cli\Commands\DocsSyncRuntimeCommand;
 use Catalyst\Framework\Cli\Commands\FixturesAuthCommand;
 use Catalyst\Framework\Cli\Commands\FeatureFlagsListCommand;
 use Catalyst\Framework\Cli\Commands\FeatureFlagsSetCommand;
+use Catalyst\Framework\Cli\Commands\ConfigurationFeatureFlagsSmokeCommand;
 use Catalyst\Framework\Cli\Commands\ExportDevelopmentOverlayCommand;
 use Catalyst\Framework\Cli\Commands\InspectHarnessCommand;
 use Catalyst\Framework\Cli\Commands\InspectLintCommand;
@@ -105,6 +105,8 @@ use Catalyst\Framework\Cli\Commands\ClaimsReleaseCommand;
 use Catalyst\Framework\Cli\Commands\ConfigE2eReadinessCommand;
 use Catalyst\Framework\Cli\Commands\ConfigSecretsSyncCommand;
 use Catalyst\Framework\Cli\Commands\ConfigContractSmokeCommand;
+use Catalyst\Framework\Cli\Commands\ConfigurationLocalizationSmokeCommand;
+use Catalyst\Framework\Cli\Commands\ConfigurationRequestsRegressionCommand;
 use Catalyst\Framework\Cli\Commands\ConcurrencySmokeCommand;
 use Catalyst\Framework\Cli\Commands\DeletionSmokeCommand;
 use Catalyst\Framework\Cli\Commands\QueueFailedCommand;
@@ -118,9 +120,9 @@ use Catalyst\Framework\Cli\Commands\RouteClearCommand;
 use Catalyst\Framework\Cli\Commands\RouteLintCommand;
 use Catalyst\Framework\Cli\Commands\RouteListCommand;
 use Catalyst\Framework\Cli\Commands\ScaffoldAppSmokeCommand;
+use Catalyst\Framework\Cli\Commands\CrudScaffoldSmokeCommand;
 use Catalyst\Framework\Cli\Commands\SecurityRegressionCommand;
 use Catalyst\Framework\Cli\Commands\SequencesSmokeCommand;
-use Catalyst\Framework\Cli\Commands\SettingsLocalizationSmokeCommand;
 use Catalyst\Framework\Cli\Commands\CatalogsSmokeCommand;
 use Catalyst\Framework\Cli\Commands\WorkflowSmokeCommand;
 use Catalyst\Framework\Cli\Commands\ReportsContractSmokeCommand;
@@ -173,7 +175,7 @@ $registry
     ->register(new AttachmentsListCommand())
     ->register(new AttachmentsPolicySmokeCommand())
     ->register(new AttachmentsSmokeCommand())
-    ->register(new AdminNavigationSmokeCommand())
+    ->register(new ShellNavigationSmokeCommand())
     ->register(new ApiTokensSmokeCommand())
     ->register(new AutomationMvcRegressionCommand())
     ->register(new CalendarSmokeCommand())
@@ -181,12 +183,12 @@ $registry
     ->register(new DistributionSmokeCommand())
     ->register(new MediaMvcRegressionCommand())
     ->register(new ModuleLocalizationRegressionCommand())
-    ->register(new OperationsRequestsRegressionCommand())
     ->register(new OrganizationSmokeCommand())
     ->register(new RolesMvcRegressionCommand())
     ->register(new DocsInventoryCommand())
     ->register(new FeatureFlagsListCommand())
     ->register(new FeatureFlagsSetCommand())
+    ->register(new ConfigurationFeatureFlagsSmokeCommand())
     ->register(new ExportDevelopmentOverlayCommand())
     ->register(new DocsSyncRuntimeCommand())
     ->register(new DeployListCommand())
@@ -211,6 +213,8 @@ $registry
     ->register(new ClaimsListCommand())
     ->register(new ClaimsReleaseCommand())
     ->register(new ConfigContractSmokeCommand())
+    ->register(new ConfigurationLocalizationSmokeCommand())
+    ->register(new ConfigurationRequestsRegressionCommand())
     ->register(new ConfigE2eReadinessCommand())
     ->register(new ConfigSecretsSyncCommand())
     ->register(new ConcurrencySmokeCommand())
@@ -235,6 +239,7 @@ $registry
     ->register(new RouteLintCommand())
     ->register(new RouteListCommand())
     ->register(new ScaffoldAppSmokeCommand())
+    ->register(new CrudScaffoldSmokeCommand())
     ->register(new ScheduleRunCommand())
     ->register(new ScheduleListCommand())
     ->register(new StorageCleanCommand())
@@ -252,7 +257,6 @@ $registry
     ->register(new MigrateStatusCommand())
     ->register(new SensitivitySmokeCommand())
     ->register(new SequencesSmokeCommand())
-    ->register(new SettingsLocalizationSmokeCommand())
     ->register(new TemporalSmokeCommand())
     ->register(new WorkflowSmokeCommand())
     ->register(new SecurityCheckCommand())

@@ -33,7 +33,7 @@ use Catalyst\Helpers\Security\CsrfProtection;
 
 return static function (array $scope): array {
     $rule = is_array($scope['rule'] ?? null) ? $scope['rule'] : [];
-    $claimContext = is_array($scope['claimContext'] ?? null) ? $scope['claimContext'] : [];
+    $recordPresence = is_array($scope['recordPresence'] ?? null) ? $scope['recordPresence'] : [];
 
     $availableTransitions = [];
     foreach ((array) ($scope['availableTransitions'] ?? []) as $transition) {
@@ -83,7 +83,7 @@ return static function (array $scope): array {
     }
 
     return [
-        'admin_header' => [
+        'page_header' => [
             'eyebrow' => __('automation.show.eyebrow'),
             'title' => (string) ($rule['name'] ?? __('automation.show.rule_fallback')),
             'description' => (string) (($rule['description'] ?? '') ?: __('automation.show.lede_fallback')),
@@ -114,7 +114,7 @@ return static function (array $scope): array {
             'transition_url' => '/automation-rules/' . (int) ($rule['id'] ?? 0) . '/transition',
             'run_url' => '/automation-rules/' . (int) ($rule['id'] ?? 0) . '/run',
         ],
-        'claim_token' => (string) ($claimContext['claim_token'] ?? ''),
+        'claim_token' => (string) ($recordPresence['claim_token'] ?? ''),
         'csrfField' => TrustedHtml::fromString(CsrfProtection::getInstance()->getTokenField()),
         'available_transitions' => $availableTransitions,
         'transitions_rows' => $transitionsRows,

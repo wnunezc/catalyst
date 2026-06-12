@@ -1,0 +1,56 @@
+<section class="page-header card mb-3{{#if page_header_modifier}} {{ page_header_modifier }}{{/if}}" data-page-header>
+    <div class="card-body">
+        <div class="page-header__main">
+            <div class="page-header__copy">
+                {{#if page_header_eyebrow}}
+                    <span class="page-header__eyebrow">{{ page_header_eyebrow }}</span>
+                {{/if}}
+                <h1 class="page-header__title">{{ page_header_title }}</h1>
+                {{#if page_header_description}}
+                    <p class="page-header__description">{{ page_header_description }}</p>
+                {{/if}}
+            </div>
+
+            {{#if page_header_has_actions}}
+                <div class="page-header__actions" aria-label="{{ page_header_actions_label }}">
+                    {{#each page_header_actions}}
+                        {{#if is_submit}}
+                            <button type="submit" class="{{ class }}"{{#if form}} form="{{ form }}"{{/if}}{{#if name}} name="{{ name }}"{{/if}}{{#if value}} value="{{ value }}"{{/if}}{{#if disabled}} disabled{{/if}}>
+                                {{#if has_icon}}<i class="{{ icon }} me-1" aria-hidden="true"></i>{{/if}}{{ label }}
+                            </button>
+                        {{else}}
+                            <button type="button" class="{{ class }}"{{#if href}} data-catalyst-href="{{ href }}"{{/if}}{{#if target}} data-catalyst-target="{{ target }}"{{/if}}{{#if modal_target}} data-bs-toggle="modal" data-bs-target="{{ modal_target }}"{{/if}}{{#if disabled}} disabled{{/if}}>
+                                {{#if has_icon}}<i class="{{ icon }} me-1" aria-hidden="true"></i>{{/if}}{{ label }}
+                            </button>
+                        {{/if}}
+                    {{/each}}
+                </div>
+            {{/if}}
+        </div>
+
+        {{#if page_header_has_metrics}}
+            <div class="page-header__metrics" aria-label="{{ page_header_metrics_label }}">
+                {{#each page_header_metrics}}
+                    <div class="page-header__metric{{#if tone_class}} {{ tone_class }}{{/if}}">
+                        <span class="page-header__metric-label">{{ label }}</span>
+                        {{#if badge_class}}
+                            <span class="badge {{ badge_class }} page-header__metric-value">{{ value }}</span>
+                        {{else}}
+                            <span class="page-header__metric-value{{#if value_class}} {{ value_class }}{{/if}}">{{ value }}</span>
+                        {{/if}}
+                    </div>
+                {{/each}}
+            </div>
+        {{/if}}
+
+        {{#if page_header_has_tabs}}
+            <nav class="page-header__tabs" aria-label="{{ page_header_tabs_label }}">
+                {{#each page_header_tabs}}
+                    <button type="button" class="page-header__tab{{#if is_active}} is-active{{/if}}" data-catalyst-href="{{ href }}"{{#if disabled}} disabled{{/if}}>
+                        {{#if has_icon}}<i class="{{ icon }} me-1" aria-hidden="true"></i>{{/if}}{{ label }}
+                    </button>
+                {{/each}}
+            </nav>
+        {{/if}}
+    </div>
+</section>

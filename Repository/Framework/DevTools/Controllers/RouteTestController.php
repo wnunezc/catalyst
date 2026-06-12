@@ -67,7 +67,7 @@ class RouteTestController extends Controller
             'version' => '1.0.0-dev',
             'phpVersion' => PHP_VERSION,
             'isConfigured' => $config->isConfigured(),
-        ], 200, 'base');
+        ]);
     }
 
     /**

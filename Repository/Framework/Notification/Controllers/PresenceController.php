@@ -35,7 +35,7 @@ use Catalyst\Framework\Concurrency\RecordClaimManager;
 use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
-use Catalyst\Framework\Presence\PresenceManager;
+use Catalyst\Framework\Presence\RecordPresenceManager;
 use RuntimeException;
 
 /**
@@ -84,8 +84,10 @@ final class PresenceController extends Controller
             return $this->jsonError(__('notification.messages.invalid_presence_target'), 400);
         }
 
+        $this->authorizeResource('view', $resourceKey);
+
         try {
-            $presence = PresenceManager::getInstance()->heartbeat(
+            $presence = RecordPresenceManager::getInstance()->heartbeat(
                 resourceKey: $resourceKey,
                 recordId: $record,
                 actorId: $this->userId(),
@@ -103,7 +105,7 @@ final class PresenceController extends Controller
             $snapshot = RecordClaimManager::getInstance()->snapshot($resourceKey, $record);
 
             return $this->jsonError($e->getMessage(), 409, [
-                'presence' => PresenceManager::getInstance()->presencePayload($snapshot),
+                'presence' => RecordPresenceManager::getInstance()->presencePayload($snapshot),
             ]);
         }
     }

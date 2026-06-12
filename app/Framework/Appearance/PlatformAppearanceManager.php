@@ -194,16 +194,16 @@ final class PlatformAppearanceManager
     }
 
     /**
-     * Determines whether the Inspinia admin customizer is exposed to users.
+     * Determines whether the shared Inspinia customizer is exposed to users.
      *
-     * Responsibility: Determines whether the Inspinia admin customizer is exposed to users.
+     * Responsibility: Determines whether the shared Inspinia customizer is exposed to users.
      */
-    public function isAdminCustomizerEnabled(): bool
+    public function isCustomizerEnabled(): bool
     {
         $settings = $this->settings();
         $ui = is_array($settings['ui'] ?? null) ? $settings['ui'] : [];
 
-        return $this->booleanValue($ui['admin_customizer_enabled'] ?? true, true);
+        return $this->booleanValue($ui['customizer_enabled'] ?? true, true);
     }
 
     /**
@@ -229,12 +229,12 @@ final class PlatformAppearanceManager
      */
     public function runtimeViewModel(): array
     {
-        $enabled = $this->isAdminCustomizerEnabled();
+        $enabled = $this->isCustomizerEnabled();
         $lockedConfig = $this->platformThemeConfig();
 
         return [
-            'admin_customizer_enabled' => $enabled,
-            'adminCustomizerEnabled' => $enabled,
+            'customizer_enabled' => $enabled,
+            'customizerEnabled' => $enabled,
             'mode' => $enabled ? 'user' : 'locked',
             'locked_config' => $lockedConfig,
             'lockedConfig' => $lockedConfig,
@@ -338,7 +338,7 @@ final class PlatformAppearanceManager
             'favicon_url' => $favicon,
             'default_variant' => $this->defaultVariant(),
             'allow_user_variant_override' => $this->allowUserVariantOverride(),
-            'admin_customizer_enabled' => $this->isAdminCustomizerEnabled(),
+            'customizer_enabled' => $this->isCustomizerEnabled(),
             'pdf_watermark_enabled' => (bool) ($brandingSettings['pdf_watermark_enabled'] ?? false),
             'pdf_watermark_text' => trim((string) ($brandingSettings['pdf_watermark_text'] ?? '')),
             'pdf_watermark_font_size' => (int) ($brandingSettings['pdf_watermark_font_size'] ?? 46),
@@ -364,7 +364,7 @@ final class PlatformAppearanceManager
             'brandName' => $branding['brand_name'],
             'brandShortName' => $branding['brand_short_name'],
             'brandTagline' => $branding['brand_tagline'],
-            'adminCustomizerEnabled' => $runtime['adminCustomizerEnabled'],
+            'customizerEnabled' => $runtime['customizerEnabled'],
             'mode' => $runtime['mode'],
             'lockedConfig' => $runtime['lockedConfig'],
         ];
@@ -444,7 +444,7 @@ final class PlatformAppearanceManager
     {
         return [
             'ui' => [
-                'admin_customizer_enabled' => true,
+                'customizer_enabled' => true,
                 'mode' => 'user',
                 'locked_theme' => $this->themeConfigDefaults(),
             ],
@@ -543,8 +543,8 @@ final class PlatformAppearanceManager
             }
         }
 
-        if (array_key_exists('admin_customizer_enabled', $raw)) {
-            $settings['ui']['admin_customizer_enabled'] = $raw['admin_customizer_enabled'];
+        if (array_key_exists('customizer_enabled', $raw)) {
+            $settings['ui']['customizer_enabled'] = $raw['customizer_enabled'];
         }
 
         if (array_key_exists('customizer_policy', $raw)) {
@@ -557,8 +557,8 @@ final class PlatformAppearanceManager
             }
         }
 
-        $settings['ui']['admin_customizer_enabled'] = $this->booleanValue($settings['ui']['admin_customizer_enabled'] ?? true, true);
-        $settings['ui']['mode'] = $settings['ui']['admin_customizer_enabled'] ? 'user' : 'locked';
+        $settings['ui']['customizer_enabled'] = $this->booleanValue($settings['ui']['customizer_enabled'] ?? true, true);
+        $settings['ui']['mode'] = $settings['ui']['customizer_enabled'] ? 'user' : 'locked';
         $settings['ui']['locked_theme'] = $this->sanitizeThemeConfig(
             is_array($settings['ui']['locked_theme'] ?? null) ? $settings['ui']['locked_theme'] : []
         );

@@ -26,7 +26,7 @@ return static function (array $scope): array {
     );
 
     return [
-        'admin_header' => [
+        'page_header' => [
             'eyebrow' => __('roles.organization_admin.eyebrow'),
             'title' => (string)($scope['title'] ?? __('roles.organization_admin.title')),
             'description' => __('roles.organization_admin.description'),

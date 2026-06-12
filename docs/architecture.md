@@ -13,13 +13,42 @@ Describe the current Catalyst architecture and act as the central index for the 
 | Route registration and dispatch | `Catalyst\Framework\Route\Router`, `Catalyst\Framework\Route\RouteDispatcher` |
 | Module registration and inspection | `Catalyst\Framework\Module\ModuleRegistry`, `ModuleInspector`, `ModuleHarnessInspector`, `ModuleLinter` |
 | View rendering and module assets | `Catalyst\Framework\View\View`, `FrontResourceTrait` |
+| Frontend UI orchestration | `public/assets/js/catalyst/runtime/ui-runtime.js` |
 | Generated documentation truth | `RuntimeInventoryGenerator`, `DocsSyncRuntimeCommand` |
 
 ## Current Behavior
 
-Catalyst is a PHP 8.4 MVC framework with a small kernel, explicit HTTP/CLI entry points, framework-owned reusable modules under `Repository/Framework`, app-owned surfaces under `Repository/App/Surface`, and runtime-generated documentation inventories. The current module catalog reports 18 modules with structural lint OK.
+Catalyst is a PHP 8.4 MVC framework with a small kernel, explicit HTTP/CLI entry points, framework-owned reusable modules under `Repository/Framework`, app-owned surfaces under `Repository/App/Surface`, and runtime-generated documentation inventories. The current module catalog reports 17 modules with structural lint OK.
 
 The architecture uses separated owners instead of single large classes: routes are registered, compiled, collected and dispatched by different route classes; modules are declared, discovered, inspected and linted by different module classes; views render templates while trusted HTML, inline JSON and token rendering are separate security boundaries.
+
+Catalyst renders every complete HTML response through
+`boot-core/template/document.phtml`. `View::render()` uses that document by
+default; insertable HTML must use the explicit `View::renderFragment()` /
+`Controller::viewFragment()` contract. There are no layout profiles or
+surface-specific document wrappers.
+
+The document composes `_html-open.phtml`, `_head.phtml`, `shell.phtml` and
+`_body-scripts.phtml`. Topbar, sidebar, status bar and the theme customizer are
+capabilities of the shared shell. Exceptional surfaces such as Auth, Public,
+Account guest and Error control visibility and CSS classes through explicit
+scope values; they do not select another layout.
+
+Catalyst uses one frontend governor. `_body-scripts.phtml` loads
+`runtime/ui-runtime.js` directly at the end of the body. The runtime owns
+ordered component registration, global runtime events, initial mounting,
+targeted rescans after `catalyst:dom:updated`, destruction and module
+extension. Inspinia and Bootstrap initializers are adapters of that runtime;
+surface work scripts register extensions or remain inert and never start a
+parallel governor.
+
+Modules may extend the active runtime through `Catalyst.ui.register()` and
+`Catalyst.ui.registerEvent()`. They must register behavior, not start a second
+runtime.
+
+All participating shells use the common `Catalyst.ui.initRuntime()` entry
+point. Surface-specific scripts extend that runtime and do not initialize a
+parallel governor.
 
 ## Runtime Layers
 
@@ -54,6 +83,7 @@ The architecture uses separated owners instead of single large classes: routes a
 | `docs/framework-auth.md` | Catalyst\Framework\Auth |
 | `docs/framework-calendar.md` | Catalyst Framework Calendar |
 | `docs/framework-concurrency.md` | Catalyst\Framework\Concurrency |
+| `docs/framework-configuration.md` | Catalyst Framework Configuration |
 | `docs/framework-controllers.md` | Catalyst\Framework\Controllers |
 | `docs/framework-database.md` | Catalyst\Framework\Database |
 | `docs/framework-datagrid.md` | Catalyst Framework DataGrid |
@@ -99,13 +129,15 @@ The architecture uses separated owners instead of single large classes: routes a
 | `docs/sequences.md` | Transactional Sequences |
 | `docs/spec-to-catalyst-guide.md` | Spec To Catalyst Guide |
 | `docs/testing.md` | Testing Guide |
-| `docs/ui/admin-surface-contract.md` | Admin surface contract |
+| `docs/ui/page-header-contract.md` | Global PageHeader contract |
 | `docs/ui/datagrid-visual-guidelines.md` | Lineamientos visuales del DataGrid |
+| `docs/ui/demo-ui-javascript-inventory.md` | Demo UI JavaScript route, asset and Playwright inventory |
 | `docs/ui/institutional-themes.md` | Response skins and neutral branding |
 | `docs/ui/public-surface-contract.md` | Public surface contract |
 | `docs/ui/sidebar-navigation.md` | Sidebar y navegacion administrativa |
+| `docs/ui/surface-architecture.md` | Canonical document, shell, runtime and surface ownership |
+| `docs/ui/test-features-javascript-inventory.md` | Test Features document, JavaScript and Playwright inventory |
 | `docs/ui/validation-checklist.md` | Checklist de validacion del parche visual |
-| `docs/ui/visual-refactor-v2.md` | Refactor visual v2 del framework Catalyst |
 | `docs/views.md` | Views Index |
 | `docs/workflow/first-run.md` | First Run Workflow |
 | `docs/workflow/patch-intake.md` | Patch Intake Workflow |
@@ -121,6 +153,7 @@ The architecture uses separated owners instead of single large classes: routes a
 
 - Use `docs/runtime-inventory.md` for exhaustive class/template/script truth.
 - Use `docs/runtime-module-catalog.md` and `php public/cli.php route:list --json` for live module and route truth.
+- Regenerate those inventories with `php public/cli.php docs:inventory` and `php public/cli.php docs:sync-runtime`; never edit generated inventory files manually.
 - Historical development plans, audit notes and route snapshots are not kept in `/docs`; closed history belongs in Obsidian summaries or Git history.
 - If a Markdown file is added under `/docs`, update this index or confirm it is generated by the runtime.
 

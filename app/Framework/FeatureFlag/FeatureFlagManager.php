@@ -56,6 +56,7 @@ final class FeatureFlagManager
 
     private const CACHE_KEY = 'feature_flags.catalog';
     private const CATALOG_ENTRY = 'catalog';
+    private const ALLOWED_SCOPES = ['auth', 'capability', 'module', 'runtime'];
 
     /**
      * @var array<string, mixed>|null
@@ -68,6 +69,11 @@ final class FeatureFlagManager
     public static function moduleFlagKey(string $moduleKey): string
     {
         return 'module.' . strtolower(trim($moduleKey));
+    }
+
+    public static function isValidKey(string $flagKey): bool
+    {
+        return preg_match('/^[a-z0-9][a-z0-9._-]{0,179}$/', trim($flagKey)) === 1;
     }
 
     /**
@@ -211,8 +217,17 @@ final class FeatureFlagManager
         $before = $this->configCatalog();
 
         foreach ($catalog as $key => $definition) {
+            if (!is_string($key) || !self::isValidKey($key)) {
+                throw new RuntimeException('Each feature flag key must use lowercase letters, numbers, dots, underscores or hyphens.');
+            }
+
             if (!is_array($definition)) {
                 throw new RuntimeException('Each feature flag definition must be an array.');
+            }
+
+            $scope = trim((string) ($definition['scope'] ?? 'runtime'));
+            if (!in_array($scope, self::ALLOWED_SCOPES, true)) {
+                throw new RuntimeException(sprintf('Flag "%s" has an invalid scope.', $key));
             }
 
             if ($this->isConfigBackedFlag($key)) {
@@ -244,6 +259,11 @@ final class FeatureFlagManager
      */
     public function setDefaultState(string $flagKey, bool $enabled, ?string $label = null, ?string $description = null): void
     {
+        $flagKey = trim($flagKey);
+        if (!self::isValidKey($flagKey)) {
+            throw new RuntimeException('Feature flag key is invalid.');
+        }
+
         if ($this->isConfigBackedFlag($flagKey)) {
             throw new RuntimeException(sprintf('Flag "%s" is owned by existing runtime config and cannot be toggled here.', $flagKey));
         }
@@ -325,9 +345,9 @@ final class FeatureFlagManager
 
         return [
             'project_config' => [
-                'label' => $this->translate('operations.feature_flags.catalog.items.project_config.label', 'Project configured'),
+                'label' => $this->translate('settings.feature_flags.catalog.items.project_config.label', 'Project configured'),
                 'description' => $this->translate(
-                    'operations.feature_flags.catalog.items.project_config.description',
+                    'settings.feature_flags.catalog.items.project_config.description',
                     'Read-only setup completion state owned by app.json.'
                 ),
                 'enabled' => $config->isConfigured(),
@@ -336,9 +356,9 @@ final class FeatureFlagManager
                 'managed_by' => 'app.json',
             ],
             'cache_enabled' => [
-                'label' => $this->translate('operations.feature_flags.catalog.items.cache_enabled.label', 'Cache enabled'),
+                'label' => $this->translate('settings.feature_flags.catalog.items.cache_enabled.label', 'Cache enabled'),
                 'description' => $this->translate(
-                    'operations.feature_flags.catalog.items.cache_enabled.description',
+                    'settings.feature_flags.catalog.items.cache_enabled.description',
                     'Read-only cache activation owned by cache.json.'
                 ),
                 'enabled' => CacheSettings::featureEnabled('cache_enabled', $cache),
@@ -347,9 +367,9 @@ final class FeatureFlagManager
                 'managed_by' => 'cache.json',
             ],
             'route_cache' => [
-                'label' => $this->translate('operations.feature_flags.catalog.items.route_cache.label', 'Route cache'),
+                'label' => $this->translate('settings.feature_flags.catalog.items.route_cache.label', 'Route cache'),
                 'description' => $this->translate(
-                    'operations.feature_flags.catalog.items.route_cache.description',
+                    'settings.feature_flags.catalog.items.route_cache.description',
                     'Read-only route cache flag owned by cache.json.'
                 ),
                 'enabled' => CacheSettings::featureEnabled('route_cache', $cache),
@@ -358,9 +378,9 @@ final class FeatureFlagManager
                 'managed_by' => 'cache.json',
             ],
             'websocket_enabled' => [
-                'label' => $this->translate('operations.feature_flags.catalog.items.websocket_enabled.label', 'WebSocket runtime'),
+                'label' => $this->translate('settings.feature_flags.catalog.items.websocket_enabled.label', 'WebSocket runtime'),
                 'description' => $this->translate(
-                    'operations.feature_flags.catalog.items.websocket_enabled.description',
+                    'settings.feature_flags.catalog.items.websocket_enabled.description',
                     'Read-only WebSocket boot flag owned by websocket.json.'
                 ),
                 'enabled' => (bool) ($websocket['enabled'] ?? false),
@@ -401,15 +421,15 @@ final class FeatureFlagManager
     private function localizeCatalogEntry(string $flagKey, array $definition): array
     {
         $catalogKey = str_replace(['.', '-'], '_', strtolower($flagKey));
-        $labelKey = 'operations.feature_flags.catalog.items.' . $catalogKey . '.label';
-        $descriptionKey = 'operations.feature_flags.catalog.items.' . $catalogKey . '.description';
+        $labelKey = 'settings.feature_flags.catalog.items.' . $catalogKey . '.label';
+        $descriptionKey = 'settings.feature_flags.catalog.items.' . $catalogKey . '.description';
 
         $currentLabel = trim((string) ($definition['label'] ?? ''));
         $currentDescription = trim((string) ($definition['description'] ?? ''));
 
         if (str_starts_with($flagKey, 'plugin.')) {
             $definition['description'] = $this->translate(
-                'operations.feature_flags.catalog.plugin_activation_description',
+                'settings.feature_flags.catalog.plugin_activation_description',
                 $currentDescription
             );
 

@@ -49,6 +49,11 @@ final class PluginManager
 {
     use SingletonTrait;
 
+    public static function isValidKey(string $pluginKey): bool
+    {
+        return preg_match('/^[a-z0-9][a-z0-9._-]{0,119}$/', trim($pluginKey)) === 1;
+    }
+
     /**
      * Returns registered plugins annotated with their effective state.
      *
@@ -139,6 +144,11 @@ final class PluginManager
      */
     public function setEnabled(string $pluginKey, bool $enabled): void
     {
+        $pluginKey = trim($pluginKey);
+        if (!self::isValidKey($pluginKey)) {
+            throw new RuntimeException('Plugin key is invalid.');
+        }
+
         $plugin = $this->find($pluginKey);
         if ($plugin === null) {
             throw new RuntimeException(sprintf('Plugin "%s" is not registered.', $pluginKey));
@@ -146,6 +156,12 @@ final class PluginManager
 
         if (!empty($plugin['required'])) {
             throw new RuntimeException(sprintf('Plugin "%s" is required and cannot be disabled.', $pluginKey));
+        }
+        if (empty($plugin['manifest_valid'])) {
+            throw new RuntimeException(sprintf('Plugin "%s" has an invalid manifest.', $pluginKey));
+        }
+        if ((bool) ($plugin['enabled'] ?? true) === $enabled) {
+            throw new RuntimeException(sprintf('Plugin "%s" is already in the requested state.', $pluginKey));
         }
 
         $states = $this->configStates();

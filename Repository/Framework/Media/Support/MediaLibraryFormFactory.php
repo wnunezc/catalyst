@@ -30,7 +30,7 @@ declare(strict_types=1);
 
 namespace Catalyst\Repository\Media\Support;
 
-use Catalyst\Framework\Admin\Form\FormBuilder;
+use Catalyst\Framework\Form\FormBuilder;
 use Catalyst\Framework\Media\MediaManager;
 use Catalyst\Framework\Metadata\MetadataManager;
 use Catalyst\Framework\Storage\StorageManager;

@@ -129,7 +129,6 @@ final class ModuleBlueprintFactory
         $routeUri = $this->manager->moduleRouteUri($module);
         $controllerName = $module . 'Controller';
         $migrationVersion = gmdate('YmdHis');
-        $layout = in_array($surface, ['workspace', 'administration', 'devtools'], true) ? 'admin' : null;
         $manifest = $this->manifestBuilder->build(
             $module,
             $routeUri,
@@ -168,7 +167,6 @@ final class ModuleBlueprintFactory
             'delete_plan_factory_class' => $module . 'DeletePlanFactory',
             'migration_version' => $migrationVersion,
             'migration_path' => ProjectPath::migrations($migrationVersion . '_create_' . $table . '_table.php'),
-            'layout' => $layout,
             'manifest' => $manifest,
             'manifest_contents' => $this->manifestBuilder->render($manifest),
             'exists' => is_dir($baseDir),

@@ -30,7 +30,7 @@ declare(strict_types=1);
 
 namespace Catalyst\Framework\Cli\Commands;
 
-use Catalyst\Framework\Admin\Crud\CrudScaffoldService;
+use Catalyst\Framework\Scaffolding\Crud\CrudScaffoldService;
 use Catalyst\Framework\Argument\ArgumentBag;
 use Catalyst\Framework\Argument\Option;
 use Catalyst\Framework\Argument\Parameter;
@@ -41,7 +41,7 @@ use RuntimeException;
 /**
  * make:crud CLI command.
  *
- * Responsibility: Runs the make:crud command to Scaffold an administrative CRUD module on top of the framework form builder and datagrid.
+ * Responsibility: Runs the make:crud command to scaffold a CRUD module on top of the framework FormBuilder and DataGrid.
  *
  * @package Catalyst\Framework\Cli\Commands
  */
@@ -64,7 +64,7 @@ final class MakeCrudCommand extends AbstractCommand
      */
     public function getDescription(): string
     {
-        return 'Scaffold an administrative CRUD module on top of the framework form builder and datagrid.';
+        return 'Scaffold a CRUD module on top of the framework FormBuilder and DataGrid.';
     }
 
     /**
@@ -79,7 +79,7 @@ final class MakeCrudCommand extends AbstractCommand
             new Option(null, 'fields', '', false, 'Field list: name:text!,slug:text!,description:textarea', true),
             new Option(null, 'table', '', false, 'Override table name (defaults to pluralized entity)', true),
             new Option(null, 'description', '', false, 'Module manifest description', true),
-            new Option(null, 'permission', '', false, 'Permission slug for the generated admin module', true),
+            new Option(null, 'permission', '', false, 'Permission slug for the generated module', true),
             new Option(null, 'surface', 'administration', false, 'Guarded surface: workspace or administration', true),
             new Option(null, 'soft-deletes', '0', false, 'Use HasSoftDeletesTrait in the generated entity (1/0)', true),
             new Option(null, 'auditable', '1', false, 'Use HasAuditLogTrait + audit columns in the generated entity and migration (1/0)', true),

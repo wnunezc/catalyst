@@ -1,34 +1,34 @@
 # Runtime Inventory
 
 > Auto-generated from filesystem and PHP tokens. Run `php public/cli.php docs:inventory` to refresh.
-> Last generated: 2026-06-04 06:52:08
+> Last generated: 2026-06-12 00:49:59
 
 ## Summary
 
-- Symbols: 676
-- Templates: 230
-- Scripts: 54
+- Symbols: 690
+- Templates: 170
+- Scripts: 59
 
 ## Symbol Roots
 
 | Root | Count |
 |---|---:|
-| `Repository` | 173 |
-| `app` | 503 |
+| `Repository` | 167 |
+| `app` | 523 |
 
 ## Template Roots
 
 | Root | Count |
 |---|---:|
-| `Repository views` | 159 |
-| `boot-core/template` | 71 |
+| `Repository views` | 145 |
+| `boot-core/template` | 25 |
 
 ## Script Roots
 
 | Root | Count |
 |---|---:|
-| `Repository front` | 17 |
-| `public catalyst js` | 37 |
+| `Repository front` | 16 |
+| `public catalyst js` | 43 |
 
 ## Symbols
 
@@ -37,7 +37,7 @@
 | `App\Repositories\UserProfileRepository` | `class` | `Repository/App/Repositories/UserProfileRepository.php` | 45 |
 | `App\Services\ApplicationEntryService` | `class` | `Repository/App/Services/ApplicationEntryService.php` | 43 |
 | `App\Services\UserProfileService` | `class` | `Repository/App/Services/UserProfileService.php` | 42 |
-| `App\Support\PublicSurface\Controllers\PublicPageController` | `class` | `Repository/App/Support/PublicSurface/Controllers/PublicPageController.php` | 44 |
+| `App\Support\PublicSurface\Controllers\PublicPageController` | `class` | `Repository/App/Support/PublicSurface/Controllers/PublicPageController.php` | 45 |
 | `App\Support\PublicSurface\Support\PublicDemoCatalog` | `class` | `Repository/App/Support/PublicSurface/Support/PublicDemoCatalog.php` | 39 |
 | `App\Surface\Account\Controllers\AccountCenterController` | `class` | `Repository/App/Surface/Account/Controllers/AccountCenterController.php` | 50 |
 | `App\Surface\Account\Controllers\AccountRecoveryAdminController` | `class` | `Repository/App/Surface/Account/Controllers/AccountRecoveryAdminController.php` | 47 |
@@ -48,7 +48,7 @@
 | `App\Surface\Account\Services\AccountDashboardService` | `class` | `Repository/App/Surface/Account/Services/AccountDashboardService.php` | 43 |
 | `App\Surface\Account\Services\AccountRecoveryService` | `class` | `Repository/App/Surface/Account/Services/AccountRecoveryService.php` | 47 |
 | `App\Surface\Account\Services\AccountSecurityService` | `class` | `Repository/App/Surface/Account/Services/AccountSecurityService.php` | 43 |
-| `App\Surface\Account\Support\AccountShellViewModel` | `class` | `Repository/App/Surface/Account/Support/AccountShellViewModel.php` | 47 |
+| `App\Surface\Account\Support\AccountSurfaceViewModel` | `class` | `Repository/App/Surface/Account/Support/AccountSurfaceViewModel.php` | 42 |
 | `App\Surface\Dashboard\Controllers\DashboardController` | `class` | `Repository/App/Surface/Dashboard/Controllers/DashboardController.php` | 48 |
 | `App\Surface\Home\Controllers\HomeController` | `class` | `Repository/App/Surface/Home/Controllers/HomeController.php` | 46 |
 | `App\Surface\Landing\Controllers\LandingController` | `class` | `Repository/App/Surface/Landing/Controllers/LandingController.php` | 45 |
@@ -79,26 +79,6 @@
 | `Catalyst\Entities\UserProfile` | `class` | `app/Entities/UserProfile.php` | 47 |
 | `Catalyst\Entities\WorkflowInstance` | `class` | `app/Entities/WorkflowInstance.php` | 44 |
 | `Catalyst\Entities\WorkflowTransition` | `class` | `app/Entities/WorkflowTransition.php` | 42 |
-| `Catalyst\Framework\Admin\Crud\CrudAssetPublisher` | `class` | `app/Framework/Admin/Crud/CrudAssetPublisher.php` | 42 |
-| `Catalyst\Framework\Admin\Crud\CrudBlueprintFactory` | `class` | `app/Framework/Admin/Crud/CrudBlueprintFactory.php` | 45 |
-| `Catalyst\Framework\Admin\Crud\CrudFieldDefinitionParser` | `class` | `app/Framework/Admin/Crud/CrudFieldDefinitionParser.php` | 41 |
-| `Catalyst\Framework\Admin\Crud\CrudFileFactory` | `class` | `app/Framework/Admin/Crud/CrudFileFactory.php` | 42 |
-| `Catalyst\Framework\Admin\Crud\CrudScaffoldService` | `class` | `app/Framework/Admin/Crud/CrudScaffoldService.php` | 42 |
-| `Catalyst\Framework\Admin\Crud\CrudSchemaBuilder` | `class` | `app/Framework/Admin/Crud/CrudSchemaBuilder.php` | 39 |
-| `Catalyst\Framework\Admin\Form\FormBuilder` | `class` | `app/Framework/Admin/Form/FormBuilder.php` | 39 |
-| `Catalyst\Framework\Admin\Grid\DataGrid` | `class` | `app/Framework/Admin/Grid/DataGrid.php` | 44 |
-| `Catalyst\Framework\Admin\Grid\DataGridBulkActionNormalizer` | `class` | `app/Framework/Admin/Grid/DataGridBulkActionNormalizer.php` | 39 |
-| `Catalyst\Framework\Admin\Grid\DataGridColumnNormalizer` | `class` | `app/Framework/Admin/Grid/DataGridColumnNormalizer.php` | 39 |
-| `Catalyst\Framework\Admin\Grid\DataGridCsvExporter` | `class` | `app/Framework/Admin/Grid/DataGridCsvExporter.php` | 41 |
-| `Catalyst\Framework\Admin\Grid\DataGridExportNormalizer` | `class` | `app/Framework/Admin/Grid/DataGridExportNormalizer.php` | 39 |
-| `Catalyst\Framework\Admin\Grid\DataGridFilterNormalizer` | `class` | `app/Framework/Admin/Grid/DataGridFilterNormalizer.php` | 39 |
-| `Catalyst\Framework\Admin\Grid\DataGridHtmlExportRenderer` | `class` | `app/Framework/Admin/Grid/DataGridHtmlExportRenderer.php` | 42 |
-| `Catalyst\Framework\Admin\Grid\DataGridPaginationBuilder` | `class` | `app/Framework/Admin/Grid/DataGridPaginationBuilder.php` | 39 |
-| `Catalyst\Framework\Admin\Grid\DataGridRowActionNormalizer` | `class` | `app/Framework/Admin/Grid/DataGridRowActionNormalizer.php` | 41 |
-| `Catalyst\Framework\Admin\Grid\DataGridRowNormalizer` | `class` | `app/Framework/Admin/Grid/DataGridRowNormalizer.php` | 42 |
-| `Catalyst\Framework\Admin\Grid\DataGridStateResolver` | `class` | `app/Framework/Admin/Grid/DataGridStateResolver.php` | 41 |
-| `Catalyst\Framework\Admin\Grid\DataGridTextFormatter` | `class` | `app/Framework/Admin/Grid/DataGridTextFormatter.php` | 39 |
-| `Catalyst\Framework\Admin\Grid\DataGridUrlBuilder` | `class` | `app/Framework/Admin/Grid/DataGridUrlBuilder.php` | 39 |
 | `Catalyst\Framework\Api\ApiCatalog` | `class` | `app/Framework/Api/ApiCatalog.php` | 39 |
 | `Catalyst\Framework\Api\ApiTokenManager` | `class` | `app/Framework/Api/ApiTokenManager.php` | 44 |
 | `Catalyst\Framework\Api\ApiTokenRepository` | `class` | `app/Framework/Api/ApiTokenRepository.php` | 46 |
@@ -159,7 +139,6 @@
 | `Catalyst\Framework\Cli\CliRouteLoader` | `class` | `app/Framework/Cli/CliRouteLoader.php` | 44 |
 | `Catalyst\Framework\Cli\CommandInterface` | `interface` | `app/Framework/Cli/CommandInterface.php` | 44 |
 | `Catalyst\Framework\Cli\CommandRegistry` | `class` | `app/Framework/Cli/CommandRegistry.php` | 42 |
-| `Catalyst\Framework\Cli\Commands\AdminNavigationSmokeCommand` | `class` | `app/Framework/Cli/Commands/AdminNavigationSmokeCommand.php` | 46 |
 | `Catalyst\Framework\Cli\Commands\ApiTokensSmokeCommand` | `class` | `app/Framework/Cli/Commands/ApiTokensSmokeCommand.php` | 49 |
 | `Catalyst\Framework\Cli\Commands\AttachmentsListCommand` | `class` | `app/Framework/Cli/Commands/AttachmentsListCommand.php` | 45 |
 | `Catalyst\Framework\Cli\Commands\AttachmentsPolicySmokeCommand` | `class` | `app/Framework/Cli/Commands/AttachmentsPolicySmokeCommand.php` | 47 |
@@ -172,8 +151,15 @@
 | `Catalyst\Framework\Cli\Commands\ClaimsListCommand` | `class` | `app/Framework/Cli/Commands/ClaimsListCommand.php` | 45 |
 | `Catalyst\Framework\Cli\Commands\ClaimsReleaseCommand` | `class` | `app/Framework/Cli/Commands/ClaimsReleaseCommand.php` | 46 |
 | `Catalyst\Framework\Cli\Commands\ConcurrencySmokeCommand` | `class` | `app/Framework/Cli/Commands/ConcurrencySmokeCommand.php` | 49 |
+| `Catalyst\Framework\Cli\Commands\ConfigContractSmokeCommand` | `class` | `app/Framework/Cli/Commands/ConfigContractSmokeCommand.php` | 45 |
+| `Catalyst\Framework\Cli\Commands\ConfigE2eReadinessCommand` | `class` | `app/Framework/Cli/Commands/ConfigE2eReadinessCommand.php` | 45 |
 | `Catalyst\Framework\Cli\Commands\ConfigSecretsSyncCommand` | `class` | `app/Framework/Cli/Commands/ConfigSecretsSyncCommand.php` | 45 |
 | `Catalyst\Framework\Cli\Commands\ConfigShowCommand` | `class` | `app/Framework/Cli/Commands/ConfigShowCommand.php` | 46 |
+| `Catalyst\Framework\Cli\Commands\ConfigSyncCommand` | `class` | `app/Framework/Cli/Commands/ConfigSyncCommand.php` | 45 |
+| `Catalyst\Framework\Cli\Commands\ConfigurationFeatureFlagsSmokeCommand` | `class` | `app/Framework/Cli/Commands/ConfigurationFeatureFlagsSmokeCommand.php` | 18 |
+| `Catalyst\Framework\Cli\Commands\ConfigurationLocalizationSmokeCommand` | `class` | `app/Framework/Cli/Commands/ConfigurationLocalizationSmokeCommand.php` | 47 |
+| `Catalyst\Framework\Cli\Commands\ConfigurationRequestsRegressionCommand` | `class` | `app/Framework/Cli/Commands/ConfigurationRequestsRegressionCommand.php` | 13 |
+| `Catalyst\Framework\Cli\Commands\CrudScaffoldSmokeCommand` | `class` | `app/Framework/Cli/Commands/CrudScaffoldSmokeCommand.php` | 14 |
 | `Catalyst\Framework\Cli\Commands\DeletionSmokeCommand` | `class` | `app/Framework/Cli/Commands/DeletionSmokeCommand.php` | 46 |
 | `Catalyst\Framework\Cli\Commands\DeployListCommand` | `class` | `app/Framework/Cli/Commands/DeployListCommand.php` | 46 |
 | `Catalyst\Framework\Cli\Commands\DeployRunCommand` | `class` | `app/Framework/Cli/Commands/DeployRunCommand.php` | 46 |
@@ -212,7 +198,6 @@
 | `Catalyst\Framework\Cli\Commands\MigrateRollbackCommand` | `class` | `app/Framework/Cli/Commands/MigrateRollbackCommand.php` | 46 |
 | `Catalyst\Framework\Cli\Commands\MigrateStatusCommand` | `class` | `app/Framework/Cli/Commands/MigrateStatusCommand.php` | 47 |
 | `Catalyst\Framework\Cli\Commands\ModuleLocalizationRegressionCommand` | `class` | `app/Framework/Cli/Commands/ModuleLocalizationRegressionCommand.php` | 44 |
-| `Catalyst\Framework\Cli\Commands\OperationsRequestsRegressionCommand` | `class` | `app/Framework/Cli/Commands/OperationsRequestsRegressionCommand.php` | 43 |
 | `Catalyst\Framework\Cli\Commands\OrganizationSmokeCommand` | `class` | `app/Framework/Cli/Commands/OrganizationSmokeCommand.php` | 46 |
 | `Catalyst\Framework\Cli\Commands\PluginListCommand` | `class` | `app/Framework/Cli/Commands/PluginListCommand.php` | 45 |
 | `Catalyst\Framework\Cli\Commands\PluginToggleCommand` | `class` | `app/Framework/Cli/Commands/PluginToggleCommand.php` | 46 |
@@ -240,7 +225,7 @@
 | `Catalyst\Framework\Cli\Commands\SecurityRegressionCommand` | `class` | `app/Framework/Cli/Commands/SecurityRegressionCommand.php` | 60 |
 | `Catalyst\Framework\Cli\Commands\SensitivitySmokeCommand` | `class` | `app/Framework/Cli/Commands/SensitivitySmokeCommand.php` | 47 |
 | `Catalyst\Framework\Cli\Commands\SequencesSmokeCommand` | `class` | `app/Framework/Cli/Commands/SequencesSmokeCommand.php` | 47 |
-| `Catalyst\Framework\Cli\Commands\SettingsLocalizationSmokeCommand` | `class` | `app/Framework/Cli/Commands/SettingsLocalizationSmokeCommand.php` | 47 |
+| `Catalyst\Framework\Cli\Commands\ShellNavigationSmokeCommand` | `class` | `app/Framework/Cli/Commands/ShellNavigationSmokeCommand.php` | 46 |
 | `Catalyst\Framework\Cli\Commands\StatusCommand` | `class` | `app/Framework/Cli/Commands/StatusCommand.php` | 45 |
 | `Catalyst\Framework\Cli\Commands\StorageCleanCommand` | `class` | `app/Framework/Cli/Commands/StorageCleanCommand.php` | 45 |
 | `Catalyst\Framework\Cli\Commands\TemporalSmokeCommand` | `class` | `app/Framework/Cli/Commands/TemporalSmokeCommand.php` | 47 |
@@ -256,10 +241,25 @@
 | `Catalyst\Framework\Cli\TerminalStyle` | `class` | `app/Framework/Cli/TerminalStyle.php` | 40 |
 | `Catalyst\Framework\Concurrency\RecordClaimManager` | `class` | `app/Framework/Concurrency/RecordClaimManager.php` | 49 |
 | `Catalyst\Framework\Concurrency\RecordClaimRepository` | `class` | `app/Framework/Concurrency/RecordClaimRepository.php` | 46 |
+| `Catalyst\Framework\Config\LocalConfigManager` | `class` | `app/Framework/Config/LocalConfigManager.php` | 39 |
 | `Catalyst\Framework\Container\Container` | `class` | `app/Framework/Container/Container.php` | 45 |
 | `Catalyst\Framework\Controllers\CanonicalRedirectController` | `class` | `app/Framework/Controllers/CanonicalRedirectController.php` | 41 |
 | `Catalyst\Framework\Controllers\Controller` | `class` | `app/Framework/Controllers/Controller.php` | 60 |
 | `Catalyst\Framework\Controllers\FlashController` | `class` | `app/Framework/Controllers/FlashController.php` | 42 |
+| `Catalyst\Framework\DataGrid\DataGrid` | `class` | `app/Framework/DataGrid/DataGrid.php` | 44 |
+| `Catalyst\Framework\DataGrid\DataGridBulkActionNormalizer` | `class` | `app/Framework/DataGrid/DataGridBulkActionNormalizer.php` | 39 |
+| `Catalyst\Framework\DataGrid\DataGridColumnNormalizer` | `class` | `app/Framework/DataGrid/DataGridColumnNormalizer.php` | 39 |
+| `Catalyst\Framework\DataGrid\DataGridCsvExporter` | `class` | `app/Framework/DataGrid/DataGridCsvExporter.php` | 41 |
+| `Catalyst\Framework\DataGrid\DataGridExportNormalizer` | `class` | `app/Framework/DataGrid/DataGridExportNormalizer.php` | 39 |
+| `Catalyst\Framework\DataGrid\DataGridFilterNormalizer` | `class` | `app/Framework/DataGrid/DataGridFilterNormalizer.php` | 39 |
+| `Catalyst\Framework\DataGrid\DataGridHtmlExportRenderer` | `class` | `app/Framework/DataGrid/DataGridHtmlExportRenderer.php` | 42 |
+| `Catalyst\Framework\DataGrid\DataGridPaginationBuilder` | `class` | `app/Framework/DataGrid/DataGridPaginationBuilder.php` | 39 |
+| `Catalyst\Framework\DataGrid\DataGridRowActionNormalizer` | `class` | `app/Framework/DataGrid/DataGridRowActionNormalizer.php` | 41 |
+| `Catalyst\Framework\DataGrid\DataGridRowNormalizer` | `class` | `app/Framework/DataGrid/DataGridRowNormalizer.php` | 42 |
+| `Catalyst\Framework\DataGrid\DataGridStateResolver` | `class` | `app/Framework/DataGrid/DataGridStateResolver.php` | 41 |
+| `Catalyst\Framework\DataGrid\DataGridTextFormatter` | `class` | `app/Framework/DataGrid/DataGridTextFormatter.php` | 39 |
+| `Catalyst\Framework\DataGrid\DataGridUrlBuilder` | `class` | `app/Framework/DataGrid/DataGridUrlBuilder.php` | 39 |
+| `Catalyst\Framework\DataGrid\DataGridViewModel` | `class` | `app/Framework/DataGrid/DataGridViewModel.php` | 36 |
 | `Catalyst\Framework\Database\Collection` | `class` | `app/Framework/Database/Collection.php` | 53 |
 | `Catalyst\Framework\Database\Concerns\HasModelAttributes` | `trait` | `app/Framework/Database/Concerns/HasModelAttributes.php` | 43 |
 | `Catalyst\Framework\Database\Concerns\HasModelLifecycleHooks` | `trait` | `app/Framework/Database/Concerns/HasModelLifecycleHooks.php` | 41 |
@@ -303,7 +303,9 @@
 | `Catalyst\Framework\Event\Listeners\DeliverNotificationListener` | `class` | `app/Framework/Event/Listeners/DeliverNotificationListener.php` | 44 |
 | `Catalyst\Framework\Event\Listeners\ProcessAutomationEventListener` | `class` | `app/Framework/Event/Listeners/ProcessAutomationEventListener.php` | 43 |
 | `Catalyst\Framework\FeatureFlag\FeatureFlagManager` | `class` | `app/Framework/FeatureFlag/FeatureFlagManager.php` | 53 |
-| `Catalyst\Framework\FeatureFlag\FeatureFlagOverrideRepository` | `class` | `app/Framework/FeatureFlag/FeatureFlagOverrideRepository.php` | 46 |
+| `Catalyst\Framework\FeatureFlag\FeatureFlagOverrideRepository` | `class` | `app/Framework/FeatureFlag/FeatureFlagOverrideRepository.php` | 47 |
+| `Catalyst\Framework\Form\FormBuilder` | `class` | `app/Framework/Form/FormBuilder.php` | 39 |
+| `Catalyst\Framework\Form\FormBuilderViewModel` | `class` | `app/Framework/Form/FormBuilderViewModel.php` | 36 |
 | `Catalyst\Framework\Geo\BoundingBox` | `class` | `app/Framework/Geo/BoundingBox.php` | 41 |
 | `Catalyst\Framework\Geo\Coordinate` | `class` | `app/Framework/Geo/Coordinate.php` | 41 |
 | `Catalyst\Framework\Geo\GeoManager` | `class` | `app/Framework/Geo/GeoManager.php` | 41 |
@@ -377,8 +379,14 @@
 | `Catalyst\Framework\Module\ModuleRuntimeDocsGenerator` | `class` | `app/Framework/Module/ModuleRuntimeDocsGenerator.php` | 39 |
 | `Catalyst\Framework\Module\ModuleRuntimeStateDecorator` | `class` | `app/Framework/Module/ModuleRuntimeStateDecorator.php` | 43 |
 | `Catalyst\Framework\Module\ModuleScaffoldService` | `class` | `app/Framework/Module/ModuleScaffoldService.php` | 42 |
-| `Catalyst\Framework\Navigation\AdminShellNavigationPresenter` | `class` | `app/Framework/Navigation/AdminShellNavigationPresenter.php` | 41 |
-| `Catalyst\Framework\Navigation\NavigationRegistry` | `class` | `app/Framework/Navigation/NavigationRegistry.php` | 44 |
+| `Catalyst\Framework\Navigation\ApplicationNavigationProvider` | `class` | `app/Framework/Navigation/ApplicationNavigationProvider.php` | 12 |
+| `Catalyst\Framework\Navigation\DemoUiNavigationProvider` | `class` | `app/Framework/Navigation/DemoUiNavigationProvider.php` | 12 |
+| `Catalyst\Framework\Navigation\FrameworkAdminNavigationProvider` | `class` | `app/Framework/Navigation/FrameworkAdminNavigationProvider.php` | 12 |
+| `Catalyst\Framework\Navigation\NavigationModelProvider` | `interface` | `app/Framework/Navigation/NavigationModelProvider.php` | 12 |
+| `Catalyst\Framework\Navigation\NavigationModelSelector` | `class` | `app/Framework/Navigation/NavigationModelSelector.php` | 14 |
+| `Catalyst\Framework\Navigation\NavigationRegistry` | `class` | `app/Framework/Navigation/NavigationRegistry.php` | 45 |
+| `Catalyst\Framework\Navigation\NavigationTreeNormalizer` | `class` | `app/Framework/Navigation/NavigationTreeNormalizer.php` | 14 |
+| `Catalyst\Framework\Navigation\ShellNavigationPresenter` | `class` | `app/Framework/Navigation/ShellNavigationPresenter.php` | 41 |
 | `Catalyst\Framework\Notification\Notification` | `class` | `app/Framework/Notification/Notification.php` | 45 |
 | `Catalyst\Framework\Notification\NotificationBag` | `class` | `app/Framework/Notification/NotificationBag.php` | 42 |
 | `Catalyst\Framework\Notification\NotificationManager` | `class` | `app/Framework/Notification/NotificationManager.php` | 57 |
@@ -390,7 +398,8 @@
 | `Catalyst\Framework\Organization\OrganizationRepository` | `class` | `app/Framework/Organization/OrganizationRepository.php` | 19 |
 | `Catalyst\Framework\Plugin\PluginManager` | `class` | `app/Framework/Plugin/PluginManager.php` | 48 |
 | `Catalyst\Framework\Plugin\PluginRegistry` | `class` | `app/Framework/Plugin/PluginRegistry.php` | 41 |
-| `Catalyst\Framework\Presence\PresenceManager` | `class` | `app/Framework/Presence/PresenceManager.php` | 43 |
+| `Catalyst\Framework\Presence\RecordPresenceManager` | `class` | `app/Framework/Presence/RecordPresenceManager.php` | 43 |
+| `Catalyst\Framework\Presence\RecordPresenceViewModel` | `class` | `app/Framework/Presence/RecordPresenceViewModel.php` | 33 |
 | `Catalyst\Framework\Queue\Jobs\DispatchNotificationJob` | `class` | `app/Framework/Queue/Jobs/DispatchNotificationJob.php` | 43 |
 | `Catalyst\Framework\Queue\Jobs\InvokeQueuedListenerJob` | `class` | `app/Framework/Queue/Jobs/InvokeQueuedListenerJob.php` | 44 |
 | `Catalyst\Framework\Queue\Jobs\PruneQueueHistoryJob` | `class` | `app/Framework/Queue/Jobs/PruneQueueHistoryJob.php` | 43 |
@@ -426,6 +435,12 @@
 | `Catalyst\Framework\Route\RouteGroup` | `class` | `app/Framework/Route/RouteGroup.php` | 42 |
 | `Catalyst\Framework\Route\Router` | `class` | `app/Framework/Route/Router.php` | 53 |
 | `Catalyst\Framework\Route\UrlGenerator` | `class` | `app/Framework/Route/UrlGenerator.php` | 44 |
+| `Catalyst\Framework\Scaffolding\Crud\CrudAssetPublisher` | `class` | `app/Framework/Scaffolding/Crud/CrudAssetPublisher.php` | 42 |
+| `Catalyst\Framework\Scaffolding\Crud\CrudBlueprintFactory` | `class` | `app/Framework/Scaffolding/Crud/CrudBlueprintFactory.php` | 45 |
+| `Catalyst\Framework\Scaffolding\Crud\CrudFieldDefinitionParser` | `class` | `app/Framework/Scaffolding/Crud/CrudFieldDefinitionParser.php` | 41 |
+| `Catalyst\Framework\Scaffolding\Crud\CrudFileFactory` | `class` | `app/Framework/Scaffolding/Crud/CrudFileFactory.php` | 42 |
+| `Catalyst\Framework\Scaffolding\Crud\CrudScaffoldService` | `class` | `app/Framework/Scaffolding/Crud/CrudScaffoldService.php` | 42 |
+| `Catalyst\Framework\Scaffolding\Crud\CrudSchemaBuilder` | `class` | `app/Framework/Scaffolding/Crud/CrudSchemaBuilder.php` | 39 |
 | `Catalyst\Framework\Schedule\CronExpression` | `class` | `app/Framework/Schedule/CronExpression.php` | 41 |
 | `Catalyst\Framework\Schedule\FrameworkScheduleCatalog` | `class` | `app/Framework/Schedule/FrameworkScheduleCatalog.php` | 44 |
 | `Catalyst\Framework\Schedule\ScheduleLockManager` | `class` | `app/Framework/Schedule/ScheduleLockManager.php` | 42 |
@@ -471,9 +486,14 @@
 | `Catalyst\Framework\Traits\SingletonTrait` | `trait` | `app/Framework/Traits/SingletonTrait.php` | 42 |
 | `Catalyst\Framework\Versioning\VersionManager` | `class` | `app/Framework/Versioning/VersionManager.php` | 48 |
 | `Catalyst\Framework\Versioning\VersionRepository` | `class` | `app/Framework/Versioning/VersionRepository.php` | 46 |
+| `Catalyst\Framework\View\AssetUrl` | `class` | `app/Framework/View/AssetUrl.php` | 12 |
+| `Catalyst\Framework\View\DocumentScope` | `class` | `app/Framework/View/DocumentScope.php` | 23 |
 | `Catalyst\Framework\View\HtmlAllowlistSanitizer` | `class` | `app/Framework/View/HtmlAllowlistSanitizer.php` | 43 |
 | `Catalyst\Framework\View\InlineJson` | `class` | `app/Framework/View/InlineJson.php` | 41 |
 | `Catalyst\Framework\View\ModuleViewPathRegistrar` | `class` | `app/Framework/View/ModuleViewPathRegistrar.php` | 39 |
+| `Catalyst\Framework\View\PageHeaderViewModel` | `class` | `app/Framework/View/PageHeaderViewModel.php` | 10 |
+| `Catalyst\Framework\View\StatusBarViewModel` | `class` | `app/Framework/View/StatusBarViewModel.php` | 24 |
+| `Catalyst\Framework\View\TopbarViewModel` | `class` | `app/Framework/View/TopbarViewModel.php` | 15 |
 | `Catalyst\Framework\View\TrustedHtml` | `class` | `app/Framework/View/TrustedHtml.php` | 39 |
 | `Catalyst\Framework\View\View` | `class` | `app/Framework/View/View.php` | 46 |
 | `Catalyst\Framework\View\ViewTokenRenderer` | `class` | `app/Framework/View/ViewTokenRenderer.php` | 43 |
@@ -488,7 +508,7 @@
 | `Catalyst\Framework\Workflow\WorkflowTransitionDecision` | `class` | `app/Framework/Workflow/WorkflowTransitionDecision.php` | 39 |
 | `Catalyst\Framework\Workflow\WorkflowTransitionEvaluator` | `class` | `app/Framework/Workflow/WorkflowTransitionEvaluator.php` | 39 |
 | `Catalyst\Helpers\Config\AppEntryCatalog` | `class` | `app/Helpers/Config/AppEntryCatalog.php` | 39 |
-| `Catalyst\Helpers\Config\ConfigManager` | `class` | `app/Helpers/Config/ConfigManager.php` | 85 |
+| `Catalyst\Helpers\Config\ConfigManager` | `class` | `app/Helpers/Config/ConfigManager.php` | 89 |
 | `Catalyst\Helpers\Config\ConfigSecretCatalog` | `class` | `app/Helpers/Config/ConfigSecretCatalog.php` | 39 |
 | `Catalyst\Helpers\Config\ConfigSecretStore` | `class` | `app/Helpers/Config/ConfigSecretStore.php` | 41 |
 | `Catalyst\Helpers\Debug\ColorType` | `enum` | `app/Helpers/Debug/ColorType.php` | 42 |
@@ -590,7 +610,66 @@
 | `Catalyst\Repository\Catalogs\Requests\CatalogItemRequest` | `class` | `Repository/Framework/Catalogs/Requests/CatalogItemRequest.php` | 49 |
 | `Catalyst\Repository\Catalogs\Support\CatalogFormFactory` | `class` | `Repository/Framework/Catalogs/Support/CatalogFormFactory.php` | 41 |
 | `Catalyst\Repository\Catalogs\Support\CatalogGridFactory` | `class` | `Repository/Framework/Catalogs/Support/CatalogGridFactory.php` | 43 |
-| `Catalyst\Repository\DemoUi\Controllers\DemoUiController` | `class` | `Repository/Framework/DemoUi/Controllers/DemoUiController.php` | 45 |
+| `Catalyst\Repository\Configuration\Controllers\AppConfigSaveController` | `class` | `Repository/Framework/Configuration/Controllers/AppConfigSaveController.php` | 44 |
+| `Catalyst\Repository\Configuration\Controllers\AppearanceController` | `class` | `Repository/Framework/Configuration/Controllers/AppearanceController.php` | 45 |
+| `Catalyst\Repository\Configuration\Controllers\CacheConfigSaveController` | `class` | `Repository/Framework/Configuration/Controllers/CacheConfigSaveController.php` | 44 |
+| `Catalyst\Repository\Configuration\Controllers\ConfigController` | `class` | `Repository/Framework/Configuration/Controllers/ConfigController.php` | 45 |
+| `Catalyst\Repository\Configuration\Controllers\CorsConfigSaveController` | `class` | `Repository/Framework/Configuration/Controllers/CorsConfigSaveController.php` | 50 |
+| `Catalyst\Repository\Configuration\Controllers\DbConfigSaveController` | `class` | `Repository/Framework/Configuration/Controllers/DbConfigSaveController.php` | 46 |
+| `Catalyst\Repository\Configuration\Controllers\DevToolsConfigSaveController` | `class` | `Repository/Framework/Configuration/Controllers/DevToolsConfigSaveController.php` | 44 |
+| `Catalyst\Repository\Configuration\Controllers\DkimController` | `class` | `Repository/Framework/Configuration/Controllers/DkimController.php` | 45 |
+| `Catalyst\Repository\Configuration\Controllers\FeatureFlagsController` | `class` | `Repository/Framework/Configuration/Controllers/FeatureFlagsController.php` | 51 |
+| `Catalyst\Repository\Configuration\Controllers\FeaturesConfigSaveController` | `class` | `Repository/Framework/Configuration/Controllers/FeaturesConfigSaveController.php` | 44 |
+| `Catalyst\Repository\Configuration\Controllers\FtpConfigController` | `class` | `Repository/Framework/Configuration/Controllers/FtpConfigController.php` | 46 |
+| `Catalyst\Repository\Configuration\Controllers\HealthController` | `class` | `Repository/Framework/Configuration/Controllers/HealthController.php` | 46 |
+| `Catalyst\Repository\Configuration\Controllers\LoggingConfigSaveController` | `class` | `Repository/Framework/Configuration/Controllers/LoggingConfigSaveController.php` | 44 |
+| `Catalyst\Repository\Configuration\Controllers\MailConfigSaveController` | `class` | `Repository/Framework/Configuration/Controllers/MailConfigSaveController.php` | 44 |
+| `Catalyst\Repository\Configuration\Controllers\PluginsController` | `class` | `Repository/Framework/Configuration/Controllers/PluginsController.php` | 47 |
+| `Catalyst\Repository\Configuration\Controllers\SecurityConfigSaveController` | `class` | `Repository/Framework/Configuration/Controllers/SecurityConfigSaveController.php` | 44 |
+| `Catalyst\Repository\Configuration\Controllers\SessionConfigSaveController` | `class` | `Repository/Framework/Configuration/Controllers/SessionConfigSaveController.php` | 44 |
+| `Catalyst\Repository\Configuration\Controllers\SetupCompletionController` | `class` | `Repository/Framework/Configuration/Controllers/SetupCompletionController.php` | 49 |
+| `Catalyst\Repository\Configuration\Controllers\WebSocketConfigSaveController` | `class` | `Repository/Framework/Configuration/Controllers/WebSocketConfigSaveController.php` | 44 |
+| `Catalyst\Repository\Configuration\Requests\AbstractSettingsRequest` | `class` | `Repository/Framework/Configuration/Requests/AbstractSettingsRequest.php` | 41 |
+| `Catalyst\Repository\Configuration\Requests\AppConfigRequest` | `class` | `Repository/Framework/Configuration/Requests/AppConfigRequest.php` | 46 |
+| `Catalyst\Repository\Configuration\Requests\AppearanceUpdateRequest` | `class` | `Repository/Framework/Configuration/Requests/AppearanceUpdateRequest.php` | 41 |
+| `Catalyst\Repository\Configuration\Requests\CacheConfigRequest` | `class` | `Repository/Framework/Configuration/Requests/CacheConfigRequest.php` | 44 |
+| `Catalyst\Repository\Configuration\Requests\CorsConfigRequest` | `class` | `Repository/Framework/Configuration/Requests/CorsConfigRequest.php` | 13 |
+| `Catalyst\Repository\Configuration\Requests\DbConfigRequest` | `class` | `Repository/Framework/Configuration/Requests/DbConfigRequest.php` | 39 |
+| `Catalyst\Repository\Configuration\Requests\DevToolsConfigRequest` | `class` | `Repository/Framework/Configuration/Requests/DevToolsConfigRequest.php` | 39 |
+| `Catalyst\Repository\Configuration\Requests\DkimGenerateRequest` | `class` | `Repository/Framework/Configuration/Requests/DkimGenerateRequest.php` | 13 |
+| `Catalyst\Repository\Configuration\Requests\FeatureFlagDefaultRequest` | `class` | `Repository/Framework/Configuration/Requests/FeatureFlagDefaultRequest.php` | 41 |
+| `Catalyst\Repository\Configuration\Requests\FeatureFlagOverrideRequest` | `class` | `Repository/Framework/Configuration/Requests/FeatureFlagOverrideRequest.php` | 43 |
+| `Catalyst\Repository\Configuration\Requests\FeaturesConfigRequest` | `class` | `Repository/Framework/Configuration/Requests/FeaturesConfigRequest.php` | 39 |
+| `Catalyst\Repository\Configuration\Requests\FtpConfigRequest` | `class` | `Repository/Framework/Configuration/Requests/FtpConfigRequest.php` | 13 |
+| `Catalyst\Repository\Configuration\Requests\LoggingConfigRequest` | `class` | `Repository/Framework/Configuration/Requests/LoggingConfigRequest.php` | 39 |
+| `Catalyst\Repository\Configuration\Requests\MailConfigRequest` | `class` | `Repository/Framework/Configuration/Requests/MailConfigRequest.php` | 39 |
+| `Catalyst\Repository\Configuration\Requests\SecurityConfigRequest` | `class` | `Repository/Framework/Configuration/Requests/SecurityConfigRequest.php` | 39 |
+| `Catalyst\Repository\Configuration\Requests\SessionConfigRequest` | `class` | `Repository/Framework/Configuration/Requests/SessionConfigRequest.php` | 39 |
+| `Catalyst\Repository\Configuration\Requests\SetupAdminRequest` | `class` | `Repository/Framework/Configuration/Requests/SetupAdminRequest.php` | 13 |
+| `Catalyst\Repository\Configuration\Requests\WebSocketConfigRequest` | `class` | `Repository/Framework/Configuration/Requests/WebSocketConfigRequest.php` | 39 |
+| `Catalyst\Repository\Configuration\Services\SetupAdminProvisioner` | `class` | `Repository/Framework/Configuration/Services/SetupAdminProvisioner.php` | 20 |
+| `Catalyst\Repository\Configuration\Services\SetupDatabaseException` | `class` | `Repository/Framework/Configuration/Services/SetupDatabaseException.php` | 16 |
+| `Catalyst\Repository\Configuration\Services\SetupDatabaseService` | `class` | `Repository/Framework/Configuration/Services/SetupDatabaseService.php` | 21 |
+| `Catalyst\Repository\Configuration\Support\AdminReadinessProbe` | `class` | `Repository/Framework/Configuration/Support/AdminReadinessProbe.php` | 42 |
+| `Catalyst\Repository\Configuration\Support\AppConfigWriter` | `class` | `Repository/Framework/Configuration/Support/AppConfigWriter.php` | 41 |
+| `Catalyst\Repository\Configuration\Support\CacheConfigWriter` | `class` | `Repository/Framework/Configuration/Support/CacheConfigWriter.php` | 46 |
+| `Catalyst\Repository\Configuration\Support\ConfigurationAccessContract` | `class` | `Repository/Framework/Configuration/Support/ConfigurationAccessContract.php` | 16 |
+| `Catalyst\Repository\Configuration\Support\DbConfigWriter` | `class` | `Repository/Framework/Configuration/Support/DbConfigWriter.php` | 41 |
+| `Catalyst\Repository\Configuration\Support\DbConnectivityProbe` | `class` | `Repository/Framework/Configuration/Support/DbConnectivityProbe.php` | 43 |
+| `Catalyst\Repository\Configuration\Support\DevToolsConfigWriter` | `class` | `Repository/Framework/Configuration/Support/DevToolsConfigWriter.php` | 41 |
+| `Catalyst\Repository\Configuration\Support\FeaturesConfigWriter` | `class` | `Repository/Framework/Configuration/Support/FeaturesConfigWriter.php` | 41 |
+| `Catalyst\Repository\Configuration\Support\FtpConnectionProbe` | `class` | `Repository/Framework/Configuration/Support/FtpConnectionProbe.php` | 41 |
+| `Catalyst\Repository\Configuration\Support\HealthProbeProjector` | `class` | `Repository/Framework/Configuration/Support/HealthProbeProjector.php` | 12 |
+| `Catalyst\Repository\Configuration\Support\LoggingConfigWriter` | `class` | `Repository/Framework/Configuration/Support/LoggingConfigWriter.php` | 41 |
+| `Catalyst\Repository\Configuration\Support\MailConfigWriter` | `class` | `Repository/Framework/Configuration/Support/MailConfigWriter.php` | 41 |
+| `Catalyst\Repository\Configuration\Support\SecurityConfigWriter` | `class` | `Repository/Framework/Configuration/Support/SecurityConfigWriter.php` | 41 |
+| `Catalyst\Repository\Configuration\Support\SessionConfigWriter` | `class` | `Repository/Framework/Configuration/Support/SessionConfigWriter.php` | 42 |
+| `Catalyst\Repository\Configuration\Support\SettingsCardFactory` | `class` | `Repository/Framework/Configuration/Support/SettingsCardFactory.php` | 39 |
+| `Catalyst\Repository\Configuration\Support\SettingsDisplayFactory` | `class` | `Repository/Framework/Configuration/Support/SettingsDisplayFactory.php` | 39 |
+| `Catalyst\Repository\Configuration\Support\SettingsModalFactory` | `class` | `Repository/Framework/Configuration/Support/SettingsModalFactory.php` | 39 |
+| `Catalyst\Repository\Configuration\Support\SettingsPageViewContext` | `class` | `Repository/Framework/Configuration/Support/SettingsPageViewContext.php` | 42 |
+| `Catalyst\Repository\Configuration\Support\WebSocketConfigWriter` | `class` | `Repository/Framework/Configuration/Support/WebSocketConfigWriter.php` | 41 |
+| `Catalyst\Repository\DemoUi\Controllers\DemoUiController` | `class` | `Repository/Framework/DemoUi/Controllers/DemoUiController.php` | 47 |
 | `Catalyst\Repository\DevTools\Controllers\DatabaseResetController` | `class` | `Repository/Framework/DevTools/Controllers/DatabaseResetController.php` | 43 |
 | `Catalyst\Repository\DevTools\Controllers\DatabaseTestController` | `class` | `Repository/Framework/DevTools/Controllers/DatabaseTestController.php` | 43 |
 | `Catalyst\Repository\DevTools\Controllers\FlashTestController` | `class` | `Repository/Framework/DevTools/Controllers/FlashTestController.php` | 42 |
@@ -632,24 +711,6 @@
 | `Catalyst\Repository\Media\Support\MetadataFieldFormFactory` | `class` | `Repository/Framework/Media/Support/MetadataFieldFormFactory.php` | 41 |
 | `Catalyst\Repository\Notification\Controllers\NotificationController` | `class` | `Repository/Framework/Notification/Controllers/NotificationController.php` | 46 |
 | `Catalyst\Repository\Notification\Controllers\PresenceController` | `class` | `Repository/Framework/Notification/Controllers/PresenceController.php` | 47 |
-| `Catalyst\Repository\Operations\Controllers\AbstractOperationsController` | `class` | `Repository/Framework/Operations/Controllers/AbstractOperationsController.php` | 41 |
-| `Catalyst\Repository\Operations\Controllers\AppearanceController` | `class` | `Repository/Framework/Operations/Controllers/AppearanceController.php` | 45 |
-| `Catalyst\Repository\Operations\Controllers\DeploymentsController` | `class` | `Repository/Framework/Operations/Controllers/DeploymentsController.php` | 47 |
-| `Catalyst\Repository\Operations\Controllers\FeatureFlagsController` | `class` | `Repository/Framework/Operations/Controllers/FeatureFlagsController.php` | 48 |
-| `Catalyst\Repository\Operations\Controllers\LocalizationController` | `class` | `Repository/Framework/Operations/Controllers/LocalizationController.php` | 48 |
-| `Catalyst\Repository\Operations\Controllers\ModuleDesignerController` | `class` | `Repository/Framework/Operations/Controllers/ModuleDesignerController.php` | 50 |
-| `Catalyst\Repository\Operations\Controllers\OperationsOverviewController` | `class` | `Repository/Framework/Operations/Controllers/OperationsOverviewController.php` | 49 |
-| `Catalyst\Repository\Operations\Controllers\PluginsController` | `class` | `Repository/Framework/Operations/Controllers/PluginsController.php` | 44 |
-| `Catalyst\Repository\Operations\Controllers\TenancyController` | `class` | `Repository/Framework/Operations/Controllers/TenancyController.php` | 43 |
-| `Catalyst\Repository\Operations\Requests\AppearanceUpdateRequest` | `class` | `Repository/Framework/Operations/Requests/AppearanceUpdateRequest.php` | 42 |
-| `Catalyst\Repository\Operations\Requests\Concerns\NormalizesCheckboxValues` | `trait` | `Repository/Framework/Operations/Requests/Concerns/NormalizesCheckboxValues.php` | 39 |
-| `Catalyst\Repository\Operations\Requests\DeploymentRunRequest` | `class` | `Repository/Framework/Operations/Requests/DeploymentRunRequest.php` | 43 |
-| `Catalyst\Repository\Operations\Requests\FeatureFlagDefaultRequest` | `class` | `Repository/Framework/Operations/Requests/FeatureFlagDefaultRequest.php` | 42 |
-| `Catalyst\Repository\Operations\Requests\FeatureFlagOverrideRequest` | `class` | `Repository/Framework/Operations/Requests/FeatureFlagOverrideRequest.php` | 43 |
-| `Catalyst\Repository\Operations\Requests\LocaleCreateRequest` | `class` | `Repository/Framework/Operations/Requests/LocaleCreateRequest.php` | 42 |
-| `Catalyst\Repository\Operations\Requests\LocaleSyncRequest` | `class` | `Repository/Framework/Operations/Requests/LocaleSyncRequest.php` | 42 |
-| `Catalyst\Repository\Operations\Requests\LocalizationSettingsRequest` | `class` | `Repository/Framework/Operations/Requests/LocalizationSettingsRequest.php` | 41 |
-| `Catalyst\Repository\Operations\Requests\ModuleDesignerRequest` | `class` | `Repository/Framework/Operations/Requests/ModuleDesignerRequest.php` | 41 |
 | `Catalyst\Repository\Roles\Controllers\OrganizationHierarchyController` | `class` | `Repository/Framework/Roles/Controllers/OrganizationHierarchyController.php` | 20 |
 | `Catalyst\Repository\Roles\Controllers\PermissionsController` | `class` | `Repository/Framework/Roles/Controllers/PermissionsController.php` | 51 |
 | `Catalyst\Repository\Roles\Controllers\RolesController` | `class` | `Repository/Framework/Roles/Controllers/RolesController.php` | 53 |
@@ -658,134 +719,41 @@
 | `Catalyst\Repository\Roles\Requests\PermissionBulkSelectionRequest` | `class` | `Repository/Framework/Roles/Requests/PermissionBulkSelectionRequest.php` | 41 |
 | `Catalyst\Repository\Roles\Requests\PermissionPayloadRequest` | `class` | `Repository/Framework/Roles/Requests/PermissionPayloadRequest.php` | 43 |
 | `Catalyst\Repository\Roles\Requests\RoleBulkSelectionRequest` | `class` | `Repository/Framework/Roles/Requests/RoleBulkSelectionRequest.php` | 41 |
-| `Catalyst\Repository\Roles\Requests\RolePayloadRequest` | `class` | `Repository/Framework/Roles/Requests/RolePayloadRequest.php` | 43 |
+| `Catalyst\Repository\Roles\Requests\RolePayloadRequest` | `class` | `Repository/Framework/Roles/Requests/RolePayloadRequest.php` | 46 |
 | `Catalyst\Repository\Roles\Requests\RolePermissionSyncRequest` | `class` | `Repository/Framework/Roles/Requests/RolePermissionSyncRequest.php` | 41 |
 | `Catalyst\Repository\Roles\Requests\UserEnrollmentRequest` | `class` | `Repository/Framework/Roles/Requests/UserEnrollmentRequest.php` | 42 |
 | `Catalyst\Repository\Roles\Support\RbacLabelPresenter` | `class` | `Repository/Framework/Roles/Support/RbacLabelPresenter.php` | 39 |
 | `Catalyst\Repository\Roles\Support\UserEnrollmentFormFactory` | `class` | `Repository/Framework/Roles/Support/UserEnrollmentFormFactory.php` | 42 |
-| `Catalyst\Repository\Settings\Controllers\AppConfigSaveController` | `class` | `Repository/Framework/Settings/Controllers/AppConfigSaveController.php` | 44 |
-| `Catalyst\Repository\Settings\Controllers\CacheConfigSaveController` | `class` | `Repository/Framework/Settings/Controllers/CacheConfigSaveController.php` | 44 |
-| `Catalyst\Repository\Settings\Controllers\ConfigController` | `class` | `Repository/Framework/Settings/Controllers/ConfigController.php` | 46 |
-| `Catalyst\Repository\Settings\Controllers\CorsConfigSaveController` | `class` | `Repository/Framework/Settings/Controllers/CorsConfigSaveController.php` | 50 |
-| `Catalyst\Repository\Settings\Controllers\DbConfigSaveController` | `class` | `Repository/Framework/Settings/Controllers/DbConfigSaveController.php` | 46 |
-| `Catalyst\Repository\Settings\Controllers\DevToolsConfigSaveController` | `class` | `Repository/Framework/Settings/Controllers/DevToolsConfigSaveController.php` | 44 |
-| `Catalyst\Repository\Settings\Controllers\DkimController` | `class` | `Repository/Framework/Settings/Controllers/DkimController.php` | 45 |
-| `Catalyst\Repository\Settings\Controllers\FeaturesConfigSaveController` | `class` | `Repository/Framework/Settings/Controllers/FeaturesConfigSaveController.php` | 44 |
-| `Catalyst\Repository\Settings\Controllers\FtpConfigController` | `class` | `Repository/Framework/Settings/Controllers/FtpConfigController.php` | 46 |
-| `Catalyst\Repository\Settings\Controllers\HealthController` | `class` | `Repository/Framework/Settings/Controllers/HealthController.php` | 44 |
-| `Catalyst\Repository\Settings\Controllers\LoggingConfigSaveController` | `class` | `Repository/Framework/Settings/Controllers/LoggingConfigSaveController.php` | 44 |
-| `Catalyst\Repository\Settings\Controllers\MailConfigSaveController` | `class` | `Repository/Framework/Settings/Controllers/MailConfigSaveController.php` | 44 |
-| `Catalyst\Repository\Settings\Controllers\SecurityConfigSaveController` | `class` | `Repository/Framework/Settings/Controllers/SecurityConfigSaveController.php` | 44 |
-| `Catalyst\Repository\Settings\Controllers\SessionConfigSaveController` | `class` | `Repository/Framework/Settings/Controllers/SessionConfigSaveController.php` | 44 |
-| `Catalyst\Repository\Settings\Controllers\SetupCompletionController` | `class` | `Repository/Framework/Settings/Controllers/SetupCompletionController.php` | 48 |
-| `Catalyst\Repository\Settings\Controllers\WebSocketConfigSaveController` | `class` | `Repository/Framework/Settings/Controllers/WebSocketConfigSaveController.php` | 44 |
-| `Catalyst\Repository\Settings\Requests\AbstractSettingsRequest` | `class` | `Repository/Framework/Settings/Requests/AbstractSettingsRequest.php` | 41 |
-| `Catalyst\Repository\Settings\Requests\AppConfigRequest` | `class` | `Repository/Framework/Settings/Requests/AppConfigRequest.php` | 46 |
-| `Catalyst\Repository\Settings\Requests\CacheConfigRequest` | `class` | `Repository/Framework/Settings/Requests/CacheConfigRequest.php` | 44 |
-| `Catalyst\Repository\Settings\Requests\DbConfigRequest` | `class` | `Repository/Framework/Settings/Requests/DbConfigRequest.php` | 39 |
-| `Catalyst\Repository\Settings\Requests\DevToolsConfigRequest` | `class` | `Repository/Framework/Settings/Requests/DevToolsConfigRequest.php` | 39 |
-| `Catalyst\Repository\Settings\Requests\FeaturesConfigRequest` | `class` | `Repository/Framework/Settings/Requests/FeaturesConfigRequest.php` | 39 |
-| `Catalyst\Repository\Settings\Requests\LoggingConfigRequest` | `class` | `Repository/Framework/Settings/Requests/LoggingConfigRequest.php` | 39 |
-| `Catalyst\Repository\Settings\Requests\MailConfigRequest` | `class` | `Repository/Framework/Settings/Requests/MailConfigRequest.php` | 39 |
-| `Catalyst\Repository\Settings\Requests\SecurityConfigRequest` | `class` | `Repository/Framework/Settings/Requests/SecurityConfigRequest.php` | 39 |
-| `Catalyst\Repository\Settings\Requests\SessionConfigRequest` | `class` | `Repository/Framework/Settings/Requests/SessionConfigRequest.php` | 39 |
-| `Catalyst\Repository\Settings\Requests\WebSocketConfigRequest` | `class` | `Repository/Framework/Settings/Requests/WebSocketConfigRequest.php` | 39 |
-| `Catalyst\Repository\Settings\Services\SetupAdminProvisioner` | `class` | `Repository/Framework/Settings/Services/SetupAdminProvisioner.php` | 19 |
-| `Catalyst\Repository\Settings\Services\SetupDatabaseException` | `class` | `Repository/Framework/Settings/Services/SetupDatabaseException.php` | 16 |
-| `Catalyst\Repository\Settings\Services\SetupDatabaseService` | `class` | `Repository/Framework/Settings/Services/SetupDatabaseService.php` | 21 |
-| `Catalyst\Repository\Settings\Support\AdminReadinessProbe` | `class` | `Repository/Framework/Settings/Support/AdminReadinessProbe.php` | 42 |
-| `Catalyst\Repository\Settings\Support\AppConfigWriter` | `class` | `Repository/Framework/Settings/Support/AppConfigWriter.php` | 41 |
-| `Catalyst\Repository\Settings\Support\CacheConfigWriter` | `class` | `Repository/Framework/Settings/Support/CacheConfigWriter.php` | 46 |
-| `Catalyst\Repository\Settings\Support\DbConfigWriter` | `class` | `Repository/Framework/Settings/Support/DbConfigWriter.php` | 41 |
-| `Catalyst\Repository\Settings\Support\DbConnectivityProbe` | `class` | `Repository/Framework/Settings/Support/DbConnectivityProbe.php` | 43 |
-| `Catalyst\Repository\Settings\Support\DevToolsConfigWriter` | `class` | `Repository/Framework/Settings/Support/DevToolsConfigWriter.php` | 41 |
-| `Catalyst\Repository\Settings\Support\FeaturesConfigWriter` | `class` | `Repository/Framework/Settings/Support/FeaturesConfigWriter.php` | 41 |
-| `Catalyst\Repository\Settings\Support\FtpConnectionProbe` | `class` | `Repository/Framework/Settings/Support/FtpConnectionProbe.php` | 41 |
-| `Catalyst\Repository\Settings\Support\LoggingConfigWriter` | `class` | `Repository/Framework/Settings/Support/LoggingConfigWriter.php` | 41 |
-| `Catalyst\Repository\Settings\Support\MailConfigWriter` | `class` | `Repository/Framework/Settings/Support/MailConfigWriter.php` | 41 |
-| `Catalyst\Repository\Settings\Support\SecurityConfigWriter` | `class` | `Repository/Framework/Settings/Support/SecurityConfigWriter.php` | 41 |
-| `Catalyst\Repository\Settings\Support\SessionConfigWriter` | `class` | `Repository/Framework/Settings/Support/SessionConfigWriter.php` | 42 |
-| `Catalyst\Repository\Settings\Support\SettingsCardFactory` | `class` | `Repository/Framework/Settings/Support/SettingsCardFactory.php` | 39 |
-| `Catalyst\Repository\Settings\Support\SettingsDisplayFactory` | `class` | `Repository/Framework/Settings/Support/SettingsDisplayFactory.php` | 39 |
-| `Catalyst\Repository\Settings\Support\SettingsModalFactory` | `class` | `Repository/Framework/Settings/Support/SettingsModalFactory.php` | 39 |
-| `Catalyst\Repository\Settings\Support\SettingsPageViewContext` | `class` | `Repository/Framework/Settings/Support/SettingsPageViewContext.php` | 42 |
-| `Catalyst\Repository\Settings\Support\WebSocketConfigWriter` | `class` | `Repository/Framework/Settings/Support/WebSocketConfigWriter.php` | 41 |
 
 ## Templates
 
 | File | Root | Extension |
 |---|---|---|
-| `boot-core/template/components/admin-form-builder/_field-block.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/components/admin-form-builder/_field-control.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/components/_account-shell-sidenav.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/components/_account-shell-topbar.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/components/_admin-datagrid-cell.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/components/_admin-datagrid.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/components/_admin-form-builder.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/components/_admin-page-header.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/components/_admin-shell-sidenav.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/components/_admin-shell-topbar.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/components/_body-scripts.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/components/_catalyst-init.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/components/_flash-messages.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/components/_head-assets.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/components/_modal-container.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/components/_public-demo-surface.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/components/_public-navigation.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/components/_record-claim-banner.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/components/_status-bar.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/components/_theme-customizer-panel.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/components/_toaster-container.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/debug/dumper-button.tpl.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/debug/dumper-modal.tpl.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/debug/dumper-scripts.tpl.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/debug/dumper-styles.tpl.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/errors/404.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/errors/405.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/errors/handler_error.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/errors/handler_error_no.phtml` | `boot-core/template` | `phtml` |
+| `boot-core/template/components/form-builder/_field-block.phtml` | `boot-core/template` | `phtml` |
+| `boot-core/template/components/form-builder/_field-control.phtml` | `boot-core/template` | `phtml` |
+| `boot-core/template/components/_datagrid-cell.phtml` | `boot-core/template` | `phtml` |
+| `boot-core/template/components/_datagrid.phtml` | `boot-core/template` | `phtml` |
+| `boot-core/template/components/_form-builder.phtml` | `boot-core/template` | `phtml` |
+| `boot-core/template/components/_page-header.phtml` | `boot-core/template` | `phtml` |
+| `boot-core/template/components/_record-presence.phtml` | `boot-core/template` | `phtml` |
+| `boot-core/template/document.phtml` | `boot-core/template` | `phtml` |
 | `boot-core/template/errors/surface.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/exports/admin-datagrid-xls.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/layouts/account.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/layouts/admin.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/layouts/auth.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/layouts/base.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/layouts/blank.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/layouts/demo-ui-shell.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/layouts/error.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/layouts/public.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/pages/route-test.phtml` | `boot-core/template` | `phtml` |
-| `boot-core/template/scope/components/_admin-datagrid.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/components/_admin-form-builder.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/components/_admin-page-header.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/components/_admin-shell-topbar.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/components/_body-scripts.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/components/_catalyst-init.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/components/_flash-messages.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/components/_head-assets.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/components/_public-navigation.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/components/_record-claim-banner.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/components/_status-bar.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/components/_toaster-container.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/debug/dumper-button.tpl.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/debug/dumper-modal.tpl.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/debug/dumper-scripts.tpl.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/debug/dumper-styles.tpl.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/errors/404.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/errors/405.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/errors/handler_error.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/errors/handler_error_no.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/errors/surface.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/layouts/account.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/layouts/admin.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/layouts/auth.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/layouts/base.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/layouts/blank.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/layouts/demo-ui-shell.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/layouts/error.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/layouts/public.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/layouts/_demo-product-shell.php` | `boot-core/template` | `php` |
-| `boot-core/template/scope/pages/route-test.php` | `boot-core/template` | `php` |
+| `boot-core/template/exports/datagrid-xls.phtml` | `boot-core/template` | `phtml` |
+| `boot-core/template/scope/components/_datagrid.php` | `boot-core/template` | `php` |
+| `boot-core/template/scope/components/_form-builder.php` | `boot-core/template` | `php` |
+| `boot-core/template/scope/components/_page-header.php` | `boot-core/template` | `php` |
+| `boot-core/template/scope/components/_record-presence.php` | `boot-core/template` | `php` |
+| `boot-core/template/shell.phtml` | `boot-core/template` | `phtml` |
+| `boot-core/template/_body-scripts.phtml` | `boot-core/template` | `phtml` |
+| `boot-core/template/_content.phtml` | `boot-core/template` | `phtml` |
+| `boot-core/template/_head-assets.phtml` | `boot-core/template` | `phtml` |
+| `boot-core/template/_head-meta.phtml` | `boot-core/template` | `phtml` |
+| `boot-core/template/_head.phtml` | `boot-core/template` | `phtml` |
+| `boot-core/template/_html-open.phtml` | `boot-core/template` | `phtml` |
+| `boot-core/template/_sidebar-node.phtml` | `boot-core/template` | `phtml` |
+| `boot-core/template/_sidebar.phtml` | `boot-core/template` | `phtml` |
+| `boot-core/template/_status-bar.phtml` | `boot-core/template` | `phtml` |
+| `boot-core/template/_topbar.phtml` | `boot-core/template` | `phtml` |
 | `Repository/App/Surface/Account/Views/pages/activity.phtml` | `Repository views` | `phtml` |
 | `Repository/App/Surface/Account/Views/pages/admin-index.phtml` | `Repository views` | `phtml` |
 | `Repository/App/Surface/Account/Views/pages/admin-show.phtml` | `Repository views` | `phtml` |
@@ -840,6 +808,26 @@
 | `Repository/Framework/Catalogs/Views/scope/pages/index.php` | `Repository views` | `php` |
 | `Repository/Framework/Catalogs/Views/scope/pages/item-form.php` | `Repository views` | `php` |
 | `Repository/Framework/Catalogs/Views/scope/pages/show.php` | `Repository views` | `php` |
+| `Repository/Framework/Configuration/Views/pages/appearance.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Configuration/Views/pages/feature-flags.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Configuration/Views/pages/health.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Configuration/Views/pages/index.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Configuration/Views/pages/plugins.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Configuration/Views/partials/_settings-card.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Configuration/Views/partials/_settings-dkim-card.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Configuration/Views/partials/_settings-grid.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Configuration/Views/partials/_settings-modal-field.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Configuration/Views/partials/_settings-modal.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Configuration/Views/partials/_settings-modals.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Configuration/Views/partials/_settings-row.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Configuration/Views/partials/_settings-setup-actions.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Configuration/Views/scope/pages/appearance.php` | `Repository views` | `php` |
+| `Repository/Framework/Configuration/Views/scope/pages/feature-flags.php` | `Repository views` | `php` |
+| `Repository/Framework/Configuration/Views/scope/pages/health.php` | `Repository views` | `php` |
+| `Repository/Framework/Configuration/Views/scope/pages/index.php` | `Repository views` | `php` |
+| `Repository/Framework/Configuration/Views/scope/pages/plugins.php` | `Repository views` | `php` |
+| `Repository/Framework/Configuration/Views/scope/partials/_settings-dkim-card.php` | `Repository views` | `php` |
+| `Repository/Framework/Configuration/Views/scope/partials/_settings-setup-actions.php` | `Repository views` | `php` |
 | `Repository/Framework/DemoUi/Views/pages/demo-ui.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/DevTools/Views/pages/layout-test.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/DevTools/Views/pages/route-test.phtml` | `Repository views` | `phtml` |
@@ -858,7 +846,6 @@
 | `Repository/Framework/DevTools/Views/partials/_tf-file-upload.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/DevTools/Views/partials/_tf-flash.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/DevTools/Views/partials/_tf-form-events.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/DevTools/Views/partials/_tf-header.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/DevTools/Views/partials/_tf-i18n.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/DevTools/Views/partials/_tf-infrastructure.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/DevTools/Views/partials/_tf-js-enhancements.phtml` | `Repository views` | `phtml` |
@@ -877,7 +864,6 @@
 | `Repository/Framework/DevTools/Views/scope/partials/_tf-auth.php` | `Repository views` | `php` |
 | `Repository/Framework/DevTools/Views/scope/partials/_tf-database.php` | `Repository views` | `php` |
 | `Repository/Framework/DevTools/Views/scope/partials/_tf-file-upload.php` | `Repository views` | `php` |
-| `Repository/Framework/DevTools/Views/scope/partials/_tf-header.php` | `Repository views` | `php` |
 | `Repository/Framework/DevTools/Views/scope/partials/_tf-i18n.php` | `Repository views` | `php` |
 | `Repository/Framework/DevTools/Views/scope/partials/_tf-rbac.php` | `Repository views` | `php` |
 | `Repository/Framework/DevTools/Views/scope/partials/_tf-system-info.php` | `Repository views` | `php` |
@@ -895,24 +881,6 @@
 | `Repository/Framework/Media/Views/scope/pages/fields-index.php` | `Repository views` | `php` |
 | `Repository/Framework/Media/Views/scope/pages/form.php` | `Repository views` | `php` |
 | `Repository/Framework/Media/Views/scope/pages/index.php` | `Repository views` | `php` |
-| `Repository/Framework/Operations/Views/pages/appearance.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Operations/Views/pages/deployments.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Operations/Views/pages/feature-flags.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Operations/Views/pages/index.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Operations/Views/pages/localization.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Operations/Views/pages/module-designer.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Operations/Views/pages/plugins.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Operations/Views/pages/tenancy.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Operations/Views/partials/_nav.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Operations/Views/scope/pages/appearance.php` | `Repository views` | `php` |
-| `Repository/Framework/Operations/Views/scope/pages/deployments.php` | `Repository views` | `php` |
-| `Repository/Framework/Operations/Views/scope/pages/feature-flags.php` | `Repository views` | `php` |
-| `Repository/Framework/Operations/Views/scope/pages/index.php` | `Repository views` | `php` |
-| `Repository/Framework/Operations/Views/scope/pages/localization.php` | `Repository views` | `php` |
-| `Repository/Framework/Operations/Views/scope/pages/module-designer.php` | `Repository views` | `php` |
-| `Repository/Framework/Operations/Views/scope/pages/plugins.php` | `Repository views` | `php` |
-| `Repository/Framework/Operations/Views/scope/pages/tenancy.php` | `Repository views` | `php` |
-| `Repository/Framework/Operations/Views/scope/partials/_nav.php` | `Repository views` | `php` |
 | `Repository/Framework/Roles/Views/pages/form.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/Roles/Views/pages/index.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/Roles/Views/pages/organization-hierarchy.phtml` | `Repository views` | `phtml` |
@@ -931,20 +899,6 @@
 | `Repository/Framework/Roles/Views/scope/pages/user-register.php` | `Repository views` | `php` |
 | `Repository/Framework/Roles/Views/scope/pages/user-roles.php` | `Repository views` | `php` |
 | `Repository/Framework/Roles/Views/scope/pages/users-index.php` | `Repository views` | `php` |
-| `Repository/Framework/Settings/Views/pages/health.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Settings/Views/pages/index.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Settings/Views/partials/_settings-card.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Settings/Views/partials/_settings-dkim-card.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Settings/Views/partials/_settings-grid.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Settings/Views/partials/_settings-modal-field.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Settings/Views/partials/_settings-modal.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Settings/Views/partials/_settings-modals.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Settings/Views/partials/_settings-row.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Settings/Views/partials/_settings-setup-actions.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Settings/Views/scope/pages/health.php` | `Repository views` | `php` |
-| `Repository/Framework/Settings/Views/scope/pages/index.php` | `Repository views` | `php` |
-| `Repository/Framework/Settings/Views/scope/partials/_settings-dkim-card.php` | `Repository views` | `php` |
-| `Repository/Framework/Settings/Views/scope/partials/_settings-setup-actions.php` | `Repository views` | `php` |
 
 ## Scripts
 
@@ -952,55 +906,60 @@
 |---|---|---:|
 | `Repository/App/Surface/Account/front/script.js` | `Repository front` | 11 |
 | `Repository/App/Surface/Dashboard/front/script.js` | `Repository front` | 11 |
-| `Repository/App/Surface/Home/front/script.js` | `Repository front` | 141 |
-| `Repository/App/Surface/Landing/front/script.js` | `Repository front` | 141 |
-| `Repository/App/Surface/Store/front/script.js` | `Repository front` | 141 |
-| `Repository/Framework/ApiPlatform/front/script.js` | `Repository front` | 631 |
-| `Repository/Framework/Audit/front/script.js` | `Repository front` | 344 |
-| `Repository/Framework/Auth/front/script.js` | `Repository front` | 2512 |
-| `Repository/Framework/Automation/front/script.js` | `Repository front` | 630 |
-| `Repository/Framework/Catalogs/front/script.js` | `Repository front` | 454 |
-| `Repository/Framework/DemoUi/front/script.js` | `Repository front` | 1447 |
-| `Repository/Framework/DevTools/front/script.js` | `Repository front` | 20808 |
-| `Repository/Framework/Documents/front/script.js` | `Repository front` | 629 |
-| `Repository/Framework/Media/front/script.js` | `Repository front` | 1187 |
-| `Repository/Framework/Operations/front/script.js` | `Repository front` | 1320 |
+| `Repository/App/Surface/Home/front/script.js` | `Repository front` | 11 |
+| `Repository/App/Surface/Landing/front/script.js` | `Repository front` | 11 |
+| `Repository/App/Surface/Store/front/script.js` | `Repository front` | 11 |
+| `Repository/Framework/ApiPlatform/front/script.js` | `Repository front` | 11 |
+| `Repository/Framework/Audit/front/script.js` | `Repository front` | 554 |
+| `Repository/Framework/Auth/front/script.js` | `Repository front` | 2073 |
+| `Repository/Framework/Automation/front/script.js` | `Repository front` | 11 |
+| `Repository/Framework/Catalogs/front/script.js` | `Repository front` | 355 |
+| `Repository/Framework/Configuration/front/script.js` | `Repository front` | 12479 |
+| `Repository/Framework/DemoUi/front/script.js` | `Repository front` | 1225 |
+| `Repository/Framework/DevTools/front/script.js` | `Repository front` | 20214 |
+| `Repository/Framework/Documents/front/script.js` | `Repository front` | 11 |
+| `Repository/Framework/Media/front/script.js` | `Repository front` | 11 |
 | `Repository/Framework/Roles/front/script.js` | `Repository front` | 275 |
-| `Repository/Framework/Settings/front/script.js` | `Repository front` | 8382 |
-| `public/assets/js/catalyst/account-shell.js` | `public catalyst js` | 833 |
-| `public/assets/js/catalyst/account-theme-bootstrap.js` | `public catalyst js` | 5667 |
-| `public/assets/js/catalyst/admin-shell.js` | `public catalyst js` | 1334 |
-| `public/assets/js/catalyst/catalyst.js` | `public catalyst js` | 11088 |
+| `public/assets/js/catalyst/appearance-bootstrap.js` | `public catalyst js` | 5802 |
+| `public/assets/js/catalyst/bootstrap/components.js` | `public catalyst js` | 10368 |
+| `public/assets/js/catalyst/bootstrap/primitives.js` | `public catalyst js` | 1245 |
+| `public/assets/js/catalyst/catalyst.js` | `public catalyst js` | 11030 |
 | `public/assets/js/catalyst/config/defaults.js` | `public catalyst js` | 3185 |
-| `public/assets/js/catalyst/modules/admin-form-dependencies.js` | `public catalyst js` | 10012 |
-| `public/assets/js/catalyst/modules/admin-grid.js` | `public catalyst js` | 5857 |
-| `public/assets/js/catalyst/modules/asset-loader.js` | `public catalyst js` | 2758 |
-| `public/assets/js/catalyst/modules/bootstrap-components.js` | `public catalyst js` | 9317 |
-| `public/assets/js/catalyst/modules/bootstrap-primitives.js` | `public catalyst js` | 3990 |
-| `public/assets/js/catalyst/modules/card-actions.js` | `public catalyst js` | 2339 |
-| `public/assets/js/catalyst/modules/code-preview.js` | `public catalyst js` | 3921 |
-| `public/assets/js/catalyst/modules/demoui-charts.js` | `public catalyst js` | 10251 |
-| `public/assets/js/catalyst/modules/demoui-tables.js` | `public catalyst js` | 12561 |
-| `public/assets/js/catalyst/modules/flash-client.js` | `public catalyst js` | 4993 |
-| `public/assets/js/catalyst/modules/form-handler.js` | `public catalyst js` | 12050 |
-| `public/assets/js/catalyst/modules/form-validation.js` | `public catalyst js` | 566 |
-| `public/assets/js/catalyst/modules/http.js` | `public catalyst js` | 10866 |
-| `public/assets/js/catalyst/modules/loading.js` | `public catalyst js` | 1789 |
-| `public/assets/js/catalyst/modules/modal.js` | `public catalyst js` | 19780 |
-| `public/assets/js/catalyst/modules/notification.js` | `public catalyst js` | 4511 |
-| `public/assets/js/catalyst/modules/password.js` | `public catalyst js` | 6700 |
-| `public/assets/js/catalyst/modules/record-presence.js` | `public catalyst js` | 4991 |
-| `public/assets/js/catalyst/modules/response-actions.js` | `public catalyst js` | 932 |
-| `public/assets/js/catalyst/modules/shell-dropdowns.js` | `public catalyst js` | 3709 |
-| `public/assets/js/catalyst/modules/shell-navigation.js` | `public catalyst js` | 6201 |
-| `public/assets/js/catalyst/modules/shell-theme-customizer.js` | `public catalyst js` | 12396 |
-| `public/assets/js/catalyst/modules/shell-topbar.js` | `public catalyst js` | 1942 |
-| `public/assets/js/catalyst/modules/simplebar.js` | `public catalyst js` | 1173 |
-| `public/assets/js/catalyst/modules/status-bar.js` | `public catalyst js` | 19612 |
-| `public/assets/js/catalyst/modules/theme-toggle.js` | `public catalyst js` | 9389 |
-| `public/assets/js/catalyst/modules/toaster.js` | `public catalyst js` | 11293 |
-| `public/assets/js/catalyst/modules/trusted-dom.js` | `public catalyst js` | 919 |
-| `public/assets/js/catalyst/modules/ui-actions.js` | `public catalyst js` | 4629 |
-| `public/assets/js/catalyst/modules/ui-enhancers.js` | `public catalyst js` | 46587 |
-| `public/assets/js/catalyst/modules/ui-runtime.js` | `public catalyst js` | 4984 |
-| `public/assets/js/catalyst/modules/utils.js` | `public catalyst js` | 6387 |
+| `public/assets/js/catalyst/core/asset-loader.js` | `public catalyst js` | 2758 |
+| `public/assets/js/catalyst/core/declarative-actions.js` | `public catalyst js` | 2528 |
+| `public/assets/js/catalyst/core/http.js` | `public catalyst js` | 10872 |
+| `public/assets/js/catalyst/core/loading.js` | `public catalyst js` | 1789 |
+| `public/assets/js/catalyst/core/response-actions.js` | `public catalyst js` | 1315 |
+| `public/assets/js/catalyst/core/trusted-dom.js` | `public catalyst js` | 919 |
+| `public/assets/js/catalyst/core/utils.js` | `public catalyst js` | 6387 |
+| `public/assets/js/catalyst/datagrid/interactions.js` | `public catalyst js` | 3156 |
+| `public/assets/js/catalyst/forms/builder.js` | `public catalyst js` | 11565 |
+| `public/assets/js/catalyst/forms/form-handler.js` | `public catalyst js` | 12062 |
+| `public/assets/js/catalyst/forms/password.js` | `public catalyst js` | 9356 |
+| `public/assets/js/catalyst/forms/validation.js` | `public catalyst js` | 707 |
+| `public/assets/js/catalyst/inspinia/card-actions.js` | `public catalyst js` | 2933 |
+| `public/assets/js/catalyst/inspinia/charts.js` | `public catalyst js` | 10660 |
+| `public/assets/js/catalyst/inspinia/code-preview.js` | `public catalyst js` | 4077 |
+| `public/assets/js/catalyst/inspinia/enhancers/editors.js` | `public catalyst js` | 322 |
+| `public/assets/js/catalyst/inspinia/enhancers/engine.js` | `public catalyst js` | 50938 |
+| `public/assets/js/catalyst/inspinia/enhancers/index.js` | `public catalyst js` | 482 |
+| `public/assets/js/catalyst/inspinia/enhancers/pickers.js` | `public catalyst js` | 648 |
+| `public/assets/js/catalyst/inspinia/enhancers/selects.js` | `public catalyst js` | 344 |
+| `public/assets/js/catalyst/inspinia/enhancers/sliders.js` | `public catalyst js` | 475 |
+| `public/assets/js/catalyst/inspinia/enhancers/uploads.js` | `public catalyst js` | 322 |
+| `public/assets/js/catalyst/inspinia/enhancers/wizard.js` | `public catalyst js` | 281 |
+| `public/assets/js/catalyst/inspinia/tables.js` | `public catalyst js` | 12552 |
+| `public/assets/js/catalyst/notifications/flash.js` | `public catalyst js` | 5051 |
+| `public/assets/js/catalyst/notifications/modal.js` | `public catalyst js` | 20322 |
+| `public/assets/js/catalyst/notifications/notification.js` | `public catalyst js` | 4509 |
+| `public/assets/js/catalyst/notifications/toaster.js` | `public catalyst js` | 11297 |
+| `public/assets/js/catalyst/presence/record-presence.js` | `public catalyst js` | 6249 |
+| `public/assets/js/catalyst/runtime/component-registry.js` | `public catalyst js` | 2114 |
+| `public/assets/js/catalyst/runtime/event-registry.js` | `public catalyst js` | 995 |
+| `public/assets/js/catalyst/runtime/registration-queue.js` | `public catalyst js` | 1957 |
+| `public/assets/js/catalyst/runtime/ui-runtime.js` | `public catalyst js` | 19967 |
+| `public/assets/js/catalyst/shell/navigation.js` | `public catalyst js` | 6297 |
+| `public/assets/js/catalyst/shell/simplebar.js` | `public catalyst js` | 1730 |
+| `public/assets/js/catalyst/shell/status-bar.js` | `public catalyst js` | 19649 |
+| `public/assets/js/catalyst/shell/theme-customizer.js` | `public catalyst js` | 12390 |
+| `public/assets/js/catalyst/shell/topbar.js` | `public catalyst js` | 1942 |

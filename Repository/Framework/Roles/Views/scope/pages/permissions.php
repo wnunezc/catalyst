@@ -33,7 +33,7 @@ use Catalyst\Helpers\Security\CsrfProtection;
 use Catalyst\Repository\Roles\Support\RbacLabelPresenter;
 
 return static function (array $scope): array {
-    $claimContext = is_array($scope['claimContext'] ?? null) ? $scope['claimContext'] : [];
+    $recordPresence = is_array($scope['recordPresence'] ?? null) ? $scope['recordPresence'] : [];
     $role = is_array($scope['role'] ?? null) ? $scope['role'] : [];
     $rolePermissions = is_array($scope['rolePermissions'] ?? null) ? $scope['rolePermissions'] : [];
     $allPermissions = is_array($scope['allPermissions'] ?? null) ? $scope['allPermissions'] : [];
@@ -57,7 +57,7 @@ return static function (array $scope): array {
     );
 
     return [
-        'admin_header' => [
+        'page_header' => [
             'eyebrow' => __('roles.permissions.map_eyebrow'),
             'title' => (string) ($scope['title'] ?? __('roles.roles.permissions_page_title')),
             'description' => __('roles.permissions.role_label') . ' ' . (string) ($role['slug'] ?? ''),
@@ -67,7 +67,7 @@ return static function (array $scope): array {
         ],
 
         'role' => $role,
-        'claimToken' => (string) ($claimContext['claim_token'] ?? ''),
+        'claimToken' => (string) ($recordPresence['claim_token'] ?? ''),
         'permissionsAction' => '/users/roles/' . (int) ($role['id'] ?? 0) . '/permissions',
         'csrfField' => TrustedHtml::fromString(CsrfProtection::getInstance()->getTokenField()),
         'permissionRows' => $permissionRows,

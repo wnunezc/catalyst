@@ -122,38 +122,44 @@ class View
     }
 
     /**
-     * Render a view template, optionally wrapped in a layout. Template naming convention: - "pages.welcome" → looks for "pages/welcome.phtml" then "pages/welcome.php" - "error.404" → looks for "errors/404.phtml" then "errors/404.php" `.phtml` is the canonical declarative template format and is rendered through the token pipeline without allowing inline PHP. `.php` remains available as the backwards-compatible executable template fallback while the framework completes migration. Layout convention: - "base" → looks for "boot-core/template/layouts/base.phtml" then "base.php" - Layout receives merged $data + $content (rendered template output).
+     * Renders a complete HTML document using the canonical document template.
      *
-     * Responsibility: Render a view template, optionally wrapped in a layout. Template naming convention: - "pages.welcome" → looks for "pages/welcome.phtml" then "pages/welcome.php" - "error.404" → looks for "errors/404.phtml" then "errors/404.php" `.phtml` is the canonical declarative template format and is rendered through the token pipeline without allowing inline PHP. `.php` remains available as the backwards-compatible executable template fallback while the framework completes migration. Layout convention: - "base" → looks for "boot-core/template/layouts/base.phtml" then "base.php" - Layout receives merged $data + $content (rendered template output).
-     * @param string      $template Template name using dot notation
-     * @param array       $data     Data to pass to the template
-     * @param int         $status   HTTP status code
-     * @param string|null $layout   Layout name, or null for no layout
-     * @return Response
-     * @throws ViewException If template or layout is not found
+     * Responsibility: Resolves a page template, prepares the shared document scope and wraps the result in document.phtml.
+     *
+     * @param string $template Template name using dot notation
+     * @param array<string, mixed> $data Data to pass to the template
      */
-    public function render(string $template, array $data = [], int $status = 200, ?string $layout = null): Response
+    public function render(string $template, array $data = [], int $status = 200): Response
     {
-        $templatePath = $this->findTemplate($template);
+        $mergedData = $this->mergedData($data);
+        $content = $this->renderResolvedTemplate($template, $mergedData);
+        $documentPath = $this->findDocument();
 
-        if ($templatePath === null) {
-            throw ViewException::templateNotFound($template);
+        if ($documentPath === null) {
+            throw ViewException::templateNotFound('framework.document');
         }
 
-        $mergedData = array_merge($this->shared, $this->consumeFormState(), $data);
-        $content    = $this->renderTemplate($templatePath, $mergedData);
+        $documentScope = DocumentScope::prepare(array_merge(
+            $mergedData,
+            ['content' => TrustedHtml::fromString($content)]
+        ));
 
-        if ($layout !== null) {
-            $layoutPath = $this->findLayout($layout);
+        return new Response($this->renderTemplate($documentPath, $documentScope), $status);
+    }
 
-            if ($layoutPath === null) {
-                throw ViewException::layoutNotFound($layout);
-            }
+    /**
+     * Renders a template without the canonical HTML document wrapper.
+     *
+     * Responsibility: Provides an explicit response path for fragments, modal bodies and other insertable HTML.
+     *
+     * @param string $template Template name using dot notation
+     * @param array<string, mixed> $data Data to pass to the template
+     */
+    public function renderFragment(string $template, array $data = [], int $status = 200): Response
+    {
+        $mergedData = $this->mergedData($data);
 
-            $content = $this->renderTemplate($layoutPath, array_merge($mergedData, ['content' => TrustedHtml::fromString($content)]));
-        }
-
-        return new Response($content, $status);
+        return new Response($this->renderResolvedTemplate($template, $mergedData), $status);
     }
 
     /**
@@ -213,17 +219,46 @@ class View
     }
 
     /**
-     * Find layout file in the layouts directory. Layouts are located in: boot-core/template/layouts/{name}.phtml with backwards-compatible fallback to .php.
+     * Resolves the single framework document template.
      *
-     * Responsibility: Find layout file in the layouts directory. Layouts are located in: boot-core/template/layouts/{name}.phtml with backwards-compatible fallback to .php.
-     * @param string $layout Layout name (without template extension)
-     * @return string|null Full path to layout file, or null if not found
+     * Responsibility: Keeps complete-page rendering bound to boot-core/template/document.phtml.
      */
-    protected function findLayout(string $layout): ?string
+    protected function findDocument(): ?string
     {
         return $this->findTemplateFile(
-            implode(DS, [PD, 'boot-core', 'template', 'layouts', $layout])
+            implode(DS, [PD, 'boot-core', 'template', 'document'])
         );
+    }
+
+    /**
+     * Merges shared, form and caller data for one render operation.
+     *
+     * Responsibility: Applies the same input scope rules to complete documents and explicit fragments.
+     *
+     * @param array<string, mixed> $data
+     * @return array<string, mixed>
+     */
+    private function mergedData(array $data): array
+    {
+        return array_merge($this->shared, $this->consumeFormState(), $data);
+    }
+
+    /**
+     * Resolves and renders a named template.
+     *
+     * Responsibility: Centralizes template-not-found handling for document and fragment responses.
+     *
+     * @param array<string, mixed> $data
+     */
+    private function renderResolvedTemplate(string $template, array $data): string
+    {
+        $templatePath = $this->findTemplate($template);
+
+        if ($templatePath === null) {
+            throw ViewException::templateNotFound($template);
+        }
+
+        return $this->renderTemplate($templatePath, $data);
     }
 
     /**

@@ -1,0 +1,11 @@
+<head>
+    {{> "./_head-meta" }}
+    {{> "./_head-assets" }}
+
+    {{#each style_links}}
+    <link href="{{ href }}" rel="{{ rel }}"{{#if has_media}} media="{{ media }}"{{/if}}>
+    {{/each}}
+
+    <link rel="stylesheet" href="{{ red_cross_theme_asset_url }}">
+    <link rel="stylesheet" href="{{ response_skins_asset_url }}">
+</head>

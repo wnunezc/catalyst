@@ -50,7 +50,7 @@ Get-ChildItem -Path boot-core,Repository,app,public -Recurse -Include *.php,*.ph
 ```powershell
 $pairs = @(
     @{ Source = 'Repository/App/Surface/Dashboard/front/style.css'; Target = 'public/assets/css/work/dashboard/style.css' },
-    @{ Source = 'Repository/Framework/Operations/front/style.css'; Target = 'public/assets/css/work/operations/style.css' },
+    @{ Source = 'Repository/Framework/Configuration/front/style.css'; Target = 'public/assets/css/work/configuration/style.css' },
     @{ Source = 'Repository/Framework/ApiPlatform/front/style.css'; Target = 'public/assets/css/work/apiplatform/style.css' },
     @{ Source = 'Repository/Framework/Roles/front/style.css'; Target = 'public/assets/css/work/roles/style.css' },
     @{ Source = 'Repository/Framework/Automation/front/style.css'; Target = 'public/assets/css/work/automation/style.css' },
@@ -78,7 +78,10 @@ $pairs | ForEach-Object {
     '/',
     '/login',
     '/dashboard',
-    '/operations',
+    '/configuration/environment-setup',
+    '/configuration/application-health',
+    '/configuration/feature-flags',
+    '/configuration/plugins',
     '/configuration/platform-appearance',
     '/api-platform',
     '/audit-log',

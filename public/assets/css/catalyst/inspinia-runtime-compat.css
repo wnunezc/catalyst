@@ -6,6 +6,62 @@
  * they must apply to /demo-ui and every migrated surface using the Inspinia shell.
  */
 
+html:has(> body.catalyst-shell-body),
+body.catalyst-shell-body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body.catalyst-shell-body > .wrapper {
+    height: calc(100vh - 32px);
+    min-height: calc(100vh - 32px);
+    overflow: hidden;
+}
+
+body.catalyst-shell-body .sidenav-menu {
+    bottom: 32px;
+    display: flex;
+    flex-direction: column;
+}
+
+body.catalyst-shell-body .sidenav-menu .scrollbar {
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+body.catalyst-shell-body .content-page,
+html[data-sidenav-size=condensed] body.catalyst-shell-body .content-page {
+    height: calc(100vh - var(--theme-topbar-height) - 32px);
+    min-height: 0;
+    overflow: visible;
+    overscroll-behavior: contain;
+}
+
+body.catalyst-shell-body .content-page[data-simplebar] {
+    display: block;
+}
+
+body.catalyst-shell-body .content-page[data-simplebar] > .simplebar-wrapper,
+body.catalyst-shell-body .content-page[data-simplebar] > .simplebar-wrapper > .simplebar-mask,
+body.catalyst-shell-body .content-page[data-simplebar] > .simplebar-wrapper > .simplebar-mask > .simplebar-offset,
+body.catalyst-shell-body .content-page[data-simplebar] > .simplebar-wrapper > .simplebar-mask > .simplebar-offset > .simplebar-content-wrapper {
+    width: 100%;
+    height: 100%;
+}
+
+body.catalyst-shell-body .content-page[data-simplebar] > .simplebar-wrapper > .simplebar-mask > .simplebar-offset > .simplebar-content-wrapper {
+    overflow-x: hidden !important;
+}
+
+body.catalyst-shell-body .content-page[data-simplebar] .simplebar-content {
+    min-height: 100%;
+}
+
+body.catalyst-shell-body .content-page > .container-fluid,
+body.catalyst-shell-body .content-page[data-simplebar] .simplebar-content > .container-fluid {
+    padding-bottom: 32px;
+}
+
 html[data-skin="red-cross"] {
     --catalyst-skin-danger: #8f1d2d;
     --catalyst-skin-danger-rgb: 143, 29, 45;
@@ -213,49 +269,49 @@ html[data-skin="grempa"] {
     --bs-alert-link-color: var(--theme-danger-text-emphasis);
 }
 
-body.demo-ui-shell-body .offcanvas-backdrop {
+body.catalyst-shell-body .offcanvas-backdrop {
     z-index: 1070;
 }
 
-body.demo-ui-shell-body .offcanvas {
+body.catalyst-shell-body .offcanvas {
     z-index: 1075;
 }
 
-body.demo-ui-shell-body .modal-dialog,
-body.demo-ui-shell-body .modal-dialog-scrollable,
-body.demo-ui-shell-body .modal-dialog-scrollable .modal-content,
-body.demo-ui-shell-body .modal-dialog-scrollable .modal-body,
-body.demo-ui-shell-body .modal-dialog-scrollable .modal-footer {
+body.catalyst-shell-body .modal-dialog,
+body.catalyst-shell-body .modal-dialog-scrollable,
+body.catalyst-shell-body .modal-dialog-scrollable .modal-content,
+body.catalyst-shell-body .modal-dialog-scrollable .modal-body,
+body.catalyst-shell-body .modal-dialog-scrollable .modal-footer {
     pointer-events: auto;
 }
 
-body.demo-ui-shell-body .form-floating > label {
+body.catalyst-shell-body .form-floating > label {
     color: var(--bs-secondary-color);
     opacity: 1;
 }
 
-body.demo-ui-shell-body .form-floating > label::after {
+body.catalyst-shell-body .form-floating > label::after {
     background-color: var(--bs-body-bg) !important;
     border-radius: .35rem;
 }
 
-body.demo-ui-shell-body .card .form-floating > label::after,
-body.demo-ui-shell-body .modal-content .form-floating > label::after,
-body.demo-ui-shell-body .offcanvas .form-floating > label::after,
-body.demo-ui-shell-body .dropdown-menu .form-floating > label::after {
+body.catalyst-shell-body .card .form-floating > label::after,
+body.catalyst-shell-body .modal-content .form-floating > label::after,
+body.catalyst-shell-body .offcanvas .form-floating > label::after,
+body.catalyst-shell-body .dropdown-menu .form-floating > label::after {
     background-color: var(--bs-card-bg, var(--theme-card-bg, var(--bs-body-bg))) !important;
 }
 
-body.demo-ui-shell-body .form-floating > .form-control:focus ~ label,
-body.demo-ui-shell-body .form-floating > .form-control:not(:placeholder-shown) ~ label,
-body.demo-ui-shell-body .form-floating > .form-control-plaintext ~ label,
-body.demo-ui-shell-body .form-floating > .form-select ~ label {
+body.catalyst-shell-body .form-floating > .form-control:focus ~ label,
+body.catalyst-shell-body .form-floating > .form-control:not(:placeholder-shown) ~ label,
+body.catalyst-shell-body .form-floating > .form-control-plaintext ~ label,
+body.catalyst-shell-body .form-floating > .form-select ~ label {
     color: var(--bs-secondary-color);
     opacity: 1;
 }
 
-body.demo-ui-shell-body .form-floating > .form-control:focus,
-body.demo-ui-shell-body .form-floating > .form-select:focus {
+body.catalyst-shell-body .form-floating > .form-control:focus,
+body.catalyst-shell-body .form-floating > .form-select:focus {
     border-color: rgba(var(--theme-primary-rgb, var(--bs-primary-rgb)), .62);
     box-shadow: 0 0 0 .2rem rgba(var(--theme-primary-rgb, var(--bs-primary-rgb)), .14);
 }
@@ -300,7 +356,7 @@ body > .offcanvas,
     z-index: var(--catalyst-zindex-tooltip);
 }
 
-body.demo-ui-shell-body.modal-open .content-page {
+body.catalyst-shell-body.modal-open .content-page {
     overflow: visible;
 }
 

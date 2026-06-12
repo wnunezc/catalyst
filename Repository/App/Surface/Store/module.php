@@ -44,7 +44,7 @@ return [
         ],
     ],
     'navigation' => [
-        'admin' => [],
+        'shell' => [],
         'public' => [
             [
                 'label' => 'Store',

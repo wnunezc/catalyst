@@ -10,10 +10,11 @@ Catalyst.
 | Concern | Owner |
 |---|---|
 | Programmatic modals | `public/assets/js/catalyst/modules/modal.js` |
+| Shared UI component lifecycle | `public/assets/js/catalyst/runtime/ui-runtime.js` |
 | Bootstrap component activation | `public/assets/js/catalyst/modules/bootstrap-components.js` |
 | Notification modal payloads | `Catalyst\Framework\Notification\NotificationBag` |
 | DevTools modal test surface | `Catalyst\Repository\DevTools\Controllers\ModalTestController` |
-| Settings modal forms | `Catalyst\Repository\Settings\Support\SettingsModalFactory` |
+| Environment Setup modal forms | `Catalyst\Repository\Configuration\Support\SettingsModalFactory` |
 
 ## Safe Modal Contract
 
@@ -21,6 +22,13 @@ Modal markup may be declared inside a view, partial, generated component or app
 surface, but runtime activation must place active modal elements at document body
 level. This avoids stacking-context bugs where a shell, account layout, sidebar,
 status bar or transformed container renders the backdrop above the dialog.
+
+Within Demo UI, declarative modal activation is owned by the common UI runtime.
+The runtime registers `bootstrap-components.js`, prevents a second shell
+governor in the Demo UI work script, hoists modal elements when required and
+destroys owned instances before trusted DOM replacement, then rescans the new
+content. Demo UI modules must not call
+`initBootstrapComponents()` or another UI runtime themselves.
 
 Third-party Catalyst modules must follow these rules:
 
@@ -31,8 +39,8 @@ Third-party Catalyst modules must follow these rules:
 - Do not wrap active modals in containers that create stacking contexts via
   `transform`, `filter`, `opacity`, `position` plus z-index, or fixed shell
   overlays.
-- Prefer framework activation through `initBootstrapComponents()` or
-  `Catalyst.modal`.
+- On a runtime-owned surface, use declarative Bootstrap markup or
+  `Catalyst.modal`; do not start another component initializer.
 - Dynamic modal HTML must be trusted HTML produced by Catalyst controllers and
   validated by the trusted DOM contract.
 - Closing a modal must leave no `.modal.show`, `.modal-backdrop`, `modal-open`
@@ -60,7 +68,7 @@ Canonical modal surfaces:
 
 Current exhaustive active-surface coverage:
 
-- Settings inventory plus every visible settings modal trigger.
+- Configuration setup inventory plus every visible setup modal trigger.
 - DevTools confirm, alert, dynamic HTML, dynamic form, API-triggered and wait
   modals.
 - Demo UI inventory plus every direct modal trigger, chained modal transition
@@ -71,7 +79,7 @@ trigger added to one of these surfaces must update the corresponding inventory
 contract and add an independent interaction case. It must not silently expand
 the runtime inventory without test coverage.
 
-`boot-core/template/components/_admin-page-header.phtml` exposes reusable
+`boot-core/template/components/_page-header.phtml` exposes reusable
 `modal_target` support but has no current runtime consumer. Generated
 `DemoUi/form-layout.html` modal markup has no active route/controller mapping.
 Neither is treated as a current E2E surface. Settings `modal-cache` is rendered

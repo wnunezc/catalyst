@@ -30,8 +30,8 @@ declare(strict_types=1);
 
 namespace Catalyst\Repository\Roles\Controllers;
 
-use Catalyst\Framework\Admin\Form\FormBuilder;
-use Catalyst\Framework\Admin\Grid\DataGrid;
+use Catalyst\Framework\Form\FormBuilder;
+use Catalyst\Framework\DataGrid\DataGrid;
 use Catalyst\Framework\Authorization\RoleRepository;
 use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\Request;
@@ -187,7 +187,7 @@ class PermissionsController extends Controller
             'title' => (string) __('roles.permissions.title'),
             'pageTitle' => (string) __('roles.permissions.title'),
             'grid' => $grid,
-        ], 200, 'admin');
+        ]);
     }
 
     /**
@@ -407,8 +407,8 @@ class PermissionsController extends Controller
             'pageTitle' => $title,
             'permission' => $permission,
             'form' => $form,
-            'claimContext' => $this->buildRecordClaimContext($claim),
-        ], 200, 'admin');
+            'recordPresence' => $this->buildRecordPresenceContext($claim),
+        ]);
     }
 
     /**

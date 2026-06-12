@@ -31,16 +31,18 @@ declare(strict_types=1);
 namespace Catalyst\Repository\DemoUi\Controllers;
 
 use Catalyst\Framework\Auth\AuthManager;
+use Catalyst\Framework\Appearance\PlatformAppearanceManager;
 use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\Response;
+use Catalyst\Framework\View\InlineJson;
 use Catalyst\Framework\View\TrustedHtml;
 use Catalyst\Helpers\Security\CspNonce;
 
 /**
- * Presents the authenticated INSPINIA reference surface and its preview catalog.
+ * Presents the public INSPINIA reference surface and its preview catalog.
  *
  * @package Catalyst\Repository\DemoUi\Controllers
- * Responsibility: Resolves demo routes, navigation groups and trusted generated previews.
+ * Responsibility: Resolves demo routes, catalog selection data and trusted generated previews.
  */
 final class DemoUiController extends Controller
 {
@@ -1136,117 +1138,76 @@ final class DemoUiController extends Controller
      */
     private function renderPage(string $selectedFile, string $selectedSection, string $selectedLabel, ?string $pageSlug = null): Response
     {
-        $frontDir = PD . DS . 'Repository' . DS . 'Framework' . DS . 'DemoUi' . DS . 'front';
-        $styleVersion = (string) (@filemtime($frontDir . DS . 'style.css') ?: time());
-        $scriptVersion = (string) (@filemtime($frontDir . DS . 'script.js') ?: time());
+        $appearanceRuntime = PlatformAppearanceManager::getInstance()->runtimeViewModel();
+        $initialTheme = is_array($appearanceRuntime['lockedConfig'] ?? null)
+            ? $appearanceRuntime['lockedConfig']
+            : [];
         $sections = $this->demoUiSections();
-        $navGroups = $this->buildNavGroups($sections, $selectedFile, $selectedSection);
         $pageStyles = $this->resolvePageStyles($pageSlug);
 
         $authUser = AuthManager::getInstance()->user() ?? [];
 
         return $this->view('demoui.demo-ui', [
             'title' => 'Demo UI',
+            'document_title' => 'Demo UI - Catalyst',
             'pageTitle' => 'Demo UI',
             'csp_nonce' => CspNonce::get(),
             'auth_name' => trim((string) ($authUser['name'] ?? '')),
-            'status_bar_show_theme_toggle' => true,
-            'status_bar_theme_toggle_attribute' => 'data-demoui-theme-toggle',
-            'status_bar_theme_toggle_icon_class' => 'ti ti-moon',
-            'status_bar_show_customizer_toggle' => true,
-            'status_bar_customizer_toggle_attribute' => 'data-theme-customizer-toggle',
-            'status_bar_customizer_toggle_icon_class' => 'ti ti-settings',
-            'status_bar_customizer_toggle_aria_label' => 'Open Admin Customizer',
-            'status_bar_customizer_toggle_title' => 'Admin Customizer',
-            'styles' => [
-                '/assets/css/catalyst/status-bar.css',
-                ...$pageStyles,
-                '/assets/css/work/demoui/style.css?v=' . rawurlencode($styleVersion),
+            'lang' => 'en',
+            'direction' => 'ltr',
+            'html_direction' => (string) ($initialTheme['dir'] ?? 'ltr'),
+            'html_theme' => (string) ($initialTheme['theme'] ?? 'light'),
+            'html_skin' => (string) ($initialTheme['skin'] ?? 'default'),
+            'html_layout_width' => (string) ($initialTheme['width'] ?? 'fluid'),
+            'html_layout_position' => (string) ($initialTheme['position'] ?? 'fixed'),
+            'html_menu_color' => (string) ($initialTheme['sidenav-color'] ?? 'dark'),
+            'html_sidenav_size' => (string) ($initialTheme['sidenav-size'] ?? 'default'),
+            'html_topbar_color' => (string) ($initialTheme['topbar-color'] ?? 'gray'),
+            'body_class' => 'catalyst-shell-body',
+            'surface_context' => 'demo-ui',
+            'surface_page' => $pageSlug ?? '',
+            'inspinia_document' => $selectedFile,
+            'show_topbar' => true,
+            'show_sidebar' => true,
+            'show_status_bar' => true,
+            'show_theme_customizer' => true,
+            'shell_class' => 'wrapper',
+            'topbar_class' => 'app-topbar',
+            'sidebar_class' => 'sidenav-menu',
+            'sidebar_label' => 'Demo UI navigation',
+            'content_class' => 'content-page',
+            'status_bar_class' => 'catalyst-status-bar',
+            'status_bar_label' => 'Catalyst Demo UI',
+            'status_bar_context' => 'demo-ui',
+            'brand_home_href' => '/demo-ui',
+            'account_href' => '/dashboard',
+            'account_label' => 'Account',
+            'auth_avatar_src' => '/assets/vendor/inspinia/images/users/user-1.jpg',
+            'platform_appearance_json' => TrustedHtml::fromString(InlineJson::encode($appearanceRuntime)),
+            'styles' => $pageStyles,
+            'navigation_model' => 'demo-ui',
+            'navigation_model_data' => [
+                'selected_file' => $selectedFile,
+                'selected_section' => $selectedSection,
+                'sections' => $sections,
+                'chart_families' => self::CHART_FAMILIES,
+                'chart_pages' => self::CHART_PAGES,
+                'table_families' => self::TABLE_FAMILIES,
+                'table_pages' => self::TABLE_PAGES,
+                'catalogs' => array_merge(
+                    self::BASE_UI_PAGES,
+                    self::FORM_PAGES,
+                    self::CHART_PAGES,
+                    self::TABLE_PAGES
+                ),
             ],
-            'scripts' => [
-                [
-                    'src' => '/assets/js/work/demoui/script.js?v=' . rawurlencode($scriptVersion),
-                    'defer' => true,
-                ],
-            ],
-            'demo_ui_nav_groups' => $navGroups,
             'selected_doc_file' => $selectedFile,
             'selected_doc_label' => $selectedLabel,
             'selected_doc_section' => $selectedSection,
             'selected_doc_source_url' => self::THEME_BASE_URL . $selectedFile,
             'demo_ui_page_slug' => $pageSlug ?? '',
             'preview_html' => TrustedHtml::fromString($this->loadThemePreviewHtml($selectedFile)),
-        ], 200, 'demo-ui-shell')->setAttribute('csp_profile', 'trusted-renderer');
-    }
-
-    /**
-     * Builds navigation links for a flat Demo UI item list.
-     *
-     * Responsibility: Builds navigation links for a flat Demo UI item list.
-     * @param array<int, array{file:string,label:string}> $items
-     * @return array<int, array{file:string,label:string,href:string,is_active:bool,link_class:string}>
-     */
-    private function buildNavItems(array $items, string $selectedFile): array
-    {
-        $navItems = [];
-        foreach ($items as $item) {
-            $isActive = $item['file'] === $selectedFile;
-            $navItems[] = [
-                'file' => $item['file'],
-                'label' => $item['label'],
-                'href' => $this->resolveNavHref($item['file']),
-                'is_active' => $isActive,
-                'link_class' => $isActive ? 'demo-ui-nav__link active' : 'demo-ui-nav__link',
-            ];
-        }
-
-        return $navItems;
-    }
-
-    /**
-     * Builds nested chart navigation for all supported chart families.
-     *
-     * Responsibility: Builds nested chart navigation for all supported chart families.
-     * @return array<int, array<string, mixed>>
-     */
-    private function buildChartNavItems(string $selectedFile): array
-    {
-        $items = [];
-
-        foreach (self::CHART_FAMILIES as $family => $definition) {
-            $childItems = [];
-            $isFamilyActive = false;
-
-            foreach ($definition['slugs'] as $slug) {
-                $page = self::CHART_PAGES[$slug] ?? null;
-                if (!is_array($page)) {
-                    continue;
-                }
-
-                $isActive = (string) ($page['file'] ?? '') === $selectedFile;
-                $isFamilyActive = $isFamilyActive || $isActive;
-                $childItems[] = [
-                    'file' => (string) $page['file'],
-                    'label' => (string) $page['label'],
-                    'href' => (string) $page['route'],
-                    'is_active' => $isActive,
-                    'link_class' => $isActive ? 'side-nav-link active' : 'side-nav-link',
-                ];
-            }
-
-            $items[] = [
-                'label' => (string) ($definition['label'] ?? ucfirst($family)),
-                'is_nested_collapse' => true,
-                'is_active' => $isFamilyActive,
-                'link_class' => $isFamilyActive ? 'side-nav-link active' : 'side-nav-link',
-                'collapse_id' => 'demo-charts-' . $family,
-                'expanded' => $isFamilyActive ? 'true' : 'false',
-                'show' => $isFamilyActive,
-                'children' => $childItems,
-            ];
-        }
-
-        return $items;
+        ])->setAttribute('csp_profile', 'trusted-renderer');
     }
 
     /**
@@ -1271,70 +1232,6 @@ final class DemoUiController extends Controller
                     'label' => (string) $page['label'],
                 ];
             }
-        }
-
-        return $items;
-    }
-
-    /**
-     * Builds table navigation including nested DataTables links.
-     *
-     * Responsibility: Builds table navigation including nested DataTables links.
-     * @return array<int, array<string, mixed>>
-     */
-    private function buildTableNavItems(string $selectedFile): array
-    {
-        $items = [];
-
-        foreach (['static', 'custom'] as $slug) {
-            $page = self::TABLE_PAGES[$slug] ?? null;
-            if (!is_array($page)) {
-                continue;
-            }
-
-            $isActive = (string) ($page['file'] ?? '') === $selectedFile;
-            $items[] = [
-                'file' => (string) $page['file'],
-                'label' => (string) $page['label'],
-                'href' => (string) $page['route'],
-                'is_active' => $isActive,
-                'link_class' => $isActive ? 'side-nav-link active' : 'side-nav-link',
-            ];
-        }
-
-        foreach (self::TABLE_FAMILIES as $family => $definition) {
-            $childItems = [];
-            $isFamilyActive = false;
-
-            foreach ((array) ($definition['slugs'] ?? []) as $slug) {
-                $page = self::TABLE_PAGES[$slug] ?? null;
-                if (!is_array($page)) {
-                    continue;
-                }
-
-                $isActive = (string) ($page['file'] ?? '') === $selectedFile;
-                $isFamilyActive = $isFamilyActive || $isActive;
-                $childItems[] = [
-                    'file' => (string) $page['file'],
-                    'label' => (string) $page['label'],
-                    'href' => (string) $page['route'],
-                    'is_active' => $isActive,
-                    'link_class' => $isActive ? 'side-nav-link active' : 'side-nav-link',
-                ];
-            }
-
-            $items[] = [
-                'label' => (string) ($definition['label'] ?? ucfirst($family)),
-                'badge_label' => (string) ($definition['badge'] ?? ''),
-                'badge_class' => 'badge bg-success text-white',
-                'is_nested_collapse' => true,
-                'is_active' => $isFamilyActive,
-                'link_class' => $isFamilyActive ? 'side-nav-link active' : 'side-nav-link',
-                'collapse_id' => 'demo-tables-' . $family,
-                'expanded' => $isFamilyActive ? 'true' : 'false',
-                'show' => $isFamilyActive,
-                'children' => $childItems,
-            ];
         }
 
         return $items;
@@ -1377,96 +1274,6 @@ final class DemoUiController extends Controller
         }
 
         return $items;
-    }
-
-    /**
-     * Resolves a Demo UI document file to its canonical navigation URL.
-     *
-     * Responsibility: Resolves a Demo UI document file to its canonical navigation URL.
-     */
-    private function resolveNavHref(string $file): string
-    {
-        if (str_starts_with($file, '/')) {
-            return $file;
-        }
-
-        foreach ([self::BASE_UI_PAGES, self::FORM_PAGES, self::CHART_PAGES, self::TABLE_PAGES] as $catalog) {
-            foreach ($catalog as $page) {
-                if (($page['file'] ?? null) === $file) {
-                    return (string) ($page['route'] ?? '#!');
-                }
-            }
-        }
-
-        return '#!';
-    }
-
-    /**
-     * Builds sidebar navigation groups for the selected Demo UI document.
-     *
-     * Responsibility: Builds sidebar navigation groups for the selected Demo UI document.
-     * @param array<string, array<int, array{file:string,label:string}>> $sections
-     * @return array<int, array<string, mixed>>
-     */
-    private function buildNavGroups(array $sections, string $selectedFile, string $selectedSection): array
-    {
-        $definitions = [
-            ['kind' => 'title', 'label' => 'Framework Configuration'],
-            ['kind' => 'collapse', 'key' => 'framework-configuration', 'label' => 'Configuration', 'icon' => 'ti ti-settings-cog'],
-            ['kind' => 'title', 'label' => 'Framework Operations'],
-            ['kind' => 'collapse', 'key' => 'framework-workspaces', 'label' => 'Workspaces', 'icon' => 'ti ti-layout-grid'],
-            ['kind' => 'collapse', 'key' => 'framework-operations', 'label' => 'Operations', 'icon' => 'ti ti-briefcase-2'],
-            ['kind' => 'collapse', 'key' => 'framework-users', 'label' => 'Users', 'icon' => 'ti ti-users'],
-            ['kind' => 'title', 'label' => 'Devtools'],
-            ['kind' => 'title', 'label' => 'Components'],
-            ['kind' => 'collapse', 'key' => 'base-ui', 'label' => 'Base UI', 'icon' => 'ti ti-diamonds'],
-            ['kind' => 'collapse', 'key' => 'charts', 'label' => 'Charts', 'icon' => 'ti ti-chart-donut'],
-            ['kind' => 'collapse', 'key' => 'forms', 'label' => 'Forms', 'icon' => 'ti ti-clipboard-text'],
-            ['kind' => 'collapse', 'key' => 'tables', 'label' => 'Tables', 'icon' => 'ti ti-table-options'],
-        ];
-
-        $groups = [];
-
-        foreach ($definitions as $definition) {
-            if ($definition['kind'] === 'title') {
-                $groups[] = [
-                    'is_title' => true,
-                    'label' => $definition['label'],
-                ];
-                continue;
-            }
-
-            $key = (string) $definition['key'];
-            $items = match ($key) {
-                'charts' => $this->buildChartNavItems($selectedFile),
-                'tables' => $this->buildTableNavItems($selectedFile),
-                default => $this->buildNavItems($sections[$key] ?? [], $selectedFile),
-            };
-            $isActive = $selectedSection === $key;
-
-            if ($key === 'framework-configuracion') {
-                foreach ($items as $index => &$item) {
-                    $item['is_active'] = $index === 0;
-                }
-                unset($item);
-                $isActive = true;
-            }
-
-            $groups[] = [
-                'is_title' => false,
-                'is_collapse' => true,
-                'key' => $key,
-                'label' => $definition['label'],
-                'icon' => $definition['icon'],
-                'collapse_id' => 'demo-' . $key,
-                'is_active' => $isActive,
-                'expanded' => $isActive ? 'true' : 'false',
-                'show' => $isActive,
-                'items' => $items,
-            ];
-        }
-
-        return $groups;
     }
 
     /**

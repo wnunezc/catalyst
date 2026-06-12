@@ -1,0 +1,35 @@
+{{#if is_title}}
+<li class="side-nav-title mt-2">{{ label }}</li>
+{{else}}
+<li class="side-nav-item {{#if is_active}}active{{/if}}">
+    {{#if is_link}}
+    {{#if is_disabled}}
+    <span class="{{ link_class }}" aria-disabled="true">
+        {{#if has_icon}}<span class="menu-icon"><i class="{{ icon }}"></i></span>{{/if}}
+        <span class="menu-text">{{ label }}</span>
+        {{#if has_badge}}<span class="{{ badge_class }}">{{ badge_label }}</span>{{/if}}
+    </span>
+    {{else}}
+    <a href="{{ href }}" class="{{ link_class }}">
+        {{#if has_icon}}<span class="menu-icon"><i class="{{ icon }}"></i></span>{{/if}}
+        <span class="menu-text">{{ label }}</span>
+        {{#if has_badge}}<span class="{{ badge_class }}">{{ badge_label }}</span>{{/if}}
+    </a>
+    {{/if}}
+    {{else}}
+    <a data-shell-collapse="true" href="#{{ collapse_id }}" aria-expanded="{{ expanded }}" aria-controls="{{ collapse_id }}" class="{{ link_class }}">
+        {{#if has_icon}}<span class="menu-icon"><i class="{{ icon }}"></i></span>{{/if}}
+        <span class="menu-text">{{ label }}</span>
+        {{#if has_badge}}<span class="{{ badge_class }}">{{ badge_label }}</span>{{/if}}
+        <span class="menu-arrow"></span>
+    </a>
+    <div class="collapse {{#if show}}show{{/if}}" id="{{ collapse_id }}">
+        <ul class="sub-menu">
+            {{#each children}}
+                {{> "./_sidebar-node" }}
+            {{/each}}
+        </ul>
+    </div>
+    {{/if}}
+</li>
+{{/if}}

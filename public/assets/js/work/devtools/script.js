@@ -1,174 +1,164 @@
-import { getHttpClient, summarizeResponseError } from '../../catalyst/modules/http.js';
-import { setButtonLoading, clearButtonLoading } from '../../catalyst/modules/loading.js';
+import { getHttpClient, summarizeResponseError } from '../../catalyst/core/http.js';
+import { setButtonLoading, clearButtonLoading } from '../../catalyst/core/loading.js';
+import {
+    registerUiComponent,
+    registerUiEvent,
+} from '../../catalyst/runtime/registration-queue.js';
 
 const http = getHttpClient();
 const MERMAID_SCRIPT_SRC = 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js';
 
-let devToolsModuleBooted = false;
+let uploadHandlerBound = false;
 let umlTheme = null;
 let umlInitialized = false;
 
-bootstrapDevToolsModule();
+registerUiEvent({
+    name: 'devtools.actions',
+    target: 'document',
+    type: 'click',
+    listener: handleDevToolsAction,
+});
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', bootstrapDevToolsModule, { once: true });
-}
+registerUiEvent({
+    name: 'devtools.form-submit',
+    target: 'document',
+    type: 'submit',
+    listener: handleDevToolsFormSubmit,
+});
 
-document.addEventListener('catalyst:ready', bootstrapDevToolsModule, { once: true });
+registerUiEvent({
+    name: 'devtools.form-response',
+    target: 'document',
+    type: 'catalyst:form:response',
+    listener: handleDevToolsFormResponse,
+});
 
-function bootstrapDevToolsModule() {
-    if (devToolsModuleBooted) {
+registerUiComponent({
+    name: 'devtools.upload',
+    phase: 'scan',
+    selector: '#u17-form',
+    mount: bindUploadHandler,
+});
+
+registerUiComponent({
+    name: 'devtools.uml',
+    phase: 'scan',
+    selector: '.uml-showcase',
+    mount: initUmlShowcase,
+});
+
+function handleDevToolsAction(event) {
+    const origin = event.target instanceof Element ? event.target : null;
+    const element = origin?.closest('[data-devtools-action]');
+    if (!(element instanceof HTMLElement)) {
         return;
     }
 
-    devToolsModuleBooted = true;
-
-    bindDevToolsDocumentActions();
-    bindDevToolsFormResponses();
-    bindUploadHandler();
-    void initUmlShowcase();
-}
-
-function bindDevToolsDocumentActions() {
-    document.addEventListener('click', event => {
-        const element = event.target.closest('[data-action]');
-        if (!element) {
-            return;
-        }
-
-        const action = element.getAttribute('data-action');
-        if (!action) {
-            return;
-        }
-
-        switch (action) {
-            case 'api-call':
-                event.preventDefault();
-                void apiCall(element, element.dataset.url);
-                break;
-            case 'toast':
-                event.preventDefault();
-                catalystToast(element.dataset.type, element.dataset.message);
-                break;
-            case 'confirm-demo':
-                event.preventDefault();
-                void runConfirm();
-                break;
-            case 'alert-demo':
-                event.preventDefault();
-                void runAlert();
-                break;
-            case 'load-modal':
-                event.preventDefault();
-                window.Catalyst?.loadModal?.(element.dataset.url, { title: element.dataset.title });
-                break;
-            case 'inspect-json':
-                event.preventDefault();
-                void inspectJson(element.dataset.url, element.dataset.resultId, element.dataset.preId, element);
-                break;
-            case 'partial-refresh':
-                event.preventDefault();
-                void runPartialRefresh(element);
-                break;
-            case 'orm-status':
-                event.preventDefault();
-                void ormGet('/test-features/orm/status');
-                break;
-            case 'orm-find-or-fail':
-                event.preventDefault();
-                void ormGet('/test-features/orm/find-or-fail');
-                break;
-            case 'orm-user-demo':
-                event.preventDefault();
-                void ormGet('/test-features/orm/user-demo');
-                break;
-        }
-    });
-
-    document.addEventListener('submit', event => {
-        const form = event.target;
-        if (!(form instanceof HTMLFormElement)) {
-            return;
-        }
-
-        const confirmMessage = form.getAttribute('data-confirm');
-        if (confirmMessage && !window.confirm(confirmMessage)) {
+    const action = element.dataset.devtoolsAction;
+    switch (action) {
+        case 'api-call':
             event.preventDefault();
-            return;
-        }
-    });
+            void apiCall(element, element.dataset.url);
+            break;
+        case 'toast':
+            event.preventDefault();
+            catalystToast(element.dataset.type, element.dataset.message);
+            break;
+        case 'confirm-demo':
+            event.preventDefault();
+            void runConfirm();
+            break;
+        case 'alert-demo':
+            event.preventDefault();
+            void runAlert();
+            break;
+        case 'load-modal':
+            event.preventDefault();
+            window.Catalyst?.loadModal?.(element.dataset.url, { title: element.dataset.title });
+            break;
+        case 'inspect-json':
+            event.preventDefault();
+            void inspectJson(element.dataset.url, element.dataset.resultId, element.dataset.preId, element);
+            break;
+        case 'partial-refresh':
+            event.preventDefault();
+            void runPartialRefresh(element);
+            break;
+        case 'clear-validator':
+            event.preventDefault();
+            document.getElementById('v3-form')?.reset();
+            document.getElementById('v3-unique-form')?.reset();
+            clearValidatorResultPanels();
+            clearUniqueValidatorResultPanel();
+            break;
+        case 'orm-status':
+            event.preventDefault();
+            void ormGet('/test-features/orm/status');
+            break;
+        case 'orm-find-or-fail':
+            event.preventDefault();
+            void ormGet('/test-features/orm/find-or-fail');
+            break;
+        case 'orm-user-demo':
+            event.preventDefault();
+            void ormGet('/test-features/orm/user-demo');
+            break;
+    }
 }
 
-function bindDevToolsFormResponses() {
-    document.getElementById('v3-btn-clear')?.addEventListener('click', () => {
-        const form = document.getElementById('v3-form');
-        const uniqueForm = document.getElementById('v3-unique-form');
+function handleDevToolsFormSubmit(event) {
+    const form = event.target;
+    if (!(form instanceof HTMLFormElement) || event.defaultPrevented) {
+        return;
+    }
 
-        if (form instanceof HTMLFormElement) {
-            form.reset();
-        }
+    switch (form.id) {
+        case 'v3-form':
+            clearValidatorResultPanels();
+            break;
+        case 'v3-unique-form':
+            clearUniqueValidatorResultPanel();
+            break;
+        case 'm4-form':
+            clearMailResult();
+            break;
+        case 'orm-mutation-form':
+            clearOrmResult();
+            break;
+    }
+}
 
-        if (uniqueForm instanceof HTMLFormElement) {
-            uniqueForm.reset();
-        }
+function handleDevToolsFormResponse(event) {
+    const detail = event.detail || {};
+    const form = detail.form;
+    const data = detail.data || {};
 
-        clearValidatorResultPanels();
-    });
+    if (!(form instanceof HTMLFormElement)) {
+        return;
+    }
 
-    document.addEventListener('submit', event => {
-        const form = event.target;
-        if (!(form instanceof HTMLFormElement) || event.defaultPrevented) {
-            return;
-        }
+    if (form.hasAttribute('data-modal-demo-form') && data.success) {
+        window.Catalyst?.closeModal?.();
+        return;
+    }
 
-        switch (form.id) {
-            case 'v3-form':
-                clearValidatorResultPanels();
-                break;
-            case 'v3-unique-form':
-                clearUniqueValidatorResultPanel();
-                break;
-            case 'm4-form':
-                clearMailResult();
-                break;
-            case 'orm-mutation-form':
-                clearOrmResult();
-                break;
-        }
-    });
-
-    document.addEventListener('catalyst:form:response', event => {
-        const detail = event.detail || {};
-        const form = detail.form;
-        const data = detail.data || {};
-
-        if (!(form instanceof HTMLFormElement)) {
-            return;
-        }
-
-        if (form.hasAttribute('data-modal-demo-form') && data.success) {
-            window.Catalyst?.closeModal?.();
-            return;
-        }
-
-        switch (form.id) {
-            case 'v3-form':
-                handleValidatorResponse(data);
-                break;
-            case 'v3-unique-form':
-                handleUniqueValidatorResponse(data);
-                break;
-            case 'u17-form':
-                handleUploadResponse(form, data);
-                break;
-            case 'm4-form':
-                handleMailResponse(data);
-                break;
-            case 'orm-mutation-form':
-                ormShowResult(data);
-                break;
-        }
-    });
+    switch (form.id) {
+        case 'v3-form':
+            handleValidatorResponse(data);
+            break;
+        case 'v3-unique-form':
+            handleUniqueValidatorResponse(data);
+            break;
+        case 'u17-form':
+            handleUploadResponse(form, data);
+            break;
+        case 'm4-form':
+            handleMailResponse(data);
+            break;
+        case 'orm-mutation-form':
+            ormShowResult(data);
+            break;
+    }
 }
 
 async function apiCall(trigger, url) {
@@ -407,6 +397,12 @@ function u17RenderSuccess(payload, containerEl, errorsEl, preEl) {
 }
 
 function bindUploadHandler() {
+    if (uploadHandlerBound) {
+        return;
+    }
+
+    uploadHandlerBound = true;
+
     const form = document.getElementById('u17-form');
     const clearBtn = document.getElementById('u17-btn-clear');
     const result = document.getElementById('u17-result');

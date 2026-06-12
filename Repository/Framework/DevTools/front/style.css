@@ -309,15 +309,15 @@
     flex-wrap: wrap;
 }
 
-.ui-admin-table {
+.ui-data-table {
     font-size: 0.86rem;
 }
 
-.ui-admin-table__check {
+.ui-data-table__check {
     width: 2.5rem;
 }
 
-.ui-admin-table thead th {
+.ui-data-table thead th {
     padding-top: 0.7rem;
     padding-bottom: 0.7rem;
     font-size: 0.69rem;
@@ -329,13 +329,13 @@
     background: var(--ui-table-head-bg);
 }
 
-.ui-admin-table tbody td {
+.ui-data-table tbody td {
     padding-top: 0.72rem;
     padding-bottom: 0.72rem;
 }
 
-.ui-admin-table tbody tr:nth-child(even) { background: var(--ui-row-alt-bg); }
-.ui-admin-table tbody tr:hover { background: var(--ui-row-hover-bg); }
+.ui-data-table tbody tr:nth-child(even) { background: var(--ui-row-alt-bg); }
+.ui-data-table tbody tr:hover { background: var(--ui-row-hover-bg); }
 
 .ui-inline-fieldset {
     min-width: 0;
@@ -607,12 +607,12 @@
  * @license   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 
-.tf-admin-page {
+.test-features-page {
     color: var(--ui-ink, var(--bs-body-color));
 }
 
 /* ── Section cards ──────────────────────────────────────────────────────────── */
-.tf-admin-page .section-card {
+.test-features-page .section-card {
     background: var(--ui-panel-bg, var(--bs-secondary-bg));
     border: 1px solid var(--ui-card-border, var(--bs-border-color));
     border-radius: 1rem;
@@ -621,7 +621,7 @@
     overflow: hidden;
 }
 
-.tf-admin-page .section-card .card-header {
+.test-features-page .section-card .card-header {
     background: var(--ui-header-bg, var(--bs-tertiary-bg));
     border-bottom: 1px dashed rgba(var(--bs-body-color-rgb), 0.12);
     padding: 0.85rem 1rem;
@@ -632,7 +632,7 @@
     color: var(--ui-muted, var(--bs-secondary-color));
 }
 
-.tf-admin-page .section-card .card-body {
+.test-features-page .section-card .card-body {
     padding: 1rem;
 }
 
@@ -643,7 +643,7 @@
     gap: 0.5rem;
 }
 
-.tf-admin-page .code-badge {
+.test-features-page .code-badge {
     font-family: 'Fira Code', monospace;
     font-size: 0.75rem;
     background-color: color-mix(in srgb, var(--ui-accent, var(--bs-info)) 10%, var(--bs-tertiary-bg));
@@ -653,25 +653,25 @@
     border: 1px solid var(--bs-border-color);
 }
 
-.tf-admin-page .json-link {
+.test-features-page .json-link {
     font-size: 0.8rem;
     color: var(--ui-muted, var(--bs-secondary-color));
     text-decoration: none;
 }
 
-.tf-admin-page .json-link:hover {
+.test-features-page .json-link:hover {
     color: var(--ui-accent, var(--bs-body-color));
 }
 
 /* ── Tables ─────────────────────────────────────────────────────────────────── */
-.tf-admin-page .sys-table td,
-.tf-admin-page .sys-table th {
+.test-features-page .sys-table td,
+.test-features-page .sys-table th {
     font-size: 0.8rem;
     border-color: var(--bs-border-color) !important;
     color: var(--bs-body-color);
 }
 
-.tf-admin-page .sys-table th {
+.test-features-page .sys-table th {
     color: var(--ui-muted, var(--bs-secondary-color));
     font-weight: 500;
 }
@@ -682,7 +682,7 @@
 }
 
 /* ── Code / JSON display ────────────────────────────────────────────────────── */
-.tf-admin-page .code-pre {
+.test-features-page .code-pre {
     background-color: var(--bs-tertiary-bg);
     border: 1px solid var(--bs-border-color);
     border-radius: 6px;
@@ -718,74 +718,23 @@
     font-size: 0.75rem;
 }
 
-.tf-admin-page .btn-outline-primary {
+.test-features-page .btn-outline-primary {
     color: var(--ui-btn-outline-text, var(--bs-primary));
     border-color: var(--ui-btn-outline-border, var(--bs-border-color));
     background: var(--ui-btn-outline-bg, transparent);
     font-weight: 600;
 }
 
-.tf-admin-page .btn-outline-primary:hover,
-.tf-admin-page .btn-outline-primary:focus {
+.test-features-page .btn-outline-primary:hover,
+.test-features-page .btn-outline-primary:focus {
     color: var(--ui-btn-text-on-accent, #fff);
     background: var(--ui-accent, var(--bs-primary));
     border-color: var(--ui-accent, var(--bs-primary));
 }
 
-.tf-admin-page .btn:focus-visible {
+.test-features-page .btn:focus-visible {
     box-shadow: 0 0 0 0.22rem color-mix(in srgb, var(--ui-accent, var(--bs-primary)) 32%, transparent);
 }
-
-.module-designer-page .module-designer-metric {
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-    padding: 0.65rem 0.75rem;
-    border: 1px solid rgba(var(--bs-body-color-rgb), 0.08);
-    border-radius: 0.8rem;
-    background: rgba(var(--bs-body-bg-rgb), 0.72);
-    margin-bottom: 0.65rem;
-}
-
-.module-designer-page .module-designer-metric__label {
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--ui-muted, var(--bs-secondary-color));
-}
-
-.module-designer-page .module-designer-file-list {
-    padding-left: 1rem;
-    margin: 0;
-}
-
-.module-designer-page .module-designer-file-list li + li {
-    margin-top: 0.45rem;
-}
-
-.module-designer-page .module-designer-pre {
-    max-height: 26rem;
-}
-
-.module-designer-page .module-designer-chip-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.45rem;
-}
-
-.module-designer-page .module-designer-check,
-.module-designer-page .module-designer-issue {
-    padding: 0.7rem 0.8rem;
-    border: 1px solid rgba(var(--bs-body-color-rgb), 0.08);
-    border-radius: 0.8rem;
-    background: rgba(var(--bs-body-bg-rgb), 0.68);
-}
-
-.module-designer-page .module-designer-table td,
-.module-designer-page .module-designer-table th {
-    font-size: 0.78rem;
-}
-
 
 .uml-showcase {
     --uml-accent: var(--ui-accent, #0f766e);
@@ -986,7 +935,7 @@
 
 
 /* Density correction v2: readable text scale with compact spacing. */
-.devtools-admin-page,
+.devtools-page,
 .ui-catalog-page,
 .ui-catalog-grid,
 .ui-catalog-card {

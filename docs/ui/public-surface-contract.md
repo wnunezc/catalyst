@@ -15,8 +15,9 @@ Canonical public/demo surfaces:
 - `/dashboard`
 
 These pages must not expose framework administration navigation such as
-Configuration, Workspaces, Operations, Users or DevTools. Administrative features
-remain in the Admin Shell and are reached only through protected framework routes.
+Configuration, Workspaces, Operations, Users or DevTools. Administrative
+features remain protected by their routes, middleware and permissions and use
+the same canonical shell.
 
 ## Entry point configuration
 
@@ -40,27 +41,31 @@ Repository/App/Services/ApplicationEntryService.php
 app/Helpers/Config/AppEntryCatalog.php
 ```
 
-## Layout rule
+## Document and shell rule
 
-Public/demo pages render through:
+Public/demo pages use the same canonical document as every other complete
+surface:
 
 ```text
-boot-core/template/layouts/public.phtml
+boot-core/template/document.phtml
+└── boot-core/template/shell.phtml
 ```
 
-The Public Shell includes:
+The public controller supplies explicit shell capabilities:
 
-- a compact public navigation bar;
-- the selected Catalyst/Inspinia theme variables;
-- module-local frontend assets;
-- the global status bar.
+- `is_public_surface = true`;
+- topbar enabled so `_topbar.phtml` renders public navigation;
+- sidebar disabled;
+- status bar and theme customizer enabled;
+- public body, shell and content CSS classes.
 
-The Public Shell excludes:
+These values do not select a Public layout or renderer. They only control
+components inside the common shell. Public surfaces therefore retain theme
+variables, module assets and the global runtime without exposing the
+administrative sidebar.
 
-- the Admin Shell left menu;
-- framework administration topbar actions;
-- framework administration customizer controls;
-- direct links to admin-only configuration routes.
+New public pages should use `PublicPageController::renderPublicPage()` instead
+of creating another document wrapper.
 
 ## Status bar rule
 

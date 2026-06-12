@@ -755,7 +755,7 @@
                 "release_posture": "Release posture"
             },
             "values": {
-                "display_name": "Catalyst Admin Shell",
+                "display_name": "Catalyst Shell",
                 "notes": "Compact visual baseline for Catalyst: useful shell, filters first, dense listings and honest placeholders."
             },
             "options": {

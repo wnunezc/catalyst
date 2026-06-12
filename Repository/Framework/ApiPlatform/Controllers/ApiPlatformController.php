@@ -30,7 +30,7 @@ declare(strict_types=1);
 
 namespace Catalyst\Repository\ApiPlatform\Controllers;
 
-use Catalyst\Framework\Admin\Form\FormBuilder;
+use Catalyst\Framework\Form\FormBuilder;
 use Catalyst\Framework\Api\ApiCatalog;
 use Catalyst\Framework\Api\ApiTokenManager;
 use Catalyst\Framework\Api\ApiTokenRepository;
@@ -211,7 +211,7 @@ final class ApiPlatformController extends Controller
             'tokens' => $tokens,
             'createdTokenPlainText' => $plainText,
             'createdToken' => $createdToken,
-        ], 200, 'admin');
+        ]);
     }
 
     /**

@@ -49,6 +49,47 @@ async function openDemoUi(page) {
     });
 }
 
+async function modalContentDiagnostics(modal) {
+    return modal.evaluate((element) => {
+        const dialog = element.querySelector('.modal-dialog');
+        const content = element.querySelector('.modal-content');
+        const snapshot = (node) => {
+            if (!(node instanceof HTMLElement)) {
+                return null;
+            }
+
+            const style = window.getComputedStyle(node);
+            const rect = node.getBoundingClientRect();
+
+            return {
+                className: node.className,
+                display: style.display,
+                visibility: style.visibility,
+                opacity: style.opacity,
+                position: style.position,
+                width: style.width,
+                height: style.height,
+                rect: {
+                    x: rect.x,
+                    y: rect.y,
+                    width: rect.width,
+                    height: rect.height,
+                },
+            };
+        };
+
+        return {
+            viewport: {
+                width: window.innerWidth,
+                height: window.innerHeight,
+            },
+            modal: snapshot(element),
+            dialog: snapshot(dialog),
+            content: snapshot(content),
+        };
+    });
+}
+
 test.describe('@modals @demo-ui-modals Demo UI modal surface', () => {
     test('modal trigger inventory matches the active Demo UI reference', async ({ page }) => {
         await runOrSkipForEnvironment(test, async () => {
@@ -76,7 +117,8 @@ test.describe('@modals @demo-ui-modals Demo UI modal surface', () => {
                 const trigger = page.locator(`[data-bs-target="${target}"]:visible, a[href="${target}"][data-bs-toggle="modal"]:visible`).first();
                 await expect(trigger).toBeVisible();
                 const modal = await openModalFromTrigger(page, expect, trigger);
-                await expect(modal.locator('.modal-content')).toBeVisible();
+                const diagnostics = await modalContentDiagnostics(modal);
+                await expect(modal.locator('.modal-content'), JSON.stringify(diagnostics)).toBeVisible();
                 await closeActiveModal(page, expect);
                 await assertNoModalResidue(page, expect);
             });

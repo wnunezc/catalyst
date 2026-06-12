@@ -1,7 +1,7 @@
 {
   "platform": {
     "ui": {
-      "admin_customizer_enabled": true,
+      "customizer_enabled": true,
       "mode": "user",
       "locked_theme": {
         "skin": "default",

@@ -15,7 +15,8 @@ workspace harness without ad hoc scripts.
 | Route lint | `Catalyst\Framework\Cli\Commands\RouteLintCommand` |
 | Runtime docs inventory | `Catalyst\Framework\Cli\Commands\DocsInventoryCommand` |
 | Runtime module sync | `Catalyst\Framework\Cli\Commands\DocsSyncRuntimeCommand` |
-| PHP unit harness | `test/framework/UnitTest` |
+| Framework PHP unit harness | `test/framework/UnitTest` |
+| Application PHP unit harness | `test/app/UnitTest` |
 | Catalyst framework Playwright specs | `test/framework/Playwright` |
 | Derived application Playwright specs | `test/app/Playwright` |
 | Playwright runtime | `D:/OpsZone/DevWorkspace/Engines/Playwright` |
@@ -28,7 +29,9 @@ The standard documentation/runtime verification set remains:
 php public/cli.php docs:inventory --json
 php public/cli.php docs:sync-runtime --stdout
 php public/cli.php route:list --json
-php public/cli.php settings:localization-smoke
+php public/cli.php configuration:requests-regression
+php public/cli.php configuration:localization-smoke
+php public/cli.php shell-navigation:smoke --json
 php public/cli.php inspect:lint
 php public/cli.php route:lint
 php public/cli.php security:check
@@ -41,13 +44,15 @@ git diff --check
 Unit tests live in:
 
 ```text
-test/framework/UnitTest
+test/framework/UnitTest  Framework contracts
+test/app/UnitTest        Application contracts
 ```
 
-Run them with:
+Run the applicable owner suites with:
 
 ```powershell
 php test\framework\UnitTest\run.php
+php test\app\UnitTest\run.php
 ```
 
 Catalyst currently does not require PHPUnit or Pest. The local runner is
@@ -168,8 +173,8 @@ Name Playwright specs by surface, for example `settings-modals.spec.cjs`,
 tests after the class or contract under test.
 
 Maintain the progressive coverage registry owned by the selected suite:
-`test/framework/Playwright/SURFACES.md` for Catalyst and
-`test/app/Playwright/SURFACES.md` for a derived application. Generated files,
+`test/framework/Playwright/SURFACES.md` for framework behavior and
+`test/app/Playwright/SURFACES.md` for application behavior. Generated files,
 inactive templates and legacy engine specs are not surfaces. Confirm the
 current runtime route and visible surface before adding E2E coverage.
 
@@ -238,7 +243,7 @@ Paths remain part of the release evidence:
 - `reporting:smoke --json`: host Windows DNS failure for `WSDD-MySql-Server`
   is an environment Sad Path. The Happy Path is to rerun the same command inside
   `WSDD-Web-Server-PHP8.4`.
-- `settings:localization-smoke`: semantic i18n guard for
+- `configuration:localization-smoke`: semantic i18n guard for
   `/configuration/environment-setup`. It verifies EN/ES card and group titles
   are not raw keys, repeated values or copies of the global Settings title.
   This complements key-count coverage because valid JSON can still contain

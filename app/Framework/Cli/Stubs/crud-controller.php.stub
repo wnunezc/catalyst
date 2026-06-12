@@ -6,8 +6,8 @@ namespace {{ModuleNamespaceRoot}}\Controllers;
 
 use {{ModuleNamespaceRoot}}\Requests\{{RequestClass}};
 use Catalyst\Entities\{{Entity}};
-use Catalyst\Framework\Admin\Form\FormBuilder;
-use Catalyst\Framework\Admin\Grid\DataGrid;
+use Catalyst\Framework\Form\FormBuilder;
+use Catalyst\Framework\DataGrid\DataGrid;
 use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
@@ -34,10 +34,10 @@ final class {{ControllerClass}} extends Controller
 
         $gridBuilder = DataGrid::make()
             ->baseUrl(self::BASE_URL)
-            ->title(self::TITLE . ' Listing', 'Generated administrative catalog powered by the framework datagrid.')
+            ->title(self::TITLE . ' Listing', 'Generated catalog powered by the framework DataGrid.')
             ->emptyState(
                 'No records found',
-                'Create the first record to activate this administrative surface.',
+                'Create the first record to activate this resource.',
                 [
                     'label' => '{{CreateLabel}}',
                     'href' => self::BASE_URL . '/create',

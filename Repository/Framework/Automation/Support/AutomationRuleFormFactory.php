@@ -30,7 +30,7 @@ declare(strict_types=1);
 
 namespace Catalyst\Repository\Automation\Support;
 
-use Catalyst\Framework\Admin\Form\FormBuilder;
+use Catalyst\Framework\Form\FormBuilder;
 
 /**
  * Builds the administrative automation rule form schema.

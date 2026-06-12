@@ -1,0 +1,57 @@
+<form method="{{ http_method }}"
+      action="{{ action }}"
+      class="{{ wrapper_class }}"{{{ form_attributes_html }}}
+      data-catalyst="form"
+      data-form-builder="form">
+    {{#if include_csrf}}
+        {{{ csrfField }}}
+    {{/if}}
+
+    {{#if include_method_override}}
+        <input type="hidden" name="_method" value="{{ method }}">
+    {{/if}}
+
+    {{#each sections}}
+        {{#if has_header}}
+            <div class="col-12">
+                <section class="card border-0 shadow-sm {{ section_class }}">
+                    <div class="card-header">
+                        <div>
+                            {{#if title}}<h2 class="h5 mb-1">{{ title }}</h2>{{/if}}
+                            {{#if description}}<p class="text-muted mb-0">{{ description }}</p>{{/if}}
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="{{ fields_wrapper_class }}">
+                            {{#each fields}}
+                                {{> "./form-builder/_field-block" }}
+                            {{/each}}
+                        </div>
+                    </div>
+                </section>
+            </div>
+        {{else}}
+            {{#each fields}}
+                {{> "./form-builder/_field-block" }}
+            {{/each}}
+        {{/if}}
+    {{/each}}
+
+    {{#if has_actions}}
+        <div class="col-12 d-flex gap-2 flex-wrap">
+            {{#each actions}}
+                {{#if is_link}}
+                    <button type="button" class="{{ class }}" data-catalyst-href="{{ href }}"{{{ attributes_html }}}>
+                        {{#if has_icon}}<i class="{{ icon }} me-1"></i>{{/if}}
+                        {{ label }}
+                    </button>
+                {{else}}
+                    <button type="{{ type }}" class="{{ class }}"{{{ attributes_html }}}>
+                        {{#if has_icon}}<i class="{{ icon }} me-1"></i>{{/if}}
+                        {{ label }}
+                    </button>
+                {{/if}}
+            {{/each}}
+        </div>
+    {{/if}}
+</form>

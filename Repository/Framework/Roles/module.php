@@ -95,7 +95,7 @@ return [
         'user_roles',
     ],
     'navigation' => [
-        'admin' => [
+        'shell' => [
             [
                 'context' => 'users',
                 'label' => __('roles.module.users_label'),

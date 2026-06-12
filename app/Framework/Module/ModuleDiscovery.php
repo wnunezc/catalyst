@@ -133,8 +133,9 @@ final class ModuleDiscovery
                     'feature_flags' => [],
                     'route_guards' => [],
                     'navigation' => [
-                        'admin' => [],
+                        'shell' => [],
                         'public' => [],
+                        'application' => [],
                         'breadcrumbs' => [],
                     ],
                 ];

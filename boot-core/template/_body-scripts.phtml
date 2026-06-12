@@ -1,0 +1,9 @@
+<script src="{{ bootstrap_bundle_asset_url }}"></script>
+{{#if has_initial_state}}
+<script type="application/json" id="catalyst-ssr-state" nonce="{{ csp_nonce }}">{{{ initial_state_json }}}</script>
+{{/if}}
+<script type="module" src="{{ ui_runtime_asset_url }}"></script>
+
+{{#each script_links}}
+<script src="{{ src }}"{{#if is_module}} type="module"{{/if}}{{#if defer}} defer{{/if}}{{#if async}} async{{/if}}{{#if has_nonce}} nonce="{{ nonce }}"{{/if}}></script>
+{{/each}}

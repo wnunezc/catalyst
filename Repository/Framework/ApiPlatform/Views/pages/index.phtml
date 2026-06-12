@@ -1,5 +1,5 @@
-<div class="admin-surface admin-surface-shell apiplatform-admin-page">
-    {{> "components._admin-page-header" }}
+<div class="surface-page surface-page-shell apiplatform-page">
+    {{> "components._page-header" }}
 
     {{#if has_created_token}}
         <section class="card border-success shadow-sm mb-3">
@@ -19,7 +19,7 @@
                     <p class="text-muted mb-0">{{ t:apiplatform.form.card_description }}</p>
                 </div>
                 <div class="card-body">
-                    {{> "components._admin-form-builder" }}
+                    {{> "components._form-builder" }}
                 </div>
             </section>
         </div>

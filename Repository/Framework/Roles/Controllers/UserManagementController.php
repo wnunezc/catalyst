@@ -30,7 +30,7 @@ declare(strict_types=1);
 
 namespace Catalyst\Repository\Roles\Controllers;
 
-use Catalyst\Framework\Admin\Grid\DataGrid;
+use Catalyst\Framework\DataGrid\DataGrid;
 use Catalyst\Framework\Auth\UserDirectoryRepository;
 use Catalyst\Framework\Auth\UserProvider;
 use Catalyst\Framework\Authorization\RoleRepository;
@@ -215,7 +215,7 @@ class UserManagementController extends Controller
             'title' => $t('roles.users.title'),
             'pageTitle' => $t('roles.users.title'),
             'grid' => $gridBuilder->resolve($request),
-        ], 200, 'admin');
+        ]);
     }
 
     /**
@@ -231,7 +231,7 @@ class UserManagementController extends Controller
             'title' => __('roles.users.register_title'),
             'pageTitle' => __('roles.users.register_title'),
             'form' => $this->enrollmentFormFactory->build($this->roles),
-        ], 200, 'admin');
+        ]);
     }
 
     /**

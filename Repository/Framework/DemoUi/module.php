@@ -29,7 +29,7 @@ declare(strict_types=1);
  */
 
 return [
-    'description' => 'Authenticated frozen demo baseline surface for the INSPINIA UI reference work.',
+    'description' => 'Public frozen demo baseline surface for the INSPINIA UI reference work.',
     'routes' => [
         'web' => [
             '/demo-ui',
@@ -79,18 +79,25 @@ return [
             '/demo-ui',
         ],
     ],
-    'route_guards' => [
-        [
-            'patterns' => [
-                '/demo-ui',
-            ],
-            'middleware_all' => [
-                'Catalyst\\Framework\\Middleware\\AuthMiddleware',
+    'route_guards' => [],
+    'navigation' => [
+        'shell' => [
+            [
+                'context' => 'devtools',
+                'label' => 'Demo UI',
+                'href' => '/demo-ui',
+                'icon' => 'ti ti-components',
+                'matches' => ['/demo-ui*'],
+                'group' => 'devtools',
+                'group_label' => 'Devtools',
+                'group_order' => 90,
+                'hint' => 'Frozen Inspinia reference surface.',
+                'order' => 40,
+                'visibility' => [
+                    ['roles_any' => ['admin'], 'environments' => ['development']],
+                ],
             ],
         ],
-    ],
-    'navigation' => [
-        'admin' => [],
         'public' => [],
         'breadcrumbs' => [],
     ],

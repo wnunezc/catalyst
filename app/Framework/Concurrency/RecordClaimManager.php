@@ -34,7 +34,7 @@ use Catalyst\Entities\RecordClaim;
 use Catalyst\Framework\Audit\AuditLogManager;
 use Catalyst\Framework\Auth\AuthManager;
 use Catalyst\Framework\Database\DatabaseManager;
-use Catalyst\Framework\Presence\PresenceManager;
+use Catalyst\Framework\Presence\RecordPresenceManager;
 use Catalyst\Framework\Session\SessionManager;
 use Catalyst\Framework\Traits\SingletonTrait;
 use DateTimeImmutable;
@@ -175,7 +175,7 @@ final class RecordClaimManager
             return $this->normalizeClaim($claim);
         });
 
-        PresenceManager::getInstance()->publishClaimSnapshot($snapshot);
+        RecordPresenceManager::getInstance()->publishClaimSnapshot($snapshot);
 
         return $snapshot;
     }
@@ -271,7 +271,7 @@ final class RecordClaimManager
             ];
         });
 
-        PresenceManager::getInstance()->publishClaimSnapshot(
+        RecordPresenceManager::getInstance()->publishClaimSnapshot(
             is_array($result['snapshot'] ?? null) ? $result['snapshot'] : null
         );
 

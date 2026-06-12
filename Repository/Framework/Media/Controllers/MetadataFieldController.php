@@ -30,7 +30,7 @@ declare(strict_types=1);
 
 namespace Catalyst\Repository\Media\Controllers;
 
-use Catalyst\Framework\Admin\Grid\DataGrid;
+use Catalyst\Framework\DataGrid\DataGrid;
 use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
@@ -198,7 +198,7 @@ final class MetadataFieldController extends Controller
             'title' => __('media.fields.index.title'),
             'pageTitle' => __('media.fields.index.title'),
             'grid' => $gridBuilder->resolve($request),
-        ], 200, 'admin');
+        ]);
     }
 
     /**
@@ -466,7 +466,7 @@ final class MetadataFieldController extends Controller
             'pageTitle' => $title,
             'field' => $field,
             'form' => $form,
-            'claimContext' => $this->buildRecordClaimContext($claim),
-        ], 200, 'admin');
+            'recordPresence' => $this->buildRecordPresenceContext($claim),
+        ]);
     }
 }

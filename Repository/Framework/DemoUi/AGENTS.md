@@ -6,7 +6,7 @@
 
 ## Contrato local
 
-1. La superficie pública final de este módulo es `/demo-ui`, no `/demo-ui`.
+1. La superficie pública final de este módulo es `/demo-ui`.
 2. `Demo UI` es una baseline congelada de referencia visual y reusable code.
 3. No modificar este módulo salvo:
    - bug crítico comprobado

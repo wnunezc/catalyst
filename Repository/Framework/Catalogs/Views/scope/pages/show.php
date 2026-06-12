@@ -34,7 +34,7 @@ use Catalyst\Helpers\Security\CsrfProtection;
 return static function (array $scope): array {
     $catalog = is_array($scope['catalog'] ?? null) ? $scope['catalog'] : [];
     $timeline = is_array($scope['timeline'] ?? null) ? $scope['timeline'] : [];
-    $claimContext = is_array($scope['claimContext'] ?? null) ? $scope['claimContext'] : [];
+    $recordPresence = is_array($scope['recordPresence'] ?? null) ? $scope['recordPresence'] : [];
 
     $itemsRows = [];
     foreach ((array) ($scope['items'] ?? []) as $item) {
@@ -101,7 +101,7 @@ return static function (array $scope): array {
     }
 
     return [
-        'admin_header' => [
+        'page_header' => [
             'eyebrow' => __('catalogs.show.eyebrow'),
             'title' => (string) ($catalog['label'] ?? __('catalogs.show.catalog_fallback')),
             'description' => (string) (($catalog['description'] ?? '') ?: __('catalogs.show.lede_fallback')),
@@ -133,7 +133,7 @@ return static function (array $scope): array {
         'timeline' => [
             'elapsed_iso8601' => (string) ($timeline['elapsed_iso8601'] ?? 'PT0S'),
         ],
-        'claim_token' => (string) ($claimContext['claim_token'] ?? ''),
+        'claim_token' => (string) ($recordPresence['claim_token'] ?? ''),
         'csrfField' => TrustedHtml::fromString(CsrfProtection::getInstance()->getTokenField()),
         'available_transitions' => $availableTransitions,
         'transitions_rows' => $transitionsRows,

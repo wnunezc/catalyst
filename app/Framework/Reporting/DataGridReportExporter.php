@@ -30,7 +30,7 @@ declare(strict_types=1);
 
 namespace Catalyst\Framework\Reporting;
 
-use Catalyst\Framework\Admin\Grid\DataGrid;
+use Catalyst\Framework\DataGrid\DataGrid;
 use RuntimeException;
 
 /**

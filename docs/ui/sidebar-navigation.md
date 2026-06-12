@@ -6,13 +6,18 @@ Documentar el criterio actual del sidebar administrativo despues del refactor de
 
 ## Scroll del sidebar
 
-El sidebar actual usa un contenedor de altura completa con scroll interno real. El comportamiento se apoya en `public/assets/css/catalyst/admin-layout.css`, donde el shell lateral queda fijado a pantalla completa y delega el desplazamiento a su zona de contenido (`.scrollbar`).
+El sidebar actual usa el shell común de Inspinia con un contenedor de altura completa y scroll interno real. El contrato activo se compone desde `boot-core/template/shell.phtml`, `_sidebar.phtml` y `public/assets/css/catalyst/inspinia-runtime-compat.css`.
 
 Esto resuelve un problema practico del estado previo: menus largos obligaban a perder contexto o a depender del scroll del documento completo.
 
 ## Agrupacion visual
 
-La navegacion ya no se presenta como una lista plana uniforme. `boot-core/template/scope/layouts/admin.php` agrupa elementos por contexto y `boot-core/template/components/_admin-shell-sidenav.phtml` los renderiza mediante:
+La navegacion ya no se presenta como una lista plana uniforme.
+`DocumentScope` selecciona uno de los tres modelos virtuales mediante
+`NavigationModelSelector`: `demo-ui`, `framework-admin` o `application`.
+Los proveedores aportan sus árboles a `NavigationTreeNormalizer` y la plantilla
+común `boot-core/template/_sidebar.phtml` conserva el renderer único mediante
+`_sidebar-node.phtml`.
 
 - areas primarias `Workspace`, `Administration` y `DevTools` dentro del sidebar;
 - `side-nav-group`
@@ -37,8 +42,10 @@ Comportamiento actual:
 - los items con hijas reales, como `Users` u `Operations`, tienen su propio colapsador;
 - el grupo o submenu activo abre por defecto;
 - los demas grupos arrancan cerrados para evitar una lista vertical interminable;
-- `public/assets/js/catalyst/admin-shell.js` persiste el estado en `sessionStorage`;
-- el shell versiona tambien `admin-shell.js` desde `boot-core/template/layouts/admin.phtml` para evitar cache viejo contra markup nuevo.
+- `public/assets/js/catalyst/shell/navigation.js` controla los colapsadores;
+- `ui-runtime.js` carga ese adaptador una sola vez cuando detecta
+  `.sidenav-menu`;
+- ninguna superficie inicializa un segundo gobernador para el sidebar.
 
 Esto corrige la incoherencia previa donde el menu empezaba agrupado conceptualmente pero terminaba comportandose como una lista estatica sin progresion visual.
 
@@ -52,19 +59,18 @@ Criterios observables en el estado actual:
 2. Las hijas deben ser operativamente cercanas y previsibles para el usuario administrativo.
 3. La anidacion debe reducir ruido de primer nivel, no esconder rutas criticas sin criterio.
 
-## Submenu de Operaciones
+## Árbol recursivo y deuda desconectada
 
-`Repository/Framework/Operations/module.php` define `operations.title` dentro del contexto de administracion con entradas hijas para:
+El contrato de navegación admite profundidad arbitraria. Los árboles mostrados
+en documentación son ejemplos y no límites de profundidad. Cada nodo puede ser
+un enlace, un contenedor o un título; el estado activo se propaga hacia sus
+ancestros.
 
-- apariencia
-- localizacion
-- module designer
-- feature flags
-- plugins
-- deployments
-- tenancy
-
-Esta decision hace visible que Operaciones es un dominio y no solo una pagina aislada. Tambien evita inflar el primer nivel del sidebar con varias entradas de bajo nivel.
+La taxonomía administrativa conserva destinos canónicos cuya migración física
+está fuera de alcance. Cuando no existe propietario activo, el destino se
+renderiza deshabilitado, no clicable y con badge `Disconnected`. El inventario y
+backup restaurable de Operations viven en
+`docs/architecture/roadmap-2-module-debt.md`.
 
 ## Limite entre navegacion principal y navegacion secundaria
 
@@ -81,23 +87,26 @@ Este limite evita mezclar:
 - configuracion operacional;
 - acciones personales del usuario.
 
-Desde `v0.1.0-rc.4`, el sidebar administrativo consume `NavigationRegistry::adminShell()` mediante `AdminShellNavigationPresenter`, pero conserva la taxonomia curada del shell administrativo: `Configuration`, `Workspaces`, `Operations`, `Users` y `Devtools`. Las entradas primarias declaradas por modulos activos en `navigation.admin` son fuente de descubrimiento, no autorizan a reordenar dominios visuales por si solas.
+El sidebar común consume `NavigationRegistry::shell()` mediante `ShellNavigationPresenter` y conserva la taxonomía curada: `Configuration`, `Workspaces`, `Operations`, `Users` y `Devtools`. Las entradas declaradas por módulos activos en `navigation.shell` son fuente de descubrimiento y su visibilidad se resuelve exclusivamente con el usuario, sus roles y permisos.
 
-La capa visual conserva el view model historico `demo_ui_nav_groups`, pero este ya no debe mantener listas hardcodeadas para superficies administrativas del framework o de la aplicacion. Los bloques demo de componentes siguen separados y solo aparecen dentro de `/demo-ui`.
+Demo UI obtiene su árbol recursivo de `DemoUiNavigationProvider`; su controlador
+solo aporta catálogo y selección. Las demás superficies usan los proveedores
+administrativo o Application del documento común, sin perfiles, wrappers,
+layouts, shells, temas ni runtimes alternativos.
 
 Los grupos administrativos deben respetar la taxonomia curada y usar metadata declarativa de modulo (`context`, `group`, `group_label`, `group_order`, `order`, `matches`, `icon`, `visibility`) para descubrir superficies faltantes, permisos, iconos y active state. No se deben duplicar rutas en `_demo-product-shell.php`, pero tampoco se debe permitir que manifests incompletos destruyan la organizacion visual del menu.
 
 Para evitar duplicidad, el contexto activo no se renderiza otra vez como link en el sidebar. La tarjeta de contexto y el titulo del bloque indican el dominio actual; el bloque `Otras áreas` contiene solo saltos a dominios inactivos.
 
-`inspect:lint` ahora valida hijos de navegacion, duplica hrefs por bucket/contexto mediante `navigation-duplicate-href` y falla con `admin-shell-navigation-not-registry-driven` si el shell vuelve a desconectarse de `NavigationRegistry`.
+`inspect:lint` valida hijos de navegación, hrefs duplicados por bucket/contexto mediante `navigation-duplicate-href` y falla con `shell-navigation-not-registry-driven` si el shell vuelve a desconectarse de `NavigationRegistry`.
 
 El smoke especifico para este contrato es:
 
 ```powershell
-php public/cli.php admin-navigation:smoke --json
+php public/cli.php shell-navigation:smoke --json
 ```
 
-Este smoke comprueba que las entradas `navigation.admin` se proyectan al modelo de sidebar sin romper la taxonomia completa: hrefs canonicos presentes, superficies esperadas por grupo en orden, `/users/organization-hierarchy` y `/admin/account-recovery` bajo `Users`, `Test Features`, `UI Showcase`, `UML / Architecture` y `Demo UI` bajo `Devtools`, sin `Users` anidado, sin `Operations` dentro de `Configuration` y sin `Devtools` duplicado.
+Este smoke comprueba que las entradas `navigation.shell` se proyectan al modelo de sidebar sin romper la taxonomía completa: hrefs canónicos presentes, superficies esperadas por grupo en orden, `/users/organization-hierarchy` y `/admin/account-recovery` bajo `Users`, `Test Features`, `UI Showcase`, `UML / Architecture` y `Demo UI` bajo `Devtools`, sin `Users` anidado, sin `Operations` dentro de `Configuration` y sin `Devtools` duplicado.
 
 El smoke permite entradas adicionales declaradas por modulos de aplicaciones derivadas dentro de grupos canonicos. La regla es preservacion, no igualdad exacta: Catalyst debe conservar sus superficies base en orden y proyectar todos los hrefs declarados, pero una app puede agregar rutas como `/rtm/profile` o `/rtm/radio` bajo `Operations` sin fallar `quality:check`.
 
@@ -106,8 +115,9 @@ El smoke permite entradas adicionales declaradas por modulos de aplicaciones der
 Las rutas auxiliares, callbacks, aliases legacy y smoke helpers no deben convertirse en entradas primarias del sidebar. Ejemplos vivos:
 
 - `/users/register` vive como hija de `Usuarios`;
-- `/test-layout` se mantiene como ruta DevTools por URL/contexto, sin entrada primaria;
-- `/test-features/module-designer*` se mantiene como alias legacy de `Operations`, no como ruta canonica de DevTools.
+- `/test-features/layout-test` se mantiene como diagnóstico DevTools sin entrada primaria;
+- `/test-features/*` conserva su contrato existente y no participa en esta
+  migración.
 
 ## Recomendaciones para futuros modulos
 

@@ -123,6 +123,7 @@ final class ModuleInspector
                 ],
                 'settings' => array_values((array) ($module['settings'] ?? [])),
                 'permissions' => $permissions->forModule($moduleKey),
+                'permission_migrations' => array_values((array) ($module['permission_migrations'] ?? [])),
                 'health_checks' => array_values((array) ($module['health_checks'] ?? [])),
                 'feature_flags' => array_values((array) ($module['feature_flags'] ?? [])),
                 'route_guards' => array_values((array) ($module['route_guards'] ?? [])),

@@ -406,7 +406,7 @@
 
 
 /* Density correction v2: readable text scale with compact spacing. */
-.rbac-admin-page,
+.rbac-page,
 .rbac-section,
 .rbac-form-shell,
 .rbac-table {
@@ -435,26 +435,26 @@
     gap: 0.75rem;
 }
 
-.rbac-enroll-page .admin-page-title,
-.rbac-enroll-page .admin-action-bar {
+.rbac-enroll-page .surface-page-title,
+.rbac-enroll-page .surface-action-bar {
     margin-bottom: 0;
 }
 
-.rbac-enroll-page .admin-enrollment-form {
+.rbac-enroll-page .surface-enrollment-form {
     margin-top: 0;
 }
 
-.rbac-enroll-page .admin-enrollment-form > .col-12 > .card {
-    border: 1px solid var(--catalyst-admin-border, var(--bs-border-color)) !important;
-    border-radius: var(--catalyst-admin-radius, .85rem);
-    box-shadow: var(--catalyst-admin-shadow, 0 .25rem .875rem rgba(15, 23, 42, .04));
+.rbac-enroll-page .surface-enrollment-form > .col-12 > .card {
+    border: 1px solid var(--catalyst-surface-border, var(--bs-border-color)) !important;
+    border-radius: var(--catalyst-surface-radius, .85rem);
+    box-shadow: var(--catalyst-surface-shadow, 0 .25rem .875rem rgba(15, 23, 42, .04));
     overflow: hidden;
 }
 
-.rbac-enroll-page .admin-enrollment-form > .col-12 > .card > .card-header {
+.rbac-enroll-page .surface-enrollment-form > .col-12 > .card > .card-header {
     align-items: center;
-    background: var(--catalyst-admin-soft-bg, var(--bs-tertiary-bg));
-    border-bottom: 1px solid var(--catalyst-admin-border, var(--bs-border-color));
+    background: var(--catalyst-surface-soft-bg, var(--bs-tertiary-bg));
+    border-bottom: 1px solid var(--catalyst-surface-border, var(--bs-border-color));
     display: flex;
     gap: .75rem;
     justify-content: space-between;
@@ -462,27 +462,27 @@
     padding: .55rem .75rem;
 }
 
-.rbac-enroll-page .admin-enrollment-form > .col-12 > .card > .card-header h2 {
-    color: var(--catalyst-admin-title, var(--bs-heading-color));
+.rbac-enroll-page .surface-enrollment-form > .col-12 > .card > .card-header h2 {
+    color: var(--catalyst-surface-title, var(--bs-heading-color));
     font-size: .92rem;
     font-weight: 700;
     line-height: 1.25;
     margin: 0;
 }
 
-.rbac-enroll-page .admin-enrollment-form > .col-12 > .card > .card-header p,
+.rbac-enroll-page .surface-enrollment-form > .col-12 > .card > .card-header p,
 .rbac-enroll-page .form-text {
-    color: var(--catalyst-admin-muted, var(--bs-secondary-color));
+    color: var(--catalyst-surface-muted, var(--bs-secondary-color));
     font-size: .74rem;
     line-height: 1.35;
 }
 
-.rbac-enroll-page .admin-enrollment-form > .col-12 > .card > .card-body {
+.rbac-enroll-page .surface-enrollment-form > .col-12 > .card > .card-body {
     padding: .75rem;
 }
 
 .rbac-enroll-page .form-label {
-    color: var(--catalyst-admin-muted, var(--bs-secondary-color));
+    color: var(--catalyst-surface-muted, var(--bs-secondary-color));
     font-size: .7rem;
     font-weight: 800 !important;
     letter-spacing: .035em;
@@ -495,11 +495,11 @@
     min-height: 2.18rem;
 }
 
-.rbac-enroll-page .admin-enrollment-form > .col-12:last-child {
+.rbac-enroll-page .surface-enrollment-form > .col-12:last-child {
     align-items: center;
-    background: var(--catalyst-admin-soft-bg, var(--bs-tertiary-bg));
-    border: 1px solid var(--catalyst-admin-border, var(--bs-border-color));
-    border-radius: var(--catalyst-admin-radius, .85rem);
+    background: var(--catalyst-surface-soft-bg, var(--bs-tertiary-bg));
+    border: 1px solid var(--catalyst-surface-border, var(--bs-border-color));
+    border-radius: var(--catalyst-surface-radius, .85rem);
     justify-content: flex-end;
     padding: .55rem .65rem;
 }

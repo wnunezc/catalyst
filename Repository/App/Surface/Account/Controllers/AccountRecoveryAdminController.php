@@ -67,7 +67,7 @@ final class AccountRecoveryAdminController extends Controller
             'title' => __('account.admin.index.title'),
             'pageTitle' => __('account.admin.index.title'),
             'recovery_requests' => $this->normalizeRows($this->repository->latestRequests(60)),
-        ], 200, 'admin');
+        ]);
     }
 
     /**
@@ -88,7 +88,7 @@ final class AccountRecoveryAdminController extends Controller
             'pageTitle' => __('account.admin.show.title'),
             'recovery_request' => $this->normalizeRow($entry),
             'csrf_field' => TrustedHtml::fromString(CsrfProtection::getInstance()->getTokenField()),
-        ], 200, 'admin');
+        ]);
     }
 
     /**

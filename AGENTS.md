@@ -25,6 +25,7 @@
 5. No mezclar cambios de harness/documentacion con codigo de producto fuera del alcance pedido.
 6. Mantener `AGENTS.md` corto; estado y continuidad viven fuera de este archivo.
 7. Todo CSS/JS especifico de modulo o pantalla debe vivir en `Repository/{Framework|App}/{Modulo}/front/{style.css,script.js}` y cargarse via `Controller::view()` + `FrontResourceTrait` hacia `public/assets/*/work/{slug}/`.
+8. Las superficies `/test-features` y `/demo-ui` estan cerradas tras la unificacion canonica; no modificarlas salvo correccion de un bug confirmado o una desalineacion demostrable con el framework.
 
 ## Verificacion base
 

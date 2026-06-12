@@ -1,0 +1,221 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * Catalyst PHP Framework
+ *
+ * A modern PHP 8.4 framework for building
+ * robust and scalable web applications.
+ *
+ * PHP Version 8.4 (Required).
+ *
+ * @package    Catalyst
+ *
+ * @author     Walter Nuñez (arcanisgk/original founder)
+ * @email      <wnunez@lh-2.net>
+ * @email      <icarosnet@gmail.com>
+ * @copyright  2024-2026 Walter Francisco Nuñez Cruz and Icaros Net
+ * @license    Proprietary - https://catalyst.lh-2.net/license
+ *
+ * @version    GIT: See repository tags
+ *
+ * @category   Framework
+ * @filesource
+ *
+ * @link       https://catalyst.lh-2.net Project homepage
+ * @see        https://catalyst.lh-2.net/docs Documentation
+ *
+ */
+
+namespace Catalyst\Repository\Configuration\Controllers;
+
+use Catalyst\Framework\Controllers\Controller;
+use Catalyst\Framework\Http\Request;
+use Catalyst\Framework\Http\Response;
+use Catalyst\Helpers\Config\ConfigManager;
+use Catalyst\Repository\Configuration\Requests\SetupAdminRequest;
+use Catalyst\Repository\Configuration\Services\SetupAdminProvisioner;
+use Catalyst\Repository\Configuration\Services\SetupDatabaseException;
+use Catalyst\Repository\Configuration\Services\SetupDatabaseService;
+use Throwable;
+
+/**
+ * Provisions the initial administrator and finalizes environment setup.
+ *
+ * @package Catalyst\Repository\Configuration\Controllers
+ * Responsibility: Creates the first administrator, validates setup readiness and toggles the configured state.
+ */
+class SetupCompletionController extends Controller
+{
+
+    private SetupDatabaseService $setupDatabase;
+    private SetupAdminProvisioner $adminProvisioner;
+
+    /**
+     * Initializes the Setup Completion Controller instance.
+     *
+     * Responsibility: Initializes the Setup Completion Controller instance.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->setupDatabase = SetupDatabaseService::make();
+        $this->adminProvisioner = SetupAdminProvisioner::make();
+    }
+
+    /**
+     * Create the initial active administrator account without finalizing setup.
+     *
+     * Responsibility: Create the initial active administrator account without finalizing setup.
+     * @param Request $request
+     * @return Response  JSON only (AJAX endpoint)
+     */
+    public function createAdmin(SetupAdminRequest $request): Response
+    {
+        $cfg = ConfigManager::getInstance();
+
+        if ($cfg->isConfigured()) {
+            return $this->jsonErrorWithToast(
+                __('settings.completion.errors.already_configured'),
+                409
+            );
+        }
+
+        try {
+            $pdo = $this->setupDatabase->open();
+        } catch (SetupDatabaseException $e) {
+            $this->logError('SetupCompletion: setup database unavailable', [
+                'error' => $e->detail() ?: $e->translationKey(),
+            ]);
+
+            return $this->jsonErrorWithToast(
+                $e->translatedMessage(),
+                $e->httpStatus()
+            );
+        }
+
+        if ($this->adminProvisioner->adminExists($pdo)) {
+            return $this->jsonSuccessWithToast(
+                ['admin_exists' => true],
+                __('settings.completion.admin_exists_success')
+            )->withRefresh(800);
+        }
+
+        $payload = $request->validated();
+        $adminName = (string) $payload['admin_name'];
+        $adminEmail = (string) $payload['admin_email'];
+        $adminPass = (string) $payload['admin_password'];
+
+        if ($this->adminProvisioner->userExistsByEmail($pdo, $adminEmail)) {
+            return $this->jsonValidationError([
+                'admin_email' => __('settings.completion.errors.admin_email_exists'),
+            ]);
+        }
+
+        try {
+            $this->adminProvisioner->createAdmin($pdo, $adminName, $adminEmail, $adminPass);
+        } catch (Throwable $e) {
+            $this->logError('SetupCompletion: initial administrator creation failed', [
+                'exception' => $e::class,
+                'error' => $e->getMessage(),
+            ]);
+
+            return $this->jsonErrorWithToast(
+                __('settings.completion.errors.admin_create_failed'),
+                500
+            );
+        }
+
+        if (!$this->adminProvisioner->adminExists($pdo)) {
+            return $this->jsonErrorWithToast(
+                __('settings.completion.errors.admin_create_failed'),
+                500
+            );
+        }
+
+        return $this->jsonSuccessWithToast(
+            ['admin_created' => true],
+            __('settings.completion.admin_create_success')
+        )->withRefresh(800);
+    }
+
+    /**
+     * Finalize the setup wizard.
+     *
+     * Responsibility: Finalize the setup wizard.
+     * @param Request $request
+     * @return Response  JSON only (AJAX endpoint)
+     */
+    public function complete(Request $request): Response
+    {
+        $cfg = ConfigManager::getInstance();
+
+        // -- 1. Reject if already configured ---------------------------------
+        if ($cfg->isConfigured()) {
+            return $this->jsonErrorWithToast(
+                __('settings.completion.errors.already_configured'),
+                409
+            );
+        }
+
+        try {
+            $pdo = $this->setupDatabase->open();
+        } catch (SetupDatabaseException $e) {
+            $this->logError('SetupCompletion: setup database unavailable during completion', [
+                'error' => $e->detail() ?: $e->translationKey(),
+            ]);
+
+            return $this->jsonErrorWithToast(
+                $e->translatedMessage(),
+                $e->httpStatus()
+            );
+        }
+
+        if (!$this->adminProvisioner->adminExists($pdo)) {
+            return $this->jsonErrorWithToast(
+                __('settings.completion.errors.admin_required'),
+                422
+            );
+        }
+
+        // -- 6. Flip project_config=true in app.json -------------------------
+        $appProject                   = $cfg->section('app')['project'] ?? [];
+        $appProject['project_config'] = true;
+        $cfg->writeSection('app', ['project' => $appProject]);
+
+        return $this->jsonSuccessWithToast(
+            ['admin_created' => false],
+            __('settings.completion.success')
+        )->withRedirect('/login', 1500);
+    }
+
+    /**
+     * Reset the setup wizard — flips project_config back to false so the finalize form becomes available again. Admin-only (enforced via route middleware). This does NOT erase any existing config values; it only unlocks the wizard.
+     *
+     * Responsibility: Reset the setup wizard — flips project_config back to false so the finalize form becomes available again. Admin-only (enforced via route middleware). This does NOT erase any existing config values; it only unlocks the wizard.
+     * @param Request $request
+     * @return Response  JSON only (AJAX endpoint)
+     */
+    public function resetConfig(Request $request): Response
+    {
+        $cfg = ConfigManager::getInstance();
+
+        if (!$cfg->isConfigured()) {
+            return $this->jsonErrorWithToast(
+                __('settings.completion.errors.not_yet_configured'),
+                409
+            );
+        }
+
+        $appProject                   = $cfg->section('app')['project'] ?? [];
+        $appProject['project_config'] = false;
+        $cfg->writeSection('app', ['project' => $appProject]);
+
+        return $this->jsonSuccessWithToast(
+            null,
+            __('settings.completion.reset_success')
+        )->withRedirect('/configuration/environment-setup', 1000);
+    }
+}

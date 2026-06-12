@@ -407,6 +407,30 @@ final class ModuleLinter
                 continue;
             }
 
+            foreach ((array) ($module['permission_migrations'] ?? []) as $migration) {
+                if (!is_array($migration)) {
+                    continue;
+                }
+
+                $from = trim((string) ($migration['from'] ?? ''));
+                $to = trim((string) ($migration['to'] ?? ''));
+                $checked += 2;
+
+                foreach ([$from, $to] as $permissionSlug) {
+                    if ($permissionSlug === '' || $permissionRegistry->find($permissionSlug) === null) {
+                        $issues[] = [
+                            'type' => 'permission-migration-without-registry-bridge',
+                            'module' => $module['key'] ?? null,
+                            'message' => sprintf(
+                                'Module "%s" declares a permission migration with unresolved permission "%s".',
+                                $module['key'] ?? 'unknown',
+                                $permissionSlug
+                            ),
+                        ];
+                    }
+                }
+            }
+
             foreach ((array) ($module['routes']['owned'] ?? []) as $route) {
                 foreach ((array) ($route['required_permissions'] ?? []) as $permissionSlug) {
                     $checked++;
@@ -426,22 +450,20 @@ final class ModuleLinter
             }
         }
 
-        foreach (['admin', 'public'] as $bucket) {
+        foreach (['shell', 'public', 'application'] as $bucket) {
             foreach ((array) ($navigation[$bucket] ?? []) as $item) {
-                foreach ((array) ($item['visibility'] ?? []) as $visibilityGroup) {
-                    foreach ((array) ($visibilityGroup['permissions_any'] ?? []) as $permissionSlug) {
-                        $checked++;
-                        if ($permissionRegistry->find((string) $permissionSlug) === null) {
-                            $issues[] = [
-                                'type' => 'navigation-permission-without-registry-bridge',
-                                'module' => $item['module_key'] ?? null,
-                                'message' => sprintf(
-                                    'Navigation item "%s" references permission "%s" that is not declared in PermissionRegistry.',
-                                    $item['label'] ?? 'unknown',
-                                    $permissionSlug
-                                ),
-                            ];
-                        }
+                foreach ($this->navigationPermissionReferences((array) $item) as $reference) {
+                    $checked++;
+                    if ($permissionRegistry->find($reference['permission']) === null) {
+                        $issues[] = [
+                            'type' => 'navigation-permission-without-registry-bridge',
+                            'module' => $item['module_key'] ?? null,
+                            'message' => sprintf(
+                                'Navigation item "%s" references permission "%s" that is not declared in PermissionRegistry.',
+                                $reference['label'],
+                                $reference['permission']
+                            ),
+                        ];
                     }
                 }
             }
@@ -467,18 +489,23 @@ final class ModuleLinter
             }
 
             $navigationPermissions = [];
-            foreach (['admin', 'public'] as $bucket) {
+            foreach (['shell', 'public', 'application'] as $bucket) {
                 foreach ((array) (($module['navigation'] ?? [])[$bucket] ?? []) as $item) {
-                    foreach ((array) ($item['visibility'] ?? []) as $visibilityGroup) {
-                        $navigationPermissions = array_merge(
-                            $navigationPermissions,
-                            (array) ($visibilityGroup['permissions_any'] ?? [])
-                        );
+                    foreach ($this->navigationPermissionReferences((array) $item) as $reference) {
+                        $navigationPermissions[] = $reference['permission'];
                     }
                 }
             }
 
-            $bridgedPermissions = array_values(array_unique(array_merge($routePermissions, $navigationPermissions)));
+            $migrationPermissions = array_values(array_filter(array_map(
+                static fn (array $migration): string => (string) ($migration['to'] ?? ''),
+                array_filter((array) ($module['permission_migrations'] ?? []), 'is_array')
+            )));
+            $bridgedPermissions = array_values(array_unique(array_merge(
+                $routePermissions,
+                $navigationPermissions,
+                $migrationPermissions
+            )));
 
             foreach ($declaredPermissions as $permissionSlug) {
                 $checked++;
@@ -499,6 +526,7 @@ final class ModuleLinter
         return [
             'ok' => !$this->hasIssuePrefix($issues, 'route-permission-without-registry-bridge')
                 && !$this->hasIssuePrefix($issues, 'navigation-permission-without-registry-bridge')
+                && !$this->hasIssuePrefix($issues, 'permission-migration-without-registry-bridge')
                 && !$this->hasIssuePrefix($issues, 'declared-permission-without-runtime-bridge'),
             'checked' => $checked,
         ];
@@ -569,59 +597,18 @@ final class ModuleLinter
 
             $navigation = (array) ($module['navigation'] ?? []);
 
-            foreach (['admin', 'public'] as $bucket) {
+            foreach (['shell', 'public', 'application'] as $bucket) {
                 foreach ((array) ($navigation[$bucket] ?? []) as $item) {
-                    $checked++;
-                    $href = (string) ($item['href'] ?? '');
-                    $context = (string) ($item['context'] ?? '');
-                    $label = (string) ($item['label'] ?? 'unknown');
-                    $moduleKey = (string) ($module['key'] ?? 'unknown');
-                    $trackNavigationHref($bucket, $context, $href, $label, $moduleKey, $seenHrefs, $issues);
-
-                    if ($href === '' || !isset($routes[$href])) {
-                        $issues[] = [
-                            'type' => 'navigation-route-missing',
-                            'module' => $module['key'] ?? null,
-                            'message' => sprintf(
-                                'Navigation item "%s" in module "%s" points to missing route "%s".',
-                                $item['label'] ?? 'unknown',
-                                $module['key'] ?? 'unknown',
-                                $href !== '' ? $href : '(empty)'
-                            ),
-                        ];
-                    }
-
-                    foreach ((array) ($item['children'] ?? []) as $child) {
-                        if (!is_array($child)) {
-                            continue;
-                        }
-
-                        $checked++;
-                        $childHref = (string) ($child['href'] ?? '');
-                        $childLabel = (string) ($child['label'] ?? 'unknown');
-                        $trackNavigationHref(
-                            $bucket,
-                            $context,
-                            $childHref,
-                            $childLabel,
-                            $moduleKey,
-                            $seenHrefs,
-                            $issues
-                        );
-
-                        if ($childHref === '' || !isset($routes[$childHref])) {
-                            $issues[] = [
-                                'type' => 'navigation-route-missing',
-                                'module' => $module['key'] ?? null,
-                                'message' => sprintf(
-                                    'Navigation child "%s" in module "%s" points to missing route "%s".',
-                                    $childLabel,
-                                    $moduleKey,
-                                    $childHref !== '' ? $childHref : '(empty)'
-                                ),
-                            ];
-                        }
-                    }
+                    $checked += $this->lintNavigationNode(
+                        (array) $item,
+                        $bucket,
+                        (string) ($item['context'] ?? ''),
+                        (string) ($module['key'] ?? 'unknown'),
+                        $routes,
+                        $seenHrefs,
+                        $issues,
+                        $trackNavigationHref
+                    );
                 }
             }
 
@@ -650,11 +637,11 @@ final class ModuleLinter
         }
 
         $checked++;
-        if (!$this->adminShellConsumesNavigationRegistry()) {
+        if (!$this->shellConsumesNavigationRegistry()) {
             $issues[] = [
-                'type' => 'admin-shell-navigation-not-registry-driven',
+                'type' => 'shell-navigation-not-registry-driven',
                 'module' => null,
-                'message' => 'The admin shell must consume NavigationRegistry::adminShell() through AdminShellNavigationPresenter so module-declared admin navigation reaches the sidebar.',
+                'message' => 'The shell must consume NavigationRegistry::shell() through ShellNavigationPresenter so module-declared shell navigation reaches the sidebar.',
             ];
         }
 
@@ -662,23 +649,150 @@ final class ModuleLinter
             'ok' => !$this->hasIssuePrefix($issues, 'navigation-route-missing')
                 && !$this->hasIssuePrefix($issues, 'breadcrumb-route-missing')
                 && !$this->hasIssuePrefix($issues, 'navigation-duplicate-href')
-                && !$this->hasIssuePrefix($issues, 'admin-shell-navigation-not-registry-driven'),
+                && !$this->hasIssuePrefix($issues, 'navigation-invalid-node')
+                && !$this->hasIssuePrefix($issues, 'shell-navigation-not-registry-driven'),
             'checked' => $checked,
         ];
     }
 
     /**
-     * Checks that the rendered admin shell is wired to the navigation registry.
+     * Validates one navigation node and all descendants.
+     *
+     * Responsibility: Applies route and duplicate-href checks without imposing a maximum tree depth.
+     *
+     * @param array<string, mixed> $node
+     * @param array<string, bool> $routes
+     * @param array<string, array{label:string,module:string}> $seenHrefs
+     * @param array<int, array<string, mixed>> $issues
+     */
+    private function lintNavigationNode(
+        array $node,
+        string $bucket,
+        string $context,
+        string $moduleKey,
+        array $routes,
+        array &$seenHrefs,
+        array &$issues,
+        callable $trackNavigationHref
+    ): int {
+        $checked = 1;
+        $kind = strtolower(trim((string) ($node['kind'] ?? '')));
+        $href = trim((string) ($node['href'] ?? ''));
+        $label = (string) ($node['label'] ?? 'unknown');
+        $children = (array) ($node['children'] ?? []);
+
+        if ($bucket === 'application' && !in_array($kind, ['title', 'link', 'container'], true)) {
+            $issues[] = [
+                'type' => 'navigation-invalid-node',
+                'module' => $moduleKey,
+                'message' => sprintf(
+                    'Application navigation item "%s" in module "%s" has invalid kind "%s".',
+                    $label,
+                    $moduleKey,
+                    $kind
+                ),
+            ];
+        }
+
+        if ($href !== '') {
+            $trackNavigationHref($bucket, $context, $href, $label, $moduleKey, $seenHrefs, $issues);
+
+            if (!isset($routes[$href])) {
+                $issues[] = [
+                    'type' => 'navigation-route-missing',
+                    'module' => $moduleKey,
+                    'message' => sprintf(
+                        'Navigation item "%s" in module "%s" points to missing route "%s".',
+                        $label,
+                        $moduleKey,
+                        $href
+                    ),
+                ];
+            }
+        } elseif ($children === [] && $kind !== 'title') {
+            $issues[] = [
+                'type' => 'navigation-route-missing',
+                'module' => $moduleKey,
+                'message' => sprintf(
+                    'Navigation item "%s" in module "%s" has no route or children.',
+                    $label,
+                    $moduleKey
+                ),
+            ];
+        }
+
+        foreach ($children as $child) {
+            if (!is_array($child)) {
+                continue;
+            }
+
+            $checked += $this->lintNavigationNode(
+                $child,
+                $bucket,
+                (string) ($child['context'] ?? $context),
+                $moduleKey,
+                $routes,
+                $seenHrefs,
+                $issues,
+                $trackNavigationHref
+            );
+        }
+
+        return $checked;
+    }
+
+    /**
+     * Collects permission references from one navigation subtree.
+     *
+     * Responsibility: Validates permission bridges recursively without limiting declaration depth.
+     *
+     * @param array<string, mixed> $node
+     * @return list<array{label:string,permission:string}>
+     */
+    private function navigationPermissionReferences(array $node): array
+    {
+        $references = [];
+
+        foreach ((array) ($node['visibility'] ?? []) as $visibilityGroup) {
+            if (!is_array($visibilityGroup)) {
+                continue;
+            }
+
+            foreach ((array) ($visibilityGroup['permissions_any'] ?? []) as $permission) {
+                if (is_string($permission) && trim($permission) !== '') {
+                    $references[] = [
+                        'label' => (string) ($node['label'] ?? 'unknown'),
+                        'permission' => $permission,
+                    ];
+                }
+            }
+        }
+
+        foreach ((array) ($node['children'] ?? []) as $child) {
+            if (is_array($child)) {
+                $references = array_merge($references, $this->navigationPermissionReferences($child));
+            }
+        }
+
+        return $references;
+    }
+
+    /**
+     * Checks that the rendered shell is wired to the navigation registry.
      *
      * Responsibility: Prevents hardcoded sidebar lists from drifting away from module manifests.
      */
-    private function adminShellConsumesNavigationRegistry(): bool
+    private function shellConsumesNavigationRegistry(): bool
     {
-        $path = PD . DS . 'boot-core' . DS . 'template' . DS . 'scope' . DS . 'layouts' . DS . '_demo-product-shell.php';
-        $source = is_file($path) ? (string)file_get_contents($path) : '';
+        $scopePath = PD . DS . 'app' . DS . 'Framework' . DS . 'View' . DS . 'DocumentScope.php';
+        $providerPath = PD . DS . 'app' . DS . 'Framework' . DS . 'Navigation' . DS
+            . 'FrameworkAdminNavigationProvider.php';
+        $scope = is_file($scopePath) ? (string)file_get_contents($scopePath) : '';
+        $provider = is_file($providerPath) ? (string)file_get_contents($providerPath) : '';
 
-        return str_contains($source, 'NavigationRegistry::getInstance()->adminShell')
-            && str_contains($source, 'AdminShellNavigationPresenter::fromAdminShell');
+        return str_contains($scope, 'NavigationModelSelector::getInstance()->select')
+            && str_contains($provider, 'NavigationRegistry::getInstance()->shell')
+            && str_contains($provider, 'ShellNavigationPresenter::fromShell');
     }
 
     /**

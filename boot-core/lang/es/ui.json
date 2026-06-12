@@ -26,13 +26,28 @@
   },
   "product_nav": {
     "title": "Producto Catalyst",
+    "framework": "Framework",
+    "components": "Componentes",
+    "disconnected": "Desconectado",
     "fallback_user": "Usuario Catalyst",
+    "titles": {
+      "configuration": "Configuración del framework",
+      "operations": "Operaciones del framework"
+    },
     "groups": {
       "configuration": "Configuración",
       "workspaces": "Workspaces",
       "operations": "Operaciones",
       "users": "Usuarios",
+      "devtools": "Herramientas de desarrollo",
       "demo_ui": "Demo UI"
+    },
+    "descriptions": {
+      "configuration": "Entorno, salud, apariencia, banderas de funcionalidad, plugins y respaldos.",
+      "workspaces": "Catálogos, diseñador de módulos, medios, documentos y herramientas de idioma.",
+      "operations": "Despliegues y operaciones de tenancy.",
+      "users": "Gestión de usuarios, alta, roles y permisos.",
+      "devtools": "Diagnósticos de desarrollo y muestras internas."
     },
     "items": {
       "environment_setup": "Configuración del entorno",
@@ -55,6 +70,11 @@
       "user_enroll": "Alta de usuarios",
       "user_role": "Roles de usuario",
       "user_permissions": "Permisos de usuario",
+      "organization_hierarchy": "Jerarquía organizacional",
+      "account_recovery": "Recuperación de cuenta",
+      "test_features": "Pruebas de funcionalidades",
+      "ui_showcase": "Muestra de UI",
+      "uml_architecture": "UML / Arquitectura",
       "base_ui": "UI base",
       "forms": "Formularios",
       "tables": "Tablas",
@@ -132,6 +152,7 @@
     "reset": "Restablecer",
     "no_rows_selected": "No hay filas seleccionadas",
     "rows_selected": ":count fila(s) seleccionada(s)",
+    "pagination_summary": "Mostrando :from-:to de :total",
     "bulk_action": "Acción masiva",
     "actions": "Acciones",
     "grid_actions": "Acciones del grid",
@@ -151,6 +172,11 @@
     "field": "Campo",
     "back": "Volver",
     "save": "Guardar"
+  },
+  "page_header": {
+    "actions": "Acciones",
+    "summary": "Resumen",
+    "navigation": "Navegación"
   },
   "route_test": {
     "title": "Catalyst Framework",

@@ -4,16 +4,16 @@ Verificación manual del flujo real de configuración inicial de Catalyst.
 
 Usar esta checklist cuando cambien:
 
-- `Repository/Framework/Settings/Controllers/SetupCompletionController.php`
-- `Repository/Framework/Settings/Controllers/AppConfigSaveController.php`
-- `Repository/Framework/Settings/Controllers/DbConfigSaveController.php`
-- `Repository/Framework/Settings/Controllers/MailConfigSaveController.php`
-- `Repository/Framework/Settings/Controllers/SessionConfigSaveController.php`
-- `Repository/Framework/Settings/Controllers/CacheConfigSaveController.php`
-- `Repository/Framework/Settings/Controllers/LoggingConfigSaveController.php`
-- `Repository/Framework/Settings/Controllers/SecurityConfigSaveController.php`
-- `Repository/Framework/Settings/Controllers/WebSocketConfigSaveController.php`
-- `Repository/Framework/Settings/Controllers/DevToolsConfigSaveController.php`
+- `Repository/Framework/Configuration/Controllers/SetupCompletionController.php`
+- `Repository/Framework/Configuration/Controllers/AppConfigSaveController.php`
+- `Repository/Framework/Configuration/Controllers/DbConfigSaveController.php`
+- `Repository/Framework/Configuration/Controllers/MailConfigSaveController.php`
+- `Repository/Framework/Configuration/Controllers/SessionConfigSaveController.php`
+- `Repository/Framework/Configuration/Controllers/CacheConfigSaveController.php`
+- `Repository/Framework/Configuration/Controllers/LoggingConfigSaveController.php`
+- `Repository/Framework/Configuration/Controllers/SecurityConfigSaveController.php`
+- `Repository/Framework/Configuration/Controllers/WebSocketConfigSaveController.php`
+- `Repository/Framework/Configuration/Controllers/DevToolsConfigSaveController.php`
 - `app/Framework/Middleware/SetupGuardMiddleware.php`
 - `app/Helpers/Config/ConfigManager.php`
 
@@ -116,7 +116,8 @@ Happy path esperado:
 Notas:
 - si ya existe un admin activo, devuelve `success=true` con `data.admin_exists=true`
 - si el email ya existe o el password no confirma, devuelve `422` con `errors`
-- si la DB no es alcanzable, falla desde `openSetupDatabase()`
+- si la DB no es alcanzable, falla desde `SetupDatabaseService::open()`
+- usuario, rol admin y asignación se confirman en una sola transacción; un fallo revierte el aprovisionamiento
 
 ## Escenario C — `POST /configuration/environment-setup/complete` falla con DB/config inválida
 

@@ -24,7 +24,7 @@ Catalyst is split into these active code roots:
 | `app/Entities` | Shared ORM entities used by framework and repository modules. |
 | `Repository/Framework` | Framework-owned UI/API modules such as Auth, Roles, Settings, Operations, Documents, Media, Automation, Catalogs, ApiPlatform, Audit, Notification, DemoUi and DevTools. |
 | `Repository/App/Surface` | App-owned public/authenticated surfaces: Home, Landing, Store, Dashboard and Account. |
-| `boot-core/template` | Shared framework templates and layout/scope components. |
+| `boot-core/template` | Canonical document, shared shell components and declarative template scopes. |
 | `public/assets/js/catalyst` | Shared frontend runtime modules. |
 
 ## Key Namespaces

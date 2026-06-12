@@ -10,6 +10,7 @@ Document reusable optimistic locking and record-claim primitives.
 |---|---|
 | Acquires, renews, releases, validates, audits, and broadcasts record claim state. | `Catalyst\Framework\Concurrency\RecordClaimManager` |
 | Reads, locks, searches, and decorates record claims for concurrency workflows. | `Catalyst\Framework\Concurrency\RecordClaimRepository` |
+| Projects claim snapshots to heartbeat and realtime clients. | `Catalyst\Framework\Presence\RecordPresenceManager` |
 
 ## Current Behavior
 
@@ -67,4 +68,5 @@ When PHP symbols or method contracts in this namespace change, refresh this docu
 
 - `docs/runtime-inventory.md`
 - `docs/runtime-module-catalog.md`
+- `docs/framework-record-presence.md`
 - `docs/harness-context-map.md`

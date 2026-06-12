@@ -68,7 +68,7 @@ return [
         ],
     ],
     'navigation' => [
-        'admin' => [
+        'shell' => [
             [
                 'context' => 'workspaces',
                 'label' => __('catalogs.module.navigation_label'),

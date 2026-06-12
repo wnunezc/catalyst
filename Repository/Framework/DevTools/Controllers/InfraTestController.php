@@ -82,7 +82,7 @@ class InfraTestController extends Controller
             'pageTitle' => __('devtools.layout_smoke.title'),
             'tokenEscapeExample' => '<script>alert(\'xss\')</script>',
             'tokenEntityExample' => '"double" & \'single\'',
-        ], 200, 'admin');
+        ]);
     }
 
     /**
@@ -95,7 +95,7 @@ class InfraTestController extends Controller
         return $this->view('ui-showcase', [
             'title'       => __('devtools.ui_showcase.title'),
             'pageTitle'   => __('devtools.ui_showcase.title'),
-        ], 200, 'admin');
+        ]);
     }
 
     /**

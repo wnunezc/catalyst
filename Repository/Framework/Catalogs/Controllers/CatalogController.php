@@ -32,8 +32,8 @@ namespace Catalyst\Repository\Catalogs\Controllers;
 
 use Catalyst\Entities\CatalogDefinition;
 use Catalyst\Entities\CatalogItem;
-use Catalyst\Framework\Admin\Form\FormBuilder;
-use Catalyst\Framework\Admin\Grid\DataGrid;
+use Catalyst\Framework\Form\FormBuilder;
+use Catalyst\Framework\DataGrid\DataGrid;
 use Catalyst\Framework\Catalog\CatalogManager;
 use Catalyst\Framework\Catalog\CatalogRepository;
 use Catalyst\Framework\Controllers\Controller;
@@ -95,7 +95,7 @@ final class CatalogController extends Controller
             'title' => __('catalogs.index.title'),
             'pageTitle' => __('catalogs.index.title'),
             'grid' => $this->gridFactory->buildIndexGrid($this->repository)->resolve($request),
-        ], 200, 'admin');
+        ]);
     }
 
     /**
@@ -414,8 +414,8 @@ final class CatalogController extends Controller
             'pageTitle' => $title,
             'catalog' => $catalog,
             'form' => $form,
-            'claimContext' => $this->buildRecordClaimContext($claim),
-        ], 200, 'admin');
+            'recordPresence' => $this->buildRecordPresenceContext($claim),
+        ]);
     }
 
     /**
@@ -462,8 +462,8 @@ final class CatalogController extends Controller
                 $catalog
             ),
             'timeline' => $this->timelines->timelineFor(CatalogManager::RESOURCE_KEY, $id),
-            'claimContext' => $this->buildRecordClaimContext($claim),
-        ], 200, 'admin');
+            'recordPresence' => $this->buildRecordPresenceContext($claim),
+        ]);
     }
 
     /**
@@ -486,8 +486,8 @@ final class CatalogController extends Controller
             'catalog' => $catalog,
             'item' => $item,
             'form' => $form,
-            'claimContext' => $this->buildRecordClaimContext($claim),
-        ], 200, 'admin');
+            'recordPresence' => $this->buildRecordPresenceContext($claim),
+        ]);
     }
 
     /**

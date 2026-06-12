@@ -37,7 +37,7 @@ return static function (array $scope): array {
     $actions[] = ['label' => __('catalogs.common.back'), 'href' => '/workspaces/catalogs', 'class' => 'btn btn-sm btn-outline-secondary', 'icon' => 'fa-solid fa-arrow-left'];
 
     return [
-        'admin_header' => [
+        'page_header' => [
             'eyebrow' => __('catalogs.form_page.eyebrow'),
             'title' => (string) ($scope['pageTitle'] ?? ($catalog !== null ? __('catalogs.form_page.edit_title') : __('catalogs.form_page.create_title'))),
             'description' => __('catalogs.form_page.hero_lede'),

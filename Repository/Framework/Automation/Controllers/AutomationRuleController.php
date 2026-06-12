@@ -93,7 +93,7 @@ final class AutomationRuleController extends Controller
             'title' => __('automation.index.title'),
             'pageTitle' => __('automation.index.title'),
             'grid' => $this->gridFactory->build($this->repository)->resolve($request),
-        ], 200, 'admin');
+        ]);
     }
 
     /**
@@ -325,9 +325,8 @@ final class AutomationRuleController extends Controller
 
         return $this->view(
             'automation.show',
-            $this->showDataFactory->build($rule, $id, $this->buildRecordClaimContext($claim)),
-            200,
-            'admin'
+            $this->showDataFactory->build($rule, $id, $this->buildRecordPresenceContext($claim)),
+            200
         );
     }
 
@@ -348,7 +347,7 @@ final class AutomationRuleController extends Controller
                 $rule,
                 $this->concurrencyHiddenFields($claim, $rule !== null ? (int) ($rule['lock_version'] ?? 1) : null)
             ),
-            'claimContext' => $this->buildRecordClaimContext($claim),
-        ], 200, 'admin');
+            'recordPresence' => $this->buildRecordPresenceContext($claim),
+        ]);
     }
 }

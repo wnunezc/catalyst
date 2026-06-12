@@ -539,9 +539,9 @@ html[data-skin="grempa"] .card {
     border-color: var(--theme-theme-card-border-color, var(--theme-border-color));
 }
 
-html[data-skin="civil-protection"] .demo-ui-theme-panel__header,
-html[data-skin="firefighters"] .demo-ui-theme-panel__header,
-html[data-skin="grempa"] .demo-ui-theme-panel__header {
+html[data-skin="civil-protection"] .catalyst-theme-panel__header,
+html[data-skin="firefighters"] .catalyst-theme-panel__header,
+html[data-skin="grempa"] .catalyst-theme-panel__header {
     background: var(--catalyst-response-primary);
 }
 

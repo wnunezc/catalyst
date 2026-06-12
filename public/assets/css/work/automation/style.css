@@ -2,7 +2,7 @@
  * Published via FrontResourceTrait to /assets/css/work/automation/style.css
  */
 
-.automation-admin-page .automation-hero {
+.automation-page .automation-hero {
     background: rgba(255, 251, 235, 0.96);
     border-left: 4px solid #d97706;
 }
@@ -58,7 +58,7 @@
 
 
 /* Density correction v2: readable text scale with compact spacing. */
-.automation-admin-page {
+.automation-page {
     font-size: 0.875rem;
 }
 

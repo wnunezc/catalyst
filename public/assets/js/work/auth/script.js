@@ -1,31 +1,9 @@
-/**
- * Contract:
- * - Init: immediate boot plus one DOMContentLoaded retry guarded by `authModuleBooted`.
- * - DOM: optional `#mfa-qr[data-qr-uri]` container on MFA setup pages.
- * - Events/Payload: loads QRCode only when the URI payload is present.
- * - CSP: no inline handlers; external QR runtime must be allowed by script-src.
- */
+import { registerUiComponent } from '../../catalyst/runtime/registration-queue.js';
+
 const QR_CODE_SCRIPT_SRC = 'https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js';
 
-let authModuleBooted = false;
-
-bootstrapAuthModule();
-
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', bootstrapAuthModule, { once: true });
-}
-
-function bootstrapAuthModule() {
-    if (authModuleBooted) {
-        return;
-    }
-
-    authModuleBooted = true;
-    void initMfaQrCode();
-}
-
-async function initMfaQrCode() {
-    const qrRoot = document.getElementById('mfa-qr');
+async function initMfaQrCode(root) {
+    const qrRoot = root.querySelector('#mfa-qr');
     if (!(qrRoot instanceof HTMLElement)) {
         return;
     }
@@ -53,6 +31,13 @@ async function initMfaQrCode() {
         correctLevel: window.QRCode.CorrectLevel.M,
     });
 }
+
+registerUiComponent({
+    name: 'auth.mfa-qr-code',
+    phase: 'scan',
+    selector: '#mfa-qr[data-qr-uri]',
+    mount: initMfaQrCode,
+});
 
 function ensureExternalScript(src, datasetKey) {
     const existing = document.querySelector(`script[data-external-script="${datasetKey}"]`);

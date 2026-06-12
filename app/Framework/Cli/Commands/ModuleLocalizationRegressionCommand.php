@@ -71,21 +71,19 @@ final class ModuleLocalizationRegressionCommand extends AbstractCommand
     public function execute(ArgumentBag $args): int
     {
         $decorator = $this->contents('app/Framework/Module/ModuleLocalizationDecorator.php');
-        $settings = $this->contents('Repository/Framework/Settings/module.php');
+        $configuration = $this->contents('Repository/Framework/Configuration/module.php');
         $roles = $this->contents('Repository/Framework/Roles/module.php');
         $registry = ModuleRegistry::getInstance();
         $registry->flushCache();
-        $operations = $registry->findByKey('framework.operations') ?? [];
         $checks = [
             'generic_visible_field_contract' => str_contains($decorator, 'localizeVisibleFields')
                 && !str_contains($decorator, 'localizeSettingsModule')
                 && !str_contains($decorator, 'localizeOperationsModule')
                 && !str_contains($decorator, 'localizeRolesModule'),
-            'settings_manifest_explicit' => str_contains($settings, "__('settings.module.description')"),
+            'configuration_manifest_explicit' => str_contains($configuration, "__('settings.module.description')"),
             'roles_manifest_explicit' => !str_contains($roles, "'label' => 'Roles'")
                 && !str_contains($roles, "'label' => 'Permissions'"),
-            'operations_manifest_resolved' => ($operations['description'] ?? '') !== 'operations.module.description'
-                && ($operations['navigation']['admin'][0]['label'] ?? '') !== 'operations.title',
+            'operations_module_disconnected' => $registry->findByKey('framework.operations') === null,
         ];
         $ok = !in_array(false, $checks, true);
 

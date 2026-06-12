@@ -1,0 +1,126 @@
+.datagrid-card {
+    border: 1px solid var(--bs-border-color);
+    border-radius: .85rem;
+    box-shadow: 0 .25rem .875rem rgba(15, 23, 42, .04);
+    overflow: hidden;
+}
+
+.datagrid-card .card-header {
+    align-items: center;
+    background: var(--bs-tertiary-bg);
+    border-bottom: 1px solid var(--bs-border-color);
+    display: flex;
+    gap: .75rem;
+    justify-content: space-between;
+    padding: .55rem .75rem;
+}
+
+.datagrid-card .card-title,
+.datagrid-title {
+    color: var(--bs-heading-color);
+    font-size: .95rem;
+    font-weight: 700;
+    line-height: 1.25;
+    margin: 0;
+}
+
+.datagrid-subtitle {
+    color: var(--bs-secondary-color);
+    font-size: .74rem;
+    line-height: 1.35;
+    margin: .1rem 0 0;
+}
+
+.datagrid-filterbar {
+    background: rgba(var(--bs-tertiary-bg-rgb, 248, 249, 250), .65);
+}
+
+.datagrid-filterbar .form-label {
+    color: var(--bs-secondary-color);
+    font-size: .68rem;
+    font-weight: 800;
+    letter-spacing: .045em;
+    margin-bottom: .25rem;
+    text-transform: uppercase;
+}
+
+.datagrid-toolbar {
+    font-size: .75rem;
+}
+
+.datagrid__per-page {
+    min-width: 4.25rem;
+}
+
+.datagrid-table {
+    --bs-table-bg: transparent;
+    font-size: .76rem;
+}
+
+.datagrid-table thead {
+    background: var(--bs-tertiary-bg);
+    border-bottom: 1px solid var(--bs-border-color);
+    color: var(--bs-secondary-color);
+    font-size: .66rem;
+    font-weight: 800;
+    letter-spacing: .055em;
+    text-transform: uppercase;
+}
+
+.datagrid-table > :not(caption) > * > * {
+    padding: .48rem .65rem;
+    vertical-align: middle;
+}
+
+.datagrid-table tbody tr:hover {
+    background-color: rgba(var(--bs-primary-rgb), .035);
+}
+
+.datagrid-table .btn-group,
+.datagrid-table .btn-group-sm {
+    gap: .25rem;
+}
+
+.datagrid-table .btn-group > .btn,
+.datagrid-table .btn-group-sm > .btn,
+.datagrid-table .btn-group > form > .btn,
+.datagrid-table .btn-group-sm > form > .btn {
+    border-radius: .45rem !important;
+}
+
+.datagrid-sort-link {
+    color: var(--bs-heading-color);
+    text-decoration: none;
+}
+
+.datagrid-sort-link:hover,
+.datagrid-sort-link:focus-visible {
+    color: var(--bs-primary);
+}
+
+.datagrid-empty-state {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 11rem;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.datagrid-empty-state__icon {
+    align-items: center;
+    background: rgba(var(--bs-primary-rgb), .1);
+    border-radius: 50%;
+    color: var(--bs-primary);
+    display: inline-flex;
+    font-size: 1.5rem;
+    height: 3rem;
+    justify-content: center;
+    margin-bottom: .75rem;
+    width: 3rem;
+}
+
+.datagrid-card .dataTable {
+    margin: 0 !important;
+}

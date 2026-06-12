@@ -34,7 +34,7 @@ use App\Surface\Account\Requests\MfaRecoveryRequest;
 use App\Surface\Account\Requests\SupportRecoveryRequest;
 use App\Surface\Account\Services\AccountRecoveryService;
 use App\Surface\Account\Services\AccountSecurityService;
-use App\Surface\Account\Support\AccountShellViewModel;
+use App\Surface\Account\Support\AccountSurfaceViewModel;
 use Catalyst\Framework\Auth\AuthManager;
 use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\RedirectResponse;
@@ -217,16 +217,22 @@ final class AccountCenterController extends Controller
      */
     private function render(string $view, string $title, array $data = []): Response
     {
-        $shell = new AccountShellViewModel();
+        $shell = new AccountSurfaceViewModel();
+        $translationKey = str_replace('-', '_', $view);
 
         return $this->view('account.' . $view, $shell->authenticated(array_merge([
             'title' => $title,
             'pageTitle' => $title,
+            'page_header' => [
+                'eyebrow' => __("account.{$translationKey}.eyebrow"),
+                'title' => $title,
+                'description' => __("account.{$translationKey}.lead"),
+            ],
             'breadcrumb_items' => [
                 ['label' => __('account.nav.account'), 'href' => '/dashboard'],
                 ['label' => $title, 'href' => '#', 'is_active' => true],
             ],
             'has_breadcrumbs' => true,
-        ], $data)), 200, 'account');
+        ], $data)));
     }
 }

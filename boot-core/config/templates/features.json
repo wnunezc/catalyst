@@ -54,12 +54,6 @@
             "enabled": true,
             "scope": "module"
         },
-        "module.framework.operations": {
-            "label": "Operations module",
-            "description": "Load platform operations surfaces for flags, plugins, deployment and tenancy.",
-            "enabled": true,
-            "scope": "module"
-        },
         "notifications": {
             "label": "Notifications",
             "description": "Enable authenticated notification endpoints and unread counters.",

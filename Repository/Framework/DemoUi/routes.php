@@ -29,12 +29,11 @@ declare(strict_types=1);
  */
 
 use Catalyst\Repository\DemoUi\Controllers\DemoUiController;
-use Catalyst\Framework\Middleware\AuthMiddleware;
 use Catalyst\Framework\Route\Router;
 use Catalyst\Framework\View\View;
 
 $router = Router::getInstance();
-$moduleMiddleware = [AuthMiddleware::class];
+$moduleMiddleware = [];
 
 View::getInstance()->addPath(
     'demoui',

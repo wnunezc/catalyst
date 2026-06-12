@@ -82,7 +82,7 @@ return [
         ],
     ],
     'navigation' => [
-        'admin' => [
+        'shell' => [
             [
                 'context' => 'operations',
                 'label' => __('apiplatform.module.navigation_label'),

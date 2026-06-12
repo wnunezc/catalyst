@@ -26,13 +26,28 @@
   },
   "product_nav": {
     "title": "Catalyst Product",
+    "framework": "Framework",
+    "components": "Components",
+    "disconnected": "Disconnected",
     "fallback_user": "Catalyst User",
+    "titles": {
+      "configuration": "Framework Configuration",
+      "operations": "Framework Operations"
+    },
     "groups": {
       "configuration": "Configuration",
       "workspaces": "Workspaces",
       "operations": "Operations",
       "users": "Users",
+      "devtools": "Devtools",
       "demo_ui": "Demo UI"
+    },
+    "descriptions": {
+      "configuration": "Environment, health, appearance, feature flags, plugins and backups.",
+      "workspaces": "Catalogs, module designer, media, documents and localization tools.",
+      "operations": "Deployments and tenancy operations.",
+      "users": "User management, enrollment, roles and permissions.",
+      "devtools": "Developer diagnostics and internal showcases."
     },
     "items": {
       "environment_setup": "Environment Setup",
@@ -55,6 +70,11 @@
       "user_enroll": "User Enroll",
       "user_role": "User Role",
       "user_permissions": "User Permissions",
+      "organization_hierarchy": "Organization Hierarchy",
+      "account_recovery": "Account Recovery",
+      "test_features": "Test Features",
+      "ui_showcase": "UI Showcase",
+      "uml_architecture": "UML / Architecture",
       "base_ui": "Base UI",
       "forms": "Forms",
       "tables": "Tables",
@@ -132,6 +152,7 @@
     "reset": "Reset",
     "no_rows_selected": "No rows selected",
     "rows_selected": ":count row(s) selected",
+    "pagination_summary": "Showing :from-:to of :total",
     "bulk_action": "Bulk action",
     "actions": "Actions",
     "grid_actions": "Grid actions",
@@ -151,6 +172,11 @@
     "field": "Field",
     "back": "Back",
     "save": "Save"
+  },
+  "page_header": {
+    "actions": "Actions",
+    "summary": "Summary",
+    "navigation": "Navigation"
   },
   "route_test": {
     "title": "Catalyst Framework",

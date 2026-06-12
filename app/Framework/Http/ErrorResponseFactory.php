@@ -60,7 +60,17 @@ final class ErrorResponseFactory
                 'error_ticket' => $ticket ?? '',
                 'request_path' => $requestPath,
                 'show_login_action' => $status === 401,
-            ], $status, 'error');
+                'is_error_surface' => true,
+                'show_topbar' => false,
+                'show_sidebar' => false,
+                'show_status_bar' => false,
+                'show_theme_customizer' => false,
+                'show_auth_brand_panel' => false,
+                'body_class' => 'catalyst-error-shell-body',
+                'shell_class' => 'wrapper',
+                'content_class' => 'catalyst-error-shell',
+                'surface_context' => 'error',
+            ], $status);
 
             foreach ($headers as $name => $value) {
                 $response->setHeader((string) $name, $value);

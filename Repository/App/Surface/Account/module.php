@@ -69,7 +69,7 @@ return [
         ],
     ],
     'navigation' => [
-        'admin' => [
+        'shell' => [
             [
                 'context' => 'account-recovery',
                 'label' => __('account.module.admin_recovery_label'),

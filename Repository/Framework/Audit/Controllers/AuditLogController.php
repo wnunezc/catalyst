@@ -30,7 +30,7 @@ declare(strict_types=1);
 
 namespace Catalyst\Repository\Audit\Controllers;
 
-use Catalyst\Framework\Admin\Grid\DataGrid;
+use Catalyst\Framework\DataGrid\DataGrid;
 use Catalyst\Framework\Audit\AuditLogRepository;
 use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\Request;
@@ -190,7 +190,7 @@ final class AuditLogController extends Controller
             'title' => __('audit.index.title'),
             'pageTitle' => __('audit.index.title'),
             'grid' => $grid,
-        ], 200, 'admin');
+        ]);
     }
 
     /**
@@ -214,7 +214,7 @@ final class AuditLogController extends Controller
             'title' => __('audit.show.title_prefix') . ' #' . (int) $entry['id'],
             'pageTitle' => __('audit.module.breadcrumb_show'),
             'entry' => $entry,
-        ], 200, 'admin');
+        ]);
     }
 
     /**

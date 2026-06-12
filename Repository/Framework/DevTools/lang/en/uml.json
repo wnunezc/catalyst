@@ -12,7 +12,7 @@
   },
   "shell": {
     "title": "Architecture Reference",
-    "description": "Browse the canonical runtime model without leaving the current admin shell.",
+    "description": "Browse the canonical runtime model without leaving the current shell.",
     "kicker": "UML",
     "aria_label": "UML architecture sections"
   },

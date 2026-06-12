@@ -18,9 +18,30 @@ Document the current view rendering primitives and their boundaries against secu
 
 ## Current Behavior
 
-The runtime inventory reports 230 templates and 54 scripts. Module templates live under module `Views` directories and boot templates live under `boot-core/template`. Feature-specific CSS/JS belongs under `Repository/{Framework|App}/{Module}/front/{style.css,script.js}` and is published to `public/assets/*/work/{slug}/` through the established front-resource path.
+The runtime inventory catalogs templates and scripts. Module templates live under module `Views` directories and boot templates live under `boot-core/template`. Feature-specific CSS/JS belongs under `Repository/{Framework|App}/{Module}/front/{style.css,script.js}` and is published to `public/assets/*/work/{slug}/` through the established front-resource path.
 
-`ViewTokenRenderer` is used for tokenized non-PHP templates such as generated HTML export output. `TrustedHtml`, `InlineJson` and the allowlist sanitizer are security boundary helpers; they do not make arbitrary HTML safe by default.
+`View::render()` always returns a complete HTML document using
+`boot-core/template/document.phtml`. Controllers use `view()` for complete
+pages and `viewFragment()` only for insertable HTML such as modal bodies or
+partial refreshes. Layout names and surface profiles are not part of the view
+API.
+
+`DocumentScope::prepare(array $scope)` supplies document metadata, appearance,
+theme attributes, shared assets, navigation and shell defaults. A new surface
+therefore receives the complete shared shell without declaring a profile.
+Exceptional surfaces may explicitly set `show_topbar`, `show_sidebar`,
+`show_status_bar`, `show_theme_customizer`, shell classes and navigation data.
+Those values control capabilities inside the same document; they do not select
+another renderer or template tree.
+
+`ViewTokenRenderer` is used for declarative `.phtml` templates and constrained
+fragments. `TrustedHtml`, `InlineJson` and the allowlist sanitizer are security
+boundary helpers; they do not make arbitrary HTML safe by default.
+
+`_body-scripts.phtml` loads the common UI runtime before published module work
+scripts. Generic shell, Bootstrap and Inspinia behavior belongs to the runtime
+registry. Surface scripts are limited to registered extensions or
+surface-specific behavior and must not initialize the shell again.
 
 ## Operational Notes
 

@@ -5,4 +5,13 @@
  * - Events/Payload: no listeners and no server payload.
  * - CSP: no inline handlers, dynamic HTML or external assets.
  */
-document.documentElement.dataset.auditLog = 'ready';
+import { registerUiComponent } from '../../catalyst/runtime/registration-queue.js';
+
+registerUiComponent({
+    name: 'audit.ready-marker',
+    phase: 'start',
+    selector: '',
+    mount() {
+        document.documentElement.dataset.auditLog = 'ready';
+    },
+});

@@ -30,7 +30,7 @@ declare(strict_types=1);
 
 namespace Catalyst\Repository\Roles\Controllers;
 
-use Catalyst\Framework\Admin\Grid\DataGrid;
+use Catalyst\Framework\DataGrid\DataGrid;
 use Catalyst\Framework\Authorization\RoleRepository;
 use Catalyst\Framework\Auth\UserDirectoryRepository;
 use Catalyst\Framework\Controllers\Controller;
@@ -164,7 +164,7 @@ class UserRolesController extends Controller
             'pageTitle' => __('roles.user_roles.title'),
             'user' => $user,
             'grid' => $gridBuilder->resolve($request),
-        ], 200, 'admin');
+        ]);
     }
 
     /**

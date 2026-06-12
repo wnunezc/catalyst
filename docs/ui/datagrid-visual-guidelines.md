@@ -2,7 +2,7 @@
 
 ## Alcance
 
-Este documento complementa `docs/framework-datagrid.md` y se limita a la capa visual, de integracion de template y de cumplimiento CSP del DataGrid administrativo.
+Este documento complementa `docs/framework-datagrid.md` y se limita a la capa visual, de integracion de template y de cumplimiento CSP del DataGrid global.
 
 ## Principios
 
@@ -23,7 +23,7 @@ El DataGrid actual debe mantenerse compacto sin perder capacidades. La reduccion
 
 ## Estructura visual recomendada
 
-El template actual `boot-core/template/components/_admin-datagrid.phtml` ya establece la jerarquia recomendada:
+El template actual `boot-core/template/components/_datagrid.phtml` establece la jerarquia recomendada:
 
 1. Header del bloque solo para identidad del grid.
 2. Formulario de filtros y busqueda.
@@ -111,13 +111,12 @@ No se recomienda volver a una estrategia basada en fuente pequena para “ganar 
 El comportamiento interactivo del grid debe seguir estas reglas:
 
 1. No usar `onclick`, `onchange` ni `javascript:` inline.
-2. Resolver `print` desde `public/assets/js/catalyst/modules/admin-grid.js`.
+2. Resolver `print` desde `public/assets/js/catalyst/datagrid/interactions.js`, gobernado por el runtime central.
 3. Resolver el submit de `per_page` desde JS externo.
 4. Activar el comportamiento del grid mediante atributos `data-*`.
 5. Mantener estilos en CSS compartido o CSS de modulo; no en `style=""` inline.
 
-## Pendientes y riesgos
+## Riesgos
 
-- El summary del grid sigue en ingles en el scope actual; si se requiere consistencia completa con i18n, debe revisarse aparte.
 - Si una futura iteracion agrega mas acciones a `Tools`, conviene vigilar que el dropdown no se convierta en un contenedor ambiguo de acciones no relacionadas.
 - La capa visual no debe desacoplarse del contrato funcional documentado en `docs/framework-datagrid.md`.

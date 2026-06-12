@@ -369,7 +369,7 @@ html[data-skin="red-cross"] .card {
     border-color: var(--theme-theme-card-border-color, var(--theme-border-color));
 }
 
-html[data-skin="red-cross"] .demo-ui-theme-panel__header {
+html[data-skin="red-cross"] .catalyst-theme-panel__header {
     background: var(--catalyst-red-cross-primary);
 }
 

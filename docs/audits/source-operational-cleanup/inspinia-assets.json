@@ -6,13 +6,9 @@
     "mapped_original": "assets/css/app.min.css",
     "exists_in_original": true,
     "same_hash_as_original": true,
-    "exact_reference_count": 5,
+    "exact_reference_count": 1,
     "exact_reference_files": [
-      "boot-core/template/components/_head-assets.phtml",
-      "boot-core/template/layouts/account.phtml",
-      "boot-core/template/layouts/admin.phtml",
-      "boot-core/template/layouts/base.phtml",
-      "boot-core/template/layouts/demo-ui-shell.phtml"
+      "boot-core/template/_head-assets.phtml"
     ],
     "runtime_reference": true
   },
@@ -67,13 +63,9 @@
     "mapped_original": "assets/css/vendors.min.css",
     "exists_in_original": true,
     "same_hash_as_original": true,
-    "exact_reference_count": 5,
+    "exact_reference_count": 1,
     "exact_reference_files": [
-      "boot-core/template/components/_head-assets.phtml",
-      "boot-core/template/layouts/account.phtml",
-      "boot-core/template/layouts/admin.phtml",
-      "boot-core/template/layouts/base.phtml",
-      "boot-core/template/layouts/demo-ui-shell.phtml"
+      "boot-core/template/_head-assets.phtml"
     ],
     "runtime_reference": true
   },
@@ -117,14 +109,10 @@
     "mapped_original": "assets/images/favicon.ico",
     "exists_in_original": true,
     "same_hash_as_original": true,
-    "exact_reference_count": 6,
+    "exact_reference_count": 2,
     "exact_reference_files": [
       "app/Framework/Appearance/PlatformAppearanceManager.php",
-      "boot-core/template/components/_head-assets.phtml",
-      "boot-core/template/layouts/account.phtml",
-      "boot-core/template/layouts/admin.phtml",
-      "boot-core/template/layouts/base.phtml",
-      "boot-core/template/layouts/demo-ui-shell.phtml"
+      "boot-core/template/_head-assets.phtml"
     ],
     "runtime_reference": true
   },
@@ -578,15 +566,11 @@
     "mapped_original": "assets/images/logo-black.png",
     "exists_in_original": true,
     "same_hash_as_original": true,
-    "exact_reference_count": 7,
+    "exact_reference_count": 3,
     "exact_reference_files": [
       "app/Framework/Appearance/PlatformAppearanceManager.php",
-      "boot-core/template/components/_account-shell-sidenav.phtml",
-      "boot-core/template/components/_account-shell-topbar.phtml",
-      "boot-core/template/components/_admin-shell-sidenav.phtml",
-      "boot-core/template/components/_admin-shell-topbar.phtml",
-      "boot-core/template/layouts/admin.phtml",
-      "boot-core/template/layouts/demo-ui-shell.phtml"
+      "boot-core/template/_sidebar.phtml",
+      "boot-core/template/_topbar.phtml"
     ],
     "runtime_reference": true
   },
@@ -597,14 +581,10 @@
     "mapped_original": "assets/images/logo-sm.png",
     "exists_in_original": true,
     "same_hash_as_original": true,
-    "exact_reference_count": 9,
+    "exact_reference_count": 5,
     "exact_reference_files": [
-      "boot-core/template/components/_account-shell-sidenav.phtml",
-      "boot-core/template/components/_account-shell-topbar.phtml",
-      "boot-core/template/components/_admin-shell-sidenav.phtml",
-      "boot-core/template/components/_admin-shell-topbar.phtml",
-      "boot-core/template/layouts/admin.phtml",
-      "boot-core/template/layouts/demo-ui-shell.phtml",
+      "boot-core/template/_sidebar.phtml",
+      "boot-core/template/_topbar.phtml",
       "Repository/Framework/DemoUi/generated/theme-previews/charts-apex-area.html",
       "Repository/Framework/DemoUi/generated/theme-previews/form-fileuploads.html",
       "Repository/Framework/DemoUi/generated/theme-previews/ui-notifications.html"
@@ -618,15 +598,11 @@
     "mapped_original": "assets/images/logo.png",
     "exists_in_original": true,
     "same_hash_as_original": true,
-    "exact_reference_count": 7,
+    "exact_reference_count": 3,
     "exact_reference_files": [
       "app/Framework/Appearance/PlatformAppearanceManager.php",
-      "boot-core/template/components/_account-shell-sidenav.phtml",
-      "boot-core/template/components/_account-shell-topbar.phtml",
-      "boot-core/template/components/_admin-shell-sidenav.phtml",
-      "boot-core/template/components/_admin-shell-topbar.phtml",
-      "boot-core/template/layouts/admin.phtml",
-      "boot-core/template/layouts/demo-ui-shell.phtml"
+      "boot-core/template/_sidebar.phtml",
+      "boot-core/template/_topbar.phtml"
     ],
     "runtime_reference": true
   },
@@ -1532,11 +1508,9 @@
     "mapped_original": "assets/plugins/datatables/responsive.bootstrap5.min.css",
     "exists_in_original": true,
     "same_hash_as_original": true,
-    "exact_reference_count": 4,
+    "exact_reference_count": 2,
     "exact_reference_files": [
-      "boot-core/template/layouts/admin.phtml",
-      "boot-core/template/layouts/demo-ui-shell.phtml",
-      "boot-core/template/scope/layouts/_demo-product-shell.php",
+      "boot-core/template/_head-assets.phtml",
       "Repository/Framework/DemoUi/Controllers/DemoUiController.php"
     ],
     "runtime_reference": true

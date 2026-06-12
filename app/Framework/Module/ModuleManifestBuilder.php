@@ -152,9 +152,9 @@ final class ModuleManifestBuilder
     }
 
     /**
-     * Builds public or administrative navigation declarations for a module.
+     * Builds public or shell navigation declarations for a module.
      *
-     * Responsibility: Builds public or administrative navigation declarations for a module.
+     * Responsibility: Builds public or shell navigation declarations for a module.
      * @return array<string, array<int, array<string, mixed>>>
      */
     private function buildNavigation(
@@ -165,7 +165,7 @@ final class ModuleManifestBuilder
         string $permissionSlug
     ): array {
         $navigation = [
-            'admin' => [],
+            'shell' => [],
             'public' => [],
             'breadcrumbs' => [],
         ];
@@ -183,7 +183,7 @@ final class ModuleManifestBuilder
         }
 
         if (in_array($surface, ['workspace', 'administration', 'devtools'], true)) {
-            $navigation['admin'][] = [
+            $navigation['shell'][] = [
                 'context' => $surface,
                 'label' => $module,
                 'href' => '/' . $routeUri,

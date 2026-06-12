@@ -1,0 +1,16 @@
+<main class="{{ content_class }}" data-simplebar="" data-simplebar-auto-hide="false">
+    <div class="container-fluid">
+        {{#if has_breadcrumbs}}
+        <nav class="account-breadcrumb" aria-label="Breadcrumb">
+            <ol>
+                {{#each breadcrumb_items}}
+                <li class="{{#if is_active}}active{{/if}}">
+                    {{#if is_active}}<span>{{ label }}</span>{{else}}<a href="{{ href }}">{{ label }}</a>{{/if}}
+                </li>
+                {{/each}}
+            </ol>
+        </nav>
+        {{/if}}
+        {{{ content }}}
+    </div>
+</main>

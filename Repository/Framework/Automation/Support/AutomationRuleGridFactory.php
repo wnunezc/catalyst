@@ -30,7 +30,7 @@ declare(strict_types=1);
 
 namespace Catalyst\Repository\Automation\Support;
 
-use Catalyst\Framework\Admin\Grid\DataGrid;
+use Catalyst\Framework\DataGrid\DataGrid;
 use Catalyst\Framework\Automation\AutomationManager;
 use Catalyst\Framework\Automation\AutomationRuleRepository;
 use Catalyst\Framework\Idempotency\IdempotencyManager;

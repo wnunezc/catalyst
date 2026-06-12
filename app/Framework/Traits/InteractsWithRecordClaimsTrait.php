@@ -105,7 +105,7 @@ trait InteractsWithRecordClaimsTrait
      * @param array<string, mixed>|null $claim
      * @return array<string, mixed>|null
      */
-    protected function buildRecordClaimContext(?array $claim): ?array
+    protected function buildRecordPresenceContext(?array $claim): ?array
     {
         if ($claim === null) {
             return null;

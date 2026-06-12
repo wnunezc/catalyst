@@ -35,7 +35,7 @@ use Catalyst\Framework\Argument\ArgumentBag;
 use Catalyst\Framework\Argument\Option;
 use Catalyst\Framework\Cli\AbstractCommand;
 use Catalyst\Framework\Concurrency\RecordClaimManager;
-use Catalyst\Framework\Presence\PresenceManager;
+use Catalyst\Framework\Presence\RecordPresenceManager;
 use Throwable;
 
 /**
@@ -95,7 +95,7 @@ final class PresenceSmokeCommand extends AbstractCommand
         $json = (bool) ($args->getOptionValue('json') ?? false);
 
         $claims = RecordClaimManager::getInstance();
-        $presence = PresenceManager::getInstance();
+        $presence = RecordPresenceManager::getInstance();
         $result = [
             'resource_key' => $resourceKey,
             'record_id' => $recordId,

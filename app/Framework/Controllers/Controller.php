@@ -94,20 +94,31 @@ abstract class Controller
     }
 
     /**
-     * Render a view template, optionally wrapped in a layout.
+     * Renders a complete view through the canonical document template.
      *
-     * Responsibility: Render a view template, optionally wrapped in a layout.
-     * @param string      $template Template name (dot notation: "pages.welcome")
-     * @param array       $data     Data to pass to the template
-     * @param int         $status   HTTP status code
-     * @param string|null $layout   Layout name (e.g. 'base', 'admin'), or null for no layout
-     * @return Response
+     * Responsibility: Publishes module assets and delegates complete-page rendering to the view engine.
+     *
+     * @param array<string, mixed> $data
      */
-    protected function view(string $template, array $data = [], int $status = 200, ?string $layout = null): Response
+    protected function view(string $template, array $data = [], int $status = 200): Response
     {
         $this->deployFrontAssets();
 
-        return $this->viewEngine->render($template, $data, $status, $layout);
+        return $this->viewEngine->render($template, $data, $status);
+    }
+
+    /**
+     * Renders an explicit HTML fragment without document or shell markup.
+     *
+     * Responsibility: Publishes module assets and delegates insertable-fragment rendering to the view engine.
+     *
+     * @param array<string, mixed> $data
+     */
+    protected function viewFragment(string $template, array $data = [], int $status = 200): Response
+    {
+        $this->deployFrontAssets();
+
+        return $this->viewEngine->renderFragment($template, $data, $status);
     }
 
     /**

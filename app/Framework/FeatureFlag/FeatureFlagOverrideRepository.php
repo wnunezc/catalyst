@@ -36,6 +36,7 @@ use Catalyst\Framework\Auth\AuthManager;
 use Catalyst\Framework\Database\DatabaseManager;
 use Catalyst\Framework\Traits\SingletonTrait;
 use Catalyst\Helpers\Log\Logger;
+use RuntimeException;
 
 /**
  * Persists and resolves per-user and per-role feature flag overrides.
@@ -218,15 +219,10 @@ final class FeatureFlagOverrideRepository
      */
     public function findBySubject(string $flagKey, string $subjectType, string $subjectKey): ?FeatureFlagOverride
     {
-        try {
-            $row = $this->db->connection()->selectOne(
-                'SELECT id FROM feature_flag_overrides WHERE flag_key = ? AND subject_type = ? AND subject_key = ?',
-                [$flagKey, $subjectType, $subjectKey]
-            );
-        } catch (\Throwable $e) {
-            $this->logger->warning('FeatureFlagOverrideRepository::findBySubject failed', ['error' => $e->getMessage()]);
-            return null;
-        }
+        $row = $this->db->connection()->selectOne(
+            'SELECT id FROM feature_flag_overrides WHERE flag_key = ? AND subject_type = ? AND subject_key = ?',
+            [$flagKey, $subjectType, $subjectKey]
+        );
 
         if (!is_array($row) || !isset($row['id'])) {
             return null;
@@ -255,10 +251,24 @@ final class FeatureFlagOverrideRepository
      */
     public function persist(array $payload, ?FeatureFlagOverride $model = null): FeatureFlagOverride
     {
+        $flagKey = trim((string) ($payload['flag_key'] ?? ''));
+        $subjectType = trim((string) ($payload['subject_type'] ?? ''));
+        $subjectKey = trim((string) ($payload['subject_key'] ?? ''));
+
+        if (!FeatureFlagManager::isValidKey($flagKey)) {
+            throw new RuntimeException('Feature flag key is invalid.');
+        }
+        if (!in_array($subjectType, ['user', 'role'], true)) {
+            throw new RuntimeException('Feature flag subject type is invalid.');
+        }
+        if (preg_match('/^[A-Za-z0-9][A-Za-z0-9._:@-]{0,179}$/', $subjectKey) !== 1) {
+            throw new RuntimeException('Feature flag subject key is invalid.');
+        }
+
         $data = [
-            'flag_key' => trim((string) ($payload['flag_key'] ?? '')),
-            'subject_type' => trim((string) ($payload['subject_type'] ?? '')),
-            'subject_key' => trim((string) ($payload['subject_key'] ?? '')),
+            'flag_key' => $flagKey,
+            'subject_type' => $subjectType,
+            'subject_key' => $subjectKey,
             'enabled' => !empty($payload['enabled']),
             'note' => trim((string) ($payload['note'] ?? '')) ?: null,
             'updated_by' => AuthManager::getInstance()->id(),

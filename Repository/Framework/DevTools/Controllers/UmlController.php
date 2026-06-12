@@ -60,7 +60,7 @@ class UmlController extends Controller
             'jsonSections' => $jsonSections,
             'isConfigured' => $configuredFlag,
             'environment' => $cfg->getEnvironment(),
-        ], 200, 'admin');
+        ]);
 
         return $response->setAttribute('csp_profile', 'trusted-renderer');
     }

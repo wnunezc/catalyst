@@ -1,11 +1,10 @@
-# Response skins and neutral branding
+# Themes and neutral branding
 
 ## Alcance
 
-Este documento reemplaza la documentación antigua de temas institucionales.
-Catalyst ya no usa un runtime visual paralelo basado en
-`response-skins.css`. La UI administrativa vive sobre Inspinia y los colores
-especiales se aplican como **Select Theme / skin presets**.
+Catalyst usa los temas Inspinia y cuatro temas institucionales dentro del mismo
+documento, shell y runtime. Un tema solo modifica variables y presentación; no
+selecciona perfiles, layouts, shells o gobernadores alternativos.
 
 El branding documental y los logos se gobiernan aparte desde
 `/configuration/platform-appearance` en el tab de Neutral Branding Runtime.
@@ -21,23 +20,33 @@ La apariencia se divide en dos capas:
 Esto evita que una marca documental reescriba el layout o que una combinación de
 colores del customizer deje textos invisibles.
 
-## Skins disponibles
+## Temas disponibles
 
-Los skins especiales actuales son:
+Los siete temas originales de Inspinia preservados son:
+
+- `default`
+- `minimal`
+- `modern`
+- `material`
+- `pixel`
+- `luxe`
+- `flat`
+
+Los cuatro temas institucionales preservados son:
 
 - `red-cross`
 - `civil-protection`
 - `firefighters`
 - `grempa`
 
-Cada skin está declarado en el runtime de apariencia y apoyado por:
+Los once temas están declarados en el runtime de apariencia y apoyados por:
 
 - `public/assets/css/catalyst/response-skins.css`
 - `public/assets/css/catalyst/inspinia-runtime-compat.css`
 - `public/assets/js/catalyst/modules/shell-theme-customizer.js`
 - `public/assets/js/catalyst/modules/theme-toggle.js`
 
-## Presets cerrados
+## Presets institucionales cerrados
 
 Estos skins son presets cerrados. No se deben mezclar libremente con cualquier
 modo claro/oscuro, topbar o sidenav porque eso puede romper contraste.
@@ -50,7 +59,8 @@ modo claro/oscuro, topbar o sidenav porque eso puede romper contraste.
 | `grempa` | `dark` | `dark` | `dark` |
 
 `PlatformAppearanceManager::sanitizeThemeConfig()` es la fuente de verdad para
-forzar estas combinaciones.
+forzar estas combinaciones. La configuración usa `customizer_enabled`; no
+existe un customizer exclusivo de Admin.
 
 ## Reglas de implementación
 
@@ -62,6 +72,9 @@ forzar estas combinaciones.
 - No usar logos o emblemas como parte del skin visual.
 - Mantener los botones de acción como botones reales; evitar `btn-link` para
   acciones administrativas.
+- Preservar selección y persistencia mediante el runtime central y
+  `shell-theme-customizer.js`.
+- No crear CSS, shell o JavaScript gobernador por tema.
 
 ## Neutral branding
 

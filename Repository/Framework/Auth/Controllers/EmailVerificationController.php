@@ -54,7 +54,16 @@ class EmailVerificationController extends Controller
     {
         return $this->view('auth.verify-email', [
             'title' => __('auth.verify.title'),
-        ], 200, 'auth');
+            'show_topbar' => false,
+            'show_sidebar' => false,
+            'show_status_bar' => false,
+            'show_theme_customizer' => false,
+            'show_auth_brand_panel' => true,
+            'body_class' => 'catalyst-auth-body',
+            'shell_class' => 'auth-layout-shell',
+            'content_class' => 'auth-layout-shell__form',
+            'surface_context' => 'auth',
+        ]);
     }
 
     /**

@@ -62,7 +62,7 @@ final class ModuleHarnessInspector
             $jsonRoutes = $this->collectRoutes($module, 'json');
             $mutationRoutes = $this->collectRoutes($module, 'mutation');
             $surface = $this->resolveSurface($module, $htmlRoutes, $jsonRoutes);
-            $adminNavigation = array_values((array) (($module['navigation'] ?? [])['admin'] ?? []));
+            $shellNavigation = array_values((array) (($module['navigation'] ?? [])['shell'] ?? []));
             $publicNavigation = array_values((array) (($module['navigation'] ?? [])['public'] ?? []));
             $breadcrumbs = array_values((array) (($module['navigation'] ?? [])['breadcrumbs'] ?? []));
             $assets = (array) ($module['assets'] ?? []);
@@ -96,14 +96,14 @@ final class ModuleHarnessInspector
                     'published_script' => (string) ($published['script'] ?? ''),
                 ],
                 'navigation' => [
-                    'admin_count' => count($adminNavigation),
+                    'shell_count' => count($shellNavigation),
                     'public_count' => count($publicNavigation),
                     'breadcrumbs_count' => count($breadcrumbs),
-                    'admin_contexts' => array_values(array_unique(array_filter(array_map(
+                    'shell_contexts' => array_values(array_unique(array_filter(array_map(
                         static fn (array $item): string => (string) ($item['context'] ?? ''),
-                        $adminNavigation
+                        $shellNavigation
                     )))),
-                    'primary_admin_href' => $adminNavigation[0]['href'] ?? null,
+                    'primary_shell_href' => $shellNavigation[0]['href'] ?? null,
                     'primary_public_href' => $publicNavigation[0]['href'] ?? null,
                 ],
                 'routes' => [
@@ -245,11 +245,11 @@ final class ModuleHarnessInspector
     private function resolveSurface(array $module, array $htmlRoutes, array $jsonRoutes): string
     {
         $moduleKey = (string) ($module['key'] ?? '');
-        $adminNavigation = array_values((array) (($module['navigation'] ?? [])['admin'] ?? []));
+        $shellNavigation = array_values((array) (($module['navigation'] ?? [])['shell'] ?? []));
         $publicNavigation = array_values((array) (($module['navigation'] ?? [])['public'] ?? []));
         $contexts = array_values(array_unique(array_filter(array_map(
             static fn (array $item): string => (string) ($item['context'] ?? ''),
-            $adminNavigation
+            $shellNavigation
         ))));
         $permissionLists = array_map(
             static fn (array $route): array => array_values((array) ($route['required_permissions'] ?? [])),
@@ -259,7 +259,7 @@ final class ModuleHarnessInspector
             ? []
             : array_values(array_unique(array_merge(...$permissionLists)));
 
-        if ($moduleKey === 'framework.settings' || in_array('workspace', $contexts, true)) {
+        if ($moduleKey === 'framework.configuration' || in_array('workspace', $contexts, true)) {
             return 'workspace';
         }
 
@@ -275,7 +275,7 @@ final class ModuleHarnessInspector
             return 'administration';
         }
 
-        if ($publicNavigation !== [] && $adminNavigation === []) {
+        if ($publicNavigation !== [] && $shellNavigation === []) {
             return 'public';
         }
 

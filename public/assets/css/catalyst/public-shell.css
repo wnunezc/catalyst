@@ -1,4 +1,4 @@
-/* Catalyst public/demo shell: theme-aware surfaces without Admin Shell navigation. */
+/* Catalyst public/demo shell: theme-aware surfaces without internal shell navigation. */
 .catalyst-public-shell-body {
     min-height: 100vh;
     background: var(--theme-body-bg, var(--bs-body-bg));

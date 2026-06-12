@@ -1,0 +1,33 @@
+{{#if record_presence.visible}}
+<div
+    class="{{ record_presence.root_class }} alert {{ record_presence.alert_class }} d-flex flex-column gap-1 mb-3"
+    role="alert"
+    data-record-presence
+    data-tenant-id="{{ record_presence.tenant_id }}"
+    data-resource-key="{{ record_presence.resource_key }}"
+    data-record-id="{{ record_presence.record_id }}"
+    data-is-owner="{{ record_presence.is_owner_flag }}"
+    data-owner-actor-id="{{ record_presence.owner_actor_id }}"
+    data-heartbeat-url="{{ record_presence.heartbeat_url }}"
+    data-active-owner-label="{{ record_presence.active_owner_label }}"
+    data-active-other-label="{{ record_presence.active_other_label }}"
+    data-released-label="{{ record_presence.released_label }}"
+    data-expired-label="{{ record_presence.expired_label }}"
+    data-owner-description="{{ record_presence.owner_description }}"
+    data-other-description-template="{{ record_presence.other_description_template }}"
+    data-released-description="{{ record_presence.released_description }}"
+    data-expired-description="{{ record_presence.expired_description }}"
+    data-fallback-actor="{{ record_presence.fallback_actor }}"
+    data-claimed-at-label="{{ record_presence.claimed_at_label }}"
+    data-expires-at-label="{{ record_presence.expires_at_label }}"
+    data-released-at-label="{{ record_presence.released_at_label }}"
+>
+    <div class="fw-semibold" data-presence-headline>{{ record_presence.headline }}</div>
+    <div data-presence-detail>{{ record_presence.detail }}</div>
+    <div class="record-presence__timestamps small">
+        <span data-presence-claimed-at class="{{ record_presence.claimed_hidden_class }}">{{ t:ui.record_claim.claimed_at }} {{ record_presence.claimed_at }}</span>
+        <span data-presence-expires-at class="{{ record_presence.expires_class }} {{ record_presence.expires_hidden_class }}">{{ t:ui.record_claim.expires_at }} {{ record_presence.expires_at }}</span>
+        <span data-presence-released-at class="{{ record_presence.released_class }} {{ record_presence.released_hidden_class }}">{{ t:ui.record_claim.released_at }} {{ record_presence.released_at }}</span>
+    </div>
+</div>
+{{/if}}

@@ -31,7 +31,7 @@ declare(strict_types=1);
 return static function (array $scope): array {
     $media = is_array($scope['media'] ?? null) ? $scope['media'] : null;
     return [
-        'admin_header' => [
+        'page_header' => [
             'eyebrow' => __('media.library.index.eyebrow'),
             'title' => (string) ($scope['pageTitle'] ?? $scope['title'] ?? __('media.library.form.create_title')),
             'description' => $media !== null ? __('media.library.form.hero_lede_edit') : __('media.library.form.hero_lede_create'),

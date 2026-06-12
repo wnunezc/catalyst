@@ -74,7 +74,6 @@ final class ModuleFileFactory
         $surface = (string) ($blueprint['surface'] ?? 'none');
         $permissionSlug = (string) ($blueprint['permission_slug'] ?? '');
         $namespaceRoot = (string) ($blueprint['namespace_root'] ?? '');
-        $layout = $blueprint['layout'] ?? null;
         $manifest = (array) ($blueprint['manifest'] ?? []);
 
         $files = [
@@ -83,10 +82,7 @@ final class ModuleFileFactory
                 'contents' => $this->manager->renderStub('module-controller.php.stub', [
                     'NamespaceRoot' => $namespaceRoot,
                     'ControllerClass' => $controllerName,
-                    'ViewCall' => $this->buildControllerViewCall(
-                        $viewNamespace . '.index',
-                        is_string($layout) ? $layout : null
-                    ),
+                    'ViewCall' => $this->buildControllerViewCall($viewNamespace . '.index'),
                 ]),
             ],
             [
@@ -283,14 +279,9 @@ final class ModuleFileFactory
      *
      * Responsibility: Emits view-return code while keeping generated controllers aligned with MVC rendering rules.
      */
-    private function buildControllerViewCall(string $view, ?string $layout): string
+    private function buildControllerViewCall(string $view): string
     {
-        if ($layout === null) {
-            return 'return $this->view(' . $this->exporter->export($view) . ');';
-        }
-
-        return 'return $this->view(' . $this->exporter->export($view) . ', [], 200, '
-            . $this->exporter->export($layout) . ');';
+        return 'return $this->view(' . $this->exporter->export($view) . ');';
     }
 
 

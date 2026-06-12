@@ -51,10 +51,10 @@ final class ModuleRegistry
             'description' => 'Developer tooling, UML and runtime smoke surfaces.',
             'routes' => [
                 'web' => [
-                    '/test-layout',
-                    '/uml',
                     '/test-features',
+                    '/test-features/layout-test',
                     '/test-features/ui-showcase',
+                    '/uml',
                 ],
                 'api' => [
                     '/test-features/api/toaster-success',
@@ -71,7 +71,6 @@ final class ModuleRegistry
                 'prefixes' => [
                     '/test-features',
                     '/uml',
-                    '/test-layout',
                 ],
             ],
             'route_guards' => [
@@ -79,7 +78,6 @@ final class ModuleRegistry
                     'patterns' => [
                         '/test-features',
                         '/uml',
-                        '/test-layout',
                     ],
                     'middleware_all' => [
                         DevToolsGuardMiddleware::class,
@@ -103,13 +101,13 @@ final class ModuleRegistry
                 'project_debug',
             ],
             'navigation' => [
-                'admin' => [
+                'shell' => [
                     [
                         'context' => 'devtools',
                         'label' => 'Test Features',
                         'href' => '/test-features',
                         'icon' => 'ti ti-test-pipe',
-                        'matches' => ['/test-features', '/test-layout'],
+                        'matches' => ['/test-features'],
                         'group' => 'devtools',
                         'group_label' => 'ui.shell.group_devtools',
                         'group_order' => 10,
@@ -175,7 +173,7 @@ final class ModuleRegistry
                         ],
                     ],
                     [
-                        'pattern' => '/test-layout',
+                        'pattern' => '/test-features/layout-test',
                         'trail' => [
                             ['label' => 'DevTools', 'href' => '/test-features'],
                             ['label' => 'Layout Smoke', 'href' => null],

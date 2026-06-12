@@ -91,7 +91,7 @@ final class DocumentTemplateController extends Controller
             'title' => __('documents.index.title'),
             'pageTitle' => __('documents.index.title'),
             'grid' => $this->gridFactory->build($this->repository)->resolve($request),
-        ], 200, 'admin');
+        ]);
     }
 
     /**
@@ -329,9 +329,8 @@ final class DocumentTemplateController extends Controller
 
         return $this->view(
             'documents.show',
-            $this->showDataFactory->build($template, $id, $this->buildRecordClaimContext($claim) ?? []),
-            200,
-            'admin'
+            $this->showDataFactory->build($template, $id, $this->buildRecordPresenceContext($claim) ?? []),
+            200
         );
     }
 
@@ -352,7 +351,7 @@ final class DocumentTemplateController extends Controller
                 $template,
                 $this->concurrencyHiddenFields($claim, $template !== null ? (int) ($template['lock_version'] ?? 1) : null)
             ),
-            'claimContext' => $this->buildRecordClaimContext($claim),
-        ], 200, 'admin');
+            'recordPresence' => $this->buildRecordPresenceContext($claim),
+        ]);
     }
 }

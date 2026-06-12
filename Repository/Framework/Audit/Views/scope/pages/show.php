@@ -33,7 +33,7 @@ return static function (array $scope): array {
     $encode = static fn (mixed $value): string => json_encode($value, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) ?: '{}';
 
     return [
-        'admin_header' => [
+        'page_header' => [
             'eyebrow' => __('audit.index.title'),
             'title' => __('audit.show.title_prefix') . ' #' . (string) ($entry['id'] ?? 0),
             'description' => (string) ($entry['resource'] ?? '') . ' · ' . (string) ($entry['action'] ?? ''),
