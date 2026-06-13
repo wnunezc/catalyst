@@ -80,6 +80,7 @@ export class HttpClient {
         this.notificationHandler = null;
         this.interceptorEnabled = false;
         this.originalFetch = null;
+        this.requestSequence = 0;
     }
 
     /**
@@ -137,12 +138,7 @@ export class HttpClient {
 
         this.originalFetch = window.fetch.bind(window);
 
-        window.fetch = async (input, options = {}) => {
-            const prepared = this.prepareOptions(options);
-            const response = await this.originalFetch(input, prepared);
-            await this.processResponse(response);
-            return response;
-        };
+        window.fetch = (input, options = {}) => this.performFetch(this.originalFetch, input, options);
 
         this.interceptorEnabled = true;
     }
@@ -167,11 +163,36 @@ export class HttpClient {
      * @returns {Promise<Response>}
      */
     async request(input, options = {}) {
-        const prepared = this.prepareOptions(options);
         const fetchFn = this.originalFetch ?? window.fetch.bind(window);
-        const response = await fetchFn(input, prepared);
-        await this.processResponse(response);
-        return response;
+        return this.performFetch(fetchFn, input, options);
+    }
+
+    /**
+     * Execute one request and guarantee matching lifecycle events.
+     *
+     * @param {Function} fetchFn
+     * @param {RequestInfo|URL} input
+     * @param {Object} options
+     * @returns {Promise<Response>}
+     */
+    async performFetch(fetchFn, input, options = {}) {
+        const id = `http-${++this.requestSequence}`;
+        const foreground = options.background !== true;
+        const prepared = this.prepareOptions(options);
+
+        document.dispatchEvent(new CustomEvent('catalyst:http:start', {
+            detail: { id, input, foreground },
+        }));
+
+        try {
+            const response = await fetchFn(input, prepared);
+            await this.processResponse(response, { deferNotifications: foreground });
+            return response;
+        } finally {
+            document.dispatchEvent(new CustomEvent('catalyst:http:finish', {
+                detail: { id, input, foreground },
+            }));
+        }
     }
 
     /**
@@ -246,6 +267,7 @@ export class HttpClient {
         prepared.headers = headers;
 
         delete prepared.acceptJson;
+        delete prepared.background;
         delete prepared.form;
         delete prepared.json;
         delete prepared.xhr;
@@ -305,7 +327,7 @@ export class HttpClient {
      * @param {Response} response
      * @returns {Promise<Response>}
      */
-    async processResponse(response) {
+    async processResponse(response, options = {}) {
         const contentType = response.headers.get('content-type') || '';
         if (!isJsonContentType(contentType)) {
             return response;
@@ -319,15 +341,19 @@ export class HttpClient {
                     this.updateCsrfToken(data.new_token);
                 }
 
-                if (this.notificationHandler?.processResponse) {
-                    this.notificationHandler.processResponse(data);
-                }
-
                 const domUpdated = await applyDomInjection(data);
 
                 document.dispatchEvent(new CustomEvent('catalyst:http:response', {
                     detail: { response, data, domUpdated }
                 }));
+
+                if (this.notificationHandler?.processResponse) {
+                    if (options.deferNotifications === true) {
+                        window.setTimeout(() => this.notificationHandler?.processResponse(data), 0);
+                    } else {
+                        this.notificationHandler.processResponse(data);
+                    }
+                }
             }
         } catch {
             // Ignore malformed JSON here; explicit callers can fail later when parsing.

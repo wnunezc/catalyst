@@ -18,6 +18,7 @@ const extensionAdapters = new Map();
 const extensionEvents = new Map();
 const statusBarInstances = new WeakMap();
 const modulePromises = new Map();
+let activity = null;
 
 function loadRuntimeModule(name, path) {
     if (!modulePromises.has(name)) {
@@ -493,13 +494,17 @@ export async function bootCatalystUiRuntime() {
 
     const ssrState = readJsonTransport('catalyst-ssr-state');
     window.__catalystModuleVersion = moduleVersion;
+    const { ActivityManager } = await loadRuntimeModule('core.activity', './activity-manager.js');
+    activity = activity ?? new ActivityManager(document.body).init();
 
     if (!Catalyst.initialized) {
         Catalyst.init();
     }
 
+    const runtime = await initUiRuntime({ root: document.body, ssrState });
+    activity.ready();
     flushPendingToasts(ssrState.toasts);
-    return initUiRuntime({ root: document.body, ssrState });
+    return runtime;
 }
 
 if (document.readyState === 'loading') {

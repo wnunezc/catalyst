@@ -22,9 +22,18 @@ async function runOrSkipForEnvironment(test, callback) {
 }
 
 async function openDevTools(page) {
-    return openSurface(page, expect, '/test-features', {
+    const surface = await openSurface(page, expect, '/test-features', {
         signal: /Test Features|Características de prueba|Modal/,
     });
+
+    const runtimeRoot = page.locator('body');
+    const overlay = page.locator('[data-catalyst-activity-overlay]');
+    await expect(runtimeRoot).toHaveAttribute('data-catalyst-ui-runtime', 'ready');
+    await page.waitForLoadState('networkidle');
+    await expect(overlay).toHaveAttribute('data-activity-state', 'idle');
+    await expect(runtimeRoot).not.toHaveAttribute('aria-busy', 'true');
+
+    return surface;
 }
 
 test.describe('@modals @devtools-modals DevTools modal surface', () => {
@@ -47,7 +56,7 @@ test.describe('@modals @devtools-modals DevTools modal surface', () => {
             await runOrSkipForEnvironment(test, async () => {
                 await openDevTools(page);
 
-                const trigger = page.locator(`[data-devtools-action="load-modal"][data-url="${path}"]`);
+                const trigger = page.locator(`[data-catalyst-modal-action="load"][data-modal-url="${path}"]`);
                 await expect(trigger).toBeVisible();
                 const responsePromise = page.waitForResponse((response) =>
                     response.url().includes(path) && response.status() === 200
@@ -81,27 +90,4 @@ test.describe('@modals @devtools-modals DevTools modal surface', () => {
         });
     });
 
-    test('partial refresh wait modal remains layered until the request finishes', async ({ page }) => {
-        await runOrSkipForEnvironment(test, async () => {
-            await openDevTools(page);
-
-            const path = '/test-features/api/js-enhancements/partial-refresh';
-            await page.route(`**${path}`, async (route) => {
-                await new Promise((resolve) => setTimeout(resolve, 750));
-                await route.continue();
-            });
-
-            const trigger = page.locator(`[data-devtools-action="partial-refresh"][data-url="${path}"]`);
-            await expect(trigger).toBeVisible();
-            const responsePromise = page.waitForResponse((response) =>
-                response.url().includes(path) && response.status() === 200
-            );
-            await trigger.click();
-            await expect(page.locator('#catalyst-wait-modal.show')).toBeVisible();
-            await assertModalLayering(page, expect);
-            await responsePromise;
-            await expect(page.locator('#catalyst-wait-modal.show')).toHaveCount(0, { timeout: 10000 });
-            await assertNoModalResidue(page, expect);
-        });
-    });
 });

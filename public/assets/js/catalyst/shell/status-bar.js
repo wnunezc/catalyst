@@ -233,7 +233,9 @@ export class StatusBarManager {
     async _refreshToken() {
         try {
             this._setDotState('connecting', this._i18n('refreshing', 'Refreshing…'));
-            const { response: res, data: json } = await this._http.json('/runtime/websocket/token');
+            const { response: res, data: json } = await this._http.json('/runtime/websocket/token', {
+                background: true,
+            });
 
             if (res.status === 401 || res.status === 403) {
                 // User is no longer authenticated — do not reconnect
@@ -371,7 +373,9 @@ export class StatusBarManager {
 
     async _refreshUnreadCount() {
         try {
-            const { data: json } = await this._http.json('/runtime/notifications/unread-count');
+            const { data: json } = await this._http.json('/runtime/notifications/unread-count', {
+                background: true,
+            });
             if (!json.success) {
                 return;
             }

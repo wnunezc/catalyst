@@ -34,7 +34,7 @@ Este archivo enruta la documentacion vigente de `catalyst` para que el contexto 
 | Secuencias transaccionales | `docs/sequences.md` |
 | Queue/event/schedule | `docs/framework-event.md`, `docs/framework-queue.md`, `docs/framework-schedule.md` |
 | Organization hierarchy | `docs/framework-organization.md` |
-| UI actual | `docs/ui/surface-architecture.md`, `docs/ui/css-ownership.md` y contratos puntuales bajo `docs/ui/` |
+| UI actual | `docs/ui/surface-architecture.md`, `docs/ui/css-ownership.md`, `docs/ui/activity-overlay.md` y contratos puntuales bajo `docs/ui/` |
 | Demo UI JavaScript y cobertura | `docs/ui/demo-ui-javascript-inventory.md` |
 | Test Features JavaScript y cobertura | `docs/ui/test-features-javascript-inventory.md` |
 | Operacion/calidad | `docs/testing.md`, `docs/quality-gate.md`, `docs/deployment.md` |
@@ -53,7 +53,7 @@ Este archivo enruta la documentacion vigente de `catalyst` para que el contexto 
 | documento, shell, runtime frontend, SSR/AJAX/SPA | `docs/ui/surface-architecture.md`, `docs/framework-view.md` |
 | Demo UI, runtime JavaScript, assets condicionales, Playwright Demo UI | `docs/ui/demo-ui-javascript-inventory.md`, `docs/testing.md`, `docs/framework-view.md` |
 | Test Features, runtime JavaScript y Playwright DevTools | `docs/ui/test-features-javascript-inventory.md`, `docs/testing.md`, `docs/framework-view.md` |
-| modals, backdrops, dialogos, overlays | `docs/framework-modals.md`, `docs/framework-notification.md`, `docs/framework-view.md` |
+| modals, backdrops, dialogos, overlays | `docs/framework-modals.md`, `docs/framework-notification.md`, `docs/framework-view.md`, `docs/ui/activity-overlay.md` |
 | bootstrap, routing, kernel, entry points | `docs/architecture.md`, `docs/entry-points.md`, `docs/kernel.md`, `docs/routing.md` |
 | setup/config | `docs/checklists/setup-completion-e2e.md`, `docs/helpers-config.md` |
 | modulos, navegacion, permisos, assets | `docs/modules.md`, `docs/runtime-module-catalog.md`, `docs/ui/sidebar-navigation.md` |

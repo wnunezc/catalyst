@@ -36,6 +36,8 @@ final class ReusableCapabilitiesArchitectureTest extends TestCase
         Assert::contains('[data-confirm]', $actions);
         Assert::contains('[data-history-back]', $actions);
         Assert::contains('[data-catalyst-href]', $actions);
+        Assert::contains('[data-catalyst-modal-action]', $actions);
+        Assert::contains('catalyst.loadModal', $actions);
         Assert::contains('export function initDeclarativeActions', $actions);
         Assert::false(str_contains($actions, 'DOMContentLoaded'));
         Assert::false(str_contains($actions, 'DevTools'));

@@ -94,6 +94,12 @@ governor. It owns ordered registration, initial mounting, targeted rescans,
 destruction and extension events. Surface scripts register behavior through
 `Catalyst.ui`; they do not call a parallel bootstrap.
 
+The canonical document also owns one global activity overlay. The runtime
+mounts one `ActivityManager` to coordinate boot, navigation, native submits and
+foreground requests without changing surface geometry or adding local loaders.
+Automatic transports explicitly marked background remain non-blocking. The
+detailed lifecycle lives in `docs/ui/activity-overlay.md`.
+
 ## Global Capabilities
 
 Reusable UI capabilities are framework-owned and must be consumed rather than
@@ -106,6 +112,7 @@ forked:
 - CRUD scaffolding
 - shell navigation
 - appearance and theme selection
+- global activity overlay
 
 The capability contract is global. A surface may provide data and
 surface-specific styling, but it may not create a local component variant or

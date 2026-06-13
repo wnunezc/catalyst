@@ -59,6 +59,7 @@ shell. The following focused specs are prepared for individual execution:
 | Global DataGrid | `/users` | `datagrid-runtime.spec.cjs` |
 | Global FormBuilder | `/workspaces/media-fields/create` | `form-builder-runtime.spec.cjs` |
 | Global RecordPresence | First available `/operations/automation-rules/{id}` | `record-presence-runtime.spec.cjs` |
+| Global activity overlay | `/test-features`, `/uml` | `activity-overlay.spec.cjs` |
 | Demo UI recursive model | `/demo-ui/charts/apex/line` | `navigation-models.spec.cjs` |
 | Framework model | `/configuration/application-health` | `navigation-models.spec.cjs` |
 | Application model | `/account/profile` | `navigation-models.spec.cjs` |
@@ -100,6 +101,11 @@ submitting mutations.
 `record-presence-runtime.spec.cjs` discovers a real automation record, verifies
 the neutral banner and shared assets, and observes owner heartbeat traffic
 without performing a record mutation.
+
+`activity-overlay.spec.cjs` verifies initial release, foreground/background
+requests, concurrency, expected error, duplicate-click prevention, toaster
+ordering, internal navigation and native submit navigation. It does not mutate
+application data.
 
 ## Individual Modal Coverage
 

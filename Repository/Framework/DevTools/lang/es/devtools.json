@@ -278,11 +278,27 @@
     },
     "js_enhancements": {
         "title": "Mejoras JS — Etapa 18",
-        "description": "Wait modal, estado de carga del botón e inyección parcial de DOM desde JSON.",
-        "wait_message": "Refrescando el bloque parcial de la etapa 18...",
+        "description": "Overlay global de actividad, estado de carga del botón e inyección parcial de DOM desde JSON.",
         "run_partial_refresh": "Ejecutar refresco parcial",
         "initial_block": "Bloque parcial inicial",
         "pending_verification": "Etapa 18 pendiente de verificación."
+    },
+    "activity_demo": {
+        "title": "Overlay Global de Actividad",
+        "description": "Pruebas no destructivas para ciclos foreground, background, concurrentes y con error.",
+        "result_title": "Último diagnóstico",
+        "pending": "Selecciona un diagnóstico para observar el comportamiento del overlay global.",
+        "actions": {
+            "foreground": "Request foreground",
+            "background": "Request background",
+            "concurrent": "Requests concurrentes",
+            "error": "Request con error",
+            "native_submit": "Navegación por submit nativo"
+        }
+    },
+    "activity_runtime": {
+        "success": "Diagnóstico de actividad completado.",
+        "error": "Error esperado del diagnóstico de actividad."
     },
     "database": {
         "title": "Base de Datos — Etapa 1",
@@ -427,6 +443,20 @@
         "dialog_utilities": "Utilidades de diálogo.",
         "dynamic_loading": "Carga dinámica de contenido.",
         "json_trigger": "Modal disparado desde respuesta JSON.",
+        "confirm": {
+            "title": "Confirmar acción",
+            "message": "¿Seguro que deseas continuar?",
+            "confirm_text": "Sí, continuar",
+            "cancel_text": "Cancelar",
+            "confirmed": "Confirmaste la acción.",
+            "cancelled": "Cancelaste la acción."
+        },
+        "alert": {
+            "title": "Alerta",
+            "message": "Este es un diálogo de alerta de Catalyst.",
+            "button_text": "Entendido",
+            "dismissed": "La alerta fue cerrada."
+        },
         "titles": {
             "sample_content": "Contenido de muestra",
             "sample_form": "Formulario de muestra"

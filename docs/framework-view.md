@@ -43,6 +43,11 @@ scripts. Generic shell, Bootstrap and Inspinia behavior belongs to the runtime
 registry. Surface scripts are limited to registered extensions or
 surface-specific behavior and must not initialize the shell again.
 
+`document.phtml` also owns the single global activity overlay. It is visible
+while the initial document runtime mounts; `ui-runtime.js` then delegates its
+lifecycle to the single `ActivityManager`. Module views must not render local
+full-page loaders or alternate activity overlays.
+
 ## Operational Notes
 
 When creating or moving templates/scripts, regenerate `docs/runtime-inventory.md` with `php public/cli.php docs:inventory`. Keep CSP and `data-*` conventions in `docs/security-conventions.md` instead of duplicating them in module docs.
@@ -51,5 +56,6 @@ When creating or moving templates/scripts, regenerate `docs/runtime-inventory.md
 
 - `docs/views.md`
 - `docs/security-conventions.md`
+- `docs/ui/activity-overlay.md`
 - `docs/framework-datagrid.md`
 - `docs/runtime-inventory.md`

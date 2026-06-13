@@ -4,13 +4,37 @@
         <div class="card-body">
             <p class="text-muted small mb-2">{{ t:devtools.modal_demo.dialog_utilities }}</p>
             <div class="btn-group-wrap mb-3">
-                <button class="btn btn-primary btn-sm" data-devtools-action="confirm-demo">{{ t:devtools.modal_demo.actions.confirm_dialog }}</button>
-                <button class="btn btn-secondary btn-sm" data-devtools-action="alert-demo">{{ t:devtools.modal_demo.actions.alert_dialog }}</button>
+                <button class="btn btn-primary btn-sm"
+                        data-devtools-action="confirm-demo"
+                        data-catalyst-modal-action="confirm"
+                        data-modal-title="{{ t:devtools.modal_demo.confirm.title }}"
+                        data-modal-message="{{ t:devtools.modal_demo.confirm.message }}"
+                        data-modal-confirm-text="{{ t:devtools.modal_demo.confirm.confirm_text }}"
+                        data-modal-cancel-text="{{ t:devtools.modal_demo.confirm.cancel_text }}"
+                        data-modal-confirmed-message="{{ t:devtools.modal_demo.confirm.confirmed }}"
+                        data-modal-cancelled-message="{{ t:devtools.modal_demo.confirm.cancelled }}"
+                        data-modal-type="warning">{{ t:devtools.modal_demo.actions.confirm_dialog }}</button>
+                <button class="btn btn-secondary btn-sm"
+                        data-devtools-action="alert-demo"
+                        data-catalyst-modal-action="alert"
+                        data-modal-title="{{ t:devtools.modal_demo.alert.title }}"
+                        data-modal-message="{{ t:devtools.modal_demo.alert.message }}"
+                        data-modal-button-text="{{ t:devtools.modal_demo.alert.button_text }}"
+                        data-modal-dismissed-message="{{ t:devtools.modal_demo.alert.dismissed }}"
+                        data-modal-type="info">{{ t:devtools.modal_demo.actions.alert_dialog }}</button>
             </div>
             <p class="text-muted small mb-2">{{ t:devtools.modal_demo.dynamic_loading }}</p>
             <div class="btn-group-wrap mb-3">
-                <button class="btn btn-outline-primary btn-sm" data-devtools-action="load-modal" data-url="/test-features/modal/sample-content" data-title="{{ t:devtools.modal_demo.titles.sample_content }}">{{ t:devtools.modal_demo.actions.load_sample }}</button>
-                <button class="btn btn-outline-primary btn-sm" data-devtools-action="load-modal" data-url="/test-features/modal/form-content" data-title="{{ t:devtools.modal_demo.titles.sample_form }}">{{ t:devtools.modal_demo.actions.load_form }}</button>
+                <button class="btn btn-outline-primary btn-sm"
+                        data-devtools-action="load-modal"
+                        data-catalyst-modal-action="load"
+                        data-modal-url="/test-features/modal/sample-content"
+                        data-modal-title="{{ t:devtools.modal_demo.titles.sample_content }}">{{ t:devtools.modal_demo.actions.load_sample }}</button>
+                <button class="btn btn-outline-primary btn-sm"
+                        data-devtools-action="load-modal"
+                        data-catalyst-modal-action="load"
+                        data-modal-url="/test-features/modal/form-content"
+                        data-modal-title="{{ t:devtools.modal_demo.titles.sample_form }}">{{ t:devtools.modal_demo.actions.load_form }}</button>
             </div>
             <p class="text-muted small mb-2">{{ t:devtools.modal_demo.json_trigger }}</p>
             <div class="btn-group-wrap">

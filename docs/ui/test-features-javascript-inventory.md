@@ -55,6 +55,12 @@ DevTools work script registers capability adapters through
 Each adapter is idempotent. Bootstrap components, modals, toasts, navigation,
 theme controls and status bar behavior remain owned by the central runtime.
 
+The visible Global Activity Overlay card exercises five non-destructive
+lifecycles through the existing partial-refresh endpoint and one GET form:
+foreground, background, concurrent foreground, expected error and native
+submit navigation. The DevTools work script does not open a local wait modal;
+the global `ActivityManager` owns request activity.
+
 ## Assets
 
 The canonical document loads:
@@ -75,7 +81,8 @@ Focused specs under `test/framework/Playwright/specs/`:
 - `test-features-runtime.spec.cjs`: document, shell, runtime and asset contract.
 - `test-features-actions.spec.cjs`: direct toast and partial-refresh actions.
 - `flash-runtime.spec.cjs`: one-shot and persistent shared flash behavior.
-- `devtools-modals.spec.cjs`: modal and wait-overlay interactions.
+- `devtools-modals.spec.cjs`: modal interactions and cleanup.
+- `activity-overlay.spec.cjs`: boot, visible request diagnostics and navigation activity.
 
 Run them only through the workspace Playwright runner with
 `--suite framework`. The specs must be executed individually when validation

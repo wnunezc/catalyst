@@ -1,13 +1,13 @@
 # Runtime Inventory
 
 > Auto-generated from filesystem and PHP tokens. Run `php public/cli.php docs:inventory` to refresh.
-> Last generated: 2026-06-13 09:07:11
+> Last generated: 2026-06-13 19:00:41
 
 ## Summary
 
 - Symbols: 713
-- Templates: 176
-- Scripts: 55
+- Templates: 177
+- Scripts: 56
 
 ## Symbol Roots
 
@@ -20,7 +20,7 @@
 
 | Root | Count |
 |---|---:|
-| `Repository views` | 151 |
+| `Repository views` | 152 |
 | `boot-core/template` | 25 |
 
 ## Script Roots
@@ -28,7 +28,7 @@
 | Root | Count |
 |---|---:|
 | `Repository front` | 12 |
-| `public catalyst js` | 43 |
+| `public catalyst js` | 44 |
 
 ## Symbols
 
@@ -667,7 +667,7 @@
 | `Catalyst\Repository\DevTools\Controllers\RbacTestController` | `class` | `Repository/Framework/DevTools/Controllers/RbacTestController.php` | 45 |
 | `Catalyst\Repository\DevTools\Controllers\RouteTestController` | `class` | `Repository/Framework/DevTools/Controllers/RouteTestController.php` | 46 |
 | `Catalyst\Repository\DevTools\Controllers\TestFeaturesController` | `class` | `Repository/Framework/DevTools/Controllers/TestFeaturesController.php` | 43 |
-| `Catalyst\Repository\DevTools\Controllers\ToasterTestController` | `class` | `Repository/Framework/DevTools/Controllers/ToasterTestController.php` | 43 |
+| `Catalyst\Repository\DevTools\Controllers\ToasterTestController` | `class` | `Repository/Framework/DevTools/Controllers/ToasterTestController.php` | 44 |
 | `Catalyst\Repository\DevTools\Controllers\UmlController` | `class` | `Repository/Framework/DevTools/Controllers/UmlController.php` | 44 |
 | `Catalyst\Repository\DevTools\Controllers\UploadTestController` | `class` | `Repository/Framework/DevTools/Controllers/UploadTestController.php` | 44 |
 | `Catalyst\Repository\DevTools\Controllers\ValidatorTestController` | `class` | `Repository/Framework/DevTools/Controllers/ValidatorTestController.php` | 42 |
@@ -839,6 +839,7 @@
 | `Repository/Framework/DevTools/Views/partials/toaster/_js-enhancement-refresh.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/DevTools/Views/partials/uml/_rail.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/DevTools/Views/partials/uml/_tab-panels.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/DevTools/Views/partials/_tf-activity.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/DevTools/Views/partials/_tf-auth.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/DevTools/Views/partials/_tf-database.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/DevTools/Views/partials/_tf-endpoints.phtml` | `Repository views` | `phtml` |
@@ -941,7 +942,7 @@
 | `Repository/Framework/Auth/front/script.js` | `Repository front` | 2073 |
 | `Repository/Framework/Configuration/front/script.js` | `Repository front` | 12479 |
 | `Repository/Framework/DemoUi/front/script.js` | `Repository front` | 1225 |
-| `Repository/Framework/DevTools/front/script.js` | `Repository front` | 21851 |
+| `Repository/Framework/DevTools/front/script.js` | `Repository front` | 23683 |
 | `Repository/Framework/Operations/front/script.js` | `Repository front` | 132 |
 | `Repository/Framework/Users/front/script.js` | `Repository front` | 255 |
 | `Repository/Framework/Workspaces/front/script.js` | `Repository front` | 366 |
@@ -951,15 +952,15 @@
 | `public/assets/js/catalyst/catalyst.js` | `public catalyst js` | 11030 |
 | `public/assets/js/catalyst/config/defaults.js` | `public catalyst js` | 3185 |
 | `public/assets/js/catalyst/core/asset-loader.js` | `public catalyst js` | 2758 |
-| `public/assets/js/catalyst/core/declarative-actions.js` | `public catalyst js` | 2528 |
-| `public/assets/js/catalyst/core/http.js` | `public catalyst js` | 10872 |
+| `public/assets/js/catalyst/core/declarative-actions.js` | `public catalyst js` | 2684 |
+| `public/assets/js/catalyst/core/http.js` | `public catalyst js` | 11831 |
 | `public/assets/js/catalyst/core/loading.js` | `public catalyst js` | 1789 |
 | `public/assets/js/catalyst/core/response-actions.js` | `public catalyst js` | 1315 |
 | `public/assets/js/catalyst/core/trusted-dom.js` | `public catalyst js` | 919 |
 | `public/assets/js/catalyst/core/utils.js` | `public catalyst js` | 6387 |
 | `public/assets/js/catalyst/datagrid/interactions.js` | `public catalyst js` | 3156 |
 | `public/assets/js/catalyst/forms/builder.js` | `public catalyst js` | 11565 |
-| `public/assets/js/catalyst/forms/form-handler.js` | `public catalyst js` | 12062 |
+| `public/assets/js/catalyst/forms/form-handler.js` | `public catalyst js` | 12234 |
 | `public/assets/js/catalyst/forms/password.js` | `public catalyst js` | 9356 |
 | `public/assets/js/catalyst/forms/validation.js` | `public catalyst js` | 707 |
 | `public/assets/js/catalyst/inspinia/card-actions.js` | `public catalyst js` | 2933 |
@@ -974,17 +975,18 @@
 | `public/assets/js/catalyst/inspinia/enhancers/uploads.js` | `public catalyst js` | 322 |
 | `public/assets/js/catalyst/inspinia/enhancers/wizard.js` | `public catalyst js` | 281 |
 | `public/assets/js/catalyst/inspinia/tables.js` | `public catalyst js` | 12552 |
-| `public/assets/js/catalyst/notifications/flash.js` | `public catalyst js` | 5059 |
+| `public/assets/js/catalyst/notifications/flash.js` | `public catalyst js` | 5093 |
 | `public/assets/js/catalyst/notifications/modal.js` | `public catalyst js` | 20322 |
 | `public/assets/js/catalyst/notifications/notification.js` | `public catalyst js` | 4509 |
-| `public/assets/js/catalyst/notifications/toaster.js` | `public catalyst js` | 11297 |
-| `public/assets/js/catalyst/presence/record-presence.js` | `public catalyst js` | 6249 |
+| `public/assets/js/catalyst/notifications/toaster.js` | `public catalyst js` | 11394 |
+| `public/assets/js/catalyst/presence/record-presence.js` | `public catalyst js` | 6279 |
+| `public/assets/js/catalyst/runtime/activity-manager.js` | `public catalyst js` | 6600 |
 | `public/assets/js/catalyst/runtime/component-registry.js` | `public catalyst js` | 2114 |
 | `public/assets/js/catalyst/runtime/event-registry.js` | `public catalyst js` | 995 |
 | `public/assets/js/catalyst/runtime/registration-queue.js` | `public catalyst js` | 1957 |
-| `public/assets/js/catalyst/runtime/ui-runtime.js` | `public catalyst js` | 19967 |
+| `public/assets/js/catalyst/runtime/ui-runtime.js` | `public catalyst js` | 20214 |
 | `public/assets/js/catalyst/shell/navigation.js` | `public catalyst js` | 6297 |
 | `public/assets/js/catalyst/shell/simplebar.js` | `public catalyst js` | 1730 |
-| `public/assets/js/catalyst/shell/status-bar.js` | `public catalyst js` | 19676 |
+| `public/assets/js/catalyst/shell/status-bar.js` | `public catalyst js` | 19778 |
 | `public/assets/js/catalyst/shell/theme-customizer.js` | `public catalyst js` | 12390 |
 | `public/assets/js/catalyst/shell/topbar.js` | `public catalyst js` | 1942 |

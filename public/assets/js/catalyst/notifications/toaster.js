@@ -172,6 +172,7 @@ export class ToasterManager {
                     className: `btn btn-sm ${action.class || 'btn-outline-light'}`,
                     onClick: () => {
                         if (action.url) {
+                            document.dispatchEvent(new CustomEvent('catalyst:navigation:start'));
                             window.location.href = action.url;
                         } else if (action.callback) {
                             action.callback();

@@ -1,0 +1,31 @@
+<div class="col-12 col-lg-6">
+    <div class="section-card">
+        <div class="card-header"><i class="fa-solid fa-spinner me-2"></i>{{ t:devtools.activity_demo.title }}</div>
+        <div class="card-body">
+            <p class="text-muted small mb-2">{{ t:devtools.activity_demo.description }}</p>
+            <div class="btn-group-wrap mb-3">
+                <button type="button" class="btn btn-primary btn-sm" data-devtools-action="activity-foreground">
+                    {{ t:devtools.activity_demo.actions.foreground }}
+                </button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" data-devtools-action="activity-background">
+                    {{ t:devtools.activity_demo.actions.background }}
+                </button>
+                <button type="button" class="btn btn-outline-primary btn-sm" data-devtools-action="activity-concurrent">
+                    {{ t:devtools.activity_demo.actions.concurrent }}
+                </button>
+                <button type="button" class="btn btn-outline-danger btn-sm" data-devtools-action="activity-error">
+                    {{ t:devtools.activity_demo.actions.error }}
+                </button>
+                <form method="GET" action="/uml" class="d-inline" data-activity-native-submit>
+                    <button type="submit" class="btn btn-outline-info btn-sm">
+                        {{ t:devtools.activity_demo.actions.native_submit }}
+                    </button>
+                </form>
+            </div>
+            <div class="border rounded p-3 bg-body-tertiary" data-activity-diagnostic-result aria-live="polite">
+                <div class="fw-semibold">{{ t:devtools.activity_demo.result_title }}</div>
+                <p class="text-muted small mb-0" data-activity-diagnostic-message>{{ t:devtools.activity_demo.pending }}</p>
+            </div>
+        </div>
+    </div>
+</div>

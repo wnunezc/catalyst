@@ -208,6 +208,7 @@ export class FormHandler {
             // Handle redirect (after notification delay)
             if (data.redirect) {
                 const delay = data.redirectDelay ?? this.options.defaultDelay;
+                document.dispatchEvent(new CustomEvent('catalyst:navigation:start'));
                 setTimeout(() => { window.location.href = data.redirect; }, delay);
                 return;
             }
@@ -215,6 +216,7 @@ export class FormHandler {
             // Handle page refresh
             if (data.refresh) {
                 const delay = data.refreshDelay ?? this.options.defaultDelay;
+                document.dispatchEvent(new CustomEvent('catalyst:navigation:start'));
                 setTimeout(() => { window.location.reload(); }, delay);
             }
 

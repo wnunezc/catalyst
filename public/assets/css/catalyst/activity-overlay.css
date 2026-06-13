@@ -1,0 +1,184 @@
+[data-catalyst-activity-overlay] {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(var(--theme-body-color-rgb, var(--bs-body-color-rgb, 15, 23, 42)), .42);
+    backdrop-filter: blur(2px);
+    opacity: 1;
+    pointer-events: all;
+    visibility: visible;
+    transition: opacity .15s ease, visibility .15s ease;
+}
+
+[data-catalyst-activity-overlay][data-activity-state="idle"] {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+.catalyst-activity-dialog {
+    display: flex;
+    align-items: center;
+    width: min(28rem, 100%);
+    gap: .9rem;
+    padding: 1rem 1.15rem;
+    border: 1px solid var(--theme-border-color, var(--bs-border-color));
+    border-radius: var(--theme-border-radius-lg, var(--bs-border-radius-lg));
+    background: var(--theme-secondary-bg, var(--bs-body-bg));
+    color: var(--theme-body-color, var(--bs-body-color));
+    box-shadow: var(--theme-box-shadow-lg, var(--bs-box-shadow-lg));
+}
+
+.catalyst-activity-dialog__spinner {
+    position: relative;
+    display: inline-block;
+    flex: 0 0 auto;
+    width: 6.5rem;
+    height: 6.5rem;
+    box-sizing: border-box;
+}
+
+.catalyst-activity-dialog__ring {
+    position: absolute;
+    display: block;
+    box-sizing: border-box;
+    border: 3px solid transparent;
+    border-radius: 50%;
+}
+
+.catalyst-activity-dialog__ring--outer {
+    inset: 0;
+    border-top-color: var(--theme-primary, var(--bs-primary));
+    border-right-color: var(--theme-primary, var(--bs-primary));
+    animation: catalyst-activity-rotation 1s linear infinite;
+}
+
+.catalyst-activity-dialog__ring--middle {
+    inset: .3125rem;
+    border-bottom-color: var(--theme-heading-color, var(--bs-heading-color));
+    border-left-color: var(--theme-heading-color, var(--bs-heading-color));
+    animation: catalyst-activity-rotation-back .65s linear infinite;
+}
+
+.catalyst-activity-dialog__ring--inner {
+    inset: .625rem;
+    border-top-color: var(--theme-primary, var(--bs-primary));
+    border-right-color: var(--theme-primary, var(--bs-primary));
+    animation: catalyst-activity-rotation 1.5s linear infinite;
+}
+
+.catalyst-activity-dialog__orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    width: 3rem;
+    height: 3rem;
+    box-sizing: border-box;
+    border-radius: 50%;
+    color: var(--theme-heading-color, var(--bs-heading-color));
+    perspective: 1000px;
+    transform: translate(-50%, -50%) rotateZ(45deg);
+}
+
+.catalyst-activity-dialog__orbit::before,
+.catalyst-activity-dialog__orbit::after {
+    position: absolute;
+    inset: 0;
+    display: block;
+    content: "";
+    box-sizing: border-box;
+    border-radius: 50%;
+    transform: rotateX(70deg);
+    animation: catalyst-activity-orbit .9s linear infinite;
+}
+
+.catalyst-activity-dialog__orbit::after {
+    color: var(--theme-primary, var(--bs-primary));
+    transform: rotateY(70deg);
+    animation-delay: -.45s;
+}
+
+@keyframes catalyst-activity-rotation {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+@keyframes catalyst-activity-rotation-back {
+    to {
+        transform: rotate(-1turn);
+    }
+}
+
+@keyframes catalyst-activity-orbit {
+    0%,
+    100% {
+        box-shadow: .2em 0 0 0 currentcolor;
+    }
+
+    12% {
+        box-shadow: .2em .2em 0 0 currentcolor;
+    }
+
+    25% {
+        box-shadow: 0 .2em 0 0 currentcolor;
+    }
+
+    37% {
+        box-shadow: -.2em .2em 0 0 currentcolor;
+    }
+
+    50% {
+        box-shadow: -.2em 0 0 0 currentcolor;
+    }
+
+    62% {
+        box-shadow: -.2em -.2em 0 0 currentcolor;
+    }
+
+    75% {
+        box-shadow: 0 -.2em 0 0 currentcolor;
+    }
+
+    87% {
+        box-shadow: .2em -.2em 0 0 currentcolor;
+    }
+}
+
+.catalyst-activity-dialog__copy {
+    min-width: 0;
+}
+
+.catalyst-activity-dialog__title,
+.catalyst-activity-dialog__message {
+    display: block;
+}
+
+.catalyst-activity-dialog__title {
+    color: var(--theme-heading-color, var(--bs-heading-color));
+    font-weight: 700;
+}
+
+.catalyst-activity-dialog__message {
+    margin-top: .15rem;
+    color: var(--theme-secondary-color, var(--bs-secondary-color));
+    font-size: .78rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    [data-catalyst-activity-overlay] {
+        transition: none;
+    }
+
+    .catalyst-activity-dialog__spinner,
+    .catalyst-activity-dialog__ring,
+    .catalyst-activity-dialog__orbit::before,
+    .catalyst-activity-dialog__orbit::after {
+        animation: none;
+    }
+}

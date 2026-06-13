@@ -278,11 +278,27 @@
     },
     "js_enhancements": {
         "title": "JS Enhancements — Stage 18",
-        "description": "Wait modal, button loading state and partial DOM injection from JSON.",
-        "wait_message": "Refreshing the Stage 18 partial block...",
+        "description": "Global activity overlay, button loading state and partial DOM injection from JSON.",
         "run_partial_refresh": "Run partial refresh",
         "initial_block": "Initial partial block",
         "pending_verification": "Stage 18 pending verification."
+    },
+    "activity_demo": {
+        "title": "Global Activity Overlay",
+        "description": "Non-destructive probes for foreground, background, concurrent and error request lifecycles.",
+        "result_title": "Last diagnostic",
+        "pending": "Select a diagnostic to observe the global overlay behavior.",
+        "actions": {
+            "foreground": "Foreground request",
+            "background": "Background request",
+            "concurrent": "Concurrent requests",
+            "error": "Error request",
+            "native_submit": "Native submit navigation"
+        }
+    },
+    "activity_runtime": {
+        "success": "Activity diagnostic completed.",
+        "error": "Expected activity diagnostic error."
     },
     "database": {
         "title": "Database — Stage 1",
@@ -427,6 +443,20 @@
         "dialog_utilities": "Dialog utilities.",
         "dynamic_loading": "Dynamic content loading.",
         "json_trigger": "Modal triggered from JSON response.",
+        "confirm": {
+            "title": "Confirm Action",
+            "message": "Are you sure you want to proceed?",
+            "confirm_text": "Yes, proceed",
+            "cancel_text": "Cancel",
+            "confirmed": "You confirmed the action.",
+            "cancelled": "You cancelled the action."
+        },
+        "alert": {
+            "title": "Alert",
+            "message": "This is an alert dialog from Catalyst.",
+            "button_text": "Got it",
+            "dismissed": "Alert was dismissed."
+        },
         "titles": {
             "sample_content": "Sample Content",
             "sample_form": "Sample Form"

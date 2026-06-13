@@ -9,9 +9,10 @@ Catalyst.
 
 | Concern | Owner |
 |---|---|
-| Programmatic modals | `public/assets/js/catalyst/modules/modal.js` |
+| Programmatic modals | `public/assets/js/catalyst/notifications/modal.js` |
 | Shared UI component lifecycle | `public/assets/js/catalyst/runtime/ui-runtime.js` |
-| Bootstrap component activation | `public/assets/js/catalyst/modules/bootstrap-components.js` |
+| Declarative modal actions | `public/assets/js/catalyst/core/declarative-actions.js` |
+| Bootstrap component activation | `public/assets/js/catalyst/bootstrap/components.js` |
 | Notification modal payloads | `Catalyst\Framework\Notification\NotificationBag` |
 | DevTools modal test surface | `Catalyst\Repository\DevTools\Controllers\ModalTestController` |
 | Environment Setup modal forms | `Catalyst\Repository\Configuration\Support\SettingsModalFactory` |
@@ -41,10 +42,18 @@ Third-party Catalyst modules must follow these rules:
   overlays.
 - On a runtime-owned surface, use declarative Bootstrap markup or
   `Catalyst.modal`; do not start another component initializer.
+- Runtime-owned programmatic triggers use `data-catalyst-modal-action`; surface
+  scripts must not instantiate, import or invoke a modal manager.
 - Dynamic modal HTML must be trusted HTML produced by Catalyst controllers and
   validated by the trusted DOM contract.
 - Closing a modal must leave no `.modal.show`, `.modal-backdrop`, `modal-open`
   body class, body overflow or body padding residue.
+
+The global activity overlay is not a Bootstrap modal and does not participate
+in this component lifecycle. It is a single non-interactive document-level
+capability owned by `ActivityManager`; surfaces must not open, clone or style it
+as a business dialog. Foreground activity is released before a Bootstrap modal
+or toaster communicates the result.
 
 ## Test Contract
 
@@ -114,3 +123,4 @@ the project.
 - `docs/framework-notification.md`
 - `docs/framework-view.md`
 - `docs/security-conventions.md`
+- `docs/ui/activity-overlay.md`

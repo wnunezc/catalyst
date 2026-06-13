@@ -64,18 +64,6 @@ function handleDevToolsAction(event) {
             event.preventDefault();
             catalystToast(element.dataset.type, element.dataset.message);
             break;
-        case 'confirm-demo':
-            event.preventDefault();
-            void runConfirm();
-            break;
-        case 'alert-demo':
-            event.preventDefault();
-            void runAlert();
-            break;
-        case 'load-modal':
-            event.preventDefault();
-            window.Catalyst?.loadModal?.(element.dataset.url, { title: element.dataset.title });
-            break;
         case 'inspect-json':
             event.preventDefault();
             void inspectJson(element.dataset.url, element.dataset.resultId, element.dataset.preId, element);
@@ -83,6 +71,22 @@ function handleDevToolsAction(event) {
         case 'partial-refresh':
             event.preventDefault();
             void runPartialRefresh(element);
+            break;
+        case 'activity-foreground':
+            event.preventDefault();
+            void runActivityDiagnostic(element, 'foreground');
+            break;
+        case 'activity-background':
+            event.preventDefault();
+            void runActivityDiagnostic(element, 'background');
+            break;
+        case 'activity-concurrent':
+            event.preventDefault();
+            void runActivityDiagnostic(element, 'concurrent');
+            break;
+        case 'activity-error':
+            event.preventDefault();
+            void runActivityDiagnostic(element, 'error');
             break;
         case 'clear-validator':
             event.preventDefault();
@@ -183,27 +187,6 @@ function catalystToast(type, message) {
     }
 }
 
-async function runConfirm() {
-    const confirmed = await window.Catalyst.confirm('Are you sure you want to proceed?', {
-        title: 'Confirm Action',
-        confirmText: 'Yes, proceed',
-        cancelText: 'Cancel',
-        type: 'warning',
-    });
-
-    window.Catalyst.info(confirmed ? 'You confirmed the action.' : 'You cancelled the action.');
-}
-
-async function runAlert() {
-    await window.Catalyst.alert('This is an alert dialog from Catalyst.', {
-        title: 'Alert',
-        buttonText: 'Got it',
-        type: 'info',
-    });
-
-    window.Catalyst.success('Alert was dismissed.');
-}
-
 async function inspectJson(url, resultId, preId, trigger = null) {
     try {
         if (trigger) {
@@ -228,14 +211,10 @@ async function inspectJson(url, resultId, preId, trigger = null) {
 }
 
 async function runPartialRefresh(trigger) {
-    const waitMessage = trigger?.dataset.waitMessage || 'Refreshing content...';
-
     try {
         if (trigger) {
             setButtonLoading(trigger);
         }
-
-        window.Catalyst?.showWaitModal?.(waitMessage);
 
         const { data } = await http.json(trigger.dataset.url);
         if (data.success === false) {
@@ -245,10 +224,46 @@ async function runPartialRefresh(trigger) {
         console.error('[devtools] partial refresh error:', error);
         window.Catalyst?.error(summarizeResponseError(error));
     } finally {
-        window.Catalyst?.closeWaitModal?.();
-
         if (trigger) {
             clearButtonLoading(trigger);
+        }
+    }
+}
+
+async function runActivityDiagnostic(trigger, mode) {
+    const result = document.querySelector('[data-activity-diagnostic-message]');
+    const endpoint = '/test-features/api/js-enhancements/partial-refresh';
+    const successUrl = `${endpoint}?activity_probe=success`;
+    const errorUrl = `${endpoint}?activity_probe=error`;
+
+    if (result instanceof HTMLElement) {
+        result.textContent = trigger.dataset.runningMessage || `Running ${mode} activity diagnostic...`;
+    }
+
+    try {
+        let responses;
+
+        if (mode === 'background') {
+            responses = [await http.json(successUrl, { background: true })];
+        } else if (mode === 'concurrent') {
+            responses = await Promise.all([
+                http.json(successUrl),
+                http.json(successUrl),
+            ]);
+        } else if (mode === 'error') {
+            responses = [await http.json(errorUrl)];
+        } else {
+            responses = [await http.json(successUrl)];
+        }
+
+        const data = responses.at(-1)?.data ?? {};
+        if (result instanceof HTMLElement) {
+            result.textContent = data.message ?? `Activity diagnostic ${mode} finished.`;
+        }
+    } catch (error) {
+        console.error('[devtools] activity diagnostic error:', mode, error);
+        if (result instanceof HTMLElement) {
+            result.textContent = summarizeResponseError(error);
         }
     }
 }

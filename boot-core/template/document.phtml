@@ -4,6 +4,26 @@
       data-surface-context="{{ surface_context }}"
       data-surface-page="{{ surface_page }}"
       data-catalyst-inspinia-document="{{ inspinia_document }}">
+    <div data-catalyst-activity-overlay
+         data-activity-state="booting"
+         role="dialog"
+         aria-live="polite"
+         aria-modal="true"
+         aria-hidden="false"
+         aria-label="Catalyst is working">
+        <div class="catalyst-activity-dialog">
+            <span class="catalyst-activity-dialog__spinner" role="status" aria-hidden="true">
+                <span class="catalyst-activity-dialog__ring catalyst-activity-dialog__ring--outer"></span>
+                <span class="catalyst-activity-dialog__ring catalyst-activity-dialog__ring--middle"></span>
+                <span class="catalyst-activity-dialog__ring catalyst-activity-dialog__ring--inner"></span>
+                <span class="catalyst-activity-dialog__orbit"></span>
+            </span>
+            <span class="catalyst-activity-dialog__copy">
+                <strong class="catalyst-activity-dialog__title">Working</strong>
+                <span class="catalyst-activity-dialog__message" data-catalyst-activity-message>Please wait while Catalyst completes this operation.</span>
+            </span>
+        </div>
+    </div>
     {{> "./shell" }}
     {{> "./_body-scripts" }}
 </body>

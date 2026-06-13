@@ -40,6 +40,7 @@ async function heartbeat(instance) {
 
     try {
         const { data } = await getHttpClient().json(instance.heartbeatUrl, {
+            background: true,
             method: 'POST',
             json: {},
         });

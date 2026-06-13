@@ -44,6 +44,12 @@ extension. Inspinia and Bootstrap initializers are adapters of that runtime;
 surface work scripts register extensions or remain inert and never start a
 parallel governor.
 
+The same governor mounts one global `ActivityManager`. The canonical document
+owns one initially visible activity overlay; the manager releases it after
+runtime mounting and coordinates internal navigation, native submits and
+foreground `HttpClient` requests. Automatic background transports never block
+the UI.
+
 Modules may extend the active runtime through `Catalyst.ui.register()` and
 `Catalyst.ui.registerEvent()`. They must register behavior, not start a second
 runtime.
@@ -135,6 +141,7 @@ parallel governor.
 | `docs/spec-to-catalyst-guide.md` | Spec To Catalyst Guide |
 | `docs/testing.md` | Testing Guide |
 | `docs/ui/page-header-contract.md` | Global PageHeader contract |
+| `docs/ui/activity-overlay.md` | Global navigation and request activity contract |
 | `docs/ui/css-ownership.md` | CSS ownership and common-layout inventory |
 | `docs/ui/datagrid-visual-guidelines.md` | Lineamientos visuales del DataGrid |
 | `docs/ui/demo-ui-javascript-inventory.md` | Demo UI JavaScript route, asset and Playwright inventory |

@@ -40,7 +40,55 @@ function navigate(trigger) {
         return;
     }
 
+    document.dispatchEvent(new CustomEvent('catalyst:navigation:start'));
     window.location.assign(url.href);
+}
+
+async function runModalAction(trigger) {
+    const catalyst = window.Catalyst;
+    if (!catalyst?.initialized) {
+        throw new Error('Catalyst modal runtime is not initialized.');
+    }
+
+    const action = trigger.dataset.catalystModalAction;
+    if (action === 'confirm') {
+        const confirmed = await catalyst.confirm(trigger.dataset.modalMessage ?? '', {
+            title: trigger.dataset.modalTitle,
+            confirmText: trigger.dataset.modalConfirmText,
+            cancelText: trigger.dataset.modalCancelText,
+            type: trigger.dataset.modalType,
+        });
+        const message = confirmed
+            ? trigger.dataset.modalConfirmedMessage
+            : trigger.dataset.modalCancelledMessage;
+        if (message) {
+            catalyst.info(message);
+        }
+        return;
+    }
+
+    if (action === 'alert') {
+        await catalyst.alert(trigger.dataset.modalMessage ?? '', {
+            title: trigger.dataset.modalTitle,
+            buttonText: trigger.dataset.modalButtonText,
+            type: trigger.dataset.modalType,
+        });
+        const message = trigger.dataset.modalDismissedMessage;
+        if (message) {
+            catalyst.success(message);
+        }
+        return;
+    }
+
+    if (action === 'load') {
+        const url = trigger.dataset.modalUrl ?? '';
+        if (url === '') {
+            throw new Error('Dynamic modal action requires data-modal-url.');
+        }
+        await catalyst.loadModal(url, {
+            title: trigger.dataset.modalTitle,
+        });
+    }
 }
 
 export function initDeclarativeActions(options = {}) {
@@ -61,7 +109,9 @@ export function initDeclarativeActions(options = {}) {
 
     eventRoot.addEventListener('click', (event) => {
         const origin = event.target instanceof Element ? event.target : null;
-        const trigger = origin?.closest('[data-confirm], [data-history-back], [data-catalyst-href]');
+        const trigger = origin?.closest(
+            '[data-confirm], [data-history-back], [data-catalyst-href], [data-catalyst-modal-action]'
+        );
         if (!(trigger instanceof HTMLElement) || !eventRoot.contains(trigger)) {
             return;
         }
@@ -72,8 +122,17 @@ export function initDeclarativeActions(options = {}) {
             return;
         }
 
+        if (trigger.hasAttribute('data-catalyst-modal-action')) {
+            event.preventDefault();
+            void runModalAction(trigger).catch((error) => {
+                console.error('[Catalyst UI] Declarative modal action failed.', error);
+            });
+            return;
+        }
+
         if (trigger.hasAttribute('data-history-back')) {
             event.preventDefault();
+            document.dispatchEvent(new CustomEvent('catalyst:navigation:start'));
             window.history.back();
             return;
         }

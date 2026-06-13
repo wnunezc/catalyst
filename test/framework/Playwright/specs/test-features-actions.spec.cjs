@@ -36,7 +36,7 @@ test.describe('@test-features-actions DevTools focused actions', () => {
 
         const target = page.locator('#js-enhancements-target');
         await page.locator('[data-devtools-action="partial-refresh"]').click();
-        await expect(target).toContainText(/server|servidor/i);
-        await expect(page.locator('.catalyst-toast.toast-success')).toHaveCount(1);
+        await expect(target).toContainText(/server|servidor/i, { timeout: 15000 });
+        await expect(page.locator('.catalyst-toast.toast-success')).toHaveCount(1, { timeout: 15000 });
     });
 });

@@ -113,6 +113,7 @@ function bindDismiss(eventRoot, http) {
 
         try {
             await http.json('/runtime/flash/dismiss', {
+                background: true,
                 method: 'POST',
                 form: { id },
             });

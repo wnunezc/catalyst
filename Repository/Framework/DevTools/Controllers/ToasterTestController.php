@@ -32,6 +32,7 @@ namespace Catalyst\Repository\DevTools\Controllers;
 
 use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\JsonResponse;
+use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\View\TrustedHtml;
 
 /**
@@ -143,9 +144,21 @@ class ToasterTestController extends Controller
      *
      * Responsibility: Returns refreshed partial HTML and its update notification.
      */
-    public function apiJsEnhancementPartialRefresh(): JsonResponse
+    public function apiJsEnhancementPartialRefresh(Request $request): JsonResponse
     {
         usleep(900000);
+
+        $probe = (string) $request->get('activity_probe', '');
+        if ($probe === 'success') {
+            return $this->jsonSuccess(
+                ['probe' => 'activity', 'result' => 'success', 'completed_at' => date('H:i:s')],
+                __('devtools.activity_runtime.success')
+            );
+        }
+
+        if ($probe === 'error') {
+            return $this->jsonError(__('devtools.activity_runtime.error'), 500);
+        }
 
         $serverTime = date('Y-m-d H:i:s');
         $html = $this->viewEngine->renderPartial('devtools.partials.toaster._js-enhancement-refresh', [

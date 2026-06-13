@@ -43,6 +43,9 @@ final class TestFeaturesArchitectureTest extends TestCase
         Assert::contains("name: 'devtools.uml'", $script);
         Assert::contains('registerUiEvent', $script);
         Assert::contains('[data-devtools-action]', $script);
+        Assert::false(str_contains($script, 'runConfirm'));
+        Assert::false(str_contains($script, 'runAlert'));
+        Assert::false(str_contains($script, 'loadModal'));
         Assert::false(str_contains($script, "selector: '[data-action]'"));
         Assert::false(str_contains($script, "document.addEventListener('click'"));
         Assert::false(str_contains($script, "document.addEventListener('submit'"));

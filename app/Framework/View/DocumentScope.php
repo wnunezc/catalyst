@@ -77,6 +77,7 @@ final class DocumentScope
             'red_cross_theme_asset_url' => AssetUrl::versioned('/assets/css/catalyst/red-cross-theme.css'),
             'response_skins_asset_url' => AssetUrl::versioned('/assets/css/catalyst/response-skins.css'),
             'notifications_asset_url' => AssetUrl::versioned('/assets/css/catalyst/notifications.css'),
+            'activity_overlay_asset_url' => AssetUrl::versioned('/assets/css/catalyst/activity-overlay.css'),
             'inspinia_runtime_compat_asset_url' => AssetUrl::versioned('/assets/css/catalyst/inspinia-runtime-compat.css'),
             'datagrid_asset_url' => AssetUrl::versioned('/assets/css/catalyst/datagrid.css'),
             'form_builder_asset_url' => AssetUrl::versioned('/assets/css/catalyst/form-builder.css'),
