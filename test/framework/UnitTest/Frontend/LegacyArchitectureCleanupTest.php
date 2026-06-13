@@ -58,7 +58,6 @@ final class LegacyArchitectureCleanupTest extends TestCase
     {
         foreach ([
             'Repository/Framework/DevTools/routes.php',
-            'Repository/Framework/DevTools/Views/partials/uml/_header.phtml',
             'app/Framework/Module/ModuleRegistry.php',
         ] as $path) {
             Assert::false(
@@ -66,6 +65,8 @@ final class LegacyArchitectureCleanupTest extends TestCase
                 "{$path} still exposes the legacy /test-layout alias."
             );
         }
+
+        Assert::false(is_file($this->path('Repository/Framework/DevTools/Views/partials/uml/_header.phtml')));
     }
 
     public function testDemoUiGeneratedPreviewsDoNotUseJavascriptLinks(): void

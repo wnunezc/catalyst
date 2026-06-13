@@ -32,7 +32,6 @@ namespace Catalyst\Framework\Middleware;
 
 use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
-use Catalyst\Helpers\Log\Logger;
 use Closure;
 use Exception;
 
@@ -99,18 +98,8 @@ class MiddlewareStack
         // Wrap the chain with each middleware, from last to first
         foreach (array_reverse($this->stack) as $middleware) {
             $chain = function (Request $request) use ($middleware, $chain) {
-                try {
-                    // Resolve and execute the middleware
-                    $resolvedMiddleware = $this->resolveMiddleware($middleware);
-                    return $resolvedMiddleware->process($request, $chain);
-                } catch (Exception $e) {
-                    // Log middleware execution errors
-                    Logger::getInstance()->error('Middleware execution error', [
-                        'middleware' => is_string($middleware) ? $middleware : get_class($middleware),
-                        'error' => $e->getMessage()
-                    ]);
-                    throw $e;
-                }
+                $resolvedMiddleware = $this->resolveMiddleware($middleware);
+                return $resolvedMiddleware->process($request, $chain);
             };
         }
 

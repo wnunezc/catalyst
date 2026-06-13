@@ -64,6 +64,12 @@ class RouteTestController extends Controller
 
         return $this->view('devtools.route-test', [
             'title' => __('devtools.route_test.title'),
+            'pageTitle' => __('devtools.route_test.title'),
+            'page_header' => [
+                'eyebrow' => __('devtools.module.devtools_label'),
+                'title' => __('devtools.route_test.title'),
+                'description' => __('devtools.route_test.footer'),
+            ],
             'version' => '1.0.0-dev',
             'phpVersion' => PHP_VERSION,
             'isConfigured' => $config->isConfigured(),

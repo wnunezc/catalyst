@@ -562,67 +562,6 @@ html[data-skin="grempa"] .catalyst-status-bar button:hover {
     color: var(--catalyst-response-primary);
 }
 
-html[data-skin="civil-protection"] .dashboard-surface > .card,
-html[data-skin="firefighters"] .dashboard-surface > .card {
-    background: #ffffff !important;
-    color: var(--catalyst-response-card-color) !important;
-    border: 1px solid var(--catalyst-response-card-border) !important;
-    border-top: 3px solid var(--catalyst-response-primary) !important;
-}
-
-html[data-skin="grempa"] .dashboard-surface > .card {
-    background: #111827 !important;
-    color: var(--catalyst-response-card-color) !important;
-    border: 1px solid var(--catalyst-response-card-border) !important;
-    border-top: 3px solid var(--catalyst-response-primary) !important;
-}
-
-html[data-skin="civil-protection"] .dashboard-surface > .card .dashboard-surface__eyebrow,
-html[data-skin="firefighters"] .dashboard-surface > .card .dashboard-surface__eyebrow,
-html[data-skin="grempa"] .dashboard-surface > .card .dashboard-surface__eyebrow {
-    border-color: rgba(var(--catalyst-response-primary-rgb), 0.24);
-    background: var(--catalyst-response-primary-soft);
-    color: var(--catalyst-response-primary-active);
-}
-
-html[data-skin="civil-protection"] .dashboard-surface > .card p.text-muted,
-html[data-skin="civil-protection"] .dashboard-surface > .card .text-muted,
-html[data-skin="firefighters"] .dashboard-surface > .card p.text-muted,
-html[data-skin="firefighters"] .dashboard-surface > .card .text-muted,
-html[data-skin="grempa"] .dashboard-surface > .card p.text-muted,
-html[data-skin="grempa"] .dashboard-surface > .card .text-muted {
-    color: var(--catalyst-response-muted) !important;
-}
-
-html[data-skin="civil-protection"] .dashboard-surface__metric,
-html[data-skin="firefighters"] .dashboard-surface__metric,
-html[data-skin="grempa"] .dashboard-surface__metric,
-html[data-skin="civil-protection"] .dashboard-surface__area,
-html[data-skin="firefighters"] .dashboard-surface__area,
-html[data-skin="grempa"] .dashboard-surface__area {
-    background: var(--catalyst-response-card-bg) !important;
-    color: var(--catalyst-response-card-color) !important;
-    border-color: var(--catalyst-response-card-border) !important;
-}
-
-html[data-skin="civil-protection"] .dashboard-surface__metric strong,
-html[data-skin="civil-protection"] .dashboard-surface__area h3,
-html[data-skin="civil-protection"] .dashboard-surface__area .h6,
-html[data-skin="firefighters"] .dashboard-surface__metric strong,
-html[data-skin="firefighters"] .dashboard-surface__area h3,
-html[data-skin="firefighters"] .dashboard-surface__area .h6,
-html[data-skin="grempa"] .dashboard-surface__metric strong,
-html[data-skin="grempa"] .dashboard-surface__area h3,
-html[data-skin="grempa"] .dashboard-surface__area .h6 {
-    color: var(--catalyst-response-card-title) !important;
-}
-
-html[data-skin="civil-protection"] .dashboard-surface__metric span,
-html[data-skin="firefighters"] .dashboard-surface__metric span,
-html[data-skin="grempa"] .dashboard-surface__metric span {
-    color: var(--catalyst-response-muted) !important;
-}
-
 html[data-skin="civil-protection"] .landing-surface,
 html[data-skin="civil-protection"] .home-surface,
 html[data-skin="civil-protection"] .store-surface,

@@ -29,6 +29,11 @@ global styles in:
 
 Module `front/style.css` files contain only behavior specific to that module.
 They must not recreate document, topbar, sidebar or content-page geometry.
+They also must not redesign native Inspinia cards, tables, buttons, badges,
+forms or page titles inside module wrappers.
+
+The detailed ownership and common-layout inventory live in
+`docs/ui/css-ownership.md`.
 
 ## CSS Cascade Contract
 

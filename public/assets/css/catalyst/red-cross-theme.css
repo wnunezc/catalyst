@@ -384,51 +384,6 @@ html[data-skin="red-cross"] .catalyst-status-bar button:hover {
     color: #c8102e;
 }
 
-/* Per-surface color compatibility. The link is loaded again after work assets, so
-   these rules deliberately only correct color contrast for Red Cross. */
-html[data-skin="red-cross"] .dashboard-surface > .card {
-    background: #ffffff !important;
-    color: var(--catalyst-red-cross-body) !important;
-    border: 1px solid var(--catalyst-red-cross-border) !important;
-    border-top: 3px solid var(--catalyst-red-cross-primary) !important;
-}
-
-html[data-skin="red-cross"] .dashboard-surface > .card .dashboard-surface__eyebrow {
-    border-color: rgba(215, 25, 32, 0.22);
-    background: var(--catalyst-red-cross-primary-soft);
-    color: #ad1218;
-}
-
-html[data-skin="red-cross"] .dashboard-surface > .card p.text-muted,
-html[data-skin="red-cross"] .dashboard-surface > .card .text-muted {
-    color: var(--catalyst-red-cross-muted) !important;
-}
-
-html[data-skin="red-cross"] .dashboard-surface__metric {
-    border-color: var(--catalyst-red-cross-border);
-    background: #ffffff;
-    color: var(--catalyst-red-cross-ink);
-}
-
-html[data-skin="red-cross"] .dashboard-surface__metric strong {
-    color: var(--catalyst-red-cross-ink);
-}
-
-html[data-skin="red-cross"] .dashboard-surface__metric span {
-    color: var(--catalyst-red-cross-muted);
-}
-
-html[data-skin="red-cross"] .dashboard-surface__area {
-    background: #ffffff;
-    color: var(--catalyst-red-cross-body);
-    border-color: var(--catalyst-red-cross-border);
-}
-
-html[data-skin="red-cross"] .dashboard-surface__area h3,
-html[data-skin="red-cross"] .dashboard-surface__area .h6 {
-    color: var(--catalyst-red-cross-ink);
-}
-
 html[data-skin="red-cross"] .landing-surface,
 html[data-skin="red-cross"] .home-surface,
 html[data-skin="red-cross"] .store-surface {

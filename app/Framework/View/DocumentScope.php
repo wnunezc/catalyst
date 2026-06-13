@@ -10,6 +10,7 @@ use Catalyst\Framework\Navigation\ApplicationNavigationProvider;
 use Catalyst\Framework\Navigation\DemoUiNavigationProvider;
 use Catalyst\Framework\Navigation\FrameworkNavigationProvider;
 use Catalyst\Framework\Navigation\NavigationModelSelector;
+use Catalyst\Framework\Navigation\NavigationRegistry;
 use Catalyst\Framework\Session\FlashMessage;
 use Catalyst\Framework\Session\ToastQueue;
 use Catalyst\Helpers\Security\CsrfProtection;
@@ -43,6 +44,7 @@ final class DocumentScope
         $brandName = (string) ($branding['brand_name'] ?? 'Catalyst');
         $title = (string) ($scope['title'] ?? $scope['pageTitle'] ?? $brandName);
         $showSidebar = self::boolScope($scope, 'show_sidebar', true);
+        $breadcrumbItems = self::breadcrumbItems($scope, $showSidebar, $currentPath, $authUser);
         $initialState = self::initialState();
         $hasInitialState = $initialState['toasts'] !== []
             || $initialState['flash']['regular'] !== []
@@ -116,6 +118,8 @@ final class DocumentScope
             'auth_name' => trim((string) ($scope['auth_name'] ?? $authUser['name'] ?? '')) ?: 'Guest',
             'auth_avatar_src' => (string) ($scope['auth_avatar_src'] ?? '/assets/vendor/inspinia/images/users/user-1.jpg'),
             'navigation_groups' => self::navigationGroups($scope, $showSidebar, $currentPath, $authUser),
+            'breadcrumb_items' => $breadcrumbItems,
+            'has_breadcrumbs' => $breadcrumbItems !== [],
             'public_navigation_items' => self::publicNavigation((array) ($scope['publicNavigation'] ?? [])),
             'has_error_ticket' => trim((string) ($scope['error_ticket'] ?? '')) !== '',
         ];
@@ -304,6 +308,48 @@ final class DocumentScope
             'link_class' => (string) ($item['link_class'] ?? ('catalyst-public-nav__link' . (!empty($item['is_active']) ? ' is-active' : ''))),
             'is_active' => !empty($item['is_active']),
         ], array_values(array_filter($items, 'is_array')));
+    }
+
+    /**
+     * @param array<string, mixed> $scope
+     * @param array<string, mixed> $authUser
+     * @return list<array{label: string, href: string, is_active: bool}>
+     */
+    private static function breadcrumbItems(array $scope, bool $showSidebar, string $currentPath, array $authUser): array
+    {
+        $definitions = is_array($scope['breadcrumb_items'] ?? null)
+            ? $scope['breadcrumb_items']
+            : [];
+
+        if ($definitions === [] && $showSidebar) {
+            foreach (NavigationRegistry::getInstance()->breadcrumbs(
+                $currentPath,
+                $authUser !== [] ? $authUser : null
+            ) as $label => $href) {
+                $definitions[] = ['label' => $label, 'href' => $href];
+            }
+        }
+
+        $items = [];
+        foreach ($definitions as $index => $item) {
+            if (!is_array($item)) {
+                continue;
+            }
+
+            $label = trim((string) ($item['label'] ?? ''));
+            if ($label === '') {
+                continue;
+            }
+
+            $href = trim((string) ($item['href'] ?? ''));
+            $items[] = [
+                'label' => $label,
+                'href' => $href,
+                'is_active' => !empty($item['is_active']) || $href === '' || $index === array_key_last($definitions),
+            ];
+        }
+
+        return $items;
     }
 
     /** @param array<string, mixed> $scope */

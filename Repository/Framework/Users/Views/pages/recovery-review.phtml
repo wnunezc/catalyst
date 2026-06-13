@@ -1,12 +1,5 @@
 <div class="surface-page surface-page-shell users-page" data-account-recovery-review="detail">
-    <div class="d-flex align-items-start justify-content-between gap-3 mb-3">
-        <div>
-            <span class="text-uppercase text-muted fw-semibold small">{{ t:account.review.show.eyebrow }}</span>
-            <h1 class="h3 mb-1">{{ t:account.review.show.title }} #{{ recovery_request.id }}</h1>
-            <p class="text-muted mb-0">{{ t:account.review.show.description }}</p>
-        </div>
-        <a href="/users/account-recovery" class="btn btn-outline-secondary btn-sm">{{ t:account.review.show.back }}</a>
-    </div>
+    {{> "components._page-header" }}
 
     <div class="row g-3">
         <div class="col-12 col-xl-8">

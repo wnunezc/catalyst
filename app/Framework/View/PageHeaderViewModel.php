@@ -19,14 +19,23 @@ final class PageHeaderViewModel
         $actions = self::actions((array)($header['actions'] ?? []));
         $metrics = self::metrics((array)($header['metrics'] ?? []));
         $tabs = self::tabs((array)($header['tabs'] ?? $scope['nav_items'] ?? []));
+        $hasHelp = trim((string)($header['description'] ?? '')) !== '';
+        $helpId = preg_replace('/[^a-z0-9_-]/i', '-', trim((string)($header['help_id'] ?? 'page-header-help')))
+            ?: 'page-header-help';
 
         return [
             'page_header_eyebrow' => (string)($header['eyebrow'] ?? ''),
             'page_header_title' => (string)($header['title'] ?? $scope['pageTitle'] ?? $scope['title'] ?? ''),
             'page_header_description' => (string)($header['description'] ?? ''),
+            'page_header_has_help' => $hasHelp,
+            'page_header_help_id' => $helpId,
+            'page_header_help_label' => (string)($header['help_label'] ?? 'Page help'),
+            'page_header_help_eyebrow' => (string)($header['eyebrow'] ?? ''),
+            'page_header_help_description' => (string)($header['description'] ?? ''),
             'page_header_modifier' => (string)($header['class'] ?? ''),
             'page_header_actions' => $actions,
             'page_header_has_actions' => $actions !== [],
+            'page_header_has_aside' => $actions !== [] || !empty($scope['has_breadcrumbs']),
             'page_header_actions_label' => (string)($header['actions_label'] ?? __('ui.page_header.actions')),
             'page_header_metrics' => $metrics,
             'page_header_has_metrics' => $metrics !== [],
@@ -34,6 +43,8 @@ final class PageHeaderViewModel
             'page_header_tabs' => $tabs,
             'page_header_has_tabs' => $tabs !== [],
             'page_header_tabs_label' => (string)($header['tabs_label'] ?? __('ui.page_header.navigation')),
+            'page_header_has_context' => $metrics !== [] || $tabs !== [],
+            'page_header_context_label' => (string)($header['context_label'] ?? __('ui.page_header.summary')),
         ];
     }
 

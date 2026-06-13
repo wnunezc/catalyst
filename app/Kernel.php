@@ -52,6 +52,7 @@ use Catalyst\Helpers\Config\ConfigManager;
 use Catalyst\Helpers\I18n\Translator;
 use Catalyst\Helpers\Log\Logger;
 use Exception;
+use Throwable;
 
 /**
  * Kernel - Core application bootstrapper
@@ -213,7 +214,7 @@ class Kernel
             ]);
             return $this->buildForbiddenResponse($e);
 
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             $ticket = number_format(microtime(true), 4, '.', '');
             $this->logger->error('Application execution failed', [
                 'ticket' => $ticket,

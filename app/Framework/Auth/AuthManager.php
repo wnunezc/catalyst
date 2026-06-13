@@ -316,11 +316,12 @@ class AuthManager
      */
     public function setPendingMfa(int $userId, bool $remember, string $redirect): void
     {
-        // Credentials have been verified but the user is not fully logged in yet.
-        // Rotate the anonymous session ID to reduce session-fixation exposure and
-        // remove any stale forced-setup state before opening a challenge.
-        $this->session->regenerateId(true);
+        // Remove privileged transition state before rotating. Keep the old
+        // anonymous session briefly available so concurrent requests cannot
+        // recreate it and overwrite the newly issued cookie.
+        $this->clearPendingMfa();
         $this->clearMfaSetupPending();
+        $this->session->regenerateId(false);
 
         $this->session
             ->set('_mfa_pending_user_id',  $userId)
@@ -442,10 +443,12 @@ class AuthManager
      */
     public function setPendingMfaSetup(int $userId, bool $remember, string $redirect): void
     {
-        // Credentials have been verified but MFA is not configured yet. Rotate
-        // the session ID and clear any stale challenge state before continuing.
-        $this->session->regenerateId(true);
+        // Remove privileged transition state before rotating. Keep the old
+        // anonymous session briefly available so concurrent requests cannot
+        // recreate it and overwrite the newly issued cookie.
         $this->clearPendingMfa();
+        $this->clearMfaSetupPending();
+        $this->session->regenerateId(false);
 
         $this->session
             ->set('_mfa_setup_pending_user_id',  $userId)
@@ -557,7 +560,11 @@ class AuthManager
      */
     private function createSession(array $user): void
     {
-        $this->session->regenerateId(true);
+        // Authentication state is written only after rotation. The retained old
+        // session remains anonymous and expires through the configured backend.
+        $this->clearPendingMfa();
+        $this->clearMfaSetupPending();
+        $this->session->regenerateId(false);
         $user = TenancyManager::getInstance()->attachContextToUser($user);
 
         // Load primary role from user_roles pivot (lowest role ID = most privileged assigned first)

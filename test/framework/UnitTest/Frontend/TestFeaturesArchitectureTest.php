@@ -96,6 +96,23 @@ final class TestFeaturesArchitectureTest extends TestCase
         );
     }
 
+    public function testUmlConsumesTheSelectedThemeAndSkin(): void
+    {
+        $script = $this->read('Repository/Framework/DevTools/front/script.js');
+        $styles = $this->read('Repository/Framework/DevTools/front/style.css');
+
+        Assert::contains("['data-bs-theme', 'data-skin']", $script);
+        Assert::contains('themeVariables', $script);
+        Assert::contains("theme: 'base'", $script);
+        Assert::contains("resolveThemeColor('--theme-primary'", $script);
+        Assert::contains('--ui-accent: var(--theme-primary, var(--bs-primary));', $styles);
+        Assert::contains('--ui-ink: var(--bs-body-color);', $styles);
+        Assert::contains('.uml-showcase .ui-catalog-head', $styles);
+        Assert::contains('background: var(--theme-card-bg, var(--bs-secondary-bg));', $styles);
+        Assert::contains('border-top: 3px solid var(--theme-primary, var(--bs-primary))', $styles);
+        Assert::false(str_contains($styles, '--uml-accent: var(--ui-accent, #0f766e);'));
+    }
+
     public function testFocusedDocumentationMatchesTheCurrentRuntimeContracts(): void
     {
         $demoUi = $this->read('docs/ui/demo-ui-javascript-inventory.md');

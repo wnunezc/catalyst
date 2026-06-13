@@ -540,7 +540,8 @@ async function initUmlShowcase() {
     if (typeof MutationObserver === 'function') {
         new MutationObserver(mutations => {
             const themeChanged = mutations.some(mutation =>
-                mutation.type === 'attributes' && mutation.attributeName === 'data-bs-theme'
+                mutation.type === 'attributes'
+                && ['data-bs-theme', 'data-skin'].includes(mutation.attributeName)
             );
 
             if (!themeChanged) {
@@ -557,22 +558,59 @@ async function initUmlShowcase() {
     }
 }
 
-function getMermaidTheme() {
-    return document.documentElement.getAttribute('data-bs-theme') === 'dark'
-        ? 'dark'
-        : 'default';
+function resolveThemeColor(customProperty, fallback) {
+    const probe = document.createElement('span');
+    probe.hidden = true;
+    probe.style.color = `var(${customProperty}, ${fallback})`;
+    document.body.appendChild(probe);
+    const resolved = getComputedStyle(probe).color;
+    probe.remove();
+
+    return resolved || fallback;
 }
 
 function ensureMermaidTheme(force) {
-    const nextTheme = getMermaidTheme();
-    if (!force && nextTheme === umlTheme) {
+    const darkMode = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+    const primary = resolveThemeColor('--theme-primary', '#0d6efd');
+    const primaryStrong = resolveThemeColor('--theme-primary-text-emphasis', primary);
+    const bodyBackground = resolveThemeColor('--bs-body-bg', darkMode ? '#212529' : '#ffffff');
+    const bodyColor = resolveThemeColor('--bs-body-color', darkMode ? '#dee2e6' : '#212529');
+    const surface = resolveThemeColor('--bs-secondary-bg', bodyBackground);
+    const surfaceAlt = resolveThemeColor('--bs-tertiary-bg', surface);
+    const themeVariables = {
+        darkMode,
+        background: bodyBackground,
+        primaryColor: surface,
+        primaryTextColor: bodyColor,
+        primaryBorderColor: primary,
+        secondaryColor: surfaceAlt,
+        secondaryTextColor: bodyColor,
+        secondaryBorderColor: primaryStrong,
+        tertiaryColor: bodyBackground,
+        tertiaryTextColor: bodyColor,
+        tertiaryBorderColor: primary,
+        lineColor: primary,
+        textColor: bodyColor,
+        mainBkg: surface,
+        nodeBorder: primary,
+        clusterBkg: bodyBackground,
+        clusterBorder: primaryStrong,
+        edgeLabelBackground: bodyBackground,
+        noteBkgColor: surfaceAlt,
+        noteTextColor: bodyColor,
+        noteBorderColor: primary,
+    };
+    const nextThemeSignature = JSON.stringify(themeVariables);
+
+    if (!force && nextThemeSignature === umlTheme) {
         return;
     }
 
-    umlTheme = nextTheme;
+    umlTheme = nextThemeSignature;
     window.mermaid.initialize({
         startOnLoad: false,
-        theme: nextTheme,
+        theme: 'base',
+        themeVariables,
         flowchart: { curve: 'basis', padding: 20 },
     });
 

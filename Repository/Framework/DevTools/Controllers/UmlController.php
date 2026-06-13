@@ -57,6 +57,16 @@ class UmlController extends Controller
         $response = $this->view('uml', [
             'title' => __('uml.title'),
             'pageTitle' => __('uml.page_title'),
+            'page_header' => [
+                'eyebrow' => __('uml.eyebrow'),
+                'title' => __('uml.title'),
+                'description' => __('uml.description'),
+                'actions' => [
+                    ['label' => __('devtools.module.devtools_label'), 'href' => '/test-features', 'icon' => 'ti ti-flask', 'class' => 'btn btn-primary'],
+                    ['label' => __('devtools.module.demo_ui_label'), 'href' => '/demo-ui', 'icon' => 'ti ti-components'],
+                    ['label' => __('devtools.module.layout_smoke_label'), 'href' => '/test-features/layout-test', 'icon' => 'ti ti-layout'],
+                ],
+            ],
             'jsonSections' => $jsonSections,
             'isConfigured' => $configuredFlag,
             'environment' => $cfg->getEnvironment(),

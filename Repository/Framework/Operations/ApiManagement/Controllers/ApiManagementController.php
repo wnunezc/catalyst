@@ -31,6 +31,7 @@ declare(strict_types=1);
 namespace Catalyst\Repository\Operations\ApiManagement\Controllers;
 
 use Catalyst\Framework\Form\FormBuilder;
+use Catalyst\Framework\Api\ApiCatalog;
 use Catalyst\Framework\Api\ApiTokenManager;
 use Catalyst\Framework\Api\ApiTokenRepository;
 use Catalyst\Framework\Auth\UserDirectoryRepository;

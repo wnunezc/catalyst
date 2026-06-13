@@ -1,32 +1,5 @@
 <div class="devtools-page">
-    <section class="ui-catalog-head card border-0 shadow-sm mb-3">
-        <div class="card-body">
-            <div class="ui-catalog-head__row">
-                <div class="ui-catalog-head__copy">
-                    <div class="ui-catalog-head__eyebrow">{{ t:devtools.layout_smoke.eyebrow }}</div>
-                    <h1 class="ui-catalog-head__title">{{ title }}</h1>
-                    <p class="ui-catalog-head__lede mb-0">
-                        {{ t:devtools.layout_smoke.description }}
-                    </p>
-                </div>
-
-                <div class="ui-catalog-head__actions">
-                    <button type="button" class="btn btn-sm btn-primary" data-catalyst-href="/test-features">
-                        <i class="ti ti-flask me-1"></i>{{ t:devtools.module.devtools_label }}
-                    </button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary" data-catalyst-href="/uml">
-                        <i class="ti ti-map-2 me-1"></i>{{ t:devtools.module.architecture_breadcrumb }}
-                    </button>
-                </div>
-            </div>
-
-            <div class="ui-catalog-head__chips">
-                <span class="ui-chip">{{ t:devtools.layout_smoke.chips.layout_wrapping }}</span>
-                <span class="ui-chip">{{ t:devtools.layout_smoke.chips.escape_helper }}</span>
-                <span class="ui-chip">{{ t:devtools.layout_smoke.chips.shared_shell }}</span>
-            </div>
-        </div>
-    </section>
+    {{> "components._page-header" }}
 
     <div class="row g-3">
         <div class="col-12 col-xl-8">

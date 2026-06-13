@@ -66,6 +66,11 @@ final class AccountRecoveryReviewController extends Controller
         return $this->view('users.recovery-requests', [
             'title' => __('account.review.index.title'),
             'pageTitle' => __('account.review.index.title'),
+            'page_header' => [
+                'eyebrow' => __('account.review.index.eyebrow'),
+                'title' => __('account.review.index.title'),
+                'description' => __('account.review.index.description'),
+            ],
             'recovery_requests' => $this->normalizeRows($this->repository->latestRequests(60)),
         ]);
     }
@@ -86,6 +91,14 @@ final class AccountRecoveryReviewController extends Controller
         return $this->view('users.recovery-review', [
             'title' => __('account.review.show.title') . ' #' . (int) $entry['id'],
             'pageTitle' => __('account.review.show.title'),
+            'page_header' => [
+                'eyebrow' => __('account.review.show.eyebrow'),
+                'title' => __('account.review.show.title') . ' #' . (int) $entry['id'],
+                'description' => __('account.review.show.description'),
+                'actions' => [
+                    ['label' => __('account.review.show.back'), 'href' => '/users/account-recovery'],
+                ],
+            ],
             'recovery_request' => $this->normalizeRow($entry),
             'csrf_field' => TrustedHtml::fromString(CsrfProtection::getInstance()->getTokenField()),
         ]);

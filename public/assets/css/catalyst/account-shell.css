@@ -65,39 +65,6 @@
     color: var(--bs-secondary-color);
 }
 
-.account-breadcrumb {
-    margin: 1rem 0 .25rem;
-}
-
-.account-breadcrumb ol {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .35rem;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    font-size: .82rem;
-}
-
-.account-breadcrumb li:not(:last-child)::after {
-    content: '/';
-    margin-left: .35rem;
-    color: var(--bs-secondary-color);
-}
-
-.account-breadcrumb a {
-    color: var(--bs-secondary-color);
-}
-
-.account-breadcrumb .active span {
-    color: var(--bs-body-color);
-    font-weight: 600;
-}
-
-.account-page {
-    padding: 1rem 0 3rem;
-}
-
 .account-section-title p,
 .account-card p {
     margin-bottom: 0;

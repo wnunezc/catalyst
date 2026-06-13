@@ -1,12 +1,12 @@
 # Runtime Inventory
 
 > Auto-generated from filesystem and PHP tokens. Run `php public/cli.php docs:inventory` to refresh.
-> Last generated: 2026-06-13 06:14:44
+> Last generated: 2026-06-13 09:07:11
 
 ## Summary
 
 - Symbols: 713
-- Templates: 177
+- Templates: 176
 - Scripts: 55
 
 ## Symbol Roots
@@ -20,7 +20,7 @@
 
 | Root | Count |
 |---|---:|
-| `Repository views` | 152 |
+| `Repository views` | 151 |
 | `boot-core/template` | 25 |
 
 ## Script Roots
@@ -347,7 +347,7 @@
 | `Catalyst\Framework\Middleware\GuestMiddleware` | `class` | `app/Framework/Middleware/GuestMiddleware.php` | 54 |
 | `Catalyst\Framework\Middleware\LoginThrottleMiddleware` | `class` | `app/Framework/Middleware/LoginThrottleMiddleware.php` | 55 |
 | `Catalyst\Framework\Middleware\MiddlewareInterface` | `interface` | `app/Framework/Middleware/MiddlewareInterface.php` | 46 |
-| `Catalyst\Framework\Middleware\MiddlewareStack` | `class` | `app/Framework/Middleware/MiddlewareStack.php` | 47 |
+| `Catalyst\Framework\Middleware\MiddlewareStack` | `class` | `app/Framework/Middleware/MiddlewareStack.php` | 46 |
 | `Catalyst\Framework\Middleware\RequestThrottlingMiddleware` | `class` | `app/Framework/Middleware/RequestThrottlingMiddleware.php` | 48 |
 | `Catalyst\Framework\Middleware\RoleMiddleware` | `class` | `app/Framework/Middleware/RoleMiddleware.php` | 75 |
 | `Catalyst\Framework\Middleware\RouteFeatureMiddleware` | `class` | `app/Framework/Middleware/RouteFeatureMiddleware.php` | 47 |
@@ -483,7 +483,7 @@
 | `Catalyst\Framework\Versioning\VersionManager` | `class` | `app/Framework/Versioning/VersionManager.php` | 48 |
 | `Catalyst\Framework\Versioning\VersionRepository` | `class` | `app/Framework/Versioning/VersionRepository.php` | 46 |
 | `Catalyst\Framework\View\AssetUrl` | `class` | `app/Framework/View/AssetUrl.php` | 12 |
-| `Catalyst\Framework\View\DocumentScope` | `class` | `app/Framework/View/DocumentScope.php` | 23 |
+| `Catalyst\Framework\View\DocumentScope` | `class` | `app/Framework/View/DocumentScope.php` | 24 |
 | `Catalyst\Framework\View\HtmlAllowlistSanitizer` | `class` | `app/Framework/View/HtmlAllowlistSanitizer.php` | 43 |
 | `Catalyst\Framework\View\InlineJson` | `class` | `app/Framework/View/InlineJson.php` | 41 |
 | `Catalyst\Framework\View\ModuleViewPathRegistrar` | `class` | `app/Framework/View/ModuleViewPathRegistrar.php` | 39 |
@@ -571,7 +571,7 @@
 | `Catalyst\Helpers\Validation\Rules\UniqueRule` | `class` | `app/Helpers/Validation/Rules/UniqueRule.php` | 48 |
 | `Catalyst\Helpers\Validation\ValidationRunner` | `class` | `app/Helpers/Validation/ValidationRunner.php` | 52 |
 | `Catalyst\Helpers\Validation\Validator` | `class` | `app/Helpers/Validation/Validator.php` | 39 |
-| `Catalyst\Kernel` | `class` | `app/Kernel.php` | 68 |
+| `Catalyst\Kernel` | `class` | `app/Kernel.php` | 69 |
 | `Catalyst\Repository\Account\Controllers\AccountCenterController` | `class` | `Repository/Framework/Account/Controllers/AccountCenterController.php` | 50 |
 | `Catalyst\Repository\Account\Controllers\AccountRecoveryController` | `class` | `Repository/Framework/Account/Controllers/AccountRecoveryController.php` | 47 |
 | `Catalyst\Repository\Account\Repositories\AccountRecoveryRepository` | `class` | `Repository/Framework/Account/Repositories/AccountRecoveryRepository.php` | 44 |
@@ -675,7 +675,7 @@
 | `Catalyst\Repository\DevTools\Services\DatabaseResetService` | `class` | `Repository/Framework/DevTools/Services/DatabaseResetService.php` | 45 |
 | `Catalyst\Repository\Notification\Controllers\NotificationController` | `class` | `Repository/Framework/Notification/Controllers/NotificationController.php` | 46 |
 | `Catalyst\Repository\Notification\Controllers\PresenceController` | `class` | `Repository/Framework/Notification/Controllers/PresenceController.php` | 47 |
-| `Catalyst\Repository\Operations\ApiManagement\Controllers\ApiManagementController` | `class` | `Repository/Framework/Operations/ApiManagement/Controllers/ApiManagementController.php` | 51 |
+| `Catalyst\Repository\Operations\ApiManagement\Controllers\ApiManagementController` | `class` | `Repository/Framework/Operations/ApiManagement/Controllers/ApiManagementController.php` | 52 |
 | `Catalyst\Repository\Operations\ApiManagement\Requests\ApiTokenRequest` | `class` | `Repository/Framework/Operations/ApiManagement/Requests/ApiTokenRequest.php` | 48 |
 | `Catalyst\Repository\Operations\Audit\Controllers\AuditLogController` | `class` | `Repository/Framework/Operations/Audit/Controllers/AuditLogController.php` | 46 |
 | `Catalyst\Repository\Operations\Automation\Actions\AutomationRuleExecutionService` | `class` | `Repository/Framework/Operations/Automation/Actions/AutomationRuleExecutionService.php` | 46 |
@@ -837,7 +837,6 @@
 | `Repository/Framework/DevTools/Views/partials/modal/_form-content.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/DevTools/Views/partials/modal/_sample-content.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/DevTools/Views/partials/toaster/_js-enhancement-refresh.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/DevTools/Views/partials/uml/_header.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/DevTools/Views/partials/uml/_rail.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/DevTools/Views/partials/uml/_tab-panels.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/DevTools/Views/partials/_tf-auth.phtml` | `Repository views` | `phtml` |
@@ -942,7 +941,7 @@
 | `Repository/Framework/Auth/front/script.js` | `Repository front` | 2073 |
 | `Repository/Framework/Configuration/front/script.js` | `Repository front` | 12479 |
 | `Repository/Framework/DemoUi/front/script.js` | `Repository front` | 1225 |
-| `Repository/Framework/DevTools/front/script.js` | `Repository front` | 20214 |
+| `Repository/Framework/DevTools/front/script.js` | `Repository front` | 21851 |
 | `Repository/Framework/Operations/front/script.js` | `Repository front` | 132 |
 | `Repository/Framework/Users/front/script.js` | `Repository front` | 255 |
 | `Repository/Framework/Workspaces/front/script.js` | `Repository front` | 366 |

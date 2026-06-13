@@ -101,6 +101,23 @@ final class ThemeArchitectureTest extends TestCase
         Assert::false(is_file($this->path('public/assets/css/catalyst/institutional-theme.css')));
     }
 
+    public function testCatalystSurfacesDoNotOverrideNativeThemeComponentSelectors(): void
+    {
+        $surfaces = $this->read('public/assets/css/catalyst/surfaces.css');
+        $compatibility = $this->read('public/assets/css/catalyst/inspinia-runtime-compat.css');
+        $content = $this->read('boot-core/template/_content.phtml');
+
+        foreach (['.page-title-head', '.page-main-title', '.card-title'] as $selector) {
+            Assert::false(
+                str_contains($surfaces, $selector),
+                "Catalyst surfaces must not override native theme selector {$selector}."
+            );
+        }
+
+        Assert::contains('body.catalyst-shell-body .content-page[data-simplebar] {', $compatibility);
+        Assert::contains('data-simplebar=""', $content);
+    }
+
     private function read(string $path): string
     {
         $contents = file_get_contents($this->path($path));

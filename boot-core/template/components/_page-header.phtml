@@ -1,33 +1,63 @@
-<section class="page-header card mb-3{{#if page_header_modifier}} {{ page_header_modifier }}{{/if}}" data-page-header>
-    <div class="card-body">
-        <div class="page-header__main">
-            <div class="page-header__copy">
+<section class="page-title-head d-flex align-items-center{{#if page_header_modifier}} {{ page_header_modifier }}{{/if}}" data-page-header>
+    <div class="page-header__main">
+        <div class="page-header__copy flex-grow-1">
+            {{#unless page_header_has_help}}
                 {{#if page_header_eyebrow}}
                     <span class="page-header__eyebrow">{{ page_header_eyebrow }}</span>
                 {{/if}}
-                <h1 class="page-header__title">{{ page_header_title }}</h1>
+            {{/unless}}
+                <div class="page-header__title-row">
+                    <h4 class="page-main-title m-0">{{ page_header_title }}</h4>
+                    {{#if page_header_has_help}}
+                        <button type="button" class="btn btn-sm btn-link page-header__help-trigger" data-page-header-help data-bs-toggle="modal" data-bs-target="#{{ page_header_help_id }}" aria-label="{{ page_header_help_label }}">
+                            <i class="ti ti-help-circle" aria-hidden="true"></i>
+                        </button>
+                    {{/if}}
+                </div>
+            {{#unless page_header_has_help}}
                 {{#if page_header_description}}
                     <p class="page-header__description">{{ page_header_description }}</p>
                 {{/if}}
-            </div>
-
-            {{#if page_header_has_actions}}
-                <div class="page-header__actions" aria-label="{{ page_header_actions_label }}">
-                    {{#each page_header_actions}}
-                        {{#if is_submit}}
-                            <button type="submit" class="{{ class }}"{{#if form}} form="{{ form }}"{{/if}}{{#if name}} name="{{ name }}"{{/if}}{{#if value}} value="{{ value }}"{{/if}}{{#if disabled}} disabled{{/if}}>
-                                {{#if has_icon}}<i class="{{ icon }} me-1" aria-hidden="true"></i>{{/if}}{{ label }}
-                            </button>
-                        {{else}}
-                            <button type="button" class="{{ class }}"{{#if href}} data-catalyst-href="{{ href }}"{{/if}}{{#if target}} data-catalyst-target="{{ target }}"{{/if}}{{#if modal_target}} data-bs-toggle="modal" data-bs-target="{{ modal_target }}"{{/if}}{{#if disabled}} disabled{{/if}}>
-                                {{#if has_icon}}<i class="{{ icon }} me-1" aria-hidden="true"></i>{{/if}}{{ label }}
-                            </button>
-                        {{/if}}
-                    {{/each}}
-                </div>
-            {{/if}}
+            {{/unless}}
         </div>
 
+        {{#if page_header_has_aside}}
+        <div class="page-header__aside">
+            {{#if has_breadcrumbs}}
+                <nav aria-label="Breadcrumb">
+                    <ol class="breadcrumb m-0 py-0">
+                        {{#each breadcrumb_items}}
+                            <li class="breadcrumb-item{{#if is_active}} active{{/if}}"{{#if is_active}} aria-current="page"{{/if}}>
+                                {{#if is_active}}<span>{{ label }}</span>{{else}}<a href="{{ href }}">{{ label }}</a>{{/if}}
+                            </li>
+                        {{/each}}
+                    </ol>
+                </nav>
+            {{/if}}
+
+            {{#if page_header_has_actions}}
+            <div class="page-header__actions" aria-label="{{ page_header_actions_label }}">
+                {{#each page_header_actions}}
+                    {{#if is_submit}}
+                        <button type="submit" class="{{ class }}"{{#if form}} form="{{ form }}"{{/if}}{{#if name}} name="{{ name }}"{{/if}}{{#if value}} value="{{ value }}"{{/if}}{{#if disabled}} disabled{{/if}}>
+                            {{#if has_icon}}<i class="{{ icon }} me-1" aria-hidden="true"></i>{{/if}}{{ label }}
+                        </button>
+                    {{else}}
+                        <button type="button" class="{{ class }}"{{#if href}} data-catalyst-href="{{ href }}"{{/if}}{{#if target}} data-catalyst-target="{{ target }}"{{/if}}{{#if modal_target}} data-bs-toggle="modal" data-bs-target="{{ modal_target }}"{{/if}}{{#if disabled}} disabled{{/if}}>
+                            {{#if has_icon}}<i class="{{ icon }} me-1" aria-hidden="true"></i>{{/if}}{{ label }}
+                        </button>
+                    {{/if}}
+                {{/each}}
+            </div>
+            {{/if}}
+        </div>
+        {{/if}}
+    </div>
+
+</section>
+
+{{#if page_header_has_context}}
+    <section class="page-header-context mb-3" aria-label="{{ page_header_context_label }}">
         {{#if page_header_has_metrics}}
             <div class="page-header__metrics" aria-label="{{ page_header_metrics_label }}">
                 {{#each page_header_metrics}}
@@ -52,5 +82,24 @@
                 {{/each}}
             </nav>
         {{/if}}
+    </section>
+{{/if}}
+
+{{#if page_header_has_help}}
+<div class="modal fade" id="{{ page_header_help_id }}" tabindex="-1" aria-labelledby="{{ page_header_help_id }}-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    {{#if page_header_help_eyebrow}}<span class="text-muted small">{{ page_header_help_eyebrow }}</span>{{/if}}
+                    <h2 class="modal-title fs-5" id="{{ page_header_help_id }}-title">{{ page_header_title }}</h2>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-0">{{ page_header_help_description }}</p>
+            </div>
+        </div>
     </div>
-</section>
+</div>
+{{/if}}

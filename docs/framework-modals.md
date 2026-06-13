@@ -80,11 +80,13 @@ contract and add an independent interaction case. It must not silently expand
 the runtime inventory without test coverage.
 
 `boot-core/template/components/_page-header.phtml` exposes reusable
-`modal_target` support but has no current runtime consumer. Generated
+`modal_target` support for actions and the common-layout PageHeader help modal.
+Every PageHeader producer outside Demo UI supplies surface-specific help
+content through its description. Generated
 `DemoUi/form-layout.html` modal markup has no active route/controller mapping.
-Neither is treated as a current E2E surface. Settings `modal-cache` is rendered
-but intentionally has no visible trigger outside production; the development
-suite asserts that inactive contract instead of opening it by bypassing the UI.
+Settings `modal-cache` is rendered but intentionally has no visible trigger
+outside production; the development suite asserts that inactive contract
+instead of opening it by bypassing the UI.
 
 Run the current modal suite from the Playwright engine:
 

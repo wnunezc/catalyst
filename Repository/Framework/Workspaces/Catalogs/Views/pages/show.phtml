@@ -88,7 +88,7 @@
                         <tr>
                             <td>
                                 <div class="fw-semibold">{{ label }}</div>
-                                <div class="small text-muted"><code>{{ item_key }}</code></div>
+                                <div class="small text-muted"><code data-catalog-code>{{ item_key }}</code></div>
                             </td>
                             <td>
                                 <span class="badge {{ temporal_badge_class }}">{{ temporal_state }}</span>
@@ -101,7 +101,7 @@
                                 <div class="small text-muted">{{ valid_to_label }}</div>
                             </td>
                             <td>
-                                <code>{{ metadata_json }}</code>
+                                <code data-catalog-code>{{ metadata_json }}</code>
                             </td>
                             <td class="text-end">
                                 <div class="d-flex gap-2 justify-content-end">
@@ -146,7 +146,7 @@
                                 <tr>
                                     <td>{{ occurred_at }}</td>
                                     <td>{{ event_type }}</td>
-                                    <td><code>{{ event_key }}</code></td>
+                                    <td><code data-catalog-code>{{ event_key }}</code></td>
                                     <td>{{ label }}</td>
                                 </tr>
                             {{else}}

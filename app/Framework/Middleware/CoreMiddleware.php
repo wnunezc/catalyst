@@ -87,12 +87,7 @@ abstract class CoreMiddleware implements MiddlewareInterface
      */
     protected function passToNext(Request $request, Closure $next): Response
     {
-        try {
-            return $next($request);
-        } catch (Exception $e) {
-            $this->logException($e);
-            throw $e;
-        }
+        return $next($request);
     }
 
     /**
@@ -113,23 +108,6 @@ abstract class CoreMiddleware implements MiddlewareInterface
 
             $this->logger->debug($message, $middlewareContext);
         }
-    }
-
-    /**
-     * Log exception information.
-     *
-     * Responsibility: Log exception information.
-     * @param Exception $exception The exception to log
-     * @return void
-     * @throws Exception
-     */
-    protected function logException(Exception $exception): void
-    {
-        $this->logger?->error('Middleware exception', [
-            'middleware' => static::class,
-            'exception' => $exception->getMessage(),
-            'trace' => $exception->getTraceAsString()
-        ]);
     }
 
     /**

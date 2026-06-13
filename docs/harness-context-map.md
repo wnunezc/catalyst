@@ -34,7 +34,7 @@ Este archivo enruta la documentacion vigente de `catalyst` para que el contexto 
 | Secuencias transaccionales | `docs/sequences.md` |
 | Queue/event/schedule | `docs/framework-event.md`, `docs/framework-queue.md`, `docs/framework-schedule.md` |
 | Organization hierarchy | `docs/framework-organization.md` |
-| UI actual | `docs/ui/surface-architecture.md` y contratos puntuales bajo `docs/ui/` |
+| UI actual | `docs/ui/surface-architecture.md`, `docs/ui/css-ownership.md` y contratos puntuales bajo `docs/ui/` |
 | Demo UI JavaScript y cobertura | `docs/ui/demo-ui-javascript-inventory.md` |
 | Test Features JavaScript y cobertura | `docs/ui/test-features-javascript-inventory.md` |
 | Operacion/calidad | `docs/testing.md`, `docs/quality-gate.md`, `docs/deployment.md` |

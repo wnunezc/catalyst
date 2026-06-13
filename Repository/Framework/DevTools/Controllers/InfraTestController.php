@@ -80,6 +80,15 @@ class InfraTestController extends Controller
         return $this->view('layout-test', [
             'title' => __('devtools.layout_smoke.title'),
             'pageTitle' => __('devtools.layout_smoke.title'),
+            'page_header' => [
+                'eyebrow' => __('devtools.layout_smoke.eyebrow'),
+                'title' => __('devtools.layout_smoke.title'),
+                'description' => __('devtools.layout_smoke.description'),
+                'actions' => [
+                    ['label' => __('devtools.module.devtools_label'), 'href' => '/test-features', 'icon' => 'ti ti-flask'],
+                    ['label' => __('devtools.module.architecture_breadcrumb'), 'href' => '/uml', 'icon' => 'ti ti-map-2'],
+                ],
+            ],
             'tokenEscapeExample' => '<script>alert(\'xss\')</script>',
             'tokenEntityExample' => '"double" & \'single\'',
         ]);

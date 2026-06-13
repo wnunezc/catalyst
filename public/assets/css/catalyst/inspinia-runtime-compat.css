@@ -1,9 +1,6 @@
 /*
- * Catalyst / Inspinia runtime compatibility
- * -----------------------------------------------------------------------------
- * Global fixes for closed Catalyst skins and Bootstrap components. Keep this file
- * global: do not move these rules to Repository/Framework/*/front slugs because
- * they must apply to /demo-ui and every migrated surface using the Inspinia shell.
+ * Catalyst / Inspinia runtime compatibility.
+ * Owns the shared shell, SimpleBar and overlay integration only.
  */
 
 html:has(> body.catalyst-shell-body),
@@ -45,8 +42,8 @@ body.catalyst-shell-body .content-page[data-simplebar] > .simplebar-wrapper,
 body.catalyst-shell-body .content-page[data-simplebar] > .simplebar-wrapper > .simplebar-mask,
 body.catalyst-shell-body .content-page[data-simplebar] > .simplebar-wrapper > .simplebar-mask > .simplebar-offset,
 body.catalyst-shell-body .content-page[data-simplebar] > .simplebar-wrapper > .simplebar-mask > .simplebar-offset > .simplebar-content-wrapper {
-    width: 100%;
     height: 100%;
+    width: 100%;
 }
 
 body.catalyst-shell-body .content-page[data-simplebar] > .simplebar-wrapper > .simplebar-mask > .simplebar-offset > .simplebar-content-wrapper {
@@ -62,218 +59,19 @@ body.catalyst-shell-body .content-page[data-simplebar] .simplebar-content > .con
     padding-bottom: 32px;
 }
 
-html[data-skin="red-cross"] {
-    --catalyst-skin-danger: #8f1d2d;
-    --catalyst-skin-danger-rgb: 143, 29, 45;
-    --catalyst-skin-danger-hover: #761724;
-    --catalyst-skin-danger-active: #62111d;
-    --catalyst-skin-danger-soft: #fff0f3;
-    --catalyst-skin-danger-border: #e8a7b2;
-    --theme-danger: var(--catalyst-skin-danger);
-    --theme-danger-rgb: var(--catalyst-skin-danger-rgb);
-    --theme-danger-text-emphasis: var(--catalyst-skin-danger-active);
-    --theme-danger-bg-subtle: var(--catalyst-skin-danger-soft);
-    --theme-danger-border-subtle: var(--catalyst-skin-danger-border);
-    --bs-danger: var(--catalyst-skin-danger);
-    --bs-danger-rgb: var(--catalyst-skin-danger-rgb);
-    --theme-link-color: #9f0d22;
-    --theme-link-color-rgb: 159, 13, 34;
-    --theme-link-hover-color: #6f101f;
-    --theme-link-hover-color-rgb: 111, 16, 31;
-    --bs-link-color: var(--theme-link-color);
-    --bs-link-color-rgb: var(--theme-link-color-rgb);
-    --bs-link-hover-color: var(--theme-link-hover-color);
-    --bs-link-hover-color-rgb: var(--theme-link-hover-color-rgb);
-}
-
-html[data-skin="civil-protection"] {
-    --catalyst-response-danger: #8f1d2d;
-    --catalyst-response-danger-rgb: 143, 29, 45;
-    --catalyst-response-danger-hover: #741724;
-    --catalyst-response-danger-active: #5f111c;
-    --catalyst-response-danger-soft: #fff0f3;
-    --catalyst-response-danger-border: #e8a7b2;
-    --theme-danger: var(--catalyst-response-danger);
-    --theme-danger-rgb: var(--catalyst-response-danger-rgb);
-    --theme-danger-text-emphasis: var(--catalyst-response-danger-active);
-    --theme-danger-bg-subtle: var(--catalyst-response-danger-soft);
-    --theme-danger-border-subtle: var(--catalyst-response-danger-border);
-    --bs-danger: var(--catalyst-response-danger);
-    --bs-danger-rgb: var(--catalyst-response-danger-rgb);
-    --theme-link-color: #a83f00;
-    --theme-link-color-rgb: 168, 63, 0;
-    --theme-link-hover-color: #6f2a00;
-    --theme-link-hover-color-rgb: 111, 42, 0;
-    --bs-link-color: var(--theme-link-color);
-    --bs-link-color-rgb: var(--theme-link-color-rgb);
-    --bs-link-hover-color: var(--theme-link-hover-color);
-    --bs-link-hover-color-rgb: var(--theme-link-hover-color-rgb);
-}
-
-html[data-skin="firefighters"] {
-    --catalyst-response-danger: #8b1025;
-    --catalyst-response-danger-rgb: 139, 16, 37;
-    --catalyst-response-danger-hover: #710c1e;
-    --catalyst-response-danger-active: #5a0918;
-    --catalyst-response-danger-soft: #fff0f3;
-    --catalyst-response-danger-border: #e7a7b3;
-    --theme-danger: var(--catalyst-response-danger);
-    --theme-danger-rgb: var(--catalyst-response-danger-rgb);
-    --theme-danger-text-emphasis: var(--catalyst-response-danger-active);
-    --theme-danger-bg-subtle: var(--catalyst-response-danger-soft);
-    --theme-danger-border-subtle: var(--catalyst-response-danger-border);
-    --bs-danger: var(--catalyst-response-danger);
-    --bs-danger-rgb: var(--catalyst-response-danger-rgb);
-    --theme-link-color: #b90a0a;
-    --theme-link-color-rgb: 185, 10, 10;
-    --theme-link-hover-color: #7f0808;
-    --theme-link-hover-color-rgb: 127, 8, 8;
-    --bs-link-color: var(--theme-link-color);
-    --bs-link-color-rgb: var(--theme-link-color-rgb);
-    --bs-link-hover-color: var(--theme-link-hover-color);
-    --bs-link-hover-color-rgb: var(--theme-link-hover-color-rgb);
-}
-
-html[data-skin="grempa"] {
-    --catalyst-response-danger: #ff7a90;
-    --catalyst-response-danger-rgb: 255, 122, 144;
-    --catalyst-response-danger-hover: #ff9dad;
-    --catalyst-response-danger-active: #e04d66;
-    --catalyst-response-danger-soft: rgba(255, 122, 144, 0.16);
-    --catalyst-response-danger-border: rgba(255, 122, 144, 0.46);
-    --theme-danger: var(--catalyst-response-danger);
-    --theme-danger-rgb: var(--catalyst-response-danger-rgb);
-    --theme-danger-text-emphasis: #ffd6dd;
-    --theme-danger-bg-subtle: var(--catalyst-response-danger-soft);
-    --theme-danger-border-subtle: var(--catalyst-response-danger-border);
-    --bs-danger: var(--catalyst-response-danger);
-    --bs-danger-rgb: var(--catalyst-response-danger-rgb);
-    --theme-link-color: #ffb2bd;
-    --theme-link-color-rgb: 255, 178, 189;
-    --theme-link-hover-color: #ffffff;
-    --theme-link-hover-color-rgb: 255, 255, 255;
-    --bs-link-color: var(--theme-link-color);
-    --bs-link-color-rgb: var(--theme-link-color-rgb);
-    --bs-link-hover-color: var(--theme-link-hover-color);
-    --bs-link-hover-color-rgb: var(--theme-link-hover-color-rgb);
-}
-
-
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) .btn-primary {
-    --bs-btn-color: #ffffff;
-    --bs-btn-bg: var(--theme-primary);
-    --bs-btn-border-color: var(--theme-primary);
-    --bs-btn-hover-color: #ffffff;
-    --bs-btn-hover-bg: var(--catalyst-response-primary-hover, var(--catalyst-red-cross-primary-hover, var(--theme-primary-text-emphasis)));
-    --bs-btn-hover-border-color: var(--catalyst-response-primary-hover, var(--catalyst-red-cross-primary-hover, var(--theme-primary-text-emphasis)));
-    --bs-btn-active-color: #ffffff;
-    --bs-btn-active-bg: var(--catalyst-response-primary-active, var(--catalyst-red-cross-primary-active, var(--theme-primary-text-emphasis)));
-    --bs-btn-active-border-color: var(--catalyst-response-primary-active, var(--catalyst-red-cross-primary-active, var(--theme-primary-text-emphasis)));
-}
-
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) .btn-danger {
-    --bs-btn-color: #ffffff;
-    --bs-btn-bg: var(--theme-danger);
-    --bs-btn-border-color: var(--theme-danger);
-    --bs-btn-hover-color: #ffffff;
-    --bs-btn-hover-bg: var(--catalyst-response-danger-hover, var(--catalyst-skin-danger-hover, var(--theme-danger-text-emphasis)));
-    --bs-btn-hover-border-color: var(--catalyst-response-danger-hover, var(--catalyst-skin-danger-hover, var(--theme-danger-text-emphasis)));
-    --bs-btn-active-color: #ffffff;
-    --bs-btn-active-bg: var(--catalyst-response-danger-active, var(--catalyst-skin-danger-active, var(--theme-danger-text-emphasis)));
-    --bs-btn-active-border-color: var(--catalyst-response-danger-active, var(--catalyst-skin-danger-active, var(--theme-danger-text-emphasis)));
-}
-
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) .btn-outline-primary {
-    --bs-btn-color: rgb(var(--theme-primary-rgb));
-    --bs-btn-border-color: rgba(var(--theme-primary-rgb), 0.72);
-    --bs-btn-hover-color: #ffffff;
-    --bs-btn-hover-bg: rgb(var(--theme-primary-rgb));
-    --bs-btn-hover-border-color: rgb(var(--theme-primary-rgb));
-}
-
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) .btn-outline-danger {
-    --bs-btn-color: rgb(var(--theme-danger-rgb));
-    --bs-btn-border-color: rgba(var(--theme-danger-rgb), 0.72);
-    --bs-btn-hover-color: #ffffff;
-    --bs-btn-hover-bg: rgb(var(--theme-danger-rgb));
-    --bs-btn-hover-border-color: rgb(var(--theme-danger-rgb));
-}
-
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) .bg-primary,
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) .badge.text-bg-primary,
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) .text-bg-primary {
-    background-color: rgba(var(--theme-primary-rgb), var(--bs-bg-opacity, 1)) !important;
-    color: #ffffff !important;
-}
-
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) .bg-danger,
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) .badge.text-bg-danger,
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) .text-bg-danger {
-    background-color: rgba(var(--theme-danger-rgb), var(--bs-bg-opacity, 1)) !important;
-    color: #ffffff !important;
-}
-
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) .text-primary,
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) .link-primary {
-    color: rgba(var(--theme-primary-rgb), var(--bs-text-opacity, 1)) !important;
-}
-
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) .text-danger,
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) .link-danger {
-    color: rgba(var(--theme-danger-rgb), var(--bs-text-opacity, 1)) !important;
-}
-
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) .border-primary {
-    border-color: rgba(var(--theme-primary-rgb), var(--bs-border-opacity, 1)) !important;
-}
-
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) .border-danger {
-    border-color: rgba(var(--theme-danger-rgb), var(--bs-border-opacity, 1)) !important;
-}
-
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) .bg-primary-subtle {
-    background-color: var(--theme-primary-bg-subtle) !important;
-}
-
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) .bg-danger-subtle {
-    background-color: var(--theme-danger-bg-subtle) !important;
-}
-
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) .text-primary-emphasis {
-    color: var(--theme-primary-text-emphasis) !important;
-}
-
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) .text-danger-emphasis {
-    color: var(--theme-danger-text-emphasis) !important;
-}
-
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) .border-primary-subtle {
-    border-color: var(--theme-primary-border-subtle) !important;
-}
-
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) .border-danger-subtle {
-    border-color: var(--theme-danger-border-subtle) !important;
-}
-
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) .alert-primary {
-    --bs-alert-color: var(--theme-primary-text-emphasis);
-    --bs-alert-bg: var(--theme-primary-bg-subtle);
-    --bs-alert-border-color: var(--theme-primary-border-subtle);
-    --bs-alert-link-color: var(--theme-primary-text-emphasis);
-}
-
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) .alert-danger {
-    --bs-alert-color: var(--theme-danger-text-emphasis);
-    --bs-alert-bg: var(--theme-danger-bg-subtle);
-    --bs-alert-border-color: var(--theme-danger-border-subtle);
-    --bs-alert-link-color: var(--theme-danger-text-emphasis);
-}
-
-body.catalyst-shell-body .offcanvas-backdrop {
+body.catalyst-shell-body .offcanvas-backdrop,
+body > .offcanvas-backdrop,
+.offcanvas-backdrop,
+body > .modal-backdrop,
+.modal-backdrop {
     z-index: 1070;
 }
 
-body.catalyst-shell-body .offcanvas {
+body.catalyst-shell-body .offcanvas,
+body > .offcanvas,
+.offcanvas,
+body > .modal,
+.modal {
     z-index: 1075;
 }
 
@@ -285,117 +83,14 @@ body.catalyst-shell-body .modal-dialog-scrollable .modal-footer {
     pointer-events: auto;
 }
 
-body.catalyst-shell-body .form-floating > label {
-    color: var(--bs-secondary-color);
-    opacity: 1;
-}
-
-body.catalyst-shell-body .form-floating > label::after {
-    background-color: var(--bs-body-bg) !important;
-    border-radius: .35rem;
-}
-
-body.catalyst-shell-body .card .form-floating > label::after,
-body.catalyst-shell-body .modal-content .form-floating > label::after,
-body.catalyst-shell-body .offcanvas .form-floating > label::after,
-body.catalyst-shell-body .dropdown-menu .form-floating > label::after {
-    background-color: var(--bs-card-bg, var(--theme-card-bg, var(--bs-body-bg))) !important;
-}
-
-body.catalyst-shell-body .form-floating > .form-control:focus ~ label,
-body.catalyst-shell-body .form-floating > .form-control:not(:placeholder-shown) ~ label,
-body.catalyst-shell-body .form-floating > .form-control-plaintext ~ label,
-body.catalyst-shell-body .form-floating > .form-select ~ label {
-    color: var(--bs-secondary-color);
-    opacity: 1;
-}
-
-body.catalyst-shell-body .form-floating > .form-control:focus,
-body.catalyst-shell-body .form-floating > .form-select:focus {
-    border-color: rgba(var(--theme-primary-rgb, var(--bs-primary-rgb)), .62);
-    box-shadow: 0 0 0 .2rem rgba(var(--theme-primary-rgb, var(--bs-primary-rgb)), .14);
-}
-
-
-/* Catalyst global overlay runtime.
- * Bootstrap modals may be rendered by Catalyst, Demo UI, or derived apps. Keep
- * the z-index contract global so the backdrop never intercepts modal controls.
- */
-:root {
-    --catalyst-zindex-modal-backdrop: 1070;
-    --catalyst-zindex-modal: 1075;
-    --catalyst-zindex-popover: 1080;
-    --catalyst-zindex-tooltip: 1085;
-}
-
-body > .modal-backdrop,
-.modal-backdrop {
-    z-index: var(--catalyst-zindex-modal-backdrop);
-}
-
-body > .modal,
-.modal {
-    z-index: var(--catalyst-zindex-modal);
-}
-
-body > .offcanvas-backdrop,
-.offcanvas-backdrop {
-    z-index: var(--catalyst-zindex-modal-backdrop);
-}
-
-body > .offcanvas,
-.offcanvas {
-    z-index: var(--catalyst-zindex-modal);
-}
-
 .popover {
-    z-index: var(--catalyst-zindex-popover);
+    z-index: 1080;
 }
 
 .tooltip {
-    z-index: var(--catalyst-zindex-tooltip);
+    z-index: 1085;
 }
 
 body.catalyst-shell-body.modal-open .content-page {
     overflow: visible;
-}
-
-/* Anchor-button contrast contract.
- * -----------------------------------------------------------------------------
- * Keep this intentionally narrow: only anchors that are also Bootstrap buttons
- * receive forced text color. Generic anchors, side navigation, dropdown links
- * and regular navigation anchors continue using their own component tokens.
- */
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) a.btn.btn-primary,
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) a.btn.btn-primary:hover,
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) a.btn.btn-primary:focus,
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) a.btn.btn-primary:active,
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) a.btn.btn-danger,
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) a.btn.btn-danger:hover,
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) a.btn.btn-danger:focus,
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) a.btn.btn-danger:active {
-    color: var(--theme-btn-color, var(--bs-btn-color, #ffffff)) !important;
-    text-decoration: none !important;
-}
-
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) a.btn.btn-outline-primary,
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) a.btn.btn-outline-danger {
-    color: var(--theme-btn-color, var(--bs-btn-color, currentColor)) !important;
-    text-decoration: none !important;
-}
-
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) a.btn.btn-outline-primary:hover,
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) a.btn.btn-outline-primary:focus,
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) a.btn.btn-outline-primary:active,
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) a.btn.btn-outline-danger:hover,
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) a.btn.btn-outline-danger:focus,
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) a.btn.btn-outline-danger:active {
-    color: var(--theme-btn-hover-color, var(--bs-btn-hover-color, #ffffff)) !important;
-}
-
-/* Side navigation is not part of the anchor-button contract. */
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) .side-nav a:not(.btn),
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) .side-nav .side-nav-link,
-:is(html[data-skin="red-cross"], html[data-skin="civil-protection"], html[data-skin="firefighters"], html[data-skin="grempa"]) .side-nav-title {
-    text-decoration: none;
 }

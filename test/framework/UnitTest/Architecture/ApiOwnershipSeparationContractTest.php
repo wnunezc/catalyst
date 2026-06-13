@@ -39,10 +39,13 @@ final class ApiOwnershipSeparationContractTest extends TestCase
     {
         $operationsRoutes = $this->read('Repository/Framework/Operations/routes.php');
         $operationsModule = $this->read('Repository/Framework/Operations/module.php');
+        $controller = $this->read('Repository/Framework/Operations/ApiManagement/Controllers/ApiManagementController.php');
 
         Assert::contains('/operations/api-management', $operationsRoutes);
         Assert::contains('Operations\\ApiManagement', $operationsRoutes);
         Assert::contains('manage-operations-api-management', $operationsModule);
+        Assert::contains('use Catalyst\\Framework\\Api\\ApiCatalog;', $controller);
+        Assert::contains('ApiCatalog::routes()', $controller);
         Assert::false(str_contains($operationsRoutes, 'ApiPlatform'));
         Assert::false(str_contains($operationsModule, '/operations/api-platform'));
     }

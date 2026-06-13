@@ -135,6 +135,7 @@ parallel governor.
 | `docs/spec-to-catalyst-guide.md` | Spec To Catalyst Guide |
 | `docs/testing.md` | Testing Guide |
 | `docs/ui/page-header-contract.md` | Global PageHeader contract |
+| `docs/ui/css-ownership.md` | CSS ownership and common-layout inventory |
 | `docs/ui/datagrid-visual-guidelines.md` | Lineamientos visuales del DataGrid |
 | `docs/ui/demo-ui-javascript-inventory.md` | Demo UI JavaScript route, asset and Playwright inventory |
 | `docs/ui/institutional-themes.md` | Response skins and neutral branding |

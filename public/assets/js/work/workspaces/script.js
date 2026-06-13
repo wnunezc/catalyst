@@ -3,9 +3,9 @@ import { registerUiComponent } from '../../catalyst/runtime/registration-queue.j
 registerUiComponent({
     name: 'workspaces.catalogs.code-wrap',
     phase: 'scan',
-    selector: '.catalogs-page code',
+    selector: '[data-catalog-code]',
     mount(root) {
-        root.querySelectorAll('.catalogs-page code').forEach((node) => {
+        root.querySelectorAll('[data-catalog-code]').forEach((node) => {
             node.classList.add('text-break');
         });
     },

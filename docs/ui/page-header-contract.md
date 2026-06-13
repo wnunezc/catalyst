@@ -24,6 +24,28 @@ The header supports:
 - compact metrics;
 - secondary tabs/navigation.
 
+PageHeader help is required across common-layout surfaces outside Demo UI. The
+title bar shows only the page title and a compact help trigger.
+Eyebrow/category and description move into one accessible Bootstrap modal
+owned by the global PageHeader. Every PageHeader producer must provide a
+surface-specific description; empty or generic placeholder help is not an
+accepted substitute. Demo UI is excluded.
+
+Metrics and secondary tabs are rendered immediately after the title bar in a
+compact contextual content block. They do not enlarge or visually replace the
+native Inspinia title bar.
+
+`DocumentScope` resolves the existing modular `NavigationRegistry` breadcrumb
+declaration for the current authorized path. The global PageHeader renders the
+compact native Bootstrap/Inspinia breadcrumb inside the same `page-title-head`
+surface as the title. An explicit `breadcrumb_items` scope remains
+authoritative when a surface supplies one.
+
+The template composes with Inspinia's native `page-title-head` and
+`h4.page-main-title` markup. PageHeader is not a card, does not add a competing
+class to `page-title-head`, and does not own an alternate border, radius,
+shadow or content-area theme.
+
 Views should pass a `page_header` array and include:
 
 ```text
