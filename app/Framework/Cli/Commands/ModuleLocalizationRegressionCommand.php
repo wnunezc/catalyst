@@ -73,8 +73,9 @@ final class ModuleLocalizationRegressionCommand extends AbstractCommand
         $decorator = $this->contents('app/Framework/Module/ModuleLocalizationDecorator.php');
         $configuration = $this->contents('Repository/Framework/Configuration/module.php');
         $roles = $this->contents('Repository/Framework/Roles/module.php');
-        $registry = ModuleRegistry::getInstance();
-        $registry->flushCache();
+        $workspaces = $this->contents('Repository/Framework/Workspaces/module.php');
+        $operations = $this->contents('Repository/Framework/Operations/module.php');
+        ModuleRegistry::getInstance()->flushCache();
         $checks = [
             'generic_visible_field_contract' => str_contains($decorator, 'localizeVisibleFields')
                 && !str_contains($decorator, 'localizeSettingsModule')
@@ -83,7 +84,10 @@ final class ModuleLocalizationRegressionCommand extends AbstractCommand
             'configuration_manifest_explicit' => str_contains($configuration, "__('settings.module.description')"),
             'roles_manifest_explicit' => !str_contains($roles, "'label' => 'Roles'")
                 && !str_contains($roles, "'label' => 'Permissions'"),
-            'operations_module_disconnected' => $registry->findByKey('framework.operations') === null,
+            'workspaces_manifest_explicit' => str_contains($workspaces, "__('workspaces.module.description')")
+                && str_contains($workspaces, "__('workspaces.permissions.catalogs.label')"),
+            'operations_manifest_explicit' => str_contains($operations, "__('operations.module.description')")
+                && str_contains($operations, "__('operations.permissions.deployments.label')"),
         ];
         $ok = !in_array(false, $checks, true);
 

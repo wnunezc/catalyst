@@ -3,9 +3,11 @@ const { isEnvironmentInterrupted } = require('../helpers/environment.cjs');
 const { openSurface } = require('../helpers/surface.cjs');
 
 const shellSurfaces = [
-    '/audit-log',
-    '/api-platform',
-    '/automation-rules',
+    '/operations/audit-log',
+    '/operations/api-management',
+    '/operations/automation-rules',
+    '/operations/deployments',
+    '/operations/tenancy',
     '/configuration/application-health',
     '/configuration/feature-flags',
     '/configuration/platform-appearance',
@@ -14,7 +16,9 @@ const shellSurfaces = [
     '/users',
     '/workspaces/catalogs',
     '/workspaces/document-templates',
+    '/workspaces/locale-tools',
     '/workspaces/media-library',
+    '/workspaces/module-designer',
     '/uml',
 ];
 

@@ -11,11 +11,14 @@ Document current deployment and packaging boundaries for Catalyst without preser
 | Deployment pipeline | `Catalyst\Framework\Deployment\DeploymentManager` |
 | Deployment runs | `Catalyst\Framework\Deployment\DeploymentRunRepository` |
 | Deployment CLI | `deploy:list`, `deploy:run` |
+| Deployment HTTP surface | `Catalyst\Repository\Operations\Deployments` |
 | Secret configuration | `Catalyst\Helpers\Config\ConfigSecretStore` |
 
 ## Current Behavior
 
 Deployment must not package local secrets, DKIM private keys, runtime storage, logs, throttle state, PID/stamp files or DevTools uploads. CLI deployment support is available through `deploy:list` and `deploy:run`; environment readiness is validated through the quality gate and status checks.
+
+The authenticated `/operations/deployments` surface exposes configured profiles and safe run status. `POST /operations/deployments/runs` is permission guarded and throttled. Profile selection is allowlisted, dry-run creates no artifact, release identifiers resist concurrent collisions, and HTTP failures never expose process details or local paths.
 
 Catalyst is distributed as a project base. The project root may be installed as
 the target site root, but the effective web root is `public/`. Production hosts

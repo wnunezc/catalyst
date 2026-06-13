@@ -414,10 +414,18 @@ final class ModuleLinter
 
                 $from = trim((string) ($migration['from'] ?? ''));
                 $to = trim((string) ($migration['to'] ?? ''));
+                $sourceIsHistorical = ($migration['source_state'] ?? '') === 'historical';
                 $checked += 2;
 
-                foreach ([$from, $to] as $permissionSlug) {
+                foreach ([
+                    ['slug' => $from, 'required' => !$sourceIsHistorical],
+                    ['slug' => $to, 'required' => true],
+                ] as $permissionReference) {
+                    $permissionSlug = $permissionReference['slug'];
                     if ($permissionSlug === '' || $permissionRegistry->find($permissionSlug) === null) {
+                        if (!$permissionReference['required'] && $permissionSlug !== '') {
+                            continue;
+                        }
                         $issues[] = [
                             'type' => 'permission-migration-without-registry-bridge',
                             'module' => $module['key'] ?? null,

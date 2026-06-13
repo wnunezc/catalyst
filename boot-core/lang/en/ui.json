@@ -64,7 +64,7 @@
       "deployments": "Deployments",
       "tenancy": "Tenancy",
       "audit_log": "Audit Log",
-      "api_platform": "API Platform",
+      "api_management": "API Management",
       "automation_rules": "Automation Rules",
       "user_management": "User Management",
       "user_enroll": "User Enroll",

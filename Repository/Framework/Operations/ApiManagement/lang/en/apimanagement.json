@@ -1,0 +1,103 @@
+{
+  "module": {
+    "description": "Versioned API platform with token management, route catalog, workflow operations and version restore endpoints.",
+    "permission_label": "Manage API Management",
+    "permission_description": "Inspect the versioned API catalog and manage bearer tokens.",
+    "navigation_label": "API Management",
+    "navigation_hint": "API v1 catalog, tokens and operational framework endpoints."
+  },
+  "index": {
+    "title": "API Management",
+    "eyebrow": "API",
+    "description": "Versioned API v1 integrated with real auth, runtime permissions, formal catalog, workflows and operational version restore.",
+    "chips": {
+      "bearer": "Bearer auth",
+      "runtime": "Queue / Workflow / Versioning"
+    }
+  },
+  "created_token": {
+    "title": "New token",
+    "description": "Copy it now. The persisted hash replaces the plain value and it will not be shown again."
+  },
+  "form": {
+    "card_title": "Issue bearer token",
+    "card_description": "Real token over active users of the current system.",
+    "defaults": {
+      "token_name": "API token",
+      "user": "User"
+    },
+    "sections": {
+      "identity": {
+        "title": "Token identity",
+        "description": "Create a real bearer token linked to an active user of the runtime."
+      }
+    },
+    "labels": {
+      "name": "Token name",
+      "user": "User",
+      "abilities": "Abilities CSV",
+      "expires_at": "Expires at"
+    },
+    "placeholders": {
+      "name": "Automation integration",
+      "user": "Select active user",
+      "abilities": "catalog,documents,automation",
+      "expires_at": "2026-05-31 23:59:59"
+    },
+    "help": {
+      "abilities": "Informational scopes persisted with the token. Use * for unrestricted scope metadata.",
+      "expires_at": "Optional UTC/local datetime accepted by strtotime(). Leave blank for non-expiring tokens."
+    },
+    "actions": {
+      "create": "Create token"
+    }
+  },
+  "catalog": {
+    "title": "Route catalog v1",
+    "description": "All versioned endpoints use `Authorization: Bearer <token>`.",
+    "auth_type": "Bearer token",
+    "columns": {
+      "method": "Method",
+      "path": "Path",
+      "permission": "Permission",
+      "description": "Description"
+    }
+  },
+  "tokens": {
+    "title": "Active tokens",
+    "description": "Current inventory with explicit revocation and traceability by last use.",
+    "never": "Never",
+    "empty": "No active API tokens yet.",
+    "columns": {
+      "name": "Name",
+      "prefix": "Prefix",
+      "user": "User",
+      "abilities": "Abilities",
+      "expires": "Expires",
+      "last_used": "Last used"
+    },
+    "actions": {
+      "revoke": "Revoke"
+    }
+  },
+  "messages": {
+    "created": "API token created. Copy it now; it will not be shown again.",
+    "revoked": "API token revoked.",
+    "not_found": "API token not found.",
+    "catalog_retrieved": "API catalog retrieved.",
+    "workflow_instances_retrieved": "Workflow instances retrieved.",
+    "workflow_instance_not_found": "Workflow instance not found.",
+    "workflow_forbidden_resource": "Forbidden workflow resource.",
+    "workflow_transition_required": "Transition is required.",
+    "workflow_transitioned": "Workflow transitioned.",
+    "versioned_resource_not_found": "Versioned resource not found.",
+    "version_history_retrieved": "Version history retrieved.",
+    "version_not_found": "Version not found.",
+    "version_restored": "Version restored."
+  },
+  "validation": {
+    "valid_active_user": "Select a valid active user.",
+    "abilities_required": "Provide at least one ability or use *.",
+    "expires_at_invalid": "Provide a valid expiration datetime or leave it blank."
+  }
+}

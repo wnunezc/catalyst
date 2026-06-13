@@ -1,0 +1,94 @@
+/*
+ * Operations module styles.
+ * Surface-specific rules are added only with their vertical migrations.
+ */
+
+.audit-log-pre {
+    min-height: 220px;
+    white-space: pre-wrap;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: 0.85rem;
+}
+
+.apimanagement-token-secret {
+    background: rgba(15, 23, 42, 0.94);
+    color: #f8fafc;
+    border: 1px solid rgba(var(--catalyst-brand-primary-rgb), 0.18);
+    border-radius: 0.42rem;
+    padding: 0.68rem;
+    overflow: auto;
+    font-size: 0.875rem;
+}
+
+.apimanagement-page .table {
+    font-size: 0.875rem;
+}
+
+.automation-page .automation-hero {
+    background: rgba(255, 251, 235, 0.96);
+    border-left: 4px solid #d97706;
+}
+
+.automation-eyebrow {
+    display: inline-flex;
+    margin-bottom: 0.35rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #b45309;
+}
+
+.automation-title {
+    font-size: clamp(1.8rem, 2vw, 2.35rem);
+    line-height: 1.1;
+}
+
+.automation-lede {
+    max-width: 60rem;
+    color: #57534e;
+    line-height: 1.42;
+}
+
+.automation-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: 0.58rem;
+}
+
+.automation-result pre {
+    max-height: 24rem;
+    overflow: auto;
+}
+
+.automation-page {
+    font-size: 0.875rem;
+}
+
+.operations-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    gap: 0.75rem;
+}
+
+.operations-card {
+    border: 1px solid rgba(var(--bs-secondary-rgb), 0.2);
+    border-radius: 0.5rem;
+    padding: 0.85rem;
+}
+
+.operations-definition-list {
+    display: grid;
+    gap: 0.65rem;
+    margin: 0;
+}
+
+.operations-definition-list > div {
+    display: grid;
+    grid-template-columns: minmax(10rem, 1fr) 1.5fr;
+    gap: 0.75rem;
+}
+
+.operations-definition-list dd {
+    margin: 0;
+}

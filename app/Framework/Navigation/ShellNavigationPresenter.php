@@ -76,9 +76,9 @@ final class ShellNavigationPresenter
             'items' => [
                 ['label_key' => 'ui.product_nav.items.deployments', 'href' => '/operations/deployments', 'icon' => 'ti ti-rocket'],
                 ['label_key' => 'ui.product_nav.items.tenancy', 'href' => '/operations/tenancy', 'icon' => 'ti ti-building-community'],
-                ['label_key' => 'ui.product_nav.items.audit_log', 'href' => '/audit-log', 'icon' => 'ti ti-history'],
-                ['label_key' => 'ui.product_nav.items.api_platform', 'href' => '/api-platform', 'icon' => 'ti ti-api'],
-                ['label_key' => 'ui.product_nav.items.automation_rules', 'href' => '/automation-rules', 'icon' => 'ti ti-bolt'],
+                ['label_key' => 'ui.product_nav.items.audit_log', 'href' => '/operations/audit-log', 'icon' => 'ti ti-history'],
+                ['label_key' => 'ui.product_nav.items.api_management', 'href' => '/operations/api-management', 'icon' => 'ti ti-api'],
+                ['label_key' => 'ui.product_nav.items.automation_rules', 'href' => '/operations/automation-rules', 'icon' => 'ti ti-bolt'],
             ],
         ],
         'users' => [

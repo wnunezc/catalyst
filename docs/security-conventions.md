@@ -22,6 +22,8 @@ Templates should escape output with `e($value)` unless a value is intentionally 
 
 Route access is enforced by middleware and verified by runtime lint. API-token routes, authenticated routes, setup routes and public routes must remain distinguishable in route docs and runtime catalog output.
 
+The 13 public `/api/v1/*` routes use `ApiTokenMiddleware`; session-authenticated `/api/notifications*`, `/api/presence*`, `/api/ws-token` and App `/api/public/*` companions are internal transports, not public APIs. Deployments must hide process errors and local paths. Tenancy diagnostics must omit raw configuration, hosts, DSN, credentials and secrets.
+
 ## Operational Notes
 
 Run `php public/cli.php security:check` for focused frontend/CSP hotspots when editing view or script behavior. Run `inspect:lint` and `route:lint` after route, guard or asset changes.

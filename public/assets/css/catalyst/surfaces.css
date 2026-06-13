@@ -162,7 +162,7 @@
 .automation-page,
 .audit-page,
 .audit-show-page,
-.apiplatform-page,
+.apimanagement-page,
 .catalogs-page,
 .documents-page,
 .media-page,
@@ -185,7 +185,7 @@
 .automation-page,
 .audit-page,
 .audit-show-page,
-.apiplatform-page,
+.apimanagement-page,
 .catalogs-page,
 .documents-page,
 .media-page {
@@ -238,7 +238,7 @@
 .rbac-eyebrow,
 .automation-eyebrow,
 .audit-eyebrow,
-.apiplatform-eyebrow {
+.apimanagement-eyebrow {
     color: var(--bs-primary);
     display: block;
     font-size: .67rem;
@@ -291,8 +291,8 @@
 .rbac-page .breadcrumb,
 .automation-page .breadcrumb,
 .audit-page .breadcrumb,
-.apiplatform-page .breadcrumb,
-.apiplatform-page .breadcrumb,
+.apimanagement-page .breadcrumb,
+.apimanagement-page .breadcrumb,
 .catalogs-page .breadcrumb,
 .documents-page .breadcrumb,
 .media-page .breadcrumb {
@@ -305,8 +305,8 @@
 .rbac-page .breadcrumb a,
 .automation-page .breadcrumb a,
 .audit-page .breadcrumb a,
-.apiplatform-page .breadcrumb a,
-.apiplatform-page .breadcrumb a,
+.apimanagement-page .breadcrumb a,
+.apimanagement-page .breadcrumb a,
 .catalogs-page .breadcrumb a,
 .documents-page .breadcrumb a,
 .media-page .breadcrumb a {
@@ -319,7 +319,7 @@
 .rbac-hero,
 .automation-hero,
 .audit-hero,
-.apiplatform-hero,
+.apimanagement-hero,
 .catalogs-hero,
 .documents-hero,
 .media-hero {
@@ -335,7 +335,7 @@
 .rbac-hero > .card-body,
 .automation-hero > .card-body,
 .audit-hero > .card-body,
-.apiplatform-hero > .card-body,
+.apimanagement-hero > .card-body,
 .catalogs-hero > .card-body,
 .documents-hero > .card-body,
 .media-hero > .card-body {
@@ -397,7 +397,7 @@
 .rbac-section,
 .rbac-form-shell,
 .audit-section,
-.apiplatform-section,
+.apimanagement-section,
 .operations-page > .card,
 .surface-page > .card,
 .surface-content-shell > .card,
@@ -413,7 +413,7 @@
 .rbac-section > .card-header,
 .rbac-form-shell > .card-header,
 .audit-section > .card-header,
-.apiplatform-section > .card-header,
+.apimanagement-section > .card-header,
 .operations-page > .card > .card-header,
 .surface-page > .card > .card-header,
 .surface-content-shell > .card > .card-header,
@@ -452,7 +452,7 @@
 .rbac-section > .card-body,
 .rbac-form-shell > .card-body,
 .audit-section > .card-body,
-.apiplatform-section > .card-body {
+.apimanagement-section > .card-body {
     padding: .75rem;
 }
 
@@ -481,8 +481,8 @@
 .rbac-page .btn-link,
 .automation-page .btn-link,
 .audit-page .btn-link,
-.apiplatform-page .btn-link,
-.apiplatform-page .btn-link,
+.apimanagement-page .btn-link,
+.apimanagement-page .btn-link,
 .catalogs-page .btn-link,
 .documents-page .btn-link,
 .media-page .btn-link {
@@ -499,8 +499,8 @@
 .rbac-page .btn-sm,
 .automation-page .btn-sm,
 .audit-page .btn-sm,
-.apiplatform-page .btn-sm,
-.apiplatform-page .btn-sm,
+.apimanagement-page .btn-sm,
+.apimanagement-page .btn-sm,
 .catalogs-page .btn-sm,
 .documents-page .btn-sm,
 .media-page .btn-sm {
@@ -514,8 +514,8 @@
 .rbac-page .table,
 .automation-page .table,
 .audit-page .table,
-.apiplatform-page .table,
-.apiplatform-page .table,
+.apimanagement-page .table,
+.apimanagement-page .table,
 .catalogs-page .table,
 .documents-page .table,
 .media-page .table {
@@ -528,8 +528,8 @@
 .rbac-page .table thead,
 .automation-page .table thead,
 .audit-page .table thead,
-.apiplatform-page .table thead,
-.apiplatform-page .table thead,
+.apimanagement-page .table thead,
+.apimanagement-page .table thead,
 .catalogs-page .table thead,
 .documents-page .table thead,
 .media-page .table thead {
@@ -547,8 +547,8 @@
 .rbac-page .table > :not(caption) > * > *,
 .automation-page .table > :not(caption) > * > *,
 .audit-page .table > :not(caption) > * > *,
-.apiplatform-page .table > :not(caption) > * > *,
-.apiplatform-page .table > :not(caption) > * > *,
+.apimanagement-page .table > :not(caption) > * > *,
+.apimanagement-page .table > :not(caption) > * > *,
 .catalogs-page .table > :not(caption) > * > *,
 .documents-page .table > :not(caption) > * > *,
 .media-page .table > :not(caption) > * > * {
@@ -561,8 +561,8 @@
 .rbac-page .table tbody tr:hover,
 .automation-page .table tbody tr:hover,
 .audit-page .table tbody tr:hover,
-.apiplatform-page .table tbody tr:hover,
-.apiplatform-page .table tbody tr:hover,
+.apimanagement-page .table tbody tr:hover,
+.apimanagement-page .table tbody tr:hover,
 .catalogs-page .table tbody tr:hover,
 .documents-page .table tbody tr:hover,
 .media-page .table tbody tr:hover {

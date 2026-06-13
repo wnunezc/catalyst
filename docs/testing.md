@@ -39,6 +39,8 @@ php public/cli.php quality:check
 git diff --check
 ```
 
+The canonical ownership contract additionally verifies exactly 76 included routes, 49 Workspaces routes, 27 Operations routes, 13 public `/api/v1/*` routes, zero legacy Repository owners, zero aliases and no `/operations` overview.
+
 ## PHP Unit Tests
 
 Unit tests live in:

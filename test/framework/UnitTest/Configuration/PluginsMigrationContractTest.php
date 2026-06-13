@@ -22,7 +22,6 @@ final class PluginsMigrationContractTest extends TestCase
         $configuration = file_get_contents($root . '/Repository/Framework/Configuration/routes.php');
 
         Assert::true(str_contains((string) $configuration, '/configuration/plugins'));
-        Assert::false(is_dir($root . '/Repository/Framework/Operations'));
         Assert::true(is_file($root . '/Repository/Framework/Configuration/Controllers/PluginsController.php'));
         Assert::false(is_file($root . '/Repository/Framework/Operations/Controllers/PluginsController.php'));
     }

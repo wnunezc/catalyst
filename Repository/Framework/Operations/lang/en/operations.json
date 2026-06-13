@@ -1,0 +1,81 @@
+{
+        "module": {
+            "description": "Canonical owner of framework operations surfaces."
+        },
+        "permissions": {
+            "deployments": {
+                "label": "Manage deployments",
+                "description": "Manage framework deployment operations."
+            },
+            "tenancy": {
+                "label": "Manage tenancy",
+                "description": "Manage framework tenant operations."
+            },
+            "audit_log": {
+                "label": "Manage audit log",
+                "description": "Review and export framework audit records."
+            },
+            "api_management": {
+                "label": "Manage API management",
+                "description": "Manage API credentials and inspect the versioned route catalog."
+            },
+            "automation_rules": {
+                "label": "Manage automation rules",
+                "description": "Manage framework automation rules and executions."
+            }
+        },
+        "deployments": {
+            "eyebrow": "Operations",
+            "title": "Deployments",
+            "description": "Run configured deployment profiles and review safe execution status.",
+            "navigation_label": "Deployments",
+            "navigation_hint": "Execute deployment profiles and review run history.",
+            "form": {
+                "title": "Run deployment",
+                "description": "Select an allowlisted profile. Use dry-run to validate without creating artifacts.",
+                "fields": {
+                    "profile": "Profile",
+                    "select_profile": "Select a profile",
+                    "dry_run": "Dry-run",
+                    "dry_run_help": "Validate preflight and persistence without copying or publishing artifacts."
+                },
+                "actions": {"run": "Run deployment"}
+            },
+            "profiles": {
+                "title": "Configured profiles",
+                "description": "Profiles currently available to the deployment runtime.",
+                "dry_run_ready": "Dry-run supported"
+            },
+            "grid": {
+                "title": "Deployment history",
+                "description": "Safe status history without process errors or local paths.",
+                "empty": {"title": "No deployment runs", "description": "Run a configured profile to create history."},
+                "columns": {"release": "Release", "profile": "Profile", "status": "Status", "environment": "Environment", "started": "Started", "finished": "Finished"},
+                "filters": {"status": "Status"},
+                "search_placeholder": "Search releases and profiles"
+            },
+            "states": {"completed": "Completed", "failed": "Failed", "dry_run": "Dry-run", "running": "Running"},
+            "messages": {"finished": "Deployment run finished:", "failed": "The deployment could not be completed. Review the audit log."}
+        },
+        "tenancy": {
+            "eyebrow": "Operations",
+            "title": "Tenancy diagnostics",
+            "description": "Read-only safe projection of tenant isolation and current resolution.",
+            "navigation_label": "Tenancy",
+            "navigation_hint": "Review tenant isolation and current resolution.",
+            "runtime": {"title": "Runtime baseline"},
+            "resolution": {"title": "Current resolution", "resolved": "Resolved", "unresolved": "Not resolved"},
+            "fields": {
+                "strategy": "Runtime strategy",
+                "target_strategy": "Target strategy",
+                "resolution_mode": "Resolution mode",
+                "isolation": "Data isolation active",
+                "tenant_count": "Configured tenants",
+                "status": "Resolution status",
+                "tenant_key": "Tenant key",
+                "tenant_id": "Tenant ID",
+                "resolved_from": "Resolved from",
+                "baseline_status": "Baseline status"
+            }
+        }
+}

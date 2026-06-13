@@ -23,7 +23,6 @@ final class AppearanceMigrationContractTest extends TestCase
 
         Assert::contains("'/configuration/platform-appearance'", $configurationRoutes);
         Assert::contains('AppearanceController::class', $configurationRoutes);
-        Assert::false(is_dir($this->path('Repository/Framework/Operations')));
         Assert::false(is_file($this->path('Repository/Framework/Operations/Controllers/AppearanceController.php')));
         Assert::false(is_file($this->path('Repository/Framework/Operations/Requests/AppearanceUpdateRequest.php')));
     }

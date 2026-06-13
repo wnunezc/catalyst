@@ -28,6 +28,39 @@ Catalyst API documentation is split by namespace and subsystem:
 | Generated inventories | `docs/runtime-inventory.md`, `docs/runtime-module-catalog.md` |
 | Operations | `docs/testing.md`, `docs/quality-gate.md`, `docs/deployment.md` |
 
+## Public Versioned APIs
+
+The ROADMAP-3 public API contract contains exactly these 13 bearer-token routes:
+
+| Owner | Method | Path |
+|---|---|---|
+| Workspaces | GET | `/api/v1/document-templates` |
+| Workspaces | GET | `/api/v1/document-templates/{id}` |
+| Workspaces | POST | `/api/v1/document-templates/{id}/preview` |
+| Workspaces | POST | `/api/v1/document-templates/{id}/export` |
+| API | GET | `/api/v1/catalog` |
+| API | GET | `/api/v1/workflows` |
+| API | POST | `/api/v1/workflows/{id}/transition` |
+| API | GET | `/api/v1/calendar/events` |
+| API | GET | `/api/v1/versions/{resourceKey}/{recordId}` |
+| API | POST | `/api/v1/versions/{id}/restore` |
+| Operations | GET | `/api/v1/automation-rules` |
+| Operations | GET | `/api/v1/automation-rules/{id}` |
+| Operations | POST | `/api/v1/automation-rules/{id}/run` |
+
+These routes preserve `ApiTokenMiddleware`, abilities, throttling and payload/error contracts.
+
+## Internal Transport Debt
+
+The following routes are not public APIs and remain pending normalization:
+
+| Kind | Current routes | Future family |
+|---|---|---|
+| Shell/runtime transport | `/api/notifications`, `/api/notifications/unread-count`, `/api/notifications/read-all`, `/api/notifications/{id}/read`, `/api/presence/{resourceKey}/{recordId}/heartbeat`, `/api/ws-token` | `/runtime/*` |
+| App companions | `/api/public/home`, `/api/public/landing`, `/api/public/store`, `/api/public/dashboard` | `/surfaces/{surface}/data` |
+
+No compatibility aliases or partial future destinations are active.
+
 ## Operational Notes
 
 Run `php public/cli.php docs:inventory --json` after class/template/script changes and `php public/cli.php docs:sync-runtime --stdout` after module, route, asset, permission or settings changes.
@@ -35,6 +68,8 @@ Run `php public/cli.php docs:inventory --json` after class/template/script chang
 ## Related Documentation
 
 - `docs/architecture.md`
+- `docs/repository-workspaces.md`
+- `docs/repository-operations.md`
 - `docs/runtime-inventory.md`
 - `docs/runtime-module-catalog.md`
 - `STRUCTURE.md`

@@ -31,7 +31,10 @@ namespace Catalyst\Framework\Localization;
 
 use Catalyst\Framework\Traits\SingletonTrait;
 use Catalyst\Helpers\Config\ConfigManager;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 use RuntimeException;
+use Throwable;
 
 /**
  * Manages runtime localization settings and locale catalogs.
@@ -163,15 +166,28 @@ final class LocalizationManager
         $settings['supported_locales'] = $supportedLocales;
         $settings['locale_labels'] = $this->normalizeLocaleLabels((array) ($settings['locale_labels'] ?? []), $supportedLocales);
 
-        $this->config->writeSection(self::SECTION, [
-            self::ENTRY => $settings,
-        ]);
+        $previousLocalization = $this->config->section(self::SECTION);
+        $previousApp = $this->config->section('app');
 
-        $app = $this->config->section('app')['project'] ?? [];
-        $app['project_lang'] = $defaultLocale;
-        $this->config->writeSection('app', [
-            'project' => $app,
-        ]);
+        try {
+            $this->config->writeSection(self::SECTION, [
+                self::ENTRY => $settings,
+            ]);
+
+            $app = $previousApp['project'] ?? [];
+            $app['project_lang'] = $defaultLocale;
+            $this->config->writeSection('app', [
+                'project' => $app,
+            ]);
+        } catch (Throwable $throwable) {
+            try {
+                $this->config->writeSection(self::SECTION, $previousLocalization);
+                $this->config->writeSection('app', $previousApp);
+            } catch (Throwable) {
+            }
+
+            throw new RuntimeException('Unable to update localization settings safely.', 0, $throwable);
+        }
     }
 
     /**
@@ -191,14 +207,24 @@ final class LocalizationManager
         ];
 
         foreach ([
-            [PD, 'Repository', 'Framework', '*', 'lang'],
-            [PD, 'Repository', 'App', '*', 'lang'],
-            [PD, 'Repository', 'App', 'Surface', '*', 'lang'],
-        ] as $patternParts) {
-            $pattern = implode(DIRECTORY_SEPARATOR, $patternParts);
-            $directories = glob($pattern, GLOB_ONLYDIR) ?: [];
+            implode(DIRECTORY_SEPARATOR, [PD, 'Repository', 'Framework']),
+            implode(DIRECTORY_SEPARATOR, [PD, 'Repository', 'App']),
+        ] as $repositoryRoot) {
+            if (!is_dir($repositoryRoot)) {
+                continue;
+            }
 
-            foreach ($directories as $directory) {
+            $iterator = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($repositoryRoot, RecursiveDirectoryIterator::SKIP_DOTS),
+                RecursiveIteratorIterator::SELF_FIRST
+            );
+
+            foreach ($iterator as $entry) {
+                if (!$entry->isDir() || strtolower($entry->getFilename()) !== 'lang') {
+                    continue;
+                }
+
+                $directory = $entry->getPathname();
                 $relative = str_replace(PD . DIRECTORY_SEPARATOR, '', $directory);
                 $scope = strtolower(str_replace(DIRECTORY_SEPARATOR, '.', preg_replace('/\\\\+/', DIRECTORY_SEPARATOR, $relative) ?: $relative));
                 $roots[] = [
@@ -209,7 +235,12 @@ final class LocalizationManager
             }
         }
 
-        return $roots;
+        $unique = [];
+        foreach ($roots as $root) {
+            $unique[(string) $root['path']] = $root;
+        }
+
+        return array_values($unique);
     }
 
     /**
@@ -302,7 +333,9 @@ final class LocalizationManager
     public function initializeLocale(string $locale, string $label, bool $dryRun = false): array
     {
         $locale = $this->normalizeLocaleCode($locale);
+        $this->assertMutableLocale($locale);
         $actions = [];
+        $writes = [];
 
         foreach ($this->languageRoots() as $root) {
             $baseDirectory = $root['path'] . DIRECTORY_SEPARATOR . self::BASE_LOCALE;
@@ -322,34 +355,39 @@ final class LocalizationManager
                     'target' => $targetFile,
                 ];
 
-                if ($dryRun || $exists) {
+                if ($exists) {
                     continue;
                 }
 
-                if (!is_dir($targetDirectory) && !mkdir($targetDirectory, 0755, true) && !is_dir($targetDirectory)) {
-                    throw new RuntimeException('Unable to create locale directory: ' . $targetDirectory);
-                }
-
                 $contents = file_get_contents($baseFile);
-                if ($contents === false || file_put_contents($targetFile, $contents) === false) {
-                    throw new RuntimeException('Unable to initialize locale file: ' . $targetFile);
+                if ($contents === false) {
+                    throw new RuntimeException('Unable to read base locale catalog.');
                 }
+                $writes[$targetFile] = $contents;
             }
         }
 
+        $writer = new AtomicLocaleCatalogWriter();
+        $snapshots = [];
         if (!$dryRun) {
-            $labels = $this->localeLabels();
-            $labels[$locale] = trim($label) !== '' ? trim($label) : $this->guessLocaleLabel($locale);
-            $supported = $this->availableLocales();
-            if (!in_array($locale, $supported, true)) {
-                $supported[] = $locale;
-            }
+            try {
+                $snapshots = $writer->write($writes);
+                $labels = $this->localeLabels();
+                $labels[$locale] = trim($label) !== '' ? trim($label) : $this->guessLocaleLabel($locale);
+                $supported = $this->availableLocales();
+                if (!in_array($locale, $supported, true)) {
+                    $supported[] = $locale;
+                }
 
-            $this->writeRuntimeSettings([
-                'default_locale' => $this->defaultLocale(),
-                'supported_locales' => $supported,
-                'locale_labels' => $labels,
-            ]);
+                $this->writeRuntimeSettings([
+                    'default_locale' => $this->defaultLocale(),
+                    'supported_locales' => $supported,
+                    'locale_labels' => $labels,
+                ]);
+            } catch (Throwable $throwable) {
+                $writer->rollback($snapshots);
+                throw new RuntimeException('Locale initialization was rolled back.', 0, $throwable);
+            }
         }
 
         return [
@@ -369,8 +407,13 @@ final class LocalizationManager
     public function synchronizeLocale(string $locale, bool $dryRun = false): array
     {
         $locale = $this->normalizeLocaleCode($locale);
+        $this->assertMutableLocale($locale);
+        if (!in_array($locale, $this->availableLocales(), true)) {
+            throw new RuntimeException('Locale must be initialized before synchronization.');
+        }
         $updatedCatalogs = [];
         $missingKeys = 0;
+        $writes = [];
 
         foreach ($this->languageRoots() as $root) {
             $baseDirectory = $root['path'] . DIRECTORY_SEPARATOR . self::BASE_LOCALE;
@@ -399,19 +442,16 @@ final class LocalizationManager
                     'created' => !is_file($targetFile),
                 ];
 
-                if ($dryRun) {
-                    continue;
-                }
-
-                if (!is_dir($targetDirectory) && !mkdir($targetDirectory, 0755, true) && !is_dir($targetDirectory)) {
-                    throw new RuntimeException('Unable to create locale directory: ' . $targetDirectory);
-                }
-
                 $encoded = json_encode($merge['merged'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-                if ($encoded === false || file_put_contents($targetFile, $encoded . PHP_EOL) === false) {
-                    throw new RuntimeException('Unable to synchronize locale file: ' . $targetFile);
+                if ($encoded === false) {
+                    throw new RuntimeException('Unable to encode synchronized locale catalog.');
                 }
+                $writes[$targetFile] = $encoded . PHP_EOL;
             }
+        }
+
+        if (!$dryRun) {
+            (new AtomicLocaleCatalogWriter())->write($writes);
         }
 
         return [
@@ -436,6 +476,13 @@ final class LocalizationManager
         }
 
         return $locale;
+    }
+
+    private function assertMutableLocale(string $locale): void
+    {
+        if ($locale === self::BASE_LOCALE) {
+            throw new RuntimeException('The base locale cannot be initialized or synchronized.');
+        }
     }
 
     /**

@@ -81,6 +81,16 @@ trait FrontResourceTrait
         $parts = explode('\\', static::class);
         $controllersIndex = array_search('Controllers', $parts, true);
 
+        if (
+            ($parts[0] ?? null) === 'Catalyst'
+            && ($parts[1] ?? null) === 'Repository'
+            && isset($parts[2])
+            && $controllersIndex !== false
+            && $controllersIndex > 2
+        ) {
+            return strtolower($parts[2]);
+        }
+
         if ($controllersIndex !== false && $controllersIndex > 0) {
             return strtolower($parts[$controllersIndex - 1]);
         }
@@ -103,8 +113,7 @@ trait FrontResourceTrait
         $view = View::getInstance()->share('moduleSlug', null);
 
         // Locate the module's front/ directory relative to the controller file
-        $controllerDir = dirname((new ReflectionClass(static::class))->getFileName());
-        $frontDir      = dirname($controllerDir) . DS . 'front';
+        $frontDir = $this->resolveFrontDirectory();
 
         if (!is_dir($frontDir)) {
             return;
@@ -137,5 +146,31 @@ trait FrontResourceTrait
                 copy($source, $destination);
             }
         }
+    }
+
+    /**
+     * Resolves the physical front directory of a flat module or canonical nested owner.
+     */
+    protected function resolveFrontDirectory(): string
+    {
+        $parts = explode('\\', static::class);
+        $controllersIndex = array_search('Controllers', $parts, true);
+        $controllerDir = dirname((new ReflectionClass(static::class))->getFileName());
+
+        if (
+            ($parts[0] ?? null) === 'Catalyst'
+            && ($parts[1] ?? null) === 'Repository'
+            && $controllersIndex !== false
+            && $controllersIndex > 2
+        ) {
+            $ownerDir = $controllerDir;
+            for ($level = 0; $level < $controllersIndex - 2; $level++) {
+                $ownerDir = dirname($ownerDir);
+            }
+
+            return $ownerDir . DS . 'front';
+        }
+
+        return dirname($controllerDir) . DS . 'front';
     }
 }

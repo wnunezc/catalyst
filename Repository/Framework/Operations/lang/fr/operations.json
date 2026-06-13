@@ -1,0 +1,81 @@
+{
+        "module": {
+            "description": "Propriétaire canonique des surfaces opérationnelles du framework."
+        },
+        "permissions": {
+            "deployments": {
+                "label": "Gérer les déploiements",
+                "description": "Gérer les opérations de déploiement du framework."
+            },
+            "tenancy": {
+                "label": "Gérer les tenants",
+                "description": "Gérer les opérations des tenants du framework."
+            },
+            "audit_log": {
+                "label": "Gérer le journal d'audit",
+                "description": "Consulter et exporter les enregistrements d'audit du framework."
+            },
+            "api_management": {
+                "label": "Gérer l'API",
+                "description": "Gérer les identifiants API et consulter le catalogue des routes versionnées."
+            },
+            "automation_rules": {
+                "label": "Gérer les règles d'automatisation",
+                "description": "Gérer les règles et exécutions d'automatisation du framework."
+            }
+        },
+        "deployments": {
+            "eyebrow": "Opérations",
+            "title": "Déploiements",
+            "description": "Exécuter les profils configurés et consulter leur statut sécurisé.",
+            "navigation_label": "Déploiements",
+            "navigation_hint": "Exécuter les profils de déploiement et consulter l'historique.",
+            "form": {
+                "title": "Exécuter un déploiement",
+                "description": "Sélectionnez un profil autorisé. Utilisez dry-run pour valider sans créer d'artefacts.",
+                "fields": {
+                    "profile": "Profil",
+                    "select_profile": "Sélectionner un profil",
+                    "dry_run": "Dry-run",
+                    "dry_run_help": "Valider le preflight et la persistance sans copier ni publier d'artefacts."
+                },
+                "actions": {"run": "Exécuter le déploiement"}
+            },
+            "profiles": {
+                "title": "Profils configurés",
+                "description": "Profils actuellement disponibles pour le runtime de déploiement.",
+                "dry_run_ready": "Dry-run disponible"
+            },
+            "grid": {
+                "title": "Historique des déploiements",
+                "description": "Historique sécurisé sans erreurs de processus ni chemins locaux.",
+                "empty": {"title": "Aucune exécution", "description": "Exécutez un profil configuré pour créer l'historique."},
+                "columns": {"release": "Release", "profile": "Profil", "status": "Statut", "environment": "Environnement", "started": "Début", "finished": "Fin"},
+                "filters": {"status": "Statut"},
+                "search_placeholder": "Rechercher des releases et profils"
+            },
+            "states": {"completed": "Terminé", "failed": "Échec", "dry_run": "Dry-run", "running": "En cours"},
+            "messages": {"finished": "Exécution du déploiement terminée :", "failed": "Le déploiement n'a pas pu être terminé. Consultez le journal d'audit."}
+        },
+        "tenancy": {
+            "eyebrow": "Opérations",
+            "title": "Diagnostic tenancy",
+            "description": "Projection read-only sécurisée de l'isolation et de la résolution actuelle.",
+            "navigation_label": "Tenancy",
+            "navigation_hint": "Consulter l'isolation et la résolution actuelle du tenant.",
+            "runtime": {"title": "Baseline du runtime"},
+            "resolution": {"title": "Résolution actuelle", "resolved": "Résolu", "unresolved": "Non résolu"},
+            "fields": {
+                "strategy": "Stratégie du runtime",
+                "target_strategy": "Stratégie cible",
+                "resolution_mode": "Mode de résolution",
+                "isolation": "Isolation des données active",
+                "tenant_count": "Tenants configurés",
+                "status": "Statut de résolution",
+                "tenant_key": "Clé du tenant",
+                "tenant_id": "ID du tenant",
+                "resolved_from": "Résolu depuis",
+                "baseline_status": "Statut baseline"
+            }
+        }
+}

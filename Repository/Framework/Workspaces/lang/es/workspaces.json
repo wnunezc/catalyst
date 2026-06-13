@@ -1,0 +1,150 @@
+{
+        "module": {
+            "description": "Propietario canónico de las superficies de espacios de trabajo del framework."
+        },
+        "module_designer": {
+            "title": "Diseñador de módulos",
+            "eyebrow": "Herramientas de Workspaces",
+            "description": "Previsualiza y genera módulos mediante el motor canónico de scaffolding.",
+            "navigation": {
+                "label": "Diseñador de módulos",
+                "group": "Herramientas de Workspaces",
+                "hint": "Previsualiza y genera scaffolds protegidos."
+            },
+            "blueprint": {
+                "title": "Plano del módulo",
+                "description": "Valida el destino y revisa cada archivo antes de escribir."
+            },
+            "form": {
+                "labels": {
+                    "space": "Espacio del repositorio",
+                    "module": "Nombre del módulo",
+                    "description": "Descripción",
+                    "surface": "Superficie",
+                    "permission_slug": "Slug del permiso",
+                    "settings": "Configuraciones",
+                    "feature_flags": "Feature flags"
+                },
+                "options": {
+                    "none": "Ninguna",
+                    "public": "Pública",
+                    "workspace": "Workspace",
+                    "administration": "Administración",
+                    "devtools": "DevTools"
+                },
+                "actions": {
+                    "preview": "Previsualizar scaffold",
+                    "generate": "Generar scaffold revisado"
+                }
+            },
+            "preview": {
+                "title": "Previsualización verificada",
+                "description": "Esta previsualización está firmada y caduca después de diez minutos.",
+                "namespace": "Namespace",
+                "route": "Ruta",
+                "destination": "Destino",
+                "files": "Archivos generados",
+                "manifest": "Manifiesto"
+            },
+            "lint": {
+                "title": "Lint estructural",
+                "ok": "Coherente",
+                "issues": "incidencia(s)"
+            },
+            "modules": {
+                "title": "Módulos registrados",
+                "name": "Módulo",
+                "scope": "Alcance",
+                "routes": "Rutas"
+            },
+            "messages": {
+                "module_created": "Módulo creado:",
+                "preview_failed": "No fue posible generar la previsualización del scaffold.",
+                "generation_failed": "No fue posible generar el módulo. No se expusieron detalles internos de la excepción."
+            },
+            "validation": {
+                "failed": "El plano del módulo no es válido.",
+                "preview_token": "Comprobante de previsualización",
+                "module_name": "Usa un solo segmento PascalCase sin separadores.",
+                "permission_slug": "Usa kebab-case en minúsculas para el slug del permiso.",
+                "permission_surface": "Las superficies públicas o sin guard no pueden declarar permisos.",
+                "list_value": "Usa identificadores en minúsculas separados por comas o saltos de línea.",
+                "destination": "El destino generado queda fuera del espacio de repositorio permitido.",
+                "destination_exists": "El directorio destino del módulo ya existe.",
+                "preview_required": "La generación requiere una previsualización vigente y sin alteraciones."
+            }
+        },
+        "localization": {
+            "title": "Herramientas de idiomas",
+            "eyebrow": "Workspace de localización",
+            "description": "Consulta cobertura e inicializa o sincroniza catálogos de forma segura.",
+            "navigation": {
+                "label": "Herramientas de idiomas",
+                "hint": "Gestiona la política de idiomas y la cobertura de catálogos."
+            },
+            "coverage": "cobertura",
+            "missing_keys": "claves faltantes",
+            "catalog": "Catálogo",
+            "scope": "Alcance",
+            "dry_run": "Solo previsualizar; no escribir archivos",
+            "settings": {
+                "title": "Política runtime de idiomas",
+                "default_locale": "Idioma predeterminado",
+                "labels": "JSON de etiquetas de idiomas",
+                "save": "Guardar política de idiomas"
+            },
+            "create": {
+                "title": "Inicializar idioma",
+                "label": "Etiqueta del idioma",
+                "submit": "Inicializar idioma"
+            },
+            "sync": {
+                "title": "Sincronizar idioma",
+                "submit": "Sincronizar claves faltantes"
+            },
+            "messages": {
+                "settings_updated": "La política runtime de idiomas se actualizó de forma segura.",
+                "settings_failed": "No fue posible actualizar la política runtime de idiomas.",
+                "preview_ready": "Dry-run completado. No se modificaron archivos.",
+                "locale_created": "Catálogos del idioma inicializados.",
+                "create_failed": "No fue posible inicializar el idioma. Las escrituras parciales se revirtieron.",
+                "locale_synced": "Claves faltantes del idioma sincronizadas.",
+                "sync_failed": "No fue posible sincronizar el idioma. Las escrituras parciales se revirtieron."
+            },
+            "validation": {
+                "failed": "La solicitud de localización no es válida.",
+                "locale_code": "Usa un código como es, fr o pt-br.",
+                "base_locale": "El idioma base inglés no puede modificarse.",
+                "locale_exists": "Ese idioma ya está inicializado.",
+                "locale_missing": "Selecciona un idioma inicializado.",
+                "labels_json": "Las etiquetas deben ser un objeto JSON válido.",
+                "labels_complete": "Cada idioma soportado requiere una etiqueta no vacía."
+            }
+        },
+        "permissions": {
+            "catalogs": {
+                "label": "Gestionar catálogos de Workspaces",
+                "description": "Gestionar los catálogos propiedad de Workspaces."
+            },
+            "module_designer": {
+                "label": "Gestionar diseñador de módulos",
+                "description": "Diseñar módulos de Workspaces y sus superficies declaradas."
+            },
+            "media_fields": {
+                "label": "Gestionar campos multimedia",
+                "description": "Gestionar definiciones de metadatos multimedia de Workspaces."
+            },
+            "media_library": {
+                "label": "Gestionar biblioteca multimedia",
+                "description": "Gestionar registros de la biblioteca multimedia de Workspaces."
+            },
+            "document_templates": {
+                "label": "Gestionar plantillas documentales",
+                "description": "Gestionar plantillas documentales de Workspaces."
+            },
+            "localization": {
+                "label": "Gestionar localización",
+                "description": "Gestionar catálogos de idiomas y herramientas de localización de Workspaces."
+            }
+        }
+}

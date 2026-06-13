@@ -17,14 +17,13 @@ final class FeatureFlagsMigrationContractTest extends TestCase
         $configuration = file_get_contents($root . '/Repository/Framework/Configuration/routes.php');
 
         Assert::true(str_contains((string) $configuration, '/configuration/feature-flags'));
-        Assert::false(is_dir($root . '/Repository/Framework/Operations'));
         Assert::true(is_file($root . '/Repository/Framework/Configuration/Controllers/FeatureFlagsController.php'));
         Assert::false(is_file($root . '/Repository/Framework/Operations/Controllers/FeatureFlagsController.php'));
     }
 
     public function testFeatureFlagKeysAndScopesAreRejectedBeforePersistence(): void
     {
-        Assert::true(FeatureFlagManager::isValidKey('module.framework.audit'));
+        Assert::true(FeatureFlagManager::isValidKey('module.framework.operations'));
         Assert::false(FeatureFlagManager::isValidKey('../invalid'));
         Assert::false(FeatureFlagManager::isValidKey('Uppercase.Flag'));
 

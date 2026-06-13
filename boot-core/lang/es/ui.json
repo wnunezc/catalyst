@@ -64,7 +64,7 @@
       "deployments": "Despliegues",
       "tenancy": "Tenancy",
       "audit_log": "Auditoría",
-      "api_platform": "Plataforma API",
+      "api_management": "Gestión de API",
       "automation_rules": "Reglas de automatización",
       "user_management": "Gestión de usuarios",
       "user_enroll": "Alta de usuarios",

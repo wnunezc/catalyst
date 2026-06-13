@@ -1,0 +1,15 @@
+{
+  "catalog": {"auth_type": "Token bearer"},
+  "messages": {
+    "catalog_retrieved": "Catálogo de API recuperado.",
+    "workflow_instances_retrieved": "Instancias de workflow recuperadas.",
+    "workflow_instance_not_found": "Instancia de workflow no encontrada.",
+    "workflow_forbidden_resource": "Acceso al recurso del workflow denegado.",
+    "workflow_transition_required": "Se requiere una transición de workflow.",
+    "workflow_transitioned": "Workflow transicionado.",
+    "versioned_resource_not_found": "Recurso versionado no encontrado.",
+    "version_history_retrieved": "Historial de versiones recuperado.",
+    "version_not_found": "Versión no encontrada.",
+    "version_restored": "Versión restaurada."
+  }
+}

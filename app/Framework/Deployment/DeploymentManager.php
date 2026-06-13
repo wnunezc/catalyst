@@ -105,14 +105,15 @@ final class DeploymentManager
             throw new RuntimeException(sprintf('Deployment profile "%s" is not defined.', $profileKey));
         }
 
-        $releaseId = gmdate('YmdHis') . '-' . preg_replace('/[^a-z0-9\-]+/i', '-', strtolower($profileKey));
+        $releaseId = gmdate('YmdHis') . '-' . bin2hex(random_bytes(4)) . '-'
+            . preg_replace('/[^a-z0-9\-]+/i', '-', strtolower($profileKey));
         $releaseDir = $this->releaseRoot() . DS . $releaseId;
         $artifactDir = $releaseDir . DS . 'staging';
         $zipPath = $releaseDir . DS . 'release.zip';
         $preflight = (new HealthReportBuilder())->build();
         $actorId = $this->resolveActorId();
 
-        if (!is_dir($releaseDir) && !mkdir($releaseDir, 0755, true) && !is_dir($releaseDir)) {
+        if (!$dryRun && !is_dir($releaseDir) && !mkdir($releaseDir, 0755, true) && !is_dir($releaseDir)) {
             throw new RuntimeException('Could not create release directory: ' . $releaseDir);
         }
 
@@ -122,7 +123,7 @@ final class DeploymentManager
             'environment' => ConfigManager::getInstance()->getEnvironment(),
             'status' => $dryRun ? 'dry-run' : 'running',
             'dry_run' => $dryRun,
-            'artifact_path' => $artifactDir,
+            'artifact_path' => $dryRun ? null : $artifactDir,
             'remote_path' => null,
             'summary_json' => [
                 'preflight' => $preflight['summary'] ?? [],
@@ -138,7 +139,7 @@ final class DeploymentManager
             'profile_key' => $profileKey,
             'release_id' => $releaseId,
             'dry_run' => $dryRun,
-            'artifact_path' => $artifactDir,
+            'artifact_path' => $dryRun ? null : $artifactDir,
             'zip_path' => null,
             'remote_path' => null,
             'preflight' => $preflight,
@@ -174,7 +175,7 @@ final class DeploymentManager
 
             DeploymentRunRepository::getInstance()->update($run, [
                 'status' => $dryRun ? 'dry-run' : 'completed',
-                'artifact_path' => $artifactDir,
+                'artifact_path' => $dryRun ? null : $artifactDir,
                 'remote_path' => $result['remote_path'],
                 'summary_json' => $summary,
                 'finished_at' => gmdate('Y-m-d H:i:s'),

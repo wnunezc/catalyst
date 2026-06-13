@@ -59,18 +59,17 @@ Criterios observables en el estado actual:
 2. Las hijas deben ser operativamente cercanas y previsibles para el usuario administrativo.
 3. La anidacion debe reducir ruido de primer nivel, no esconder rutas criticas sin criterio.
 
-## Árbol recursivo y deuda desconectada
+## Árbol recursivo y propietarios conectados
 
 El contrato de navegación admite profundidad arbitraria. Los árboles mostrados
 en documentación son ejemplos y no límites de profundidad. Cada nodo puede ser
 un enlace, un contenedor o un título; el estado activo se propaga hacia sus
 ancestros.
 
-La taxonomía administrativa conserva destinos canónicos cuya migración física
-está fuera de alcance. Cuando no existe propietario activo, el destino se
-renderiza deshabilitado, no clicable y con badge `Disconnected`. El inventario y
-backup restaurable de Operations viven en
-`docs/architecture/roadmap-2-module-debt.md`.
+Workspaces y Operations tienen propietarios físicos activos para todas sus
+superficies incluidas. Sus nodos son clicables y no usan badges
+`Disconnected`. La deuda transversal pendiente pertenece a transportes y
+companions, no a nodos del sidebar.
 
 ## Limite entre navegacion principal y navegacion secundaria
 

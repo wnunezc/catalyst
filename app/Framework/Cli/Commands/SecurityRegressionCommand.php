@@ -378,7 +378,7 @@ final class SecurityRegressionCommand extends AbstractCommand
     private function assertRouteCacheMiddlewareSigning(): array
     {
         $route = new Route(['GET'], '/security-regression', static fn (): null => null);
-        $route->middleware(new RoleMiddleware(permissions: 'manage-platform-operations'));
+        $route->middleware(new RoleMiddleware(permissions: 'manage-operations-deployments'));
         $route->normalizeMiddlewareForCache();
 
         $state = [

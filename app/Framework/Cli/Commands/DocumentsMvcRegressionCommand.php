@@ -69,31 +69,31 @@ final class DocumentsMvcRegressionCommand extends AbstractCommand
      */
     public function execute(ArgumentBag $args): int
     {
-        $controller = $this->contents('Repository/Framework/Documents/Controllers/DocumentTemplateController.php');
-        $routes = $this->contents('Repository/Framework/Documents/routes.php');
+        $controller = $this->contents('Repository/Framework/Workspaces/Documents/Controllers/DocumentTemplateController.php');
+        $routes = $this->contents('Repository/Framework/Workspaces/routes.php');
         $checks = [
             'web_controller_is_thin' => substr_count($controller, PHP_EOL) < 430
                 && !str_contains($controller, 'DataGrid::')
                 && !str_contains($controller, 'FormBuilder::')
                 && !str_contains($controller, 'SessionManager::'),
-            'api_controller_split' => class_exists(\Catalyst\Repository\Documents\Controllers\DocumentTemplateApiController::class)
+            'api_controller_split' => class_exists(\Catalyst\Repository\Workspaces\Documents\Controllers\DocumentTemplateApiController::class)
                 && str_contains($routes, "[DocumentTemplateApiController::class, 'apiIndex']")
                 && str_contains($routes, "[DocumentTemplateApiController::class, 'apiShow']")
                 && str_contains($routes, "[DocumentTemplateApiController::class, 'apiPreview']")
                 && str_contains($routes, "[DocumentTemplateApiController::class, 'apiExport']"),
-            'ui_factories_extracted' => class_exists(\Catalyst\Repository\Documents\Support\DocumentTemplateGridFactory::class)
-                && class_exists(\Catalyst\Repository\Documents\Support\DocumentTemplateFormFactory::class)
-                && class_exists(\Catalyst\Repository\Documents\Support\DocumentTemplateShowDataFactory::class),
-            'preview_export_services_extracted' => class_exists(\Catalyst\Repository\Documents\Actions\DocumentTemplatePreviewService::class)
-                && class_exists(\Catalyst\Repository\Documents\Actions\DocumentTemplateExportService::class)
-                && class_exists(\Catalyst\Repository\Documents\Support\DocumentPreviewState::class)
-                && class_exists(\Catalyst\Repository\Documents\Requests\DocumentExportPayloadRequest::class),
-            'transition_request_centralized' => class_exists(\Catalyst\Repository\Documents\Requests\DocumentTemplateTransitionRequest::class)
+            'ui_factories_extracted' => class_exists(\Catalyst\Repository\Workspaces\Documents\Support\DocumentTemplateGridFactory::class)
+                && class_exists(\Catalyst\Repository\Workspaces\Documents\Support\DocumentTemplateFormFactory::class)
+                && class_exists(\Catalyst\Repository\Workspaces\Documents\Support\DocumentTemplateShowDataFactory::class),
+            'preview_export_services_extracted' => class_exists(\Catalyst\Repository\Workspaces\Documents\Actions\DocumentTemplatePreviewService::class)
+                && class_exists(\Catalyst\Repository\Workspaces\Documents\Actions\DocumentTemplateExportService::class)
+                && class_exists(\Catalyst\Repository\Workspaces\Documents\Support\DocumentPreviewState::class)
+                && class_exists(\Catalyst\Repository\Workspaces\Documents\Requests\DocumentExportPayloadRequest::class),
+            'transition_request_centralized' => class_exists(\Catalyst\Repository\Workspaces\Documents\Requests\DocumentTemplateTransitionRequest::class)
                 && str_contains($controller, 'new DocumentTemplateTransitionRequest($request)')
                 && str_contains($controller, '$payload->hasTransition()'),
-            'api_filters_request_centralized' => class_exists(\Catalyst\Repository\Documents\Requests\DocumentTemplateIndexRequest::class)
+            'api_filters_request_centralized' => class_exists(\Catalyst\Repository\Workspaces\Documents\Requests\DocumentTemplateIndexRequest::class)
                 && str_contains(
-                    $this->contents('Repository/Framework/Documents/Controllers/DocumentTemplateApiController.php'),
+                    $this->contents('Repository/Framework/Workspaces/Documents/Controllers/DocumentTemplateApiController.php'),
                     'apiIndex(DocumentTemplateIndexRequest $request'
                 ),
         ];

@@ -48,7 +48,8 @@ shell. The following focused specs are prepared for individual execution:
 
 | Surface | Representative routes | Coverage |
 |---|---|---|
-| Application shell | Audit, API Platform, Operations, Roles, Settings, DevTools | `shell-layout.spec.cjs` |
+| Application shell | Workspaces, Operations, Roles, Settings, DevTools | `shell-layout.spec.cjs` |
+| Canonical owners | Six Workspaces and five Operations representative routes | `canonical-owners.spec.cjs` |
 | Auth | Login, forgot password, email verification | `surface-auth-layout.spec.cjs` |
 | Error | Missing route / 404 | `surface-error-layout.spec.cjs` |
 | Demo UI runtime | `/demo-ui` | `demo-ui-runtime.spec.cjs` |
@@ -57,7 +58,7 @@ shell. The following focused specs are prepared for individual execution:
 | Global flash notifications | Shared flash projection and runtime dismissal | `flash-runtime.spec.cjs` |
 | Global DataGrid | `/users` | `datagrid-runtime.spec.cjs` |
 | Global FormBuilder | `/workspaces/media-fields/create` | `form-builder-runtime.spec.cjs` |
-| Global RecordPresence | First available `/automation-rules/{id}` | `record-presence-runtime.spec.cjs` |
+| Global RecordPresence | First available `/operations/automation-rules/{id}` | `record-presence-runtime.spec.cjs` |
 | Demo UI recursive model | `/demo-ui/charts/apex/line` | `navigation-models.spec.cjs` |
 | Framework admin model | `/configuration/application-health` | `navigation-models.spec.cjs` |
 | Application model | `/account/profile` | `navigation-models.spec.cjs` |
@@ -74,7 +75,7 @@ shell. The following focused specs are prepared for individual execution:
 | Plugins | `/configuration/plugins` | `configuration-surfaces.spec.cjs` |
 
 The model tests assert the single recursive sidebar renderer, active propagation,
-Framework/App composition and disabled `Disconnected` debt. The Configuration
+Framework/App composition and zero `Disconnected` debt. The Configuration
 tests assert the shared shell/runtime and reject legacy Operations work assets.
 They are prepared for manual execution and are not executed as part of
 ROADMAP-2 implementation.
@@ -139,7 +140,7 @@ Before adding a spec:
 4. Add one short independent regression or surface contract.
 5. Run the new spec independently before adding another surface.
 
-## ROADMAP-2 Manual Commands
+## ROADMAP-3 Manual Commands
 
 Run from PowerShell through the authorized workspace runner. These commands are
 prepared for the user and were not executed by the implementation agent.
@@ -147,5 +148,7 @@ prepared for the user and were not executed by the implementation agent.
 ```powershell
 Push-Location D:\OpsZone\DevWorkspace\Engines\Playwright; node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalyst --suite framework --grep "@navigation-models"; Pop-Location
 Push-Location D:\OpsZone\DevWorkspace\Engines\Playwright; node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalyst --suite framework --grep "@configuration-surfaces"; Pop-Location
+Push-Location D:\OpsZone\DevWorkspace\Engines\Playwright; node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalyst --suite framework --grep "@canonical-owners"; Pop-Location
+Push-Location D:\OpsZone\DevWorkspace\Engines\Playwright; node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalyst --suite framework --grep "@record-presence"; Pop-Location
 Push-Location D:\OpsZone\DevWorkspace\Engines\Playwright; node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalyst --suite framework; Pop-Location
 ```

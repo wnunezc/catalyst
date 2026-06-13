@@ -1,0 +1,150 @@
+{
+        "module": {
+            "description": "Canonical owner of framework workspace surfaces."
+        },
+        "module_designer": {
+            "title": "Module Designer",
+            "eyebrow": "Workspace tooling",
+            "description": "Preview and generate framework modules through the canonical scaffolding engine.",
+            "navigation": {
+                "label": "Module Designer",
+                "group": "Workspace tools",
+                "hint": "Preview and generate guarded module scaffolds."
+            },
+            "blueprint": {
+                "title": "Module blueprint",
+                "description": "Validate the destination and inspect every generated file before writing."
+            },
+            "form": {
+                "labels": {
+                    "space": "Repository space",
+                    "module": "Module name",
+                    "description": "Description",
+                    "surface": "Surface",
+                    "permission_slug": "Permission slug",
+                    "settings": "Settings",
+                    "feature_flags": "Feature flags"
+                },
+                "options": {
+                    "none": "None",
+                    "public": "Public",
+                    "workspace": "Workspace",
+                    "administration": "Administration",
+                    "devtools": "DevTools"
+                },
+                "actions": {
+                    "preview": "Preview scaffold",
+                    "generate": "Generate reviewed scaffold"
+                }
+            },
+            "preview": {
+                "title": "Verified preview",
+                "description": "This preview is signed and expires after ten minutes.",
+                "namespace": "Namespace",
+                "route": "Route",
+                "destination": "Destination",
+                "files": "Generated files",
+                "manifest": "Manifest"
+            },
+            "lint": {
+                "title": "Structural lint",
+                "ok": "Coherent",
+                "issues": "issue(s)"
+            },
+            "modules": {
+                "title": "Registered modules",
+                "name": "Module",
+                "scope": "Scope",
+                "routes": "Routes"
+            },
+            "messages": {
+                "module_created": "Module created:",
+                "preview_failed": "The scaffold preview could not be generated.",
+                "generation_failed": "The module could not be generated. No internal exception details were exposed."
+            },
+            "validation": {
+                "failed": "The module blueprint is invalid.",
+                "preview_token": "Preview proof",
+                "module_name": "Use one PascalCase namespace segment without separators.",
+                "permission_slug": "Use lowercase kebab-case for the permission slug.",
+                "permission_surface": "Public and unguarded surfaces cannot declare a permission.",
+                "list_value": "Use lowercase identifiers separated by commas or new lines.",
+                "destination": "The generated destination is outside the allowed repository space.",
+                "destination_exists": "The target module directory already exists.",
+                "preview_required": "Generate requires a current, untampered preview."
+            }
+        },
+        "localization": {
+            "title": "Locale Tools",
+            "eyebrow": "Localization workspace",
+            "description": "Inspect coverage and safely initialize or synchronize locale catalogs.",
+            "navigation": {
+                "label": "Locale Tools",
+                "hint": "Manage runtime locale policy and catalog coverage."
+            },
+            "coverage": "coverage",
+            "missing_keys": "missing keys",
+            "catalog": "Catalog",
+            "scope": "Scope",
+            "dry_run": "Preview only; do not write files",
+            "settings": {
+                "title": "Runtime locale policy",
+                "default_locale": "Default locale",
+                "labels": "Locale labels JSON",
+                "save": "Save locale policy"
+            },
+            "create": {
+                "title": "Initialize locale",
+                "label": "Locale label",
+                "submit": "Initialize locale"
+            },
+            "sync": {
+                "title": "Synchronize locale",
+                "submit": "Synchronize missing keys"
+            },
+            "messages": {
+                "settings_updated": "Runtime locale policy updated safely.",
+                "settings_failed": "The runtime locale policy could not be updated.",
+                "preview_ready": "Dry-run completed. No files were changed.",
+                "locale_created": "Locale catalogs initialized.",
+                "create_failed": "The locale could not be initialized. Partial writes were rolled back.",
+                "locale_synced": "Missing locale keys synchronized.",
+                "sync_failed": "The locale could not be synchronized. Partial writes were rolled back."
+            },
+            "validation": {
+                "failed": "The localization request is invalid.",
+                "locale_code": "Use a locale code such as es, fr or pt-br.",
+                "base_locale": "The English base locale cannot be mutated.",
+                "locale_exists": "That locale is already initialized.",
+                "locale_missing": "Select an initialized locale.",
+                "labels_json": "Locale labels must be a valid JSON object.",
+                "labels_complete": "Every supported locale requires a non-empty label."
+            }
+        },
+        "permissions": {
+            "catalogs": {
+                "label": "Manage workspace catalogs",
+                "description": "Manage catalogs owned by Workspaces."
+            },
+            "module_designer": {
+                "label": "Manage module designer",
+                "description": "Design workspace modules and their declared surfaces."
+            },
+            "media_fields": {
+                "label": "Manage media fields",
+                "description": "Manage workspace media metadata field definitions."
+            },
+            "media_library": {
+                "label": "Manage media library",
+                "description": "Manage workspace media library records."
+            },
+            "document_templates": {
+                "label": "Manage document templates",
+                "description": "Manage workspace document templates."
+            },
+            "localization": {
+                "label": "Manage localization",
+                "description": "Manage workspace locale catalogs and localization tools."
+            }
+        }
+}

@@ -18,7 +18,9 @@ Describe the current Catalyst architecture and act as the central index for the 
 
 ## Current Behavior
 
-Catalyst is a PHP 8.4 MVC framework with a small kernel, explicit HTTP/CLI entry points, framework-owned reusable modules under `Repository/Framework`, app-owned surfaces under `Repository/App/Surface`, and runtime-generated documentation inventories. The current module catalog reports 17 modules with structural lint OK.
+Catalyst is a PHP 8.4 MVC framework with a small kernel, explicit HTTP/CLI entry points, framework-owned reusable modules under `Repository/Framework`, app-owned surfaces under `Repository/App/Surface`, and runtime-generated documentation inventories. The current module catalog reports 13 modules with structural lint OK.
+
+Workspaces and Operations are canonical aggregate owners for administrative surfaces. Workspaces owns 49 routes and six connected surfaces; Operations owns 21 routes and five connected surfaces. The independent Framework API owner holds six transversal routes. Together they preserve the 76 included routes and 13 public APIs under `/api/v1/*`.
 
 The architecture uses separated owners instead of single large classes: routes are registered, compiled, collected and dispatched by different route classes; modules are declared, discovered, inspected and linted by different module classes; views render templates while trusted HTML, inline JSON and token rendering are separate security boundaries.
 
@@ -120,6 +122,9 @@ parallel governor.
 | `docs/repository-auth.md` | Catalyst\Repository\Auth |
 | `docs/repository-devtools.md` | Catalyst\Repository\DevTools |
 | `docs/repository-notification.md` | Catalyst\Repository\Notification |
+| `docs/repository-workspaces.md` | Workspaces Owner |
+| `docs/repository-operations.md` | Operations Owner |
+| `docs/repository-api.md` | Framework API Owner |
 | `docs/reverse-cascade-delete.md` | Reverse Cascade Delete |
 | `docs/routing.md` | Routing Index |
 | `docs/runtime-inventory.md` | Runtime Inventory |

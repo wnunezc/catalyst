@@ -26,15 +26,14 @@ test.describe('@navigation-models Virtual navigation models', () => {
         });
     });
 
-    test('framework-admin keeps Configuration active and disconnected debt non-clickable', async ({ page }) => {
+    test('framework-admin keeps Configuration active and canonical owners connected', async ({ page }) => {
         await runOrSkipForEnvironment(test, async () => {
             await openSurface(page, expect, '/configuration/application-health', { requireTriggers: false });
 
             await expect(page.locator('#sidenav-menu a[href="/configuration/application-health"]')).toHaveCount(1);
-            const disconnectedDebt = page.locator('#sidenav-menu [aria-disabled="true"]', { hasText: 'Disconnected' });
-            expect(await disconnectedDebt.count()).toBeGreaterThan(0);
-            await expect(disconnectedDebt.first()).toHaveAttribute('aria-disabled', 'true');
-            await expect(page.locator('#sidenav-menu a[href="/operations/deployments"]')).toHaveCount(0);
+            await expect(page.locator('#sidenav-menu [aria-disabled="true"]', { hasText: 'Disconnected' })).toHaveCount(0);
+            await expect(page.locator('#sidenav-menu a[href="/operations/deployments"]')).toHaveCount(1);
+            await expect(page.locator('#sidenav-menu a[href="/operations/tenancy"]')).toHaveCount(1);
         });
     });
 

@@ -5,15 +5,15 @@ const { openSurface } = require('../helpers/surface.cjs');
 test.describe('@record-presence Global RecordPresence runtime', () => {
     test('real automation consumer mounts through the shared runtime', async ({ page }) => {
         try {
-            await openSurface(page, expect, '/automation-rules', { requireTriggers: false });
+            await openSurface(page, expect, '/operations/automation-rules', { requireTriggers: false });
 
-            const candidates = page.locator('[data-catalyst-href^="/automation-rules/"]');
+            const candidates = page.locator('[data-catalyst-href^="/operations/automation-rules/"]');
             let target = null;
 
             for (let index = 0; index < await candidates.count(); index++) {
                 const candidate = candidates.nth(index);
                 const href = await candidate.getAttribute('data-catalyst-href');
-                if (/^\/automation-rules\/\d+(?:\/edit)?$/.test(href || '')) {
+                if (/^\/operations\/automation-rules\/\d+(?:\/edit)?$/.test(href || '')) {
                     target = candidate;
                     break;
                 }
@@ -32,7 +32,7 @@ test.describe('@record-presence Global RecordPresence runtime', () => {
             });
 
             await target.click();
-            await expect(page).toHaveURL(/\/automation-rules\/\d+(?:\/edit)?$/);
+            await expect(page).toHaveURL(/\/operations\/automation-rules\/\d+(?:\/edit)?$/);
 
             const presence = page.locator('[data-record-presence]').first();
             await expect(presence).toBeVisible();

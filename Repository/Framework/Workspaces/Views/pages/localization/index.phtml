@@ -1,0 +1,82 @@
+<div class="surface-page surface-page-shell localization-page">
+    {{> "components._page-header" }}
+
+    {{#if localization_error}}<div class="alert alert-danger">{{ localization_error }}</div>{{/if}}
+    {{#if has_operation}}
+        <div class="alert alert-info">
+            <strong>{{ operation_message }}</strong>
+            {{#if operation_items}}
+                <ul class="mb-0 mt-2">{{#each operation_items}}<li><code>{{ action }}</code> {{ target }}</li>{{/each}}</ul>
+            {{/if}}
+        </div>
+    {{/if}}
+
+    <div class="localization-cards mb-3">
+        {{#each locale_cards}}
+            <a href="{{ href }}" class="card card-body text-decoration-none{{#if active}} border-primary{{/if}}">
+                <strong>{{ label }} ({{ locale }})</strong>
+                <span>{{ coverage }}% {{ t:workspaces.localization.coverage }}</span>
+                <small>{{ missing }} {{ t:workspaces.localization.missing_keys }}</small>
+            </a>
+        {{/each}}
+    </div>
+
+    <div class="row g-3">
+        <div class="col-12 col-xl-6">
+            <section class="card h-100">
+                <div class="card-header"><h2 class="h5 mb-0">{{ t:workspaces.localization.settings.title }}</h2></div>
+                <div class="card-body">
+                    <form method="POST" action="/workspaces/locale-tools/settings" class="row g-3">
+                        {{{ csrfField }}}
+                        <div class="col-12">
+                            <label class="form-label" for="default-locale">{{ t:workspaces.localization.settings.default_locale }}</label>
+                            <select class="form-select" id="default-locale" name="default_locale">
+                                {{#each default_locale_options}}<option value="{{ value }}"{{#if selected}} selected{{/if}}>{{ label }}</option>{{/each}}
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="locale-labels">{{ t:workspaces.localization.settings.labels }}</label>
+                            <textarea class="form-control" id="locale-labels" name="locale_labels_json" rows="7">{{ locale_labels_json }}</textarea>
+                        </div>
+                        <div class="col-12"><button class="btn btn-primary" type="submit">{{ t:workspaces.localization.settings.save }}</button></div>
+                    </form>
+                </div>
+            </section>
+        </div>
+        <div class="col-12 col-xl-6">
+            <section class="card mb-3">
+                <div class="card-header"><h2 class="h5 mb-0">{{ t:workspaces.localization.create.title }}</h2></div>
+                <div class="card-body">
+                    <form method="POST" action="/workspaces/locale-tools/create-locale" class="row g-3">
+                        {{{ csrfField }}}
+                        <div class="col-4"><input class="form-control" name="locale_code" placeholder="pt-br" required></div>
+                        <div class="col-8"><input class="form-control" name="locale_label" placeholder="{{ t:workspaces.localization.create.label }}" required></div>
+                        <div class="col-12 form-check ms-2"><input class="form-check-input" id="create-dry" name="dry_run" value="1" type="checkbox"><label class="form-check-label" for="create-dry">{{ t:workspaces.localization.dry_run }}</label></div>
+                        <div class="col-12"><button class="btn btn-outline-primary" type="submit">{{ t:workspaces.localization.create.submit }}</button></div>
+                    </form>
+                </div>
+            </section>
+            <section class="card">
+                <div class="card-header"><h2 class="h5 mb-0">{{ t:workspaces.localization.sync.title }}</h2></div>
+                <div class="card-body">
+                    <form method="POST" action="/workspaces/locale-tools/sync-locale" class="row g-3">
+                        {{{ csrfField }}}
+                        <div class="col-12"><select class="form-select" name="target_locale">{{#each sync_locale_options}}<option value="{{ value }}"{{#if selected}} selected{{/if}}>{{ label }}</option>{{/each}}</select></div>
+                        <div class="col-12 form-check ms-2"><input class="form-check-input" id="sync-dry" name="dry_run_sync" value="1" type="checkbox"><label class="form-check-label" for="sync-dry">{{ t:workspaces.localization.dry_run }}</label></div>
+                        <div class="col-12"><button class="btn btn-outline-primary" type="submit">{{ t:workspaces.localization.sync.submit }}</button></div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <section class="card mt-3">
+        <div class="card-header"><h2 class="h5 mb-0">{{ selected_locale }}: {{ coverage }}% {{ t:workspaces.localization.coverage }}</h2></div>
+        <div class="table-responsive">
+            <table class="table mb-0">
+                <thead><tr><th>{{ t:workspaces.localization.catalog }}</th><th>{{ t:workspaces.localization.scope }}</th><th>{{ t:workspaces.localization.coverage }}</th><th>{{ t:workspaces.localization.missing_keys }}</th></tr></thead>
+                <tbody>{{#each catalogs}}<tr><td>{{ name }}</td><td><code>{{ scope }}</code></td><td>{{ coverage }}%</td><td>{{ missing }}</td></tr>{{/each}}</tbody>
+            </table>
+        </div>
+    </section>
+</div>

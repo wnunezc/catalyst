@@ -1,11 +1,11 @@
 # Runtime Module Catalog
 
 > Auto-generated from `ModuleRegistry`, `PermissionRegistry`, `NavigationRegistry`, `ModuleInspector`, `ModuleHarnessInspector` and `ModuleLinter`.
-> Last generated: 2026-06-12 00:50:05
+> Last generated: 2026-06-13 01:40:07
 
 ## Runtime Summary
 
-- Modules: 17
+- Modules: 14
 - Structural lint: OK
 
 | Key | Surface | HTML | JSON | Mutations | Assets | Permissions | Settings | Seeds |
@@ -15,18 +15,15 @@
 | `app.surface.home` | `public` | 2 | 1 | 0 | `ok` | `n/a` | `n/a` | `n/a` |
 | `app.surface.landing` | `public` | 1 | 1 | 0 | `ok` | `n/a` | `n/a` | `n/a` |
 | `app.surface.store` | `public` | 1 | 1 | 0 | `ok` | `n/a` | `n/a` | `n/a` |
-| `framework.apiplatform` | `authenticated` | 1 | 4 | 4 | `ok` | `manage-api-platform` | `n/a` | `n/a` |
-| `framework.audit` | `authenticated` | 2 | 0 | 0 | `ok` | `manage-audit-log` | `n/a` | `n/a` |
+| `framework.api` | `authenticated-api` | 0 | 4 | 2 | `n/a` | `n/a` | `n/a` | `n/a` |
 | `framework.auth` | `auth-flow` | 10 | 0 | 9 | `ok` | `n/a` | `n/a` | `n/a` |
-| `framework.automation` | `authenticated` | 4 | 2 | 7 | `ok` | `manage-automation-rules` | `n/a` | `n/a` |
-| `framework.catalogs` | `authenticated` | 6 | 0 | 8 | `ok` | `manage-catalogs` | `n/a` | `n/a` |
 | `framework.configuration` | `workspace` | 7 | 0 | 22 | `ok` | `manage-platform-configuration` | `n/a` | `n/a` |
 | `framework.demoui` | `devtools` | 40 | 0 | 0 | `ok` | `n/a` | `n/a` | `n/a` |
 | `framework.devtools` | `devtools` | 25 | 7 | 12 | `ok` | `access-devtools` | `n/a` | `n/a` |
-| `framework.documents` | `authenticated` | 4 | 2 | 9 | `ok` | `manage-document-templates` | `n/a` | `n/a` |
-| `framework.media` | `authenticated` | 6 | 0 | 7 | `ok` | `manage-media-library`, `manage-media-metadata` | `n/a` | `n/a` |
 | `framework.notification` | `authenticated-api` | 0 | 3 | 3 | `n/a` | `n/a` | `n/a` | `n/a` |
+| `framework.operations` | `authenticated` | 9 | 2 | 10 | `n/a` | `manage-operations-api-management`, `manage-operations-audit-log`, `manage-operations-automation-rules`, `manage-operations-deployments`, `manage-operations-tenancy` | `n/a` | `n/a` |
 | `framework.roles` | `administration` | 11 | 0 | 16 | `ok` | `manage-roles`, `manage-users` | `n/a` | `n/a` |
+| `framework.workspaces` | `authenticated` | 18 | 2 | 29 | `ok` | `manage-workspaces-catalogs`, `manage-workspaces-document-templates`, `manage-workspaces-localization`, `manage-workspaces-media-fields`, `manage-workspaces-media-library`, `manage-workspaces-module-designer` | `n/a` | `n/a` |
 
 ## Module Detail
 
@@ -222,29 +219,27 @@ _No mutation routes declared for harness._
 
 _No mutation routes declared for harness._
 
-### framework.apiplatform
+### framework.api
 
 - Scope: `Framework`
-- Surface: `authenticated`
+- Surface: `authenticated-api`
 - Runtime enabled: `yes`
-- Slug: `apiplatform`
-- Description: Versioned API platform with token management, route catalog, workflow operations and version restore endpoints.
-- Plugin: `framework.business`
-- Views: `yes`
-- Assets: `ok`
+- Slug: `api`
+- Description: Versioned transversal framework API.
+- Plugin: `framework.core`
+- Views: `no`
+- Assets: `n/a`
 - Settings: `n/a`
-- Permissions: `manage-api-platform`
+- Permissions: `n/a`
 - Seeds: `n/a`
 - Feature flags: `n/a`
-- Module flag key: `module.framework.apiplatform`
-- Representative HTML: `/api-platform`
+- Module flag key: `module.framework.api`
+- Representative HTML: `n/a`
 - Representative JSON: `/api/v1/catalog`
 
 #### HTML routes
 
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
-|---|---|---|---|---|---|---|---|
-| `/api-platform` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-api-platform` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+_No HTML routes declared for harness._
 
 #### JSON routes
 
@@ -259,43 +254,8 @@ _No mutation routes declared for harness._
 
 | Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
 |---|---|---|---|---|---|---|---|
-| `/api-platform/tokens` | `POST` | `401` | `403` | `200` | `n/a` | `manage-api-platform` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/api-platform/tokens/{id}/revoke` | `POST` | `401` | `403` | `200` | `n/a` | `manage-api-platform` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
 | `/api/v1/versions/{id}/restore` | `POST` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
 | `/api/v1/workflows/{id}/transition` | `POST` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
-
-### framework.audit
-
-- Scope: `Framework`
-- Surface: `authenticated`
-- Runtime enabled: `yes`
-- Slug: `audit`
-- Description: Operational audit log for administrative mutations and framework runtime events.
-- Plugin: `framework.core`
-- Views: `yes`
-- Assets: `ok`
-- Settings: `n/a`
-- Permissions: `manage-audit-log`
-- Seeds: `n/a`
-- Feature flags: `n/a`
-- Module flag key: `module.framework.audit`
-- Representative HTML: `/audit-log`
-- Representative JSON: `n/a`
-
-#### HTML routes
-
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
-|---|---|---|---|---|---|---|---|
-| `/audit-log` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-audit-log` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/audit-log/{id}` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-audit-log` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-
-#### JSON routes
-
-_No JSON routes declared for harness._
-
-#### Mutations
-
-_No mutation routes declared for harness._
 
 ### framework.auth
 
@@ -347,98 +307,6 @@ _No JSON routes declared for harness._
 | `/register` | `POST` | `200` | `409` | `409` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\RouteFeatureMiddleware`, `Catalyst\Framework\Middleware\GuestMiddleware`, `Catalyst\Framework\Middleware\LoginThrottleMiddleware` |
 | `/reset-password/{token}` | `POST` | `200` | `409` | `409` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\GuestMiddleware` |
 | `/verify-email` | `POST` | `200` | `409` | `409` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\GuestMiddleware` |
-
-### framework.automation
-
-- Scope: `Framework`
-- Surface: `authenticated`
-- Runtime enabled: `yes`
-- Slug: `automation`
-- Description: Reusable internal automation rules with workflow lifecycle, queue/schedule execution, logs and version history.
-- Plugin: `framework.business`
-- Views: `yes`
-- Assets: `ok`
-- Settings: `n/a`
-- Permissions: `manage-automation-rules`
-- Seeds: `n/a`
-- Feature flags: `n/a`
-- Module flag key: `module.framework.automation`
-- Representative HTML: `/automation-rules`
-- Representative JSON: `/api/v1/automation-rules`
-
-#### HTML routes
-
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
-|---|---|---|---|---|---|---|---|
-| `/automation-rules` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-automation-rules` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/automation-rules/create` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-automation-rules` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/automation-rules/{id}` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-automation-rules` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/automation-rules/{id}/edit` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-automation-rules` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-
-#### JSON routes
-
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
-|---|---|---|---|---|---|---|---|
-| `/api/v1/automation-rules` | `GET,HEAD` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
-| `/api/v1/automation-rules/{id}` | `GET,HEAD` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
-
-#### Mutations
-
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
-|---|---|---|---|---|---|---|---|
-| `/api/v1/automation-rules/{id}/run` | `POST` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
-| `/automation-rules` | `POST` | `401` | `403` | `200` | `n/a` | `manage-automation-rules` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/automation-rules/{id}` | `POST` | `401` | `403` | `200` | `n/a` | `manage-automation-rules` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/automation-rules/{id}/delete` | `POST` | `401` | `403` | `200` | `n/a` | `manage-automation-rules` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/automation-rules/{id}/run` | `POST` | `401` | `403` | `200` | `n/a` | `manage-automation-rules` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/automation-rules/{id}/transition` | `POST` | `401` | `403` | `200` | `n/a` | `manage-automation-rules` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/automation-rules/{id}/versions/{versionId}/restore` | `POST` | `401` | `403` | `200` | `n/a` | `manage-automation-rules` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-
-### framework.catalogs
-
-- Scope: `Framework`
-- Surface: `authenticated`
-- Runtime enabled: `yes`
-- Slug: `catalogs`
-- Description: Reusable governed catalogs with workflow lifecycle, validity windows, version history and metadata consumption.
-- Plugin: `standalone`
-- Views: `yes`
-- Assets: `ok`
-- Settings: `n/a`
-- Permissions: `manage-catalogs`
-- Seeds: `n/a`
-- Feature flags: `n/a`
-- Module flag key: `module.framework.catalogs`
-- Representative HTML: `/workspaces/catalogs`
-- Representative JSON: `n/a`
-
-#### HTML routes
-
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
-|---|---|---|---|---|---|---|---|
-| `/workspaces/catalogs` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/catalogs/create` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/catalogs/{id}` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/catalogs/{id}/edit` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/catalogs/{id}/items/create` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/catalogs/{id}/items/{itemId}/edit` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-
-#### JSON routes
-
-_No JSON routes declared for harness._
-
-#### Mutations
-
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
-|---|---|---|---|---|---|---|---|
-| `/workspaces/catalogs` | `POST` | `401` | `403` | `200` | `n/a` | `manage-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/catalogs/{id}` | `POST` | `401` | `403` | `200` | `n/a` | `manage-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/catalogs/{id}/delete` | `POST` | `401` | `403` | `200` | `n/a` | `manage-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/catalogs/{id}/items` | `POST` | `401` | `403` | `200` | `n/a` | `manage-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/catalogs/{id}/items/{itemId}` | `POST` | `401` | `403` | `200` | `n/a` | `manage-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/catalogs/{id}/items/{itemId}/delete` | `POST` | `401` | `403` | `200` | `n/a` | `manage-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/catalogs/{id}/transition` | `POST` | `401` | `403` | `200` | `n/a` | `manage-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/catalogs/{id}/versions/{versionId}/restore` | `POST` | `401` | `403` | `200` | `n/a` | `manage-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
 
 ### framework.configuration
 
@@ -649,99 +517,6 @@ _No mutation routes declared for harness._
 | `/test-features/orm/update` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
 | `/test-features/upload` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
 
-### framework.documents
-
-- Scope: `Framework`
-- Surface: `authenticated`
-- Runtime enabled: `yes`
-- Slug: `documents`
-- Description: Reusable document templates with workflow, preview, exports and persisted version history.
-- Plugin: `framework.business`
-- Views: `yes`
-- Assets: `ok`
-- Settings: `n/a`
-- Permissions: `manage-document-templates`
-- Seeds: `n/a`
-- Feature flags: `n/a`
-- Module flag key: `module.framework.documents`
-- Representative HTML: `/workspaces/document-templates`
-- Representative JSON: `/api/v1/document-templates`
-
-#### HTML routes
-
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
-|---|---|---|---|---|---|---|---|
-| `/workspaces/document-templates` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-document-templates` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/document-templates/create` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-document-templates` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/document-templates/{id}` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-document-templates` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/document-templates/{id}/edit` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-document-templates` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-
-#### JSON routes
-
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
-|---|---|---|---|---|---|---|---|
-| `/api/v1/document-templates` | `GET,HEAD` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
-| `/api/v1/document-templates/{id}` | `GET,HEAD` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
-
-#### Mutations
-
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
-|---|---|---|---|---|---|---|---|
-| `/api/v1/document-templates/{id}/export` | `POST` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
-| `/api/v1/document-templates/{id}/preview` | `POST` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
-| `/workspaces/document-templates` | `POST` | `401` | `403` | `200` | `n/a` | `manage-document-templates` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/document-templates/{id}` | `POST` | `401` | `403` | `200` | `n/a` | `manage-document-templates` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/document-templates/{id}/delete` | `POST` | `401` | `403` | `200` | `n/a` | `manage-document-templates` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/document-templates/{id}/export` | `POST` | `401` | `403` | `200` | `n/a` | `manage-document-templates` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/document-templates/{id}/preview` | `POST` | `401` | `403` | `200` | `n/a` | `manage-document-templates` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/document-templates/{id}/transition` | `POST` | `401` | `403` | `200` | `n/a` | `manage-document-templates` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/document-templates/{id}/versions/{versionId}/restore` | `POST` | `401` | `403` | `200` | `n/a` | `manage-document-templates` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-
-### framework.media
-
-- Scope: `Framework`
-- Surface: `authenticated`
-- Runtime enabled: `yes`
-- Slug: `media`
-- Description: Reusable media library plus dynamic metadata field definitions for business entities.
-- Plugin: `framework.business`
-- Views: `yes`
-- Assets: `ok`
-- Settings: `n/a`
-- Permissions: `manage-media-library`, `manage-media-metadata`
-- Seeds: `n/a`
-- Feature flags: `n/a`
-- Module flag key: `module.framework.media`
-- Representative HTML: `/workspaces/media-library`
-- Representative JSON: `n/a`
-
-#### HTML routes
-
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
-|---|---|---|---|---|---|---|---|
-| `/workspaces/media-fields` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-media-metadata` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/media-fields/create` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-media-metadata` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/media-fields/{id}/edit` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-media-metadata` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/media-library` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-media-library` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/media-library/upload` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-media-library` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/media-library/{id}/edit` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-media-library` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-
-#### JSON routes
-
-_No JSON routes declared for harness._
-
-#### Mutations
-
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
-|---|---|---|---|---|---|---|---|
-| `/workspaces/media-fields` | `POST` | `401` | `403` | `200` | `n/a` | `manage-media-metadata` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/media-fields/{id}` | `POST` | `401` | `403` | `200` | `n/a` | `manage-media-metadata` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/media-fields/{id}/delete` | `POST` | `401` | `403` | `200` | `n/a` | `manage-media-metadata` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/media-library` | `POST` | `401` | `403` | `200` | `n/a` | `manage-media-library` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/media-library/bulk-delete` | `POST` | `401` | `403` | `200` | `n/a` | `manage-media-library` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/media-library/{id}` | `POST` | `401` | `403` | `200` | `n/a` | `manage-media-library` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/workspaces/media-library/{id}/delete` | `POST` | `401` | `403` | `200` | `n/a` | `manage-media-library` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-
 ### framework.notification
 
 - Scope: `Framework`
@@ -779,6 +554,60 @@ _No HTML routes declared for harness._
 | `/api/notifications/read-all` | `POST` | `401` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
 | `/api/notifications/{id}/read` | `POST` | `401` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
 | `/api/presence/{resourceKey}/{recordId}/heartbeat` | `POST` | `401` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
+
+### framework.operations
+
+- Scope: `Framework`
+- Surface: `authenticated`
+- Runtime enabled: `yes`
+- Slug: `operations`
+- Description: Canonical owner of framework operations surfaces.
+- Plugin: `framework.core`
+- Views: `no`
+- Assets: `n/a`
+- Settings: `n/a`
+- Permissions: `manage-operations-api-management`, `manage-operations-audit-log`, `manage-operations-automation-rules`, `manage-operations-deployments`, `manage-operations-tenancy`
+- Seeds: `n/a`
+- Feature flags: `n/a`
+- Module flag key: `module.framework.operations`
+- Representative HTML: `/operations/audit-log`
+- Representative JSON: `/api/v1/automation-rules`
+
+#### HTML routes
+
+| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+|---|---|---|---|---|---|---|---|
+| `/operations/api-management` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-operations-api-management` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/operations/audit-log` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-operations-audit-log` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/operations/audit-log/{id}` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-operations-audit-log` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/operations/automation-rules` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-operations-automation-rules` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/operations/automation-rules/create` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-operations-automation-rules` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/operations/automation-rules/{id}` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-operations-automation-rules` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/operations/automation-rules/{id}/edit` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-operations-automation-rules` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/operations/deployments` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-operations-deployments` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/operations/tenancy` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-operations-tenancy` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+
+#### JSON routes
+
+| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+|---|---|---|---|---|---|---|---|
+| `/api/v1/automation-rules` | `GET,HEAD` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
+| `/api/v1/automation-rules/{id}` | `GET,HEAD` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
+
+#### Mutations
+
+| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+|---|---|---|---|---|---|---|---|
+| `/api/v1/automation-rules/{id}/run` | `POST` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
+| `/operations/api-management/tokens` | `POST` | `401` | `403` | `200` | `n/a` | `manage-operations-api-management` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/operations/api-management/tokens/{id}/revoke` | `POST` | `401` | `403` | `200` | `n/a` | `manage-operations-api-management` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/operations/automation-rules` | `POST` | `401` | `403` | `200` | `n/a` | `manage-operations-automation-rules` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/operations/automation-rules/{id}` | `POST` | `401` | `403` | `200` | `n/a` | `manage-operations-automation-rules` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/operations/automation-rules/{id}/delete` | `POST` | `401` | `403` | `200` | `n/a` | `manage-operations-automation-rules` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/operations/automation-rules/{id}/run` | `POST` | `401` | `403` | `200` | `n/a` | `manage-operations-automation-rules` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/operations/automation-rules/{id}/transition` | `POST` | `401` | `403` | `200` | `n/a` | `manage-operations-automation-rules` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/operations/automation-rules/{id}/versions/{versionId}/restore` | `POST` | `401` | `403` | `200` | `n/a` | `manage-operations-automation-rules` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/operations/deployments/runs` | `POST` | `401` | `403` | `200` | `n/a` | `manage-operations-deployments` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
 
 ### framework.roles
 
@@ -838,4 +667,86 @@ _No JSON routes declared for harness._
 | `/users/roles/{id}/permissions` | `POST` | `401` | `403` | `200` | `n/a` | `manage-roles` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
 | `/users/{userId}/roles/{roleId}` | `POST` | `401` | `403` | `200` | `n/a` | `manage-users` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
 | `/users/{userId}/roles/{roleId}/remove` | `POST` | `401` | `403` | `200` | `n/a` | `manage-users` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+
+### framework.workspaces
+
+- Scope: `Framework`
+- Surface: `authenticated`
+- Runtime enabled: `yes`
+- Slug: `workspaces`
+- Description: Canonical owner of framework workspace surfaces.
+- Plugin: `framework.business`
+- Views: `yes`
+- Assets: `ok`
+- Settings: `n/a`
+- Permissions: `manage-workspaces-catalogs`, `manage-workspaces-document-templates`, `manage-workspaces-localization`, `manage-workspaces-media-fields`, `manage-workspaces-media-library`, `manage-workspaces-module-designer`
+- Seeds: `n/a`
+- Feature flags: `n/a`
+- Module flag key: `module.framework.workspaces`
+- Representative HTML: `/workspaces/catalogs`
+- Representative JSON: `/api/v1/document-templates`
+
+#### HTML routes
+
+| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+|---|---|---|---|---|---|---|---|
+| `/workspaces/catalogs` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-workspaces-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/catalogs/create` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-workspaces-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/catalogs/{id}` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-workspaces-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/catalogs/{id}/edit` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-workspaces-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/catalogs/{id}/items/create` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-workspaces-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/catalogs/{id}/items/{itemId}/edit` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-workspaces-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/document-templates` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-workspaces-document-templates` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/document-templates/create` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-workspaces-document-templates` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/document-templates/{id}` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-workspaces-document-templates` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/document-templates/{id}/edit` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-workspaces-document-templates` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/locale-tools` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-workspaces-localization` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/media-fields` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-workspaces-media-fields` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/media-fields/create` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-workspaces-media-fields` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/media-fields/{id}/edit` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-workspaces-media-fields` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/media-library` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-workspaces-media-library` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/media-library/upload` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-workspaces-media-library` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/media-library/{id}/edit` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-workspaces-media-library` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/module-designer` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-workspaces-module-designer` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+
+#### JSON routes
+
+| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+|---|---|---|---|---|---|---|---|
+| `/api/v1/document-templates` | `GET,HEAD` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
+| `/api/v1/document-templates/{id}` | `GET,HEAD` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
+
+#### Mutations
+
+| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+|---|---|---|---|---|---|---|---|
+| `/api/v1/document-templates/{id}/export` | `POST` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
+| `/api/v1/document-templates/{id}/preview` | `POST` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
+| `/workspaces/catalogs` | `POST` | `401` | `403` | `200` | `n/a` | `manage-workspaces-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/catalogs/{id}` | `POST` | `401` | `403` | `200` | `n/a` | `manage-workspaces-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/catalogs/{id}/delete` | `POST` | `401` | `403` | `200` | `n/a` | `manage-workspaces-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/catalogs/{id}/items` | `POST` | `401` | `403` | `200` | `n/a` | `manage-workspaces-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/catalogs/{id}/items/{itemId}` | `POST` | `401` | `403` | `200` | `n/a` | `manage-workspaces-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/catalogs/{id}/items/{itemId}/delete` | `POST` | `401` | `403` | `200` | `n/a` | `manage-workspaces-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/catalogs/{id}/transition` | `POST` | `401` | `403` | `200` | `n/a` | `manage-workspaces-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/catalogs/{id}/versions/{versionId}/restore` | `POST` | `401` | `403` | `200` | `n/a` | `manage-workspaces-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/document-templates` | `POST` | `401` | `403` | `200` | `n/a` | `manage-workspaces-document-templates` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/document-templates/{id}` | `POST` | `401` | `403` | `200` | `n/a` | `manage-workspaces-document-templates` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/document-templates/{id}/delete` | `POST` | `401` | `403` | `200` | `n/a` | `manage-workspaces-document-templates` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/document-templates/{id}/export` | `POST` | `401` | `403` | `200` | `n/a` | `manage-workspaces-document-templates` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/document-templates/{id}/preview` | `POST` | `401` | `403` | `200` | `n/a` | `manage-workspaces-document-templates` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/document-templates/{id}/transition` | `POST` | `401` | `403` | `200` | `n/a` | `manage-workspaces-document-templates` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/document-templates/{id}/versions/{versionId}/restore` | `POST` | `401` | `403` | `200` | `n/a` | `manage-workspaces-document-templates` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/locale-tools/create-locale` | `POST` | `401` | `403` | `200` | `n/a` | `manage-workspaces-localization` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/locale-tools/settings` | `POST` | `401` | `403` | `200` | `n/a` | `manage-workspaces-localization` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/locale-tools/sync-locale` | `POST` | `401` | `403` | `200` | `n/a` | `manage-workspaces-localization` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/media-fields` | `POST` | `401` | `403` | `200` | `n/a` | `manage-workspaces-media-fields` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/media-fields/{id}` | `POST` | `401` | `403` | `200` | `n/a` | `manage-workspaces-media-fields` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/media-fields/{id}/delete` | `POST` | `401` | `403` | `200` | `n/a` | `manage-workspaces-media-fields` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/media-library` | `POST` | `401` | `403` | `200` | `n/a` | `manage-workspaces-media-library` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/media-library/bulk-delete` | `POST` | `401` | `403` | `200` | `n/a` | `manage-workspaces-media-library` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/media-library/{id}` | `POST` | `401` | `403` | `200` | `n/a` | `manage-workspaces-media-library` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/media-library/{id}/delete` | `POST` | `401` | `403` | `200` | `n/a` | `manage-workspaces-media-library` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/module-designer/generate` | `POST` | `401` | `403` | `200` | `n/a` | `manage-workspaces-module-designer` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/workspaces/module-designer/preview` | `POST` | `401` | `403` | `200` | `n/a` | `manage-workspaces-module-designer` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
 

@@ -38,7 +38,8 @@ return [
         'framework.auth',
         'framework.configuration',
         'framework.roles',
-        'framework.audit',
+        'framework.api',
+        'framework.operations',
         'framework.notification',
     ],
 ];

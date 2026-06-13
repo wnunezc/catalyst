@@ -1,33 +1,33 @@
 # Runtime Inventory
 
 > Auto-generated from filesystem and PHP tokens. Run `php public/cli.php docs:inventory` to refresh.
-> Last generated: 2026-06-12 00:49:59
+> Last generated: 2026-06-12 09:31:28
 
 ## Summary
 
-- Symbols: 690
-- Templates: 170
-- Scripts: 59
+- Symbols: 710
+- Templates: 178
+- Scripts: 55
 
 ## Symbol Roots
 
 | Root | Count |
 |---|---:|
-| `Repository` | 167 |
-| `app` | 523 |
+| `Repository` | 183 |
+| `app` | 527 |
 
 ## Template Roots
 
 | Root | Count |
 |---|---:|
-| `Repository views` | 145 |
+| `Repository views` | 153 |
 | `boot-core/template` | 25 |
 
 ## Script Roots
 
 | Root | Count |
 |---|---:|
-| `Repository front` | 16 |
+| `Repository front` | 12 |
 | `public catalyst js` | 43 |
 
 ## Symbols
@@ -108,7 +108,10 @@
 | `Catalyst\Framework\Auth\UserDirectoryRepository` | `class` | `app/Framework/Auth/UserDirectoryRepository.php` | 45 |
 | `Catalyst\Framework\Auth\UserProvider` | `class` | `app/Framework/Auth/UserProvider.php` | 48 |
 | `Catalyst\Framework\Authorization\AbilitySubject` | `class` | `app/Framework/Authorization/AbilitySubject.php` | 39 |
+| `Catalyst\Framework\Authorization\CanonicalPermissionGrantMigrator` | `class` | `app/Framework/Authorization/CanonicalPermissionGrantMigrator.php` | 15 |
 | `Catalyst\Framework\Authorization\Gate` | `class` | `app/Framework/Authorization/Gate.php` | 45 |
+| `Catalyst\Framework\Authorization\LegacyOperationsPermissionRetirer` | `class` | `app/Framework/Authorization/LegacyOperationsPermissionRetirer.php` | 13 |
+| `Catalyst\Framework\Authorization\LegacyWorkspacePermissionRetirer` | `class` | `app/Framework/Authorization/LegacyWorkspacePermissionRetirer.php` | 10 |
 | `Catalyst\Framework\Authorization\PermissionRegistry` | `class` | `app/Framework/Authorization/PermissionRegistry.php` | 41 |
 | `Catalyst\Framework\Authorization\Policy` | `class` | `app/Framework/Authorization/Policy.php` | 39 |
 | `Catalyst\Framework\Authorization\RbacAuditLogger` | `class` | `app/Framework/Authorization/RbacAuditLogger.php` | 41 |
@@ -325,7 +328,8 @@
 | `Catalyst\Framework\Idempotency\IdempotencyInProgressException` | `class` | `app/Framework/Idempotency/IdempotencyInProgressException.php` | 41 |
 | `Catalyst\Framework\Idempotency\IdempotencyManager` | `class` | `app/Framework/Idempotency/IdempotencyManager.php` | 42 |
 | `Catalyst\Framework\Idempotency\IdempotencyRepository` | `class` | `app/Framework/Idempotency/IdempotencyRepository.php` | 43 |
-| `Catalyst\Framework\Localization\LocalizationManager` | `class` | `app/Framework/Localization/LocalizationManager.php` | 42 |
+| `Catalyst\Framework\Localization\AtomicLocaleCatalogWriter` | `class` | `app/Framework/Localization/AtomicLocaleCatalogWriter.php` | 13 |
+| `Catalyst\Framework\Localization\LocalizationManager` | `class` | `app/Framework/Localization/LocalizationManager.php` | 45 |
 | `Catalyst\Framework\Mail\DkimGenerator` | `class` | `app/Framework/Mail/DkimGenerator.php` | 45 |
 | `Catalyst\Framework\Mail\MailAttachment` | `class` | `app/Framework/Mail/MailAttachment.php` | 42 |
 | `Catalyst\Framework\Mail\MailManager` | `class` | `app/Framework/Mail/MailManager.php` | 55 |
@@ -576,12 +580,6 @@
 | `Catalyst\Helpers\Validation\ValidationRunner` | `class` | `app/Helpers/Validation/ValidationRunner.php` | 52 |
 | `Catalyst\Helpers\Validation\Validator` | `class` | `app/Helpers/Validation/Validator.php` | 39 |
 | `Catalyst\Kernel` | `class` | `app/Kernel.php` | 68 |
-| `Catalyst\Repository\ApiPlatform\Controllers\ApiPlatformController` | `class` | `Repository/Framework/ApiPlatform/Controllers/ApiPlatformController.php` | 52 |
-| `Catalyst\Repository\ApiPlatform\Controllers\CalendarApiController` | `class` | `Repository/Framework/ApiPlatform/Controllers/CalendarApiController.php` | 23 |
-| `Catalyst\Repository\ApiPlatform\Controllers\VersionApiController` | `class` | `Repository/Framework/ApiPlatform/Controllers/VersionApiController.php` | 50 |
-| `Catalyst\Repository\ApiPlatform\Controllers\WorkflowApiController` | `class` | `Repository/Framework/ApiPlatform/Controllers/WorkflowApiController.php` | 49 |
-| `Catalyst\Repository\ApiPlatform\Requests\ApiTokenRequest` | `class` | `Repository/Framework/ApiPlatform/Requests/ApiTokenRequest.php` | 48 |
-| `Catalyst\Repository\Audit\Controllers\AuditLogController` | `class` | `Repository/Framework/Audit/Controllers/AuditLogController.php` | 46 |
 | `Catalyst\Repository\Auth\Controllers\EmailVerificationController` | `class` | `Repository/Framework/Auth/Controllers/EmailVerificationController.php` | 46 |
 | `Catalyst\Repository\Auth\Controllers\LoginController` | `class` | `Repository/Framework/Auth/Controllers/LoginController.php` | 47 |
 | `Catalyst\Repository\Auth\Controllers\LogoutController` | `class` | `Repository/Framework/Auth/Controllers/LogoutController.php` | 44 |
@@ -592,24 +590,6 @@
 | `Catalyst\Repository\Auth\Models\User` | `class` | `Repository/Framework/Auth/Models/User.php` | 51 |
 | `Catalyst\Repository\Auth\Requests\EmailVerificationTokenRequest` | `class` | `Repository/Framework/Auth/Requests/EmailVerificationTokenRequest.php` | 44 |
 | `Catalyst\Repository\Auth\Requests\MfaCodeRequest` | `class` | `Repository/Framework/Auth/Requests/MfaCodeRequest.php` | 46 |
-| `Catalyst\Repository\Automation\Actions\AutomationRuleExecutionService` | `class` | `Repository/Framework/Automation/Actions/AutomationRuleExecutionService.php` | 46 |
-| `Catalyst\Repository\Automation\Actions\AutomationRuleMutationService` | `class` | `Repository/Framework/Automation/Actions/AutomationRuleMutationService.php` | 47 |
-| `Catalyst\Repository\Automation\Controllers\AutomationRuleApiController` | `class` | `Repository/Framework/Automation/Controllers/AutomationRuleApiController.php` | 54 |
-| `Catalyst\Repository\Automation\Controllers\AutomationRuleController` | `class` | `Repository/Framework/Automation/Controllers/AutomationRuleController.php` | 61 |
-| `Catalyst\Repository\Automation\Requests\AutomationRuleIndexRequest` | `class` | `Repository/Framework/Automation/Requests/AutomationRuleIndexRequest.php` | 41 |
-| `Catalyst\Repository\Automation\Requests\AutomationRuleRequest` | `class` | `Repository/Framework/Automation/Requests/AutomationRuleRequest.php` | 50 |
-| `Catalyst\Repository\Automation\Requests\AutomationRuleTransitionRequest` | `class` | `Repository/Framework/Automation/Requests/AutomationRuleTransitionRequest.php` | 41 |
-| `Catalyst\Repository\Automation\Requests\AutomationRunContextRequest` | `class` | `Repository/Framework/Automation/Requests/AutomationRunContextRequest.php` | 44 |
-| `Catalyst\Repository\Automation\Support\AutomationManualRunState` | `class` | `Repository/Framework/Automation/Support/AutomationManualRunState.php` | 41 |
-| `Catalyst\Repository\Automation\Support\AutomationRuleFormFactory` | `class` | `Repository/Framework/Automation/Support/AutomationRuleFormFactory.php` | 41 |
-| `Catalyst\Repository\Automation\Support\AutomationRuleGridFactory` | `class` | `Repository/Framework/Automation/Support/AutomationRuleGridFactory.php` | 45 |
-| `Catalyst\Repository\Automation\Support\AutomationRuleShowDataFactory` | `class` | `Repository/Framework/Automation/Support/AutomationRuleShowDataFactory.php` | 47 |
-| `Catalyst\Repository\Catalogs\Actions\CatalogMutationService` | `class` | `Repository/Framework/Catalogs/Actions/CatalogMutationService.php` | 49 |
-| `Catalyst\Repository\Catalogs\Controllers\CatalogController` | `class` | `Repository/Framework/Catalogs/Controllers/CatalogController.php` | 62 |
-| `Catalyst\Repository\Catalogs\Requests\CatalogDefinitionRequest` | `class` | `Repository/Framework/Catalogs/Requests/CatalogDefinitionRequest.php` | 48 |
-| `Catalyst\Repository\Catalogs\Requests\CatalogItemRequest` | `class` | `Repository/Framework/Catalogs/Requests/CatalogItemRequest.php` | 49 |
-| `Catalyst\Repository\Catalogs\Support\CatalogFormFactory` | `class` | `Repository/Framework/Catalogs/Support/CatalogFormFactory.php` | 41 |
-| `Catalyst\Repository\Catalogs\Support\CatalogGridFactory` | `class` | `Repository/Framework/Catalogs/Support/CatalogGridFactory.php` | 43 |
 | `Catalyst\Repository\Configuration\Controllers\AppConfigSaveController` | `class` | `Repository/Framework/Configuration/Controllers/AppConfigSaveController.php` | 44 |
 | `Catalyst\Repository\Configuration\Controllers\AppearanceController` | `class` | `Repository/Framework/Configuration/Controllers/AppearanceController.php` | 45 |
 | `Catalyst\Repository\Configuration\Controllers\CacheConfigSaveController` | `class` | `Repository/Framework/Configuration/Controllers/CacheConfigSaveController.php` | 44 |
@@ -688,29 +668,34 @@
 | `Catalyst\Repository\DevTools\Controllers\ValidatorTestController` | `class` | `Repository/Framework/DevTools/Controllers/ValidatorTestController.php` | 42 |
 | `Catalyst\Repository\DevTools\Models\DemoEmail` | `class` | `Repository/Framework/DevTools/Models/DemoEmail.php` | 41 |
 | `Catalyst\Repository\DevTools\Services\DatabaseResetService` | `class` | `Repository/Framework/DevTools/Services/DatabaseResetService.php` | 45 |
-| `Catalyst\Repository\Documents\Actions\DocumentTemplateExportService` | `class` | `Repository/Framework/Documents/Actions/DocumentTemplateExportService.php` | 43 |
-| `Catalyst\Repository\Documents\Actions\DocumentTemplateMutationService` | `class` | `Repository/Framework/Documents/Actions/DocumentTemplateMutationService.php` | 47 |
-| `Catalyst\Repository\Documents\Actions\DocumentTemplatePreviewService` | `class` | `Repository/Framework/Documents/Actions/DocumentTemplatePreviewService.php` | 42 |
-| `Catalyst\Repository\Documents\Controllers\DocumentTemplateApiController` | `class` | `Repository/Framework/Documents/Controllers/DocumentTemplateApiController.php` | 53 |
-| `Catalyst\Repository\Documents\Controllers\DocumentTemplateController` | `class` | `Repository/Framework/Documents/Controllers/DocumentTemplateController.php` | 59 |
-| `Catalyst\Repository\Documents\Requests\DocumentExportPayloadRequest` | `class` | `Repository/Framework/Documents/Requests/DocumentExportPayloadRequest.php` | 39 |
-| `Catalyst\Repository\Documents\Requests\DocumentPreviewPayloadRequest` | `class` | `Repository/Framework/Documents/Requests/DocumentPreviewPayloadRequest.php` | 44 |
-| `Catalyst\Repository\Documents\Requests\DocumentTemplateIndexRequest` | `class` | `Repository/Framework/Documents/Requests/DocumentTemplateIndexRequest.php` | 41 |
-| `Catalyst\Repository\Documents\Requests\DocumentTemplateRequest` | `class` | `Repository/Framework/Documents/Requests/DocumentTemplateRequest.php` | 48 |
-| `Catalyst\Repository\Documents\Requests\DocumentTemplateTransitionRequest` | `class` | `Repository/Framework/Documents/Requests/DocumentTemplateTransitionRequest.php` | 41 |
-| `Catalyst\Repository\Documents\Support\DocumentPreviewState` | `class` | `Repository/Framework/Documents/Support/DocumentPreviewState.php` | 41 |
-| `Catalyst\Repository\Documents\Support\DocumentTemplateFormFactory` | `class` | `Repository/Framework/Documents/Support/DocumentTemplateFormFactory.php` | 41 |
-| `Catalyst\Repository\Documents\Support\DocumentTemplateGridFactory` | `class` | `Repository/Framework/Documents/Support/DocumentTemplateGridFactory.php` | 43 |
-| `Catalyst\Repository\Documents\Support\DocumentTemplateShowDataFactory` | `class` | `Repository/Framework/Documents/Support/DocumentTemplateShowDataFactory.php` | 44 |
-| `Catalyst\Repository\Media\Controllers\MediaLibraryController` | `class` | `Repository/Framework/Media/Controllers/MediaLibraryController.php` | 53 |
-| `Catalyst\Repository\Media\Controllers\MetadataFieldController` | `class` | `Repository/Framework/Media/Controllers/MetadataFieldController.php` | 53 |
-| `Catalyst\Repository\Media\Requests\MediaBulkSelectionRequest` | `class` | `Repository/Framework/Media/Requests/MediaBulkSelectionRequest.php` | 41 |
-| `Catalyst\Repository\Media\Requests\MediaItemRequest` | `class` | `Repository/Framework/Media/Requests/MediaItemRequest.php` | 49 |
-| `Catalyst\Repository\Media\Requests\MetadataFieldDefinitionRequest` | `class` | `Repository/Framework/Media/Requests/MetadataFieldDefinitionRequest.php` | 47 |
-| `Catalyst\Repository\Media\Support\MediaLibraryFormFactory` | `class` | `Repository/Framework/Media/Support/MediaLibraryFormFactory.php` | 44 |
-| `Catalyst\Repository\Media\Support\MetadataFieldFormFactory` | `class` | `Repository/Framework/Media/Support/MetadataFieldFormFactory.php` | 41 |
 | `Catalyst\Repository\Notification\Controllers\NotificationController` | `class` | `Repository/Framework/Notification/Controllers/NotificationController.php` | 46 |
 | `Catalyst\Repository\Notification\Controllers\PresenceController` | `class` | `Repository/Framework/Notification/Controllers/PresenceController.php` | 47 |
+| `Catalyst\Repository\Operations\ApiPlatform\Controllers\ApiPlatformController` | `class` | `Repository/Framework/Operations/ApiPlatform/Controllers/ApiPlatformController.php` | 52 |
+| `Catalyst\Repository\Operations\ApiPlatform\Controllers\CalendarApiController` | `class` | `Repository/Framework/Operations/ApiPlatform/Controllers/CalendarApiController.php` | 23 |
+| `Catalyst\Repository\Operations\ApiPlatform\Controllers\VersionApiController` | `class` | `Repository/Framework/Operations/ApiPlatform/Controllers/VersionApiController.php` | 50 |
+| `Catalyst\Repository\Operations\ApiPlatform\Controllers\WorkflowApiController` | `class` | `Repository/Framework/Operations/ApiPlatform/Controllers/WorkflowApiController.php` | 49 |
+| `Catalyst\Repository\Operations\ApiPlatform\Requests\ApiTokenRequest` | `class` | `Repository/Framework/Operations/ApiPlatform/Requests/ApiTokenRequest.php` | 48 |
+| `Catalyst\Repository\Operations\Audit\Controllers\AuditLogController` | `class` | `Repository/Framework/Operations/Audit/Controllers/AuditLogController.php` | 46 |
+| `Catalyst\Repository\Operations\Automation\Actions\AutomationRuleExecutionService` | `class` | `Repository/Framework/Operations/Automation/Actions/AutomationRuleExecutionService.php` | 46 |
+| `Catalyst\Repository\Operations\Automation\Actions\AutomationRuleMutationService` | `class` | `Repository/Framework/Operations/Automation/Actions/AutomationRuleMutationService.php` | 47 |
+| `Catalyst\Repository\Operations\Automation\Controllers\AutomationRuleApiController` | `class` | `Repository/Framework/Operations/Automation/Controllers/AutomationRuleApiController.php` | 54 |
+| `Catalyst\Repository\Operations\Automation\Controllers\AutomationRuleController` | `class` | `Repository/Framework/Operations/Automation/Controllers/AutomationRuleController.php` | 61 |
+| `Catalyst\Repository\Operations\Automation\Requests\AutomationRuleIndexRequest` | `class` | `Repository/Framework/Operations/Automation/Requests/AutomationRuleIndexRequest.php` | 41 |
+| `Catalyst\Repository\Operations\Automation\Requests\AutomationRuleRequest` | `class` | `Repository/Framework/Operations/Automation/Requests/AutomationRuleRequest.php` | 50 |
+| `Catalyst\Repository\Operations\Automation\Requests\AutomationRuleTransitionRequest` | `class` | `Repository/Framework/Operations/Automation/Requests/AutomationRuleTransitionRequest.php` | 41 |
+| `Catalyst\Repository\Operations\Automation\Requests\AutomationRunContextRequest` | `class` | `Repository/Framework/Operations/Automation/Requests/AutomationRunContextRequest.php` | 44 |
+| `Catalyst\Repository\Operations\Automation\Support\AutomationManualRunState` | `class` | `Repository/Framework/Operations/Automation/Support/AutomationManualRunState.php` | 41 |
+| `Catalyst\Repository\Operations\Automation\Support\AutomationRuleFormFactory` | `class` | `Repository/Framework/Operations/Automation/Support/AutomationRuleFormFactory.php` | 41 |
+| `Catalyst\Repository\Operations\Automation\Support\AutomationRuleGridFactory` | `class` | `Repository/Framework/Operations/Automation/Support/AutomationRuleGridFactory.php` | 45 |
+| `Catalyst\Repository\Operations\Automation\Support\AutomationRuleShowDataFactory` | `class` | `Repository/Framework/Operations/Automation/Support/AutomationRuleShowDataFactory.php` | 47 |
+| `Catalyst\Repository\Operations\Deployments\Actions\DeploymentExecutionService` | `class` | `Repository/Framework/Operations/Deployments/Actions/DeploymentExecutionService.php` | 15 |
+| `Catalyst\Repository\Operations\Deployments\Controllers\DeploymentsController` | `class` | `Repository/Framework/Operations/Deployments/Controllers/DeploymentsController.php` | 21 |
+| `Catalyst\Repository\Operations\Deployments\Requests\DeploymentRunRequest` | `class` | `Repository/Framework/Operations/Deployments/Requests/DeploymentRunRequest.php` | 15 |
+| `Catalyst\Repository\Operations\Deployments\Support\DeploymentFormFactory` | `class` | `Repository/Framework/Operations/Deployments/Support/DeploymentFormFactory.php` | 12 |
+| `Catalyst\Repository\Operations\Deployments\Support\DeploymentGridFactory` | `class` | `Repository/Framework/Operations/Deployments/Support/DeploymentGridFactory.php` | 13 |
+| `Catalyst\Repository\Operations\Support\OperationsAccessContract` | `class` | `Repository/Framework/Operations/Support/OperationsAccessContract.php` | 17 |
+| `Catalyst\Repository\Operations\Tenancy\Controllers\TenancyController` | `class` | `Repository/Framework/Operations/Tenancy/Controllers/TenancyController.php` | 16 |
+| `Catalyst\Repository\Operations\Tenancy\Support\TenancyDiagnosticProjector` | `class` | `Repository/Framework/Operations/Tenancy/Support/TenancyDiagnosticProjector.php` | 10 |
 | `Catalyst\Repository\Roles\Controllers\OrganizationHierarchyController` | `class` | `Repository/Framework/Roles/Controllers/OrganizationHierarchyController.php` | 20 |
 | `Catalyst\Repository\Roles\Controllers\PermissionsController` | `class` | `Repository/Framework/Roles/Controllers/PermissionsController.php` | 51 |
 | `Catalyst\Repository\Roles\Controllers\RolesController` | `class` | `Repository/Framework/Roles/Controllers/RolesController.php` | 53 |
@@ -724,6 +709,41 @@
 | `Catalyst\Repository\Roles\Requests\UserEnrollmentRequest` | `class` | `Repository/Framework/Roles/Requests/UserEnrollmentRequest.php` | 42 |
 | `Catalyst\Repository\Roles\Support\RbacLabelPresenter` | `class` | `Repository/Framework/Roles/Support/RbacLabelPresenter.php` | 39 |
 | `Catalyst\Repository\Roles\Support\UserEnrollmentFormFactory` | `class` | `Repository/Framework/Roles/Support/UserEnrollmentFormFactory.php` | 42 |
+| `Catalyst\Repository\Workspaces\Catalogs\Actions\CatalogMutationService` | `class` | `Repository/Framework/Workspaces/Catalogs/Actions/CatalogMutationService.php` | 49 |
+| `Catalyst\Repository\Workspaces\Catalogs\Controllers\CatalogController` | `class` | `Repository/Framework/Workspaces/Catalogs/Controllers/CatalogController.php` | 62 |
+| `Catalyst\Repository\Workspaces\Catalogs\Requests\CatalogDefinitionRequest` | `class` | `Repository/Framework/Workspaces/Catalogs/Requests/CatalogDefinitionRequest.php` | 48 |
+| `Catalyst\Repository\Workspaces\Catalogs\Requests\CatalogItemRequest` | `class` | `Repository/Framework/Workspaces/Catalogs/Requests/CatalogItemRequest.php` | 49 |
+| `Catalyst\Repository\Workspaces\Catalogs\Support\CatalogFormFactory` | `class` | `Repository/Framework/Workspaces/Catalogs/Support/CatalogFormFactory.php` | 41 |
+| `Catalyst\Repository\Workspaces\Catalogs\Support\CatalogGridFactory` | `class` | `Repository/Framework/Workspaces/Catalogs/Support/CatalogGridFactory.php` | 43 |
+| `Catalyst\Repository\Workspaces\Documents\Actions\DocumentTemplateExportService` | `class` | `Repository/Framework/Workspaces/Documents/Actions/DocumentTemplateExportService.php` | 43 |
+| `Catalyst\Repository\Workspaces\Documents\Actions\DocumentTemplateMutationService` | `class` | `Repository/Framework/Workspaces/Documents/Actions/DocumentTemplateMutationService.php` | 47 |
+| `Catalyst\Repository\Workspaces\Documents\Actions\DocumentTemplatePreviewService` | `class` | `Repository/Framework/Workspaces/Documents/Actions/DocumentTemplatePreviewService.php` | 42 |
+| `Catalyst\Repository\Workspaces\Documents\Controllers\DocumentTemplateApiController` | `class` | `Repository/Framework/Workspaces/Documents/Controllers/DocumentTemplateApiController.php` | 53 |
+| `Catalyst\Repository\Workspaces\Documents\Controllers\DocumentTemplateController` | `class` | `Repository/Framework/Workspaces/Documents/Controllers/DocumentTemplateController.php` | 59 |
+| `Catalyst\Repository\Workspaces\Documents\Requests\DocumentExportPayloadRequest` | `class` | `Repository/Framework/Workspaces/Documents/Requests/DocumentExportPayloadRequest.php` | 39 |
+| `Catalyst\Repository\Workspaces\Documents\Requests\DocumentPreviewPayloadRequest` | `class` | `Repository/Framework/Workspaces/Documents/Requests/DocumentPreviewPayloadRequest.php` | 44 |
+| `Catalyst\Repository\Workspaces\Documents\Requests\DocumentTemplateIndexRequest` | `class` | `Repository/Framework/Workspaces/Documents/Requests/DocumentTemplateIndexRequest.php` | 41 |
+| `Catalyst\Repository\Workspaces\Documents\Requests\DocumentTemplateRequest` | `class` | `Repository/Framework/Workspaces/Documents/Requests/DocumentTemplateRequest.php` | 48 |
+| `Catalyst\Repository\Workspaces\Documents\Requests\DocumentTemplateTransitionRequest` | `class` | `Repository/Framework/Workspaces/Documents/Requests/DocumentTemplateTransitionRequest.php` | 41 |
+| `Catalyst\Repository\Workspaces\Documents\Support\DocumentPreviewState` | `class` | `Repository/Framework/Workspaces/Documents/Support/DocumentPreviewState.php` | 41 |
+| `Catalyst\Repository\Workspaces\Documents\Support\DocumentTemplateFormFactory` | `class` | `Repository/Framework/Workspaces/Documents/Support/DocumentTemplateFormFactory.php` | 41 |
+| `Catalyst\Repository\Workspaces\Documents\Support\DocumentTemplateGridFactory` | `class` | `Repository/Framework/Workspaces/Documents/Support/DocumentTemplateGridFactory.php` | 43 |
+| `Catalyst\Repository\Workspaces\Documents\Support\DocumentTemplateShowDataFactory` | `class` | `Repository/Framework/Workspaces/Documents/Support/DocumentTemplateShowDataFactory.php` | 44 |
+| `Catalyst\Repository\Workspaces\Localization\Controllers\LocalizationController` | `class` | `Repository/Framework/Workspaces/Localization/Controllers/LocalizationController.php` | 16 |
+| `Catalyst\Repository\Workspaces\Localization\Requests\LocaleCreateRequest` | `class` | `Repository/Framework/Workspaces/Localization/Requests/LocaleCreateRequest.php` | 12 |
+| `Catalyst\Repository\Workspaces\Localization\Requests\LocaleSyncRequest` | `class` | `Repository/Framework/Workspaces/Localization/Requests/LocaleSyncRequest.php` | 12 |
+| `Catalyst\Repository\Workspaces\Localization\Requests\LocalizationSettingsRequest` | `class` | `Repository/Framework/Workspaces/Localization/Requests/LocalizationSettingsRequest.php` | 12 |
+| `Catalyst\Repository\Workspaces\Media\Controllers\MediaLibraryController` | `class` | `Repository/Framework/Workspaces/Media/Controllers/MediaLibraryController.php` | 53 |
+| `Catalyst\Repository\Workspaces\Media\Controllers\MetadataFieldController` | `class` | `Repository/Framework/Workspaces/Media/Controllers/MetadataFieldController.php` | 53 |
+| `Catalyst\Repository\Workspaces\Media\Requests\MediaBulkSelectionRequest` | `class` | `Repository/Framework/Workspaces/Media/Requests/MediaBulkSelectionRequest.php` | 41 |
+| `Catalyst\Repository\Workspaces\Media\Requests\MediaItemRequest` | `class` | `Repository/Framework/Workspaces/Media/Requests/MediaItemRequest.php` | 49 |
+| `Catalyst\Repository\Workspaces\Media\Requests\MetadataFieldDefinitionRequest` | `class` | `Repository/Framework/Workspaces/Media/Requests/MetadataFieldDefinitionRequest.php` | 47 |
+| `Catalyst\Repository\Workspaces\Media\Support\MediaLibraryFormFactory` | `class` | `Repository/Framework/Workspaces/Media/Support/MediaLibraryFormFactory.php` | 44 |
+| `Catalyst\Repository\Workspaces\Media\Support\MetadataFieldFormFactory` | `class` | `Repository/Framework/Workspaces/Media/Support/MetadataFieldFormFactory.php` | 41 |
+| `Catalyst\Repository\Workspaces\ModuleDesigner\Controllers\ModuleDesignerController` | `class` | `Repository/Framework/Workspaces/ModuleDesigner/Controllers/ModuleDesignerController.php` | 21 |
+| `Catalyst\Repository\Workspaces\ModuleDesigner\Requests\ModuleDesignerRequest` | `class` | `Repository/Framework/Workspaces/ModuleDesigner/Requests/ModuleDesignerRequest.php` | 20 |
+| `Catalyst\Repository\Workspaces\ModuleDesigner\Support\ModuleDesignerPreviewToken` | `class` | `Repository/Framework/Workspaces/ModuleDesigner/Support/ModuleDesignerPreviewToken.php` | 12 |
+| `Catalyst\Repository\Workspaces\Support\WorkspacesAccessContract` | `class` | `Repository/Framework/Workspaces/Support/WorkspacesAccessContract.php` | 17 |
 
 ## Templates
 
@@ -772,12 +792,6 @@
 | `Repository/App/Surface/Home/Views/pages/surface.phtml` | `Repository views` | `phtml` |
 | `Repository/App/Surface/Landing/Views/pages/surface.phtml` | `Repository views` | `phtml` |
 | `Repository/App/Surface/Store/Views/pages/surface.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/ApiPlatform/Views/pages/index.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/ApiPlatform/Views/scope/pages/index.php` | `Repository views` | `php` |
-| `Repository/Framework/Audit/Views/pages/index.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Audit/Views/pages/show.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Audit/Views/scope/pages/index.php` | `Repository views` | `php` |
-| `Repository/Framework/Audit/Views/scope/pages/show.php` | `Repository views` | `php` |
 | `Repository/Framework/Auth/Views/pages/forgot-password.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/Auth/Views/pages/login.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/Auth/Views/pages/mfa-challenge.phtml` | `Repository views` | `phtml` |
@@ -794,20 +808,6 @@
 | `Repository/Framework/Auth/Views/scope/pages/reset-password.php` | `Repository views` | `php` |
 | `Repository/Framework/Auth/Views/scope/pages/verify-email.php` | `Repository views` | `php` |
 | `Repository/Framework/Auth/Views/scope/partials/_auth-social.php` | `Repository views` | `php` |
-| `Repository/Framework/Automation/Views/pages/form.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Automation/Views/pages/index.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Automation/Views/pages/show.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Automation/Views/scope/pages/form.php` | `Repository views` | `php` |
-| `Repository/Framework/Automation/Views/scope/pages/index.php` | `Repository views` | `php` |
-| `Repository/Framework/Automation/Views/scope/pages/show.php` | `Repository views` | `php` |
-| `Repository/Framework/Catalogs/Views/pages/form.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Catalogs/Views/pages/index.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Catalogs/Views/pages/item-form.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Catalogs/Views/pages/show.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Catalogs/Views/scope/pages/form.php` | `Repository views` | `php` |
-| `Repository/Framework/Catalogs/Views/scope/pages/index.php` | `Repository views` | `php` |
-| `Repository/Framework/Catalogs/Views/scope/pages/item-form.php` | `Repository views` | `php` |
-| `Repository/Framework/Catalogs/Views/scope/pages/show.php` | `Repository views` | `php` |
 | `Repository/Framework/Configuration/Views/pages/appearance.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/Configuration/Views/pages/feature-flags.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/Configuration/Views/pages/health.phtml` | `Repository views` | `phtml` |
@@ -867,20 +867,22 @@
 | `Repository/Framework/DevTools/Views/scope/partials/_tf-i18n.php` | `Repository views` | `php` |
 | `Repository/Framework/DevTools/Views/scope/partials/_tf-rbac.php` | `Repository views` | `php` |
 | `Repository/Framework/DevTools/Views/scope/partials/_tf-system-info.php` | `Repository views` | `php` |
-| `Repository/Framework/Documents/Views/pages/form.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Documents/Views/pages/index.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Documents/Views/pages/show.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Documents/Views/scope/pages/form.php` | `Repository views` | `php` |
-| `Repository/Framework/Documents/Views/scope/pages/index.php` | `Repository views` | `php` |
-| `Repository/Framework/Documents/Views/scope/pages/show.php` | `Repository views` | `php` |
-| `Repository/Framework/Media/Views/pages/field-form.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Media/Views/pages/fields-index.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Media/Views/pages/form.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Media/Views/pages/index.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Media/Views/scope/pages/field-form.php` | `Repository views` | `php` |
-| `Repository/Framework/Media/Views/scope/pages/fields-index.php` | `Repository views` | `php` |
-| `Repository/Framework/Media/Views/scope/pages/form.php` | `Repository views` | `php` |
-| `Repository/Framework/Media/Views/scope/pages/index.php` | `Repository views` | `php` |
+| `Repository/Framework/Operations/ApiPlatform/Views/pages/index.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Operations/ApiPlatform/Views/scope/pages/index.php` | `Repository views` | `php` |
+| `Repository/Framework/Operations/Audit/Views/pages/index.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Operations/Audit/Views/pages/show.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Operations/Audit/Views/scope/pages/index.php` | `Repository views` | `php` |
+| `Repository/Framework/Operations/Audit/Views/scope/pages/show.php` | `Repository views` | `php` |
+| `Repository/Framework/Operations/Automation/Views/pages/form.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Operations/Automation/Views/pages/index.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Operations/Automation/Views/pages/show.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Operations/Automation/Views/scope/pages/form.php` | `Repository views` | `php` |
+| `Repository/Framework/Operations/Automation/Views/scope/pages/index.php` | `Repository views` | `php` |
+| `Repository/Framework/Operations/Automation/Views/scope/pages/show.php` | `Repository views` | `php` |
+| `Repository/Framework/Operations/Deployments/Views/pages/deployments.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Operations/Deployments/Views/scope/pages/deployments.php` | `Repository views` | `php` |
+| `Repository/Framework/Operations/Tenancy/Views/pages/index.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Operations/Tenancy/Views/scope/pages/index.php` | `Repository views` | `php` |
 | `Repository/Framework/Roles/Views/pages/form.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/Roles/Views/pages/index.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/Roles/Views/pages/organization-hierarchy.phtml` | `Repository views` | `phtml` |
@@ -899,6 +901,32 @@
 | `Repository/Framework/Roles/Views/scope/pages/user-register.php` | `Repository views` | `php` |
 | `Repository/Framework/Roles/Views/scope/pages/user-roles.php` | `Repository views` | `php` |
 | `Repository/Framework/Roles/Views/scope/pages/users-index.php` | `Repository views` | `php` |
+| `Repository/Framework/Workspaces/Catalogs/Views/pages/form.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Workspaces/Catalogs/Views/pages/index.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Workspaces/Catalogs/Views/pages/item-form.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Workspaces/Catalogs/Views/pages/show.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Workspaces/Catalogs/Views/scope/pages/form.php` | `Repository views` | `php` |
+| `Repository/Framework/Workspaces/Catalogs/Views/scope/pages/index.php` | `Repository views` | `php` |
+| `Repository/Framework/Workspaces/Catalogs/Views/scope/pages/item-form.php` | `Repository views` | `php` |
+| `Repository/Framework/Workspaces/Catalogs/Views/scope/pages/show.php` | `Repository views` | `php` |
+| `Repository/Framework/Workspaces/Documents/Views/pages/form.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Workspaces/Documents/Views/pages/index.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Workspaces/Documents/Views/pages/show.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Workspaces/Documents/Views/scope/pages/form.php` | `Repository views` | `php` |
+| `Repository/Framework/Workspaces/Documents/Views/scope/pages/index.php` | `Repository views` | `php` |
+| `Repository/Framework/Workspaces/Documents/Views/scope/pages/show.php` | `Repository views` | `php` |
+| `Repository/Framework/Workspaces/Media/Views/pages/field-form.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Workspaces/Media/Views/pages/fields-index.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Workspaces/Media/Views/pages/form.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Workspaces/Media/Views/pages/index.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Workspaces/Media/Views/scope/pages/field-form.php` | `Repository views` | `php` |
+| `Repository/Framework/Workspaces/Media/Views/scope/pages/fields-index.php` | `Repository views` | `php` |
+| `Repository/Framework/Workspaces/Media/Views/scope/pages/form.php` | `Repository views` | `php` |
+| `Repository/Framework/Workspaces/Media/Views/scope/pages/index.php` | `Repository views` | `php` |
+| `Repository/Framework/Workspaces/Views/localization/index.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Workspaces/Views/module-designer/index.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Workspaces/Views/scope/localization/index.php` | `Repository views` | `php` |
+| `Repository/Framework/Workspaces/Views/scope/module-designer/index.php` | `Repository views` | `php` |
 
 ## Scripts
 
@@ -909,17 +937,13 @@
 | `Repository/App/Surface/Home/front/script.js` | `Repository front` | 11 |
 | `Repository/App/Surface/Landing/front/script.js` | `Repository front` | 11 |
 | `Repository/App/Surface/Store/front/script.js` | `Repository front` | 11 |
-| `Repository/Framework/ApiPlatform/front/script.js` | `Repository front` | 11 |
-| `Repository/Framework/Audit/front/script.js` | `Repository front` | 554 |
 | `Repository/Framework/Auth/front/script.js` | `Repository front` | 2073 |
-| `Repository/Framework/Automation/front/script.js` | `Repository front` | 11 |
-| `Repository/Framework/Catalogs/front/script.js` | `Repository front` | 355 |
 | `Repository/Framework/Configuration/front/script.js` | `Repository front` | 12479 |
 | `Repository/Framework/DemoUi/front/script.js` | `Repository front` | 1225 |
 | `Repository/Framework/DevTools/front/script.js` | `Repository front` | 20214 |
-| `Repository/Framework/Documents/front/script.js` | `Repository front` | 11 |
-| `Repository/Framework/Media/front/script.js` | `Repository front` | 11 |
+| `Repository/Framework/Operations/front/script.js` | `Repository front` | 132 |
 | `Repository/Framework/Roles/front/script.js` | `Repository front` | 275 |
+| `Repository/Framework/Workspaces/front/script.js` | `Repository front` | 366 |
 | `public/assets/js/catalyst/appearance-bootstrap.js` | `public catalyst js` | 5802 |
 | `public/assets/js/catalyst/bootstrap/components.js` | `public catalyst js` | 10368 |
 | `public/assets/js/catalyst/bootstrap/primitives.js` | `public catalyst js` | 1245 |

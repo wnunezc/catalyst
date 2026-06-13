@@ -19,15 +19,15 @@ final class FrameworkConsumersArchitectureTest extends TestCase
     public function testCrudOrientedFrameworkConsumersUseNeutralModuleWrappers(): void
     {
         $contracts = [
-            'ApiPlatform' => ['apiplatform-admin-page', 'apiplatform-page'],
-            'Automation' => ['automation-admin-page', 'automation-page'],
-            'Catalogs' => ['catalogs-admin-page', 'catalogs-page'],
-            'Documents' => ['documents-admin-page', 'documents-page'],
-            'Media' => ['media-admin-page', 'media-page'],
+            'ApiManagement' => ['Operations/ApiManagement', 'apimanagement-admin-page', 'apimanagement-page'],
+            'Automation' => ['Operations/Automation', 'automation-admin-page', 'automation-page'],
+            'Catalogs' => ['Workspaces/Catalogs', 'catalogs-admin-page', 'catalogs-page'],
+            'Documents' => ['Workspaces/Documents', 'documents-admin-page', 'documents-page'],
+            'Media' => ['Workspaces/Media', 'media-admin-page', 'media-page'],
         ];
 
-        foreach ($contracts as $module => [$legacy, $neutral]) {
-            $source = $this->moduleSource($module);
+        foreach ($contracts as $module => [$path, $legacy, $neutral]) {
+            $source = $this->moduleSource($path);
             Assert::contains($neutral, $source);
             Assert::false(
                 str_contains($source, $legacy),
@@ -38,14 +38,16 @@ final class FrameworkConsumersArchitectureTest extends TestCase
 
     public function testRemainingFrameworkConsumersUseNeutralSurfaceContracts(): void
     {
-        $audit = $this->moduleSource('Audit');
+        $audit = $this->moduleSource('Operations/Audit');
         $roles = $this->moduleSource('Roles');
         $configuration = $this->moduleSource('Configuration');
 
         Assert::contains('surface-section-card', $audit);
         Assert::false(str_contains($audit, 'admin-section-card'));
 
-        Assert::false(is_dir($this->path('Repository/Framework/Operations')));
+        $operations = $this->moduleSource('Operations');
+        Assert::false(str_contains($operations, 'admin-content-shell'));
+        Assert::false(str_contains($operations, 'admin-section-card'));
 
         Assert::contains('surface-enrollment-form', $roles);
         Assert::false(str_contains($roles, 'rbac-admin-page'));

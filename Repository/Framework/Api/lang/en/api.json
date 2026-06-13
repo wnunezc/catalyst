@@ -1,0 +1,15 @@
+{
+  "catalog": {"auth_type": "Bearer token"},
+  "messages": {
+    "catalog_retrieved": "API catalog retrieved.",
+    "workflow_instances_retrieved": "Workflow instances retrieved.",
+    "workflow_instance_not_found": "Workflow instance not found.",
+    "workflow_forbidden_resource": "Workflow resource access denied.",
+    "workflow_transition_required": "A workflow transition is required.",
+    "workflow_transitioned": "Workflow transitioned.",
+    "versioned_resource_not_found": "Versioned resource not found.",
+    "version_history_retrieved": "Version history retrieved.",
+    "version_not_found": "Version not found.",
+    "version_restored": "Version restored."
+  }
+}

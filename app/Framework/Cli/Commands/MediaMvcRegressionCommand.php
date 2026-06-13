@@ -69,14 +69,14 @@ final class MediaMvcRegressionCommand extends AbstractCommand
      */
     public function execute(ArgumentBag $args): int
     {
-        $library = $this->contents('Repository/Framework/Media/Controllers/MediaLibraryController.php');
-        $fields = $this->contents('Repository/Framework/Media/Controllers/MetadataFieldController.php');
+        $library = $this->contents('Repository/Framework/Workspaces/Media/Controllers/MediaLibraryController.php');
+        $fields = $this->contents('Repository/Framework/Workspaces/Media/Controllers/MetadataFieldController.php');
         $checks = [
-            'bulk_request_centralized' => class_exists(\Catalyst\Repository\Media\Requests\MediaBulkSelectionRequest::class)
+            'bulk_request_centralized' => class_exists(\Catalyst\Repository\Workspaces\Media\Requests\MediaBulkSelectionRequest::class)
                 && str_contains($library, 'new MediaBulkSelectionRequest($request)'),
-            'library_form_extracted' => class_exists(\Catalyst\Repository\Media\Support\MediaLibraryFormFactory::class)
+            'library_form_extracted' => class_exists(\Catalyst\Repository\Workspaces\Media\Support\MediaLibraryFormFactory::class)
                 && !str_contains($library, 'FormBuilder::'),
-            'metadata_field_form_extracted' => class_exists(\Catalyst\Repository\Media\Support\MetadataFieldFormFactory::class)
+            'metadata_field_form_extracted' => class_exists(\Catalyst\Repository\Workspaces\Media\Support\MetadataFieldFormFactory::class)
                 && !str_contains($fields, 'FormBuilder::'),
         ];
         $ok = !in_array(false, $checks, true);

@@ -115,10 +115,10 @@ final class ShellNavigationSmokeCommand extends AbstractCommand
                 'Deployments',
                 'Tenancy',
                 'Audit Log',
-                'API Platform',
+                'API Management',
                 'Automation Rules',
             ]),
-            'disconnected_debt_marked' => $this->disconnectedCanonicalDebtMarked($sidebar),
+            'no_disconnected_canonical_debt' => $this->hasNoDisconnectedCanonicalDebt($sidebar),
             'users_surfaces_preserved' => $this->groupContainsLabelsInOrder($usersGroup, [
                 'User Management',
                 'User Role',
@@ -336,7 +336,7 @@ final class ShellNavigationSmokeCommand extends AbstractCommand
                 ['label' => 'Deployments', 'href' => '/operations/deployments'],
                 ['label' => 'Tenancy', 'href' => '/operations/tenancy'],
                 ['label' => 'Audit Log', 'href' => '/operations/audit-log'],
-                ['label' => 'API Platform', 'href' => '/operations/api-platform'],
+                ['label' => 'API Management', 'href' => '/operations/api-management'],
                 ['label' => 'Automation Rules', 'href' => '/operations/automation-rules'],
                 ['label' => 'RTM Profile', 'href' => '/rtm/profile'],
                 ['label' => 'RTM Radio', 'href' => '/rtm/radio'],
@@ -345,7 +345,7 @@ final class ShellNavigationSmokeCommand extends AbstractCommand
             'Deployments',
             'Tenancy',
             'Audit Log',
-            'API Platform',
+            'API Management',
             'Automation Rules',
         ]);
     }
@@ -391,23 +391,22 @@ final class ShellNavigationSmokeCommand extends AbstractCommand
     }
 
     /**
-     * Confirms that canonical destinations without an active owner remain visible but non-clickable.
+     * Confirms that no canonical navigation node remains marked as disconnected.
      *
      * @param array<int, array<string, mixed>> $sidebar
      */
-    private function disconnectedCanonicalDebtMarked(array $sidebar): bool
+    private function hasNoDisconnectedCanonicalDebt(array $sidebar): bool
     {
-        foreach ([
-            '/workspaces/module-designer',
-            '/workspaces/locale-tools',
-            '/operations/deployments',
-            '/operations/tenancy',
-        ] as $href) {
-            $item = $this->findSidebarItem($sidebar, $href);
-            if ($item === null
-                || empty($item['is_disabled'])
-                || (string)($item['badge_label'] ?? '') !== 'Disconnected'
-            ) {
+        foreach ($sidebar as $item) {
+            if (!is_array($item)) {
+                continue;
+            }
+
+            if ((string)($item['badge_label'] ?? '') === 'Disconnected') {
+                return false;
+            }
+
+            if (!$this->hasNoDisconnectedCanonicalDebt((array)($item['children'] ?? []))) {
                 return false;
             }
         }

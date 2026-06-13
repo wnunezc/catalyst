@@ -100,14 +100,14 @@ php public/cli.php inspect:module framework.devtools
 php public/cli.php inspect:module framework.media
 php public/cli.php inspect:module framework.documents
 php public/cli.php inspect:module framework.automation
-php public/cli.php inspect:module framework.apiplatform
+php public/cli.php inspect:module framework.api
 php public/cli.php inspect:module framework.catalogs
 php public/cli.php inspect:lint
 php public/cli.php inspect:harness --module framework.roles --json
 php public/cli.php inspect:harness --module framework.media --json
 php public/cli.php inspect:harness --module framework.documents --json
 php public/cli.php inspect:harness --module framework.automation --json
-php public/cli.php inspect:harness --module framework.apiplatform --json
+php public/cli.php inspect:harness --module framework.api --json
 php public/cli.php docs:sync-runtime
 php public/cli.php claims:list --active --json
 php public/cli.php claims:release --resource=framework.demo --record-id=42 --force --json
@@ -165,7 +165,7 @@ php public/cli.php schedule:run --task=framework.queue.prune-history --force
 - `timeline:smoke` and `catalogs:smoke` are the canonical PA-09/PA-11 verification probes; if the host cannot resolve `WSDD-MySql-Server`, run them inside `WSDD-Web-Server-PHP8.4`.
 - `PA-01` is now adopted in the live framework admin runtime: Documents, Automation, Media and Roles/Permissions must extend the canonical claim/token + `lock_version` flow instead of introducing local concurrency semantics.
 - RM-29/RM-30 do not add a dedicated CLI command: the canonical runtime surfaces are `/media-fields` and `/media-library`, while CLI verification should go through `inspect:module framework.media`, `inspect:harness --module framework.media`, `inspect:lint` and `docs:sync-runtime`.
-- RM-31/RM-35 tampoco agregan un comando CLI exclusivo por subsistema: las superficies canonicas son `/document-templates`, `/automation-rules`, `/api-platform` y `/api/v1/*`, mientras que la verificacion CLI debe apoyarse en `inspect:module`, `inspect:harness`, `inspect:lint`, `docs:sync-runtime`, `queue:*` y `schedule:*`.
+- RM-31/RM-35 tampoco agregan un comando CLI exclusivo por subsistema: las superficies canonicas son `/document-templates`, `/automation-rules`, `/operations/api-management` y `/api/v1/*`, mientras que la verificacion CLI debe apoyarse en `inspect:module`, `inspect:harness`, `inspect:lint`, `docs:sync-runtime`, `queue:*` y `schedule:*`.
 - RM-36/RM-39 centralizan su gobierno operativo en `/operations`: feature flags, plugins, deployments y tenancy no deben abrirse como paneles paralelos en `/setup` ni en DevTools.
 - `status` ahora expone un bloque `Platform` con feature flags, plugins, perfiles de deploy y baseline de tenancy; usarlo como snapshot rapido antes de ejecutar cambios operativos.
 - `feature-flags:set` y `plugin:toggle` son mutaciones reales y auditables; los flags/runtime read-only deben rechazarse en CLI y UI en lugar de inventar bypasses.

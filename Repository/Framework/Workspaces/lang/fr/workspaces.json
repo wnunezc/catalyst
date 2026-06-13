@@ -1,0 +1,31 @@
+{
+        "module": {
+            "description": "Propriétaire canonique des surfaces d'espaces de travail du framework."
+        },
+        "permissions": {
+            "catalogs": {
+                "label": "Gérer les catalogues Workspaces",
+                "description": "Gérer les catalogues appartenant à Workspaces."
+            },
+            "module_designer": {
+                "label": "Gérer le concepteur de modules",
+                "description": "Concevoir les modules Workspaces et leurs surfaces déclarées."
+            },
+            "media_fields": {
+                "label": "Gérer les champs multimédias",
+                "description": "Gérer les définitions de métadonnées multimédias Workspaces."
+            },
+            "media_library": {
+                "label": "Gérer la médiathèque",
+                "description": "Gérer les enregistrements de la médiathèque Workspaces."
+            },
+            "document_templates": {
+                "label": "Gérer les modèles de documents",
+                "description": "Gérer les modèles de documents Workspaces."
+            },
+            "localization": {
+                "label": "Gérer la localisation",
+                "description": "Gérer les catalogues de langues et les outils de localisation Workspaces."
+            }
+        }
+}

@@ -80,7 +80,9 @@ final class ConfigurationModuleContractTest extends TestCase
         }
 
         Assert::same([], $legacyRoutes);
-        Assert::false(is_dir(dirname(__DIR__, 4) . '/Repository/Framework/Operations'));
+        $operationsRoutes = dirname(__DIR__, 4) . '/Repository/Framework/Operations/routes.php';
+        Assert::true(is_file($operationsRoutes));
+        Assert::same([], $this->configurationRoutes($operationsRoutes));
     }
 
     /**

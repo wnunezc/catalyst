@@ -1,0 +1,81 @@
+{
+        "module": {
+            "description": "Propietario canónico de las superficies operativas del framework."
+        },
+        "permissions": {
+            "deployments": {
+                "label": "Gestionar despliegues",
+                "description": "Gestionar operaciones de despliegue del framework."
+            },
+            "tenancy": {
+                "label": "Gestionar tenancy",
+                "description": "Gestionar operaciones de tenants del framework."
+            },
+            "audit_log": {
+                "label": "Gestionar registro de auditoría",
+                "description": "Revisar y exportar registros de auditoría del framework."
+            },
+            "api_management": {
+                "label": "Gestionar API",
+                "description": "Gestionar credenciales API e inspeccionar el catálogo versionado de rutas."
+            },
+            "automation_rules": {
+                "label": "Gestionar reglas de automatización",
+                "description": "Gestionar reglas y ejecuciones de automatización del framework."
+            }
+        },
+        "deployments": {
+            "eyebrow": "Operaciones",
+            "title": "Despliegues",
+            "description": "Ejecuta perfiles configurados y revisa estados seguros de ejecución.",
+            "navigation_label": "Despliegues",
+            "navigation_hint": "Ejecutar perfiles de despliegue y revisar historial.",
+            "form": {
+                "title": "Ejecutar despliegue",
+                "description": "Selecciona un perfil permitido. Usa dry-run para validar sin crear artefactos.",
+                "fields": {
+                    "profile": "Perfil",
+                    "select_profile": "Selecciona un perfil",
+                    "dry_run": "Dry-run",
+                    "dry_run_help": "Valida preflight y persistencia sin copiar ni publicar artefactos."
+                },
+                "actions": {"run": "Ejecutar despliegue"}
+            },
+            "profiles": {
+                "title": "Perfiles configurados",
+                "description": "Perfiles disponibles actualmente para el runtime de despliegue.",
+                "dry_run_ready": "Dry-run disponible"
+            },
+            "grid": {
+                "title": "Historial de despliegues",
+                "description": "Historial seguro sin errores de proceso ni rutas locales.",
+                "empty": {"title": "Sin ejecuciones", "description": "Ejecuta un perfil configurado para crear historial."},
+                "columns": {"release": "Release", "profile": "Perfil", "status": "Estado", "environment": "Entorno", "started": "Inicio", "finished": "Fin"},
+                "filters": {"status": "Estado"},
+                "search_placeholder": "Buscar releases y perfiles"
+            },
+            "states": {"completed": "Completado", "failed": "Fallido", "dry_run": "Dry-run", "running": "En ejecución"},
+            "messages": {"finished": "Ejecución de despliegue finalizada:", "failed": "El despliegue no pudo completarse. Revisa el registro de auditoría."}
+        },
+        "tenancy": {
+            "eyebrow": "Operaciones",
+            "title": "Diagnóstico de tenancy",
+            "description": "Proyección segura y read-only del aislamiento y la resolución actual.",
+            "navigation_label": "Tenancy",
+            "navigation_hint": "Revisar aislamiento y resolución actual del tenant.",
+            "runtime": {"title": "Baseline del runtime"},
+            "resolution": {"title": "Resolución actual", "resolved": "Resuelto", "unresolved": "No resuelto"},
+            "fields": {
+                "strategy": "Estrategia del runtime",
+                "target_strategy": "Estrategia objetivo",
+                "resolution_mode": "Modo de resolución",
+                "isolation": "Aislamiento de datos activo",
+                "tenant_count": "Tenants configurados",
+                "status": "Estado de resolución",
+                "tenant_key": "Clave del tenant",
+                "tenant_id": "ID del tenant",
+                "resolved_from": "Resuelto desde",
+                "baseline_status": "Estado baseline"
+            }
+        }
+}

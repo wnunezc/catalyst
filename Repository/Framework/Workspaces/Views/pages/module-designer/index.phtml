@@ -1,0 +1,122 @@
+<div class="surface-page surface-page-shell module-designer-page">
+    {{> "components._page-header" }}
+
+    {{#if designer_error}}
+        <div class="alert alert-danger" role="alert">{{ designer_error }}</div>
+    {{/if}}
+
+    {{#if has_result}}
+        <div class="alert alert-success" role="status">
+            {{ t:workspaces.module_designer.messages.module_created }}
+            <strong>{{ result.space }}/{{ result.module }}</strong>
+            <code>{{ result.base_dir }}</code>
+        </div>
+    {{/if}}
+
+    <div class="row g-3">
+        <div class="col-12 col-xl-7">
+            <section class="card border-0 shadow-sm">
+                <div class="card-header">
+                    <h2 class="h5 mb-1">{{ t:workspaces.module_designer.blueprint.title }}</h2>
+                    <p class="text-muted mb-0">{{ t:workspaces.module_designer.blueprint.description }}</p>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="/workspaces/module-designer/preview" class="row g-3">
+                        {{{ csrfField }}}
+                        <div class="col-12 col-md-4">
+                            <label class="form-label" for="module-space">{{ t:workspaces.module_designer.form.labels.space }}</label>
+                            <select id="module-space" name="space" class="form-select">
+                                {{#each space_options}}
+                                    <option value="{{ value }}"{{#if selected}} selected{{/if}}>{{ label }}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="col-12 col-md-8">
+                            <label class="form-label" for="module-name">{{ t:workspaces.module_designer.form.labels.module }}</label>
+                            <input id="module-name" name="module" class="form-control" value="{{ designer_form.module }}" required>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="module-description">{{ t:workspaces.module_designer.form.labels.description }}</label>
+                            <textarea id="module-description" name="description" class="form-control" rows="3">{{ designer_form.description }}</textarea>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <label class="form-label" for="module-surface">{{ t:workspaces.module_designer.form.labels.surface }}</label>
+                            <select id="module-surface" name="surface" class="form-select">
+                                {{#each surface_options}}
+                                    <option value="{{ value }}"{{#if selected}} selected{{/if}}>{{ label }}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="col-12 col-md-8">
+                            <label class="form-label" for="module-permission">{{ t:workspaces.module_designer.form.labels.permission_slug }}</label>
+                            <input id="module-permission" name="permission_slug" class="form-control" value="{{ designer_form.permission_slug }}">
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" for="module-settings">{{ t:workspaces.module_designer.form.labels.settings }}</label>
+                            <input id="module-settings" name="settings" class="form-control" value="{{ designer_form.settings }}">
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" for="module-flags">{{ t:workspaces.module_designer.form.labels.feature_flags }}</label>
+                            <input id="module-flags" name="feature_flags" class="form-control" value="{{ designer_form.feature_flags }}">
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">{{ t:workspaces.module_designer.form.actions.preview }}</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            {{#if has_preview}}
+                <section class="card border-0 shadow-sm mt-3">
+                    <div class="card-header">
+                        <h2 class="h5 mb-1">{{ t:workspaces.module_designer.preview.title }}</h2>
+                        <p class="text-muted mb-0">{{ t:workspaces.module_designer.preview.description }}</p>
+                    </div>
+                    <div class="card-body">
+                        <dl class="module-designer-metrics">
+                            <div><dt>{{ t:workspaces.module_designer.preview.namespace }}</dt><dd><code>{{ preview.namespace_root }}</code></dd></div>
+                            <div><dt>{{ t:workspaces.module_designer.preview.route }}</dt><dd><code>{{ preview.route_uri }}</code></dd></div>
+                            <div><dt>{{ t:workspaces.module_designer.preview.destination }}</dt><dd><code>{{ preview.base_dir }}</code></dd></div>
+                        </dl>
+                        <h3 class="h6 mt-3">{{ t:workspaces.module_designer.preview.files }}</h3>
+                        <ul class="module-designer-file-list">
+                            {{#each preview.files}}<li><code>{{ path }}</code></li>{{/each}}
+                        </ul>
+                        <h3 class="h6 mt-3">{{ t:workspaces.module_designer.preview.manifest }}</h3>
+                        <pre class="module-designer-pre">{{ preview.manifest_contents }}</pre>
+                        <form method="POST" action="/workspaces/module-designer/generate" class="mt-3">
+                            {{{ csrfField }}}
+                            {{#each hidden_fields}}<input type="hidden" name="{{ name }}" value="{{ value }}">{{/each}}
+                            <input type="hidden" name="preview_token" value="{{ preview_token }}">
+                            <button type="submit" class="btn btn-danger">{{ t:workspaces.module_designer.form.actions.generate }}</button>
+                        </form>
+                    </div>
+                </section>
+            {{/if}}
+        </div>
+
+        <div class="col-12 col-xl-5">
+            <section class="card border-0 shadow-sm mb-3">
+                <div class="card-header"><h2 class="h5 mb-0">{{ t:workspaces.module_designer.lint.title }}</h2></div>
+                <div class="card-body">
+                    {{#if lint_ok}}
+                        <span class="badge text-bg-success">{{ t:workspaces.module_designer.lint.ok }}</span>
+                    {{else}}
+                        <span class="badge text-bg-warning">{{ lint_issue_count }} {{ t:workspaces.module_designer.lint.issues }}</span>
+                    {{/if}}
+                </div>
+            </section>
+            <section class="card border-0 shadow-sm">
+                <div class="card-header"><h2 class="h5 mb-0">{{ t:workspaces.module_designer.modules.title }}</h2></div>
+                <div class="table-responsive">
+                    <table class="table mb-0 module-designer-table">
+                        <thead><tr><th>{{ t:workspaces.module_designer.modules.name }}</th><th>{{ t:workspaces.module_designer.modules.scope }}</th><th>{{ t:workspaces.module_designer.modules.routes }}</th></tr></thead>
+                        <tbody>
+                        {{#each registered_modules}}<tr><td>{{ name }}</td><td>{{ scope }}</td><td>{{ routes }}</td></tr>{{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
