@@ -294,7 +294,7 @@ class BasicAuthMiddleware extends CoreMiddleware
         }
 
         // Default fallback
-        return 'admin';
+        return 'privileged';
     }
 
     /**
@@ -317,7 +317,7 @@ class BasicAuthMiddleware extends CoreMiddleware
         }
 
         // Default fallback
-        return 'admin';
+        return 'privileged';
     }
 
     /**

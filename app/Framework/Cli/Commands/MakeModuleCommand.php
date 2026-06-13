@@ -85,7 +85,7 @@ class MakeModuleCommand extends AbstractCommand
                 true
             ),
             new Option(null, 'description', '', false, 'Registry-facing module description', true),
-            new Option(null, 'surface', null, false, 'Surface type: none, public, workspace, administration, devtools', true),
+            new Option(null, 'surface', null, false, 'Surface type: none, public, workspace, privileged, devtools', true),
             new Option(null, 'permission', '', false, 'Optional permission slug to declare in the manifest', true),
             new Option(null, 'settings', '', false, 'Comma-separated settings sections for the manifest', true),
             new Option(null, 'feature-flags', '', false, 'Comma-separated feature flags for the manifest', true),

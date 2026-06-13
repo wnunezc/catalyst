@@ -119,7 +119,7 @@ final class ModuleManifestBuilder
             'description' => sprintf('%s the %s module surface.', $labelVerb, $module),
             'action' => strtolower($labelVerb),
             'resource' => $routeUri,
-            'role_fallback_any' => in_array($surface, ['workspace', 'administration', 'devtools'], true)
+            'role_fallback_any' => in_array($surface, ['workspace', 'privileged', 'devtools'], true)
                 ? ['admin']
                 : [],
         ]];
@@ -134,7 +134,7 @@ final class ModuleManifestBuilder
     private function buildRouteGuards(string $routeUri, string $surface): array
     {
         return match ($surface) {
-            'workspace', 'administration' => [[
+            'workspace', 'privileged' => [[
                 'patterns' => ['/' . $routeUri],
                 'middleware_all' => [
                     'Catalyst\\Framework\\Middleware\\AuthMiddleware',
@@ -182,7 +182,7 @@ final class ModuleManifestBuilder
             return $navigation;
         }
 
-        if (in_array($surface, ['workspace', 'administration', 'devtools'], true)) {
+        if (in_array($surface, ['workspace', 'privileged', 'devtools'], true)) {
             $navigation['shell'][] = [
                 'context' => $surface,
                 'label' => $module,
@@ -230,7 +230,7 @@ final class ModuleManifestBuilder
                 ['roles_any' => ['admin'], 'environments' => ['development']],
                 ['permissions_any' => ['access-devtools'], 'environments' => ['development']],
             ],
-            'workspace', 'administration' => [
+            'workspace', 'privileged' => [
                 ['roles_any' => ['admin']],
             ],
             default => [],

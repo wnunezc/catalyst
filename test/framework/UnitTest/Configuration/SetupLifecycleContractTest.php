@@ -24,8 +24,8 @@ final class SetupLifecycleContractTest extends TestCase
         Assert::same(1, substr_count($configuration, "\$appProject['project_config'] = true"));
         Assert::contains("\$appProject['project_config'] = true", $completion);
         Assert::contains("\$appProject['project_config'] = false", $completion);
-        Assert::false(str_contains($completion, "\$request->input('admin_name'"));
-        Assert::false(str_contains($completion, "\$request->input('admin_password'"));
+        Assert::false(str_contains($completion, "\$request->input('account_name'"));
+        Assert::false(str_contains($completion, "\$request->input('account_password'"));
     }
 
     public function testPartialApplicationWriterPreservesConfiguredState(): void

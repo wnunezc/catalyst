@@ -9,6 +9,6 @@
         "change_to": "Switch to"
     },
     "rbac_runtime": {
-        "admin_role_missing": "Le rôle admin est introuvable dans le tenant actuel."
+        "privileged_role_missing": "Le rôle privilégié requis est introuvable dans le tenant actuel."
     }
 }

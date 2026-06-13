@@ -35,14 +35,11 @@ return [
             '/',
             '/home',
         ],
-        'api' => [
-            '/api/public/home',
-        ],
+        'api' => [],
         'aliases' => [],
         'prefixes' => [
             '/',
             '/home',
-            '/api/public/home',
         ],
     ],
     'navigation' => [

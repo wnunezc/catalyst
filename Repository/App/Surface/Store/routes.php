@@ -40,4 +40,3 @@ View::getInstance()->addPath(
 );
 
 $router->get('/store', [StoreController::class, 'index']);
-$router->get('/api/public/store', [StoreController::class, 'api']);

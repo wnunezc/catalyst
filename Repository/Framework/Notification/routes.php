@@ -40,23 +40,23 @@ Translator::getInstance()->addPath(
     implode(DS, [PD, 'Repository', 'Framework', 'Notification', 'lang'])
 );
 
-$router->get('/api/ws-token', [NotificationController::class, 'wsToken'])
+$router->get('/runtime/websocket/token', [NotificationController::class, 'wsToken'])
        ->middleware(AuthMiddleware::class);
 
-$router->get('/api/notifications', [NotificationController::class, 'index'])
+$router->get('/runtime/notifications', [NotificationController::class, 'index'])
        ->middleware(AuthMiddleware::class);
 
-$router->get('/api/notifications/unread-count', [NotificationController::class, 'unreadCount'])
+$router->get('/runtime/notifications/unread-count', [NotificationController::class, 'unreadCount'])
        ->middleware(AuthMiddleware::class);
 
-$router->post('/api/notifications/read-all', [NotificationController::class, 'markAllRead'])
+$router->post('/runtime/notifications/read-all', [NotificationController::class, 'markAllRead'])
        ->middleware(AuthMiddleware::class)
        ->throttle('api_mutation');
 
-$router->post('/api/notifications/{id}/read', [NotificationController::class, 'markRead'])
+$router->post('/runtime/notifications/{id}/read', [NotificationController::class, 'markRead'])
        ->middleware(AuthMiddleware::class)
        ->throttle('api_mutation');
 
-$router->post('/api/presence/{resourceKey}/{recordId}/heartbeat', [PresenceController::class, 'heartbeat'])
+$router->post('/runtime/presence/{resourceKey}/{recordId}/heartbeat', [PresenceController::class, 'heartbeat'])
        ->middleware(AuthMiddleware::class)
        ->throttle('presence_heartbeat');

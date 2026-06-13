@@ -56,7 +56,7 @@ trait SetupAccessTrait
             '/configuration/application-health/live',
             '/configuration/application-health/ready',
             '/assets/',
-            '/flash/dismiss',
+            '/runtime/flash/dismiss',
         ];
     }
 

@@ -550,7 +550,7 @@ final class NavigationRegistry
     /**
      * Resolves the active shell navigation context.
      *
-     * Responsibility: Resolves the active administrative navigation context.
+     * Responsibility: Resolves the active privileged navigation context.
      * @param array<string, array<int, array<string, mixed>>> $itemsByContext
      */
     private function resolveActiveContext(string $currentPath, array $itemsByContext): string

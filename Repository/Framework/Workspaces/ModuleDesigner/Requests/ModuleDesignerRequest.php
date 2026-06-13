@@ -59,7 +59,7 @@ final class ModuleDesignerRequest extends FormRequest
             'space' => 'required|in:App,Framework',
             'module' => 'required|max:80',
             'description' => 'max:500',
-            'surface' => 'required|in:none,public,workspace,administration,devtools',
+            'surface' => 'required|in:none,public,workspace,privileged,devtools',
             'permission_slug' => 'max:120',
             'settings' => 'max:2000',
             'feature_flags' => 'max:2000',

@@ -83,7 +83,6 @@ $router->group(['middleware' => $guard], function (Router $router): void {
 
     $router->get('/test-features/e-helper',         [InfraTestController::class, 'testEscapeHelper']);
     $router->get('/test-features/layout-test',      [InfraTestController::class, 'testLayout']);
-    $router->get('/test-features/ui-showcase',      [InfraTestController::class, 'uiShowcase']);
     $router->get('/test-features/json',             [InfraTestController::class, 'testJson']);
     $router->get('/test-features/json-success',     [InfraTestController::class, 'testJsonSuccess']);
     $router->get('/test-features/json-error',       [InfraTestController::class, 'testJsonError']);
@@ -171,7 +170,7 @@ $router->group(['middleware' => $guard], function (Router $router): void {
     // ---------------------------------------------------------------------
 
     $router->get('/test-features/rbac-status', [RbacTestController::class, 'rbacStatus']);
-    $router->post('/test-features/make-admin', [RbacTestController::class, 'makeAdmin']);
+    $router->post('/test-features/assign-privileged-role', [RbacTestController::class, 'assignPrivilegedRole']);
 
     // ---------------------------------------------------------------------
     // Etapa 9 + 14 - ORM / Entities + Relationships

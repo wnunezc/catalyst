@@ -53,7 +53,7 @@ use Catalyst\Repository\Operations\Automation\Support\AutomationRuleShowDataFact
 use RuntimeException;
 
 /**
- * Serves the administrative automation rule workflow.
+ * Serves the privileged automation rule workflow.
  *
  * @package Catalyst\Repository\Operations\Automation\Controllers
  * Responsibility: Render automation rule screens and coordinate authorized CRUD, execution and workflow actions.

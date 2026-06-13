@@ -233,7 +233,7 @@ export class StatusBarManager {
     async _refreshToken() {
         try {
             this._setDotState('connecting', this._i18n('refreshing', 'Refreshing…'));
-            const { response: res, data: json } = await this._http.json('/api/ws-token');
+            const { response: res, data: json } = await this._http.json('/runtime/websocket/token');
 
             if (res.status === 401 || res.status === 403) {
                 // User is no longer authenticated — do not reconnect
@@ -354,7 +354,7 @@ export class StatusBarManager {
         this._showLoading();
 
         try {
-            const { data: json } = await this._http.json('/api/notifications?limit=30');
+            const { data: json } = await this._http.json('/runtime/notifications?limit=30');
 
             if (!json.success) throw new Error('API error');
 
@@ -371,7 +371,7 @@ export class StatusBarManager {
 
     async _refreshUnreadCount() {
         try {
-            const { data: json } = await this._http.json('/api/notifications/unread-count');
+            const { data: json } = await this._http.json('/runtime/notifications/unread-count');
             if (!json.success) {
                 return;
             }
@@ -435,7 +435,7 @@ export class StatusBarManager {
         if (!el.classList.contains('unread')) return;
 
         try {
-            const res = await this._http.request(`/api/notifications/${id}/read`, {
+            const res = await this._http.request(`/runtime/notifications/${id}/read`, {
                 method: 'POST',
             });
             if (!res.ok) return;
@@ -454,7 +454,7 @@ export class StatusBarManager {
 
         this._markAllBtn.addEventListener('click', async () => {
             try {
-                await this._http.request('/api/notifications/read-all', {
+                await this._http.request('/runtime/notifications/read-all', {
                     method: 'POST',
                 });
             } catch { /* silent */ }

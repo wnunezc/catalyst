@@ -30,20 +30,20 @@ $router->get({{CreateRouteLiteral}}, [{{ControllerClass}}::class, 'create'])
 
 $router->post({{IndexRouteLiteral}}, [{{ControllerClass}}::class, 'store'])
        ->middleware($moduleMiddleware)
-       ->throttle('admin_mutation');
+       ->throttle('privileged_mutation');
 
 $router->get({{EditRouteLiteral}}, [{{ControllerClass}}::class, 'edit'])
        ->middleware($moduleMiddleware);
 
 $router->post({{BulkDeleteRouteLiteral}}, [{{ControllerClass}}::class, 'bulkDestroy'])
        ->middleware($moduleMiddleware)
-       ->throttle('admin_mutation');
+       ->throttle('privileged_mutation');
 
 {{RestoreRoutes}}
 $router->post({{UpdateRouteLiteral}}, [{{ControllerClass}}::class, 'update'])
        ->middleware($moduleMiddleware)
-       ->throttle('admin_mutation');
+       ->throttle('privileged_mutation');
 
 $router->post({{DeleteRouteLiteral}}, [{{ControllerClass}}::class, 'destroy'])
        ->middleware($moduleMiddleware)
-       ->throttle('admin_mutation');
+       ->throttle('privileged_mutation');

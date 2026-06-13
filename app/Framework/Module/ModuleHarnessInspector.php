@@ -271,8 +271,8 @@ final class ModuleHarnessInspector
             return 'devtools';
         }
 
-        if ($moduleKey === 'framework.roles' || in_array('administration', $contexts, true)) {
-            return 'administration';
+        if ($moduleKey === 'framework.users' || in_array('users', $contexts, true)) {
+            return 'privileged';
         }
 
         if ($publicNavigation !== [] && $shellNavigation === []) {
@@ -314,19 +314,19 @@ final class ModuleHarnessInspector
             $defaults = [
                 'guest' => '401',
                 'user' => '401',
-                'admin' => '401',
+                'privileged' => '401',
             ];
         } else {
             $defaults = $json
                 ? [
                     'guest' => $requiresAuth ? '401' : '200',
                     'user' => $guestOnly ? '409' : ($requiresPrivilege ? '403' : '200'),
-                    'admin' => $guestOnly ? '409' : '200',
+                    'privileged' => $guestOnly ? '409' : '200',
                 ]
                 : [
                 'guest' => $requiresAuth ? 'login' : '200',
                 'user' => $guestOnly ? 'root' : (($usesDevToolsGuard || $usesSetupGuard) ? '403' : ($usesRoleGuard ? 'root' : '200')),
-                'admin' => $guestOnly ? 'root' : '200',
+                'privileged' => $guestOnly ? 'root' : '200',
                 ];
         }
 
@@ -346,14 +346,14 @@ final class ModuleHarnessInspector
                     $defaults = [
                         'guest' => 'login',
                         'user' => '200',
-                        'admin' => '200',
+                        'privileged' => '200',
                     ];
                     $states['pending_setup'] = '200';
                 } else {
                     $defaults = [
                         'guest' => 'root',
                         'user' => 'root',
-                        'admin' => 'root',
+                        'privileged' => 'root',
                     ];
                 }
             }
@@ -362,7 +362,7 @@ final class ModuleHarnessInspector
                 $defaults = [
                     'guest' => 'login',
                     'user' => 'root',
-                    'admin' => 'root',
+                    'privileged' => 'root',
                 ];
                 $states['pending_mfa'] = '200';
             }
@@ -370,15 +370,15 @@ final class ModuleHarnessInspector
 
         if ($moduleKey === 'framework.devtools') {
             if ($pattern === '/test-features/json-error') {
-                $defaults['admin'] = '400';
+                $defaults['privileged'] = '400';
             }
 
             if ($pattern === '/test-features/validation-error') {
-                $defaults['admin'] = '422';
+                $defaults['privileged'] = '422';
             }
 
             if ($pattern === '/test-features/api/toaster-error') {
-                $defaults['admin'] = '400';
+                $defaults['privileged'] = '400';
             }
         }
 

@@ -42,14 +42,14 @@ use Throwable;
  * Presents installed plugins and applies plugin enablement changes.
  *
  * @package Catalyst\Repository\Configuration\Controllers
- * Responsibility: Connects plugin administration pages to the plugin manager.
+ * Responsibility: Connects plugin privileged pages to the plugin manager.
  */
 final class PluginsController extends Controller
 {
     /**
-     * Renders the searchable plugin administration grid.
+     * Renders the searchable plugin privileged grid.
      *
-     * Responsibility: Renders the searchable plugin administration grid.
+     * Responsibility: Renders the searchable plugin privileged grid.
      */
     public function plugins(Request $request): Response
     {

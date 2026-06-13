@@ -46,7 +46,7 @@ final class ModuleBlueprintFactory
         'none',
         'public',
         'workspace',
-        'administration',
+        'privileged',
         'devtools',
     ];
 
@@ -325,7 +325,7 @@ final class ModuleBlueprintFactory
 
         if (in_array($surface, ['none', 'public'], true)) {
             throw new RuntimeException(
-                'Permission slug requires a guarded surface: workspace, administration or devtools.'
+                'Permission slug requires a guarded surface: workspace, privileged or devtools.'
             );
         }
     }

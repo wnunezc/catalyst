@@ -61,8 +61,8 @@ class TestFeaturesController extends Controller
                 'description' => __('devtools.harness.description'),
                 'actions' => [
                     [
-                        'label' => __('devtools.harness.actions.ui_showcase'),
-                        'href' => '/test-features/ui-showcase',
+                        'label' => __('devtools.harness.actions.demo_ui'),
+                        'href' => '/demo-ui',
                         'icon' => 'ti ti-layout-dashboard',
                         'class' => 'btn btn-primary',
                     ],

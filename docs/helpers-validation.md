@@ -47,7 +47,7 @@ This file is regenerated from current PHP docblocks and the runtime inventory sc
 | `same()` | `public` | The field must match another field in the data set. Usage: same:other_field | n/a |
 | `different()` | `public` | The field must differ from another field in the data set. Usage: different:other_field | n/a |
 | `confirmed()` | `public` | The field must match its confirmation counterpart ({field}_confirmation). Usage: confirmed  (on field 'password' → checks 'password_confirmation') | n/a |
-| `in()` | `public` | The field must be one of the listed values. Usage: in:admin,user,moderator | n/a |
+| `in()` | `public` | The field must be one of the listed values. Usage: in:manager,user,moderator | n/a |
 | `notIn()` | `public` | The field must NOT be one of the listed values. Usage: not_in:banned,suspended | n/a |
 
 ### `Catalyst\Helpers\Validation\Rules\FileRules`

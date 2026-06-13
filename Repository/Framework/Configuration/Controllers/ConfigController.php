@@ -34,13 +34,13 @@ use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
 use Catalyst\Helpers\Config\ConfigManager;
-use Catalyst\Repository\Configuration\Support\AdminReadinessProbe;
+use Catalyst\Repository\Configuration\Support\PrivilegedAccountReadinessProbe;
 
 /**
  * Renders the environment setup panel with current configuration values.
  *
  * @package Catalyst\Repository\Configuration\Controllers
- * Responsibility: Loads configurable sections, evaluates administrator readiness and exposes the canonical setup route.
+ * Responsibility: Loads configurable sections, evaluates privileged account readiness and exposes the canonical setup route.
  */
 class ConfigController extends Controller
 {
@@ -50,7 +50,7 @@ class ConfigController extends Controller
      * Responsibility: Binds required collaborators or immutable state without executing the main workflow.
      */
     public function __construct(
-        private readonly AdminReadinessProbe $adminReadinessProbe = new AdminReadinessProbe()
+        private readonly PrivilegedAccountReadinessProbe $privilegedAccountReadinessProbe = new PrivilegedAccountReadinessProbe()
     ) {
         parent::__construct();
     }
@@ -107,13 +107,15 @@ class ConfigController extends Controller
         ];
 
         // -- Setup readiness --------------------------------------------------
-        $adminReady = $cfg->isConfigured() ? true : $this->adminReadinessProbe->hasActiveAdministrator($db);
+        $privilegedAccountReady = $cfg->isConfigured()
+            ? true
+            : $this->privilegedAccountReadinessProbe->hasActivePrivilegedAccount($db);
 
         return $this->view('configuration.index', [
             'title'       => __('settings.settings.title'),
             'pageTitle'   => __('settings.settings.title'),
             'configured'  => $cfg->isConfigured(),
-            'adminReady'  => $adminReady,
+            'privilegedAccountReady' => $privilegedAccountReady,
             'app'         => $app,
             'db'          => $db,
             'mail'        => $mail,

@@ -94,7 +94,7 @@ final class ScaffoldAppSmokeCommand extends AbstractCommand
             $blueprint = $service->preview([
                 'module' => 'ComplexIntake',
                 'space' => 'App',
-                'surface' => 'administration',
+                'surface' => 'privileged',
                 'permission_slug' => 'manage-complex-intake',
                 'preset' => 'complex',
                 'table' => 'complex_intake_records',

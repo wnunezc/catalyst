@@ -51,7 +51,7 @@ use Catalyst\Repository\Workspaces\Documents\Support\DocumentTemplateShowDataFac
 use RuntimeException;
 
 /**
- * Serves the administrative document template workflow.
+ * Serves the privileged document template workflow.
  *
  * @package Catalyst\Repository\Workspaces\Documents\Controllers
  * Responsibility: Render template screens and coordinate authorized CRUD, preview, export and workflow actions.

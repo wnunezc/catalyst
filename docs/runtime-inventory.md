@@ -1,26 +1,26 @@
 # Runtime Inventory
 
 > Auto-generated from filesystem and PHP tokens. Run `php public/cli.php docs:inventory` to refresh.
-> Last generated: 2026-06-12 09:31:28
+> Last generated: 2026-06-13 06:14:44
 
 ## Summary
 
-- Symbols: 710
-- Templates: 178
+- Symbols: 713
+- Templates: 177
 - Scripts: 55
 
 ## Symbol Roots
 
 | Root | Count |
 |---|---:|
-| `Repository` | 183 |
-| `app` | 527 |
+| `Repository` | 184 |
+| `app` | 529 |
 
 ## Template Roots
 
 | Root | Count |
 |---|---:|
-| `Repository views` | 153 |
+| `Repository views` | 152 |
 | `boot-core/template` | 25 |
 
 ## Script Roots
@@ -39,20 +39,10 @@
 | `App\Services\UserProfileService` | `class` | `Repository/App/Services/UserProfileService.php` | 42 |
 | `App\Support\PublicSurface\Controllers\PublicPageController` | `class` | `Repository/App/Support/PublicSurface/Controllers/PublicPageController.php` | 45 |
 | `App\Support\PublicSurface\Support\PublicDemoCatalog` | `class` | `Repository/App/Support/PublicSurface/Support/PublicDemoCatalog.php` | 39 |
-| `App\Surface\Account\Controllers\AccountCenterController` | `class` | `Repository/App/Surface/Account/Controllers/AccountCenterController.php` | 50 |
-| `App\Surface\Account\Controllers\AccountRecoveryAdminController` | `class` | `Repository/App/Surface/Account/Controllers/AccountRecoveryAdminController.php` | 47 |
-| `App\Surface\Account\Controllers\AccountRecoveryController` | `class` | `Repository/App/Surface/Account/Controllers/AccountRecoveryController.php` | 47 |
-| `App\Surface\Account\Repositories\AccountRecoveryRepository` | `class` | `Repository/App/Surface/Account/Repositories/AccountRecoveryRepository.php` | 44 |
-| `App\Surface\Account\Requests\MfaRecoveryRequest` | `class` | `Repository/App/Surface/Account/Requests/MfaRecoveryRequest.php` | 42 |
-| `App\Surface\Account\Requests\SupportRecoveryRequest` | `class` | `Repository/App/Surface/Account/Requests/SupportRecoveryRequest.php` | 42 |
-| `App\Surface\Account\Services\AccountDashboardService` | `class` | `Repository/App/Surface/Account/Services/AccountDashboardService.php` | 43 |
-| `App\Surface\Account\Services\AccountRecoveryService` | `class` | `Repository/App/Surface/Account/Services/AccountRecoveryService.php` | 47 |
-| `App\Surface\Account\Services\AccountSecurityService` | `class` | `Repository/App/Surface/Account/Services/AccountSecurityService.php` | 43 |
-| `App\Surface\Account\Support\AccountSurfaceViewModel` | `class` | `Repository/App/Surface/Account/Support/AccountSurfaceViewModel.php` | 42 |
-| `App\Surface\Dashboard\Controllers\DashboardController` | `class` | `Repository/App/Surface/Dashboard/Controllers/DashboardController.php` | 48 |
-| `App\Surface\Home\Controllers\HomeController` | `class` | `Repository/App/Surface/Home/Controllers/HomeController.php` | 46 |
-| `App\Surface\Landing\Controllers\LandingController` | `class` | `Repository/App/Surface/Landing/Controllers/LandingController.php` | 45 |
-| `App\Surface\Store\Controllers\StoreController` | `class` | `Repository/App/Surface/Store/Controllers/StoreController.php` | 45 |
+| `App\Surface\Dashboard\Controllers\DashboardController` | `class` | `Repository/App/Surface/Dashboard/Controllers/DashboardController.php` | 46 |
+| `App\Surface\Home\Controllers\HomeController` | `class` | `Repository/App/Surface/Home/Controllers/HomeController.php` | 45 |
+| `App\Surface\Landing\Controllers\LandingController` | `class` | `Repository/App/Surface/Landing/Controllers/LandingController.php` | 44 |
+| `App\Surface\Store\Controllers\StoreController` | `class` | `Repository/App/Surface/Store/Controllers/StoreController.php` | 44 |
 | `Catalyst\Entities\ApiToken` | `class` | `app/Entities/ApiToken.php` | 44 |
 | `Catalyst\Entities\AuditLogEntry` | `class` | `app/Entities/AuditLogEntry.php` | 42 |
 | `Catalyst\Entities\AutomationExecutionLog` | `class` | `app/Entities/AutomationExecutionLog.php` | 43 |
@@ -108,6 +98,8 @@
 | `Catalyst\Framework\Auth\UserDirectoryRepository` | `class` | `app/Framework/Auth/UserDirectoryRepository.php` | 45 |
 | `Catalyst\Framework\Auth\UserProvider` | `class` | `app/Framework/Auth/UserProvider.php` | 48 |
 | `Catalyst\Framework\Authorization\AbilitySubject` | `class` | `app/Framework/Authorization/AbilitySubject.php` | 39 |
+| `Catalyst\Framework\Authorization\AccountRecoveryPermissionMigrator` | `class` | `app/Framework/Authorization/AccountRecoveryPermissionMigrator.php` | 10 |
+| `Catalyst\Framework\Authorization\ApiManagementPermissionMigrator` | `class` | `app/Framework/Authorization/ApiManagementPermissionMigrator.php` | 10 |
 | `Catalyst\Framework\Authorization\CanonicalPermissionGrantMigrator` | `class` | `app/Framework/Authorization/CanonicalPermissionGrantMigrator.php` | 15 |
 | `Catalyst\Framework\Authorization\Gate` | `class` | `app/Framework/Authorization/Gate.php` | 45 |
 | `Catalyst\Framework\Authorization\LegacyOperationsPermissionRetirer` | `class` | `app/Framework/Authorization/LegacyOperationsPermissionRetirer.php` | 13 |
@@ -385,7 +377,7 @@
 | `Catalyst\Framework\Module\ModuleScaffoldService` | `class` | `app/Framework/Module/ModuleScaffoldService.php` | 42 |
 | `Catalyst\Framework\Navigation\ApplicationNavigationProvider` | `class` | `app/Framework/Navigation/ApplicationNavigationProvider.php` | 12 |
 | `Catalyst\Framework\Navigation\DemoUiNavigationProvider` | `class` | `app/Framework/Navigation/DemoUiNavigationProvider.php` | 12 |
-| `Catalyst\Framework\Navigation\FrameworkAdminNavigationProvider` | `class` | `app/Framework/Navigation/FrameworkAdminNavigationProvider.php` | 12 |
+| `Catalyst\Framework\Navigation\FrameworkNavigationProvider` | `class` | `app/Framework/Navigation/FrameworkNavigationProvider.php` | 12 |
 | `Catalyst\Framework\Navigation\NavigationModelProvider` | `interface` | `app/Framework/Navigation/NavigationModelProvider.php` | 12 |
 | `Catalyst\Framework\Navigation\NavigationModelSelector` | `class` | `app/Framework/Navigation/NavigationModelSelector.php` | 14 |
 | `Catalyst\Framework\Navigation\NavigationRegistry` | `class` | `app/Framework/Navigation/NavigationRegistry.php` | 45 |
@@ -580,6 +572,19 @@
 | `Catalyst\Helpers\Validation\ValidationRunner` | `class` | `app/Helpers/Validation/ValidationRunner.php` | 52 |
 | `Catalyst\Helpers\Validation\Validator` | `class` | `app/Helpers/Validation/Validator.php` | 39 |
 | `Catalyst\Kernel` | `class` | `app/Kernel.php` | 68 |
+| `Catalyst\Repository\Account\Controllers\AccountCenterController` | `class` | `Repository/Framework/Account/Controllers/AccountCenterController.php` | 50 |
+| `Catalyst\Repository\Account\Controllers\AccountRecoveryController` | `class` | `Repository/Framework/Account/Controllers/AccountRecoveryController.php` | 47 |
+| `Catalyst\Repository\Account\Repositories\AccountRecoveryRepository` | `class` | `Repository/Framework/Account/Repositories/AccountRecoveryRepository.php` | 44 |
+| `Catalyst\Repository\Account\Requests\MfaRecoveryRequest` | `class` | `Repository/Framework/Account/Requests/MfaRecoveryRequest.php` | 42 |
+| `Catalyst\Repository\Account\Requests\SupportRecoveryRequest` | `class` | `Repository/Framework/Account/Requests/SupportRecoveryRequest.php` | 42 |
+| `Catalyst\Repository\Account\Services\AccountDashboardService` | `class` | `Repository/Framework/Account/Services/AccountDashboardService.php` | 43 |
+| `Catalyst\Repository\Account\Services\AccountRecoveryService` | `class` | `Repository/Framework/Account/Services/AccountRecoveryService.php` | 47 |
+| `Catalyst\Repository\Account\Services\AccountSecurityService` | `class` | `Repository/Framework/Account/Services/AccountSecurityService.php` | 43 |
+| `Catalyst\Repository\Account\Support\AccountSurfaceViewModel` | `class` | `Repository/Framework/Account/Support/AccountSurfaceViewModel.php` | 42 |
+| `Catalyst\Repository\Api\Controllers\CalendarApiController` | `class` | `Repository/Framework/Api/Controllers/CalendarApiController.php` | 23 |
+| `Catalyst\Repository\Api\Controllers\CatalogApiController` | `class` | `Repository/Framework/Api/Controllers/CatalogApiController.php` | 12 |
+| `Catalyst\Repository\Api\Controllers\VersionApiController` | `class` | `Repository/Framework/Api/Controllers/VersionApiController.php` | 50 |
+| `Catalyst\Repository\Api\Controllers\WorkflowApiController` | `class` | `Repository/Framework/Api/Controllers/WorkflowApiController.php` | 49 |
 | `Catalyst\Repository\Auth\Controllers\EmailVerificationController` | `class` | `Repository/Framework/Auth/Controllers/EmailVerificationController.php` | 46 |
 | `Catalyst\Repository\Auth\Controllers\LoginController` | `class` | `Repository/Framework/Auth/Controllers/LoginController.php` | 47 |
 | `Catalyst\Repository\Auth\Controllers\LogoutController` | `class` | `Repository/Framework/Auth/Controllers/LogoutController.php` | 44 |
@@ -625,12 +630,11 @@
 | `Catalyst\Repository\Configuration\Requests\MailConfigRequest` | `class` | `Repository/Framework/Configuration/Requests/MailConfigRequest.php` | 39 |
 | `Catalyst\Repository\Configuration\Requests\SecurityConfigRequest` | `class` | `Repository/Framework/Configuration/Requests/SecurityConfigRequest.php` | 39 |
 | `Catalyst\Repository\Configuration\Requests\SessionConfigRequest` | `class` | `Repository/Framework/Configuration/Requests/SessionConfigRequest.php` | 39 |
-| `Catalyst\Repository\Configuration\Requests\SetupAdminRequest` | `class` | `Repository/Framework/Configuration/Requests/SetupAdminRequest.php` | 13 |
+| `Catalyst\Repository\Configuration\Requests\SetupPrivilegedAccountRequest` | `class` | `Repository/Framework/Configuration/Requests/SetupPrivilegedAccountRequest.php` | 13 |
 | `Catalyst\Repository\Configuration\Requests\WebSocketConfigRequest` | `class` | `Repository/Framework/Configuration/Requests/WebSocketConfigRequest.php` | 39 |
-| `Catalyst\Repository\Configuration\Services\SetupAdminProvisioner` | `class` | `Repository/Framework/Configuration/Services/SetupAdminProvisioner.php` | 20 |
 | `Catalyst\Repository\Configuration\Services\SetupDatabaseException` | `class` | `Repository/Framework/Configuration/Services/SetupDatabaseException.php` | 16 |
 | `Catalyst\Repository\Configuration\Services\SetupDatabaseService` | `class` | `Repository/Framework/Configuration/Services/SetupDatabaseService.php` | 21 |
-| `Catalyst\Repository\Configuration\Support\AdminReadinessProbe` | `class` | `Repository/Framework/Configuration/Support/AdminReadinessProbe.php` | 42 |
+| `Catalyst\Repository\Configuration\Services\SetupPrivilegedAccountProvisioner` | `class` | `Repository/Framework/Configuration/Services/SetupPrivilegedAccountProvisioner.php` | 20 |
 | `Catalyst\Repository\Configuration\Support\AppConfigWriter` | `class` | `Repository/Framework/Configuration/Support/AppConfigWriter.php` | 41 |
 | `Catalyst\Repository\Configuration\Support\CacheConfigWriter` | `class` | `Repository/Framework/Configuration/Support/CacheConfigWriter.php` | 46 |
 | `Catalyst\Repository\Configuration\Support\ConfigurationAccessContract` | `class` | `Repository/Framework/Configuration/Support/ConfigurationAccessContract.php` | 16 |
@@ -642,6 +646,7 @@
 | `Catalyst\Repository\Configuration\Support\HealthProbeProjector` | `class` | `Repository/Framework/Configuration/Support/HealthProbeProjector.php` | 12 |
 | `Catalyst\Repository\Configuration\Support\LoggingConfigWriter` | `class` | `Repository/Framework/Configuration/Support/LoggingConfigWriter.php` | 41 |
 | `Catalyst\Repository\Configuration\Support\MailConfigWriter` | `class` | `Repository/Framework/Configuration/Support/MailConfigWriter.php` | 41 |
+| `Catalyst\Repository\Configuration\Support\PrivilegedAccountReadinessProbe` | `class` | `Repository/Framework/Configuration/Support/PrivilegedAccountReadinessProbe.php` | 42 |
 | `Catalyst\Repository\Configuration\Support\SecurityConfigWriter` | `class` | `Repository/Framework/Configuration/Support/SecurityConfigWriter.php` | 41 |
 | `Catalyst\Repository\Configuration\Support\SessionConfigWriter` | `class` | `Repository/Framework/Configuration/Support/SessionConfigWriter.php` | 42 |
 | `Catalyst\Repository\Configuration\Support\SettingsCardFactory` | `class` | `Repository/Framework/Configuration/Support/SettingsCardFactory.php` | 39 |
@@ -670,11 +675,8 @@
 | `Catalyst\Repository\DevTools\Services\DatabaseResetService` | `class` | `Repository/Framework/DevTools/Services/DatabaseResetService.php` | 45 |
 | `Catalyst\Repository\Notification\Controllers\NotificationController` | `class` | `Repository/Framework/Notification/Controllers/NotificationController.php` | 46 |
 | `Catalyst\Repository\Notification\Controllers\PresenceController` | `class` | `Repository/Framework/Notification/Controllers/PresenceController.php` | 47 |
-| `Catalyst\Repository\Operations\ApiPlatform\Controllers\ApiPlatformController` | `class` | `Repository/Framework/Operations/ApiPlatform/Controllers/ApiPlatformController.php` | 52 |
-| `Catalyst\Repository\Operations\ApiPlatform\Controllers\CalendarApiController` | `class` | `Repository/Framework/Operations/ApiPlatform/Controllers/CalendarApiController.php` | 23 |
-| `Catalyst\Repository\Operations\ApiPlatform\Controllers\VersionApiController` | `class` | `Repository/Framework/Operations/ApiPlatform/Controllers/VersionApiController.php` | 50 |
-| `Catalyst\Repository\Operations\ApiPlatform\Controllers\WorkflowApiController` | `class` | `Repository/Framework/Operations/ApiPlatform/Controllers/WorkflowApiController.php` | 49 |
-| `Catalyst\Repository\Operations\ApiPlatform\Requests\ApiTokenRequest` | `class` | `Repository/Framework/Operations/ApiPlatform/Requests/ApiTokenRequest.php` | 48 |
+| `Catalyst\Repository\Operations\ApiManagement\Controllers\ApiManagementController` | `class` | `Repository/Framework/Operations/ApiManagement/Controllers/ApiManagementController.php` | 51 |
+| `Catalyst\Repository\Operations\ApiManagement\Requests\ApiTokenRequest` | `class` | `Repository/Framework/Operations/ApiManagement/Requests/ApiTokenRequest.php` | 48 |
 | `Catalyst\Repository\Operations\Audit\Controllers\AuditLogController` | `class` | `Repository/Framework/Operations/Audit/Controllers/AuditLogController.php` | 46 |
 | `Catalyst\Repository\Operations\Automation\Actions\AutomationRuleExecutionService` | `class` | `Repository/Framework/Operations/Automation/Actions/AutomationRuleExecutionService.php` | 46 |
 | `Catalyst\Repository\Operations\Automation\Actions\AutomationRuleMutationService` | `class` | `Repository/Framework/Operations/Automation/Actions/AutomationRuleMutationService.php` | 47 |
@@ -696,19 +698,20 @@
 | `Catalyst\Repository\Operations\Support\OperationsAccessContract` | `class` | `Repository/Framework/Operations/Support/OperationsAccessContract.php` | 17 |
 | `Catalyst\Repository\Operations\Tenancy\Controllers\TenancyController` | `class` | `Repository/Framework/Operations/Tenancy/Controllers/TenancyController.php` | 16 |
 | `Catalyst\Repository\Operations\Tenancy\Support\TenancyDiagnosticProjector` | `class` | `Repository/Framework/Operations/Tenancy/Support/TenancyDiagnosticProjector.php` | 10 |
-| `Catalyst\Repository\Roles\Controllers\OrganizationHierarchyController` | `class` | `Repository/Framework/Roles/Controllers/OrganizationHierarchyController.php` | 20 |
-| `Catalyst\Repository\Roles\Controllers\PermissionsController` | `class` | `Repository/Framework/Roles/Controllers/PermissionsController.php` | 51 |
-| `Catalyst\Repository\Roles\Controllers\RolesController` | `class` | `Repository/Framework/Roles/Controllers/RolesController.php` | 53 |
-| `Catalyst\Repository\Roles\Controllers\UserManagementController` | `class` | `Repository/Framework/Roles/Controllers/UserManagementController.php` | 52 |
-| `Catalyst\Repository\Roles\Controllers\UserRolesController` | `class` | `Repository/Framework/Roles/Controllers/UserRolesController.php` | 46 |
-| `Catalyst\Repository\Roles\Requests\PermissionBulkSelectionRequest` | `class` | `Repository/Framework/Roles/Requests/PermissionBulkSelectionRequest.php` | 41 |
-| `Catalyst\Repository\Roles\Requests\PermissionPayloadRequest` | `class` | `Repository/Framework/Roles/Requests/PermissionPayloadRequest.php` | 43 |
-| `Catalyst\Repository\Roles\Requests\RoleBulkSelectionRequest` | `class` | `Repository/Framework/Roles/Requests/RoleBulkSelectionRequest.php` | 41 |
-| `Catalyst\Repository\Roles\Requests\RolePayloadRequest` | `class` | `Repository/Framework/Roles/Requests/RolePayloadRequest.php` | 46 |
-| `Catalyst\Repository\Roles\Requests\RolePermissionSyncRequest` | `class` | `Repository/Framework/Roles/Requests/RolePermissionSyncRequest.php` | 41 |
-| `Catalyst\Repository\Roles\Requests\UserEnrollmentRequest` | `class` | `Repository/Framework/Roles/Requests/UserEnrollmentRequest.php` | 42 |
-| `Catalyst\Repository\Roles\Support\RbacLabelPresenter` | `class` | `Repository/Framework/Roles/Support/RbacLabelPresenter.php` | 39 |
-| `Catalyst\Repository\Roles\Support\UserEnrollmentFormFactory` | `class` | `Repository/Framework/Roles/Support/UserEnrollmentFormFactory.php` | 42 |
+| `Catalyst\Repository\Users\Controllers\AccountRecoveryReviewController` | `class` | `Repository/Framework/Users/Controllers/AccountRecoveryReviewController.php` | 47 |
+| `Catalyst\Repository\Users\Controllers\OrganizationHierarchyController` | `class` | `Repository/Framework/Users/Controllers/OrganizationHierarchyController.php` | 20 |
+| `Catalyst\Repository\Users\Controllers\PermissionsController` | `class` | `Repository/Framework/Users/Controllers/PermissionsController.php` | 51 |
+| `Catalyst\Repository\Users\Controllers\RolesController` | `class` | `Repository/Framework/Users/Controllers/RolesController.php` | 53 |
+| `Catalyst\Repository\Users\Controllers\UserManagementController` | `class` | `Repository/Framework/Users/Controllers/UserManagementController.php` | 52 |
+| `Catalyst\Repository\Users\Controllers\UserRolesController` | `class` | `Repository/Framework/Users/Controllers/UserRolesController.php` | 46 |
+| `Catalyst\Repository\Users\Requests\PermissionBulkSelectionRequest` | `class` | `Repository/Framework/Users/Requests/PermissionBulkSelectionRequest.php` | 41 |
+| `Catalyst\Repository\Users\Requests\PermissionPayloadRequest` | `class` | `Repository/Framework/Users/Requests/PermissionPayloadRequest.php` | 43 |
+| `Catalyst\Repository\Users\Requests\RoleBulkSelectionRequest` | `class` | `Repository/Framework/Users/Requests/RoleBulkSelectionRequest.php` | 41 |
+| `Catalyst\Repository\Users\Requests\RolePayloadRequest` | `class` | `Repository/Framework/Users/Requests/RolePayloadRequest.php` | 46 |
+| `Catalyst\Repository\Users\Requests\RolePermissionSyncRequest` | `class` | `Repository/Framework/Users/Requests/RolePermissionSyncRequest.php` | 41 |
+| `Catalyst\Repository\Users\Requests\UserEnrollmentRequest` | `class` | `Repository/Framework/Users/Requests/UserEnrollmentRequest.php` | 42 |
+| `Catalyst\Repository\Users\Support\RbacLabelPresenter` | `class` | `Repository/Framework/Users/Support/RbacLabelPresenter.php` | 39 |
+| `Catalyst\Repository\Users\Support\UserEnrollmentFormFactory` | `class` | `Repository/Framework/Users/Support/UserEnrollmentFormFactory.php` | 43 |
 | `Catalyst\Repository\Workspaces\Catalogs\Actions\CatalogMutationService` | `class` | `Repository/Framework/Workspaces/Catalogs/Actions/CatalogMutationService.php` | 49 |
 | `Catalyst\Repository\Workspaces\Catalogs\Controllers\CatalogController` | `class` | `Repository/Framework/Workspaces/Catalogs/Controllers/CatalogController.php` | 62 |
 | `Catalyst\Repository\Workspaces\Catalogs\Requests\CatalogDefinitionRequest` | `class` | `Repository/Framework/Workspaces/Catalogs/Requests/CatalogDefinitionRequest.php` | 48 |
@@ -774,24 +777,22 @@
 | `boot-core/template/_sidebar.phtml` | `boot-core/template` | `phtml` |
 | `boot-core/template/_status-bar.phtml` | `boot-core/template` | `phtml` |
 | `boot-core/template/_topbar.phtml` | `boot-core/template` | `phtml` |
-| `Repository/App/Surface/Account/Views/pages/activity.phtml` | `Repository views` | `phtml` |
-| `Repository/App/Surface/Account/Views/pages/admin-index.phtml` | `Repository views` | `phtml` |
-| `Repository/App/Surface/Account/Views/pages/admin-show.phtml` | `Repository views` | `phtml` |
-| `Repository/App/Surface/Account/Views/pages/mfa-recovery.phtml` | `Repository views` | `phtml` |
-| `Repository/App/Surface/Account/Views/pages/mfa-request.phtml` | `Repository views` | `phtml` |
-| `Repository/App/Surface/Account/Views/pages/mfa.phtml` | `Repository views` | `phtml` |
-| `Repository/App/Surface/Account/Views/pages/profile.phtml` | `Repository views` | `phtml` |
-| `Repository/App/Surface/Account/Views/pages/recovery-start.phtml` | `Repository views` | `phtml` |
-| `Repository/App/Surface/Account/Views/pages/recovery.phtml` | `Repository views` | `phtml` |
-| `Repository/App/Surface/Account/Views/pages/security.phtml` | `Repository views` | `phtml` |
-| `Repository/App/Surface/Account/Views/pages/support-request.phtml` | `Repository views` | `phtml` |
-| `Repository/App/Surface/Account/Views/pages/support.phtml` | `Repository views` | `phtml` |
 | `Repository/App/Surface/Dashboard/Views/pages/guest.phtml` | `Repository views` | `phtml` |
 | `Repository/App/Surface/Dashboard/Views/pages/index.phtml` | `Repository views` | `phtml` |
 | `Repository/App/Surface/Dashboard/Views/pages/surface.phtml` | `Repository views` | `phtml` |
 | `Repository/App/Surface/Home/Views/pages/surface.phtml` | `Repository views` | `phtml` |
 | `Repository/App/Surface/Landing/Views/pages/surface.phtml` | `Repository views` | `phtml` |
 | `Repository/App/Surface/Store/Views/pages/surface.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Account/Views/pages/activity.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Account/Views/pages/mfa-recovery.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Account/Views/pages/mfa-request.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Account/Views/pages/mfa.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Account/Views/pages/profile.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Account/Views/pages/recovery-start.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Account/Views/pages/recovery.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Account/Views/pages/security.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Account/Views/pages/support-request.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Account/Views/pages/support.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/Auth/Views/pages/forgot-password.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/Auth/Views/pages/login.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/Auth/Views/pages/mfa-challenge.phtml` | `Repository views` | `phtml` |
@@ -832,7 +833,6 @@
 | `Repository/Framework/DevTools/Views/pages/layout-test.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/DevTools/Views/pages/route-test.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/DevTools/Views/pages/test-features.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/DevTools/Views/pages/ui-showcase.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/DevTools/Views/pages/uml.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/DevTools/Views/partials/modal/_form-content.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/DevTools/Views/partials/modal/_sample-content.phtml` | `Repository views` | `phtml` |
@@ -867,8 +867,8 @@
 | `Repository/Framework/DevTools/Views/scope/partials/_tf-i18n.php` | `Repository views` | `php` |
 | `Repository/Framework/DevTools/Views/scope/partials/_tf-rbac.php` | `Repository views` | `php` |
 | `Repository/Framework/DevTools/Views/scope/partials/_tf-system-info.php` | `Repository views` | `php` |
-| `Repository/Framework/Operations/ApiPlatform/Views/pages/index.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Operations/ApiPlatform/Views/scope/pages/index.php` | `Repository views` | `php` |
+| `Repository/Framework/Operations/ApiManagement/Views/pages/index.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Operations/ApiManagement/Views/scope/pages/index.php` | `Repository views` | `php` |
 | `Repository/Framework/Operations/Audit/Views/pages/index.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/Operations/Audit/Views/pages/show.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/Operations/Audit/Views/scope/pages/index.php` | `Repository views` | `php` |
@@ -883,24 +883,26 @@
 | `Repository/Framework/Operations/Deployments/Views/scope/pages/deployments.php` | `Repository views` | `php` |
 | `Repository/Framework/Operations/Tenancy/Views/pages/index.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/Operations/Tenancy/Views/scope/pages/index.php` | `Repository views` | `php` |
-| `Repository/Framework/Roles/Views/pages/form.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Roles/Views/pages/index.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Roles/Views/pages/organization-hierarchy.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Roles/Views/pages/permission-form.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Roles/Views/pages/permissions-list.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Roles/Views/pages/permissions.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Roles/Views/pages/user-register.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Roles/Views/pages/user-roles.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Roles/Views/pages/users-index.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Roles/Views/scope/pages/form.php` | `Repository views` | `php` |
-| `Repository/Framework/Roles/Views/scope/pages/index.php` | `Repository views` | `php` |
-| `Repository/Framework/Roles/Views/scope/pages/organization-hierarchy.php` | `Repository views` | `php` |
-| `Repository/Framework/Roles/Views/scope/pages/permission-form.php` | `Repository views` | `php` |
-| `Repository/Framework/Roles/Views/scope/pages/permissions-list.php` | `Repository views` | `php` |
-| `Repository/Framework/Roles/Views/scope/pages/permissions.php` | `Repository views` | `php` |
-| `Repository/Framework/Roles/Views/scope/pages/user-register.php` | `Repository views` | `php` |
-| `Repository/Framework/Roles/Views/scope/pages/user-roles.php` | `Repository views` | `php` |
-| `Repository/Framework/Roles/Views/scope/pages/users-index.php` | `Repository views` | `php` |
+| `Repository/Framework/Users/Views/pages/form.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Users/Views/pages/index.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Users/Views/pages/organization-hierarchy.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Users/Views/pages/permission-form.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Users/Views/pages/permissions-list.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Users/Views/pages/permissions.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Users/Views/pages/recovery-requests.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Users/Views/pages/recovery-review.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Users/Views/pages/user-register.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Users/Views/pages/user-roles.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Users/Views/pages/users-index.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Users/Views/scope/pages/form.php` | `Repository views` | `php` |
+| `Repository/Framework/Users/Views/scope/pages/index.php` | `Repository views` | `php` |
+| `Repository/Framework/Users/Views/scope/pages/organization-hierarchy.php` | `Repository views` | `php` |
+| `Repository/Framework/Users/Views/scope/pages/permission-form.php` | `Repository views` | `php` |
+| `Repository/Framework/Users/Views/scope/pages/permissions-list.php` | `Repository views` | `php` |
+| `Repository/Framework/Users/Views/scope/pages/permissions.php` | `Repository views` | `php` |
+| `Repository/Framework/Users/Views/scope/pages/user-register.php` | `Repository views` | `php` |
+| `Repository/Framework/Users/Views/scope/pages/user-roles.php` | `Repository views` | `php` |
+| `Repository/Framework/Users/Views/scope/pages/users-index.php` | `Repository views` | `php` |
 | `Repository/Framework/Workspaces/Catalogs/Views/pages/form.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/Workspaces/Catalogs/Views/pages/index.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/Workspaces/Catalogs/Views/pages/item-form.phtml` | `Repository views` | `phtml` |
@@ -923,26 +925,26 @@
 | `Repository/Framework/Workspaces/Media/Views/scope/pages/fields-index.php` | `Repository views` | `php` |
 | `Repository/Framework/Workspaces/Media/Views/scope/pages/form.php` | `Repository views` | `php` |
 | `Repository/Framework/Workspaces/Media/Views/scope/pages/index.php` | `Repository views` | `php` |
-| `Repository/Framework/Workspaces/Views/localization/index.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Workspaces/Views/module-designer/index.phtml` | `Repository views` | `phtml` |
-| `Repository/Framework/Workspaces/Views/scope/localization/index.php` | `Repository views` | `php` |
-| `Repository/Framework/Workspaces/Views/scope/module-designer/index.php` | `Repository views` | `php` |
+| `Repository/Framework/Workspaces/Views/pages/localization/index.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Workspaces/Views/pages/module-designer/index.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Workspaces/Views/scope/pages/localization/index.php` | `Repository views` | `php` |
+| `Repository/Framework/Workspaces/Views/scope/pages/module-designer/index.php` | `Repository views` | `php` |
 
 ## Scripts
 
 | File | Root | Bytes |
 |---|---|---:|
-| `Repository/App/Surface/Account/front/script.js` | `Repository front` | 11 |
 | `Repository/App/Surface/Dashboard/front/script.js` | `Repository front` | 11 |
 | `Repository/App/Surface/Home/front/script.js` | `Repository front` | 11 |
 | `Repository/App/Surface/Landing/front/script.js` | `Repository front` | 11 |
 | `Repository/App/Surface/Store/front/script.js` | `Repository front` | 11 |
+| `Repository/Framework/Account/front/script.js` | `Repository front` | 11 |
 | `Repository/Framework/Auth/front/script.js` | `Repository front` | 2073 |
 | `Repository/Framework/Configuration/front/script.js` | `Repository front` | 12479 |
 | `Repository/Framework/DemoUi/front/script.js` | `Repository front` | 1225 |
 | `Repository/Framework/DevTools/front/script.js` | `Repository front` | 20214 |
 | `Repository/Framework/Operations/front/script.js` | `Repository front` | 132 |
-| `Repository/Framework/Roles/front/script.js` | `Repository front` | 275 |
+| `Repository/Framework/Users/front/script.js` | `Repository front` | 255 |
 | `Repository/Framework/Workspaces/front/script.js` | `Repository front` | 366 |
 | `public/assets/js/catalyst/appearance-bootstrap.js` | `public catalyst js` | 5802 |
 | `public/assets/js/catalyst/bootstrap/components.js` | `public catalyst js` | 10368 |
@@ -973,7 +975,7 @@
 | `public/assets/js/catalyst/inspinia/enhancers/uploads.js` | `public catalyst js` | 322 |
 | `public/assets/js/catalyst/inspinia/enhancers/wizard.js` | `public catalyst js` | 281 |
 | `public/assets/js/catalyst/inspinia/tables.js` | `public catalyst js` | 12552 |
-| `public/assets/js/catalyst/notifications/flash.js` | `public catalyst js` | 5051 |
+| `public/assets/js/catalyst/notifications/flash.js` | `public catalyst js` | 5059 |
 | `public/assets/js/catalyst/notifications/modal.js` | `public catalyst js` | 20322 |
 | `public/assets/js/catalyst/notifications/notification.js` | `public catalyst js` | 4509 |
 | `public/assets/js/catalyst/notifications/toaster.js` | `public catalyst js` | 11297 |
@@ -984,6 +986,6 @@
 | `public/assets/js/catalyst/runtime/ui-runtime.js` | `public catalyst js` | 19967 |
 | `public/assets/js/catalyst/shell/navigation.js` | `public catalyst js` | 6297 |
 | `public/assets/js/catalyst/shell/simplebar.js` | `public catalyst js` | 1730 |
-| `public/assets/js/catalyst/shell/status-bar.js` | `public catalyst js` | 19649 |
+| `public/assets/js/catalyst/shell/status-bar.js` | `public catalyst js` | 19676 |
 | `public/assets/js/catalyst/shell/theme-customizer.js` | `public catalyst js` | 12390 |
 | `public/assets/js/catalyst/shell/topbar.js` | `public catalyst js` | 1942 |

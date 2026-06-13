@@ -91,7 +91,7 @@ final class ShellNavigationPresenter
                 ['label_key' => 'ui.product_nav.items.user_permissions', 'href' => '/users/permissions', 'icon' => 'ti ti-key'],
                 ['label_key' => 'ui.product_nav.items.user_enroll', 'href' => '/users/enroll', 'icon' => 'ti ti-user-plus'],
                 ['label_key' => 'ui.product_nav.items.organization_hierarchy', 'href' => '/users/organization-hierarchy', 'icon' => 'ti ti-building-hierarchy'],
-                ['label_key' => 'ui.product_nav.items.account_recovery', 'href' => '/admin/account-recovery', 'icon' => 'ti ti-lifebuoy'],
+                ['label_key' => 'ui.product_nav.items.account_recovery', 'href' => '/users/account-recovery', 'icon' => 'ti ti-lifebuoy'],
             ],
         ],
         'devtools' => [
@@ -100,7 +100,6 @@ final class ShellNavigationPresenter
             'icon' => 'ti ti-flask',
             'items' => [
                 ['label_key' => 'ui.product_nav.items.test_features', 'href' => '/test-features', 'icon' => 'ti ti-flask'],
-                ['label_key' => 'ui.product_nav.items.ui_showcase', 'href' => '/test-features/ui-showcase', 'icon' => 'ti ti-layout-dashboard'],
                 ['label_key' => 'ui.product_nav.items.uml_architecture', 'href' => '/uml', 'icon' => 'ti ti-route'],
                 ['label_key' => 'ui.product_nav.groups.demo_ui', 'href' => '/demo-ui', 'icon' => 'ti ti-components'],
             ],
@@ -305,7 +304,7 @@ final class ShellNavigationPresenter
     }
 
     /**
-     * Flattens raw admin definitions into href-indexed items.
+     * Flattens raw navigation definitions into href-indexed items.
      *
      * @param array<int, array<string, mixed>> $definitions
      * @return array<string, array<string, mixed>>
@@ -392,7 +391,7 @@ final class ShellNavigationPresenter
         $href = (string)($item['href'] ?? '');
         $context = (string)($item['context'] ?? '');
 
-        if ($context === 'account-recovery' || str_starts_with($href, '/admin/account-recovery')) {
+        if ($context === 'account-recovery' || str_starts_with($href, '/users/account-recovery')) {
             return 'users';
         }
 

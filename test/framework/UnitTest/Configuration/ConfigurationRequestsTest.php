@@ -12,7 +12,7 @@ use Catalyst\Repository\Configuration\Requests\DkimGenerateRequest;
 use Catalyst\Repository\Configuration\Requests\FtpConfigRequest;
 use Catalyst\Repository\Configuration\Requests\FeatureFlagDefaultRequest;
 use Catalyst\Repository\Configuration\Requests\FeatureFlagOverrideRequest;
-use Catalyst\Repository\Configuration\Requests\SetupAdminRequest;
+use Catalyst\Repository\Configuration\Requests\SetupPrivilegedAccountRequest;
 use CatalystTest\Support\Assert;
 use CatalystTest\TestCase;
 
@@ -99,26 +99,26 @@ final class ConfigurationRequestsTest extends TestCase
         $this->expectValidationFailure(static fn() => (new DkimGenerateRequest($payload))->validated());
     }
 
-    public function testSetupAdminRequestNormalizesEmailAndRejectsPasswordMismatch(): void
+    public function testSetupPrivilegedAccountRequestNormalizesEmailAndRejectsPasswordMismatch(): void
     {
         $valid = $this->request([
-            'admin_name' => ' Initial Admin ',
-            'admin_email' => ' ADMIN@EXAMPLE.COM ',
-            'admin_password' => 'correct-password',
-            'admin_password_confirm' => 'correct-password',
+            'account_name' => ' Initial Privileged Account ',
+            'account_email' => ' PRIVILEGED@EXAMPLE.COM ',
+            'account_password' => 'correct-password',
+            'account_password_confirm' => 'correct-password',
         ]);
-        $resolved = (new SetupAdminRequest($valid))->validated();
+        $resolved = (new SetupPrivilegedAccountRequest($valid))->validated();
 
-        Assert::same('Initial Admin', $resolved['admin_name']);
-        Assert::same('admin@example.com', $resolved['admin_email']);
+        Assert::same('Initial Privileged Account', $resolved['account_name']);
+        Assert::same('privileged@example.com', $resolved['account_email']);
 
         $invalid = $this->request([
-            'admin_name' => 'Initial Admin',
-            'admin_email' => 'admin@example.com',
-            'admin_password' => 'correct-password',
-            'admin_password_confirm' => 'different-password',
+            'account_name' => 'Initial Privileged Account',
+            'account_email' => 'privileged@example.com',
+            'account_password' => 'correct-password',
+            'account_password_confirm' => 'different-password',
         ]);
-        $this->expectValidationFailure(static fn() => (new SetupAdminRequest($invalid))->validated());
+        $this->expectValidationFailure(static fn() => (new SetupPrivilegedAccountRequest($invalid))->validated());
     }
 
     public function testFeatureFlagRequestsNormalizeCheckboxAndRejectInvalidSubjects(): void

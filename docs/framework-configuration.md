@@ -4,8 +4,8 @@
 
 `Repository/Framework/Configuration` is the only physical owner of the 29
 active `/configuration/*` routes. Its PHP namespace is
-`Catalyst\Repository\Configuration` and protected administration uses
-`manage-platform-configuration` with the existing administrator fallback.
+`Catalyst\Repository\Configuration` and protected privileged uses
+`manage-platform-configuration` with the existing privileged role fallback.
 
 Configuration owns Environment Setup, Application Health, Platform Appearance,
 Feature Flags and Plugins. There are no active Settings or Operations route
@@ -27,7 +27,7 @@ name does not create a Settings module or route owner.
 
 | Surface | Route family | Access |
 |---|---|---|
-| Environment Setup | `/configuration/environment-setup*` | Public during first run; authenticated administrator after configuration |
+| Environment Setup | `/configuration/environment-setup*` | Public during first run; authenticated privileged role after configuration |
 | Application Health panel | `/configuration/application-health` | Authenticated `manage-platform-configuration` |
 | Public health probes | `/configuration/application-health/live`, `/configuration/application-health/ready` | Public minimal JSON |
 | Platform Appearance | `/configuration/platform-appearance*` | Authenticated `manage-platform-configuration` |
@@ -48,8 +48,8 @@ to `_sidebar-node.phtml`.
 
 - `demo-ui`: recursive catalog navigation supplied by
   `DemoUiNavigationProvider`; it does not alter Demo UI previews or components.
-- `framework-admin`: administrative taxonomy composed by
-  `FrameworkAdminNavigationProvider`.
+- `framework`: authorized Framework taxonomy composed by
+  `FrameworkNavigationProvider`.
 - `application`: Framework account capabilities plus registered App module
   contributions, composed by `ApplicationNavigationProvider`.
 

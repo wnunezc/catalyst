@@ -33,7 +33,7 @@ namespace Catalyst\Repository\Workspaces\Documents\Support;
 use Catalyst\Framework\Form\FormBuilder;
 
 /**
- * Builds the administrative document template form schema.
+ * Builds the privileged document template form schema.
  *
  * @package Catalyst\Repository\Workspaces\Documents\Support
  * Responsibility: Define template form sections, fields, defaults and actions for create and edit screens.

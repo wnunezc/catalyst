@@ -18,7 +18,7 @@ final class AppConsumersArchitectureTest extends TestCase
 
     public function testAccountUsesTheCanonicalShellContract(): void
     {
-        $viewModel = $this->read('Repository/App/Surface/Account/Support/AccountSurfaceViewModel.php');
+        $viewModel = $this->read('Repository/Framework/Account/Support/AccountSurfaceViewModel.php');
         $styles = $this->read('public/assets/css/catalyst/account-shell.css');
 
         Assert::contains("'body_class' => 'catalyst-shell-body account-page-body'", $viewModel);

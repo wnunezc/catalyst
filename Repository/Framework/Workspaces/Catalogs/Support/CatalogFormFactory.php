@@ -33,7 +33,7 @@ namespace Catalyst\Repository\Workspaces\Catalogs\Support;
 use Catalyst\Framework\Form\FormBuilder;
 
 /**
- * Builds administrative catalog definition and item form schemas.
+ * Builds privileged catalog definition and item form schemas.
  *
  * @package Catalyst\Repository\Workspaces\Catalogs\Support
  * Responsibility: Define catalog form sections, fields, defaults and actions for create and edit screens.

@@ -74,8 +74,8 @@ class RbacTestController extends Controller
             'legacy_role'      => $user['role'] ?? null,
             'roles'            => array_column($repo->getUserRoles($userId), 'slug'),
             'permissions'      => array_column($repo->getUserPermissions($userId), 'slug'),
-            'gate_admin_check' => $gate->allows('rbac-test-gate'),
-            'is_admin_role'    => $repo->userHasRole($userId, 'admin'),
+            'gate_privileged_check' => $gate->allows('rbac-test-gate'),
+            'has_privileged_role'    => $repo->userHasRole($userId, 'admin'),
         ], __('devtools.rbac_runtime.status_ok'));
     }
 
@@ -84,7 +84,7 @@ class RbacTestController extends Controller
      *
      * Responsibility: Assigns the administrator role to the authenticated development user.
      */
-    public function makeAdmin(): JsonResponse
+    public function assignPrivilegedRole(): JsonResponse
     {
         if (!defined('IS_DEVELOPMENT') || !IS_DEVELOPMENT) {
             return $this->jsonError(__('devtools.rbac_runtime.dev_only'), 403);
@@ -100,7 +100,7 @@ class RbacTestController extends Controller
         $assigned = RoleRepository::getInstance()->assignRoleSlugToUser($userId, 'admin');
 
         if (!$assigned) {
-            return $this->jsonError(__('devtools.rbac_runtime.admin_role_missing'), 404);
+            return $this->jsonError(__('devtools.rbac_runtime.privileged_role_missing'), 404);
         }
 
         return $this->jsonSuccess(

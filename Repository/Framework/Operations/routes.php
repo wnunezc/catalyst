@@ -45,8 +45,8 @@ Translator::getInstance()->addPath(
 );
 $apiManagementMiddleware = OperationsAccessContract::middleware(OperationsAccessContract::API_MANAGEMENT);
 $router->get('/operations/api-management', [ApiManagementController::class, 'index'])->middleware($apiManagementMiddleware);
-$router->post('/operations/api-management/tokens', [ApiManagementController::class, 'storeToken'])->middleware($apiManagementMiddleware)->throttle('admin_mutation');
-$router->post('/operations/api-management/tokens/{id}/revoke', [ApiManagementController::class, 'revokeToken'])->middleware($apiManagementMiddleware)->throttle('admin_mutation');
+$router->post('/operations/api-management/tokens', [ApiManagementController::class, 'storeToken'])->middleware($apiManagementMiddleware)->throttle('privileged_mutation');
+$router->post('/operations/api-management/tokens/{id}/revoke', [ApiManagementController::class, 'revokeToken'])->middleware($apiManagementMiddleware)->throttle('privileged_mutation');
 
 $apiMiddleware = [ApiTokenMiddleware::class];
 
@@ -60,14 +60,14 @@ Translator::getInstance()->addPath(
 $automationMiddleware = OperationsAccessContract::middleware(OperationsAccessContract::AUTOMATION_RULES);
 $router->get('/operations/automation-rules', [AutomationRuleController::class, 'index'])->middleware($automationMiddleware);
 $router->get('/operations/automation-rules/create', [AutomationRuleController::class, 'create'])->middleware($automationMiddleware);
-$router->post('/operations/automation-rules', [AutomationRuleController::class, 'store'])->middleware($automationMiddleware)->throttle('admin_mutation');
+$router->post('/operations/automation-rules', [AutomationRuleController::class, 'store'])->middleware($automationMiddleware)->throttle('privileged_mutation');
 $router->get('/operations/automation-rules/{id}', [AutomationRuleController::class, 'show'])->middleware($automationMiddleware);
 $router->get('/operations/automation-rules/{id}/edit', [AutomationRuleController::class, 'edit'])->middleware($automationMiddleware);
-$router->post('/operations/automation-rules/{id}', [AutomationRuleController::class, 'update'])->middleware($automationMiddleware)->throttle('admin_mutation');
-$router->post('/operations/automation-rules/{id}/delete', [AutomationRuleController::class, 'destroy'])->middleware($automationMiddleware)->throttle('admin_mutation');
-$router->post('/operations/automation-rules/{id}/run', [AutomationRuleController::class, 'run'])->middleware($automationMiddleware)->throttle('admin_mutation');
-$router->post('/operations/automation-rules/{id}/transition', [AutomationRuleController::class, 'transition'])->middleware($automationMiddleware)->throttle('admin_mutation');
-$router->post('/operations/automation-rules/{id}/versions/{versionId}/restore', [AutomationRuleController::class, 'restoreVersion'])->middleware($automationMiddleware)->throttle('admin_mutation');
+$router->post('/operations/automation-rules/{id}', [AutomationRuleController::class, 'update'])->middleware($automationMiddleware)->throttle('privileged_mutation');
+$router->post('/operations/automation-rules/{id}/delete', [AutomationRuleController::class, 'destroy'])->middleware($automationMiddleware)->throttle('privileged_mutation');
+$router->post('/operations/automation-rules/{id}/run', [AutomationRuleController::class, 'run'])->middleware($automationMiddleware)->throttle('privileged_mutation');
+$router->post('/operations/automation-rules/{id}/transition', [AutomationRuleController::class, 'transition'])->middleware($automationMiddleware)->throttle('privileged_mutation');
+$router->post('/operations/automation-rules/{id}/versions/{versionId}/restore', [AutomationRuleController::class, 'restoreVersion'])->middleware($automationMiddleware)->throttle('privileged_mutation');
 
 $router->get('/api/v1/automation-rules', [AutomationRuleApiController::class, 'apiIndex'])->middleware($apiMiddleware);
 $router->get('/api/v1/automation-rules/{id}', [AutomationRuleApiController::class, 'apiShow'])->middleware($apiMiddleware);
@@ -79,7 +79,7 @@ View::getInstance()->addPath(
 );
 $deploymentMiddleware = OperationsAccessContract::middleware(OperationsAccessContract::DEPLOYMENTS);
 $router->get('/operations/deployments', [DeploymentsController::class, 'index'])->middleware($deploymentMiddleware);
-$router->post('/operations/deployments/runs', [DeploymentsController::class, 'run'])->middleware($deploymentMiddleware)->throttle('admin_mutation');
+$router->post('/operations/deployments/runs', [DeploymentsController::class, 'run'])->middleware($deploymentMiddleware)->throttle('privileged_mutation');
 
 View::getInstance()->addPath(
     'tenancy',

@@ -129,14 +129,13 @@ final class ShellNavigationSmokeCommand extends AbstractCommand
             ]),
             'devtools_surfaces_preserved' => $this->groupContainsLabelsInOrder($this->findSidebarGroup($sidebar, 'Devtools'), [
                 'Test Features',
-                'UI Showcase',
                 'UML / Architecture',
                 'Demo UI',
             ]),
             'derived_group_entries_allowed' => $this->derivedOperationsEntriesAllowed(),
             'no_nested_users_item' => !$this->groupContainsLabel($usersGroup, 'Users'),
             'no_operations_inside_configuration' => !$this->groupContainsLabel($configurationGroup, 'Operations'),
-            'account_recovery_under_users' => $this->groupContainsHref($usersGroup, '/admin/account-recovery'),
+            'account_recovery_under_users' => $this->groupContainsHref($usersGroup, '/users/account-recovery'),
             'single_devtools_section' => count(array_filter($groupLabels, static fn (string $label): bool => $label === 'Devtools')) === 1
                 && !in_array('Devtools', $titles, true),
             'organization_hierarchy_projected' => $organizationItem !== null,
@@ -450,7 +449,7 @@ final class ShellNavigationSmokeCommand extends AbstractCommand
     {
         $scopePath = PD . DS . 'app' . DS . 'Framework' . DS . 'View' . DS . 'DocumentScope.php';
         $providerPath = PD . DS . 'app' . DS . 'Framework' . DS . 'Navigation' . DS
-            . 'FrameworkAdminNavigationProvider.php';
+            . 'FrameworkNavigationProvider.php';
         $scope = is_file($scopePath) ? (string)file_get_contents($scopePath) : '';
         $provider = is_file($providerPath) ? (string)file_get_contents($providerPath) : '';
 

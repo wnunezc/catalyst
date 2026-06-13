@@ -4,7 +4,7 @@
     "eyebrow": "Storefront demo",
     "badge": "Catalog surface",
     "headline": "A product catalog that actually looks like a store.",
-    "lead": "This storefront demo gives implementers a clear pattern for categories, product cards, pricing and a checkout summary without exposing administration.",
+    "lead": "This storefront demo gives implementers a clear pattern for categories, product cards, pricing and a checkout summary without exposing privileged.",
     "actions": {
       "primary": "Browse catalog",
       "secondary": "View landing"

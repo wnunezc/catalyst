@@ -1,0 +1,205 @@
+{
+  "shell": {
+    "workspace": "Account Center",
+    "fallback_user": "Catalyst User",
+    "toggle_navigation": "Toggle account navigation",
+    "breadcrumb": "Account breadcrumb"
+  },
+  "nav": {
+    "account": "My Account",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "mfa": "MFA",
+    "recovery": "Account Recovery",
+    "activity": "Recent Activity",
+    "mfa_manage": "Manage MFA",
+    "mfa_recovery": "Request MFA recovery",
+    "recovery_support": "Assisted support",
+    "recovery_compromised": "Report compromised account"
+  },
+  "nav_hints": {
+    "dashboard": "Personal summary, account indicators and recent events.",
+    "profile": "Basic identity, email, role and tenant data.",
+    "mfa": "Second-factor management and recovery options.",
+    "recovery": "Password, MFA, lost-email and compromised-account recovery options.",
+    "activity": "Recent security and recovery events for your account.",
+    "mfa_manage": "Open the MFA status and management surface.",
+    "mfa_recovery": "Request a secure email link to reset MFA access.",
+    "recovery_support": "Open the assisted recovery request form.",
+    "recovery_compromised": "Report a hacked or compromised account."
+  },
+  "profile": {
+    "eyebrow": "Identity",
+    "title": "Profile",
+    "lead": "Shows the base information the framework has for your session and tenant context.",
+    "identity_title": "Account data",
+    "identity_hint": "This view defines what belongs to the user without mixing system privileged.",
+    "name": "Name",
+    "email": "Email",
+    "role": "Role",
+    "tenant": "Tenant",
+    "scope_title": "Functional scope",
+    "scope_hint": "At this stage the profile is informational; editing must be added with dedicated requests and audit.",
+    "editing_note": "Profile editing stays separate so identity changes are not mixed with recovery flows."
+  },
+  "mfa": {
+    "eyebrow": "Second factor",
+    "title": "MFA",
+    "lead": "Manage second-factor status and safe recovery for lost access.",
+    "status_title": "Current status",
+    "status_hint": "MFA changes remain delegated to the existing framework flow.",
+    "enabled": "MFA active",
+    "enabled_hint": "The account requires a second factor to complete access.",
+    "disabled": "MFA inactive",
+    "disabled_hint": "The account currently has no active second factor.",
+    "setup": "Set up MFA",
+    "manage_existing": "Manage MFA",
+    "scope_note": "This surface focuses only on the current MFA state. Recovery requests are separated under the MFA submenu so the page does not become a navigation hub."
+  },
+  "activity": {
+    "eyebrow": "Personal audit",
+    "title": "Recent Activity",
+    "lead": "Lists recovery and security events related to your account."
+  },
+  "recovery": {
+    "eyebrow": "Recovery options",
+    "title": "Account recovery",
+    "lead": "Choose the recovery path that matches the account access problem.",
+    "password_title": "Password recovery",
+    "password_body": "Use the standard password reset flow when the account email is still available.",
+    "mfa_title": "MFA recovery",
+    "mfa_body": "Request a secure recovery link when the password is known but the second factor is unavailable.",
+    "support_title": "Assisted support",
+    "support_body": "Create a reviewed case when email access is lost or unauthorized access is suspected."
+  },
+  "security": {
+    "eyebrow": "Account protection",
+    "title": "Security",
+    "lead": "Review the account security surfaces without mixing them with privileged configuration."
+  },
+  "recovery_public": {
+    "eyebrow": "Safe recovery",
+    "start_title": "Need to recover your account?",
+    "start_lead": "Choose the scenario that best describes your situation. Cases without email access require assisted review.",
+    "forgot_password": "Forgot password",
+    "forgot_password_hint": "I have email access and need to change my password.",
+    "lost_mfa": "Lost MFA",
+    "lost_mfa_hint": "I know my password and have email access.",
+    "lost_email": "No email access",
+    "lost_email_hint": "I need support to validate the account.",
+    "compromised": "Compromised account",
+    "compromised_hint": "I suspect unauthorized access or takeover.",
+    "mfa_title": "Recover MFA access",
+    "mfa_lead": "Enter the account email. If it exists and has MFA enabled, we will send a temporary link. The response is always generic for security.",
+    "mfa_submit": "Send MFA recovery link",
+    "generic_response_hint": "For security, we do not confirm whether the email exists or MFA is enabled.",
+    "support_title": "Assisted support recovery",
+    "support_lead": "Describe your case. Support must manually review requests when primary email access is unavailable.",
+    "support_submit": "Submit request",
+    "compromised_title": "Report compromised account"
+  },
+  "request_types": {
+    "lost_email_password": "No email access and forgot password",
+    "lost_email_mfa": "No email access and lost MFA",
+    "compromised_account": "Hacked or compromised account"
+  },
+  "forms": {
+    "email": "Account email",
+    "request_type": "Recovery type",
+    "known_email": "Original account email",
+    "alternate_email": "Alternate contact email",
+    "message": "Case description"
+  },
+  "messages": {
+    "validation_failed": "Review the form fields.",
+    "mfa_recovery_sent": "If the account exists and applies, a recovery link will be sent.",
+    "mfa_recovery_success": "MFA was reset. Sign in and configure MFA again if the system requires it.",
+    "recovery_token_invalid": "The recovery link is invalid or expired.",
+    "support_request_created": "Request received. Support must review the case before approving any change."
+  },
+  "events": {
+    "now": "Now",
+    "generic": "Recovery event",
+    "generic_body": "Event registered by the account center.",
+    "dashboard_view": "Account center available",
+    "dashboard_view_body": "No recovery events are registered for this account yet.",
+    "mfa_reset_requested": "MFA recovery requested",
+    "mfa_reset_completed": "MFA reset completed",
+    "support_request_created": "Assisted request created",
+    "support_request_approved": "Request approved",
+    "support_request_rejected": "Request rejected"
+  },
+  "email": {
+    "mfa_reset_subject": "MFA access recovery",
+    "mfa_reset_greeting": "Hello :name, we received a request to reset MFA for your account.",
+    "mfa_reset_expiry": "The link expires in 30 minutes and can be used only once.",
+    "mfa_reset_ignore": "If you did not request this change, ignore this message and contact support."
+  },
+  "module": {
+    "recovery_review_label": "Account Recovery",
+    "recovery_review_hint": "Review assisted recovery and compromised-account requests.",
+    "manage_recovery_label": "Manage account recovery",
+    "manage_recovery_description": "Allows reviewing and marking assisted account recovery requests."
+  },
+  "statuses": {
+    "pending_email_verification": "Pending email verification",
+    "pending_support_review": "Pending review",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "completed": "Completed",
+    "cancelled": "Cancelled",
+    "expired": "Expired"
+  },
+  "review": {
+    "index": {
+      "eyebrow": "Technical support",
+      "title": "Account recovery requests",
+      "description": "Initial queue to review lost-email, lost-MFA or compromised-account cases.",
+      "view": "View case",
+      "columns": {
+        "id": "ID",
+        "type": "Type",
+        "status": "Status",
+        "email": "Known / alternate email",
+        "created": "Created",
+        "action": "Action"
+      }
+    },
+    "show": {
+      "eyebrow": "Recovery case",
+      "title": "Recovery request",
+      "description": "Assisted review. Approving or rejecting does not automatically change password, email or MFA without a later dedicated flow.",
+      "back": "Back",
+      "reviewed_at": "Reviewed at",
+      "review_title": "Support review",
+      "review_hint": "Mark the case according to the initial identity and risk review.",
+      "approve": "Approve review",
+      "reject": "Reject request",
+      "already_reviewed": "This request has already been reviewed."
+    },
+    "messages": {
+      "not_found": "The request does not exist.",
+      "review_saved": "Review saved.",
+      "review_failed": "The review could not be saved."
+    }
+  },
+  "mfa_recovery": {
+    "eyebrow": "MFA recovery",
+    "title": "Request MFA recovery",
+    "lead": "Use this option when the account owner still has access to the registered email but lost the authenticator app or backup codes.",
+    "form_title": "Send recovery link",
+    "form_hint": "The link is sent to the current account email and can be used only once.",
+    "submit": "Send MFA recovery link",
+    "note": "For security, the recovery token is stored hashed, expires quickly and resets MFA only when consumed successfully.",
+    "warning": "If the email account is also unavailable, use assisted support recovery instead of this direct flow."
+  },
+  "support": {
+    "eyebrow": "Assisted recovery",
+    "title": "Assisted support recovery",
+    "compromised_title": "Report compromised account",
+    "lead": "Create a support-reviewed case when direct email recovery is not enough or unauthorized access is suspected.",
+    "submit": "Submit support request",
+    "note": "Support review does not automatically change password, email or MFA. It records the case and keeps the decision auditable.",
+    "security_note": "Do not share passwords or MFA codes. Describe the issue and use an alternate email where support can contact you."
+  }
+}

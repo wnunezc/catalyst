@@ -87,7 +87,7 @@ class ComparisonRules
 
     /**
      * The field must be one of the listed values.
-     * Usage: in:admin,user,moderator
+     * Usage: in:manager,user,moderator
      *
      * @param mixed    $value
      * @param string[] $params Allowed values

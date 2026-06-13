@@ -57,9 +57,9 @@ final class HealthController extends Controller
     }
 
     /**
-     * Displays the administrative health report.
+     * Displays the privileged health report.
      *
-     * Responsibility: Displays the administrative health report.
+     * Responsibility: Displays the privileged health report.
      */
     public function panel(Request $request): Response
     {

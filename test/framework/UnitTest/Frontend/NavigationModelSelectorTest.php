@@ -23,7 +23,7 @@ final class NavigationModelSelectorTest extends TestCase
     {
         Assert::same([
             'demo-ui',
-            'framework-admin',
+            'framework',
             'application',
         ], NavigationModelSelector::getInstance()->ids());
     }

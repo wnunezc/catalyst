@@ -169,7 +169,7 @@ final class ModuleRuntimeDocsGenerator
     private function renderRouteTable(array $routes): string
     {
         $lines = [
-            '| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |',
+            '| Pattern | Methods | Guest | User | Privileged | State Profiles | Permissions | Middleware |',
             '|---|---|---|---|---|---|---|---|',
         ];
 
@@ -182,7 +182,7 @@ final class ModuleRuntimeDocsGenerator
                 implode(',', (array) ($route['methods'] ?? [])),
                 (string) ($expectations['guest'] ?? 'n/a'),
                 (string) ($expectations['user'] ?? 'n/a'),
-                (string) ($expectations['admin'] ?? 'n/a'),
+                (string) ($expectations['privileged'] ?? 'n/a'),
                 $this->inlineStateExpectations($stateExpectations),
                 $this->inlineList((array) ($route['required_permissions'] ?? [])),
                 $this->inlineList((array) ($route['middleware_classes'] ?? []))

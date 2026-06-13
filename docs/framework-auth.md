@@ -17,7 +17,7 @@ Document authentication primitives: users, sessions, remember-me, MFA and OAuth 
 | Expose provider identity, display name, email and raw payload through one resource-owner interface. | `Catalyst\Framework\Auth\OAuth\OAuthUser` |
 | Issue, resolve and invalidate remember-me tokens without storing raw token values. | `Catalyst\Framework\Auth\RememberMe` |
 | Create, consume and invalidate user recovery tokens without persisting raw token values. | `Catalyst\Framework\Auth\TokenRepository` |
-| Provide tenant-scoped user summaries, select options and admin listings. | `Catalyst\Framework\Auth\UserDirectoryRepository` |
+| Provide tenant-scoped user summaries, select options and privileged listings. | `Catalyst\Framework\Auth\UserDirectoryRepository` |
 | Resolve users, manage credentials, link OAuth accounts and persist MFA state. | `Catalyst\Framework\Auth\UserProvider` |
 | Represents the subject passed to resource-level authorization checks. | `Catalyst\Framework\Authorization\AbilitySubject` |
 | Evaluates authorization abilities through registered closures and policy classes. | `Catalyst\Framework\Authorization\Gate` |
@@ -36,7 +36,7 @@ This file is regenerated from current PHP docblocks and the runtime inventory sc
 Public self-service registration is controlled by the `auth.registration_enabled` feature flag. The installation default is managed from `/configuration/environment-setup` in the Features card, which writes `features.json` under `boot-core/config/{environment}` through the Configuration module. Advanced runtime governance remains available from `/configuration/feature-flags` for post-setup review and overrides. When disabled, `/register` GET and POST are blocked by `RouteFeatureMiddleware` and the login screen hides the create-account link. Login, logout, password reset, MFA and email verification remain separate auth surfaces.
 
 Role records may carry optional organization hierarchy metadata through `hierarchy_scope_id`, `hierarchy_level_id` and `role_organization_units`. This metadata is used for classification, badges, reports and institutional context only. It does not change role membership, permission checks, `RoleMiddleware`, policies or gate evaluation.
-The Roles admin form manages this metadata directly: scope and level are single
+The Roles privileged form manages this metadata directly: scope and level are single
 selectors, while `role_organization_units` is synchronized from the horizontal
 organization unit multi-select.
 
@@ -254,15 +254,15 @@ $this->authorizeResource('update', 'documents', $document, [
 
 - File: `app/Framework/Auth/UserDirectoryRepository.php`
 - Kind: `class`
-- Summary: Read-side repository for administration surfaces that need user directory data.
-- Responsibility: Provide tenant-scoped user summaries, select options and admin listings.
+- Summary: Read-side repository for privileged surfaces that need user directory data.
+- Responsibility: Provide tenant-scoped user summaries, select options and privileged listings.
 
 | Method | Visibility | Summary | Responsibility |
 |---|---|---|---|
 | `__construct()` | `protected` | Initializes database and logging collaborators for user directory reads. | Initializes database and logging collaborators for user directory reads. |
 | `findActiveSummary()` | `public` | Returns a compact active-user summary for display and lookup surfaces. | Returns a compact active-user summary for display and lookup surfaces. |
 | `activeUserOptions()` | `public` | Builds active-user select options for tenant-scoped forms. | Builds active-user select options for tenant-scoped forms. |
-| `searchAdminUsers()` | `public` | Searches users for administration grids with filters, roles and pagination. | Searches users for administration grids with filters, roles and pagination. |
+| `searchPrivilegedUsers()` | `public` | Searches users for privileged grids with filters, roles and pagination. | Searches users for privileged grids with filters, roles and pagination. |
 | `resolveUserSort()` | `private` | Restricts requested user sort columns to safe SQL expressions. | Restricts requested user sort columns to safe SQL expressions. |
 | `resolveUserDirection()` | `private` | Normalizes requested user sort direction to SQL ASC or DESC. | Normalizes requested user sort direction to SQL ASC or DESC. |
 | `currentTenantId()` | `private` | Resolves the required tenant identifier for user directory queries. | Resolves the required tenant identifier for user directory queries. |

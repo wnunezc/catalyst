@@ -112,7 +112,7 @@ function bindDismiss(eventRoot, http) {
         alert.classList.add('dismissing');
 
         try {
-            await http.json('/flash/dismiss', {
+            await http.json('/runtime/flash/dismiss', {
                 method: 'POST',
                 form: { id },
             });

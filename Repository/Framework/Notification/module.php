@@ -35,26 +35,26 @@ return [
     'routes' => [
         'web' => [],
         'api' => [
-            '/api/ws-token',
-            '/api/notifications',
-            '/api/notifications/unread-count',
-            '/api/notifications/read-all',
-            '/api/notifications/{id}/read',
-            '/api/presence/{resourceKey}/{recordId}/heartbeat',
+            '/runtime/websocket/token',
+            '/runtime/notifications',
+            '/runtime/notifications/unread-count',
+            '/runtime/notifications/read-all',
+            '/runtime/notifications/{id}/read',
+            '/runtime/presence/{resourceKey}/{recordId}/heartbeat',
         ],
         'aliases' => [],
         'prefixes' => [
-            '/api/ws-token',
-            '/api/notifications',
-            '/api/presence',
+            '/runtime/websocket',
+            '/runtime/notifications',
+            '/runtime/presence',
         ],
     ],
     'route_guards' => [
         [
             'patterns' => [
-                '/api/ws-token',
-                '/api/notifications',
-                '/api/presence',
+                '/runtime/websocket',
+                '/runtime/notifications',
+                '/runtime/presence',
             ],
             'middleware_all' => [
                 AuthMiddleware::class,

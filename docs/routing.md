@@ -18,7 +18,7 @@ Route readers to the live routing sources and define the split between route reg
 
 ## Current Behavior
 
-Routes are declared by framework and app modules, loaded through the kernel, and exposed through `route:list`. The current runtime has app public surfaces, auth-flow routes, authenticated workspace/admin modules, authenticated API routes and DevTools routes. Route guards are validated by `inspect:lint`; route casing, aliases and work asset publication are validated by `route:lint`.
+Routes are declared by framework and app modules, loaded through the kernel, and exposed through `route:list`. The current runtime has app public surfaces, auth-flow routes, authenticated workspace/privileged modules, authenticated API routes and DevTools routes. Route guards are validated by `inspect:lint`; route casing, aliases and work asset publication are validated by `route:lint`.
 
 ## Operational Notes
 

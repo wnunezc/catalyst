@@ -26,7 +26,7 @@ test.describe('@navigation-models Virtual navigation models', () => {
         });
     });
 
-    test('framework-admin keeps Configuration active and canonical owners connected', async ({ page }) => {
+    test('framework keeps Configuration active and canonical owners connected', async ({ page }) => {
         await runOrSkipForEnvironment(test, async () => {
             await openSurface(page, expect, '/configuration/application-health', { requireTriggers: false });
 

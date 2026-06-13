@@ -34,23 +34,23 @@ use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
 use Catalyst\Helpers\Config\ConfigManager;
-use Catalyst\Repository\Configuration\Requests\SetupAdminRequest;
-use Catalyst\Repository\Configuration\Services\SetupAdminProvisioner;
+use Catalyst\Repository\Configuration\Requests\SetupPrivilegedAccountRequest;
+use Catalyst\Repository\Configuration\Services\SetupPrivilegedAccountProvisioner;
 use Catalyst\Repository\Configuration\Services\SetupDatabaseException;
 use Catalyst\Repository\Configuration\Services\SetupDatabaseService;
 use Throwable;
 
 /**
- * Provisions the initial administrator and finalizes environment setup.
+ * Provisions the initial privileged account and finalizes environment setup.
  *
  * @package Catalyst\Repository\Configuration\Controllers
- * Responsibility: Creates the first administrator, validates setup readiness and toggles the configured state.
+ * Responsibility: Creates the first privileged account, validates setup readiness and toggles the configured state.
  */
 class SetupCompletionController extends Controller
 {
 
     private SetupDatabaseService $setupDatabase;
-    private SetupAdminProvisioner $adminProvisioner;
+    private SetupPrivilegedAccountProvisioner $privilegedAccountProvisioner;
 
     /**
      * Initializes the Setup Completion Controller instance.
@@ -62,17 +62,17 @@ class SetupCompletionController extends Controller
         parent::__construct();
 
         $this->setupDatabase = SetupDatabaseService::make();
-        $this->adminProvisioner = SetupAdminProvisioner::make();
+        $this->privilegedAccountProvisioner = SetupPrivilegedAccountProvisioner::make();
     }
 
     /**
-     * Create the initial active administrator account without finalizing setup.
+     * Create the initial active privileged account without finalizing setup.
      *
-     * Responsibility: Create the initial active administrator account without finalizing setup.
+     * Responsibility: Create the initial active privileged account without finalizing setup.
      * @param Request $request
      * @return Response  JSON only (AJAX endpoint)
      */
-    public function createAdmin(SetupAdminRequest $request): Response
+    public function createPrivilegedAccount(SetupPrivilegedAccountRequest $request): Response
     {
         $cfg = ConfigManager::getInstance();
 
@@ -96,48 +96,53 @@ class SetupCompletionController extends Controller
             );
         }
 
-        if ($this->adminProvisioner->adminExists($pdo)) {
+        if ($this->privilegedAccountProvisioner->privilegedAccountExists($pdo)) {
             return $this->jsonSuccessWithToast(
-                ['admin_exists' => true],
-                __('settings.completion.admin_exists_success')
+                ['privileged_account_exists' => true],
+                __('settings.completion.privileged_account_exists_success')
             )->withRefresh(800);
         }
 
         $payload = $request->validated();
-        $adminName = (string) $payload['admin_name'];
-        $adminEmail = (string) $payload['admin_email'];
-        $adminPass = (string) $payload['admin_password'];
+        $accountName = (string) $payload['account_name'];
+        $accountEmail = (string) $payload['account_email'];
+        $accountPassword = (string) $payload['account_password'];
 
-        if ($this->adminProvisioner->userExistsByEmail($pdo, $adminEmail)) {
+        if ($this->privilegedAccountProvisioner->userExistsByEmail($pdo, $accountEmail)) {
             return $this->jsonValidationError([
-                'admin_email' => __('settings.completion.errors.admin_email_exists'),
+                'account_email' => __('settings.completion.errors.account_email_exists'),
             ]);
         }
 
         try {
-            $this->adminProvisioner->createAdmin($pdo, $adminName, $adminEmail, $adminPass);
+            $this->privilegedAccountProvisioner->createPrivilegedAccount(
+                $pdo,
+                $accountName,
+                $accountEmail,
+                $accountPassword
+            );
         } catch (Throwable $e) {
-            $this->logError('SetupCompletion: initial administrator creation failed', [
+            $this->logError('SetupCompletion: initial privileged account creation failed', [
                 'exception' => $e::class,
                 'error' => $e->getMessage(),
             ]);
 
             return $this->jsonErrorWithToast(
-                __('settings.completion.errors.admin_create_failed'),
+                __('settings.completion.errors.privileged_account_create_failed'),
                 500
             );
         }
 
-        if (!$this->adminProvisioner->adminExists($pdo)) {
+        if (!$this->privilegedAccountProvisioner->privilegedAccountExists($pdo)) {
             return $this->jsonErrorWithToast(
-                __('settings.completion.errors.admin_create_failed'),
+                __('settings.completion.errors.privileged_account_create_failed'),
                 500
             );
         }
 
         return $this->jsonSuccessWithToast(
-            ['admin_created' => true],
-            __('settings.completion.admin_create_success')
+            ['privileged_account_created' => true],
+            __('settings.completion.privileged_account_create_success')
         )->withRefresh(800);
     }
 
@@ -173,9 +178,9 @@ class SetupCompletionController extends Controller
             );
         }
 
-        if (!$this->adminProvisioner->adminExists($pdo)) {
+        if (!$this->privilegedAccountProvisioner->privilegedAccountExists($pdo)) {
             return $this->jsonErrorWithToast(
-                __('settings.completion.errors.admin_required'),
+                __('settings.completion.errors.privileged_account_required'),
                 422
             );
         }
@@ -186,15 +191,15 @@ class SetupCompletionController extends Controller
         $cfg->writeSection('app', ['project' => $appProject]);
 
         return $this->jsonSuccessWithToast(
-            ['admin_created' => false],
+            ['privileged_account_created' => false],
             __('settings.completion.success')
         )->withRedirect('/login', 1500);
     }
 
     /**
-     * Reset the setup wizard — flips project_config back to false so the finalize form becomes available again. Admin-only (enforced via route middleware). This does NOT erase any existing config values; it only unlocks the wizard.
+     * Reset the setup wizard while preserving existing configuration values.
      *
-     * Responsibility: Reset the setup wizard — flips project_config back to false so the finalize form becomes available again. Admin-only (enforced via route middleware). This does NOT erase any existing config values; it only unlocks the wizard.
+     * Responsibility: Resets the configured flag; route middleware enforces the required role.
      * @param Request $request
      * @return Response  JSON only (AJAX endpoint)
      */

@@ -8,7 +8,7 @@ use Catalyst\Framework\Appearance\PlatformAppearanceManager;
 use Catalyst\Framework\Auth\AuthManager;
 use Catalyst\Framework\Navigation\ApplicationNavigationProvider;
 use Catalyst\Framework\Navigation\DemoUiNavigationProvider;
-use Catalyst\Framework\Navigation\FrameworkAdminNavigationProvider;
+use Catalyst\Framework\Navigation\FrameworkNavigationProvider;
 use Catalyst\Framework\Navigation\NavigationModelSelector;
 use Catalyst\Framework\Session\FlashMessage;
 use Catalyst\Framework\Session\ToastQueue;
@@ -293,7 +293,7 @@ final class DocumentScope
             return ApplicationNavigationProvider::ID;
         }
 
-        return FrameworkAdminNavigationProvider::ID;
+        return FrameworkNavigationProvider::ID;
     }
 
     private static function publicNavigation(array $items): array

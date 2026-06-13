@@ -49,7 +49,7 @@ use Closure;
  * ## Usage in routes.php
  *
  *   // Single role:
- *   $router->get('/admin', [AdminController::class, 'index'])
+ *   $router->get('/users', [UsersController::class, 'index'])
  *          ->middleware(new RoleMiddleware(roles: 'admin'));
  *
  *   // Multiple roles (OR — user needs at least one):

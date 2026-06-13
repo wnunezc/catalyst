@@ -51,22 +51,22 @@ use Closure;
  *     before any database or session infrastructure exists.
  *
  * When the framework IS configured:
- *   → Require an authenticated admin session (same as AuthMiddleware + RoleMiddleware).
+ *   → Require an authenticated privileged session (same as AuthMiddleware + RoleMiddleware).
  *   → Unauthenticated HTML request → /login?redirect=/configuration/environment-setup.
  *   → Unauthenticated AJAX / JSON → 401 JSON.
- *   → Authenticated but non-admin → 403 JSON / 403 HTML.
+ *   → Authenticated without the required role → 403 JSON / 403 HTML.
  *
  * @package Catalyst\Framework\Middleware
- * Responsibility: Keeps first-run setup reachable while requiring an authenticated admin after configuration.
+ * Responsibility: Keeps first-run setup reachable while requiring an authenticated privileged role after configuration.
  */
 class SetupGuardMiddleware extends CoreMiddleware
 {
     use SetupAccessTrait;
 
     /**
-     * Allows first-run setup or requires an authenticated admin after configuration.
+     * Allows first-run setup or requires the configured privileged role after configuration.
      *
-     * Responsibility: Allows first-run setup or requires an authenticated admin after configuration.
+     * Responsibility: Allows first-run setup or requires the configured privileged role after configuration.
      */
     public function process(Request $request, Closure $next): Response
     {
@@ -75,7 +75,7 @@ class SetupGuardMiddleware extends CoreMiddleware
             return $this->passToNext($request, $next);
         }
 
-        // -- Configured: require authenticated admin ---------------------------
+        // -- Configured: require the privileged role ---------------------------
         $auth = AuthManager::getInstance();
 
         if (!$auth->check() && !$auth->loginFromRemember()) {
@@ -92,10 +92,10 @@ class SetupGuardMiddleware extends CoreMiddleware
         $repo   = RoleRepository::getInstance();
 
         if ($userId === null || !$repo->userHasAnyRole($userId, ['admin'])) {
-            $this->log('SetupGuard: non-admin access blocked', ['uri' => $request->getUri()]);
+            $this->log('SetupGuard: required-role access blocked', ['uri' => $request->getUri()]);
 
             if ($this->expectsJson($request)) {
-                return $this->setupJsonError('Admin access required.', 403);
+                return $this->setupJsonError('Required role access denied.', 403);
             }
 
             return ErrorResponseFactory::forbidden(__('ui.errors.403_message'));

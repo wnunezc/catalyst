@@ -55,7 +55,7 @@ return static function (array $scope): array {
             ['value' => 'none', 'label' => __('workspaces.module_designer.form.options.none'), 'selected' => ($form['surface'] ?? '') === 'none'],
             ['value' => 'public', 'label' => __('workspaces.module_designer.form.options.public'), 'selected' => ($form['surface'] ?? 'public') === 'public'],
             ['value' => 'workspace', 'label' => __('workspaces.module_designer.form.options.workspace'), 'selected' => ($form['surface'] ?? '') === 'workspace'],
-            ['value' => 'administration', 'label' => __('workspaces.module_designer.form.options.administration'), 'selected' => ($form['surface'] ?? '') === 'administration'],
+            ['value' => 'privileged', 'label' => __('workspaces.module_designer.form.options.privileged'), 'selected' => ($form['surface'] ?? '') === 'privileged'],
             ['value' => 'devtools', 'label' => __('workspaces.module_designer.form.options.devtools'), 'selected' => ($form['surface'] ?? '') === 'devtools'],
         ],
         'has_preview' => $preview !== null,

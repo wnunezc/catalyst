@@ -35,7 +35,7 @@ use Catalyst\Framework\Catalog\CatalogManager;
 use Catalyst\Framework\Catalog\CatalogRepository;
 
 /**
- * Builds the administrative catalog definition data grid.
+ * Builds the privileged catalog definition data grid.
  *
  * @package Catalyst\Repository\Workspaces\Catalogs\Support
  * Responsibility: Configure catalog columns, filters, row actions and repository-backed pagination.

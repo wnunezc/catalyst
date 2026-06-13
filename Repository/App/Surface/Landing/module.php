@@ -34,13 +34,10 @@ return [
         'web' => [
             '/landing',
         ],
-        'api' => [
-            '/api/public/landing',
-        ],
+        'api' => [],
         'aliases' => [],
         'prefixes' => [
             '/landing',
-            '/api/public/landing',
         ],
     ],
     'navigation' => [

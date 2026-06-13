@@ -1,7 +1,7 @@
 # Runtime Module Catalog
 
 > Auto-generated from `ModuleRegistry`, `PermissionRegistry`, `NavigationRegistry`, `ModuleInspector`, `ModuleHarnessInspector` and `ModuleLinter`.
-> Last generated: 2026-06-13 01:40:07
+> Last generated: 2026-06-13 06:14:42
 
 ## Runtime Summary
 
@@ -10,77 +10,22 @@
 
 | Key | Surface | HTML | JSON | Mutations | Assets | Permissions | Settings | Seeds |
 |---|---|---:|---:|---:|---|---|---|---|
-| `app.surface.account` | `authenticated` | 15 | 0 | 8 | `ok` | `manage-account-recovery` | `n/a` | `n/a` |
-| `app.surface.dashboard` | `public` | 1 | 1 | 0 | `ok` | `n/a` | `n/a` | `n/a` |
-| `app.surface.home` | `public` | 2 | 1 | 0 | `ok` | `n/a` | `n/a` | `n/a` |
-| `app.surface.landing` | `public` | 1 | 1 | 0 | `ok` | `n/a` | `n/a` | `n/a` |
-| `app.surface.store` | `public` | 1 | 1 | 0 | `ok` | `n/a` | `n/a` | `n/a` |
+| `app.surface.dashboard` | `public` | 1 | 0 | 0 | `ok` | `n/a` | `n/a` | `n/a` |
+| `app.surface.home` | `public` | 2 | 0 | 0 | `ok` | `n/a` | `n/a` | `n/a` |
+| `app.surface.landing` | `public` | 1 | 0 | 0 | `ok` | `n/a` | `n/a` | `n/a` |
+| `app.surface.store` | `public` | 1 | 0 | 0 | `ok` | `n/a` | `n/a` | `n/a` |
+| `framework.account` | `authenticated` | 13 | 0 | 6 | `ok` | `n/a` | `n/a` | `n/a` |
 | `framework.api` | `authenticated-api` | 0 | 4 | 2 | `n/a` | `n/a` | `n/a` | `n/a` |
 | `framework.auth` | `auth-flow` | 10 | 0 | 9 | `ok` | `n/a` | `n/a` | `n/a` |
 | `framework.configuration` | `workspace` | 7 | 0 | 22 | `ok` | `manage-platform-configuration` | `n/a` | `n/a` |
 | `framework.demoui` | `devtools` | 40 | 0 | 0 | `ok` | `n/a` | `n/a` | `n/a` |
-| `framework.devtools` | `devtools` | 25 | 7 | 12 | `ok` | `access-devtools` | `n/a` | `n/a` |
+| `framework.devtools` | `devtools` | 24 | 7 | 12 | `ok` | `access-devtools` | `n/a` | `n/a` |
 | `framework.notification` | `authenticated-api` | 0 | 3 | 3 | `n/a` | `n/a` | `n/a` | `n/a` |
 | `framework.operations` | `authenticated` | 9 | 2 | 10 | `n/a` | `manage-operations-api-management`, `manage-operations-audit-log`, `manage-operations-automation-rules`, `manage-operations-deployments`, `manage-operations-tenancy` | `n/a` | `n/a` |
-| `framework.roles` | `administration` | 11 | 0 | 16 | `ok` | `manage-roles`, `manage-users` | `n/a` | `n/a` |
+| `framework.users` | `privileged` | 13 | 0 | 18 | `ok` | `manage-account-recovery`, `manage-roles`, `manage-users` | `n/a` | `n/a` |
 | `framework.workspaces` | `authenticated` | 18 | 2 | 29 | `ok` | `manage-workspaces-catalogs`, `manage-workspaces-document-templates`, `manage-workspaces-localization`, `manage-workspaces-media-fields`, `manage-workspaces-media-library`, `manage-workspaces-module-designer` | `n/a` | `n/a` |
 
 ## Module Detail
-
-### app.surface.account
-
-- Scope: `App`
-- Surface: `authenticated`
-- Runtime enabled: `yes`
-- Slug: `account`
-- Description: Personal user account center, account security and assisted recovery flows.
-- Plugin: `standalone`
-- Views: `yes`
-- Assets: `ok`
-- Settings: `n/a`
-- Permissions: `manage-account-recovery`
-- Seeds: `n/a`
-- Feature flags: `n/a`
-- Module flag key: `module.app.surface.account`
-- Representative HTML: `/account/profile`
-- Representative JSON: `n/a`
-
-#### HTML routes
-
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
-|---|---|---|---|---|---|---|---|
-| `/account-recovery/compromised` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
-| `/account-recovery/mfa` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
-| `/account-recovery/mfa/{token}` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
-| `/account-recovery/start` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
-| `/account-recovery/support` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
-| `/account/activity` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/account/profile` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/account/recovery` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/account/recovery/compromised` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/account/recovery/mfa` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/account/recovery/support` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/account/security` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/account/security/mfa` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/admin/account-recovery` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-account-recovery` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/admin/account-recovery/{id}` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-account-recovery` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-
-#### JSON routes
-
-_No JSON routes declared for harness._
-
-#### Mutations
-
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
-|---|---|---|---|---|---|---|---|
-| `/account-recovery/compromised` | `POST` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
-| `/account-recovery/mfa` | `POST` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
-| `/account-recovery/support` | `POST` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
-| `/account/recovery/compromised` | `POST` | `401` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/account/recovery/mfa` | `POST` | `401` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/account/recovery/support` | `POST` | `401` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/admin/account-recovery/{id}/approve` | `POST` | `401` | `403` | `200` | `n/a` | `manage-account-recovery` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
-| `/admin/account-recovery/{id}/reject` | `POST` | `401` | `403` | `200` | `n/a` | `manage-account-recovery` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
 
 ### app.surface.dashboard
 
@@ -98,19 +43,17 @@ _No JSON routes declared for harness._
 - Feature flags: `n/a`
 - Module flag key: `module.app.surface.dashboard`
 - Representative HTML: `/dashboard`
-- Representative JSON: `/api/public/dashboard`
+- Representative JSON: `n/a`
 
 #### HTML routes
 
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+| Pattern | Methods | Guest | User | Privileged | State Profiles | Permissions | Middleware |
 |---|---|---|---|---|---|---|---|
 | `/dashboard` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
 
 #### JSON routes
 
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
-|---|---|---|---|---|---|---|---|
-| `/api/public/dashboard` | `GET,HEAD` | `401` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
+_No JSON routes declared for harness._
 
 #### Mutations
 
@@ -132,20 +75,18 @@ _No mutation routes declared for harness._
 - Feature flags: `n/a`
 - Module flag key: `module.app.surface.home`
 - Representative HTML: `/home`
-- Representative JSON: `/api/public/home`
+- Representative JSON: `n/a`
 
 #### HTML routes
 
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+| Pattern | Methods | Guest | User | Privileged | State Profiles | Permissions | Middleware |
 |---|---|---|---|---|---|---|---|
 | `/` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
 | `/home` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
 
 #### JSON routes
 
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
-|---|---|---|---|---|---|---|---|
-| `/api/public/home` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+_No JSON routes declared for harness._
 
 #### Mutations
 
@@ -167,19 +108,17 @@ _No mutation routes declared for harness._
 - Feature flags: `n/a`
 - Module flag key: `module.app.surface.landing`
 - Representative HTML: `/landing`
-- Representative JSON: `/api/public/landing`
+- Representative JSON: `n/a`
 
 #### HTML routes
 
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+| Pattern | Methods | Guest | User | Privileged | State Profiles | Permissions | Middleware |
 |---|---|---|---|---|---|---|---|
 | `/landing` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
 
 #### JSON routes
 
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
-|---|---|---|---|---|---|---|---|
-| `/api/public/landing` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+_No JSON routes declared for harness._
 
 #### Mutations
 
@@ -201,23 +140,72 @@ _No mutation routes declared for harness._
 - Feature flags: `n/a`
 - Module flag key: `module.app.surface.store`
 - Representative HTML: `/store`
-- Representative JSON: `/api/public/store`
+- Representative JSON: `n/a`
 
 #### HTML routes
 
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+| Pattern | Methods | Guest | User | Privileged | State Profiles | Permissions | Middleware |
 |---|---|---|---|---|---|---|---|
 | `/store` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
 
 #### JSON routes
 
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
-|---|---|---|---|---|---|---|---|
-| `/api/public/store` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+_No JSON routes declared for harness._
 
 #### Mutations
 
 _No mutation routes declared for harness._
+
+### framework.account
+
+- Scope: `Framework`
+- Surface: `authenticated`
+- Runtime enabled: `yes`
+- Slug: `account`
+- Description: Personal user account center, account security and assisted recovery flows.
+- Plugin: `framework.core`
+- Views: `yes`
+- Assets: `ok`
+- Settings: `n/a`
+- Permissions: `n/a`
+- Seeds: `n/a`
+- Feature flags: `n/a`
+- Module flag key: `module.framework.account`
+- Representative HTML: `/account/profile`
+- Representative JSON: `n/a`
+
+#### HTML routes
+
+| Pattern | Methods | Guest | User | Privileged | State Profiles | Permissions | Middleware |
+|---|---|---|---|---|---|---|---|
+| `/account-recovery/compromised` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/account-recovery/mfa` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/account-recovery/mfa/{token}` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/account-recovery/start` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/account-recovery/support` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/account/activity` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
+| `/account/profile` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
+| `/account/recovery` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
+| `/account/recovery/compromised` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
+| `/account/recovery/mfa` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
+| `/account/recovery/support` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
+| `/account/security` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
+| `/account/security/mfa` | `GET,HEAD` | `login` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
+
+#### JSON routes
+
+_No JSON routes declared for harness._
+
+#### Mutations
+
+| Pattern | Methods | Guest | User | Privileged | State Profiles | Permissions | Middleware |
+|---|---|---|---|---|---|---|---|
+| `/account-recovery/compromised` | `POST` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/account-recovery/mfa` | `POST` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/account-recovery/support` | `POST` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
+| `/account/recovery/compromised` | `POST` | `401` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
+| `/account/recovery/mfa` | `POST` | `401` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
+| `/account/recovery/support` | `POST` | `401` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
 
 ### framework.api
 
@@ -243,7 +231,7 @@ _No HTML routes declared for harness._
 
 #### JSON routes
 
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+| Pattern | Methods | Guest | User | Privileged | State Profiles | Permissions | Middleware |
 |---|---|---|---|---|---|---|---|
 | `/api/v1/calendar/events` | `GET,HEAD` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
 | `/api/v1/catalog` | `GET,HEAD` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
@@ -252,7 +240,7 @@ _No HTML routes declared for harness._
 
 #### Mutations
 
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+| Pattern | Methods | Guest | User | Privileged | State Profiles | Permissions | Middleware |
 |---|---|---|---|---|---|---|---|
 | `/api/v1/versions/{id}/restore` | `POST` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
 | `/api/v1/workflows/{id}/transition` | `POST` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
@@ -277,7 +265,7 @@ _No HTML routes declared for harness._
 
 #### HTML routes
 
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+| Pattern | Methods | Guest | User | Privileged | State Profiles | Permissions | Middleware |
 |---|---|---|---|---|---|---|---|
 | `/auth/social/callback/{provider}` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\RouteFeatureMiddleware` |
 | `/auth/social/{provider}` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\RouteFeatureMiddleware` |
@@ -296,7 +284,7 @@ _No JSON routes declared for harness._
 
 #### Mutations
 
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+| Pattern | Methods | Guest | User | Privileged | State Profiles | Permissions | Middleware |
 |---|---|---|---|---|---|---|---|
 | `/forgot-password` | `POST` | `200` | `409` | `409` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\GuestMiddleware` |
 | `/login` | `POST` | `200` | `409` | `409` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\GuestMiddleware`, `Catalyst\Framework\Middleware\LoginThrottleMiddleware` |
@@ -328,7 +316,7 @@ _No JSON routes declared for harness._
 
 #### HTML routes
 
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+| Pattern | Methods | Guest | User | Privileged | State Profiles | Permissions | Middleware |
 |---|---|---|---|---|---|---|---|
 | `/configuration/application-health` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-platform-configuration` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
 | `/configuration/application-health/live` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
@@ -344,9 +332,8 @@ _No JSON routes declared for harness._
 
 #### Mutations
 
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+| Pattern | Methods | Guest | User | Privileged | State Profiles | Permissions | Middleware |
 |---|---|---|---|---|---|---|---|
-| `/configuration/environment-setup/admin` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
 | `/configuration/environment-setup/app` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
 | `/configuration/environment-setup/cache` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
 | `/configuration/environment-setup/complete` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
@@ -359,6 +346,7 @@ _No JSON routes declared for harness._
 | `/configuration/environment-setup/ftp/pretest` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
 | `/configuration/environment-setup/logging` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
 | `/configuration/environment-setup/mail` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
+| `/configuration/environment-setup/privileged-account-account` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
 | `/configuration/environment-setup/reset` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
 | `/configuration/environment-setup/security` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
 | `/configuration/environment-setup/session` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\SetupGuardMiddleware` |
@@ -389,7 +377,7 @@ _No JSON routes declared for harness._
 
 #### HTML routes
 
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+| Pattern | Methods | Guest | User | Privileged | State Profiles | Permissions | Middleware |
 |---|---|---|---|---|---|---|---|
 | `/demo-ui` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
 | `/demo-ui/accordions` | `GET,HEAD` | `200` | `200` | `200` | `n/a` | `n/a` | `n/a` |
@@ -460,7 +448,7 @@ _No mutation routes declared for harness._
 
 #### HTML routes
 
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+| Pattern | Methods | Guest | User | Privileged | State Profiles | Permissions | Middleware |
 |---|---|---|---|---|---|---|---|
 | `/test-features` | `GET,HEAD` | `login` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
 | `/test-features/api-response` | `GET,HEAD` | `login` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
@@ -484,13 +472,12 @@ _No mutation routes declared for harness._
 | `/test-features/orm/user-demo` | `GET,HEAD` | `login` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
 | `/test-features/rbac-status` | `GET,HEAD` | `login` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
 | `/test-features/route-cache` | `GET,HEAD` | `login` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
-| `/test-features/ui-showcase` | `GET,HEAD` | `login` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
 | `/test-features/validation-error` | `GET,HEAD` | `login` | `403` | `422` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
 | `/uml` | `GET,HEAD` | `login` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
 
 #### JSON routes
 
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+| Pattern | Methods | Guest | User | Privileged | State Profiles | Permissions | Middleware |
 |---|---|---|---|---|---|---|---|
 | `/test-features/api/js-enhancements/partial-refresh` | `GET,HEAD` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
 | `/test-features/api/modal-trigger` | `GET,HEAD` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
@@ -502,15 +489,15 @@ _No mutation routes declared for harness._
 
 #### Mutations
 
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+| Pattern | Methods | Guest | User | Privileged | State Profiles | Permissions | Middleware |
 |---|---|---|---|---|---|---|---|
 | `/test-features/api/validator-test` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
 | `/test-features/api/validator-unique` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
+| `/test-features/assign-privileged-role` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
 | `/test-features/db-reset` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
 | `/test-features/form-demo` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
 | `/test-features/i18n/set-locale` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
 | `/test-features/mail-test` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
-| `/test-features/make-admin` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
 | `/test-features/modal/form-submit` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
 | `/test-features/orm/create` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
 | `/test-features/orm/delete-latest` | `POST` | `401` | `403` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\DevToolsGuardMiddleware` |
@@ -533,7 +520,7 @@ _No mutation routes declared for harness._
 - Feature flags: `websocket_enabled`, `notifications`
 - Module flag key: `module.framework.notification`
 - Representative HTML: `n/a`
-- Representative JSON: `/api/ws-token`
+- Representative JSON: `/runtime/websocket/token`
 
 #### HTML routes
 
@@ -541,19 +528,19 @@ _No HTML routes declared for harness._
 
 #### JSON routes
 
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+| Pattern | Methods | Guest | User | Privileged | State Profiles | Permissions | Middleware |
 |---|---|---|---|---|---|---|---|
-| `/api/notifications` | `GET,HEAD` | `401` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/api/notifications/unread-count` | `GET,HEAD` | `401` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/api/ws-token` | `GET,HEAD` | `401` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
+| `/runtime/notifications` | `GET,HEAD` | `401` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
+| `/runtime/notifications/unread-count` | `GET,HEAD` | `401` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
+| `/runtime/websocket/token` | `GET,HEAD` | `401` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
 
 #### Mutations
 
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+| Pattern | Methods | Guest | User | Privileged | State Profiles | Permissions | Middleware |
 |---|---|---|---|---|---|---|---|
-| `/api/notifications/read-all` | `POST` | `401` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/api/notifications/{id}/read` | `POST` | `401` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
-| `/api/presence/{resourceKey}/{recordId}/heartbeat` | `POST` | `401` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
+| `/runtime/notifications/read-all` | `POST` | `401` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
+| `/runtime/notifications/{id}/read` | `POST` | `401` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
+| `/runtime/presence/{resourceKey}/{recordId}/heartbeat` | `POST` | `401` | `200` | `200` | `n/a` | `n/a` | `Catalyst\Framework\Middleware\AuthMiddleware` |
 
 ### framework.operations
 
@@ -575,7 +562,7 @@ _No HTML routes declared for harness._
 
 #### HTML routes
 
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+| Pattern | Methods | Guest | User | Privileged | State Profiles | Permissions | Middleware |
 |---|---|---|---|---|---|---|---|
 | `/operations/api-management` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-operations-api-management` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
 | `/operations/audit-log` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-operations-audit-log` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
@@ -589,14 +576,14 @@ _No HTML routes declared for harness._
 
 #### JSON routes
 
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+| Pattern | Methods | Guest | User | Privileged | State Profiles | Permissions | Middleware |
 |---|---|---|---|---|---|---|---|
 | `/api/v1/automation-rules` | `GET,HEAD` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
 | `/api/v1/automation-rules/{id}` | `GET,HEAD` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
 
 #### Mutations
 
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+| Pattern | Methods | Guest | User | Privileged | State Profiles | Permissions | Middleware |
 |---|---|---|---|---|---|---|---|
 | `/api/v1/automation-rules/{id}/run` | `POST` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
 | `/operations/api-management/tokens` | `POST` | `401` | `403` | `200` | `n/a` | `manage-operations-api-management` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
@@ -609,29 +596,31 @@ _No HTML routes declared for harness._
 | `/operations/automation-rules/{id}/versions/{versionId}/restore` | `POST` | `401` | `403` | `200` | `n/a` | `manage-operations-automation-rules` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
 | `/operations/deployments/runs` | `POST` | `401` | `403` | `200` | `n/a` | `manage-operations-deployments` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
 
-### framework.roles
+### framework.users
 
 - Scope: `Framework`
-- Surface: `administration`
+- Surface: `privileged`
 - Runtime enabled: `yes`
-- Slug: `roles`
-- Description: RBAC administration, users, roles and permissions.
+- Slug: `users`
+- Description: RBAC privileged, users, roles and permissions.
 - Plugin: `framework.core`
 - Views: `yes`
 - Assets: `ok`
 - Settings: `n/a`
-- Permissions: `manage-roles`, `manage-users`
+- Permissions: `manage-account-recovery`, `manage-roles`, `manage-users`
 - Seeds: `n/a`
 - Feature flags: `n/a`
-- Module flag key: `module.framework.roles`
+- Module flag key: `module.framework.users`
 - Representative HTML: `/users`
 - Representative JSON: `n/a`
 
 #### HTML routes
 
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+| Pattern | Methods | Guest | User | Privileged | State Profiles | Permissions | Middleware |
 |---|---|---|---|---|---|---|---|
 | `/users` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-users` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/users/account-recovery` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-account-recovery` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/users/account-recovery/{id}` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-account-recovery` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
 | `/users/enroll` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-users` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
 | `/users/organization-hierarchy` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-roles` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
 | `/users/permissions` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-roles` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
@@ -649,8 +638,10 @@ _No JSON routes declared for harness._
 
 #### Mutations
 
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+| Pattern | Methods | Guest | User | Privileged | State Profiles | Permissions | Middleware |
 |---|---|---|---|---|---|---|---|
+| `/users/account-recovery/{id}/approve` | `POST` | `401` | `403` | `200` | `n/a` | `manage-account-recovery` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
+| `/users/account-recovery/{id}/reject` | `POST` | `401` | `403` | `200` | `n/a` | `manage-account-recovery` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
 | `/users/enroll` | `POST` | `401` | `403` | `200` | `n/a` | `manage-users` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
 | `/users/organization-hierarchy/levels` | `POST` | `401` | `403` | `200` | `n/a` | `manage-roles` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
 | `/users/organization-hierarchy/organizations` | `POST` | `401` | `403` | `200` | `n/a` | `manage-roles` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
@@ -688,7 +679,7 @@ _No JSON routes declared for harness._
 
 #### HTML routes
 
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+| Pattern | Methods | Guest | User | Privileged | State Profiles | Permissions | Middleware |
 |---|---|---|---|---|---|---|---|
 | `/workspaces/catalogs` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-workspaces-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
 | `/workspaces/catalogs/create` | `GET,HEAD` | `login` | `root` | `200` | `n/a` | `manage-workspaces-catalogs` | `Catalyst\Framework\Middleware\AuthMiddleware`, `Catalyst\Framework\Middleware\RoleMiddleware` |
@@ -711,14 +702,14 @@ _No JSON routes declared for harness._
 
 #### JSON routes
 
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+| Pattern | Methods | Guest | User | Privileged | State Profiles | Permissions | Middleware |
 |---|---|---|---|---|---|---|---|
 | `/api/v1/document-templates` | `GET,HEAD` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
 | `/api/v1/document-templates/{id}` | `GET,HEAD` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
 
 #### Mutations
 
-| Pattern | Methods | Guest | User | Admin | State Profiles | Permissions | Middleware |
+| Pattern | Methods | Guest | User | Privileged | State Profiles | Permissions | Middleware |
 |---|---|---|---|---|---|---|---|
 | `/api/v1/document-templates/{id}/export` | `POST` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |
 | `/api/v1/document-templates/{id}/preview` | `POST` | `401` | `401` | `401` | `api_token=200` | `n/a` | `Catalyst\Framework\Middleware\ApiTokenMiddleware` |

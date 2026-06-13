@@ -4,7 +4,7 @@
     "eyebrow": "Public home",
     "badge": "Application entry",
     "headline": "A clean starting point for your product.",
-    "lead": "This demo shows how a framework implementer can introduce the application without exposing administrative screens, runtime internals or configuration data.",
+    "lead": "This demo shows how a framework implementer can introduce the application without exposing privileged screens, runtime internals or configuration data.",
     "actions": {
       "primary": "View landing",
       "secondary": "Explore store"
@@ -24,8 +24,8 @@
     "workflow": {
       "discover": { "title": "Discover", "body": "Start with public pages that help a visitor understand the product before authentication." },
       "adapt": { "title": "Adapt", "body": "Replace the demo content with the implementer brand, services and audience-specific copy." },
-      "launch": { "title": "Launch", "body": "Keep public pages isolated from administration while preserving the configured Catalyst theme." }
+      "launch": { "title": "Launch", "body": "Keep public pages isolated from privileged while preserving the configured Catalyst theme." }
     },
-    "note": "This page intentionally contains no administrative links, no module diagnostics and no configuration summary."
+    "note": "This page intentionally contains no privileged links, no module diagnostics and no configuration summary."
   }
 }

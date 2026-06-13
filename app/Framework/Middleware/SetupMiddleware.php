@@ -43,7 +43,7 @@ use Closure;
  * initial framework setup.
  *
  * SRP: this middleware decides *where* unconfigured requests go. Access
- * control for /configuration/environment-setup itself (open when unconfigured, admin-only once
+ * control for /configuration/environment-setup itself (open when unconfigured, role-protected once
  * configured) belongs to SetupGuardMiddleware.
  *
  * Bypass paths (always allowed regardless of configuration state):

@@ -35,7 +35,7 @@ final class ApiOwnershipSeparationContractTest extends TestCase
         }
     }
 
-    public function testApiManagementRemainsAnOperationsAdministrativeSurface(): void
+    public function testApiManagementRemainsAnOperationsPrivilegedSurface(): void
     {
         $operationsRoutes = $this->read('Repository/Framework/Operations/routes.php');
         $operationsModule = $this->read('Repository/Framework/Operations/module.php');

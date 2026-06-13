@@ -46,7 +46,7 @@ use Throwable;
  * Manages platform feature-flag defaults and subject-specific overrides.
  *
  * @package Catalyst\Repository\Configuration\Controllers
- * Responsibility: Presents flag administration state and persists approved mutations.
+ * Responsibility: Presents flag privileged state and persists approved mutations.
  */
 final class FeatureFlagsController extends Controller
 {

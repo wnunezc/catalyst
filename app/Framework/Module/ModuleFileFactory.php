@@ -337,7 +337,7 @@ final class ModuleFileFactory
      */
     private function buildMiddlewareImports(string $surface): string
     {
-        if (in_array($surface, ['workspace', 'administration'], true)) {
+        if (in_array($surface, ['workspace', 'privileged'], true)) {
             return implode(PHP_EOL, [
                 'use Catalyst\\Framework\\Middleware\\AuthMiddleware;',
                 'use Catalyst\\Framework\\Middleware\\RoleMiddleware;',
@@ -358,7 +358,7 @@ final class ModuleFileFactory
      */
     private function buildMiddlewareSetup(string $surface, string $permissionSlug): string
     {
-        if (in_array($surface, ['workspace', 'administration'], true)) {
+        if (in_array($surface, ['workspace', 'privileged'], true)) {
             $roleMiddleware = $permissionSlug !== ''
                 ? 'new RoleMiddleware(permissions: ' . $this->exporter->export($permissionSlug) . ')'
                 : 'new RoleMiddleware(roles: ' . $this->exporter->export('admin') . ')';
@@ -385,7 +385,7 @@ final class ModuleFileFactory
      */
     private function buildRouteMiddlewareChain(string $surface): string
     {
-        if (in_array($surface, ['workspace', 'administration', 'devtools'], true)) {
+        if (in_array($surface, ['workspace', 'privileged', 'devtools'], true)) {
             return PHP_EOL . '       ->middleware($moduleMiddleware);';
         }
 

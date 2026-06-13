@@ -5,7 +5,7 @@
 This document inventories the active `/demo-ui` surface after the Catalyst UI
 runtime cutover and the shared shell normalization. It is the route, view,
 asset and Playwright coverage map for Demo UI. The same canonical document and
-runtime contract now applies to Admin, Public, Auth, Account and Error
+runtime contract now applies to Privileged, Public, Auth, Account and Error
 surfaces; their focused coverage remains in separate specs.
 
 ## Route And View Inventory

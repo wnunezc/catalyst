@@ -20,7 +20,7 @@ final class ShellArchitectureTest extends TestCase
     {
         $registry = $this->read('app/Framework/Navigation/NavigationRegistry.php');
         $presenter = $this->read('app/Framework/Navigation/ShellNavigationPresenter.php');
-        $provider = $this->read('app/Framework/Navigation/FrameworkAdminNavigationProvider.php');
+        $provider = $this->read('app/Framework/Navigation/FrameworkNavigationProvider.php');
         $scope = $this->read('app/Framework/View/DocumentScope.php');
 
         Assert::contains('public function shell(', $registry);
@@ -87,7 +87,7 @@ final class ShellArchitectureTest extends TestCase
 
         Assert::contains('NavigationModelSelector::getInstance()->select(', $scope);
         Assert::contains('DemoUiNavigationProvider::ID', $scope);
-        Assert::contains('FrameworkAdminNavigationProvider::ID', $scope);
+        Assert::contains('FrameworkNavigationProvider::ID', $scope);
         Assert::contains('ApplicationNavigationProvider::ID', $scope);
         Assert::false(str_contains($scope, "\$scope['navigation_groups']"));
         Assert::false(str_contains($scope, "\$scope['account_nav_groups']"));

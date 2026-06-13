@@ -78,7 +78,7 @@ final class AuthFixtureCatalog
                         'id' => 2,
                         'name' => 'View Dashboard',
                         'slug' => 'view-dashboard',
-                        'description' => 'Access admin dashboard',
+                        'description' => 'Access privileged dashboard',
                         'created_at' => '2026-05-15 18:40:27',
                     ],
                     [
@@ -105,7 +105,7 @@ final class AuthFixtureCatalog
                 ],
                 'users' => [
                     [
-                        'key' => 'seed-admin',
+                        'key' => 'seed-privileged',
                         'id' => 1,
                         'name' => 'Walter Nuñez',
                         'email' => 'icarosnet@gmail.com',
@@ -129,7 +129,7 @@ final class AuthFixtureCatalog
                         'updated_at' => '2026-05-15 18:40:27',
                     ],
                     [
-                        'key' => 'qa-admin',
+                        'key' => 'qa-privileged',
                         'id' => 3,
                         'name' => 'Walter Nuñez',
                         'email' => 'icarosnet+user1@gmail.com',
@@ -178,8 +178,8 @@ final class AuthFixtureCatalog
                     ],
                 ],
                 'user_roles' => [
-                    ['user_key' => 'seed-admin', 'role_slugs' => ['admin']],
-                    ['user_key' => 'qa-admin', 'role_slugs' => ['admin', 'user']],
+                    ['user_key' => 'seed-privileged', 'role_slugs' => ['admin']],
+                    ['user_key' => 'qa-privileged', 'role_slugs' => ['admin', 'user']],
                     ['user_key' => 'qa-auth', 'role_slugs' => ['user']],
                 ],
                 'user_social_accounts' => [],

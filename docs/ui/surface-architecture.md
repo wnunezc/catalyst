@@ -117,14 +117,14 @@ Application-owned controllers, services and surfaces live under
 The same ownership boundary applies to PHP unit tests and Playwright specs.
 Application behavior must not be placed in the framework suite.
 
-## Admin Boundary
+## Privileged Boundary
 
-Admin is a role, permission and business authorization concept. It may appear
-in protected routes such as `/admin/account-recovery`, middleware, policies,
+Privileged is a role, permission and business authorization concept. It may appear
+in protected routes such as `/privileged/account-recovery`, middleware, policies,
 labels and operational workflows.
 
-Admin is never a global namespace, document profile, layout, shell, frontend
-runtime or CSS architecture. Administrative routes use the same document,
+Privileged is never a global namespace, document profile, layout, shell, frontend
+runtime or CSS architecture. Privileged routes use the same document,
 shell, capabilities and runtime as other internal surfaces.
 
 ## Generated Inventories

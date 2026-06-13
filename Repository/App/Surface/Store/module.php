@@ -34,13 +34,10 @@ return [
         'web' => [
             '/store',
         ],
-        'api' => [
-            '/api/public/store',
-        ],
+        'api' => [],
         'aliases' => [],
         'prefixes' => [
             '/store',
-            '/api/public/store',
         ],
     ],
     'navigation' => [

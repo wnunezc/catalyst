@@ -30,12 +30,10 @@ declare(strict_types=1);
 
 namespace App\Surface\Dashboard\Controllers;
 
-use App\Surface\Account\Services\AccountDashboardService;
-use App\Surface\Account\Support\AccountSurfaceViewModel;
-use App\Support\PublicSurface\Support\PublicDemoCatalog;
+use Catalyst\Repository\Account\Services\AccountDashboardService;
+use Catalyst\Repository\Account\Support\AccountSurfaceViewModel;
 use Catalyst\Framework\Auth\AuthManager;
 use Catalyst\Framework\Controllers\Controller;
-use Catalyst\Framework\Http\JsonResponse;
 use Catalyst\Framework\Http\RedirectResponse;
 use Catalyst\Framework\Http\Response;
 
@@ -43,7 +41,7 @@ use Catalyst\Framework\Http\Response;
  * Serves the public account dashboard entry point and its companion API payload.
  *
  * @package App\Surface\Dashboard\Controllers
- * Responsibility: Renders the authenticated account shell, presents a guest gateway for anonymous users, and exposes dashboard demo data.
+ * Responsibility: Renders the authenticated account shell and presents a guest gateway for anonymous users.
  */
 final class DashboardController extends Controller
 {
@@ -83,18 +81,6 @@ final class DashboardController extends Controller
             ],
             'has_breadcrumbs' => true,
         ]));
-    }
-
-    /**
-     * Returns the authenticated dashboard companion payload for public surface consumers.
-     *
-     * Responsibility: Returns the authenticated dashboard companion payload for public surface consumers.
-     */
-    public function api(): JsonResponse
-    {
-        return $this->jsonSuccess([
-            'page' => (new PublicDemoCatalog())->dashboard(),
-        ]);
     }
 
     /**

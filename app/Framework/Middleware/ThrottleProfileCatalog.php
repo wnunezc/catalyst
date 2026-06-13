@@ -64,14 +64,14 @@ final class ThrottleProfileCatalog
             'context' => 'setup',
             'route_scoped' => true,
         ],
-        'admin_mutation' => [
-            'name' => 'admin_mutation',
+        'privileged_mutation' => [
+            'name' => 'privileged_mutation',
             'enabled' => true,
             'max_attempts' => 30,
             'window_seconds' => 60,
             'lockout_seconds' => 180,
             'scope' => 'actor',
-            'context' => 'admin',
+            'context' => 'privileged',
             'route_scoped' => true,
         ],
         'api_mutation' => [
@@ -157,7 +157,7 @@ final class ThrottleProfileCatalog
     {
         foreach ([
             '/configuration/environment-setup' => 'setup_mutation',
-            '/users' => 'admin_mutation',
+            '/users' => 'privileged_mutation',
             '/forgot-password' => 'auth_recovery',
             '/reset-password' => 'auth_recovery',
             '/mfa/verify' => 'mfa_challenge',

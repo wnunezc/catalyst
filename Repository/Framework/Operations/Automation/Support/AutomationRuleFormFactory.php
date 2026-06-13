@@ -33,7 +33,7 @@ namespace Catalyst\Repository\Operations\Automation\Support;
 use Catalyst\Framework\Form\FormBuilder;
 
 /**
- * Builds the administrative automation rule form schema.
+ * Builds the privileged automation rule form schema.
  *
  * @package Catalyst\Repository\Operations\Automation\Support
  * Responsibility: Define automation rule form sections, fields, defaults and actions for create and edit screens.

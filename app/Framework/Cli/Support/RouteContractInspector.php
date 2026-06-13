@@ -299,16 +299,12 @@ final class RouteContractInspector
             $moduleName = $module['name'];
             $slug = $module['slug'];
             $hasHtml = false;
-            $hasJson = false;
 
             foreach (array_keys($paths) as $pattern) {
                 if ($pattern === '/' . $slug || str_starts_with($pattern, '/' . $slug . '/')) {
                     $hasHtml = true;
                 }
 
-                if ($pattern === '/api/public/' . $slug || str_starts_with($pattern, '/api/public/' . $slug . '/')) {
-                    $hasJson = true;
-                }
             }
 
             if (!$hasHtml) {
@@ -318,17 +314,10 @@ final class RouteContractInspector
                 ];
             }
 
-            if (!$hasJson) {
-                $issues[] = [
-                    'type' => 'missing-public-json-route',
-                    'message' => sprintf('Public module "%s" has no JSON companion route under "/api/public/%s".', $moduleName, $slug),
-                ];
-            }
         }
 
         return [
-            'ok' => !$this->hasIssueType($issues, 'missing-public-html-route')
-                && !$this->hasIssueType($issues, 'missing-public-json-route'),
+            'ok' => !$this->hasIssueType($issues, 'missing-public-html-route'),
             'checked' => $checked,
         ];
     }

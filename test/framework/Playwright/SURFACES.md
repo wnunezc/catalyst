@@ -60,8 +60,9 @@ shell. The following focused specs are prepared for individual execution:
 | Global FormBuilder | `/workspaces/media-fields/create` | `form-builder-runtime.spec.cjs` |
 | Global RecordPresence | First available `/operations/automation-rules/{id}` | `record-presence-runtime.spec.cjs` |
 | Demo UI recursive model | `/demo-ui/charts/apex/line` | `navigation-models.spec.cjs` |
-| Framework admin model | `/configuration/application-health` | `navigation-models.spec.cjs` |
+| Framework model | `/configuration/application-health` | `navigation-models.spec.cjs` |
 | Application model | `/account/profile` | `navigation-models.spec.cjs` |
+| ROADMAP-4 route ownership | Retired aliases/companions and canonical Users, Account, runtime, UML and Demo UI routes | `roadmap4-routes.spec.cjs` |
 
 ## Configuration Ownership Coverage
 
@@ -150,5 +151,6 @@ Push-Location D:\OpsZone\DevWorkspace\Engines\Playwright; node .\scripts\run-pro
 Push-Location D:\OpsZone\DevWorkspace\Engines\Playwright; node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalyst --suite framework --grep "@configuration-surfaces"; Pop-Location
 Push-Location D:\OpsZone\DevWorkspace\Engines\Playwright; node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalyst --suite framework --grep "@canonical-owners"; Pop-Location
 Push-Location D:\OpsZone\DevWorkspace\Engines\Playwright; node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalyst --suite framework --grep "@record-presence"; Pop-Location
+Push-Location D:\OpsZone\DevWorkspace\Engines\Playwright; node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalyst --suite framework --grep "@roadmap4-routes"; Pop-Location
 Push-Location D:\OpsZone\DevWorkspace\Engines\Playwright; node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalyst --suite framework; Pop-Location
 ```

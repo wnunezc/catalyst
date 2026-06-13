@@ -32,15 +32,14 @@ namespace App\Surface\Landing\Controllers;
 
 use App\Support\PublicSurface\Controllers\PublicPageController;
 use App\Support\PublicSurface\Support\PublicDemoCatalog;
-use Catalyst\Framework\Http\JsonResponse;
 use Catalyst\Framework\Http\RedirectResponse;
 use Catalyst\Framework\Http\Response;
 
 /**
- * Serves the public marketing landing surface and companion API payload.
+ * Serves the public marketing landing surface.
  *
  * @package App\Surface\Landing\Controllers
- * Responsibility: Renders the landing demo page, publishes its catalog-backed payload, and normalizes legacy landing aliases.
+ * Responsibility: Renders the landing demo page and normalizes legacy landing aliases.
  */
 class LandingController extends PublicPageController
 {
@@ -52,18 +51,6 @@ class LandingController extends PublicPageController
     public function index(): Response
     {
         return $this->renderPublicPage('landing.surface', (new PublicDemoCatalog())->landing());
-    }
-
-    /**
-     * Returns the landing companion payload for public surface consumers.
-     *
-     * Responsibility: Returns the landing companion payload for public surface consumers.
-     */
-    public function api(): JsonResponse
-    {
-        return $this->jsonSuccess([
-            'page' => (new PublicDemoCatalog())->landing(),
-        ]);
     }
 
     /**

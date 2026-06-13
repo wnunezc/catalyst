@@ -794,7 +794,7 @@ final class ModuleLinter
     {
         $scopePath = PD . DS . 'app' . DS . 'Framework' . DS . 'View' . DS . 'DocumentScope.php';
         $providerPath = PD . DS . 'app' . DS . 'Framework' . DS . 'Navigation' . DS
-            . 'FrameworkAdminNavigationProvider.php';
+            . 'FrameworkNavigationProvider.php';
         $scope = is_file($scopePath) ? (string)file_get_contents($scopePath) : '';
         $provider = is_file($providerPath) ? (string)file_get_contents($providerPath) : '';
 

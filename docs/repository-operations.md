@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Document the single framework owner for operational administration and its domain APIs.
+Document the single framework owner for operational privileged and its domain APIs.
 
 ## Contract
 

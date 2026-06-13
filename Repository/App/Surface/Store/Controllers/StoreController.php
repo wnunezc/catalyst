@@ -32,15 +32,14 @@ namespace App\Surface\Store\Controllers;
 
 use App\Support\PublicSurface\Controllers\PublicPageController;
 use App\Support\PublicSurface\Support\PublicDemoCatalog;
-use Catalyst\Framework\Http\JsonResponse;
 use Catalyst\Framework\Http\RedirectResponse;
 use Catalyst\Framework\Http\Response;
 
 /**
- * Serves the public storefront surface and companion API payload.
+ * Serves the public storefront surface.
  *
  * @package App\Surface\Store\Controllers
- * Responsibility: Renders the store catalog demo page, publishes its companion payload, and normalizes legacy store aliases.
+ * Responsibility: Renders the store catalog demo page and normalizes legacy store aliases.
  */
 class StoreController extends PublicPageController
 {
@@ -52,18 +51,6 @@ class StoreController extends PublicPageController
     public function index(): Response
     {
         return $this->renderPublicPage('store.surface', (new PublicDemoCatalog())->store());
-    }
-
-    /**
-     * Returns the store companion payload for public surface consumers.
-     *
-     * Responsibility: Returns the store companion payload for public surface consumers.
-     */
-    public function api(): JsonResponse
-    {
-        return $this->jsonSuccess([
-            'page' => (new PublicDemoCatalog())->store(),
-        ]);
     }
 
     /**

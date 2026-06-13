@@ -48,12 +48,11 @@ final class ModuleRegistry
      */
     private const DECLARATIONS = [
         'framework.devtools' => [
-            'description' => 'Developer tooling, UML and runtime smoke surfaces.',
+            'description' => 'devtools.module.description',
             'routes' => [
                 'web' => [
                     '/test-features',
                     '/test-features/layout-test',
-                    '/test-features/ui-showcase',
                     '/uml',
                 ],
                 'api' => [
@@ -87,8 +86,8 @@ final class ModuleRegistry
             'permissions' => [
                 [
                     'slug' => 'access-devtools',
-                    'label' => 'Access DevTools',
-                    'description' => 'Access development-only runtime tooling.',
+                    'label' => 'devtools.module.permission_label',
+                    'description' => 'devtools.module.permission_description',
                     'action' => 'access',
                     'resource' => 'devtools',
                     'role_fallback_any' => ['admin'],
@@ -104,14 +103,14 @@ final class ModuleRegistry
                 'shell' => [
                     [
                         'context' => 'devtools',
-                        'label' => 'Test Features',
+                        'label' => 'devtools.module.test_features_label',
                         'href' => '/test-features',
                         'icon' => 'ti ti-test-pipe',
                         'matches' => ['/test-features'],
                         'group' => 'devtools',
                         'group_label' => 'ui.shell.group_devtools',
                         'group_order' => 10,
-                        'hint' => 'Harness principal de runtime',
+                        'hint' => 'devtools.module.test_features_hint',
                         'order' => 10,
                         'visibility' => [
                             ['roles_any' => ['admin'], 'environments' => ['development']],
@@ -120,30 +119,14 @@ final class ModuleRegistry
                     ],
                     [
                         'context' => 'devtools',
-                        'label' => 'UI Showcase',
-                        'href' => '/test-features/ui-showcase',
-                        'icon' => 'ti ti-components',
-                        'matches' => ['/test-features/ui-showcase'],
-                        'group' => 'devtools',
-                        'group_label' => 'ui.shell.group_devtools',
-                        'group_order' => 10,
-                        'hint' => 'Catalogo visual y componentes',
-                        'order' => 20,
-                        'visibility' => [
-                            ['roles_any' => ['admin'], 'environments' => ['development']],
-                            ['permissions_any' => ['access-devtools'], 'environments' => ['development']],
-                        ],
-                    ],
-                    [
-                        'context' => 'devtools',
-                        'label' => 'UML / Architecture',
+                        'label' => 'devtools.module.uml_label',
                         'href' => '/uml',
                         'icon' => 'ti ti-schema',
                         'matches' => ['/uml'],
                         'group' => 'devtools',
                         'group_label' => 'ui.shell.group_devtools',
                         'group_order' => 10,
-                        'hint' => 'Modelo tecnico y diagramas',
+                        'hint' => 'devtools.module.uml_hint',
                         'order' => 30,
                         'visibility' => [
                             ['roles_any' => ['admin'], 'environments' => ['development']],
@@ -153,30 +136,23 @@ final class ModuleRegistry
                 ],
                 'breadcrumbs' => [
                     [
-                        'pattern' => '/test-features/ui-showcase',
-                        'trail' => [
-                            ['label' => 'DevTools', 'href' => '/test-features'],
-                            ['label' => 'UI Showcase', 'href' => null],
-                        ],
-                    ],
-                    [
                         'pattern' => '/test-features',
                         'trail' => [
-                            ['label' => 'DevTools', 'href' => null],
+                            ['label' => 'devtools.module.devtools_label', 'href' => null],
                         ],
                     ],
                     [
                         'pattern' => '/uml',
                         'trail' => [
-                            ['label' => 'DevTools', 'href' => '/test-features'],
-                            ['label' => 'Architecture', 'href' => null],
+                            ['label' => 'devtools.module.devtools_label', 'href' => '/test-features'],
+                            ['label' => 'devtools.module.architecture_breadcrumb', 'href' => null],
                         ],
                     ],
                     [
                         'pattern' => '/test-features/layout-test',
                         'trail' => [
-                            ['label' => 'DevTools', 'href' => '/test-features'],
-                            ['label' => 'Layout Smoke', 'href' => null],
+                            ['label' => 'devtools.module.devtools_label', 'href' => '/test-features'],
+                            ['label' => 'devtools.module.layout_smoke_label', 'href' => null],
                         ],
                     ],
                 ],

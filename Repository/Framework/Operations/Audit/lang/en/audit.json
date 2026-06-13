@@ -1,6 +1,6 @@
 {
   "module": {
-    "description": "Operational audit log for administrative mutations and framework runtime events.",
+    "description": "Operational audit log for privileged mutations and framework runtime events.",
     "permission_label": "Manage Audit Log",
     "permission_description": "Inspect operational audit entries and exports.",
     "navigation_label": "Audit Log",
@@ -9,11 +9,11 @@
   },
   "index": {
     "title": "Audit Log",
-    "description": "Operational timeline of administrative mutations and internal framework events.",
-    "hero_lede": "Centralized view of administrative mutations, ORM hooks and internal framework events.",
+    "description": "Operational timeline of privileged mutations and internal framework events.",
+    "hero_lede": "Centralized view of privileged mutations, ORM hooks and internal framework events.",
     "empty": {
       "title": "No audit entries yet",
-      "description": "The audit log will populate after administrative changes or framework events are recorded."
+      "description": "The audit log will populate after privileged changes or framework events are recorded."
     },
     "columns": {
       "occurred": "Occurred",

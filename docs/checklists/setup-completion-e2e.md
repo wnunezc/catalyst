@@ -1,4 +1,4 @@
-# Checklist E2E — `/configuration/environment-setup` admin + finalización
+# Checklist E2E — `/configuration/environment-setup` privileged + finalización
 
 Verificación manual del flujo real de configuración inicial de Catalyst.
 
@@ -21,21 +21,21 @@ Usar esta checklist cuando cambien:
 
 - El contrato público para saber si el framework ya quedó configurado es `ConfigManager::isConfigured(): bool`.
 - `ConfigManager::detectConfigured()` existe, pero es **privado**; no documentarlo como superficie de uso.
-- `POST /configuration/environment-setup/admin` crea el administrador inicial.
-- `POST /configuration/environment-setup/complete` **no** crea admin ni consume `admin_name`, `admin_email` o passwords.
+- `POST /configuration/environment-setup/privileged-account` crea la cuenta privilegiada inicial.
+- `POST /configuration/environment-setup/complete` **no** crea privileged ni consume `account_name`, `account_email` o passwords.
 - `POST /configuration/environment-setup/complete` solo finaliza si:
   - `app.json` y `db.json` existen
   - la DB es alcanzable
   - existen `users`, `roles` y `user_roles` o el bootstrap SQL puede crearlas
-  - ya existe al menos un admin activo
+  - ya existe al menos un privileged activo
 - La respuesta JSON del stack usa `JsonResponse::api()`:
   - base: `success`, `data`, `noFlash`
   - opcionales: `message`, `meta`, `notifications`, `redirect`, `redirectDelay`, `refresh`, `refreshDelay`, `in`, `html`
 - `SetupGuardMiddleware` redirige HTML no autenticado a `/login?redirect=/configuration/environment-setup`.
-- Si `/configuration/environment-setup` ya está configurado y el caller no está autenticado como admin, el middleware bloquea antes de llegar al controller:
+- Si `/configuration/environment-setup` ya está configurado y el caller no está autenticado como privileged, el middleware bloquea antes de llegar al controller:
   - HTML no autenticado: redirect a `/login?redirect=/configuration/environment-setup`
   - JSON/AJAX no autenticado: `401` con mensaje `Login required.`
-  - usuario autenticado no admin: `403` con mensaje `Admin access required.`
+  - usuario autenticado no privileged: `403` con mensaje `Privileged access required.`
 
 ## Pre-requisitos
 
@@ -82,23 +82,23 @@ Pasos:
 
 Criterio de éxito:
 - los guardados parciales no llaman el flujo de finalización
-- sigue visible la tarjeta de admin/finalización
+- sigue visible la tarjeta de privileged/finalización
 - `ConfigManager::isConfigured()` seguiría resolviendo `false`
 
-## Escenario B — `POST /configuration/environment-setup/admin` crea el admin inicial
+## Escenario B — `POST /configuration/environment-setup/privileged-account` crea el privileged inicial
 
 Objetivo:
-- validar el contrato real de aprovisionamiento de admin antes de finalizar
+- validar el contrato real de aprovisionamiento de privileged antes de finalizar
 
 Request esperado:
 
 ```text
-POST /configuration/environment-setup/admin
+POST /configuration/environment-setup/privileged-account
 csrf_token
-admin_name
-admin_email
-admin_password
-admin_password_confirm
+account_name
+account_email
+account_password
+account_password_confirm
 ```
 
 Happy path esperado:
@@ -106,7 +106,7 @@ Happy path esperado:
 ```json
 {
   "success": true,
-  "data": { "admin_created": true },
+  "data": { "privileged_account_created": true },
   "noFlash": true,
   "message": "...",
   "notifications": { "...": "..." }
@@ -114,10 +114,10 @@ Happy path esperado:
 ```
 
 Notas:
-- si ya existe un admin activo, devuelve `success=true` con `data.admin_exists=true`
+- si ya existe un privileged activo, devuelve `success=true` con `data.privileged_account_exists=true`
 - si el email ya existe o el password no confirma, devuelve `422` con `errors`
 - si la DB no es alcanzable, falla desde `SetupDatabaseService::open()`
-- usuario, rol admin y asignación se confirman en una sola transacción; un fallo revierte el aprovisionamiento
+- usuario, rol privileged y asignación se confirman en una sola transacción; un fallo revierte el aprovisionamiento
 
 ## Escenario C — `POST /configuration/environment-setup/complete` falla con DB/config inválida
 
@@ -131,7 +131,7 @@ POST /configuration/environment-setup/complete
 csrf_token
 ```
 
-No enviar campos `admin_*`; el controller no los consume.
+No enviar campos `privileged_*`; el controller no los consume.
 
 Errores runtime vigentes:
 
@@ -142,7 +142,7 @@ Errores runtime vigentes:
 | `db.db1.db_database` vacío | 422 | mensaje de `db_incomplete` |
 | credenciales/host inválidos | 422 | mensaje de `db_unreachable` + detalle |
 | fallo al materializar `users/roles/user_roles` | 500 | mensaje de `auth_tables_missing` + detalle |
-| no existe admin activo | 422 | mensaje de `admin_required` |
+| no existe privileged activo | 422 | mensaje de `privileged_account_required` |
 
 Envelope esperado en error:
 
@@ -156,20 +156,20 @@ Envelope esperado en error:
 }
 ```
 
-## Escenario D — `POST /configuration/environment-setup/complete` finaliza cuando ya existe admin
+## Escenario D — `POST /configuration/environment-setup/complete` finaliza cuando ya existe privileged
 
 Objetivo:
 - validar el happy path real de finalización
 
 Precondición:
-- `POST /configuration/environment-setup/admin` ya creó un admin activo
+- `POST /configuration/environment-setup/privileged-account` ya creó un privileged activo
 
 Happy path esperado:
 
 ```json
 {
   "success": true,
-  "data": { "admin_created": false },
+  "data": { "privileged_account_created": false },
   "noFlash": true,
   "message": "...",
   "notifications": { "...": "..." },
@@ -182,7 +182,7 @@ Criterio de éxito:
 - `POST /configuration/environment-setup/complete` responde `200`
 - `app.project.project_config` cambia a `true`
 - el browser redirige a `/login` aproximadamente 1.5 s después
-- no se crea un segundo admin; solo se completa la configuración
+- no se crea un segundo privileged; solo se completa la configuración
 
 ## Escenario E — Gate post-configuración
 
@@ -192,17 +192,17 @@ Objetivo:
 Pasos:
 1. Con `project_config=true`, abrir `{APP_URL}/configuration/environment-setup` sin sesión.
 2. Verificar redirect a `/login?redirect=/configuration/environment-setup`.
-3. Autenticarse como admin.
+3. Autenticarse como privileged.
 4. Reabrir `/configuration/environment-setup`.
 
 Criterio de éxito:
 - el paso 2 usa el querystring URL-encoded real
-- el admin autenticado sí puede entrar
+- el privileged autenticado sí puede entrar
 - la vista ya no muestra la tarjeta de finalización; muestra la tarjeta de reset
 
 Variante AJAX:
 - un caller no autenticado a `/configuration/environment-setup/complete` no debería recibir `{"error":"already_configured"}`; el middleware responde antes con `401 Login required.`
-- un admin autenticado que fuerce `POST /configuration/environment-setup/complete` con `project_config=true` sí llega al controller y recibe `409` con `success=false` y mensaje de `already_configured`
+- un privileged autenticado que fuerce `POST /configuration/environment-setup/complete` con `project_config=true` sí llega al controller y recibe `409` con `success=false` y mensaje de `already_configured`
 
 ## Escenario F — Doble finalización
 
@@ -232,7 +232,7 @@ No esperar un payload tipo:
 Opciones:
 
 1. Cambiar `project_config` a `false` manualmente en `app.json`.
-2. Usar `POST /configuration/environment-setup/reset` como admin autenticado para reabrir el wizard sin borrar la configuración.
+2. Usar `POST /configuration/environment-setup/reset` como privileged autenticado para reabrir el wizard sin borrar la configuración.
 3. Si además hace falta reprobar bootstrap de DB desde cero, limpiar la base aparte.
 
 Advertencia:
@@ -241,6 +241,6 @@ Advertencia:
 
 ## Registro de ejecución
 
-| Fecha | Ejecutado por | Admin create | Finalize error | Finalize success | Gate | Notas |
+| Fecha | Ejecutado por | Privileged create | Finalize error | Finalize success | Gate | Notas |
 |---|---|---|---|---|---|---|
 | 2026-05-14 | Walter | ✅ | ✅ | ✅ | ✅ | Contrato reconciliado con `SetupCompletionController`, `JsonResponse` y `SetupGuardMiddleware`. |

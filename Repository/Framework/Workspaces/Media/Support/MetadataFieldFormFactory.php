@@ -33,7 +33,7 @@ namespace Catalyst\Repository\Workspaces\Media\Support;
 use Catalyst\Framework\Form\FormBuilder;
 
 /**
- * Builds the administrative metadata field form schema.
+ * Builds the privileged metadata field form schema.
  *
  * @package Catalyst\Repository\Workspaces\Media\Support
  * Responsibility: Configure metadata field sections, values, dynamic controls and form actions.

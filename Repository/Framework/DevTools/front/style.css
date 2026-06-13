@@ -3,7 +3,7 @@
  * Published via FrontResourceTrait to /assets/css/work/devtools/style.css
  */
 
-.ui-showcase {
+.devtools-page {
     --ui-card-border: rgba(var(--bs-body-color-rgb), 0.08);
     --ui-card-shadow: 0 1rem 2.5rem rgba(15, 23, 42, 0.08);
     --ui-accent: #0f766e;
@@ -47,7 +47,7 @@
     --ui-badge-info-text: #082f49;
 }
 
-[data-bs-theme="dark"] .ui-showcase {
+[data-bs-theme="dark"] .devtools-page {
     --ui-card-border: rgba(255, 255, 255, 0.08);
     --ui-card-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.3);
     --ui-accent: #22c3b0;
@@ -423,7 +423,7 @@
     font-size: 0.84rem;
 }
 
-.ui-showcase .btn-primary {
+.devtools-page .btn-primary {
     background: var(--ui-accent);
     border-color: var(--ui-accent);
     color: var(--ui-btn-text-on-accent);
@@ -431,133 +431,133 @@
     box-shadow: 0 0.45rem 1rem color-mix(in srgb, var(--ui-accent) 24%, transparent);
 }
 
-.ui-showcase .btn-primary:hover,
-.ui-showcase .btn-primary:focus {
+.devtools-page .btn-primary:hover,
+.devtools-page .btn-primary:focus {
     background: var(--ui-accent-strong);
     border-color: var(--ui-accent-strong);
     color: var(--ui-btn-text-on-accent);
 }
 
-.ui-showcase .btn-outline-secondary {
+.devtools-page .btn-outline-secondary {
     color: var(--ui-btn-outline-text);
     border-color: var(--ui-btn-outline-border);
     background: var(--ui-btn-outline-bg);
     font-weight: 600;
 }
 
-.ui-showcase .btn-outline-secondary:hover,
-.ui-showcase .btn-outline-secondary:focus {
+.devtools-page .btn-outline-secondary:hover,
+.devtools-page .btn-outline-secondary:focus {
     color: var(--ui-btn-text-on-accent);
     background: var(--ui-accent);
     border-color: var(--ui-accent);
 }
 
-.ui-showcase .btn-outline-danger {
+.devtools-page .btn-outline-danger {
     color: var(--ui-btn-danger-text);
     border-color: var(--ui-btn-danger-border);
     background: var(--ui-btn-danger-bg);
     font-weight: 600;
 }
 
-.ui-showcase .btn-outline-danger:hover,
-.ui-showcase .btn-outline-danger:focus {
+.devtools-page .btn-outline-danger:hover,
+.devtools-page .btn-outline-danger:focus {
     color: #fff;
     background: #dc2626;
     border-color: #dc2626;
 }
 
-.ui-showcase .btn-outline-dark {
+.devtools-page .btn-outline-dark {
     color: var(--ui-btn-neutral-text);
     border-color: var(--ui-btn-neutral-border);
     background: var(--ui-btn-neutral-bg);
     font-weight: 600;
 }
 
-.ui-showcase .btn-outline-dark:hover,
-.ui-showcase .btn-outline-dark:focus {
+.devtools-page .btn-outline-dark:hover,
+.devtools-page .btn-outline-dark:focus {
     color: var(--ui-btn-text-on-accent);
     background: var(--ui-accent);
     border-color: var(--ui-accent);
 }
 
-.ui-showcase .btn:focus-visible {
+.devtools-page .btn:focus-visible {
     box-shadow: 0 0 0 0.22rem color-mix(in srgb, var(--ui-accent) 32%, transparent);
 }
 
-.ui-showcase .badge {
+.devtools-page .badge {
     font-weight: 700;
     letter-spacing: 0.01em;
 }
 
-.ui-showcase .badge.text-bg-light {
+.devtools-page .badge.text-bg-light {
     color: var(--ui-badge-light-text) !important;
     background-color: var(--ui-badge-light-bg) !important;
     border-color: var(--ui-badge-light-border) !important;
 }
 
-.ui-showcase .badge.text-bg-success {
+.devtools-page .badge.text-bg-success {
     color: var(--ui-badge-success-text) !important;
     background-color: var(--ui-badge-success-bg) !important;
 }
 
-.ui-showcase .badge.text-bg-warning {
+.devtools-page .badge.text-bg-warning {
     color: var(--ui-badge-warning-text) !important;
     background-color: var(--ui-badge-warning-bg) !important;
 }
 
-.ui-showcase .badge.text-bg-danger {
+.devtools-page .badge.text-bg-danger {
     color: var(--ui-badge-danger-text) !important;
     background-color: var(--ui-badge-danger-bg-strong) !important;
 }
 
-.ui-showcase .badge.text-bg-info {
+.devtools-page .badge.text-bg-info {
     color: var(--ui-badge-info-text) !important;
     background-color: var(--ui-badge-info-bg) !important;
 }
 
-[data-bs-theme="dark"] .ui-showcase .ui-catalog-head__actions .btn {
+[data-bs-theme="dark"] .devtools-page .ui-catalog-head__actions .btn {
     box-shadow: 0 0.9rem 1.8rem rgba(0, 0, 0, 0.28);
 }
 
-[data-bs-theme="dark"] .ui-showcase .ui-catalog-head__actions .btn-outline-secondary {
+[data-bs-theme="dark"] .devtools-page .ui-catalog-head__actions .btn-outline-secondary {
     color: #d7fff8;
     border-color: rgba(34, 195, 176, 0.34);
     background: rgba(34, 195, 176, 0.12);
 }
 
-[data-bs-theme="dark"] .ui-showcase .ui-catalog-head__actions .btn-outline-danger {
+[data-bs-theme="dark"] .devtools-page .ui-catalog-head__actions .btn-outline-danger {
     color: #ffd6d6;
     border-color: rgba(248, 113, 113, 0.36);
     background: rgba(239, 68, 68, 0.14);
 }
 
-[data-bs-theme="dark"] .ui-showcase .ui-filter-chip {
+[data-bs-theme="dark"] .devtools-page .ui-filter-chip {
     border-color: rgba(34, 195, 176, 0.34);
     background: rgba(34, 195, 176, 0.14);
     color: #defcf7;
 }
 
-.ui-showcase .ui-catalog-head__actions .btn-outline-secondary {
+.devtools-page .ui-catalog-head__actions .btn-outline-secondary {
     color: #f4fbff;
     border-color: rgba(148, 163, 184, 0.42);
     background: rgba(15, 23, 42, 0.28);
 }
 
-.ui-showcase .ui-catalog-head__actions .btn-outline-secondary:hover,
-.ui-showcase .ui-catalog-head__actions .btn-outline-secondary:focus {
+.devtools-page .ui-catalog-head__actions .btn-outline-secondary:hover,
+.devtools-page .ui-catalog-head__actions .btn-outline-secondary:focus {
     color: var(--ui-btn-text-on-accent);
     border-color: var(--ui-accent);
     background: var(--ui-accent);
 }
 
-.ui-showcase .ui-catalog-head__actions .btn-outline-danger {
+.devtools-page .ui-catalog-head__actions .btn-outline-danger {
     color: #ffe2e2;
     border-color: rgba(248, 113, 113, 0.42);
     background: rgba(127, 29, 29, 0.22);
 }
 
-.ui-showcase .ui-catalog-head__actions .btn-outline-danger:hover,
-.ui-showcase .ui-catalog-head__actions .btn-outline-danger:focus {
+.devtools-page .ui-catalog-head__actions .btn-outline-danger:hover,
+.devtools-page .ui-catalog-head__actions .btn-outline-danger:focus {
     color: #fff;
     background: #dc2626;
     border-color: #dc2626;
@@ -901,7 +901,7 @@
 }
 
 /* Compact UI pass for diagnostics/showcase screens. */
-.ui-showcase {
+.devtools-page {
     --ui-card-shadow: 0 1px 4px rgba(130, 143, 163, 0.15);
 }
 

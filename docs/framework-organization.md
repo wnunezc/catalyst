@@ -15,11 +15,11 @@
 
 Roles also expose nullable `hierarchy_scope_id` and `hierarchy_level_id` metadata. Existing roles without classification continue to work.
 
-## Administration UI
+## Privileged UI
 
 The hierarchy engine is intentionally empty after migration. Catalyst does not seed institution-specific organization data because derived applications need to define their own institution model.
 
-Administrators with `manage-roles` can configure the hierarchy from:
+Privileged users with `manage-roles` can configure the hierarchy from:
 
 ```text
 /users/organization-hierarchy
@@ -47,7 +47,7 @@ empty set.
 | `OrganizationClassification` | Normalizes classification payloads for roles, users, courses, certifications and future catalogs. |
 | `OrganizationClassificationPresenter` | Converts classification metadata into badge payloads using configured visual tokens and colors. |
 | `OrganizationRepository` | Reads and writes tenant-scoped organizations, scopes, levels, units and classifications. |
-| `OrganizationHierarchyController` | Provides the administrator UI used to populate organizations, scopes, levels and units. |
+| `OrganizationHierarchyController` | Provides the privileged role UI used to populate organizations, scopes, levels and units. |
 
 ## RBAC Boundary
 
@@ -79,7 +79,7 @@ This smoke validates the value object, presenter, migration presence and optiona
 
 For an end-to-end local verification, use the browser or HTTP session against the configured site:
 
-1. Sign in as an admin.
+1. Sign in as an privileged.
 2. Open `/users/organization-hierarchy`.
 3. Create an organization, scope and level.
 4. Open `/users/roles/create`.

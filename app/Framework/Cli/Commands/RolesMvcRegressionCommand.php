@@ -69,23 +69,23 @@ final class RolesMvcRegressionCommand extends AbstractCommand
      */
     public function execute(ArgumentBag $args): int
     {
-        $users = $this->contents('Repository/Framework/Roles/Controllers/UserManagementController.php');
-        $roles = $this->contents('Repository/Framework/Roles/Controllers/RolesController.php');
-        $permissions = $this->contents('Repository/Framework/Roles/Controllers/PermissionsController.php');
-        $roleRequest = $this->contents('Repository/Framework/Roles/Requests/RolePayloadRequest.php');
+        $users = $this->contents('Repository/Framework/Users/Controllers/UserManagementController.php');
+        $roles = $this->contents('Repository/Framework/Users/Controllers/RolesController.php');
+        $permissions = $this->contents('Repository/Framework/Users/Controllers/PermissionsController.php');
+        $roleRequest = $this->contents('Repository/Framework/Users/Requests/RolePayloadRequest.php');
         $formBuilder = $this->contents('app/Framework/Form/FormBuilder.php');
         $formViewModel = $this->contents('app/Framework/Form/FormBuilderViewModel.php');
         $formControl = $this->contents('boot-core/template/components/form-builder/_field-control.phtml');
         $checks = [
-            'enrollment_request_centralized' => class_exists(\Catalyst\Repository\Roles\Requests\UserEnrollmentRequest::class)
+            'enrollment_request_centralized' => class_exists(\Catalyst\Repository\Users\Requests\UserEnrollmentRequest::class)
                 && str_contains($users, 'new UserEnrollmentRequest($request)'),
-            'enrollment_form_extracted' => class_exists(\Catalyst\Repository\Roles\Support\UserEnrollmentFormFactory::class)
+            'enrollment_form_extracted' => class_exists(\Catalyst\Repository\Users\Support\UserEnrollmentFormFactory::class)
                 && !str_contains($users, 'FormBuilder::'),
-            'role_bulk_request_centralized' => class_exists(\Catalyst\Repository\Roles\Requests\RoleBulkSelectionRequest::class)
+            'role_bulk_request_centralized' => class_exists(\Catalyst\Repository\Users\Requests\RoleBulkSelectionRequest::class)
                 && str_contains($roles, 'new RoleBulkSelectionRequest($request)'),
-            'permission_bulk_request_centralized' => class_exists(\Catalyst\Repository\Roles\Requests\PermissionBulkSelectionRequest::class)
+            'permission_bulk_request_centralized' => class_exists(\Catalyst\Repository\Users\Requests\PermissionBulkSelectionRequest::class)
                 && str_contains($permissions, 'new PermissionBulkSelectionRequest($request)'),
-            'permission_sync_request_centralized' => class_exists(\Catalyst\Repository\Roles\Requests\RolePermissionSyncRequest::class)
+            'permission_sync_request_centralized' => class_exists(\Catalyst\Repository\Users\Requests\RolePermissionSyncRequest::class)
                 && str_contains($roles, 'new RolePermissionSyncRequest($request)'),
             'role_units_payload_centralized' => str_contains($roleRequest, 'organization_unit_ids')
                 && str_contains($roleRequest, 'normalizeOrganizationUnitIds'),

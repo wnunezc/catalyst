@@ -29,7 +29,7 @@ final class NavigationModelSelector
     {
         $providers = [
             new DemoUiNavigationProvider(),
-            new FrameworkAdminNavigationProvider(),
+            new FrameworkNavigationProvider(),
             new ApplicationNavigationProvider(),
         ];
 

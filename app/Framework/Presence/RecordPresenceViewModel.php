@@ -58,7 +58,7 @@ final class RecordPresenceViewModel
     $recordId = (int) ($presence['record_id'] ?? 0);
     $tenantId = (int) ($presence['tenant_id'] ?? 0);
     $heartbeatUrl = $resourceKey !== '' && $recordId > 0
-        ? '/api/presence/' . rawurlencode($resourceKey) . '/' . $recordId . '/heartbeat'
+        ? '/runtime/presence/' . rawurlencode($resourceKey) . '/' . $recordId . '/heartbeat'
         : '';
 
     $alertClass = match ($status) {

@@ -32,7 +32,7 @@ Views should pass a `page_header` array and include:
 
 Surface-specific hero classes such as `rbac-hero`, `operations-hero`,
 `catalogs-hero`, `media-hero`, `documents-hero`, `automation-hero`,
-`apiplatform-hero`, `settings-console-hero` and `admin-executive-hero` are legacy
+`apiplatform-hero`, `settings-console-hero` and `privileged-executive-hero` are legacy
 patterns and should not be used for new headers.
 
 ## Buttons
@@ -92,5 +92,5 @@ Useful searches before closing a UI normalization change:
 ```powershell
 rg -n '<a[^>]*class="[^"]*\bbtn\b' Repository boot-core
 rg -n 'btn-link' Repository boot-core public/assets
-rg -n 'rbac-hero|operations-hero|catalogs-hero|media-hero|documents-hero|automation-hero|apiplatform-hero|settings-console-hero|admin-executive-hero' Repository/Framework boot-core/template
+rg -n 'rbac-hero|operations-hero|catalogs-hero|media-hero|documents-hero|automation-hero|apiplatform-hero|settings-console-hero|privileged-executive-hero' Repository/Framework boot-core/template
 ```

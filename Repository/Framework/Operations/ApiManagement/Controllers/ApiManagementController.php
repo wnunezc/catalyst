@@ -42,18 +42,18 @@ use Catalyst\Repository\Operations\ApiManagement\Requests\ApiTokenRequest;
 use Throwable;
 
 /**
- * Admin controller for API token lifecycle and API catalog exposure.
+ * Privileged controller for API token lifecycle and API catalog exposure.
  *
  * @package Catalyst\Repository\Operations\ApiManagement\Controllers
- * Responsibility: Renders the API Management admin surface, creates and revokes bearer tokens,
+ * Responsibility: Renders the API Management privileged surface, creates and revokes bearer tokens,
  * and publishes the authenticated API route catalog.
  */
 final class ApiManagementController extends Controller
 {
     /**
-     * Receives token and user repositories required by the API Management admin workflows.
+     * Receives token and user repositories required by the API Management privileged workflows.
      *
-     * Responsibility: Receives token and user repositories required by the API Management admin workflows.
+     * Responsibility: Receives token and user repositories required by the API Management privileged workflows.
      */
     public function __construct(
         private readonly ApiTokenManager $tokens,
@@ -122,9 +122,9 @@ final class ApiManagementController extends Controller
     }
 
     /**
-     * Builds token form, catalog, and token list state for the admin index view.
+     * Builds token form, catalog, and token list state for the privileged index view.
      *
-     * Responsibility: Builds token form, catalog, and token list state for the admin index view.
+     * Responsibility: Builds token form, catalog, and token list state for the privileged index view.
      */
     private function renderIndex(?string $plainText = null, ?array $createdToken = null): Response
     {

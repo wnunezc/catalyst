@@ -37,10 +37,10 @@ use Catalyst\Helpers\Log\Logger;
 use Exception;
 
 /**
- * Read-side repository for administration surfaces that need user directory data.
+ * Read-side repository for privileged surfaces that need user directory data.
  *
  * @package Catalyst\Framework\Auth
- * Responsibility: Provide tenant-scoped user summaries, select options and admin listings.
+ * Responsibility: Provide tenant-scoped user summaries, select options and privileged listings.
  */
 final class UserDirectoryRepository
 {
@@ -132,9 +132,9 @@ final class UserDirectoryRepository
     }
 
     /**
-     * Searches users for administration grids with filters, roles and pagination.
+     * Searches users for privileged grids with filters, roles and pagination.
      *
-     * Responsibility: Searches users for administration grids with filters, roles and pagination.
+     * Responsibility: Searches users for privileged grids with filters, roles and pagination.
      * @param array<string, mixed> $state
      * @return array{rows: array<int, array<string, mixed>>, total: int}
      */

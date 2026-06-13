@@ -25,7 +25,7 @@ Run:
 php public/cli.php quality:check
 ```
 
-The gate runs Composer validation/audit, route lint, structural lint, local config contract smoke, admin navigation projection smoke, security check and status. Route, structural, config, navigation and security failures block. Local `status` warnings can be environment-bound when host Windows cannot resolve Docker-only service names.
+The gate runs Composer validation/audit, route lint, structural lint, local config contract smoke, privileged navigation projection smoke, security check and status. Route, structural, config, navigation and security failures block. Local `status` warnings can be environment-bound when host Windows cannot resolve Docker-only service names.
 
 For release work, PHP classes and methods changed by the RC must have docblocks
 with a real `Responsibility:` line. The responsibility must not be a copy of the

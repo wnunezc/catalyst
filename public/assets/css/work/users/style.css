@@ -1,0 +1,510 @@
+/*
+ * Users module styles
+ * Published via FrontResourceTrait to /assets/css/work/users/style.css
+ */
+
+.users-page {
+    --rbac-card-border: rgba(var(--catalyst-brand-primary-rgb), 0.1);
+    --rbac-card-shadow: 0 1rem 2.2rem rgba(15, 23, 42, 0.06);
+    --rbac-accent: var(--catalyst-brand-primary);
+    --rbac-accent-strong: color-mix(in srgb, var(--catalyst-brand-primary) 82%, black 18%);
+    --rbac-ink: var(--catalyst-brand-text-strong);
+    --rbac-muted: var(--catalyst-brand-text-muted);
+    --rbac-hero-ink: #f8fbff;
+    --rbac-hero-muted: rgba(239, 245, 250, 0.86);
+    --rbac-hero-border: rgba(255, 255, 255, 0.14);
+    --rbac-hero-chip-bg: rgba(255, 255, 255, 0.06);
+    --rbac-header-bg: rgba(255, 255, 255, 0.92);
+    --rbac-panel-bg: rgba(255, 255, 255, 0.98);
+    --rbac-table-head-bg: rgba(var(--catalyst-brand-primary-rgb), 0.04);
+    --rbac-row-alt-bg: rgba(var(--catalyst-brand-primary-rgb), 0.015);
+    --rbac-row-hover-bg: rgba(var(--catalyst-brand-primary-rgb), 0.05);
+    --rbac-btn-text-on-accent: #ffffff;
+    --rbac-btn-outline-bg: rgba(var(--catalyst-brand-primary-rgb), 0.08);
+    --rbac-btn-outline-border: rgba(var(--catalyst-brand-primary-rgb), 0.32);
+    --rbac-btn-outline-text: var(--rbac-accent-strong);
+    --rbac-btn-danger-bg: rgba(220, 38, 38, 0.06);
+    --rbac-btn-danger-border: rgba(220, 38, 38, 0.28);
+    --rbac-btn-danger-text: #b42318;
+    display: grid;
+    gap: 1rem;
+}
+
+[data-bs-theme="dark"] .users-page {
+    --rbac-card-border: rgba(255, 255, 255, 0.08);
+    --rbac-card-shadow: 0 1rem 2.2rem rgba(0, 0, 0, 0.3);
+    --rbac-accent: #ff6b76;
+    --rbac-accent-strong: #ff9ca4;
+    --rbac-ink: #edf4fb;
+    --rbac-muted: #aebccc;
+    --rbac-hero-ink: #f8fbff;
+    --rbac-hero-muted: rgba(233, 240, 248, 0.84);
+    --rbac-hero-border: rgba(255, 255, 255, 0.14);
+    --rbac-hero-chip-bg: rgba(255, 255, 255, 0.05);
+    --rbac-header-bg: rgba(20, 27, 37, 0.92);
+    --rbac-panel-bg: rgba(18, 25, 36, 0.98);
+    --rbac-table-head-bg: rgba(255, 255, 255, 0.04);
+    --rbac-row-alt-bg: rgba(255, 255, 255, 0.02);
+    --rbac-row-hover-bg: rgba(var(--catalyst-brand-primary-rgb), 0.1);
+    --rbac-btn-text-on-accent: #fff4f5;
+    --rbac-btn-outline-bg: rgba(var(--catalyst-brand-primary-rgb), 0.16);
+    --rbac-btn-outline-border: rgba(255, 107, 118, 0.42);
+    --rbac-btn-outline-text: #ffd7db;
+    --rbac-btn-danger-bg: rgba(239, 68, 68, 0.12);
+    --rbac-btn-danger-border: rgba(248, 113, 113, 0.44);
+    --rbac-btn-danger-text: #fecaca;
+}
+
+.rbac-hero,
+.rbac-section,
+.rbac-form-shell {
+    border: 1px solid var(--rbac-card-border);
+    box-shadow: var(--rbac-card-shadow);
+    overflow: hidden;
+}
+
+.rbac-hero {
+    background: #142033;
+    color: var(--rbac-hero-ink);
+}
+
+.rbac-hero .card-body {
+    padding: 1.2rem 1.25rem;
+}
+
+.rbac-hero__row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.rbac-hero__copy {
+    min-width: 0;
+}
+
+.rbac-eyebrow {
+    display: inline-flex;
+    margin-bottom: 0.45rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid var(--rbac-hero-border);
+    background: var(--rbac-hero-chip-bg);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.rbac-hero__title {
+    font-size: clamp(1.7rem, 2.4vw, 2.4rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+.rbac-hero__lede {
+    max-width: 46rem;
+    color: var(--rbac-hero-muted);
+    line-height: 1.55;
+}
+
+.rbac-hero__actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.rbac-section .card-header,
+.rbac-form-shell .card-header {
+    padding: 0.9rem 1rem;
+    background: var(--rbac-header-bg);
+    border-bottom: 1px dashed rgba(var(--bs-body-color-rgb), 0.12);
+}
+
+.rbac-section .card-body,
+.rbac-form-shell .card-body {
+    padding: 1rem;
+    background: var(--rbac-panel-bg);
+}
+
+.rbac-section__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.rbac-section__title {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--rbac-ink);
+}
+
+.rbac-section__subtitle {
+    font-size: 0.82rem;
+    color: var(--rbac-muted);
+}
+
+.rbac-chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.9rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--rbac-accent) 12%, transparent);
+    color: var(--rbac-accent-strong);
+    font-size: 0.75rem;
+    font-weight: 800;
+}
+
+.rbac-table thead th {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    font-size: 0.69rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--rbac-muted);
+    background: var(--rbac-table-head-bg);
+    border-bottom-width: 1px;
+}
+
+.rbac-table tbody td {
+    padding-top: 0.78rem;
+    padding-bottom: 0.78rem;
+}
+
+.rbac-table tbody tr:nth-child(even) {
+    background: var(--rbac-row-alt-bg);
+}
+
+.rbac-table tbody tr:hover {
+    background: var(--rbac-row-hover-bg);
+}
+
+.rbac-empty-state {
+    min-height: 16rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.rbac-empty-state__icon {
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 0.85rem;
+    border-radius: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: color-mix(in srgb, var(--rbac-accent) 18%, transparent);
+    color: var(--rbac-accent-strong);
+    font-size: 1.3rem;
+}
+
+.rbac-form-shell {
+    max-width: 56rem;
+}
+
+.rbac-form-shell .form-control,
+.rbac-form-shell .form-select {
+    min-height: 2.65rem;
+}
+
+.rbac-permission-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 0.85rem;
+}
+
+.rbac-permission-card {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    padding: 0.9rem 0.95rem;
+    border: 1px solid var(--rbac-card-border);
+    border-radius: 0.9rem;
+    background: color-mix(in srgb, var(--bs-body-bg) 92%, white 8%);
+    cursor: pointer;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.rbac-permission-card:hover {
+    border-color: color-mix(in srgb, var(--rbac-accent) 35%, transparent);
+    box-shadow: 0 0.8rem 1.8rem rgba(15, 23, 42, 0.05);
+    transform: translateY(-1px);
+}
+
+.rbac-permission-card__body {
+    display: grid;
+    gap: 0.35rem;
+}
+
+.rbac-permission-card__name {
+    font-weight: 800;
+    color: var(--rbac-ink);
+}
+
+.rbac-permission-card__slug {
+    font-size: 0.78rem;
+}
+
+@media (max-width: 1199.98px) {
+    .rbac-hero__row,
+    .rbac-section__head {
+        flex-direction: column;
+    }
+
+    .rbac-hero__actions {
+        justify-content: flex-start;
+    }
+}
+
+[data-bs-theme="dark"] .users-page code,
+[data-bs-theme="dark"] .users-page .text-muted,
+[data-bs-theme="dark"] .users-page .small.text-muted {
+    color: var(--rbac-muted) !important;
+}
+
+[data-bs-theme="dark"] .users-page .badge.text-bg-light {
+    color: var(--rbac-ink) !important;
+    background-color: rgba(255, 255, 255, 0.88) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.users-page .btn-primary {
+    background: var(--rbac-accent);
+    border-color: var(--rbac-accent);
+    color: var(--rbac-btn-text-on-accent);
+    font-weight: 700;
+    box-shadow: 0 0.45rem 1rem color-mix(in srgb, var(--rbac-accent) 24%, transparent);
+}
+
+.users-page .btn-primary:hover,
+.users-page .btn-primary:focus {
+    background: var(--rbac-accent-strong);
+    border-color: var(--rbac-accent-strong);
+    color: var(--rbac-btn-text-on-accent);
+}
+
+.users-page .btn-outline-secondary,
+.users-page .btn-outline-primary {
+    color: var(--rbac-btn-outline-text);
+    border-color: var(--rbac-btn-outline-border);
+    background: var(--rbac-btn-outline-bg);
+    font-weight: 700;
+}
+
+.users-page .btn-outline-secondary:hover,
+.users-page .btn-outline-secondary:focus,
+.users-page .btn-outline-primary:hover,
+.users-page .btn-outline-primary:focus {
+    color: var(--rbac-btn-text-on-accent);
+    background: var(--rbac-accent);
+    border-color: var(--rbac-accent);
+}
+
+.users-page .btn-outline-danger {
+    color: var(--rbac-btn-danger-text);
+    border-color: var(--rbac-btn-danger-border);
+    background: var(--rbac-btn-danger-bg);
+    font-weight: 700;
+}
+
+.users-page .btn-outline-danger:hover,
+.users-page .btn-outline-danger:focus {
+    color: #fff;
+    background: #dc2626;
+    border-color: #dc2626;
+}
+
+.users-page .btn:focus-visible {
+    box-shadow: 0 0 0 0.22rem color-mix(in srgb, var(--rbac-accent) 32%, transparent);
+}
+
+/* Compact UI pass aligned with INSPINIA operational density. */
+.users-page {
+    gap: 0.75rem;
+}
+
+.users-page {
+    --rbac-card-shadow: 0 1px 4px rgba(130, 143, 163, 0.15);
+}
+
+[data-bs-theme="dark"] .users-page {
+    --rbac-card-shadow: 0 1px 4px rgba(0, 0, 0, 0.32);
+}
+
+.rbac-hero .card-body {
+    padding: 0.82rem 0.95rem;
+}
+
+.rbac-hero__row {
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.rbac-eyebrow {
+    margin-bottom: 0.32rem;
+    padding: 0.16rem 0.46rem;
+    border-radius: 0.32rem;
+    font-size: 0.58rem;
+}
+
+.rbac-hero__title {
+    font-size: clamp(1.4rem, 1.8vw, 1.95rem);
+}
+
+.rbac-hero__lede {
+    line-height: 1.42;
+}
+
+.rbac-section .card-header,
+.rbac-form-shell .card-header {
+    padding: 0.68rem 0.82rem;
+}
+
+.rbac-section .card-body,
+.rbac-form-shell .card-body {
+    padding: 0.82rem;
+}
+
+.rbac-table thead th {
+    padding-top: 0.52rem;
+    padding-bottom: 0.52rem;
+    font-size: 0.66rem;
+}
+
+.rbac-table tbody td {
+    padding-top: 0.48rem;
+    padding-bottom: 0.48rem;
+}
+
+.rbac-empty-state {
+    min-height: 9rem;
+}
+
+.rbac-empty-state__icon {
+    width: 2.35rem;
+    height: 2.35rem;
+    margin-bottom: 0.52rem;
+    border-radius: 0.42rem;
+    font-size: 1rem;
+}
+
+.rbac-form-shell .form-control,
+.rbac-form-shell .form-select {
+    min-height: 2.12rem;
+}
+
+.rbac-permission-card {
+    padding: 0.68rem 0.72rem;
+    border-radius: 0.42rem;
+}
+
+
+/* Density correction v2: readable text scale with compact spacing. */
+.users-page,
+.rbac-section,
+.rbac-form-shell,
+.rbac-table {
+    font-size: 0.875rem;
+}
+
+.rbac-eyebrow {
+    font-size: 0.7rem;
+}
+
+.rbac-hero__title {
+    font-size: clamp(1.7rem, 2.4vw, 2.4rem);
+}
+
+.rbac-section__subtitle,
+.rbac-chip {
+    font-size: 0.875rem;
+}
+
+.rbac-table thead th {
+    font-size: 0.75rem;
+}
+
+/* User enrollment surface normalization: compact executive form aligned with Catalyst surfaces. */
+.users-enroll-page {
+    gap: 0.75rem;
+}
+
+.users-enroll-page .surface-page-title,
+.users-enroll-page .surface-action-bar {
+    margin-bottom: 0;
+}
+
+.users-enroll-page .surface-enrollment-form {
+    margin-top: 0;
+}
+
+.users-enroll-page .surface-enrollment-form > .col-12 > .card {
+    border: 1px solid var(--catalyst-surface-border, var(--bs-border-color)) !important;
+    border-radius: var(--catalyst-surface-radius, .85rem);
+    box-shadow: var(--catalyst-surface-shadow, 0 .25rem .875rem rgba(15, 23, 42, .04));
+    overflow: hidden;
+}
+
+.users-enroll-page .surface-enrollment-form > .col-12 > .card > .card-header {
+    align-items: center;
+    background: var(--catalyst-surface-soft-bg, var(--bs-tertiary-bg));
+    border-bottom: 1px solid var(--catalyst-surface-border, var(--bs-border-color));
+    display: flex;
+    gap: .75rem;
+    justify-content: space-between;
+    min-height: 2.75rem;
+    padding: .55rem .75rem;
+}
+
+.users-enroll-page .surface-enrollment-form > .col-12 > .card > .card-header h2 {
+    color: var(--catalyst-surface-title, var(--bs-heading-color));
+    font-size: .92rem;
+    font-weight: 700;
+    line-height: 1.25;
+    margin: 0;
+}
+
+.users-enroll-page .surface-enrollment-form > .col-12 > .card > .card-header p,
+.users-enroll-page .form-text {
+    color: var(--catalyst-surface-muted, var(--bs-secondary-color));
+    font-size: .74rem;
+    line-height: 1.35;
+}
+
+.users-enroll-page .surface-enrollment-form > .col-12 > .card > .card-body {
+    padding: .75rem;
+}
+
+.users-enroll-page .form-label {
+    color: var(--catalyst-surface-muted, var(--bs-secondary-color));
+    font-size: .7rem;
+    font-weight: 800 !important;
+    letter-spacing: .035em;
+    margin-bottom: .28rem;
+    text-transform: uppercase;
+}
+
+.users-enroll-page .form-control,
+.users-enroll-page .form-select {
+    min-height: 2.18rem;
+}
+
+.users-enroll-page .surface-enrollment-form > .col-12:last-child {
+    align-items: center;
+    background: var(--catalyst-surface-soft-bg, var(--bs-tertiary-bg));
+    border: 1px solid var(--catalyst-surface-border, var(--bs-border-color));
+    border-radius: var(--catalyst-surface-radius, .85rem);
+    justify-content: flex-end;
+    padding: .55rem .65rem;
+}
+
+.users-enroll-toolbar .badge {
+    font-size: .72rem;
+    font-weight: 700;
+}

@@ -64,7 +64,7 @@ final class ReusableCapabilitiesArchitectureTest extends TestCase
 
         Assert::contains('export function initFlashMessages', $flash);
         Assert::contains('data-flash-dismiss', $flash);
-        Assert::contains("http.json('/flash/dismiss'", $flash);
+        Assert::contains("http.json('/runtime/flash/dismiss'", $flash);
         Assert::contains('paragraph.textContent = text', $flash);
         Assert::contains('ssrState?.flash', $runtime);
         Assert::contains("AssetUrl::versioned('/assets/css/catalyst/notifications.css')", $scope);

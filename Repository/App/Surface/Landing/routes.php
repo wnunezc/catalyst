@@ -40,4 +40,3 @@ View::getInstance()->addPath(
 );
 
 $router->get('/landing', [LandingController::class, 'index']);
-$router->get('/api/public/landing', [LandingController::class, 'api']);

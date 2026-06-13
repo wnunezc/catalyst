@@ -35,7 +35,7 @@ use Catalyst\Framework\Document\DocumentTemplateManager;
 use Catalyst\Framework\Document\DocumentTemplateRepository;
 
 /**
- * Builds the administrative document template data grid.
+ * Builds the privileged document template data grid.
  *
  * @package Catalyst\Repository\Workspaces\Documents\Support
  * Responsibility: Configure template columns, filters, row actions and repository-backed pagination.

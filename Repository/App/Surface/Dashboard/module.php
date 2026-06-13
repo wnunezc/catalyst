@@ -34,25 +34,13 @@ return [
         'web' => [
             '/dashboard',
         ],
-        'api' => [
-            '/api/public/dashboard',
-        ],
+        'api' => [],
         'aliases' => [],
         'prefixes' => [
             '/dashboard',
-            '/api/public/dashboard',
         ],
     ],
-    'route_guards' => [
-        [
-            'patterns' => [
-                '/api/public/dashboard',
-            ],
-            'middleware_all' => [
-                Catalyst\Framework\Middleware\AuthMiddleware::class,
-            ],
-        ],
-    ],
+    'route_guards' => [],
     'navigation' => [
         'shell' => [],
         'application' => [

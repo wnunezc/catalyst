@@ -445,7 +445,7 @@ html[data-skin="red-cross"] .landing-surface {
     --surface-muted: rgba(255, 255, 255, 0.84);
 }
 
-/* Red Cross option preview inside Admin Customizer. */
+/* Red Cross option preview inside Theme Customizer. */
 .catalyst-red-cross-skin-preview {
     display: block;
     height: 88px;

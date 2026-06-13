@@ -37,7 +37,7 @@ use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
 
 /**
- * Admin controller for browsing and inspecting audit log entries.
+ * Privileged controller for browsing and inspecting audit log entries.
  *
  * @package Catalyst\Repository\Operations\Audit\Controllers
  * Responsibility: Builds the audit log data grid, handles CSV/XLS exports,

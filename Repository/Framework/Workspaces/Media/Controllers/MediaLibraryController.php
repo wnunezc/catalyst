@@ -45,7 +45,7 @@ use Catalyst\Repository\Workspaces\Media\Support\MediaLibraryFormFactory;
 use RuntimeException;
 
 /**
- * Serves the administrative media library workflow.
+ * Serves the privileged media library workflow.
  *
  * @package Catalyst\Repository\Workspaces\Media\Controllers
  * Responsibility: Render media screens and coordinate authorized upload, edit, deletion, bulk and export actions.

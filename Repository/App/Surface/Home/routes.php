@@ -41,4 +41,3 @@ View::getInstance()->addPath(
 
 $router->get('/', [HomeController::class, 'root']);
 $router->get('/home', [HomeController::class, 'index']);
-$router->get('/api/public/home', [HomeController::class, 'api']);

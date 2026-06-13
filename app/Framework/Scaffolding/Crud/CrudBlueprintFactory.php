@@ -71,10 +71,10 @@ final class CrudBlueprintFactory
         $entity = $this->manager->normalizeClassName((string) ($input['entity'] ?? ''));
         $table = trim((string) ($input['table'] ?? ''));
         $table = $table !== '' ? $this->normalizeTableName($table) : $this->manager->defaultTableName($entity);
-        $surface = strtolower(trim((string) ($input['surface'] ?? 'administration')));
+        $surface = strtolower(trim((string) ($input['surface'] ?? 'privileged')));
 
-        if (!in_array($surface, ['workspace', 'administration'], true)) {
-            throw new InvalidArgumentException('The CRUD surface must be workspace or administration.');
+        if (!in_array($surface, ['workspace', 'privileged'], true)) {
+            throw new InvalidArgumentException('The CRUD surface must be workspace or privileged.');
         }
 
         $permission = trim((string) ($input['permission'] ?? ''));

@@ -61,9 +61,9 @@ return static function (array $scope): array {
             'badge_class' => ($scope['configured'] ?? false) ? 'text-bg-success' : 'text-bg-warning',
         ],
         [
-            'label' => __('settings.overview.admin'),
-            'value' => ($scope['adminReady'] ?? false) ? __('settings.overview.ready') : __('settings.overview.pending'),
-            'badge_class' => ($scope['adminReady'] ?? false) ? 'text-bg-success' : 'text-bg-secondary',
+            'label' => __('settings.overview.privileged'),
+            'value' => ($scope['privilegedAccountReady'] ?? false) ? __('settings.overview.ready') : __('settings.overview.pending'),
+            'badge_class' => ($scope['privilegedAccountReady'] ?? false) ? 'text-bg-success' : 'text-bg-secondary',
         ],
         [
             'label' => __('settings.overview.entry'),

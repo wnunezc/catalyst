@@ -86,19 +86,6 @@ class InfraTestController extends Controller
     }
 
     /**
-     * Renders the shared UI showcase page.
-     *
-     * Responsibility: Renders the shared UI showcase page.
-     */
-    public function uiShowcase(): Response
-    {
-        return $this->view('ui-showcase', [
-            'title'       => __('devtools.ui_showcase.title'),
-            'pageTitle'   => __('devtools.ui_showcase.title'),
-        ]);
-    }
-
-    /**
      * Returns a raw JSON response envelope.
      *
      * Responsibility: Returns a raw JSON response envelope.

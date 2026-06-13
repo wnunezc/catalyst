@@ -48,8 +48,8 @@ use Closure;
  * Rules:
  * - Outside development: always 403
  * - Development without login: standard auth behavior (401 JSON or redirect)
- * - Development with authenticated non-admin/non-authorized user: 403
- * - Development with admin or explicit permission: pass through
+ * - Development with authenticated unauthorized user: 403
+ * - Development with required role or explicit permission: pass through
  *
  * @package Catalyst\Framework\Middleware
  * Responsibility: Restricts developer tooling routes to authorized users in development environments.
@@ -135,7 +135,7 @@ class DevToolsGuardMiddleware extends CoreMiddleware
 
             return $this->forbiddenResponse(
                 $request,
-                'DevTools access requires the admin role or a declared DevTools permission.'
+                'DevTools access requires the required role or a declared DevTools permission.'
             );
         }
 
@@ -143,9 +143,9 @@ class DevToolsGuardMiddleware extends CoreMiddleware
     }
 
     /**
-     * Returns permissions that authorize DevTools access in addition to the admin role.
+     * Returns permissions that authorize DevTools access in addition to the required role.
      *
-     * Responsibility: Returns permissions that authorize DevTools access in addition to the admin role.
+     * Responsibility: Returns permissions that authorize DevTools access in addition to the required role.
      * @return string[]
      */
     public function getRequiredPermissions(): array

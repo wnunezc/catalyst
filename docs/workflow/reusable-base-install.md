@@ -112,7 +112,7 @@ php public/cli.php migrate
    - preferred: point the VirtualHost document root to `public/`;
    - fallback: allow the root `.htaccess` to forward project-root requests to
      `public/` transparently.
-9. Run the setup wizard and create the initial admin.
+9. Run the setup wizard and create the initial privileged.
 
 ## Update Workflow
 
@@ -148,7 +148,7 @@ For `v0.1.0-rc.7`, expect framework-owned changes in:
 - local config sync and contract smoke commands under `app/Framework/Cli/Commands/`;
 - the local config merge service under `app/Framework/Config/`;
 - migration contracts and new organization hierarchy tables under `boot-core/database/migrations/`;
-- RBAC/role administration surfaces under `Repository/Framework/Roles/`;
+- RBAC/role privileged surfaces under `Repository/Framework/Roles/`;
 - shared form multi-select rendering under `app/Framework/Form/` and `boot-core/template/components/form-builder/`;
 - organization hierarchy primitives under `app/Framework/Organization/`;
 - shell navigation projection under `app/Framework/Navigation/`;
@@ -166,7 +166,7 @@ ignored and owned by the derived project. Run `php public/cli.php config:sync`
 after the merge to receive new default keys without resetting app URL, database
 credentials, session name or E2E-local settings.
 
-After merging `v0.1.0-rc.2` or later, administrators must populate organization hierarchy metadata manually from:
+After merging `v0.1.0-rc.2` or later, privileged users must populate organization hierarchy metadata manually from:
 
 ```text
 /users/organization-hierarchy

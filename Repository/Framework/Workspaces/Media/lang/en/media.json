@@ -75,7 +75,7 @@
         "field_label": "Credit line",
         "field_key": "credit-line",
         "section_key": "publishing",
-        "help_text": "Shown below the field in the admin form.",
+        "help_text": "Shown below the field in the privileged form.",
         "placeholder": "Visible hint for inputs that support it.",
         "default_value": "Optional default for the host form.",
         "extra_rules": "max:255|regex:/.../",
@@ -166,7 +166,7 @@
       "create_title": "Upload Asset",
       "edit_title": "Edit Asset",
       "hero_lede_create": "Reusable registration of files and media over the current upload and storage stack.",
-      "hero_lede_edit": "Update the real asset and its dynamic metadata without leaving the administrative flow.",
+      "hero_lede_edit": "Update the real asset and its dynamic metadata without leaving the privileged flow.",
       "hero_manage_fields": "Metadata fields",
       "current_asset": "Current asset",
       "labels": {

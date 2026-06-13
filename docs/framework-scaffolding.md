@@ -5,8 +5,8 @@ Catalyst scaffolding generates framework-compatible module structure without put
 ## Commands
 
 ```powershell
-php public/cli.php make:module Intake --space=App --surface=administration --permission=manage-intake
-php public/cli.php make:module Intake --space=App --surface=administration --permission=manage-intake --preset=complex
+php public/cli.php make:module Intake --space=App --surface=privileged --permission=manage-intake
+php public/cli.php make:module Intake --space=App --surface=privileged --permission=manage-intake --preset=complex
 php public/cli.php make:crud Catalog CatalogItem --fields="name:text!,slug:text!"
 php public/cli.php scaffold:app-smoke --json
 php public/cli.php scaffold:crud-smoke --json
@@ -17,7 +17,7 @@ php public/cli.php scaffold:crud-smoke --json
 `make:crud` is owned by `Catalyst\Framework\Scaffolding\Crud`. It generates an
 App module that reuses the global `DataGrid` and `FormBuilder` capabilities.
 The target surface remains explicit through `--surface=workspace` or
-`--surface=administration`; role and permission middleware are generated as a
+`--surface=privileged`; role and permission middleware are generated as a
 separate authorization concern.
 
 The `CrudScaffoldService::preview()` method builds the complete blueprint

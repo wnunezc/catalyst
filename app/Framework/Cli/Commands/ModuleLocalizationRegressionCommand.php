@@ -72,7 +72,7 @@ final class ModuleLocalizationRegressionCommand extends AbstractCommand
     {
         $decorator = $this->contents('app/Framework/Module/ModuleLocalizationDecorator.php');
         $configuration = $this->contents('Repository/Framework/Configuration/module.php');
-        $roles = $this->contents('Repository/Framework/Roles/module.php');
+        $users = $this->contents('Repository/Framework/Users/module.php');
         $workspaces = $this->contents('Repository/Framework/Workspaces/module.php');
         $operations = $this->contents('Repository/Framework/Operations/module.php');
         ModuleRegistry::getInstance()->flushCache();
@@ -82,8 +82,9 @@ final class ModuleLocalizationRegressionCommand extends AbstractCommand
                 && !str_contains($decorator, 'localizeOperationsModule')
                 && !str_contains($decorator, 'localizeRolesModule'),
             'configuration_manifest_explicit' => str_contains($configuration, "__('settings.module.description')"),
-            'roles_manifest_explicit' => !str_contains($roles, "'label' => 'Roles'")
-                && !str_contains($roles, "'label' => 'Permissions'"),
+            'users_manifest_explicit' => str_contains($users, "__('roles.module.description')")
+                && !str_contains($users, "'label' => 'Roles'")
+                && !str_contains($users, "'label' => 'Permissions'"),
             'workspaces_manifest_explicit' => str_contains($workspaces, "__('workspaces.module.description')")
                 && str_contains($workspaces, "__('workspaces.permissions.catalogs.label')"),
             'operations_manifest_explicit' => str_contains($operations, "__('operations.module.description')")

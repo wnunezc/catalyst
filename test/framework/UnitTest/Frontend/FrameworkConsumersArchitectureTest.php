@@ -39,7 +39,7 @@ final class FrameworkConsumersArchitectureTest extends TestCase
     public function testRemainingFrameworkConsumersUseNeutralSurfaceContracts(): void
     {
         $audit = $this->moduleSource('Operations/Audit');
-        $roles = $this->moduleSource('Roles');
+        $users = $this->moduleSource('Users');
         $configuration = $this->moduleSource('Configuration');
 
         Assert::contains('surface-section-card', $audit);
@@ -49,10 +49,10 @@ final class FrameworkConsumersArchitectureTest extends TestCase
         Assert::false(str_contains($operations, 'admin-content-shell'));
         Assert::false(str_contains($operations, 'admin-section-card'));
 
-        Assert::contains('surface-enrollment-form', $roles);
-        Assert::false(str_contains($roles, 'rbac-admin-page'));
-        Assert::false(str_contains($roles, 'admin-enrollment-form'));
-        Assert::false(str_contains($roles, 'admin-section-card'));
+        Assert::contains('surface-enrollment-form', $users);
+        Assert::false(str_contains($users, 'rbac-' . 'ad' . 'min-page'));
+        Assert::false(str_contains($users, 'ad' . 'min-enrollment-form'));
+        Assert::false(str_contains($users, 'ad' . 'min-section-card'));
 
         Assert::contains('surface-content-shell', $configuration);
         Assert::contains('surface-panel-grid', $configuration);

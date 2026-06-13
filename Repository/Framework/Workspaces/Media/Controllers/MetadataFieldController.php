@@ -45,7 +45,7 @@ use Catalyst\Repository\Workspaces\Media\Support\MetadataFieldFormFactory;
 use RuntimeException;
 
 /**
- * Serves the administrative dynamic metadata field workflow.
+ * Serves the privileged dynamic metadata field workflow.
  *
  * @package Catalyst\Repository\Workspaces\Media\Controllers
  * Responsibility: Render metadata field screens and coordinate authorized CRUD and export actions.

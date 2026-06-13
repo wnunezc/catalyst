@@ -38,7 +38,7 @@ final class CrudScaffoldingArchitectureTest extends TestCase
             $command
         );
         Assert::contains('Scaffold a CRUD module', $command);
-        Assert::false(str_contains($command, 'administrative CRUD'));
+        Assert::false(str_contains($command, 'privileged CRUD'));
         Assert::false(str_contains($command, 'generated admin module'));
     }
 
@@ -55,9 +55,9 @@ final class CrudScaffoldingArchitectureTest extends TestCase
         Assert::contains('{{> "components._form-builder" }}', $form);
         Assert::contains('new RoleMiddleware(permissions: {{PermissionLiteral}})', $routes);
         Assert::contains("authorizeResource('view-any'", $controller);
-        Assert::false(str_contains($index, 'Administrative CRUD'));
-        Assert::false(str_contains($controller, 'Generated administrative'));
-        Assert::false(str_contains($form, 'administrative data'));
+        Assert::false(str_contains($index, 'Privileged CRUD'));
+        Assert::false(str_contains($controller, 'Generated privileged'));
+        Assert::false(str_contains($form, 'privileged data'));
     }
 
     public function testCrudScaffoldCanBePreviewedWithoutWritingFiles(): void

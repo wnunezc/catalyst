@@ -1,0 +1,205 @@
+{
+  "shell": {
+    "workspace": "Centro de cuenta",
+    "fallback_user": "Usuario Catalyst",
+    "toggle_navigation": "Alternar navegación de cuenta",
+    "breadcrumb": "Ruta de navegación de cuenta"
+  },
+  "nav": {
+    "account": "Mi Cuenta",
+    "dashboard": "Dashboard",
+    "profile": "Perfil",
+    "mfa": "MFA",
+    "recovery": "Recuperación de cuenta",
+    "activity": "Actividad reciente",
+    "mfa_manage": "Administrar MFA",
+    "mfa_recovery": "Solicitar recuperación MFA",
+    "recovery_support": "Soporte asistido",
+    "recovery_compromised": "Reportar cuenta comprometida"
+  },
+  "nav_hints": {
+    "dashboard": "Resumen personal, indicadores de cuenta y eventos recientes.",
+    "profile": "Datos básicos de identidad, correo, rol y tenant actual.",
+    "mfa": "Administración del segundo factor y opciones de recuperación.",
+    "recovery": "Opciones de recuperación de contraseña, MFA, correo perdido y cuenta comprometida.",
+    "activity": "Eventos recientes de seguridad y recuperación asociados a tu cuenta.",
+    "mfa_manage": "Abrir la superficie de estado y administración MFA.",
+    "mfa_recovery": "Solicitar un enlace seguro por correo para restablecer MFA.",
+    "recovery_support": "Abrir el formulario de recuperación asistida.",
+    "recovery_compromised": "Reportar una cuenta hackeada o comprometida."
+  },
+  "profile": {
+    "eyebrow": "Identidad",
+    "title": "Perfil",
+    "lead": "Muestra la información base que el framework tiene de tu sesión y de tu contexto tenant.",
+    "identity_title": "Datos de la cuenta",
+    "identity_hint": "Esta vista define qué información pertenece al usuario, sin mezclarla con administración del sistema.",
+    "name": "Nombre",
+    "email": "Correo",
+    "role": "Rol",
+    "tenant": "Tenant",
+    "scope_title": "Alcance funcional",
+    "scope_hint": "En esta etapa el perfil es informativo; la edición debe incorporarse con requests y auditoría específicos.",
+    "editing_note": "La edición de perfil queda separada para no mezclar cambios de identidad con el flujo de recuperación de cuenta."
+  },
+  "mfa": {
+    "eyebrow": "Segundo factor",
+    "title": "MFA",
+    "lead": "Administra el estado del segundo factor y el flujo seguro para pérdida de acceso.",
+    "status_title": "Estado actual",
+    "status_hint": "El cambio de MFA se mantiene delegado al flujo existente del framework.",
+    "enabled": "MFA activo",
+    "enabled_hint": "La cuenta requiere segundo factor para completar el acceso.",
+    "disabled": "MFA inactivo",
+    "disabled_hint": "La cuenta no tiene segundo factor activo actualmente.",
+    "setup": "Configurar MFA",
+    "manage_existing": "Administrar MFA",
+    "scope_note": "Esta superficie se enfoca únicamente en el estado actual de MFA. Las solicitudes de recuperación se separan en el submenú de MFA para que la página no se convierta en un centro de navegación."
+  },
+  "activity": {
+    "eyebrow": "Auditoría personal",
+    "title": "Actividad reciente",
+    "lead": "Lista eventos de recuperación y seguridad relacionados con tu cuenta."
+  },
+  "recovery": {
+    "eyebrow": "Opciones de recuperación",
+    "title": "Recuperación de cuenta",
+    "lead": "Elige el flujo de recuperación que corresponde al problema de acceso de la cuenta.",
+    "password_title": "Recuperación de contraseña",
+    "password_body": "Usa el flujo estándar de cambio de contraseña cuando todavía tienes acceso al correo de la cuenta.",
+    "mfa_title": "Recuperación MFA",
+    "mfa_body": "Solicita un enlace seguro de recuperación cuando conoces la contraseña, pero no tienes disponible el segundo factor.",
+    "support_title": "Soporte asistido",
+    "support_body": "Crea un caso revisado cuando perdiste acceso al correo o sospechas acceso no autorizado."
+  },
+  "security": {
+    "eyebrow": "Protección de cuenta",
+    "title": "Seguridad",
+    "lead": "Revisa las superficies de seguridad de cuenta sin mezclarlas con la configuración administrativa."
+  },
+  "recovery_public": {
+    "eyebrow": "Recuperación segura",
+    "start_title": "¿Necesitas recuperar tu cuenta?",
+    "start_lead": "Selecciona el escenario que describe mejor tu situación. Los casos sin acceso al correo requieren revisión asistida.",
+    "forgot_password": "Olvidé mi contraseña",
+    "forgot_password_hint": "Tengo acceso a mi correo y necesito cambiar la contraseña.",
+    "lost_mfa": "Perdí mi MFA",
+    "lost_mfa_hint": "Conozco mi contraseña y tengo acceso al correo.",
+    "lost_email": "No tengo acceso al correo",
+    "lost_email_hint": "Necesito revisión de soporte para validar la cuenta.",
+    "compromised": "Cuenta comprometida",
+    "compromised_hint": "Sospecho acceso no autorizado o toma de cuenta.",
+    "mfa_title": "Recuperar acceso MFA",
+    "mfa_lead": "Ingresa el correo de la cuenta. Si existe y tiene MFA activo, enviaremos un enlace temporal. La respuesta siempre será genérica por seguridad.",
+    "mfa_submit": "Enviar enlace de recuperación MFA",
+    "generic_response_hint": "Por seguridad, no confirmamos si el correo existe o si MFA está activo.",
+    "support_title": "Recuperación asistida por soporte",
+    "support_lead": "Describe tu caso. Soporte deberá revisar manualmente las solicitudes cuando no hay acceso al correo principal.",
+    "support_submit": "Enviar solicitud",
+    "compromised_title": "Reportar cuenta comprometida"
+  },
+  "request_types": {
+    "lost_email_password": "No tengo acceso al correo y olvidé mi contraseña",
+    "lost_email_mfa": "No tengo acceso al correo y perdí MFA",
+    "compromised_account": "Cuenta hackeada o comprometida"
+  },
+  "forms": {
+    "email": "Correo de la cuenta",
+    "request_type": "Tipo de recuperación",
+    "known_email": "Correo original de la cuenta",
+    "alternate_email": "Correo alternativo de contacto",
+    "message": "Descripción del caso"
+  },
+  "messages": {
+    "validation_failed": "Revisa los campos del formulario.",
+    "mfa_recovery_sent": "Si la cuenta existe y aplica, enviaremos un enlace de recuperación.",
+    "mfa_recovery_success": "MFA fue restablecido. Inicia sesión y configura MFA nuevamente si el sistema lo solicita.",
+    "recovery_token_invalid": "El enlace de recuperación no es válido o expiró.",
+    "support_request_created": "Solicitud recibida. Soporte deberá revisar el caso antes de aprobar cualquier cambio."
+  },
+  "events": {
+    "now": "Ahora",
+    "generic": "Evento de recuperación",
+    "generic_body": "Evento registrado por el centro de cuenta.",
+    "dashboard_view": "Centro de cuenta disponible",
+    "dashboard_view_body": "Aún no hay eventos de recuperación registrados para esta cuenta.",
+    "mfa_reset_requested": "Recuperación MFA solicitada",
+    "mfa_reset_completed": "MFA restablecido",
+    "support_request_created": "Solicitud asistida creada",
+    "support_request_approved": "Solicitud aprobada",
+    "support_request_rejected": "Solicitud rechazada"
+  },
+  "email": {
+    "mfa_reset_subject": "Recuperación de acceso MFA",
+    "mfa_reset_greeting": "Hola :name, recibimos una solicitud para restablecer el MFA de tu cuenta.",
+    "mfa_reset_expiry": "El enlace expira en 30 minutos y solo puede usarse una vez.",
+    "mfa_reset_ignore": "Si no solicitaste este cambio, ignora este mensaje y contacta soporte."
+  },
+  "module": {
+    "recovery_review_label": "Recuperación de cuenta",
+    "recovery_review_hint": "Revisar solicitudes asistidas de recuperación y cuenta comprometida.",
+    "manage_recovery_label": "Gestionar recuperación de cuenta",
+    "manage_recovery_description": "Permite revisar y marcar solicitudes asistidas de recuperación de cuenta."
+  },
+  "statuses": {
+    "pending_email_verification": "Pendiente de verificación por correo",
+    "pending_support_review": "Pendiente de revisión",
+    "approved": "Aprobado",
+    "rejected": "Rechazado",
+    "completed": "Completado",
+    "cancelled": "Cancelado",
+    "expired": "Expirado"
+  },
+  "review": {
+    "index": {
+      "eyebrow": "Soporte técnico",
+      "title": "Solicitudes de recuperación de cuenta",
+      "description": "Bandeja inicial para revisar casos de correo perdido, MFA perdido o cuenta comprometida.",
+      "view": "Ver caso",
+      "columns": {
+        "id": "ID",
+        "type": "Tipo",
+        "status": "Estado",
+        "email": "Correo conocido / alternativo",
+        "created": "Creado",
+        "action": "Acción"
+      }
+    },
+    "show": {
+      "eyebrow": "Caso de recuperación",
+      "title": "Solicitud de recuperación",
+      "description": "Revisión asistida. Aprobar o rechazar no ejecuta cambios automáticos sobre contraseña, correo o MFA sin un flujo posterior específico.",
+      "back": "Volver",
+      "reviewed_at": "Revisado en",
+      "review_title": "Revisión de soporte",
+      "review_hint": "Marca el caso según la revisión inicial de identidad y riesgo.",
+      "approve": "Aprobar revisión",
+      "reject": "Rechazar solicitud",
+      "already_reviewed": "Esta solicitud ya fue revisada."
+    },
+    "messages": {
+      "not_found": "La solicitud no existe.",
+      "review_saved": "Revisión guardada.",
+      "review_failed": "No se pudo guardar la revisión."
+    }
+  },
+  "mfa_recovery": {
+    "eyebrow": "Recuperación MFA",
+    "title": "Solicitar recuperación MFA",
+    "lead": "Usa esta opción cuando el titular conserva acceso al correo registrado, pero perdió la app autenticadora o los códigos de respaldo.",
+    "form_title": "Enviar enlace de recuperación",
+    "form_hint": "El enlace se envía al correo actual de la cuenta y solo puede usarse una vez.",
+    "submit": "Enviar enlace de recuperación MFA",
+    "note": "Por seguridad, el token se almacena hasheado, expira rápido y solo restablece MFA cuando se consume correctamente.",
+    "warning": "Si tampoco tienes acceso al correo, usa la recuperación asistida por soporte en lugar de este flujo directo."
+  },
+  "support": {
+    "eyebrow": "Recuperación asistida",
+    "title": "Recuperación con soporte asistido",
+    "compromised_title": "Reportar cuenta comprometida",
+    "lead": "Crea un caso revisado por soporte cuando la recuperación directa por correo no sea suficiente o se sospeche acceso no autorizado.",
+    "submit": "Enviar solicitud de soporte",
+    "note": "La revisión de soporte no cambia automáticamente contraseña, correo ni MFA. Registra el caso y mantiene la decisión auditable.",
+    "security_note": "No compartas contraseñas ni códigos MFA. Describe el problema y usa un correo alternativo donde soporte pueda contactarte."
+  }
+}

@@ -20,7 +20,7 @@ Describe the current Catalyst architecture and act as the central index for the 
 
 Catalyst is a PHP 8.4 MVC framework with a small kernel, explicit HTTP/CLI entry points, framework-owned reusable modules under `Repository/Framework`, app-owned surfaces under `Repository/App/Surface`, and runtime-generated documentation inventories. The current module catalog reports 13 modules with structural lint OK.
 
-Workspaces and Operations are canonical aggregate owners for administrative surfaces. Workspaces owns 49 routes and six connected surfaces; Operations owns 21 routes and five connected surfaces. The independent Framework API owner holds six transversal routes. Together they preserve the 76 included routes and 13 public APIs under `/api/v1/*`.
+Workspaces and Operations are canonical aggregate owners for privileged surfaces. Workspaces owns 49 routes and six connected surfaces; Operations owns 21 routes and five connected surfaces. The independent Framework API owner holds six transversal routes. Together they preserve the 76 included routes and 13 public APIs under `/api/v1/*`.
 
 The architecture uses separated owners instead of single large classes: routes are registered, compiled, collected and dispatched by different route classes; modules are declared, discovered, inspected and linted by different module classes; views render templates while trusted HTML, inline JSON and token rendering are separate security boundaries.
 
@@ -72,7 +72,7 @@ parallel governor.
 |---|---|
 | `docs/architecture.md` | Catalyst Framework - Architecture |
 | `docs/auth.md` | Auth Index |
-| `docs/checklists/setup-completion-e2e.md` | Checklist E2E — `/configuration/environment-setup` admin + finalización |
+| `docs/checklists/setup-completion-e2e.md` | Checklist E2E — `/configuration/environment-setup` privileged + finalización |
 | `docs/composer.md` | Composer Configuration |
 | `docs/database.md` | Database Index |
 | `docs/deployment.md` | Deployment Guide |
@@ -139,7 +139,7 @@ parallel governor.
 | `docs/ui/demo-ui-javascript-inventory.md` | Demo UI JavaScript route, asset and Playwright inventory |
 | `docs/ui/institutional-themes.md` | Response skins and neutral branding |
 | `docs/ui/public-surface-contract.md` | Public surface contract |
-| `docs/ui/sidebar-navigation.md` | Sidebar y navegacion administrativa |
+| `docs/ui/sidebar-navigation.md` | Sidebar y navegacion privilegiada |
 | `docs/ui/surface-architecture.md` | Canonical document, shell, runtime and surface ownership |
 | `docs/ui/test-features-javascript-inventory.md` | Test Features document, JavaScript and Playwright inventory |
 | `docs/ui/validation-checklist.md` | Checklist de validacion del parche visual |

@@ -54,7 +54,7 @@ use Catalyst\Repository\Workspaces\Catalogs\Support\CatalogGridFactory;
 use RuntimeException;
 
 /**
- * Serves the administrative catalog and catalog-item workflow.
+ * Serves the privileged catalog and catalog-item workflow.
  *
  * @package Catalyst\Repository\Workspaces\Catalogs\Controllers
  * Responsibility: Render catalog screens and coordinate authorized CRUD, workflow, version and item actions.

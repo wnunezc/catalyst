@@ -17,7 +17,7 @@
                             <i class="fa-solid fa-arrow-up-right-from-square me-1"></i>{{ t:devtools.rbac_test.raw_json }}
                         </button>
                     </div>
-                    <p class="text-muted small mb-2">{{ t:devtools.rbac_test.admin_links }}</p>
+                    <p class="text-muted small mb-2">{{ t:devtools.rbac_test.privileged_links }}</p>
                     <div class="btn-group-wrap mb-3">
                         <button type="button" class="btn btn-outline-info btn-sm" data-catalyst-href="/users/roles"><i class="fa-solid fa-layer-group me-1"></i>Roles</button>
                         <button type="button" class="btn btn-outline-info btn-sm" data-catalyst-href="/users/permissions"><i class="fa-solid fa-key me-1"></i>{{ t:roles.permissions.title }}</button>
@@ -25,10 +25,10 @@
                     <p class="text-muted small mb-1 text-warning fw-semibold">
                         <i class="fa-solid fa-triangle-exclamation me-1"></i>{{ t:devtools.rbac_test.promote_warning }}
                     </p>
-                    <form data-catalyst="form" method="POST" action="/test-features/make-admin" class="d-inline">
-                        {{{ make_admin_csrf_field }}}
+                    <form data-catalyst="form" method="POST" action="/test-features/assign-privileged-role" class="d-inline">
+                        {{{ assign_privileged_role_csrf_field }}}
                         <button type="submit" class="btn btn-warning btn-sm text-dark">
-                            <i class="fa-solid fa-user-shield me-1"></i>{{ t:devtools.rbac_test.make_admin }}
+                            <i class="fa-solid fa-user-shield me-1"></i>{{ t:devtools.rbac_test.assign_privileged_role }}
                         </button>
                     </form>
                     <div id="rbac-result" class="mt-2 tf-result">

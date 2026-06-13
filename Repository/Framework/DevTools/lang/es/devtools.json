@@ -6,8 +6,8 @@
         "devtools_label": "DevTools",
         "test_features_label": "Pruebas",
         "test_features_hint": "Banco principal de pruebas de ejecución",
-        "ui_showcase_label": "Galería UI",
-        "ui_showcase_hint": "Catálogo visual y componentes",
+        "demo_ui_label": "Demo UI",
+        "demo_ui_hint": "Catálogo visual y componentes",
         "uml_label": "UML / Arquitectura",
         "uml_hint": "Modelo técnico y diagramas",
         "layout_smoke_label": "Smoke de layout",
@@ -28,9 +28,9 @@
         "current_status": "Estado RBAC del usuario actual",
         "inspect_status": "Inspeccionar estado RBAC",
         "raw_json": "JSON crudo",
-        "admin_links": "Enlaces de módulos admin (requieren rol admin):",
+        "privileged_links": "Enlaces de módulos privilegiados:",
         "promote_warning": "Solo dev - promover usuario actual:",
-        "make_admin": "Hacerme admin",
+        "assign_privileged_role": "Asignar rol privilegiado",
         "architecture_overview": "Vista de arquitectura",
         "table": {
             "component": "Componente",
@@ -49,12 +49,12 @@
         "title": "Catalyst — DevTools",
         "page_title": "DevTools",
         "eyebrow": "Banco de pruebas de ejecución",
-        "description": "Superficie técnica para validar flashes, toasts, modales, formularios, endpoints y diagnóstico operativo sin salir del lenguaje visual admin.",
+        "description": "Superficie técnica para validar flashes, toasts, modales, formularios, endpoints y diagnóstico operativo.",
         "boundary_title": "Límite canónico",
         "boundary_prefix": "El gobierno de ejecución de banderas de funcionalidad, plugins, despliegues y segmentación por tenant vive en",
         "boundary_suffix": "DevTools conserva sondas, endpoints de smoke y diagnóstico del banco de pruebas.",
         "actions": {
-            "ui_showcase": "Galería UI",
+            "demo_ui": "Demo UI",
             "module_designer": "Diseñador de Módulos",
             "operations": "Operaciones",
             "roles": "Roles",
@@ -77,15 +77,15 @@
     "layout_smoke": {
         "title": "Catalyst — Layout Smoke",
         "eyebrow": "Layout smoke",
-        "description": "Superficie corta para validar que el layout, el helper e() y el wrapping de vistas siguen funcionando dentro del chrome admin actual.",
+        "description": "Superficie corta para validar que el layout, el helper e() y el wrapping de vistas siguen funcionando dentro del shell compartido actual.",
         "chips": {
             "layout_wrapping": "Layout wrapping",
             "escape_helper": "Escape helper",
-            "admin_shell": "Admin shell"
+            "shared_shell": "Shared shell"
         },
         "contract": {
             "title": "Contrato de Layout",
-            "description": "Verifica que la vista siga siendo fragmento y que el layout admin aporte el chrome compartido.",
+            "description": "Verifica que la vista siga siendo fragmento y que el shell compartido aporte el chrome compartido.",
             "kicker": "Smoke",
             "body": "Este contenido fue renderizado como fragmento y luego envuelto por un layout del framework via View::render(...). Las etiquetas <html>, <head> y los recursos provienen del layout, no de esta vista."
         },
@@ -108,7 +108,7 @@
             "title": "Verificaciones",
             "description": "Qué valida realmente esta pantalla.",
             "items": {
-                "chrome": "El chrome admin carga sin romper una vista mínima.",
+                "chrome": "El shell compartido carga sin romper una vista mínima.",
                 "escape": "e() sigue escapando payload HTML en render real.",
                 "no_inline": "La vista no depende de markup completo ni de recursos inline."
             }
@@ -163,7 +163,7 @@
                 "surface_none": "Ninguna",
                 "surface_public": "Pública",
                 "surface_workspace": "Espacio de trabajo",
-                "surface_administration": "Administración",
+                "surface_privileged": "Gestión privilegiada",
                 "surface_devtools": "DevTools"
             },
             "actions": {
@@ -606,9 +606,9 @@
         "status_ok": "Estado RBAC OK",
         "dev_only": "Este endpoint solo está disponible en modo desarrollo.",
         "login_required": "Debes iniciar sesión para usar este endpoint.",
-        "promoted": "Usuario promovido a admin. Refresca la página o vuelve a iniciar sesión para aplicar el cambio.",
-        "promoted_toast": "Promovido a admin; vuelve a iniciar sesión para aplicar el cambio.",
-        "admin_role_missing": "No se encontró el rol admin en el tenant actual."
+        "promoted": "Rol privilegiado asignado. Refresca la página o vuelve a iniciar sesión para aplicar el cambio.",
+        "promoted_toast": "Rol privilegiado asignado; vuelve a iniciar sesión para aplicar el cambio.",
+        "privileged_role_missing": "No se encontró el rol privilegiado requerido en el tenant actual."
     },
     "orm_runtime": {
         "status_ok": "Estado ORM OK",
@@ -657,10 +657,10 @@
         },
         "usage": "Uso:"
     },
-    "ui_showcase": {
-        "title": "UI Showcase",
-        "eyebrow": "Catálogo admin compacto",
-        "description": "Superficie de referencia para módulos administrativos de Catalyst: shell compacta, listados densos, formularios utilitarios y estados honestos para backoffice real.",
+    "demo_ui": {
+        "title": "Demo UI",
+        "eyebrow": "Catálogo técnico compacto",
+        "description": "Superficie de referencia para módulos privilegiadosistrativos de Catalyst: shell compacta, listados densos, formularios utilitarios y estados honestos para backoffice real.",
         "actions": {
             "roles": "Roles",
             "permissions": "Permisos",
@@ -696,7 +696,7 @@
         },
         "listing": {
             "title": "Listado Compacto",
-            "description": "Ejemplo base para CRUD administrativo con acciones claras y lectura rápida.",
+            "description": "Ejemplo base para CRUD privilegiado con acciones claras y lectura rápida.",
             "export": "Exportar",
             "new_record": "Nuevo registro",
             "select_all": "Seleccionar todo",
@@ -705,7 +705,7 @@
             "archive": "Archivar",
             "select_roles": "Seleccionar Roles",
             "select_permissions": "Seleccionar Permisos",
-            "select_ui_showcase": "Seleccionar UI Showcase",
+            "select_demo_ui": "Seleccionar Demo UI",
             "columns": {
                 "resource": "Recurso",
                 "scope": "Alcance",
@@ -735,8 +735,8 @@
                 "open": "Abrir"
             },
             "showcase": {
-                "title": "UI Showcase",
-                "description": "Referencia visual para módulos admin",
+                "title": "Demo UI",
+                "description": "Referencia visual para módulos privilegiados",
                 "status": "Interno",
                 "owner": "Infra UX",
                 "updated": "Ahora",
@@ -745,7 +745,7 @@
         },
         "form": {
             "title": "Formulario Denso",
-            "description": "Edición administrativa con bajo roce y alta legibilidad.",
+            "description": "Edición privilegiada con bajo roce y alta legibilidad.",
             "kicker": "Patrón B",
             "labels": {
                 "display_name": "Nombre visible",

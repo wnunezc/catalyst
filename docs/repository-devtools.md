@@ -17,7 +17,7 @@ Document DevTools controllers and local diagnostic services.
 | Validates demo mail fields and reports the mail-manager result. | `Catalyst\Repository\DevTools\Controllers\MailTestController` |
 | Supplies modal content and validates the modal form harness. | `Catalyst\Repository\DevTools\Controllers\ModalTestController` |
 | Validates CRUD, collection, pagination and exception flows against demo data. | `Catalyst\Repository\DevTools\Controllers\OrmTestController` |
-| Reports current RBAC state and assigns the demo administrator role. | `Catalyst\Repository\DevTools\Controllers\RbacTestController` |
+| Reports current RBAC state and assigns the demo privileged role role. | `Catalyst\Repository\DevTools\Controllers\RbacTestController` |
 | Maps configured application entries to their canonical paths. | `Catalyst\Repository\DevTools\Controllers\RouteTestController` |
 | Supplies authentication and navigation state to the DevTools workspace. | `Catalyst\Repository\DevTools\Controllers\TestFeaturesController` |
 | Returns deterministic toaster, modal and partial-refresh responses. | `Catalyst\Repository\DevTools\Controllers\ToasterTestController` |
@@ -107,7 +107,6 @@ This file is regenerated from current PHP docblocks and the runtime inventory sc
 | `index()` | `public` | Redirects the infrastructure diagnostic entry point to the DevTools harness. | Redirects the infrastructure diagnostic entry point to the DevTools harness. |
 | `testEscapeHelper()` | `public` | Returns representative escaped values produced by the HTML helper. | Returns representative escaped values produced by the HTML helper. |
 | `testLayout()` | `public` | Renders the layout smoke-test page with escaping tokens. | Renders the layout smoke-test page with escaping tokens. |
-| `uiShowcase()` | `public` | Renders the shared UI showcase page. | Renders the shared UI showcase page. |
 | `testJson()` | `public` | Returns a raw JSON response envelope. | Returns a raw JSON response envelope. |
 | `testJsonSuccess()` | `public` | Returns a successful JSON response envelope. | Returns a successful JSON response envelope. |
 | `testJsonError()` | `public` | Returns an error JSON response envelope. | Returns an error JSON response envelope. |
@@ -163,12 +162,12 @@ This file is regenerated from current PHP docblocks and the runtime inventory sc
 - File: `Repository/Framework/DevTools/Controllers/RbacTestController.php`
 - Kind: `class`
 - Summary: Exposes development diagnostics for role and permission behavior.
-- Responsibility: Reports current RBAC state and assigns the demo administrator role.
+- Responsibility: Reports current RBAC state and assigns the demo privileged role role.
 
 | Method | Visibility | Summary | Responsibility |
 |---|---|---|---|
 | `rbacStatus()` | `public` | Returns role, permission and gate diagnostics for the authenticated user. | Returns role, permission and gate diagnostics for the authenticated user. |
-| `makeAdmin()` | `public` | Assigns the administrator role to the authenticated development user. | Assigns the administrator role to the authenticated development user. |
+| `makePrivileged()` | `public` | Assigns the privileged role role to the authenticated development user. | Assigns the privileged role role to the authenticated development user. |
 
 ### `Catalyst\Repository\DevTools\Controllers\RouteTestController`
 

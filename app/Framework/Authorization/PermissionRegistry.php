@@ -110,7 +110,7 @@ final class PermissionRegistry
      */
     public function registerGateDefinitions(Gate $gate): void
     {
-        $gate->define('admin-area', fn (array $user): bool => $this->userHasRole($user, 'admin'));
+        $gate->define('privileged-area', fn (array $user): bool => $this->userHasRole($user, 'admin'));
         $gate->policy(AbilitySubject::class, ResourcePolicy::class);
 
         foreach ($this->all() as $definition) {

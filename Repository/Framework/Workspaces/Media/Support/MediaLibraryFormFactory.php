@@ -36,7 +36,7 @@ use Catalyst\Framework\Metadata\MetadataManager;
 use Catalyst\Framework\Storage\StorageManager;
 
 /**
- * Builds the administrative media upload and edit form schema.
+ * Builds the privileged media upload and edit form schema.
  *
  * @package Catalyst\Repository\Workspaces\Media\Support
  * Responsibility: Combine storage options and dynamic metadata definitions into the media asset form.

@@ -6,7 +6,7 @@ Este documento complementa `docs/framework-datagrid.md` y se limita a la capa vi
 
 ## Principios
 
-El DataGrid actual debe mantenerse compacto sin perder capacidades. La reduccion de densidad se consigue mediante espaciado, altura de controles y orden del toolbar, no eliminando funciones ni reduciendo el texto por debajo de una escala administrativa legible.
+El DataGrid actual debe mantenerse compacto sin perder capacidades. La reduccion de densidad se consigue mediante espaciado, altura de controles y orden del toolbar, no eliminando funciones ni reduciendo el texto por debajo de una escala privilegiada legible.
 
 ## Funcionalidades que no deben eliminarse
 
@@ -95,7 +95,7 @@ Las acciones por fila deben seguir visibles, alineadas con la densidad general d
 
 ## Densidad visual recomendada
 
-La densidad recomendada para grids administrativos en Catalyst es:
+La densidad recomendada para grids privilegiados en Catalyst es:
 
 - texto base legible;
 - paddings de celda moderados;

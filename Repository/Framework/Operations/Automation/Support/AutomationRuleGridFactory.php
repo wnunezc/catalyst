@@ -37,7 +37,7 @@ use Catalyst\Framework\Idempotency\IdempotencyManager;
 use Catalyst\Framework\Temporal\EffectiveWindow;
 
 /**
- * Builds the administrative automation rule data grid.
+ * Builds the privileged automation rule data grid.
  *
  * @package Catalyst\Repository\Operations\Automation\Support
  * Responsibility: Configure rule columns, filters, row actions and repository-backed pagination.

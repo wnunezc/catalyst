@@ -1,8 +1,8 @@
-# Sidebar y navegacion administrativa
+# Sidebar y navegacion privilegiada
 
 ## Objetivo
 
-Documentar el criterio actual del sidebar administrativo despues del refactor de navegacion: mas compacto, navegable en listas largas, plegable por areas reales y con mejor separacion entre navegacion principal y secundaria.
+Documentar el criterio actual del sidebar privilegiado despues del refactor de navegacion: mas compacto, navegable en listas largas, plegable por areas reales y con mejor separacion entre navegacion principal y secundaria.
 
 ## Scroll del sidebar
 
@@ -14,12 +14,12 @@ Esto resuelve un problema practico del estado previo: menus largos obligaban a p
 
 La navegacion ya no se presenta como una lista plana uniforme.
 `DocumentScope` selecciona uno de los tres modelos virtuales mediante
-`NavigationModelSelector`: `demo-ui`, `framework-admin` o `application`.
+`NavigationModelSelector`: `demo-ui`, `framework` o `application`.
 Los proveedores aportan sus árboles a `NavigationTreeNormalizer` y la plantilla
 común `boot-core/template/_sidebar.phtml` conserva el renderer único mediante
 `_sidebar-node.phtml`.
 
-- areas primarias `Workspace`, `Administration` y `DevTools` dentro del sidebar;
+- areas primarias `Workspace`, `Privileged` y `DevTools` dentro del sidebar;
 - `side-nav-group`
 - `side-nav-group__toggle`
 - `side-nav-group__panel`
@@ -38,7 +38,7 @@ El sidebar ya no deja todos los bloques expandidos al mismo tiempo.
 
 Comportamiento actual:
 
-- cada grupo administrativo (`Acceso y usuarios`, `Contenido y activos`, `Plataforma`, `Framework operations`) es plegable;
+- cada grupo privilegiado (`Acceso y usuarios`, `Contenido y activos`, `Plataforma`, `Framework operations`) es plegable;
 - los items con hijas reales, como `Users` u `Operations`, tienen su propio colapsador;
 - el grupo o submenu activo abre por defecto;
 - los demas grupos arrancan cerrados para evitar una lista vertical interminable;
@@ -56,7 +56,7 @@ La anidacion es adecuada cuando varias rutas pertenecen al mismo dominio operati
 Criterios observables en el estado actual:
 
 1. La opcion padre debe representar un dominio reconocible, no una pagina decorativa.
-2. Las hijas deben ser operativamente cercanas y previsibles para el usuario administrativo.
+2. Las hijas deben ser operativamente cercanas y previsibles para el usuario privilegiado.
 3. La anidacion debe reducir ruido de primer nivel, no esconder rutas criticas sin criterio.
 
 ## Árbol recursivo y propietarios conectados
@@ -75,7 +75,7 @@ companions, no a nodos del sidebar.
 
 En la estructura actual:
 
-- el sidebar izquierdo es la superficie primaria para cambiar entre `Workspace`, `Administration` y `DevTools`;
+- el sidebar izquierdo es la superficie primaria para cambiar entre `Workspace`, `Privileged` y `DevTools`;
 - la navegacion principal debe contener dominios o puntos de entrada de alto nivel;
 - la navegacion secundaria debe vivir como hija o grupo contextual cuando depende de un dominio padre;
 - acciones de usuario, sesion y contexto no deben migrarse al sidebar si ya viven correctamente en el topbar.
@@ -90,10 +90,10 @@ El sidebar común consume `NavigationRegistry::shell()` mediante `ShellNavigatio
 
 Demo UI obtiene su árbol recursivo de `DemoUiNavigationProvider`; su controlador
 solo aporta catálogo y selección. Las demás superficies usan los proveedores
-administrativo o Application del documento común, sin perfiles, wrappers,
+privilegiado o Application del documento común, sin perfiles, wrappers,
 layouts, shells, temas ni runtimes alternativos.
 
-Los grupos administrativos deben respetar la taxonomia curada y usar metadata declarativa de modulo (`context`, `group`, `group_label`, `group_order`, `order`, `matches`, `icon`, `visibility`) para descubrir superficies faltantes, permisos, iconos y active state. No se deben duplicar rutas en `_demo-product-shell.php`, pero tampoco se debe permitir que manifests incompletos destruyan la organizacion visual del menu.
+Los grupos privilegiados deben respetar la taxonomia curada y usar metadata declarativa de modulo (`context`, `group`, `group_label`, `group_order`, `order`, `matches`, `icon`, `visibility`) para descubrir superficies faltantes, permisos, iconos y active state. No se deben duplicar rutas en `_demo-product-shell.php`, pero tampoco se debe permitir que manifests incompletos destruyan la organizacion visual del menu.
 
 Para evitar duplicidad, el contexto activo no se renderiza otra vez como link en el sidebar. La tarjeta de contexto y el titulo del bloque indican el dominio actual; el bloque `Otras áreas` contiene solo saltos a dominios inactivos.
 
@@ -105,7 +105,7 @@ El smoke especifico para este contrato es:
 php public/cli.php shell-navigation:smoke --json
 ```
 
-Este smoke comprueba que las entradas `navigation.shell` se proyectan al modelo de sidebar sin romper la taxonomía completa: hrefs canónicos presentes, superficies esperadas por grupo en orden, `/users/organization-hierarchy` y `/admin/account-recovery` bajo `Users`, `Test Features`, `UI Showcase`, `UML / Architecture` y `Demo UI` bajo `Devtools`, sin `Users` anidado, sin `Operations` dentro de `Configuration` y sin `Devtools` duplicado.
+Este smoke comprueba que las entradas `navigation.shell` se proyectan al modelo de sidebar sin romper la taxonomía completa: hrefs canónicos presentes, superficies esperadas por grupo en orden, `/users/organization-hierarchy` y `/users/account-recovery` bajo `Users`, `Test Features`, `UML / Architecture` y `Demo UI` bajo `Devtools`, sin `Users` anidado, sin `Operations` dentro de `Configuration` y sin `Devtools` duplicado.
 
 El smoke permite entradas adicionales declaradas por modulos de aplicaciones derivadas dentro de grupos canonicos. La regla es preservacion, no igualdad exacta: Catalyst debe conservar sus superficies base en orden y proyectar todos los hrefs declarados, pero una app puede agregar rutas como `/rtm/profile` o `/rtm/radio` bajo `Operations` sin fallar `quality:check`.
 

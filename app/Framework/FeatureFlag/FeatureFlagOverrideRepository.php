@@ -125,9 +125,9 @@ final class FeatureFlagOverrideRepository
     }
 
     /**
-     * Returns all override rows ordered for administration.
+     * Returns all override rows ordered for privileged.
      *
-     * Responsibility: Returns all override rows ordered for administration.
+     * Responsibility: Returns all override rows ordered for privileged.
      * @return array<int, array<string, mixed>>
      */
     public function all(): array

@@ -23,7 +23,7 @@ The generated runtime module catalog currently reports 13 modules with structura
 
 Module code is split between `Repository/App/Surface/*` for app surfaces and `Repository/Framework/*` for framework-owned modules. Core framework primitives remain under `app/Framework/*`.
 
-`framework.workspaces` owns 49 included routes across six surfaces. `framework.operations` owns 21 routes across five administrative surfaces. `framework.api` independently owns six transversal public endpoints. Together they own exactly 76 ROADMAP-3 routes and preserve 13 public versioned APIs.
+`framework.workspaces` owns 49 included routes across six surfaces. `framework.operations` owns 21 routes across five privileged surfaces. `framework.api` independently owns six transversal public endpoints. Together they own exactly 76 ROADMAP-3 routes and preserve 13 public versioned APIs.
 
 ## Operational Notes
 

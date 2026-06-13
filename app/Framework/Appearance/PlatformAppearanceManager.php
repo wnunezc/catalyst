@@ -674,16 +674,16 @@ final class PlatformAppearanceManager
     }
 
     /**
-     * Resolves blank or legacy administration tagline text through translation.
+     * Resolves blank or legacy privileged tagline text through translation.
      *
-     * Responsibility: Resolves blank or legacy administration tagline text through translation.
+     * Responsibility: Resolves blank or legacy privileged tagline text through translation.
      */
     private function resolveBrandTagline(string $value): string
     {
         $value = trim($value);
 
-        if ($value === '' || strcasecmp($value, 'Administration') === 0) {
-            return __('ui.shell.administration_tagline');
+        if ($value === '' || strcasecmp($value, 'Privileged') === 0) {
+            return __('ui.shell.privileged_tagline');
         }
 
         return $value;

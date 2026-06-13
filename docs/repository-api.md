@@ -17,4 +17,4 @@ Document the independent owner of transversal public framework APIs.
 | GET | `/api/v1/versions/{resourceKey}/{recordId}` |
 | POST | `/api/v1/versions/{id}/restore` |
 
-These endpoints preserve `ApiTokenMiddleware`, abilities, throttling, payloads and error contracts. API Management remains a separate administrative surface under Operations.
+These endpoints preserve `ApiTokenMiddleware`, abilities, throttling, payloads and error contracts. API Management remains a separate privileged surface under Operations.

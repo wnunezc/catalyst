@@ -29,7 +29,7 @@
                     "none": "None",
                     "public": "Public",
                     "workspace": "Workspace",
-                    "administration": "Administration",
+                    "privileged": "Privileged",
                     "devtools": "DevTools"
                 },
                 "actions": {

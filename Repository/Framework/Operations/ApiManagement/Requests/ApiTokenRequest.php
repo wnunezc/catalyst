@@ -39,7 +39,7 @@ use Catalyst\Helpers\Exceptions\ValidationException;
 use Catalyst\Helpers\Validation\Validator;
 
 /**
- * Form request for creating API bearer tokens from the admin surface.
+ * Form request for creating API bearer tokens from the privileged surface.
  *
  * @package Catalyst\Repository\Operations\ApiManagement\Requests
  * Responsibility: Authorizes token creation, limits accepted input, validates token fields,

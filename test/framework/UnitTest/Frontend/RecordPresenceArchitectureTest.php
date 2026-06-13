@@ -33,7 +33,7 @@ final class RecordPresenceArchitectureTest extends TestCase
         ]);
 
         Assert::true($view['record_presence']['visible']);
-        Assert::same('/api/presence/catalogs/9/heartbeat', $view['record_presence']['heartbeat_url']);
+        Assert::same('/runtime/presence/catalogs/9/heartbeat', $view['record_presence']['heartbeat_url']);
     }
 
     public function testTemplateRuntimeAndStylesUseNeutralRecordPresenceNames(): void

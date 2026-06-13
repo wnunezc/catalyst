@@ -28,7 +28,6 @@ declare(strict_types=1);
  *
  */
 
-use Catalyst\Framework\Controllers\CanonicalRedirectController;
 use Catalyst\Framework\Controllers\FlashController;
 use Catalyst\Framework\Route\Router;
 
@@ -38,8 +37,5 @@ $router = Router::getInstance();
  * Canonical redirects — normalize common entry-point aliases to root.
  * Using a controller method (not a Closure) so these routes are cacheable.
  */
-$router->get('/index', [CanonicalRedirectController::class, 'root']);
-$router->get('/index.php', [CanonicalRedirectController::class, 'root']);
-
 // Framework-level flash actions.
-$router->post('/flash/dismiss', [FlashController::class, 'dismiss']);
+$router->post('/runtime/flash/dismiss', [FlashController::class, 'dismiss']);

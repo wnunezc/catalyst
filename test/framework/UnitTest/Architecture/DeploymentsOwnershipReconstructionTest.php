@@ -25,7 +25,7 @@ final class DeploymentsOwnershipReconstructionTest extends TestCase
 
         Assert::contains("get('/operations/deployments'", $routes);
         Assert::contains("post('/operations/deployments/runs'", $routes);
-        Assert::contains("->throttle('admin_mutation')", $routes);
+        Assert::contains("->throttle('privileged_mutation')", $routes);
         Assert::contains("'operations-deployments'", $request);
         Assert::contains("DeploymentManager::getInstance()->profiles()", $request);
         Assert::contains("throw new RuntimeException(__('operations.deployments.messages.failed')", $service);

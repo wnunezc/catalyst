@@ -49,23 +49,23 @@ $router->get('/configuration/platform-appearance', [AppearanceController::class,
     ->middleware(ConfigurationAccessContract::protectedMiddleware());
 $router->post('/configuration/platform-appearance', [AppearanceController::class, 'update'])
     ->middleware(ConfigurationAccessContract::protectedMiddleware())
-    ->throttle(ConfigurationAccessContract::ADMIN_THROTTLE);
+    ->throttle(ConfigurationAccessContract::PRIVILEGED_THROTTLE);
 $router->get('/configuration/feature-flags', [FeatureFlagsController::class, 'featureFlags'])
     ->middleware(ConfigurationAccessContract::protectedMiddleware());
 $router->post('/configuration/feature-flags/defaults/{flagKey}', [FeatureFlagsController::class, 'setFeatureFlagDefault'])
     ->middleware(ConfigurationAccessContract::protectedMiddleware())
-    ->throttle(ConfigurationAccessContract::ADMIN_THROTTLE);
+    ->throttle(ConfigurationAccessContract::PRIVILEGED_THROTTLE);
 $router->post('/configuration/feature-flags/overrides', [FeatureFlagsController::class, 'storeFeatureFlagOverride'])
     ->middleware(ConfigurationAccessContract::protectedMiddleware())
-    ->throttle(ConfigurationAccessContract::ADMIN_THROTTLE);
+    ->throttle(ConfigurationAccessContract::PRIVILEGED_THROTTLE);
 $router->post('/configuration/feature-flags/overrides/{id}/delete', [FeatureFlagsController::class, 'deleteFeatureFlagOverride'])
     ->middleware(ConfigurationAccessContract::protectedMiddleware())
-    ->throttle(ConfigurationAccessContract::ADMIN_THROTTLE);
+    ->throttle(ConfigurationAccessContract::PRIVILEGED_THROTTLE);
 $router->get('/configuration/plugins', [PluginsController::class, 'plugins'])
     ->middleware(ConfigurationAccessContract::protectedMiddleware());
 $router->post('/configuration/plugins/{pluginKey}/toggle', [PluginsController::class, 'togglePlugin'])
     ->middleware(ConfigurationAccessContract::protectedMiddleware())
-    ->throttle(ConfigurationAccessContract::ADMIN_THROTTLE);
+    ->throttle(ConfigurationAccessContract::PRIVILEGED_THROTTLE);
 
 $setupMiddleware = ConfigurationAccessContract::setupMiddleware();
 
@@ -99,7 +99,7 @@ $router->post('/configuration/environment-setup/cors', [CorsConfigSaveController
     ->middleware($setupMiddleware)->throttle(ConfigurationAccessContract::SETUP_THROTTLE);
 $router->post('/configuration/environment-setup/dkim/generate', [DkimController::class, 'generate'])
     ->middleware($setupMiddleware)->throttle(ConfigurationAccessContract::SETUP_THROTTLE);
-$router->post('/configuration/environment-setup/admin', [SetupCompletionController::class, 'createAdmin'])
+$router->post('/configuration/environment-setup/privileged-account-account', [SetupCompletionController::class, 'createPrivilegedAccount'])
     ->middleware($setupMiddleware)->throttle(ConfigurationAccessContract::SETUP_THROTTLE);
 $router->post('/configuration/environment-setup/complete', [SetupCompletionController::class, 'complete'])
     ->middleware($setupMiddleware)->throttle(ConfigurationAccessContract::SETUP_THROTTLE);

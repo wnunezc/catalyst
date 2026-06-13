@@ -55,16 +55,16 @@ Use one row per candidate module:
 
 | Module | Surface | Routes | Requests | Services | Repositories | Permissions | Workflow | Attachments | Reports | Calendar | Delete Policy |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| `{Module}` | `public/workspace/administration/devtools` | HTML/API/mutations | FormRequest list | Business actions | Tables/queries | Slugs | Definition key | Purposes/storage | Provider key | Provider key | Preview factory |
+| `{Module}` | `public/workspace/privileged/devtools` | HTML/API/mutations | FormRequest list | Business actions | Tables/queries | Slugs | Definition key | Purposes/storage | Provider key | Provider key | Preview factory |
 
 Start complex modules with:
 
 ```powershell
-php public/cli.php make:module {Module} --space=App --surface=administration --permission=manage-{module} --preset=complex
+php public/cli.php make:module {Module} --space=App --surface=privileged --permission=manage-{module} --preset=complex
 ```
 
 Use `make:crud` when the module is primarily a resource CRUD surface. Select
-`workspace` or `administration` explicitly and keep domain workflows outside
+`workspace` or `privileged` explicitly and keep domain workflows outside
 the generated controller.
 
 ## Happy Path Template

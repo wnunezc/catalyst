@@ -60,7 +60,7 @@ modo claro/oscuro, topbar o sidenav porque eso puede romper contraste.
 
 `PlatformAppearanceManager::sanitizeThemeConfig()` es la fuente de verdad para
 forzar estas combinaciones. La configuración usa `customizer_enabled`; no
-existe un customizer exclusivo de Admin.
+existe un customizer exclusivo de Privileged.
 
 ## Reglas de implementación
 
@@ -71,7 +71,7 @@ existe un customizer exclusivo de Admin.
 - No reactivar `response-skins.css`.
 - No usar logos o emblemas como parte del skin visual.
 - Mantener los botones de acción como botones reales; evitar `btn-link` para
-  acciones administrativas.
+  acciones privilegiadas.
 - Preservar selección y persistencia mediante el runtime central y
   `shell-theme-customizer.js`.
 - No crear CSS, shell o JavaScript gobernador por tema.

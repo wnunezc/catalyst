@@ -33,6 +33,6 @@ use Catalyst\Helpers\Security\CsrfProtection;
 
 return static function (array $scope): array {
     return [
-        'make_admin_csrf_field' => TrustedHtml::fromString(CsrfProtection::getInstance()->getTokenField()),
+        'assign_privileged_role_csrf_field' => TrustedHtml::fromString(CsrfProtection::getInstance()->getTokenField()),
     ];
 };

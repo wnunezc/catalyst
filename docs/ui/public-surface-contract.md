@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Catalyst separates application/demo surfaces from framework administration. The
+Catalyst separates application/demo surfaces from framework privileged. The
 public surface contract is used by pages that a project implementer is expected
 to customize for their own product, ERP, store or landing experience.
 
@@ -14,14 +14,14 @@ Canonical public/demo surfaces:
 - `/store`
 - `/dashboard`
 
-These pages must not expose framework administration navigation such as
-Configuration, Workspaces, Operations, Users or DevTools. Administrative
+These pages must not expose framework privileged navigation such as
+Configuration, Workspaces, Operations, Users or DevTools. Privileged
 features remain protected by their routes, middleware and permissions and use
 the same canonical shell.
 
 ## Entry point configuration
 
-The administrator controls the initial behavior from Framework Settings:
+The privileged role controls the initial behavior from Framework Settings:
 
 - **Primary Entry Point** decides what `/` does.
 - **Secondary Entry Point** is used when the primary entry point requires a
@@ -32,7 +32,7 @@ Current intent:
 - `Home`, `Landing`, `Store` and `Dashboard` point to application/demo surfaces.
 - `User-Access` makes `/` require authentication, then sends the user to the
   configured secondary entry point.
-- `Setup` keeps framework setup/admin behavior for development and operations.
+- `Setup` keeps framework setup/privileged behavior for development and operations.
 
 The entry point resolver lives in:
 
@@ -62,7 +62,7 @@ The public controller supplies explicit shell capabilities:
 These values do not select a Public layout or renderer. They only control
 components inside the common shell. Public surfaces therefore retain theme
 variables, module assets and the global runtime without exposing the
-administrative sidebar.
+privileged sidebar.
 
 New public pages should use `PublicPageController::renderPublicPage()` instead
 of creating another document wrapper.
@@ -80,10 +80,10 @@ Do not render placeholder identities such as `Catalyst User` for guests.
 ## Dashboard rule
 
 `/dashboard` is an authenticated application/demo dashboard. It is not the
-framework administration console. It should demonstrate ERP-style cards,
+framework privileged console. It should demonstrate ERP-style cards,
 activity, metrics and workflows that implementers can replace.
 
-Framework administration remains under protected configuration/operation routes.
+Framework privileged remains under protected configuration/operation routes.
 
 ## CSP rule
 

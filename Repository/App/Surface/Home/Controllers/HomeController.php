@@ -33,7 +33,6 @@ namespace App\Surface\Home\Controllers;
 use App\Support\PublicSurface\Controllers\PublicPageController;
 use App\Services\ApplicationEntryService;
 use App\Support\PublicSurface\Support\PublicDemoCatalog;
-use Catalyst\Framework\Http\JsonResponse;
 use Catalyst\Framework\Http\RedirectResponse;
 use Catalyst\Framework\Http\Response;
 
@@ -41,7 +40,7 @@ use Catalyst\Framework\Http\Response;
  * Serves the canonical public home surface and root entry resolution.
  *
  * @package App\Surface\Home\Controllers
- * Responsibility: Resolves the application root target, renders the home demo page, and exposes its companion payload.
+ * Responsibility: Resolves the application root target and renders the home demo page.
  */
 class HomeController extends PublicPageController
 {
@@ -68,18 +67,6 @@ class HomeController extends PublicPageController
     public function index(): Response
     {
         return $this->renderPublicPage('home.surface', (new PublicDemoCatalog())->home());
-    }
-
-    /**
-     * Returns the home companion payload for public surface consumers.
-     *
-     * Responsibility: Returns the home companion payload for public surface consumers.
-     */
-    public function api(): JsonResponse
-    {
-        return $this->jsonSuccess([
-            'page' => (new PublicDemoCatalog())->home(),
-        ]);
     }
 
     /**

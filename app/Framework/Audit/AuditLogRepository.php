@@ -37,7 +37,7 @@ use Catalyst\Helpers\Log\Logger;
 use Exception;
 
 /**
- * Reads tenant-scoped audit log rows for admin inspection.
+ * Reads tenant-scoped audit log rows for privileged inspection.
  *
  * @package Catalyst\Framework\Audit
  * Responsibility: Search, decode and filter audit records without exposing write-side audit logic.

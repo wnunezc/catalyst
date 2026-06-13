@@ -6,8 +6,8 @@
         "devtools_label": "DevTools",
         "test_features_label": "Test Features",
         "test_features_hint": "Primary runtime harness",
-        "ui_showcase_label": "UI Showcase",
-        "ui_showcase_hint": "Visual catalog and components",
+        "demo_ui_label": "Demo UI",
+        "demo_ui_hint": "Visual catalog and components",
         "uml_label": "UML / Architecture",
         "uml_hint": "Technical model and diagrams",
         "layout_smoke_label": "Layout Smoke",
@@ -28,9 +28,9 @@
         "current_status": "Current User RBAC Status",
         "inspect_status": "Inspect RBAC Status",
         "raw_json": "Raw JSON",
-        "admin_links": "Admin module links (require admin role):",
+        "privileged_links": "Privileged module links:",
         "promote_warning": "Dev only - promote current user:",
-        "make_admin": "Make Me Admin",
+        "assign_privileged_role": "Assign Privileged Role",
         "architecture_overview": "Architecture Overview",
         "table": {
             "component": "Component",
@@ -49,12 +49,12 @@
         "title": "Catalyst — DevTools",
         "page_title": "DevTools",
         "eyebrow": "Runtime harness",
-        "description": "Technical surface to validate flashes, toasts, modals, forms, endpoints and operational diagnostics without leaving the admin visual language.",
+        "description": "Technical surface to validate flashes, toasts, modals, forms, endpoints and operational diagnostics.",
         "boundary_title": "Canonical boundary",
         "boundary_prefix": "The runtime governance of feature flags, plugins, deployment and tenancy lives in",
         "boundary_suffix": "DevTools keeps probes, smoke endpoints and harness diagnostics.",
         "actions": {
-            "ui_showcase": "UI Showcase",
+            "demo_ui": "Demo UI",
             "module_designer": "Module Designer",
             "operations": "Operations",
             "roles": "Roles",
@@ -77,15 +77,15 @@
     "layout_smoke": {
         "title": "Catalyst — Layout Smoke",
         "eyebrow": "Layout smoke",
-        "description": "Short surface to validate that the layout, the e() helper and view wrapping still work inside the current admin chrome.",
+        "description": "Short surface to validate that the layout, the e() helper and view wrapping still work inside the current shared shell.",
         "chips": {
             "layout_wrapping": "Layout wrapping",
             "escape_helper": "Escape helper",
-            "admin_shell": "Admin shell"
+            "shared_shell": "Shared shell"
         },
         "contract": {
             "title": "Layout Contract",
-            "description": "Verify that the view remains a fragment and the admin layout provides the shared chrome.",
+            "description": "Verify that the view remains a fragment and the shared shell provides the shared chrome.",
             "kicker": "Smoke",
             "body": "This content was rendered as a fragment and then wrapped by a framework layout via View::render(...). The <html>, <head> and asset tags come from the layout, not from this view."
         },
@@ -108,7 +108,7 @@
             "title": "Checks",
             "description": "What this screen actually validates.",
             "items": {
-                "chrome": "The admin chrome loads without breaking a minimal view.",
+                "chrome": "The shared shell loads without breaking a minimal view.",
                 "escape": "e() still escapes HTML payload in real rendering.",
                 "no_inline": "The view does not depend on full markup or inline assets."
             }
@@ -163,7 +163,7 @@
                 "surface_none": "None",
                 "surface_public": "Public",
                 "surface_workspace": "Workspace",
-                "surface_administration": "Administration",
+                "surface_privileged": "Privileged",
                 "surface_devtools": "DevTools"
             },
             "actions": {
@@ -606,9 +606,9 @@
         "status_ok": "RBAC status OK",
         "dev_only": "This endpoint is only available in development mode.",
         "login_required": "You must be logged in to use this endpoint.",
-        "promoted": "User promoted to admin. Refresh the page or re-login to apply.",
-        "promoted_toast": "Promoted to admin — re-login to apply session change.",
-        "admin_role_missing": "Admin role was not found in the current tenant."
+        "promoted": "Privileged role assigned. Refresh the page or re-login to apply.",
+        "promoted_toast": "Privileged role assigned; re-login to apply session change.",
+        "privileged_role_missing": "Required privileged role was not found in the current tenant."
     },
     "orm_runtime": {
         "status_ok": "ORM status OK",
@@ -657,10 +657,10 @@
         },
         "usage": "Usage:"
     },
-    "ui_showcase": {
-        "title": "UI Showcase",
-        "eyebrow": "Compact admin catalog",
-        "description": "Reference surface for Catalyst administrative modules: compact shell, dense listings, utilitarian forms and honest states for real backoffice work.",
+    "demo_ui": {
+        "title": "Demo UI",
+        "eyebrow": "Compact technical catalog",
+        "description": "Reference surface for Catalyst privileged modules: compact shell, dense listings, utilitarian forms and honest states for real backoffice work.",
         "actions": {
             "roles": "Roles",
             "permissions": "Permissions",
@@ -696,7 +696,7 @@
         },
         "listing": {
             "title": "Compact Listing",
-            "description": "Base example for administrative CRUD with clear actions and fast reading.",
+            "description": "Base example for privileged CRUD with clear actions and fast reading.",
             "export": "Export",
             "new_record": "New record",
             "select_all": "Select all",
@@ -705,7 +705,7 @@
             "archive": "Archive",
             "select_roles": "Select Roles",
             "select_permissions": "Select Permissions",
-            "select_ui_showcase": "Select UI Showcase",
+            "select_demo_ui": "Select Demo UI",
             "columns": {
                 "resource": "Resource",
                 "scope": "Scope",
@@ -735,8 +735,8 @@
                 "open": "Open"
             },
             "showcase": {
-                "title": "UI Showcase",
-                "description": "Visual reference for admin modules",
+                "title": "Demo UI",
+                "description": "Visual reference for privileged modules",
                 "status": "Internal",
                 "owner": "UX infra",
                 "updated": "Now",
@@ -745,7 +745,7 @@
         },
         "form": {
             "title": "Dense Form",
-            "description": "Administrative editing with low friction and high readability.",
+            "description": "Privileged editing with low friction and high readability.",
             "kicker": "Pattern B",
             "labels": {
                 "display_name": "Display name",

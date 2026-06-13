@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Registrar una rutina minima y repetible para verificar que el parche visual documentado no rompa sintaxis, autoload, CLI, CSP ni superficies administrativas clave.
+Registrar una rutina minima y repetible para verificar que el parche visual documentado no rompa sintaxis, autoload, CLI, CSP ni superficies privilegiadas clave.
 
 ## PowerShell
 
