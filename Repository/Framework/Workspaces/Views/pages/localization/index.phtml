@@ -1,4 +1,4 @@
-<div class="surface-page surface-page-shell localization-page">
+<div class="surface-page surface-page-shell">
     {{> "components._page-header" }}
 
     {{#if localization_error}}<div class="alert alert-danger">{{ localization_error }}</div>{{/if}}
@@ -11,13 +11,15 @@
         </div>
     {{/if}}
 
-    <div class="localization-cards mb-3">
+    <div class="row g-3 mb-3">
         {{#each locale_cards}}
-            <a href="{{ href }}" class="card card-body text-decoration-none{{#if active}} border-primary{{/if}}">
+        <div class="col-12 col-md-6 col-xl-4">
+            <a href="{{ href }}" class="card card-body h-100 text-decoration-none{{#if active}} border-primary{{/if}}">
                 <strong>{{ label }} ({{ locale }})</strong>
                 <span>{{ coverage }}% {{ t:workspaces.localization.coverage }}</span>
                 <small>{{ missing }} {{ t:workspaces.localization.missing_keys }}</small>
             </a>
+        </div>
         {{/each}}
     </div>
 
@@ -72,11 +74,13 @@
 
     <section class="card mt-3">
         <div class="card-header"><h2 class="h5 mb-0">{{ selected_locale }}: {{ coverage }}% {{ t:workspaces.localization.coverage }}</h2></div>
-        <div class="table-responsive">
-            <table class="table mb-0">
-                <thead><tr><th>{{ t:workspaces.localization.catalog }}</th><th>{{ t:workspaces.localization.scope }}</th><th>{{ t:workspaces.localization.coverage }}</th><th>{{ t:workspaces.localization.missing_keys }}</th></tr></thead>
-                <tbody>{{#each catalogs}}<tr><td>{{ name }}</td><td><code>{{ scope }}</code></td><td>{{ coverage }}%</td><td>{{ missing }}</td></tr>{{/each}}</tbody>
-            </table>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover align-middle mb-0">
+                    <thead><tr><th>{{ t:workspaces.localization.catalog }}</th><th>{{ t:workspaces.localization.scope }}</th><th>{{ t:workspaces.localization.coverage }}</th><th>{{ t:workspaces.localization.missing_keys }}</th></tr></thead>
+                    <tbody>{{#each catalogs}}<tr><td>{{ name }}</td><td><code>{{ scope }}</code></td><td>{{ coverage }}%</td><td>{{ missing }}</td></tr>{{/each}}</tbody>
+                </table>
+            </div>
         </div>
     </section>
 </div>

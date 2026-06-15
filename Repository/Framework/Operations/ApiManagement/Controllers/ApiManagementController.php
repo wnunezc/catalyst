@@ -101,7 +101,7 @@ final class ApiManagementController extends Controller
 
         $this->stashCreatedToken((string) ($created['plain_text'] ?? ''));
 
-        return $this->postActionSuccessRedirect('/operations/api-management', __('apimanagement.messages.created'), null, 0);
+        return $this->postActionSuccessRedirect('/operations/api-management', __('apimanagement.messages.created'));
     }
 
     /**

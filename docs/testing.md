@@ -112,6 +112,14 @@ node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalys
 Pop-Location
 ```
 
+Run only the user login, MFA and logout lifecycle:
+
+```powershell
+Push-Location D:\OpsZone\DevWorkspace\Engines\Playwright
+node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalyst --suite framework auth-session-lifecycle.spec.cjs --project stateful-serial --workers 1 --no-deps
+Pop-Location
+```
+
 Run a derived application's own suite:
 
 ```powershell
@@ -129,9 +137,19 @@ Specs must not live under the Playwright engine. The engine may provide runtime,
 local auth state, traces, screenshots and other machine-local artifacts.
 By default, Playwright output is written outside the Catalyst repo under the
 workspace engine: `D:/OpsZone/DevWorkspace/Engines/Playwright/test-results/catalyst`.
-Catalyst runs authenticated specs with one worker because the local test account
-and MFA service are shared. Do not enable concurrent authenticated workers
-without isolated accounts and isolated MFA service identities.
+Catalyst creates authenticated browser states sequentially through the shared
+account and MFA service. Read-only coverage then assigns a distinct session to
+each worker, avoiding concurrent MFA challenges and shared PHP session locks.
+Stateful interactions remain in a one-worker project.
+
+The default read-only pool is four workers:
+
+```powershell
+$env:CATALYST_E2E_PARALLEL_WORKERS = '6'
+```
+
+Use `--project surface-parallel` for exhaustive read-only route coverage and
+`--project stateful-serial` for interaction/state coverage.
 
 ## Browser E2E Protocol
 

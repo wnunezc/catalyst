@@ -19,12 +19,12 @@ const protectedSurfaces = [
     {
         name: 'Environment Setup',
         path: '/configuration/environment-setup',
-        selector: '.settings-console',
+        selector: '.surface-page .card',
     },
     {
         name: 'Application Health',
         path: '/configuration/application-health',
-        selector: '.configuration-health-console',
+        selector: '.surface-page .card',
     },
     {
         name: 'Platform Appearance',

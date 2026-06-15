@@ -133,7 +133,7 @@ final class FormBuilderViewModel
             'has_help' => $help !== '',
             'error' => $error,
             'has_error' => $error !== '',
-            'wrapper_class' => $wrapperClasses,
+            'field_wrapper_class' => $wrapperClasses,
             'wrapper_attributes_html' => TrustedHtml::fromString($wrapperAttributes !== '' ? ' ' . $wrapperAttributes : ''),
             'render_without_wrapper' => $renderWithoutWrapper,
             'show_label' => !in_array($fieldType, ['checkbox', 'repeater', 'hidden'], true),
@@ -259,15 +259,17 @@ final class FormBuilderViewModel
         $sectionTitle = trim((string) ($section['title'] ?? ''));
         $sectionDescription = trim((string) ($section['description'] ?? ''));
         $sectionClass = trim((string) ($section['class'] ?? ''));
+        $sectionColClass = trim((string) ($section['col_class'] ?? 'col-12'));
         $sectionWrapper = trim((string) ($section['wrapper_class'] ?? ''));
         $fields = array_values((array) ($section['fields'] ?? []));
         $hasHeader = $sectionTitle !== '' || $sectionDescription !== '';
 
         $normalizedSections[] = [
             'has_header' => $hasHeader,
-            'title' => $sectionTitle,
-            'description' => $sectionDescription,
+            'section_title' => $sectionTitle,
+            'section_description' => $sectionDescription,
             'section_class' => $sectionClass,
+            'section_col_class' => $sectionColClass !== '' ? $sectionColClass : 'col-12',
             'fields_wrapper_class' => trim('row g-3 ' . $sectionWrapper),
             'fields' => $normalizeFields($fields, !$hasHeader),
         ];
@@ -318,6 +320,7 @@ final class FormBuilderViewModel
         'include_csrf' => $httpMethod !== 'GET',
         'csrfField' => TrustedHtml::fromString(CsrfProtection::getInstance()->getTokenField()),
         'include_method_override' => !in_array($method, ['GET', 'POST'], true),
+        'grouped_sections' => !empty($form['group_sections_in_card']),
         'sections' => $normalizedSections,
         'has_actions' => $normalizedActions !== [],
         'actions' => $normalizedActions,

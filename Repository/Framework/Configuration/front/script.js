@@ -55,6 +55,8 @@ function mountAppearanceForms(root) {
         const themeInputs = form.querySelectorAll('[data-platform-theme]');
         const topbarInputs = form.querySelectorAll('[data-platform-topbar]');
         const sidenavInputs = form.querySelectorAll('[data-platform-sidenav]');
+        const brandAssetUploads = form.querySelectorAll('[data-brand-asset-upload]');
+        const brandAssetResets = form.querySelectorAll('[data-brand-asset-reset]');
 
         const selectValue = (inputs, value) => {
             inputs.forEach((input) => {
@@ -94,6 +96,20 @@ function mountAppearanceForms(root) {
 
         customizer?.addEventListener('change', syncPolicy);
         skinInputs.forEach((input) => input.addEventListener('change', syncPreset));
+        brandAssetUploads.forEach((upload) => upload.addEventListener('change', () => {
+            const asset = upload.dataset.brandAssetUpload || '';
+            const reset = form.querySelector(`[data-brand-asset-reset="${asset}"]`);
+            if (reset instanceof HTMLInputElement && upload instanceof HTMLInputElement && upload.files?.length) {
+                reset.checked = false;
+            }
+        }));
+        brandAssetResets.forEach((reset) => reset.addEventListener('change', () => {
+            const asset = reset.dataset.brandAssetReset || '';
+            const upload = form.querySelector(`[data-brand-asset-upload="${asset}"]`);
+            if (reset instanceof HTMLInputElement && reset.checked && upload instanceof HTMLInputElement) {
+                upload.value = '';
+            }
+        }));
         syncPolicy();
         syncPreset();
     });

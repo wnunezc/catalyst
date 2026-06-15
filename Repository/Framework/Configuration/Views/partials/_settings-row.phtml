@@ -1,10 +1,10 @@
-<li class="list-group-item settings-kv-row surface-list-row">
-    <span class="settings-kv-label surface-list-label">{{ label }}</span>
+<li class="list-group-item surface-kv-row">
+    <span class="surface-kv-label">{{ label }}</span>
     {{#if is_boolean}}
-        <span id="{{ id }}" class="settings-kv-value settings-kv-value--badge">
+        <span id="{{ id }}" class="surface-kv-value">
             <span class="badge {{ badge_class }}">{{ text }}</span>
         </span>
     {{else}}
-        <span id="{{ id }}" class="settings-kv-value{{ text_class }}">{{ text }}</span>
+        <span id="{{ id }}" class="surface-kv-value{{ text_class }}">{{ text }}</span>
     {{/if}}
 </li>

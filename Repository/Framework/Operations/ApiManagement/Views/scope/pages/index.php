@@ -57,18 +57,20 @@ return static function (array $scope): array {
         ];
     }
 
+    $apiMetrics = [
+        ['label' => __('apimanagement.index.chips.bearer'), 'value' => 'Bearer'],
+        ['label' => 'Version', 'value' => 'v1'],
+        ['label' => __('apimanagement.index.chips.runtime'), 'value' => 'Enabled'],
+    ];
+
     return [
         'page_header' => [
             'eyebrow' => __('apimanagement.index.eyebrow'),
             'title' => (string) ($scope['title'] ?? __('apimanagement.index.title')),
             'description' => __('apimanagement.index.description'),
-            'metrics' => [
-                ['label' => __('apimanagement.index.chips.bearer'), 'value' => 'Bearer'],
-                ['label' => 'Version', 'value' => 'v1'],
-                ['label' => __('apimanagement.index.chips.runtime'), 'value' => 'Enabled'],
-            ],
         ],
 
+        'api_metrics' => $apiMetrics,
         'form' => (array) ($scope['form'] ?? []),
         'catalog_routes' => $catalogRoutes,
         'tokens_rows' => $tokensRows,

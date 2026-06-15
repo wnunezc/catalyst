@@ -1,4 +1,4 @@
-<div class="surface-page surface-page-shell media-page">
+<div class="surface-page surface-page-shell">
     {{> "components._page-header" }}
 
     {{#if media}}
@@ -22,10 +22,6 @@
     </section>
     {{/if}}
 
-    <section class="card border-0 shadow-sm">
-        <div class="card-body">
-            {{> "components._record-presence" }}
-            {{> "components._form-builder" }}
-        </div>
-    </section>
+    {{> "components._record-presence" }}
+    {{> "components._form-builder" }}
 </div>

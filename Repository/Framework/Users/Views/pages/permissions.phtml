@@ -1,22 +1,22 @@
-<div class="surface-page surface-page-shell users-page">
+<div class="surface-page surface-page-shell">
     {{> "components._page-header" }}
 
     {{> "components._record-presence" }}
 
-    <section class="rbac-section card">
+    <section class="card">
         <div class="card-header">
-            <div class="rbac-section__head">
+            <div class="d-flex align-items-center flex-wrap gap-3 justify-content-between">
                 <div>
-                    <h2 class="rbac-section__title mb-1">{{ t:roles.permissions.assignment_title }}</h2>
-                    <p class="rbac-section__subtitle mb-0">{{ t:roles.permissions.assignment_description }}</p>
+                    <h2 class="card-title mb-1">{{ t:roles.permissions.assignment_title }}</h2>
+                    <p class="text-muted mb-0">{{ t:roles.permissions.assignment_description }}</p>
                 </div>
                 <span class="rbac-chip">{{ availablePermissionCountLabel }}</span>
             </div>
         </div>
         <div class="card-body">
             {{#unless permissionRows}}
-                <div class="rbac-empty-state">
-                    <span class="rbac-empty-state__icon"><i class="fa-solid fa-key"></i></span>
+                <div class="d-flex flex-column align-items-center justify-content-center text-center py-5">
+                    <span><i class="fa-solid fa-key"></i></span>
                     <h2 class="h5 mb-2">{{ t:roles.permissions.none_defined }}</h2>
                     <p class="text-muted mb-3">{{ t:roles.permissions.create_first }}</p>
                     <button type="button" class="btn btn-sm btn-primary" data-catalyst-href="/users/permissions/create">
@@ -31,20 +31,20 @@
                         <input type="hidden" name="claim_token" value="{{ claimToken }}">
                     {{/if}}
 
-                    <div class="rbac-permission-grid mb-4">
+                    <div class="row g-3 mb-4">
                         {{#each permissionRows}}
-                            <label class="rbac-permission-card" for="{{ input_id }}">
-                                <span class="form-check">
+                            <label class="col-12 col-lg-6" for="{{ input_id }}">
+                                <span class="form-check border rounded p-3 h-100 d-flex align-items-start gap-2">
                                     <input type="checkbox"
                                            class="form-check-input"
                                            id="{{ input_id }}"
                                            name="permissions[]"
                                            value="{{ value }}"
                                            {{#if checked}}checked{{/if}}>
+                                <span class="d-grid gap-1">
+                                    <span>{{ display_name }}</span>
+                                    <code class="text-break">{{ slug }}</code>
                                 </span>
-                                <span class="rbac-permission-card__body">
-                                    <span class="rbac-permission-card__name">{{ display_name }}</span>
-                                    <code class="rbac-permission-card__slug">{{ slug }}</code>
                                 </span>
                             </label>
                         {{/each}}

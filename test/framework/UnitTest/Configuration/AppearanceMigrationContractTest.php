@@ -39,6 +39,12 @@ final class AppearanceMigrationContractTest extends TestCase
         Assert::contains('[data-platform-customizer-enabled]', $script);
         Assert::contains('[data-platform-locked-customizer]', $script);
         Assert::contains('[data-platform-skin]', $script);
+        Assert::contains('[data-brand-asset-upload]', $script);
+        Assert::contains('[data-brand-asset-reset]', $script);
+        Assert::contains('reset.checked = false', $script);
+        Assert::contains('upload.value =', $script);
+        Assert::contains('data-brand-asset-upload="logo_primary"', $view);
+        Assert::contains('data-brand-asset-reset="logo_primary"', $view);
         Assert::false(str_contains($script, '.operations-theme-card'));
         Assert::false(str_contains($view, 'operations.appearance'));
         Assert::false(str_contains($view, 'operations-appearance'));
@@ -51,6 +57,28 @@ final class AppearanceMigrationContractTest extends TestCase
         Assert::false(str_contains($scope, "'label' => 'Gray'"));
         Assert::false(str_contains($healthScope, "['label' => 'Environment'"));
         Assert::same(11, count($manager->customizerAllowedValues()['skin']));
+    }
+
+    public function testBrandAssetLocationsAreControlledByTheFramework(): void
+    {
+        $controller = $this->read('Repository/Framework/Configuration/Controllers/AppearanceController.php');
+        $request = $this->read('Repository/Framework/Configuration/Requests/AppearanceUpdateRequest.php');
+        $view = $this->read('Repository/Framework/Configuration/Views/pages/appearance.phtml');
+        $manager = $this->read('app/Framework/Appearance/PlatformAppearanceManager.php');
+
+        Assert::false(str_contains($view, 'name="logo_primary_path"'));
+        Assert::false(str_contains($view, 'name="logo_dark_path"'));
+        Assert::false(str_contains($view, 'name="favicon_path"'));
+        Assert::false(str_contains($request, "\$this->request->input('logo_primary_path'"));
+        Assert::false(str_contains($request, "\$this->request->input('logo_dark_path'"));
+        Assert::false(str_contains($request, "\$this->request->input('favicon_path'"));
+        Assert::contains("\$currentBrandingSettings['logo_primary_path']", $controller);
+        Assert::contains("\$currentBrandingSettings['logo_dark_path']", $controller);
+        Assert::contains("\$currentBrandingSettings['favicon_path']", $controller);
+        Assert::contains('$this->rawSettings()', $manager);
+        Assert::contains('foreach (self::BRANDING_KEYS as $key)', $manager);
+        Assert::contains('unset($settings[$key])', $manager);
+        Assert::false(str_contains($manager, '$this->mergeRecursiveDistinct($this->settings(), $payload)'));
     }
 
     private function read(string $relative): string

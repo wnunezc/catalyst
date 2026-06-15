@@ -63,12 +63,57 @@ final class TestFeaturesArchitectureTest extends TestCase
 
         Assert::contains("'page_header' =>", $controller);
         Assert::contains('{{> "components._page-header" }}', $page);
-        Assert::contains('test-features-page', $page);
+        Assert::false(str_contains($page, 'test-features-page'));
         Assert::false(str_contains($page, '../partials/_tf-header'));
         Assert::false(str_contains($page, 'tf-admin-page'));
         Assert::false(str_contains($styles, 'tf-admin-page'));
         Assert::false(str_contains($styles, 'ui-admin-table'));
         Assert::false(str_contains($styles, 'devtools-admin-page'));
+    }
+
+    public function testDiagnosticGroupsUseNativeBootstrapCards(): void
+    {
+        $partials = glob($this->root . '/Repository/Framework/DevTools/Views/partials/_tf-*.phtml') ?: [];
+
+        Assert::same(18, count($partials), 'The diagnostic group inventory changed.');
+
+        foreach ($partials as $partial) {
+            $source = file_get_contents($partial);
+            if (!is_string($source)) {
+                throw new \RuntimeException("Unable to read {$partial}.");
+            }
+
+            Assert::contains('class="card h-100"', $source);
+            Assert::false(
+                str_contains($source, 'section-card'),
+                "{$partial} still replaces the native Bootstrap card contract."
+            );
+        }
+    }
+
+    public function testDiagnosticTablesUseNativeBootstrapTableClasses(): void
+    {
+        $partials = glob($this->root . '/Repository/Framework/DevTools/Views/partials/_tf-*.phtml') ?: [];
+
+        foreach ($partials as $partial) {
+            $source = file_get_contents($partial);
+            if (!is_string($source)) {
+                throw new \RuntimeException("Unable to read {$partial}.");
+            }
+
+            Assert::false(
+                str_contains($source, 'sys-table'),
+                "{$partial} still uses the ownerless sys-table alias."
+            );
+        }
+    }
+
+    public function testHarnessBoundaryIsContextInsteadOfDecorativeAlert(): void
+    {
+        $page = $this->read('Repository/Framework/DevTools/Views/pages/test-features.phtml');
+
+        Assert::contains('class="text-muted small mb-3"', $page);
+        Assert::false(str_contains($page, 'alert alert-info border-0 shadow-sm'));
     }
 
     public function testPublishedDevToolsScriptMatchesItsSource(): void
@@ -143,7 +188,7 @@ final class TestFeaturesArchitectureTest extends TestCase
         $actions = $this->read('test/framework/Playwright/specs/test-features-actions.spec.cjs');
         $surfaceHelper = $this->read('test/framework/Playwright/helpers/surface.cjs');
 
-        Assert::contains('.test-features-page', $runtime);
+        Assert::contains('main .card', $runtime);
         Assert::contains('[data-page-header]', $runtime);
         Assert::contains('[data-devtools-action="toast"]', $actions);
         Assert::contains('[data-devtools-action="partial-refresh"]', $actions);

@@ -13,7 +13,7 @@ export function initCardActions(options = {}) {
                 return;
             }
 
-            card.classList.add('catalyst-card-closing');
+            card.dataset.catalystClosing = 'true';
             window.setTimeout(() => {
                 card.remove();
             }, 300);
@@ -32,7 +32,11 @@ export function initCardActions(options = {}) {
                 return;
             }
 
-            card.classList.toggle('catalyst-card-collapsed');
+            if (card.dataset.catalystCollapsed === 'true') {
+                delete card.dataset.catalystCollapsed;
+            } else {
+                card.dataset.catalystCollapsed = 'true';
+            }
         });
     });
 
@@ -48,7 +52,11 @@ export function initCardActions(options = {}) {
                 return;
             }
 
-            card.classList.toggle('catalyst-code-collapsed');
+            if (card.dataset.catalystCodeCollapsed === 'true') {
+                delete card.dataset.catalystCodeCollapsed;
+            } else {
+                card.dataset.catalystCodeCollapsed = 'true';
+            }
         });
     });
 
@@ -64,10 +72,10 @@ export function initCardActions(options = {}) {
                 return;
             }
 
-            let overlay = card.querySelector('.card-overlay');
+            let overlay = card.querySelector('.activity-overlay');
             if (!(overlay instanceof HTMLElement)) {
                 overlay = document.createElement('div');
-                overlay.className = 'card-overlay';
+                overlay.className = 'activity-overlay';
                 overlay.innerHTML = '<div class="spinner-border text-primary" role="status" aria-hidden="true"></div>';
                 card.appendChild(overlay);
             }

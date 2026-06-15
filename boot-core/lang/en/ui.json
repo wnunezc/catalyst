@@ -161,7 +161,12 @@
     "previous": "Previous",
     "next": "Next",
     "first": "First",
-    "last": "Last"
+    "last": "Last",
+    "copy": "Copy full value",
+    "copied": "Copied"
+  },
+  "activity": {
+    "release_interface": "Release interface"
   },
   "form_builder": {
     "items": "Items",

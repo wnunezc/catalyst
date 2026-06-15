@@ -73,6 +73,7 @@ final class DataGrid
         'print_label' => 'Print',
         'print_icon' => 'fa-solid fa-print',
         'bulk_name' => 'selected',
+        'inset_table' => true,
     ];
 
     /**
@@ -419,6 +420,18 @@ final class DataGrid
     }
 
     /**
+     * Insets the table inside the card body while preserving DataGrid controls.
+     *
+     * Responsibility: Selects classic table geometry for bounded datasets that still consume DataGrid interactions.
+     */
+    public function insetTable(bool $inset = true): self
+    {
+        $this->config['inset_table'] = $inset;
+
+        return $this;
+    }
+
+    /**
      * Registers the provider callback that returns rows and total count for resolved state.
      *
      * Responsibility: Registers the provider callback that returns rows and total count for resolved state.
@@ -680,6 +693,7 @@ final class DataGrid
             'empty_title' => (string) $this->config['empty_title'],
             'empty_message' => (string) $this->config['empty_message'],
             'empty_action' => $this->normalizeEmptyAction(),
+            'inset_table' => !empty($this->config['inset_table']),
             'bulk' => [
                 'name' => (string) ($this->config['bulk_name'] ?? 'selected'),
                 'actions' => $this->normalizeBulkActions($state),

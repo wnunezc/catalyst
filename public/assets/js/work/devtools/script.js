@@ -533,21 +533,25 @@ async function initUmlShowcase() {
         return;
     }
 
-    const buttons = Array.from(document.querySelectorAll('.uml-nav-tab[data-tab]'));
+    const buttons = Array.from(showcase.querySelectorAll('[data-bs-toggle="tab"]'));
     const root = document.documentElement;
 
     cacheMermaidSources();
     ensureMermaidTheme(true);
 
     buttons.forEach(button => {
-        button.addEventListener('click', () => {
-            showUmlTab(button.getAttribute('data-tab'), button);
+        button.addEventListener('shown.bs.tab', (event) => {
+            const selector = event.target instanceof HTMLElement
+                ? event.target.getAttribute('data-bs-target')
+                : '';
+            const panel = selector ? document.querySelector(selector) : null;
+            if (panel instanceof HTMLElement) {
+                void renderUmlTab(panel);
+            }
         });
     });
 
-    bindUmlKeyboardNavigation(buttons);
-
-    const active = document.querySelector('.uml-tab-content.active');
+    const active = showcase.querySelector('.tab-pane.active');
     if (active) {
         void renderUmlTab(active);
     }
@@ -565,7 +569,7 @@ async function initUmlShowcase() {
 
             ensureMermaidTheme(false);
 
-            const current = document.querySelector('.uml-tab-content.active');
+            const current = showcase.querySelector('.tab-pane.active');
             if (current) {
                 void renderUmlTab(current);
             }
@@ -614,6 +618,7 @@ function ensureMermaidTheme(force) {
         noteBkgColor: surfaceAlt,
         noteTextColor: bodyColor,
         noteBorderColor: primary,
+        fontSize: '18px',
     };
     const nextThemeSignature = JSON.stringify(themeVariables);
 
@@ -626,7 +631,13 @@ function ensureMermaidTheme(force) {
         startOnLoad: false,
         theme: 'base',
         themeVariables,
-        flowchart: { curve: 'basis', padding: 20 },
+        flowchart: {
+            curve: 'basis',
+            padding: 24,
+            nodeSpacing: 50,
+            rankSpacing: 60,
+            useMaxWidth: false,
+        },
     });
 
     document.querySelectorAll('.mermaid').forEach(node => {
@@ -673,58 +684,6 @@ async function renderUmlTab(tabEl) {
     for (let index = 0; index < nodes.length; index += 1) {
         await renderMermaidNode(nodes[index], index);
     }
-}
-
-function showUmlTab(id, button) {
-    document.querySelectorAll('.uml-tab-content').forEach(element => {
-        element.classList.remove('active');
-        element.hidden = true;
-    });
-
-    document.querySelectorAll('.uml-nav-tab').forEach(element => {
-        element.classList.remove('active');
-        element.setAttribute('aria-selected', 'false');
-        element.setAttribute('tabindex', '-1');
-    });
-
-    const tab = document.getElementById(`uml-tab-${id}`);
-    if (!tab || !button) {
-        return;
-    }
-
-    tab.classList.add('active');
-    tab.hidden = false;
-    button.classList.add('active');
-    button.setAttribute('aria-selected', 'true');
-    button.setAttribute('tabindex', '0');
-    button.focus();
-    void renderUmlTab(tab);
-}
-
-function bindUmlKeyboardNavigation(buttons) {
-    buttons.forEach((button, index) => {
-        button.addEventListener('keydown', event => {
-            let targetIndex = null;
-
-            if (event.key === 'ArrowRight') {
-                targetIndex = (index + 1) % buttons.length;
-            } else if (event.key === 'ArrowLeft') {
-                targetIndex = (index - 1 + buttons.length) % buttons.length;
-            } else if (event.key === 'Home') {
-                targetIndex = 0;
-            } else if (event.key === 'End') {
-                targetIndex = buttons.length - 1;
-            }
-
-            if (targetIndex === null) {
-                return;
-            }
-
-            event.preventDefault();
-            const target = buttons[targetIndex];
-            showUmlTab(target.getAttribute('data-tab'), target);
-        });
-    });
 }
 
 function ensureExternalScript(src, datasetKey) {

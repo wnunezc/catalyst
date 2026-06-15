@@ -49,6 +49,27 @@ final class AssetUrlTest extends TestCase
         );
     }
 
+    public function testRuntimeEntryUsesDeterministicDependencyTreeVersion(): void
+    {
+        $versioned = AssetUrl::versionedTree(
+            '/assets/js/catalyst/runtime/ui-runtime.js',
+            '/assets/js/catalyst',
+            $this->publicRoot
+        );
+
+        Assert::true(
+            preg_match('#^/assets/js/catalyst/runtime/ui-runtime\.js\?v=[a-f0-9]{16}$#', $versioned) === 1
+        );
+        Assert::same(
+            $versioned,
+            AssetUrl::versionedTree(
+                '/assets/js/catalyst/runtime/ui-runtime.js',
+                '/assets/js/catalyst',
+                $this->publicRoot
+            )
+        );
+    }
+
     public function testExternalUrlsAreNotRewritten(): void
     {
         Assert::same(
@@ -67,6 +88,10 @@ final class AssetUrlTest extends TestCase
         );
         Assert::contains(
             'AssetUrl::versioned("/assets/js/work/{$slug}/script.js")',
+            $scope
+        );
+        Assert::contains(
+            "AssetUrl::versionedTree(\n                '/assets/js/catalyst/runtime/ui-runtime.js',\n                '/assets/js/catalyst'\n            )",
             $scope
         );
     }

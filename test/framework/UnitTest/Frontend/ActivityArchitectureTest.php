@@ -26,6 +26,8 @@ final class ActivityArchitectureTest extends TestCase
         Assert::contains('aria-live="polite"', $document);
         Assert::contains('aria-modal="true"', $document);
         Assert::contains('data-activity-state="booting"', $document);
+        Assert::contains('{{#if is_development}}', $document);
+        Assert::contains('data-catalyst-activity-release', $document);
     }
 
     public function testActivityOverlayCssIsLoadedCentrallyBeforeTheBodyRuntime(): void
@@ -46,6 +48,7 @@ final class ActivityArchitectureTest extends TestCase
     {
         $runtime = $this->read('public/assets/js/catalyst/runtime/ui-runtime.js');
         $activity = $this->read('public/assets/js/catalyst/runtime/activity-manager.js');
+        $scope = $this->read('app/Framework/View/DocumentScope.php');
         $activeSource = $this->readDirectory('public/assets/js/catalyst', ['js']);
 
         Assert::contains("loadRuntimeModule('core.activity'", $runtime);
@@ -55,6 +58,9 @@ final class ActivityArchitectureTest extends TestCase
         Assert::contains('begin(options = {})', $activity);
         Assert::contains('finish(token)', $activity);
         Assert::contains('this.tokens = new Map()', $activity);
+        Assert::contains('[data-catalyst-activity-release]', $activity);
+        Assert::contains('this.reset()', $activity);
+        Assert::contains("'is_development' => defined('IS_DEVELOPMENT')", $scope);
     }
 
     public function testActivityManagerCoordinatesInternalNavigationAndNativeSubmits(): void
@@ -110,6 +116,8 @@ final class ActivityArchitectureTest extends TestCase
         Assert::contains("activity_probe", $controller);
         Assert::contains("\$probe === 'success'", $controller);
         Assert::contains("\$probe === 'error'", $controller);
+        Assert::contains("__('devtools.activity_runtime.error'), 422", $controller);
+        Assert::false(str_contains($controller, "__('devtools.activity_runtime.error'), 500"));
         Assert::contains('../partials/_tf-activity', $page);
         Assert::contains('data-devtools-action="activity-foreground"', $partial);
         Assert::contains('data-devtools-action="activity-background"', $partial);

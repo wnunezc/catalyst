@@ -20,17 +20,17 @@
         <div class="d-flex align-items-center gap-2">
             <div class="logo-topbar">
                 <a href="{{ brand_home_href }}" class="logo-light">
-                    <span class="logo-lg"><img src="/assets/vendor/inspinia/images/logo.png" alt="{{ brand_name }}"></span>
-                    <span class="logo-sm"><img src="/assets/vendor/inspinia/images/logo-sm.png" alt="{{ brand_name }}"></span>
+                    <span class="logo-lg"><img src="{{ brand_logo_dark_url }}" alt="{{ brand_name }}"></span>
+                    <span class="logo-sm"><img src="{{ brand_logo_small_url }}" alt="{{ brand_name }}"></span>
                 </a>
                 <a href="{{ brand_home_href }}" class="logo-dark">
-                    <span class="logo-lg"><img src="/assets/vendor/inspinia/images/logo-black.png" alt="{{ brand_name }}"></span>
-                    <span class="logo-sm"><img src="/assets/vendor/inspinia/images/logo-sm.png" alt="{{ brand_name }}"></span>
+                    <span class="logo-lg"><img src="{{ brand_logo_light_url }}" alt="{{ brand_name }}"></span>
+                    <span class="logo-sm"><img src="{{ brand_logo_small_url }}" alt="{{ brand_name }}"></span>
                 </a>
             </div>
 
             {{#if topbar_is_account_surface}}
-            <div class="account-topbar-title d-none d-xl-flex">
+            <div class="topbar-context d-none d-xl-flex">
                 <span>{{ topbar_workspace_label }}</span>
                 {{#if topbar_has_page_title}}<strong>{{ topbar_page_title }}</strong>{{/if}}
             </div>
@@ -53,7 +53,7 @@
             </div>
             {{/if}}
 
-            <div id="simple-user-dropdown" class="topbar-item nav-user catalyst-user-dropdown{{#if topbar_is_account_surface}} account-user-dropdown{{/if}}">
+            <div id="simple-user-dropdown" class="topbar-item nav-user catalyst-user-dropdown">
                 <div class="dropdown">
                     <a class="topbar-link dropdown-toggle drop-arrow-none px-2"
                        data-bs-toggle="dropdown"
@@ -65,15 +65,15 @@
                        title="{{ topbar_account_menu_title }}">
                         <img src="{{ auth_avatar_src }}" width="32" class="rounded-circle me-lg-2 d-flex" alt="user-image">
                         <div class="d-lg-flex align-items-center gap-1 d-none">
-                            <h5 class="my-0 catalyst-account-label{{#if topbar_is_account_surface}} account-menu-label{{/if}}">{{ topbar_account_menu_label }}</h5>
+                            <h5 class="my-0 catalyst-account-label">{{ topbar_account_menu_label }}</h5>
                             <i class="ti ti-chevron-down align-middle"></i>
                         </div>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-end{{#if topbar_is_account_surface}} account-user-menu{{/if}}">
-                        <div class="dropdown-header catalyst-account-summary{{#if topbar_is_account_surface}} account-user-summary{{/if}}">
-                            <span class="catalyst-account-summary__name{{#if topbar_is_account_surface}} account-user-summary__name{{/if}}">{{ auth_name }}</span>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <div class="dropdown-header catalyst-account-summary">
+                            <span class="catalyst-account-summary__name">{{ auth_name }}</span>
                             {{#if has_auth_email}}
-                            <span class="catalyst-account-summary__email{{#if topbar_is_account_surface}} account-user-summary__email{{/if}}">{{ auth_email }}</span>
+                            <span class="catalyst-account-summary__email">{{ auth_email }}</span>
                             {{/if}}
                             {{#if has_auth_role}}
                             <span class="catalyst-account-summary__email">{{ auth_role }}</span>

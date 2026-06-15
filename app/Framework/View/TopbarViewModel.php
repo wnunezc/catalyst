@@ -30,7 +30,7 @@ final class TopbarViewModel
         $isPublicSurface = !empty($scope['is_public_surface']);
         $isAccountSurface = !empty($scope['is_account_surface']) && !empty($scope['is_authenticated']);
         $isInternalSurface = !$isPublicSurface && empty($scope['is_account_guest']);
-        $topbarClass = self::topbarClass((string) ($scope['topbar_class'] ?? 'app-topbar'), $isAccountSurface);
+        $topbarClass = self::topbarClass((string) ($scope['topbar_class'] ?? 'app-topbar'));
         $menuItems = self::accountMenuItems($scope, $isAccountSurface, $isInternalSurface);
 
         return [
@@ -105,15 +105,9 @@ final class TopbarViewModel
         return array_key_exists($key, $scope) ? (bool) $scope[$key] : $default;
     }
 
-    private static function topbarClass(string $class, bool $isAccountSurface): string
+    private static function topbarClass(string $class): string
     {
-        $class = trim($class) !== '' ? trim($class) : 'app-topbar';
-
-        if ($isAccountSurface && !str_contains(' ' . $class . ' ', ' account-topbar ')) {
-            $class .= ' account-topbar';
-        }
-
-        return $class;
+        return trim($class) !== '' ? trim($class) : 'app-topbar';
     }
 
     private static function safeIconClass(string $class, string $default): string

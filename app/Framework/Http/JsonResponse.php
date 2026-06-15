@@ -287,14 +287,10 @@ class JsonResponse extends Response
      *
      * Responsibility: Adds a client-side redirect instruction to the payload.
      */
-    public function withRedirect(string $url, int $delay = 300): self
+    public function withRedirect(string $url): self
     {
         $data             = is_array($this->data) ? $this->data : ['data' => $this->data];
         $data['redirect'] = $url;
-
-        if ($delay > 0) {
-            $data['redirectDelay'] = $delay;
-        }
 
         $this->data = $data;
         $this->setContent($this->encodeData($data));
@@ -307,14 +303,10 @@ class JsonResponse extends Response
      *
      * Responsibility: Adds a client-side page refresh instruction to the payload.
      */
-    public function withRefresh(int $delay = 300): self
+    public function withRefresh(): self
     {
         $data           = is_array($this->data) ? $this->data : ['data' => $this->data];
         $data['refresh'] = true;
-
-        if ($delay > 0) {
-            $data['refreshDelay'] = $delay;
-        }
 
         $this->data = $data;
         $this->setContent($this->encodeData($data));

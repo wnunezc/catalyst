@@ -367,7 +367,7 @@ class Kernel
         $safeTicket = htmlspecialchars((string) ($ticket ?? ''), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
         $ticketHtml = $safeTicket !== '' ? '<p>Error ID: ' . $safeTicket . '</p>' : '';
 
-        return '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>' . $safeTitle . '</title><link href="/assets/css/catalyst/error-surface.css" rel="stylesheet"></head><body class="catalyst-error-shell-body"><main class="catalyst-error-shell"><section class="catalyst-error-card"><h1>' . $safeTitle . '</h1><p>Sorry, an error occurred while processing your request.</p>' . $ticketHtml . '</section></main></body></html>';
+        return '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>' . $safeTitle . '</title><link href="/assets/vendor/inspinia/css/app.min.css" rel="stylesheet"><link href="/assets/css/catalyst/error-surface.css" rel="stylesheet"></head><body class="catalyst-error-shell-body"><main class="catalyst-error-shell"><section class="card"><div class="card-body"><h1>' . $safeTitle . '</h1><p>Sorry, an error occurred while processing your request.</p>' . $ticketHtml . '</div></section></main></body></html>';
     }
 
 

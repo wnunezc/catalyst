@@ -16,7 +16,7 @@ final class FrameworkConsumersArchitectureTest extends TestCase
         $this->root = dirname(__DIR__, 4);
     }
 
-    public function testCrudOrientedFrameworkConsumersUseNeutralModuleWrappers(): void
+    public function testCrudOrientedFrameworkConsumersDoNotUseNamedModuleWrappers(): void
     {
         $contracts = [
             'ApiManagement' => ['Operations/ApiManagement', 'apimanagement-admin-page', 'apimanagement-page'],
@@ -28,10 +28,13 @@ final class FrameworkConsumersArchitectureTest extends TestCase
 
         foreach ($contracts as $module => [$path, $legacy, $neutral]) {
             $source = $this->moduleSource($path);
-            Assert::contains($neutral, $source);
             Assert::false(
                 str_contains($source, $legacy),
                 "{$module} still uses its legacy admin wrapper."
+            );
+            Assert::false(
+                str_contains($source, $neutral),
+                "{$module} still uses a named visual wrapper."
             );
         }
     }
@@ -42,20 +45,22 @@ final class FrameworkConsumersArchitectureTest extends TestCase
         $users = $this->moduleSource('Users');
         $configuration = $this->moduleSource('Configuration');
 
-        Assert::contains('surface-section-card', $audit);
+        Assert::false(str_contains($audit, 'audit-show-page'));
         Assert::false(str_contains($audit, 'admin-section-card'));
 
         $operations = $this->moduleSource('Operations');
         Assert::false(str_contains($operations, 'admin-content-shell'));
         Assert::false(str_contains($operations, 'admin-section-card'));
 
-        Assert::contains('surface-enrollment-form', $users);
+        Assert::contains('groupSectionsInCard', $users);
+        Assert::contains('col-12 col-md-6', $users);
+        Assert::false(str_contains($users, 'surface-enrollment-form'));
         Assert::false(str_contains($users, 'rbac-' . 'ad' . 'min-page'));
         Assert::false(str_contains($users, 'ad' . 'min-enrollment-form'));
         Assert::false(str_contains($users, 'ad' . 'min-section-card'));
 
         Assert::contains('surface-content-shell', $configuration);
-        Assert::contains('surface-panel-grid', $configuration);
+        Assert::contains('row g-3 mb-3', $configuration);
         Assert::false(str_contains($configuration, 'admin-content-shell'));
         Assert::false(str_contains($configuration, 'admin-section-card'));
         Assert::false(str_contains($configuration, 'admin-panel-'));
@@ -80,6 +85,18 @@ final class FrameworkConsumersArchitectureTest extends TestCase
         Assert::false(str_contains($topbar, 'demo-ui-user-dropdown'));
         Assert::false(str_contains($topbar, 'demo-ui-account-label'));
         Assert::false(str_contains($topbar, 'demo-ui-account-summary'));
+    }
+
+    public function testFeatureFlagsMetricsUseNativeCardsAfterThePageHeader(): void
+    {
+        $template = $this->readFile('Repository/Framework/Configuration/Views/pages/feature-flags.phtml');
+        $scope = $this->readFile('Repository/Framework/Configuration/Views/scope/pages/feature-flags.php');
+
+        Assert::contains('{{#each feature_metrics}}', $template);
+        Assert::contains('class="row g-3 mb-3"', $template);
+        Assert::contains('class="card h-100"', $template);
+        Assert::contains("'feature_metrics' => [", $scope);
+        Assert::false(str_contains($scope, "'metrics' => ["));
     }
 
     public function testDemoUiControllerOnlySuppliesNavigationCatalogData(): void

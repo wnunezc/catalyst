@@ -1,45 +1,49 @@
 <div class="col-12">
-    <div class="section-card">
+    <div class="card h-100">
         <div class="card-header"><i class="fa-solid fa-server me-2"></i>{{ t:devtools.system_info.title }}</div>
         <div class="card-body">
             <div class="row g-3">
                 <div class="col-12 col-md-6">
-                    <table class="table table-sm sys-table">
-                        <thead><tr><th>{{ t:devtools.system_info.constants }}</th><th>{{ t:devtools.system_info.value }}</th></tr></thead>
-                        <tbody>
-                            {{#each constants_rows}}
-                            <tr>
-                                <td><span class="code-badge">{{ this.name }}</span></td>
-                                <td>
-                                    {{#if this.value_class}}
-                                    <span class="{{ this.value_class }}">{{ this.value }}</span>
-                                    {{else}}
-                                    {{ this.value }}
-                                    {{/if}}
-                                </td>
-                            </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead><tr><th>{{ t:devtools.system_info.constants }}</th><th>{{ t:devtools.system_info.value }}</th></tr></thead>
+                            <tbody>
+                                {{#each constants_rows}}
+                                <tr>
+                                    <td><span class="code-badge">{{ this.name }}</span></td>
+                                    <td>
+                                        {{#if this.value_class}}
+                                        <span class="{{ this.value_class }}">{{ this.value }}</span>
+                                        {{else}}
+                                        {{ this.value }}
+                                        {{/if}}
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="col-12 col-md-6">
-                    <table class="table table-sm sys-table">
-                        <thead><tr><th>{{ t:devtools.system_info.flash_state }}</th><th>{{ t:devtools.system_info.value }}</th></tr></thead>
-                        <tbody>
-                            {{#each flash_rows}}
-                            <tr>
-                                <td>{{ this.label }}</td>
-                                <td>
-                                    {{#if this.value_class}}
-                                    <span class="{{ this.value_class }}">{{ this.value }}</span>
-                                    {{else}}
-                                    {{ this.value }}
-                                    {{/if}}
-                                </td>
-                            </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead><tr><th>{{ t:devtools.system_info.flash_state }}</th><th>{{ t:devtools.system_info.value }}</th></tr></thead>
+                            <tbody>
+                                {{#each flash_rows}}
+                                <tr>
+                                    <td>{{ this.label }}</td>
+                                    <td>
+                                        {{#if this.value_class}}
+                                        <span class="{{ this.value_class }}">{{ this.value }}</span>
+                                        {{else}}
+                                        {{ this.value }}
+                                        {{/if}}
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

@@ -328,7 +328,7 @@ class MfaController extends Controller
             return $this->postActionErrorRedirect('/login', __('auth.messages.login_failed'), 401);
         }
 
-        return $this->postActionSuccessRedirect($safeRedirect, __('auth.messages.login_success'), null, 800);
+        return $this->postActionSuccessRedirect($safeRedirect, __('auth.messages.login_success'));
     }
 
     // -------------------------------------------------------------------------

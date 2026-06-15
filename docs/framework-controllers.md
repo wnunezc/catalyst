@@ -80,7 +80,7 @@ This file is regenerated from current PHP docblocks and the runtime inventory sc
 | `postActionSuccessRedirect()` | `protected` | Builds a success response for post-action redirects across HTML and JSON flows. | Builds a success response for post-action redirects across HTML and JSON flows. |
 | `postActionErrorRedirect()` | `protected` | Builds an error response for post-action redirects across HTML and JSON flows. | Builds an error response for post-action redirects across HTML and JSON flows. |
 | `isSequentialArray()` | `private` | Determines whether an array uses sequential numeric keys. | Determines whether an array uses sequential numeric keys. |
-| `postActionRedirect()` | `private` | Applies toast or flash state and returns the appropriate redirect response shape. | Applies toast or flash state and returns the appropriate redirect response shape. |
+| `postActionRedirect()` | `private` | Applies exactly one feedback channel and returns the appropriate redirect response shape. | Queues feedback for the destination before returning an immediate redirect response. |
 
 ### `Catalyst\Framework\Controllers\FlashController`
 

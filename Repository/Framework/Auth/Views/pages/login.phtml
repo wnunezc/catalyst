@@ -1,9 +1,9 @@
-<div class="card auth-card auth-card--sm">
+<div class="card w-100">
     <div class="card-body">
-        <div class="auth-card__header auth-card__header--center">
-            <span class="auth-card__eyebrow">Account access</span>
-            <h1 class="auth-card__title">{{ title }}</h1>
-            <p class="auth-card__subtitle">{{ t:auth.login.subtitle }}</p>
+        <div class="text-center mb-4">
+            <span class="small text-uppercase text-primary fw-semibold">Account access</span>
+            <h1 class="h3 mb-2">{{ title }}</h1>
+            <p class="text-muted mb-0">{{ t:auth.login.subtitle }}</p>
         </div>
 
         <form data-catalyst="form" method="POST" action="/login" novalidate>

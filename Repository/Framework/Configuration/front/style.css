@@ -1,56 +1,5 @@
 /* Configuration module: workflow-specific layout and interaction states. */
 
-.settings-console-hero__copy {
-    min-width: 16rem;
-}
-
-.settings-console-hero__metrics {
-    display: grid;
-    gap: .75rem;
-    grid-template-columns: repeat(6, minmax(6.25rem, 1fr));
-    width: min(100%, 48rem);
-}
-
-.settings-command-section__header,
-.settings-config-card__header,
-.settings-reference-card__header,
-.settings-config-card__title {
-    align-items: center;
-    display: flex;
-    gap: .75rem;
-    justify-content: space-between;
-}
-
-.settings-command-section__description {
-    max-width: 33rem;
-    text-align: right;
-}
-
-.settings-kv-row {
-    align-items: center;
-    display: grid;
-    gap: .5rem;
-    grid-template-columns: minmax(6rem, 7.75rem) minmax(0, 1fr);
-}
-
-.settings-kv-label,
-.settings-kv-value,
-.settings-metric__value {
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.settings-kv-value {
-    text-align: right;
-}
-
-.configuration-appearance-page {
-    display: grid;
-    gap: 1rem;
-}
-
 .configuration-customizer-option:has(input:checked) {
     border-color: var(--bs-primary);
 }
@@ -81,37 +30,4 @@ body.catalyst-shell-body .modal-dialog.modal-dialog-scrollable .modal-content,
 body.catalyst-shell-body .modal-dialog.modal-dialog-scrollable .modal-body,
 body.catalyst-shell-body .modal-dialog.modal-dialog-scrollable .modal-footer {
     pointer-events: auto !important;
-}
-
-@media (max-width: 1399.98px) {
-    .settings-console-hero__metrics {
-        grid-template-columns: repeat(3, minmax(7rem, 1fr));
-        width: 100%;
-    }
-}
-
-@media (max-width: 991.98px) {
-    .settings-command-section__header {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-
-    .settings-command-section__description {
-        max-width: none;
-        text-align: left;
-    }
-}
-
-@media (max-width: 575.98px) {
-    .settings-console-hero__metrics {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .settings-kv-row {
-        grid-template-columns: 1fr;
-    }
-
-    .settings-kv-value {
-        text-align: left;
-    }
 }

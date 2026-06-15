@@ -384,22 +384,6 @@ html[data-skin="red-cross"] .catalyst-status-bar button:hover {
     color: #c8102e;
 }
 
-html[data-skin="red-cross"] .landing-surface,
-html[data-skin="red-cross"] .home-surface,
-html[data-skin="red-cross"] .store-surface {
-    --surface-accent: var(--catalyst-red-cross-primary);
-    --surface-highlight: var(--catalyst-red-cross-primary-active);
-    --surface-ink: var(--catalyst-red-cross-ink);
-    --surface-muted: var(--catalyst-red-cross-muted);
-    --surface-panel: rgba(255, 255, 255, 0.92);
-    --surface-border: rgba(215, 25, 32, 0.14);
-}
-
-html[data-skin="red-cross"] .landing-surface {
-    --surface-accent: #fff1f2;
-    --surface-muted: rgba(255, 255, 255, 0.84);
-}
-
 /* Red Cross option preview inside Theme Customizer. */
 .catalyst-red-cross-skin-preview {
     display: block;

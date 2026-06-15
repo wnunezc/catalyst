@@ -1,11 +1,11 @@
-<div class="card settings-config-card settings-config-card--dkim h-100">
-    <div class="card-header settings-config-card__header">
-        <div class="settings-config-card__title">
-            <span class="settings-config-card__icon"><i class="fa-solid fa-key"></i></span>
+<div class="card h-100">
+    <div class="card-header">
+        <div class="d-flex align-items-center gap-2">
+            <span><i class="fa-solid fa-key"></i></span>
             <h6 class="mb-0 fw-semibold">{{ t:settings.dkim.card_title }}</h6>
         </div>
     </div>
-    <div class="card-body settings-dkim-card__body">
+    <div class="card-body">
         <p class="text-muted small mb-2">{{ t:settings.dkim.card_description }} <code>boot-core/dkim/</code>.</p>
         <form id="dkim-form" method="POST" action="/configuration/environment-setup/dkim/generate" novalidate data-catalyst="form">
             {{{ csrfField }}}

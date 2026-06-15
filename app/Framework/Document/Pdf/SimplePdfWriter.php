@@ -92,7 +92,10 @@ final class SimplePdfWriter implements PdfRendererInterface
         $objects[$fontBoldId] = '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>';
 
         if ($watermarkImage !== null && $watermarkStateId !== null && $watermarkImageId !== null) {
-            $opacity = max(0.02, min(0.35, (float) ($watermark['logo_opacity'] ?? 0.08)));
+            $hasBrandLogo = trim((string) ($watermark['brand_logo_path'] ?? '')) !== '';
+            $opacity = $hasBrandLogo
+                ? 1.0
+                : max(0.02, min(0.35, (float) ($watermark['logo_opacity'] ?? 0.08)));
             $objects[$watermarkStateId] = sprintf('<< /Type /ExtGState /ca %.3F /CA %.3F >>', $opacity, $opacity);
             $objects[$watermarkImageId] = sprintf(
                 "<< /Type /XObject /Subtype /Image /Width %d /Height %d /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length %d >>\nstream\n%s\nendstream",
@@ -141,7 +144,9 @@ final class SimplePdfWriter implements PdfRendererInterface
     private function buildPages(string $title, string $body, array $watermark, ?array $watermarkImage = null): array
     {
         $marginLeft = 50;
-        $marginTop = 786;
+        $marginTop = $watermarkImage !== null && trim((string) ($watermark['brand_logo_path'] ?? '')) !== ''
+            ? 720
+            : 786;
         $lineHeight = 16;
         $usableCharacters = 88;
         $lines = [];
@@ -291,7 +296,7 @@ final class SimplePdfWriter implements PdfRendererInterface
      */
     private function loadWatermarkImage(array $watermark): ?array
     {
-        $path = trim((string) ($watermark['logo_path'] ?? ''));
+        $path = trim((string) ($watermark['brand_logo_path'] ?? $watermark['logo_path'] ?? ''));
         if ($path === '' || !is_file($path)) {
             return null;
         }
@@ -307,14 +312,48 @@ final class SimplePdfWriter implements PdfRendererInterface
         }
 
         $mime = strtolower((string) ($imageInfo['mime'] ?? ''));
-        if (!in_array($mime, ['image/jpeg', 'image/jpg'], true)) {
+        if (in_array($mime, ['image/jpeg', 'image/jpg'], true)) {
+            return [
+                'bytes' => $bytes,
+                'width' => (int) ($imageInfo[0] ?? 0),
+                'height' => (int) ($imageInfo[1] ?? 0),
+            ];
+        }
+
+        if (!in_array($mime, ['image/png', 'image/webp'], true) || !function_exists('imagecreatefromstring')) {
+            return null;
+        }
+
+        $source = @imagecreatefromstring($bytes);
+        if ($source === false) {
+            return null;
+        }
+
+        $width = (int) ($imageInfo[0] ?? 0);
+        $height = (int) ($imageInfo[1] ?? 0);
+        $canvas = imagecreatetruecolor($width, $height);
+        if ($canvas === false) {
+            imagedestroy($source);
+            return null;
+        }
+
+        $white = imagecolorallocate($canvas, 255, 255, 255);
+        imagefill($canvas, 0, 0, $white);
+        imagecopy($canvas, $source, 0, 0, 0, 0, $width, $height);
+        ob_start();
+        $encoded = imagejpeg($canvas, null, 90);
+        $jpegBytes = ob_get_clean();
+        imagedestroy($source);
+        imagedestroy($canvas);
+
+        if (!$encoded || !is_string($jpegBytes) || $jpegBytes === '') {
             return null;
         }
 
         return [
-            'bytes' => $bytes,
-            'width' => (int) ($imageInfo[0] ?? 0),
-            'height' => (int) ($imageInfo[1] ?? 0),
+            'bytes' => $jpegBytes,
+            'width' => $width,
+            'height' => $height,
         ];
     }
 
@@ -332,6 +371,16 @@ final class SimplePdfWriter implements PdfRendererInterface
         $pageHeight = 842.0;
         $sourceWidth = max(1.0, (float) ($image['width'] ?? 1));
         $sourceHeight = max(1.0, (float) ($image['height'] ?? 1));
+        if (trim((string) ($watermark['brand_logo_path'] ?? '')) !== '') {
+            $maxWidth = max(60.0, min(180.0, (float) ($watermark['brand_logo_max_width'] ?? 120)));
+            $maxHeight = 55.0;
+            $scale = min($maxWidth / $sourceWidth, $maxHeight / $sourceHeight, 1.0);
+            $drawWidth = round($sourceWidth * $scale, 2);
+            $drawHeight = round($sourceHeight * $scale, 2);
+
+            return [$drawWidth, $drawHeight, 50.0, round(790.0 - $drawHeight, 2)];
+        }
+
         $maxWidth = max(160.0, min(340.0, (float) ($watermark['logo_max_width'] ?? 280)));
         $maxHeight = 220.0;
         $scale = min($maxWidth / $sourceWidth, $maxHeight / $sourceHeight, 1.0);

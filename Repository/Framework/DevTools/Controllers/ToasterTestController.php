@@ -157,7 +157,7 @@ class ToasterTestController extends Controller
         }
 
         if ($probe === 'error') {
-            return $this->jsonError(__('devtools.activity_runtime.error'), 500);
+            return $this->jsonError(__('devtools.activity_runtime.error'), 422);
         }
 
         $serverTime = date('Y-m-d H:i:s');

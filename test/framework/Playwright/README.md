@@ -22,6 +22,18 @@ Use `--grep` for a single surface:
 node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalyst --suite framework --grep "@modals"
 ```
 
+Run only exhaustive read-only coverage:
+
+```powershell
+node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalyst --suite framework --project surface-parallel --grep "@roadmap7-full"
+```
+
+Run only stateful/serial coverage:
+
+```powershell
+node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalyst --suite framework --project stateful-serial
+```
+
 ## Environment
 
 - Default URL: `https://catalyst.dock`
@@ -30,9 +42,11 @@ node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalys
 - Override with `CATALYST_MFA_FORGE`.
 - Authenticated runs read local secrets from
   `D:\OpsZone\DevWorkspace\Engines\Playwright\.secrets\catalyst.e2e.json`.
-- The Catalyst harness uses one worker because authenticated tests share the
-  local account and MFA service; concurrent login challenges are not a stable
-  project contract.
+- `auth-setup` creates isolated authenticated sessions sequentially; MFA
+  challenges never run concurrently.
+- `surface-parallel` uses four read-only workers by default. Override with
+  `CATALYST_E2E_PARALLEL_WORKERS`.
+- `stateful-serial` retains one worker for shared-state interactions.
 - `CATALYST_E2E_EMAIL`, `CATALYST_E2E_PASSWORD` and
   `CATALYST_E2E_MFA_SERVICE` may override the engine-local values.
 - Do not commit account identifiers or credentials in this repo.

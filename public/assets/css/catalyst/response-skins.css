@@ -562,23 +562,6 @@ html[data-skin="grempa"] .catalyst-status-bar button:hover {
     color: var(--catalyst-response-primary);
 }
 
-html[data-skin="civil-protection"] .landing-surface,
-html[data-skin="civil-protection"] .home-surface,
-html[data-skin="civil-protection"] .store-surface,
-html[data-skin="firefighters"] .landing-surface,
-html[data-skin="firefighters"] .home-surface,
-html[data-skin="firefighters"] .store-surface,
-html[data-skin="grempa"] .landing-surface,
-html[data-skin="grempa"] .home-surface,
-html[data-skin="grempa"] .store-surface {
-    --surface-accent: var(--catalyst-response-primary);
-    --surface-highlight: var(--catalyst-response-accent);
-    --surface-ink: var(--catalyst-response-ink);
-    --surface-muted: var(--catalyst-response-muted);
-    --surface-panel: color-mix(in srgb, var(--catalyst-response-surface) 92%, transparent);
-    --surface-border: rgba(var(--catalyst-response-primary-rgb), 0.18);
-}
-
 /* Generic preview cards for extra closed skins. */
 .catalyst-response-skin-preview {
     display: block;

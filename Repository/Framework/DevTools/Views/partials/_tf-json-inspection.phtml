@@ -1,18 +1,20 @@
 <div class="col-12 col-lg-6">
-    <div class="section-card">
+    <div class="card h-100">
         <div class="card-header"><i class="fa-solid fa-code me-2"></i>{{ t:devtools.json_inspection.title }}</div>
         <div class="card-body">
             <p class="text-muted small mb-2">{{ t:devtools.json_inspection.description }}</p>
-            <table class="table table-sm sys-table">
-                <thead><tr><th>{{ t:devtools.json_inspection.columns.method }}</th><th>{{ t:devtools.json_inspection.columns.endpoint }}</th></tr></thead>
-                <tbody>
-                    <tr><td><span class="code-badge">json()</span></td><td><a href="/test-features/json" target="_blank" class="json-link">/test-features/json ↗</a></td></tr>
-                    <tr><td><span class="code-badge">jsonSuccess()</span></td><td><a href="/test-features/json-success" target="_blank" class="json-link">/test-features/json-success ↗</a></td></tr>
-                    <tr><td><span class="code-badge">jsonError()</span></td><td><a href="/test-features/json-error" target="_blank" class="json-link">/test-features/json-error ↗</a></td></tr>
-                    <tr><td><span class="code-badge">jsonValidationError()</span></td><td><a href="/test-features/validation-error" target="_blank" class="json-link">/test-features/validation-error ↗</a></td></tr>
-                    <tr><td><span class="code-badge">apiResponse()</span></td><td><a href="/test-features/api-response" target="_blank" class="json-link">/test-features/api-response ↗</a></td></tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-sm">
+                    <thead><tr><th>{{ t:devtools.json_inspection.columns.method }}</th><th>{{ t:devtools.json_inspection.columns.endpoint }}</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="code-badge">json()</span></td><td><a href="/test-features/json" target="_blank" class="json-link">/test-features/json ↗</a></td></tr>
+                        <tr><td><span class="code-badge">jsonSuccess()</span></td><td><a href="/test-features/json-success" target="_blank" class="json-link">/test-features/json-success ↗</a></td></tr>
+                        <tr><td><span class="code-badge">jsonError()</span></td><td><a href="/test-features/json-error" target="_blank" class="json-link">/test-features/json-error ↗</a></td></tr>
+                        <tr><td><span class="code-badge">jsonValidationError()</span></td><td><a href="/test-features/validation-error" target="_blank" class="json-link">/test-features/validation-error ↗</a></td></tr>
+                        <tr><td><span class="code-badge">apiResponse()</span></td><td><a href="/test-features/api-response" target="_blank" class="json-link">/test-features/api-response ↗</a></td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

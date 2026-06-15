@@ -1,12 +1,12 @@
-<div class="surface-page surface-page-shell users-page">
+<div class="surface-page surface-page-shell">
     {{> "components._page-header" }}
 
-    <section class="rbac-section card mb-3">
+    <section class="card mb-3">
         <div class="card-header">
-            <div class="rbac-section__head">
+            <div class="d-flex align-items-center flex-wrap gap-3 justify-content-between">
                 <div>
-                    <h2 class="rbac-section__title mb-1">{{ t:roles.organization_hierarchy.organizations }}</h2>
-                    <p class="rbac-section__subtitle mb-0">{{ t:roles.organization_hierarchy.organizations_help }}</p>
+                    <h2 class="card-title mb-1">{{ t:roles.organization_hierarchy.organizations }}</h2>
+                    <p class="text-muted mb-0">{{ t:roles.organization_hierarchy.organizations_help }}</p>
                 </div>
                 <span class="rbac-chip">{{ organizationCountLabel }}</span>
             </div>
@@ -32,7 +32,7 @@
             </form>
             {{#if organizationRows}}
                 <div class="table-responsive">
-                    <table class="table table-sm align-middle">
+                    <table class="table table-striped table-hover align-middle mb-0">
                         <thead><tr><th>{{ t:roles.common.name }}</th><th>{{ t:roles.common.slug }}</th><th>{{ t:roles.common.description }}</th></tr></thead>
                         <tbody>
                         {{#each organizationRows}}
@@ -45,8 +45,8 @@
         </div>
     </section>
 
-    <section class="rbac-section card mb-3">
-        <div class="card-header"><h2 class="rbac-section__title mb-0">{{ t:roles.organization_hierarchy.scopes }}</h2></div>
+    <section class="card mb-3">
+        <div class="card-header"><h2 class="card-title mb-0">{{ t:roles.organization_hierarchy.scopes }}</h2></div>
         <div class="card-body">
             <form data-catalyst="form" method="POST" action="/users/organization-hierarchy/scopes" class="row g-3 mb-4">
                 {{{ csrfField }}}
@@ -78,7 +78,7 @@
             </form>
             {{#if scopeRows}}
                 <div class="table-responsive">
-                    <table class="table table-sm align-middle">
+                    <table class="table table-striped table-hover align-middle mb-0">
                         <thead><tr><th>{{ t:roles.organization_hierarchy.organization }}</th><th>{{ t:roles.organization_hierarchy.scope_key }}</th><th>{{ t:roles.organization_hierarchy.label }}</th></tr></thead>
                         <tbody>
                         {{#each scopeRows}}
@@ -91,8 +91,8 @@
         </div>
     </section>
 
-    <section class="rbac-section card mb-3">
-        <div class="card-header"><h2 class="rbac-section__title mb-0">{{ t:roles.organization_hierarchy.levels }}</h2></div>
+    <section class="card mb-3">
+        <div class="card-header"><h2 class="card-title mb-0">{{ t:roles.organization_hierarchy.levels }}</h2></div>
         <div class="card-body">
             <form data-catalyst="form" method="POST" action="/users/organization-hierarchy/levels" class="row g-3 mb-4">
                 {{{ csrfField }}}
@@ -124,7 +124,7 @@
             </form>
             {{#if levelRows}}
                 <div class="table-responsive">
-                    <table class="table table-sm align-middle">
+                    <table class="table table-striped table-hover align-middle mb-0">
                         <thead><tr><th>{{ t:roles.organization_hierarchy.scope }}</th><th>{{ t:roles.organization_hierarchy.code }}</th><th>{{ t:roles.organization_hierarchy.label }}</th><th>{{ t:roles.organization_hierarchy.order }}</th></tr></thead>
                         <tbody>
                         {{#each levelRows}}
@@ -137,8 +137,8 @@
         </div>
     </section>
 
-    <section class="rbac-section card">
-        <div class="card-header"><h2 class="rbac-section__title mb-0">{{ t:roles.organization_hierarchy.units }}</h2></div>
+    <section class="card">
+        <div class="card-header"><h2 class="card-title mb-0">{{ t:roles.organization_hierarchy.units }}</h2></div>
         <div class="card-body">
             <form data-catalyst="form" method="POST" action="/users/organization-hierarchy/units" class="row g-3 mb-4">
                 {{{ csrfField }}}
@@ -170,7 +170,7 @@
             </form>
             {{#if unitRows}}
                 <div class="table-responsive">
-                    <table class="table table-sm align-middle">
+                    <table class="table table-striped table-hover align-middle mb-0">
                         <thead><tr><th>{{ t:roles.organization_hierarchy.organization }}</th><th>{{ t:roles.common.name }}</th><th>{{ t:roles.organization_hierarchy.code }}</th><th>{{ t:roles.organization_hierarchy.unit_type }}</th></tr></thead>
                         <tbody>
                         {{#each unitRows}}

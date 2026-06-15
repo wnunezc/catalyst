@@ -161,7 +161,12 @@
     "previous": "Anterior",
     "next": "Siguiente",
     "first": "Primera",
-    "last": "Última"
+    "last": "Última",
+    "copy": "Copiar valor completo",
+    "copied": "Copiado"
+  },
+  "activity": {
+    "release_interface": "Liberar interfaz"
   },
   "form_builder": {
     "items": "Ítems",

@@ -1,7 +1,7 @@
 {{#if render_without_wrapper}}
     {{> "./_field-control" }}
 {{else}}
-    <div class="{{ wrapper_class }}"{{{ wrapper_attributes_html }}}>
+    <div class="{{ field_wrapper_class }}"{{{ wrapper_attributes_html }}}>
         {{#if show_label}}
             <label for="{{ id }}" class="form-label small fw-semibold">
                 {{ label }}

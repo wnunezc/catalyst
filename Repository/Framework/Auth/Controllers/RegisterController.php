@@ -163,8 +163,9 @@ class RegisterController extends Controller
         $this->sendVerificationEmail($email, $name, $token);
 
         if ($this->expectsJson()) {
-            return $this->jsonSuccessWithToast(null, __('auth.messages.register_success'))
-                ->withRedirect('/login', 1500);
+            $this->toast('success', __('auth.messages.register_success'));
+            return $this->jsonSuccess(null, __('auth.messages.register_success'))
+                ->withRedirect('/login');
         }
 
         $this->toast('success', __('auth.messages.register_success'));

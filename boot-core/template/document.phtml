@@ -21,6 +21,11 @@
             <span class="catalyst-activity-dialog__copy">
                 <strong class="catalyst-activity-dialog__title">Working</strong>
                 <span class="catalyst-activity-dialog__message" data-catalyst-activity-message>Please wait while Catalyst completes this operation.</span>
+                {{#if is_development}}
+                <button type="button" class="btn btn-sm btn-outline-danger mt-2" data-catalyst-activity-release>
+                    {{ t:ui.activity.release_interface }}
+                </button>
+                {{/if}}
             </span>
         </div>
     </div>

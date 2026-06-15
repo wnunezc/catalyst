@@ -8,27 +8,19 @@
 .catalyst-error-shell {
     min-height: 100vh;
     display: grid;
+    grid-template-columns: minmax(0, 720px);
     place-items: center;
     padding: clamp(1.25rem, 3vw, 3rem);
 }
 
-.catalyst-error-card {
-    width: min(100%, 720px);
-    border: 1px solid var(--theme-border-color, rgba(148, 163, 184, .28));
-    border-radius: 1.5rem;
-    background: color-mix(in srgb, var(--theme-secondary-bg, #fff) 94%, transparent);
-    box-shadow: 0 1.5rem 3rem rgba(15, 23, 42, .12);
-    padding: clamp(1.5rem, 3.5vw, 3rem);
-}
-
-.catalyst-error-card__brand {
+.error-brand {
     display: flex;
     align-items: center;
     gap: .85rem;
     margin-bottom: 1.25rem;
 }
 
-.catalyst-error-card__mark {
+.error-status {
     display: inline-grid;
     place-items: center;
     min-width: 4rem;
@@ -41,7 +33,7 @@
     border: 1px solid color-mix(in srgb, var(--theme-primary, #d71920) 22%, transparent);
 }
 
-.catalyst-error-card__eyebrow {
+.error-eyebrow {
     text-transform: uppercase;
     letter-spacing: .16em;
     font-weight: 800;
@@ -49,7 +41,7 @@
     color: var(--theme-secondary-color, #6c757d);
 }
 
-.catalyst-error-card__title {
+.error-title {
     font-size: clamp(2rem, 5vw, 3.5rem);
     line-height: 1;
     letter-spacing: -.04em;
@@ -57,19 +49,19 @@
     margin: 0 0 .85rem;
 }
 
-.catalyst-error-card__message {
+.error-message {
     color: var(--theme-secondary-color, #6c757d);
     font-size: 1.05rem;
     margin-bottom: 1.5rem;
 }
 
-.catalyst-error-card__meta {
+.error-meta {
     display: grid;
     gap: .75rem;
     margin-bottom: 1.5rem;
 }
 
-.catalyst-error-card__meta div {
+.error-meta div {
     display: grid;
     gap: .15rem;
     padding: .85rem 1rem;
@@ -77,7 +69,7 @@
     background: var(--theme-tertiary-bg, rgba(148, 163, 184, .1));
 }
 
-.catalyst-error-card__meta dt {
+.error-meta dt {
     font-size: .72rem;
     font-weight: 800;
     text-transform: uppercase;
@@ -85,12 +77,12 @@
     color: var(--theme-secondary-color, #6c757d);
 }
 
-.catalyst-error-card__meta dd {
+.error-meta dd {
     margin: 0;
     color: var(--theme-heading-color, #111827);
 }
 
-.catalyst-error-card__actions {
+.error-actions {
     display: flex;
     align-items: center;
     flex-wrap: wrap;

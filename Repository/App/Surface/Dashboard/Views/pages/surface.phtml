@@ -1,72 +1,91 @@
-<main class="dashboard-surface catalyst-demo-surface" data-public-route="dashboard">
-    <section class="dashboard-surface__hero">
-        <div class="dashboard-surface__copy catalyst-demo-hero__copy">
-            <div class="dashboard-surface__tags">
-                <span class="catalyst-demo-eyebrow">{{ page.eyebrow }}</span>
-                <span class="catalyst-demo-badge">{{ page.badge }}</span>
+<main class="d-grid gap-3" data-public-route="dashboard">
+    <section class="row g-3">
+        <div class="col-12 col-lg-8">
+            <div class="card h-100">
+                <div class="card-body p-lg-5">
+                    <div class="d-flex align-items-center flex-wrap gap-2 mb-3">
+                        <span class="text-primary text-uppercase small fw-bold">{{ page.eyebrow }}</span>
+                        <span class="badge text-bg-primary">{{ page.badge }}</span>
+                    </div>
+                    <h1 class="display-4">{{ page.headline }}</h1>
+                    <p class="lead text-muted mb-0">{{ page.lead }}</p>
+                </div>
             </div>
-            <h1>{{ page.headline }}</h1>
-            <p class="catalyst-demo-lead">{{ page.lead }}</p>
         </div>
-        <aside class="dashboard-surface__period catalyst-demo-card">
-            <span>{{ page.periodLabel }}</span>
-            <strong>Q2 · 2026</strong>
-            <div class="dashboard-surface__sparkline" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
-        </aside>
+        <div class="col-12 col-lg-4">
+            <aside class="card h-100">
+                <div class="card-body d-flex flex-column justify-content-center">
+                    <span class="text-muted">{{ page.periodLabel }}</span>
+                    <strong class="display-6">Q2 · 2026</strong>
+                </div>
+            </aside>
+        </div>
     </section>
 
-    <section class="dashboard-surface__metrics" aria-label="{{ page.modulesTitle }}">
+    <section class="row g-3" aria-label="{{ page.modulesTitle }}">
         {{#each page.metrics}}
-        <article class="dashboard-surface__metric catalyst-demo-card">
-            <span>{{ label }}</span>
-            <strong>{{ value }}</strong>
-            <small>{{ delta }}</small>
-        </article>
+        <div class="col-12 col-md-6 col-xl-3">
+            <article class="card h-100">
+                <div class="card-body">
+                    <span class="text-muted">{{ label }}</span>
+                    <strong class="d-block fs-3">{{ value }}</strong>
+                    <small>{{ delta }}</small>
+                </div>
+            </article>
+        </div>
         {{/each}}
     </section>
 
-    <section class="dashboard-surface__workspace">
-        <article class="dashboard-surface__panel dashboard-surface__panel--wide catalyst-demo-card">
-            <div class="dashboard-surface__panel-header">
-                <h2>{{ page.pipelineTitle }}</h2>
-                <span>{{ page.pipelineBadge }}</span>
-            </div>
-            <div class="dashboard-surface__pipeline">
-                {{#each page.pipeline}}
-                <div class="dashboard-surface__pipeline-row">
+    <section class="row g-3">
+        <div class="col-12 col-xl-8">
+            <article class="card h-100">
+                <div class="card-header d-flex align-items-center justify-content-between gap-2">
+                    <h2 class="card-title mb-0">{{ page.pipelineTitle }}</h2>
+                    <span class="badge text-bg-primary">{{ page.pipelineBadge }}</span>
+                </div>
+                <div class="card-body d-grid gap-3">
+                    {{#each page.pipeline}}
                     <div>
-                        <span>{{ label }}</span>
-                        <strong>{{ value }}</strong>
+                        <div class="d-flex align-items-center justify-content-between gap-2 mb-1">
+                            <span>{{ label }}</span>
+                            <strong>{{ value }}</strong>
+                        </div>
+                        <div class="progress" role="progressbar"><div class="progress-bar {{ barClass }}"></div></div>
                     </div>
-                    <span class="dashboard-surface__bar"><span class="{{ barClass }}"></span></span>
+                    {{/each}}
                 </div>
-                {{/each}}
-            </div>
-        </article>
+            </article>
+        </div>
 
-        <article class="dashboard-surface__panel catalyst-demo-card">
-            <div class="dashboard-surface__panel-header">
-                <h2>{{ page.activityTitle }}</h2>
-                <span>{{ page.activityBadge }}</span>
-            </div>
-            <div class="dashboard-surface__activity">
-                {{#each page.activity}}
-                <div>
-                    <span>{{ time }}</span>
-                    <p>{{ event }}</p>
+        <div class="col-12 col-xl-4">
+            <article class="card h-100">
+                <div class="card-header d-flex align-items-center justify-content-between gap-2">
+                    <h2 class="card-title mb-0">{{ page.activityTitle }}</h2>
+                    <span class="badge text-bg-primary">{{ page.activityBadge }}</span>
                 </div>
-                {{/each}}
-            </div>
-        </article>
+                <div class="list-group list-group-flush">
+                    {{#each page.activity}}
+                    <div class="list-group-item">
+                        <span class="text-muted small">{{ time }}</span>
+                        <p class="mb-0">{{ event }}</p>
+                    </div>
+                    {{/each}}
+                </div>
+            </article>
+        </div>
     </section>
 
-    <section class="dashboard-surface__modules" aria-label="{{ page.modulesTitle }}">
+    <section class="row g-3" aria-label="{{ page.modulesTitle }}">
         {{#each page.modules}}
-        <article class="catalyst-demo-card">
-            <span>{{ status }}</span>
-            <h2>{{ title }}</h2>
-            <p>{{ body }}</p>
-        </article>
+        <div class="col-12 col-lg-4">
+            <article class="card h-100">
+                <div class="card-body">
+                    <span class="badge text-bg-light border mb-2">{{ status }}</span>
+                    <h2 class="card-title">{{ title }}</h2>
+                    <p class="card-text">{{ body }}</p>
+                </div>
+            </article>
+        </div>
         {{/each}}
     </section>
 </main>

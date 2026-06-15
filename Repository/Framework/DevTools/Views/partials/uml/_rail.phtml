@@ -1,5 +1,5 @@
 <div class="vstack gap-3">
-    <section class="card ui-rail-card">
+    <section class="card">
         <div class="card-header">
             <div class="ui-section-head">
                 <div>
@@ -11,13 +11,13 @@
         <div class="card-body">
             <ol class="ui-rail-list">
                 {{#each rail_scope_items}}
-                <li><a href="{{ this.href }}">{{ this.label }}</a></li>
+                <li><button type="button" class="btn btn-link p-0 text-start" data-bs-toggle="tab" data-bs-target="{{ this.href }}">{{ this.label }}</button></li>
                 {{/each}}
             </ol>
         </div>
     </section>
 
-    <section class="card ui-rail-card">
+    <section class="card">
         <div class="card-header">
             <div class="ui-section-head">
                 <div>
@@ -44,7 +44,7 @@
         </div>
     </section>
 
-    <section class="card ui-rail-card">
+    <section class="card">
         <div class="card-header">
             <div class="ui-section-head">
                 <div>

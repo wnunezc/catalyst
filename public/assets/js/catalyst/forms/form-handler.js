@@ -30,9 +30,7 @@
  *     "notifications": { "toasters": [...], "modals": [...] },  ← handled by fetch interceptor
  *     "errors": { "fieldName": "error message" },               ← handled here
  *     "redirect": "/url",                                        ← handled here
- *     "redirectDelay": 300,
- *     "refresh": true,                                           ← handled here
- *     "refreshDelay": 300
+ *     "refresh": true                                            ← handled here
  *   }
  *
  * @package Catalyst
@@ -51,7 +49,6 @@ export class FormHandler {
      * @param {string} [options.formSelector]      - CSS selector for managed forms
      * @param {string} [options.eventAttr]         - Button attribute that holds the event name
      * @param {string} [options.eventField]        - Hidden input name for the event key
-     * @param {number} [options.defaultDelay]      - Default ms before redirect/refresh (lets toasters appear)
      * @param {string} [options.loadingHtml]       - HTML to show inside the button while loading
      */
     constructor(options = {}) {
@@ -59,7 +56,6 @@ export class FormHandler {
             formSelector: '[data-catalyst="form"]',
             eventAttr: 'data-event',
             eventField: '_event',
-            defaultDelay: 300,
             loadingHtml: '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>',
             ...options
         };
@@ -205,19 +201,17 @@ export class FormHandler {
                 }
             }));
 
-            // Handle redirect (after notification delay)
+            // Navigate as soon as the server confirms the operation.
             if (data.redirect) {
-                const delay = data.redirectDelay ?? this.options.defaultDelay;
                 document.dispatchEvent(new CustomEvent('catalyst:navigation:start'));
-                setTimeout(() => { window.location.href = data.redirect; }, delay);
+                window.location.href = data.redirect;
                 return;
             }
 
-            // Handle page refresh
+            // Refresh as soon as the server confirms the operation.
             if (data.refresh) {
-                const delay = data.refreshDelay ?? this.options.defaultDelay;
                 document.dispatchEvent(new CustomEvent('catalyst:navigation:start'));
-                setTimeout(() => { window.location.reload(); }, delay);
+                window.location.reload();
             }
 
         } catch (err) {

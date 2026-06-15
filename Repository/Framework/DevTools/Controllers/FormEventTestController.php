@@ -112,7 +112,7 @@ class FormEventTestController extends Controller
     {
         return $this->jsonSuccess(null, __('devtools.form_events.messages.refreshing'))
             ->withNotification($this->toaster('info', __('devtools.form_events.messages.page_refreshing'), ['duration' => 900]))
-            ->withRefresh(1000);
+            ->withRefresh();
     }
 
     /**
@@ -124,6 +124,6 @@ class FormEventTestController extends Controller
     {
         return $this->jsonSuccess(null, __('messages.redirecting'))
             ->withNotification($this->toaster('success', __('devtools.form_events.messages.redirecting_soon'), ['duration' => 900]))
-            ->withRedirect('/test-features', 1000);
+            ->withRedirect('/test-features');
     }
 }

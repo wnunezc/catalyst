@@ -27,7 +27,7 @@ final class UiRuntimeArchitectureTest extends TestCase
             'The shared body scripts template must load the canonical UI runtime.'
         );
         Assert::contains(
-            "AssetUrl::versioned('/assets/js/catalyst/runtime/ui-runtime.js')",
+            "AssetUrl::versionedTree(\n                '/assets/js/catalyst/runtime/ui-runtime.js',\n                '/assets/js/catalyst'\n            )",
             $scope,
             'The canonical runtime URL must be cache-busted centrally.'
         );
@@ -120,7 +120,7 @@ final class UiRuntimeArchitectureTest extends TestCase
             'The common body template must load the canonical runtime.'
         );
         Assert::contains(
-            "AssetUrl::versioned('/assets/js/catalyst/runtime/ui-runtime.js')",
+            "AssetUrl::versionedTree(\n                '/assets/js/catalyst/runtime/ui-runtime.js',\n                '/assets/js/catalyst'\n            )",
             $scope,
             'The common body template runtime variable must resolve to the canonical entry.'
         );

@@ -99,10 +99,48 @@ final class DataGridColumnNormalizer
                 'type' => (string) ($column['type'] ?? 'text'),
                 'formatter' => $column['formatter'] ?? null,
                 'empty' => (string) ($column['empty'] ?? '—'),
+                'truncate' => self::normalizeTruncateConfig($column['truncate'] ?? null),
             ];
         }
 
         return $normalized;
+    }
+
+    /**
+     * Normalizes the opt-in long-text presentation contract shared by headers and cells.
+     *
+     * @return array{enabled:bool,automatic:bool,threshold:int,width:string,tooltip:bool,copyable:bool}
+     */
+    public static function normalizeTruncateConfig(mixed $config): array
+    {
+        if ($config === false) {
+            return [
+                'enabled' => false,
+                'automatic' => false,
+                'threshold' => 35,
+                'width' => 'md',
+                'tooltip' => false,
+                'copyable' => false,
+            ];
+        }
+
+        $automatic = $config === null;
+        $config = is_array($config) ? $config : [];
+        $width = strtolower(trim((string) ($config['width'] ?? 'md')));
+        $threshold = max(1, (int) ($config['threshold'] ?? 35));
+
+        if (!in_array($width, ['sm', 'md', 'lg'], true)) {
+            $width = 'md';
+        }
+
+        return [
+            'enabled' => !array_key_exists('enabled', $config) || !empty($config['enabled']),
+            'automatic' => $automatic || empty($config['enabled']),
+            'threshold' => $threshold,
+            'width' => $width,
+            'tooltip' => !array_key_exists('tooltip', $config) || !empty($config['tooltip']),
+            'copyable' => !array_key_exists('copyable', $config) || !empty($config['copyable']),
+        ];
     }
 
     /**

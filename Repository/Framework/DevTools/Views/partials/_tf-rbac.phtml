@@ -1,5 +1,5 @@
 <div class="col-12">
-    <div class="section-card">
+    <div class="card h-100">
         <div class="card-header"><i class="fa-solid fa-shield-halved me-2"></i>{{ t:devtools.rbac_test.title }}</div>
         <div class="card-body">
             <div class="row g-3">
@@ -38,17 +38,19 @@
 
                 <div class="col-12 col-lg-6">
                     <p class="text-muted small fw-semibold mb-2">{{ t:devtools.rbac_test.architecture_overview }}</p>
-                    <table class="table table-sm sys-table">
-                        <thead><tr><th>{{ t:devtools.rbac_test.table.component }}</th><th>{{ t:devtools.rbac_test.table.class }}</th></tr></thead>
-                        <tbody>
-                            <tr><td>{{ t:devtools.rbac_test.table.rows.role_guard }}</td><td><span class="code-badge">RoleMiddleware</span></td></tr>
-                            <tr><td>{{ t:devtools.rbac_test.table.rows.db_repository }}</td><td><span class="code-badge">RoleRepository</span></td></tr>
-                            <tr><td>{{ t:devtools.rbac_test.table.rows.gate }}</td><td><span class="code-badge">Gate::define()</span></td></tr>
-                            <tr><td>{{ t:devtools.rbac_test.table.rows.policy }}</td><td><span class="code-badge">Gate::policy()</span></td></tr>
-                            <tr><td>{{ t:devtools.rbac_test.table.rows.controller_api }}</td><td><span class="code-badge">authorize() / can()</span></td></tr>
-                            <tr><td>{{ t:devtools.rbac_test.table.rows.exception }}</td><td><span class="code-badge">ForbiddenException</span></td></tr>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead><tr><th>{{ t:devtools.rbac_test.table.component }}</th><th>{{ t:devtools.rbac_test.table.class }}</th></tr></thead>
+                            <tbody>
+                                <tr><td>{{ t:devtools.rbac_test.table.rows.role_guard }}</td><td><span class="code-badge">RoleMiddleware</span></td></tr>
+                                <tr><td>{{ t:devtools.rbac_test.table.rows.db_repository }}</td><td><span class="code-badge">RoleRepository</span></td></tr>
+                                <tr><td>{{ t:devtools.rbac_test.table.rows.gate }}</td><td><span class="code-badge">Gate::define()</span></td></tr>
+                                <tr><td>{{ t:devtools.rbac_test.table.rows.policy }}</td><td><span class="code-badge">Gate::policy()</span></td></tr>
+                                <tr><td>{{ t:devtools.rbac_test.table.rows.controller_api }}</td><td><span class="code-badge">authorize() / can()</span></td></tr>
+                                <tr><td>{{ t:devtools.rbac_test.table.rows.exception }}</td><td><span class="code-badge">ForbiddenException</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

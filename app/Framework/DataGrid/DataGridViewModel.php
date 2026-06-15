@@ -53,6 +53,35 @@ final class DataGridViewModel
     $csrfField = TrustedHtml::fromString(CsrfProtection::getInstance()->getTokenField());
     $total = (int) ($grid['total'] ?? 0);
     $gridBulkFormId = 'grid-bulk-' . substr(md5((string) ($grid['base_url'] ?? 'grid')), 0, 10);
+    $rawRows = (array) ($grid['rows'] ?? []);
+    $gridHasBulk = $bulkActions !== [];
+    $gridHasRowActions = false;
+    foreach ($rawRows as $rawRow) {
+        if (!empty($rawRow['has_actions']) || (array) ($rawRow['actions'] ?? []) !== []) {
+            $gridHasRowActions = true;
+            break;
+        }
+    }
+    $visibleColumnCount = count((array) ($grid['columns'] ?? []))
+        + ($gridHasBulk ? 1 : 0)
+        + ($gridHasRowActions ? 1 : 0);
+    $visibleCharacterLimit = max(15, 35 - (max(0, $visibleColumnCount - 6) * 5));
+    $visibleRowCount = count($rawRows);
+    $tableScrollClasses = ['datagrid-table-scroll'];
+    $tableClasses = ['table', 'table-striped', 'table-hover', 'dt-responsive', 'align-middle', 'mb-0', 'datagrid-table'];
+
+    if ($visibleColumnCount >= 11) {
+        $tableScrollClasses[] = 'datagrid-table-scroll--wide';
+        $tableClasses[] = 'datagrid-table--wide';
+    }
+
+    if ($visibleColumnCount >= 16) {
+        $tableClasses[] = 'datagrid-table--extreme';
+
+        if ($visibleRowCount > 15) {
+            $tableScrollClasses[] = 'datagrid-table-scroll--vertical';
+        }
+    }
     $normalizeButtonClass = static function (string $class, string $fallback = 'btn btn-outline-secondary btn-sm'): string {
         $class = trim($class) !== '' ? trim($class) : $fallback;
 
@@ -66,23 +95,86 @@ final class DataGridViewModel
 
         return trim(preg_replace('/\s+/', ' ', $class) ?? $class);
     };
-    $normalizeCell = static function (mixed $value, string $empty): array {
+    $applyTruncate = static function (array $normalized, array $truncate): array {
+        $fullText = $normalized['is_code']
+            ? (string) $normalized['code_text']
+            : (string) $normalized['text'];
+        $threshold = (int) ($truncate['threshold'] ?? 35);
+        $exceedsThreshold = mb_strlen($fullText) > $threshold;
+        $enabled = !empty($truncate['enabled'])
+            && trim($fullText) !== ''
+            && (empty($truncate['automatic']) || $exceedsThreshold);
+        $width = in_array((string) ($truncate['width'] ?? 'md'), ['sm', 'md', 'lg'], true)
+            ? (string) $truncate['width']
+            : 'md';
+
+        $normalized['has_truncated_text'] = $enabled;
+        $normalized['full_text'] = $fullText;
+        $normalized['display_text'] = $enabled ? mb_substr($fullText, 0, $threshold) . '...' : $fullText;
+        $normalized['text_width_class'] = 'datagrid-cell-text--' . $width;
+        $normalized['tooltip'] = $enabled && !empty($truncate['tooltip']);
+        $normalized['copyable'] = $enabled && !empty($truncate['copyable']);
+        $normalized['copy_label'] = __('ui.datagrid.copy');
+        $normalized['copied_label'] = __('ui.datagrid.copied');
+
+        return $normalized;
+    };
+    $normalizeStackLine = static function (string $text, array $truncate): array {
+        $threshold = (int) ($truncate['threshold'] ?? 35);
+        $exceedsThreshold = mb_strlen($text) > $threshold;
+        $truncated = !empty($truncate['enabled'])
+            && trim($text) !== ''
+            && (empty($truncate['automatic']) || $exceedsThreshold);
+        $width = in_array((string) ($truncate['width'] ?? 'md'), ['sm', 'md', 'lg'], true)
+            ? (string) $truncate['width']
+            : 'md';
+
+        return [
+            'truncated' => $truncated,
+            'full_text' => $text,
+            'display_text' => $truncated ? mb_substr($text, 0, $threshold) . '...' : $text,
+            'text_width_class' => 'datagrid-cell-text--' . $width,
+            'tooltip' => $truncated && !empty($truncate['tooltip']),
+            'copyable' => $truncated && !empty($truncate['copyable']),
+        ];
+    };
+    $normalizeCell = static function (mixed $value, string $empty, array $truncate = []) use ($applyTruncate, $normalizeStackLine): array {
         $normalized = [
             'class' => '',
             'is_stack' => false,
             'primary' => '',
             'primary_class' => '',
             'primary_is_code' => false,
+            'primary_truncated' => false,
+            'primary_full_text' => '',
+            'primary_display_text' => '',
+            'primary_text_width_class' => 'datagrid-cell-text--md',
+            'primary_tooltip' => false,
+            'primary_copyable' => false,
             'has_secondary' => false,
             'secondary' => '',
             'secondary_class' => '',
             'secondary_is_code' => false,
+            'secondary_truncated' => false,
+            'secondary_full_text' => '',
+            'secondary_display_text' => '',
+            'secondary_text_width_class' => 'datagrid-cell-text--md',
+            'secondary_tooltip' => false,
+            'secondary_copyable' => false,
             'has_badges' => false,
             'badges' => [],
             'is_code' => false,
             'code_text' => '',
             'code_class' => '',
             'text' => $empty,
+            'display_text' => $empty,
+            'has_truncated_text' => false,
+            'full_text' => '',
+            'text_width_class' => 'datagrid-cell-text--md',
+            'tooltip' => false,
+            'copyable' => false,
+            'copy_label' => __('ui.datagrid.copy'),
+            'copied_label' => __('ui.datagrid.copied'),
         ];
 
         if ($value === null || $value === '') {
@@ -101,6 +193,20 @@ final class DataGridViewModel
                 $normalized['secondary_class'] = (string) ($value['secondary_class'] ?? '');
                 $normalized['secondary_is_code'] = !empty($value['secondary_is_code']);
                 $normalized['has_secondary'] = trim($normalized['secondary']) !== '';
+                $primary = $normalizeStackLine($normalized['primary'], $truncate);
+                $secondary = $normalizeStackLine($normalized['secondary'], $truncate);
+                $normalized['primary_truncated'] = $primary['truncated'];
+                $normalized['primary_full_text'] = $primary['full_text'];
+                $normalized['primary_display_text'] = $primary['display_text'];
+                $normalized['primary_text_width_class'] = $primary['text_width_class'];
+                $normalized['primary_tooltip'] = $primary['tooltip'];
+                $normalized['primary_copyable'] = $primary['copyable'];
+                $normalized['secondary_truncated'] = $secondary['truncated'];
+                $normalized['secondary_full_text'] = $secondary['full_text'];
+                $normalized['secondary_display_text'] = $secondary['display_text'];
+                $normalized['secondary_text_width_class'] = $secondary['text_width_class'];
+                $normalized['secondary_tooltip'] = $secondary['tooltip'];
+                $normalized['secondary_copyable'] = $secondary['copyable'];
 
                 return $normalized;
             }
@@ -110,7 +216,7 @@ final class DataGridViewModel
                 $normalized['code_text'] = (string) ($value['text'] ?? '');
                 $normalized['code_class'] = (string) ($value['class'] ?? '');
 
-                return $normalized;
+                return $applyTruncate($normalized, $truncate);
             }
 
             if ($kind === 'badge') {
@@ -155,7 +261,7 @@ final class DataGridViewModel
 
         $normalized['text'] = (string) $value;
 
-        return $normalized;
+        return $applyTruncate($normalized, $truncate);
     };
 
     foreach ((array) ($grid['exports'] ?? []) as $export) {
@@ -226,12 +332,16 @@ final class DataGridViewModel
     }
 
     $normalizedRows = [];
-    foreach ((array) ($grid['rows'] ?? []) as $row) {
+    foreach ($rawRows as $row) {
         $cells = [];
         foreach ((array) ($row['cells'] ?? []) as $cell) {
             $value = $cell['value'] ?? null;
             $empty = (string) ($cell['empty'] ?? '—');
-            $normalizedCell = $normalizeCell($value, $empty);
+            $truncate = (array) ($cell['truncate'] ?? []);
+            if (!empty($truncate['automatic'])) {
+                $truncate['threshold'] = $visibleCharacterLimit;
+            }
+            $normalizedCell = $normalizeCell($value, $empty, $truncate);
             $normalizedCell['class'] = (string) ($cell['class'] ?? '');
             $cells[] = $normalizedCell;
         }
@@ -288,15 +398,6 @@ final class DataGridViewModel
         ];
     }
 
-    $gridHasBulk = $normalizedBulkActions !== [];
-    $gridHasRowActions = false;
-    foreach ($normalizedRows as $normalizedRow) {
-        if (!empty($normalizedRow['has_actions'])) {
-            $gridHasRowActions = true;
-            break;
-        }
-    }
-
     $normalizedRows = array_map(
         static fn (array $row): array => array_merge($row, [
             'row_has_bulk' => $gridHasBulk,
@@ -313,6 +414,11 @@ final class DataGridViewModel
         'grid_subtitle' => (string) ($grid['subtitle'] ?? ''),
         'grid_base_url' => (string) ($grid['base_url'] ?? ''),
         'grid_is_empty' => $total === 0,
+        'grid_table_body_class' => !empty($grid['inset_table']) ? 'card-body' : 'card-body p-0',
+        'grid_table_scroll_class' => implode(' ', $tableScrollClasses),
+        'grid_table_class' => implode(' ', $tableClasses),
+        'grid_visible_column_count' => $visibleColumnCount,
+        'grid_visible_character_limit' => $visibleCharacterLimit,
         'grid_has_bulk' => $gridHasBulk,
         'grid_has_row_actions' => $gridHasRowActions,
         'grid_bulk_name' => $bulkName,

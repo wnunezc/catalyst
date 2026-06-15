@@ -89,7 +89,6 @@ return static function (array $scope): array {
             'eyebrow' => __('settings.overview.eyebrow'),
             'title' => __('settings.settings.title'),
             'description' => __('settings.overview.description'),
-            'metrics' => $statusSummary,
         ],
 
         'csrfField' => TrustedHtml::fromString(CsrfProtection::getInstance()->getTokenField()),

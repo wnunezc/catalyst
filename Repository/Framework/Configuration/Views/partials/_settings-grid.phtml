@@ -1,14 +1,14 @@
-<div class="settings-command-grid">
+<div>
     {{#each settingsGroups}}
-        <section class="settings-command-section mb-3" id="settings-group-{{ this.id }}">
-            <div class="settings-command-section__header">
+        <section class="mb-3" id="settings-group-{{ this.id }}">
+            <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-center mb-2">
                 <div>
-                    <div class="settings-command-section__eyebrow">{{ this.eyebrow }}</div>
-                    <h5 class="settings-command-section__title">{{ this.title }}</h5>
+                    <div class="small text-uppercase text-muted fw-semibold">{{ this.eyebrow }}</div>
+                    <h5 class="mb-0" data-settings-group-title>{{ this.title }}</h5>
                 </div>
-                <p class="settings-command-section__description">{{ this.description }}</p>
+                <p class="text-muted mb-0 text-lg-end">{{ this.description }}</p>
             </div>
-            <div class="row g-2 settings-card-grid">
+            <div class="row g-2">
                 {{#each this.cards}}
                     <div class="{{ this.colClass }}">
                         {{> ./_settings-card }}

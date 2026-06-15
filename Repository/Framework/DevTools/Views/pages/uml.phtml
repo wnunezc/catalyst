@@ -1,9 +1,9 @@
-<div class="devtools-page uml-showcase">
+<div class="uml-showcase">
     {{> "components._page-header" }}
 
     <div class="row g-3">
         <div class="col-12 col-xl-9">
-            <section class="card ui-surface-card uml-shell">
+            <section class="card uml-shell">
                 <div class="card-header">
                     <div class="ui-section-head">
                         <div>
@@ -16,16 +16,17 @@
                     </div>
                 </div>
                 <div class="card-body p-0">
-                    <nav class="uml-nav-tabbar" role="tablist" aria-label="{{ t:uml.shell.aria_label }}">
+                    <nav class="nav nav-tabs px-3 pt-3" role="tablist" aria-label="{{ t:uml.shell.aria_label }}">
                         {{#each uml_tabs}}
                         <button
                             id="{{ this.button_id }}"
-                            class="uml-nav-tab{{#if this.active}} active{{/if}}"
-                            data-tab="{{ this.slug }}"
+                            class="nav-link{{#if this.active}} active{{/if}}"
+                            type="button"
+                            data-bs-toggle="tab"
+                            data-bs-target="#{{ this.panel_id }}"
                             role="tab"
                             aria-selected="{{ this.aria_selected }}"
                             aria-controls="{{ this.panel_id }}"
-                            tabindex="{{ this.tabindex }}"
                         >{{ this.label }}</button>
                         {{/each}}
                     </nav>

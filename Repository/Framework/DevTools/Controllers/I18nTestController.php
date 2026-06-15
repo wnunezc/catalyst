@@ -104,6 +104,6 @@ class I18nTestController extends Controller
                 'title' => __('devtools.i18n_runtime.locale_changed_title'),
                 'duration' => 3000,
             ])
-        )->withRefresh(300);
+        )->withRefresh();
     }
 }

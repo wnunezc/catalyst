@@ -30,7 +30,7 @@ Usar esta checklist cuando cambien:
   - ya existe al menos un privileged activo
 - La respuesta JSON del stack usa `JsonResponse::api()`:
   - base: `success`, `data`, `noFlash`
-  - opcionales: `message`, `meta`, `notifications`, `redirect`, `redirectDelay`, `refresh`, `refreshDelay`, `in`, `html`
+  - opcionales: `message`, `meta`, `notifications`, `redirect`, `refresh`, `in`, `html`
 - `SetupGuardMiddleware` redirige HTML no autenticado a `/login?redirect=/configuration/environment-setup`.
 - Si `/configuration/environment-setup` ya está configurado y el caller no está autenticado como privileged, el middleware bloquea antes de llegar al controller:
   - HTML no autenticado: redirect a `/login?redirect=/configuration/environment-setup`
@@ -173,8 +173,7 @@ Happy path esperado:
   "noFlash": true,
   "message": "...",
   "notifications": { "...": "..." },
-  "redirect": "/login",
-  "redirectDelay": 1500
+  "redirect": "/login"
 }
 ```
 

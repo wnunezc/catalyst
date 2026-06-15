@@ -163,7 +163,7 @@ class LoginController extends Controller
 
                 if ($this->expectsJson()) {
                     return $this->jsonSuccess(['mfa_setup_required' => true])
-                        ->withRedirect('/mfa/setup', 0);
+                        ->withRedirect('/mfa/setup');
                 }
                 return $this->redirect('/mfa/setup');
             }
@@ -173,7 +173,7 @@ class LoginController extends Controller
 
             if ($this->expectsJson()) {
                 return $this->jsonSuccess(['mfa_required' => true])
-                    ->withRedirect('/mfa/challenge', 0);
+                    ->withRedirect('/mfa/challenge');
             }
             return $this->redirect('/mfa/challenge');
         }
@@ -182,8 +182,9 @@ class LoginController extends Controller
         $auth->loginFromUser($user, $remember);
 
         if ($this->expectsJson()) {
-            return $this->jsonSuccessWithToast(null, __('auth.messages.login_success'))
-                ->withRedirect($safeRedirect, 800);
+            $this->toast('success', __('auth.messages.login_success'));
+            return $this->jsonSuccess(null, __('auth.messages.login_success'))
+                ->withRedirect($safeRedirect);
         }
 
         return $this->redirect($safeRedirect);

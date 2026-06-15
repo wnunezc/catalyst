@@ -1,5 +1,22 @@
-<div class="surface-page surface-page-shell surface-content-shell surface-content-shell--xl settings-console">
+<div class="surface-page surface-page-shell surface-content-shell surface-content-shell--xl">
     {{> "components._page-header" }}
+
+    <section class="row g-3 mb-3" aria-label="{{ t:settings.overview.eyebrow }}">
+        {{#each statusSummary}}
+            <div class="col-12 col-sm-6 col-xl-4 col-xxl-2">
+                <article class="card h-100">
+                    <div class="card-body">
+                        <span class="small text-muted d-block mb-1">{{ label }}</span>
+                        {{#if badge_class}}
+                            <span class="badge {{ badge_class }}">{{ value }}</span>
+                        {{else}}
+                            <strong class="d-block">{{ value }}</strong>
+                        {{/if}}
+                    </div>
+                </article>
+            </div>
+        {{/each}}
+    </section>
 
     {{#unless configured}}
         <div class="alert alert-warning d-flex align-items-center gap-2 py-2 small mb-3">

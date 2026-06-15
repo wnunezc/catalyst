@@ -51,10 +51,13 @@ shell. The following focused specs are prepared for individual execution:
 | Application shell | Workspaces, Operations, Roles, Settings, DevTools | `shell-layout.spec.cjs` |
 | Canonical owners | Six Workspaces and five Operations representative routes | `canonical-owners.spec.cjs` |
 | Auth | Login, forgot password, email verification | `surface-auth-layout.spec.cjs` |
+| Auth session lifecycle | Protected redirect, credential login, MFA challenge, session rotation, CSRF-protected logout, remember-token removal and stale-session rejection | `auth-session-lifecycle.spec.cjs` |
 | Error | Missing route / 404 | `surface-error-layout.spec.cjs` |
 | Demo UI runtime | `/demo-ui` | `demo-ui-runtime.spec.cjs` |
 | Dynamic runtime rescan | Runtime-managed inserted DOM | `ui-runtime-dynamic.spec.cjs` |
 | Theme skins | 7 Inspinia skins plus 4 institutional skins | `theme-skins.spec.cjs` |
+| ROADMAP-7 composition | All 117 included GET/HEAD routes outside Demo UI | Complete ROADMAP-7 inventory specs plus focused composition spec |
+| ROADMAP-7 table audit | All reported table routes plus additional static and discoverable detail surfaces | `roadmap7-reported-tables-audit.spec.cjs`, `roadmap7-remaining-tables-audit.spec.cjs` |
 | Global flash notifications | Shared flash projection and runtime dismissal | `flash-runtime.spec.cjs` |
 | Global DataGrid | `/users` | `datagrid-runtime.spec.cjs` |
 | Global FormBuilder | `/workspaces/media-fields/create` | `form-builder-runtime.spec.cjs` |
@@ -106,6 +109,30 @@ without performing a record mutation.
 requests, concurrency, expected error, duplicate-click prevention, toaster
 ordering, internal navigation and native submit navigation. It does not mutate
 application data.
+
+## ROADMAP-7 Complete Coverage
+
+`fixtures/roadmap7-surface-inventory.cjs` is the executable registry for all
+`117` included GET/HEAD routes:
+
+- `5` application-owned routes run in the app suite;
+- `100` framework routes are read-only and run in `surface-parallel`;
+- `12` framework routes own session state, redirects, token flows or observable
+  side effects and run in `stateful-serial`;
+- anonymous Demo UI, Auth, error and route-ownership specs also run in
+  `surface-parallel` because each case owns an independent browser context and
+  does not mutate shared server state;
+- parametrized record routes discover real links from their owning list/detail
+  surface; missing optional records are reported as data-dependent skips;
+- token and API routes use explicit non-destructive concrete probes.
+
+The inventory contract compares the fixture with fresh `route:list --json`
+output. Route drift therefore fails before surface assertions run.
+
+Current `--list` distribution:
+
+- framework: `295` parallel, `106` serial and `1` auth setup;
+- app: `8` parallel and `3` serial.
 
 ## Individual Modal Coverage
 

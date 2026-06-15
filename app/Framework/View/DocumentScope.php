@@ -68,7 +68,7 @@ final class DocumentScope
             'script_links' => self::scriptLinks($scope),
             'csp_nonce' => (string) ($scope['csp_nonce'] ?? CspNonce::get()),
             'platform_appearance_json' => TrustedHtml::fromString(InlineJson::encode($runtime)),
-            'favicon_asset_url' => AssetUrl::versioned('/assets/vendor/inspinia/images/favicon.ico'),
+            'favicon_asset_url' => AssetUrl::versioned((string) ($branding['favicon_url'] ?? '/assets/vendor/inspinia/images/favicon.ico')),
             'appearance_bootstrap_asset_url' => AssetUrl::versioned('/assets/js/catalyst/appearance-bootstrap.js'),
             'inspinia_vendors_asset_url' => AssetUrl::versioned('/assets/vendor/inspinia/css/vendors.min.css'),
             'font_awesome_asset_url' => AssetUrl::versioned('/assets/vendor/fontawesome/css/all.min.css'),
@@ -86,7 +86,10 @@ final class DocumentScope
             'status_bar_asset_url' => AssetUrl::versioned('/assets/css/catalyst/status-bar.css'),
             'ui_reference_asset_url' => AssetUrl::versioned('/assets/css/catalyst/ui-reference.css'),
             'bootstrap_bundle_asset_url' => AssetUrl::versioned('/assets/vendor/bootstrap/js/bootstrap.bundle.min.js'),
-            'ui_runtime_asset_url' => AssetUrl::versioned('/assets/js/catalyst/runtime/ui-runtime.js'),
+            'ui_runtime_asset_url' => AssetUrl::versionedTree(
+                '/assets/js/catalyst/runtime/ui-runtime.js',
+                '/assets/js/catalyst'
+            ),
             'body_class' => (string) ($scope['body_class'] ?? 'catalyst-shell-body'),
             'surface_context' => (string) ($scope['surface_context'] ?? 'global'),
             'surface_page' => (string) ($scope['surface_page'] ?? trim($currentPath, '/')),
@@ -112,6 +115,9 @@ final class DocumentScope
             'status_bar_show_customizer_toggle' => self::boolScope($scope, 'status_bar_show_customizer_toggle', true),
             'brand_home_href' => (string) ($scope['brand_home_href'] ?? '/dashboard'),
             'brand_name' => $brandName,
+            'brand_logo_light_url' => (string) ($branding['logo_light_url'] ?? '/assets/vendor/inspinia/images/logo.png'),
+            'brand_logo_dark_url' => (string) ($branding['logo_dark_url'] ?? '/assets/vendor/inspinia/images/logo-black.png'),
+            'brand_logo_small_url' => (string) ($branding['logo_small_url'] ?? '/assets/vendor/inspinia/images/logo-sm.png'),
             'brand_tagline' => (string) ($branding['brand_tagline'] ?? ''),
             'has_brand_tagline' => trim((string) ($branding['brand_tagline'] ?? '')) !== '',
             'account_href' => (string) ($scope['account_href'] ?? '/account/profile'),
@@ -123,6 +129,7 @@ final class DocumentScope
             'has_breadcrumbs' => $breadcrumbItems !== [],
             'public_navigation_items' => self::publicNavigation((array) ($scope['publicNavigation'] ?? [])),
             'has_error_ticket' => trim((string) ($scope['error_ticket'] ?? '')) !== '',
+            'is_development' => defined('IS_DEVELOPMENT') && IS_DEVELOPMENT,
         ];
 
         $prepared = array_replace($defaults, $scope);
@@ -131,6 +138,7 @@ final class DocumentScope
         $prepared['csrf_meta_tag'] = $csrfMetaTag;
         $prepared['has_initial_state'] = $hasInitialState;
         $prepared['initial_state_json'] = $initialStateJson;
+        $prepared['is_development'] = defined('IS_DEVELOPMENT') && IS_DEVELOPMENT;
 
         return $prepared;
     }

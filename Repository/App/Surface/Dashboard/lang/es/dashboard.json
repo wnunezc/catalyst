@@ -23,7 +23,9 @@
     "purpose_security_title": "Indicadores de seguridad",
     "purpose_security_body": "Resume señales de correo, MFA y solicitudes abiertas sin reemplazar las páginas dedicadas.",
     "purpose_activity_title": "Actividad reciente",
-    "purpose_activity_body": "Destaca los últimos eventos de recuperación o seguridad de cuenta cuando existan."
+    "purpose_activity_body": "Destaca los últimos eventos de recuperación o seguridad de cuenta cuando existan.",
+    "extension_title": "Área de dashboard de la aplicación",
+    "extension_description": "Esta superficie es intencionalmente mínima. Las aplicaciones construidas sobre Catalyst son propietarias del contenido que se renderiza aquí."
   },
   "metrics": {
     "profile": "Perfil",

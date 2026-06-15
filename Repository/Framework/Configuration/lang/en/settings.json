@@ -58,15 +58,19 @@
         "fields": {
             "brand_name": "Brand name", "brand_short_name": "Short brand name", "brand_tagline": "Tagline",
             "asset_path_placeholder": "/uploads/branding/... or https://...",
-            "logo_primary_path": "Primary logo path", "logo_primary_help": "Empty = use the neutral Catalyst/Inspinia logo.", "reset_logo_primary": "Reset to preset primary logo",
-            "logo_dark_path": "Dark-mode alternate logo path", "logo_dark_help": "Used whenever the resolved variant is dark.", "reset_logo_dark": "Reset to preset dark logo",
-            "favicon_path": "Favicon path", "favicon_help": "Rendered in the shared head assets for the full platform.", "reset_favicon": "Reset to preset favicon",
+            "logo_primary_path": "Primary logo", "logo_primary_help": "Catalyst stores and resolves the uploaded image for the shared shell and PDF watermark.", "reset_logo_primary": "Reset to preset primary logo",
+            "logo_dark_path": "Dark-mode alternate logo", "logo_dark_help": "Used by the shared shell whenever the resolved variant is dark.", "reset_logo_dark": "Reset to preset dark logo",
+            "favicon_path": "Favicon", "favicon_help": "Catalyst stores and renders the uploaded image in the shared document head.", "reset_favicon": "Reset to preset favicon",
             "pdf_watermark": "PDF watermark", "pdf_watermark_enabled": "Enable watermark on PDF exports", "pdf_watermark_text": "Watermark text"
         },
         "actions": {"save": "Save appearance", "open_runtime": "Open runtime", "open_documents": "Open documents"},
         "messages": {
             "invalid_theme": "Select the canonical Catalyst/Inspinia branding preset.",
             "invalid_watermark_color": "PDF watermark color must be a hex value like #CBD5E1.",
+            "invalid_brand_asset": "The selected branding image could not be inspected.",
+            "primary_logo_raster": "The primary logo must use a PNG, JPEG or WebP image so it can also be rendered in PDFs.",
+            "favicon_raster": "The favicon must use a PNG, JPEG or WebP image.",
+            "favicon_square": "The favicon must use a square image.",
             "updated": "Platform appearance updated."
         }
     },

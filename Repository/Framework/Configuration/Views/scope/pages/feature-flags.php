@@ -68,13 +68,13 @@ return static function (array $scope): array {
             'eyebrow' => __('settings.feature_flags.title'),
             'title' => (string) ($scope['pageTitle'] ?? __('settings.feature_flags.title')),
             'description' => __('settings.feature_flags.hero_lede'),
-            'metrics' => [
-                ['label' => __('settings.feature_flags.metrics.flags'), 'value' => (string) ($summary['count'] ?? 0)],
-                ['label' => __('settings.feature_flags.common.enabled'), 'value' => (string) ($summary['enabled'] ?? 0)],
-                ['label' => __('settings.feature_flags.common.disabled'), 'value' => (string) ($summary['disabled'] ?? 0)],
-            ],
         ],
 
+        'feature_metrics' => [
+            ['label' => __('settings.feature_flags.metrics.flags'), 'value' => (string) ($summary['count'] ?? 0)],
+            ['label' => __('settings.feature_flags.common.enabled'), 'value' => (string) ($summary['enabled'] ?? 0)],
+            ['label' => __('settings.feature_flags.common.disabled'), 'value' => (string) ($summary['disabled'] ?? 0)],
+        ],
         'summary' => [
             'count' => (int) (($scope['summary']['count'] ?? 0)),
             'enabled' => (int) (($scope['summary']['enabled'] ?? 0)),

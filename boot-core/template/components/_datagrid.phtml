@@ -1,4 +1,4 @@
-<section class="datagrid-card card"
+<section class="card"
          data-datagrid="1"
          {{#if grid_has_bulk}}data-grid-selection-name="{{ grid_bulk_name }}"
          data-grid-selection-empty="{{ grid_selection_empty_label }}"
@@ -80,101 +80,9 @@
             </form>
         </div>
 
-        <div class="card-body border-bottom py-2">
-            <div class="datagrid-toolbar d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-2">
-                <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-2">
-                    {{#if grid_has_tools}}
-                        <div class="dropdown">
-                            <button class="btn btn-outline-secondary btn-sm dropdown-toggle"
-                                    type="button"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                <i class="ti ti-tool me-1"></i>
-                                {{ t:ui.datagrid.tools }}
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-start">
-                                {{#each grid_exports}}
-                                    <li>
-                                        {{#if is_print}}
-                                            <button type="button" class="dropdown-item" data-grid-print>
-                                                {{#if has_icon}}<i class="{{ icon }} me-2"></i>{{/if}}
-                                                {{ label }}
-                                            </button>
-                                        {{else}}
-                                            <a href="{{ href }}" class="dropdown-item">
-                                                {{#if has_icon}}<i class="{{ icon }} me-2"></i>{{/if}}
-                                                {{ label }}
-                                            </a>
-                                        {{/if}}
-                                    </li>
-                                {{/each}}
-                            </ul>
-                        </div>
-                    {{/if}}
-
-                    <form method="GET" action="{{ grid_base_url }}" class="d-flex align-items-center gap-2 mb-0">
-                        <input type="hidden" name="sort" value="{{ grid_query_sort }}">
-                        <input type="hidden" name="direction" value="{{ grid_query_direction }}">
-                        <input type="hidden" name="{{ grid_search_name }}" value="{{ grid_search_value }}">
-
-                        {{#each grid_filters}}
-                            <input type="hidden" name="{{ name }}" value="{{ value }}">
-                        {{/each}}
-
-                        <label for="grid-per-page-top" class="small text-muted mb-0">
-                            {{ t:ui.datagrid.per_page }}
-                        </label>
-
-                        <select id="grid-per-page-top"
-                                name="per_page"
-                                class="form-select form-select-sm datagrid__per-page"
-                                data-grid-per-page>
-                            {{#each grid_per_page_options}}
-                                <option value="{{ value }}"{{#if selected}} selected{{/if}}>{{ value }}</option>
-                            {{/each}}
-                        </select>
-                    </form>
-
-                    <span class="small text-muted">{{ grid_pagination_summary }}</span>
-                </div>
-
-                <nav aria-label="{{ t:ui.datagrid.pagination }}">
-                    <ul class="pagination pagination-sm mb-0">
-                        <li class="page-item{{#if grid_first_disabled}} disabled{{/if}}">
-                            <a class="page-link" href="{{ grid_first_url }}" aria-label="{{ t:ui.datagrid.first }}">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span class="d-none d-sm-inline">{{ t:ui.datagrid.first }}</span>
-                            </a>
-                        </li>
-
-                        <li class="page-item{{#if grid_prev_disabled}} disabled{{/if}}">
-                            <a class="page-link" href="{{ grid_prev_url }}" aria-label="{{ t:ui.datagrid.previous }}">
-                                <span aria-hidden="true">&lsaquo;</span>
-                                <span class="d-none d-sm-inline">{{ t:ui.datagrid.previous }}</span>
-                            </a>
-                        </li>
-
-                        {{#each grid_pages}}
-                            <li class="page-item{{#if active}} active{{/if}}">
-                                <a class="page-link" href="{{ url }}">{{ page }}</a>
-                            </li>
-                        {{/each}}
-
-                        <li class="page-item{{#if grid_next_disabled}} disabled{{/if}}">
-                            <a class="page-link" href="{{ grid_next_url }}" aria-label="{{ t:ui.datagrid.next }}">
-                                <span class="d-none d-sm-inline">{{ t:ui.datagrid.next }}</span>
-                                <span aria-hidden="true">&rsaquo;</span>
-                            </a>
-                        </li>
-
-                        <li class="page-item{{#if grid_last_disabled}} disabled{{/if}}">
-                            <a class="page-link" href="{{ grid_last_url }}" aria-label="{{ t:ui.datagrid.last }}">
-                                <span class="d-none d-sm-inline">{{ t:ui.datagrid.last }}</span>
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+        <div class="card-body py-0">
+            <div class="border-bottom py-2">
+                {{> "./_datagrid-toolbar" }}
             </div>
         </div>
 
@@ -206,11 +114,13 @@
             </div>
         {{/if}}
 
-        <div class="card-body p-0">
-            <div class="table-responsive">
+        <div class="{{ grid_table_body_class }}">
+            <div class="table-responsive {{ grid_table_scroll_class }}"
+                 data-grid-visible-columns="{{ grid_visible_column_count }}"
+                 data-grid-visible-character-limit="{{ grid_visible_character_limit }}">
                 <table data-catalyst-datatable="progressive"
                        data-empty-label="{{ grid_empty_title }}"
-                       class="table table-striped dt-responsive align-middle mb-0 datagrid-table table-nowrap">
+                       class="{{ grid_table_class }}">
                     <thead class="thead-sm text-uppercase fs-xxs">
                     <tr>
                         {{#if grid_has_bulk}}
@@ -302,30 +212,9 @@
             </div>
         </div>
 
-        <div class="card-footer py-2">
-            <div class="datagrid-toolbar d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-2">
-                <span class="small text-muted">{{ grid_pagination_summary }}</span>
-                <nav aria-label="{{ t:ui.datagrid.pagination }}">
-                    <ul class="pagination pagination-sm mb-0">
-                        <li class="page-item{{#if grid_first_disabled}} disabled{{/if}}">
-                            <a class="page-link" href="{{ grid_first_url }}" aria-label="{{ t:ui.datagrid.first }}">&laquo;</a>
-                        </li>
-                        <li class="page-item{{#if grid_prev_disabled}} disabled{{/if}}">
-                            <a class="page-link" href="{{ grid_prev_url }}" aria-label="{{ t:ui.datagrid.previous }}">&lsaquo;</a>
-                        </li>
-                        {{#each grid_pages}}
-                            <li class="page-item{{#if active}} active{{/if}}">
-                                <a class="page-link" href="{{ url }}">{{ page }}</a>
-                            </li>
-                        {{/each}}
-                        <li class="page-item{{#if grid_next_disabled}} disabled{{/if}}">
-                            <a class="page-link" href="{{ grid_next_url }}" aria-label="{{ t:ui.datagrid.next }}">&rsaquo;</a>
-                        </li>
-                        <li class="page-item{{#if grid_last_disabled}} disabled{{/if}}">
-                            <a class="page-link" href="{{ grid_last_url }}" aria-label="{{ t:ui.datagrid.last }}">&raquo;</a>
-                        </li>
-                    </ul>
-                </nav>
+        <div class="card-body py-0">
+            <div class="border-top py-2">
+                {{> "./_datagrid-toolbar" }}
             </div>
         </div>
     {{/if}}

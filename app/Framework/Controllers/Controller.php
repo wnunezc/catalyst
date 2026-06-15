@@ -706,10 +706,9 @@ abstract class Controller
         string $url,
         string $message,
         mixed $data = null,
-        int $delay = 300,
         int $status = 200
     ): Response {
-        return $this->postActionRedirect($url, $message, true, $status, $data, $delay);
+        return $this->postActionRedirect($url, $message, true, $status, $data);
     }
 
     /**
@@ -721,10 +720,9 @@ abstract class Controller
         string $url,
         string $message,
         int $status = 422,
-        mixed $data = null,
-        int $delay = 0
+        mixed $data = null
     ): Response {
-        return $this->postActionRedirect($url, $message, false, $status, $data, $delay);
+        return $this->postActionRedirect($url, $message, false, $status, $data);
     }
 
     /**
@@ -739,32 +737,29 @@ abstract class Controller
     }
 
     /**
-     * Applies toast or flash state and returns the appropriate redirect response shape.
+     * Applies exactly one feedback channel and returns the appropriate redirect response shape.
      *
-     * Responsibility: Applies toast or flash state and returns the appropriate redirect response shape.
+     * Responsibility: Queues feedback for the destination before returning an immediate redirect response.
      */
     private function postActionRedirect(
         string $url,
         string $message,
         bool $success,
         int $status,
-        mixed $data,
-        int $delay
+        mixed $data
     ): Response {
         if ($this->expectsJson()) {
-            if ($delay <= 0) {
-                if ($success) {
-                    $this->toast('success', $message);
-                } else {
-                    $this->flash()->error($message);
-                }
+            if ($success) {
+                $this->toast('success', $message);
+            } else {
+                $this->flash()->error($message);
             }
 
             $response = $success
-                ? $this->jsonSuccessWithToast($data, $message, $status)
-                : $this->jsonErrorWithToast($message, $status, $data);
+                ? $this->jsonSuccess($data, $message, $status)
+                : $this->jsonError($message, $status, $data);
 
-            return $response->withRedirect($url, max(0, $delay));
+            return $response->withRedirect($url);
         }
 
         if ($success) {

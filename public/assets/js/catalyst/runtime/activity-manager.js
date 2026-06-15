@@ -128,13 +128,21 @@ export class ActivityManager {
     }
 
     handleClick(event) {
+        const origin = event.target instanceof Element ? event.target : null;
+        const release = origin?.closest('[data-catalyst-activity-release]');
+        if (release instanceof HTMLButtonElement && this.overlay?.contains(release)) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            this.reset();
+            return;
+        }
+
         if (this.tokens.size > 0) {
             event.preventDefault();
             event.stopImmediatePropagation();
             return;
         }
 
-        const origin = event.target instanceof Element ? event.target : null;
         const link = origin?.closest('a[href]');
         if (!(link instanceof HTMLElement) || !this.root?.contains(link)) {
             return;

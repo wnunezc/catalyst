@@ -13,10 +13,11 @@ async function openAccountSurface(page, path) {
     });
 
     await openSurface(page, expect, path, { requireTriggers: false });
-    await expect(page.locator('body.catalyst-shell-body.account-page-body')).toHaveAttribute('data-catalyst-ui-runtime', 'ready');
     if (path === '/dashboard' && await page.locator('.account-guest-shell').count() > 0) {
+        await expect(page.locator('body')).toHaveAttribute('data-catalyst-ui-runtime', 'ready');
         await expect(page.locator('.account-guest-shell')).toBeVisible();
     } else {
+        await expect(page.locator('body.catalyst-shell-body')).toHaveAttribute('data-catalyst-ui-runtime', 'ready');
         await expect(page.locator('.sidenav-menu')).toBeVisible();
         await expect(page.locator('.content-page')).toBeVisible();
     }

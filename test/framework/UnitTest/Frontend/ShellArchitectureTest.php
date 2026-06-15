@@ -178,6 +178,28 @@ final class ShellArchitectureTest extends TestCase
         Assert::true(is_file($this->root . '/public/assets/vendor/fontawesome/webfonts/fa-brands-400.woff2'));
     }
 
+    public function testCanonicalDocumentConsumesGlobalBrandingAssets(): void
+    {
+        $scope = $this->read('app/Framework/View/DocumentScope.php');
+        $sidebar = $this->read('boot-core/template/_sidebar.phtml');
+        $topbar = $this->read('boot-core/template/_topbar.phtml');
+        $headAssets = $this->read('boot-core/template/_head-assets.phtml');
+
+        Assert::contains("'brand_logo_light_url' =>", $scope);
+        Assert::contains("'brand_logo_dark_url' =>", $scope);
+        Assert::contains("'brand_logo_small_url' =>", $scope);
+        Assert::contains("'favicon_asset_url' => AssetUrl::versioned((string) (\$branding['favicon_url']", $scope);
+        Assert::contains('src="{{ brand_logo_light_url }}"', $sidebar);
+        Assert::contains('src="{{ brand_logo_dark_url }}"', $sidebar);
+        Assert::contains('src="{{ brand_logo_small_url }}"', $sidebar);
+        Assert::contains('src="{{ brand_logo_light_url }}"', $topbar);
+        Assert::contains('src="{{ brand_logo_dark_url }}"', $topbar);
+        Assert::contains('src="{{ brand_logo_small_url }}"', $topbar);
+        Assert::contains('href="{{ favicon_asset_url }}"', $headAssets);
+        Assert::false(str_contains($sidebar, '/assets/vendor/inspinia/images/logo'));
+        Assert::false(str_contains($topbar, '/assets/vendor/inspinia/images/logo'));
+    }
+
     public function testInternalShellAssignsViewportScrollingToContentPage(): void
     {
         $compat = $this->read('public/assets/css/catalyst/inspinia-runtime-compat.css');

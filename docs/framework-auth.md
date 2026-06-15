@@ -110,21 +110,22 @@ $this->authorizeResource('update', 'documents', $document, [
 | `id()` | `public` | Get the authenticated user's ID. | Exposes the authenticated user identifier from the active session payload. |
 | `beginScopedUser()` | `public` | Scope an authenticated user to the current request without mutating the session. Used by non-session guards such as bearer API tokens so Gate, middleware and audit logging can keep consuming AuthManager as the single auth boundary. | Scope an authenticated user to the current request without mutating the session. Used by non-session guards such as bearer API tokens so Gate, middleware and audit logging can keep consuming AuthManager as the single auth boundary. |
 | `clearScopedUser()` | `public` | Clears the request-only authenticated user context. | Clears the request-only authenticated user context. |
-| `setPendingMfa()` | `public` | Store a pending-MFA state after successful credential verification. The full session is NOT created yet — it will be completed by completeMfaLogin(). Session keys written: _mfa_pending_user_id — int _mfa_pending_remember — bool _mfa_pending_redirect — string. | Store a pending-MFA state after successful credential verification. The full session is NOT created yet — it will be completed by completeMfaLogin(). Session keys written: _mfa_pending_user_id — int _mfa_pending_remember — bool _mfa_pending_redirect — string. |
-| `hasMfaPending()` | `public` | Check whether a pending MFA challenge is in progress. | Check whether a pending MFA challenge is in progress. |
+| `setPendingMfa()` | `public` | Store a pending-MFA state after successful credential verification. The full session is not created until completeMfaLogin(), and the transition expires after five minutes. | Stores the pending user, remember flag, safe redirect and issue time used to enforce the short MFA transition window. |
+| `hasMfaPending()` | `public` | Check whether a non-expired pending MFA challenge is in progress. | Rejects and clears missing or expired pending MFA challenge state. |
 | `getMfaPendingUserId()` | `public` | Return the user ID stored in the pending MFA state, or null if absent. | Return the user ID stored in the pending MFA state, or null if absent. |
 | `getMfaPendingRemember()` | `public` | Return the remember flag stored in the pending MFA state. | Return the remember flag stored in the pending MFA state. |
 | `getMfaPendingRedirect()` | `public` | Return the redirect path stored in the pending MFA state. | Return the redirect path stored in the pending MFA state. |
 | `completeMfaLogin()` | `public` | Complete the MFA challenge: create full auth session and clear pending state. | Complete the MFA challenge: create full auth session and clear pending state. |
 | `clearPendingMfa()` | `public` | Remove all pending MFA session keys. | Remove all pending MFA session keys. |
-| `setPendingMfaSetup()` | `public` | Store a pending-MFA-setup state after successful credential verification. Used when MFA is globally on and the user has never configured it. | Store a pending-MFA-setup state after successful credential verification. Used when MFA is globally on and the user has never configured it. |
-| `hasMfaSetupPending()` | `public` | Check whether a forced-MFA-setup flow is in progress. | Check whether a forced-MFA-setup flow is in progress. |
+| `setPendingMfaSetup()` | `public` | Store a five-minute pending-MFA-setup state after successful credential verification. | Stores the forced-setup identity, remember flag, safe redirect and issue time without creating a full session. |
+| `hasMfaSetupPending()` | `public` | Check whether a non-expired forced-MFA-setup flow is in progress. | Rejects and clears missing or expired forced-MFA-setup state. |
 | `getMfaSetupPendingUserId()` | `public` | Returns the user ID stored in the pending MFA setup state, or null if absent. | Returns the user ID stored in the pending MFA setup state, or null if absent. |
 | `getMfaSetupPendingRemember()` | `public` | Returns the remember flag stored in the pending MFA setup state. | Returns the remember flag stored in the pending MFA setup state. |
 | `getMfaSetupPendingRedirect()` | `public` | Returns the safe redirect path stored in the pending MFA setup state. | Returns the safe redirect path stored in the pending MFA setup state. |
 | `completeMfaSetupLogin()` | `public` | Complete a forced-setup login: create full session, issue remember-me if needed, and clear the pending-setup state. | Complete a forced-setup login: create full session, issue remember-me if needed, and clear the pending-setup state. |
 | `clearMfaSetupPending()` | `public` | Remove all pending-MFA-setup session keys. | Remove all pending-MFA-setup session keys. |
 | `createSession()` | `private` | Creates the tenant-aware session keys for a fully authenticated user. | Creates the tenant-aware session keys for a fully authenticated user. |
+| `pendingStateIsFresh()` | `private` | Checks whether a privileged pending-auth transition is still usable. | Rejects missing, expired or future-dated MFA transition state before it can create an authenticated session. |
 | `tenantMatches()` | `private` | Checks whether a user row belongs to the active tenant context. | Checks whether a user row belongs to the active tenant context. |
 
 ### `Catalyst\Framework\Auth\MfaManager`

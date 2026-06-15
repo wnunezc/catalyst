@@ -1,5 +1,5 @@
 <div class="col-12">
-    <div class="section-card">
+    <div class="card h-100">
         <div class="card-header"><i class="fa-solid fa-language me-2"></i>{{ t:devtools.i18n_demo.title }}</div>
         <div class="card-body">
             <div class="row g-3">
@@ -19,29 +19,33 @@
                 </div>
 
                 <div class="col-12 col-md-8">
-                    <table class="table table-sm sys-table">
-                        <thead><tr><th>{{ t:devtools.i18n_demo.columns.example }}</th><th>{{ t:devtools.i18n_demo.columns.result }}</th></tr></thead>
-                        <tbody>
-                            {{#each validation_examples}}
-                            <tr>
-                                <td><span class="code-badge">{{ this.label }}</span></td>
-                                <td class="{{ this.row_class }} small">{{ this.result }}</td>
-                            </tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead><tr><th>{{ t:devtools.i18n_demo.columns.example }}</th><th>{{ t:devtools.i18n_demo.columns.result }}</th></tr></thead>
+                            <tbody>
+                                {{#each validation_examples}}
+                                <tr>
+                                    <td><span class="code-badge">{{ this.label }}</span></td>
+                                    <td class="{{ this.row_class }} small">{{ this.result }}</td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <div class="col-12 col-md-6">
                     <p class="text-muted small mb-2 fw-semibold">{{ t:devtools.i18n_demo.date_formatting }} - <span class="code-badge">format_date()</span></p>
-                    <table class="table table-sm sys-table">
-                        <thead><tr><th>{{ t:devtools.i18n_demo.columns.format }}</th><th>{{ t:devtools.i18n_demo.columns.output }}</th></tr></thead>
-                        <tbody>
-                            {{#each date_rows}}
-                            <tr><td><span class="code-badge">{{ this.format }}</span></td><td>{{ this.output }}</td></tr>
-                            {{/each}}
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead><tr><th>{{ t:devtools.i18n_demo.columns.format }}</th><th>{{ t:devtools.i18n_demo.columns.output }}</th></tr></thead>
+                            <tbody>
+                                {{#each date_rows}}
+                                <tr><td><span class="code-badge">{{ this.format }}</span></td><td>{{ this.output }}</td></tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <div class="col-12 col-md-6">

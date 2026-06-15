@@ -58,15 +58,19 @@
         "fields": {
             "brand_name": "Nombre de marca", "brand_short_name": "Nombre corto de marca", "brand_tagline": "Lema de marca",
             "asset_path_placeholder": "/uploads/branding/... o https://...",
-            "logo_primary_path": "Ruta del logo principal", "logo_primary_help": "Vacío = usar el logo neutral de Catalyst/Inspinia.", "reset_logo_primary": "Restablecer logo principal",
-            "logo_dark_path": "Ruta alterna para modo oscuro", "logo_dark_help": "Se usa cuando la variante resuelta es oscura.", "reset_logo_dark": "Restablecer logo oscuro",
-            "favicon_path": "Ruta del favicon", "favicon_help": "Se renderiza en los recursos compartidos del head.", "reset_favicon": "Restablecer favicon",
+            "logo_primary_path": "Logo principal", "logo_primary_help": "Catalyst almacena y resuelve la imagen para el shell compartido y la marca de agua PDF.", "reset_logo_primary": "Restablecer logo principal",
+            "logo_dark_path": "Logo alterno para modo oscuro", "logo_dark_help": "Se usa en el shell compartido cuando la variante resuelta es oscura.", "reset_logo_dark": "Restablecer logo oscuro",
+            "favicon_path": "Favicon", "favicon_help": "Catalyst almacena y renderiza la imagen en el head compartido.", "reset_favicon": "Restablecer favicon",
             "pdf_watermark": "Marca de agua PDF", "pdf_watermark_enabled": "Habilitar marca de agua en PDF", "pdf_watermark_text": "Texto de marca de agua"
         },
         "actions": {"save": "Guardar apariencia", "open_runtime": "Abrir plataforma", "open_documents": "Abrir documentos"},
         "messages": {
             "invalid_theme": "Selecciona el preset canónico Catalyst/Inspinia.",
             "invalid_watermark_color": "El color PDF debe ser hexadecimal como #CBD5E1.",
+            "invalid_brand_asset": "No fue posible inspeccionar la imagen de identidad seleccionada.",
+            "primary_logo_raster": "El logo principal debe usar una imagen PNG, JPEG o WebP para poder renderizarse también en los PDF.",
+            "favicon_raster": "El favicon debe usar una imagen PNG, JPEG o WebP.",
+            "favicon_square": "El favicon debe usar una imagen cuadrada.",
             "updated": "Apariencia de plataforma actualizada."
         }
     },

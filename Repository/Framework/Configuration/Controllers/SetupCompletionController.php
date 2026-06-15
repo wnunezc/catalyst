@@ -100,7 +100,7 @@ class SetupCompletionController extends Controller
             return $this->jsonSuccessWithToast(
                 ['privileged_account_exists' => true],
                 __('settings.completion.privileged_account_exists_success')
-            )->withRefresh(800);
+            )->withRefresh();
         }
 
         $payload = $request->validated();
@@ -143,7 +143,7 @@ class SetupCompletionController extends Controller
         return $this->jsonSuccessWithToast(
             ['privileged_account_created' => true],
             __('settings.completion.privileged_account_create_success')
-        )->withRefresh(800);
+        )->withRefresh();
     }
 
     /**
@@ -193,7 +193,7 @@ class SetupCompletionController extends Controller
         return $this->jsonSuccessWithToast(
             ['privileged_account_created' => false],
             __('settings.completion.success')
-        )->withRedirect('/login', 1500);
+        )->withRedirect('/login');
     }
 
     /**
@@ -221,6 +221,6 @@ class SetupCompletionController extends Controller
         return $this->jsonSuccessWithToast(
             null,
             __('settings.completion.reset_success')
-        )->withRedirect('/configuration/environment-setup', 1000);
+        )->withRedirect('/configuration/environment-setup');
     }
 }

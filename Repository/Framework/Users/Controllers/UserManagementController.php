@@ -295,7 +295,7 @@ class UserManagementController extends Controller
             return $this->jsonSuccessWithToast(
                 ['user_id' => $userId],
                 __('roles.users.messages.created')
-            )->withRedirect('/users', 1200);
+            )->withRedirect('/users');
         }
 
         $this->toast('success', __('roles.users.messages.created'));

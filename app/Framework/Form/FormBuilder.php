@@ -53,6 +53,7 @@ final class FormBuilder
         'error_bag' => 'default',
         'multipart' => false,
         'wrapper_class' => 'row g-3',
+        'group_sections_in_card' => false,
         'autosave' => [
             'enabled' => false,
             'key' => null,
@@ -206,6 +207,18 @@ final class FormBuilder
     }
 
     /**
+     * Renders declared sections as groups within one shared card.
+     *
+     * Responsibility: Selects the single-responsibility grouped-card composition.
+     */
+    public function groupSectionsInCard(bool $group = true): self
+    {
+        $this->config['group_sections_in_card'] = $group;
+
+        return $this;
+    }
+
+    /**
      * Configures client-side autosave metadata for the form.
      *
      * Responsibility: Configures client-side autosave metadata for the form.
@@ -254,6 +267,7 @@ final class FormBuilder
             'sections' => $sections,
             'actions' => $this->normalizeActions((array) ($this->config['actions'] ?? [])),
             'wrapper_class' => (string) ($this->config['wrapper_class'] ?? 'row g-3'),
+            'group_sections_in_card' => (bool) ($this->config['group_sections_in_card'] ?? false),
             'has_dependencies' => $hasDependencies,
             'has_repeaters' => $hasRepeaters,
             'autosave' => $this->normalizeAutosave(),
@@ -515,6 +529,7 @@ final class FormBuilder
                 'title' => (string) ($section['title'] ?? $this->humanize($sectionKey)),
                 'description' => (string) ($section['description'] ?? ''),
                 'class' => (string) ($section['class'] ?? ''),
+                'col_class' => (string) ($section['col_class'] ?? $section['colClass'] ?? 'col-12'),
                 'wrapper_class' => (string) ($section['wrapper_class'] ?? ''),
                 'fields' => [],
             ];

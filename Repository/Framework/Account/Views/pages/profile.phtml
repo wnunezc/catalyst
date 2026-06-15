@@ -1,16 +1,16 @@
-<div class="account-page" data-account-page="profile">
+<div data-account-page="profile">
     {{> "components._page-header" }}
 
     <section class="row g-3">
         <div class="col-12 col-xl-7">
-            <article class="card account-card h-100">
-                <div class="card-body">
-                    <div class="account-section-title">
-                        <div>
-                            <h2>{{ t:account.profile.identity_title }}</h2>
-                            <p>{{ t:account.profile.identity_hint }}</p>
-                        </div>
+            <article class="card h-100">
+                <div class="card-header">
+                    <div>
+                        <h2 class="card-title mb-1">{{ t:account.profile.identity_title }}</h2>
+                        <p class="text-muted mb-0">{{ t:account.profile.identity_hint }}</p>
                     </div>
+                </div>
+                <div class="card-body">
                     <dl class="account-definition-list">
                         <div>
                             <dt>{{ t:account.profile.name }}</dt>
@@ -33,15 +33,15 @@
             </article>
         </div>
         <div class="col-12 col-xl-5">
-            <article class="card account-card h-100">
-                <div class="card-body">
-                    <div class="account-section-title">
-                        <div>
-                            <h2>{{ t:account.profile.scope_title }}</h2>
-                            <p>{{ t:account.profile.scope_hint }}</p>
-                        </div>
+            <article class="card h-100">
+                <div class="card-header">
+                    <div>
+                        <h2 class="card-title mb-1">{{ t:account.profile.scope_title }}</h2>
+                        <p class="text-muted mb-0">{{ t:account.profile.scope_hint }}</p>
                     </div>
-                    <div class="account-note-card">
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info mb-0">
                         <i class="ti ti-info-circle"></i>
                         <p>{{ t:account.profile.editing_note }}</p>
                     </div>

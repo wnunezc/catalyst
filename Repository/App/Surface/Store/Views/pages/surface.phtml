@@ -1,72 +1,79 @@
-<main class="store-surface catalyst-demo-surface" data-public-route="store">
-    <section class="store-surface__hero">
-        <div class="store-surface__copy catalyst-demo-hero__copy">
-            <div class="store-surface__tags">
-                <span class="catalyst-demo-eyebrow">{{ page.eyebrow }}</span>
-                <span class="catalyst-demo-badge">{{ page.badge }}</span>
-            </div>
-            <h1>{{ page.headline }}</h1>
-            <p class="catalyst-demo-lead">{{ page.lead }}</p>
-            <div class="store-surface__categories" aria-label="{{ page.productsTitle }}">
-                {{#each page.categories}}
-                <span>{{ this }}</span>
-                {{/each}}
-            </div>
-            <div class="catalyst-demo-actions">
-                <a class="btn btn-primary btn-lg" href="{{ page.primaryCta.href }}">{{ page.primaryCta.label }}</a>
-                <a class="btn btn-outline-primary btn-lg" href="{{ page.secondaryCta.href }}">{{ page.secondaryCta.label }}</a>
+<main class="d-grid gap-3" data-public-route="store">
+    <section class="row g-3">
+        <div class="col-12 col-lg-7">
+            <div class="card h-100">
+                <div class="card-body p-lg-5">
+                    <div class="d-flex align-items-center flex-wrap gap-2 mb-3">
+                        <span class="text-primary text-uppercase small fw-bold">{{ page.eyebrow }}</span>
+                        <span class="badge text-bg-primary">{{ page.badge }}</span>
+                    </div>
+                    <h1 class="display-4">{{ page.headline }}</h1>
+                    <p class="lead text-muted">{{ page.lead }}</p>
+                    <div class="d-flex flex-wrap gap-2 mb-3" aria-label="{{ page.productsTitle }}">
+                        {{#each page.categories}}
+                        <span class="badge text-bg-light border">{{ this }}</span>
+                        {{/each}}
+                    </div>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a class="btn btn-primary btn-lg" href="{{ page.primaryCta.href }}">{{ page.primaryCta.label }}</a>
+                        <a class="btn btn-outline-primary btn-lg" href="{{ page.secondaryCta.href }}">{{ page.secondaryCta.label }}</a>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <aside class="store-surface__cart catalyst-demo-card">
-            <div class="store-surface__cart-header">
-                <span class="catalyst-demo-eyebrow">{{ page.cartTitle }}</span>
-                <span class="store-surface__cart-count">{{ page.cartItemCount }}</span>
-            </div>
-            <div class="store-surface__cart-lines">
-                {{#each page.cartLines}}
-                <div>
-                    <span>{{ name }}</span>
-                    <strong>{{ price }}</strong>
+        <div class="col-12 col-lg-5">
+            <aside class="card h-100">
+                <div class="card-header d-flex align-items-center justify-content-between gap-2">
+                    <h2 class="card-title mb-0">{{ page.cartTitle }}</h2>
+                    <span class="badge text-bg-primary">{{ page.cartItemCount }}</span>
                 </div>
-                {{/each}}
-            </div>
-            <div class="store-surface__cart-total">
-                <span>{{ page.cartSubtotalLabel }}</span>
-                <strong>{{ page.cartSubtotal }}</strong>
-            </div>
-            <button type="button" class="btn btn-primary w-100">{{ page.checkoutLabel }}</button>
-        </aside>
+                <div class="card-body">
+                    <div class="list-group list-group-flush mb-3">
+                        {{#each page.cartLines}}
+                        <div class="list-group-item d-flex align-items-center justify-content-between gap-2 px-0">
+                            <span>{{ name }}</span>
+                            <strong>{{ price }}</strong>
+                        </div>
+                        {{/each}}
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between gap-2 p-3 bg-body-tertiary rounded mb-3">
+                        <span>{{ page.cartSubtotalLabel }}</span>
+                        <strong class="font-monospace fs-4">{{ page.cartSubtotal }}</strong>
+                    </div>
+                    <button type="button" class="btn btn-primary w-100">{{ page.checkoutLabel }}</button>
+                </div>
+            </aside>
+        </div>
     </section>
 
-    <section id="catalog" class="store-surface__catalog catalyst-demo-card" aria-label="{{ page.productsTitle }}">
-        <div class="store-surface__catalog-header">
+    <section id="catalog" class="card" aria-label="{{ page.productsTitle }}">
+        <div class="card-header d-flex flex-wrap align-items-start justify-content-between gap-2">
             <div>
-                <span class="catalyst-demo-eyebrow">{{ page.productsTitle }}</span>
-                <p>{{ page.note }}</p>
+                <h2 class="card-title mb-1">{{ page.productsTitle }}</h2>
+                <p class="text-muted mb-0">{{ page.note }}</p>
             </div>
-            <div class="store-surface__search" aria-hidden="true">
-                <i class="ti ti-search"></i>
-                <span>{{ page.searchLabel }}</span>
-            </div>
+            <span class="text-muted"><i class="ti ti-search me-1"></i>{{ page.searchLabel }}</span>
         </div>
-        <div class="store-surface__product-grid">
-            {{#each page.products}}
-            <article class="store-surface__product-card">
-                <div class="store-surface__product-visual" aria-hidden="true">
-                    <span>{{ badge }}</span>
+        <div class="card-body">
+            <div class="row g-3">
+                {{#each page.products}}
+                <div class="col-12 col-md-6 col-xl-3">
+                    <article class="card h-100">
+                        <div class="card-body">
+                            <span class="badge text-bg-primary mb-2">{{ badge }}</span>
+                            <p class="text-uppercase small fw-bold text-muted mb-1">{{ type }}</p>
+                            <h3 class="card-title">{{ name }}</h3>
+                            <p class="card-text text-muted">{{ body }}</p>
+                        </div>
+                        <div class="card-footer d-flex align-items-center justify-content-between gap-2">
+                            <strong class="font-monospace fs-5">{{ price }}</strong>
+                            <button type="button" class="btn btn-sm btn-outline-primary">{{ page.addLabel }}</button>
+                        </div>
+                    </article>
                 </div>
-                <div class="store-surface__product-body">
-                    <p class="store-surface__product-type">{{ type }}</p>
-                    <h2>{{ name }}</h2>
-                    <p>{{ body }}</p>
-                </div>
-                <div class="store-surface__product-footer">
-                    <strong>{{ price }}</strong>
-                    <button type="button" class="btn btn-sm btn-outline-primary">{{ page.addLabel }}</button>
-                </div>
-            </article>
-            {{/each}}
+                {{/each}}
+            </div>
         </div>
     </section>
 </main>

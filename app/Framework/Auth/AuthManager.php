@@ -46,6 +46,8 @@ class AuthManager
 {
     use SingletonTrait;
 
+    private const MFA_PENDING_TTL = 300;
+
     private UserProvider $users;
     private RememberMe   $remember;
     private SessionManager $session;
@@ -306,9 +308,9 @@ class AuthManager
     // -------------------------------------------------------------------------
 
     /**
-     * Store a pending-MFA state after successful credential verification. The full session is NOT created yet — it will be completed by completeMfaLogin(). Session keys written: _mfa_pending_user_id — int _mfa_pending_remember — bool _mfa_pending_redirect — string.
+     * Store a pending-MFA state after successful credential verification. The full session is not created until completeMfaLogin(), and the transition expires after five minutes.
      *
-     * Responsibility: Store a pending-MFA state after successful credential verification. The full session is NOT created yet — it will be completed by completeMfaLogin(). Session keys written: _mfa_pending_user_id — int _mfa_pending_remember — bool _mfa_pending_redirect — string.
+     * Responsibility: Stores the pending user, remember flag, safe redirect and issue time used to enforce the short MFA transition window.
      * @param int    $userId
      * @param bool   $remember  Whether to set remember-me after MFA passes
      * @param string $redirect  Safe redirect path after full login
@@ -326,18 +328,24 @@ class AuthManager
         $this->session
             ->set('_mfa_pending_user_id',  $userId)
             ->set('_mfa_pending_remember', $remember)
-            ->set('_mfa_pending_redirect', AuthInputGuard::localRedirect($redirect));
+            ->set('_mfa_pending_redirect', AuthInputGuard::localRedirect($redirect))
+            ->set('_mfa_pending_issued_at', time());
     }
 
     /**
-     * Check whether a pending MFA challenge is in progress.
+     * Check whether a non-expired pending MFA challenge is in progress.
      *
-     * Responsibility: Check whether a pending MFA challenge is in progress.
+     * Responsibility: Rejects and clears missing or expired pending MFA challenge state.
      * @return bool
      */
     public function hasMfaPending(): bool
     {
-        return $this->session->get('_mfa_pending_user_id') !== null;
+        if ($this->pendingStateIsFresh('_mfa_pending_user_id', '_mfa_pending_issued_at')) {
+            return true;
+        }
+
+        $this->clearPendingMfa();
+        return false;
     }
 
     /**
@@ -348,6 +356,10 @@ class AuthManager
      */
     public function getMfaPendingUserId(): ?int
     {
+        if (!$this->hasMfaPending()) {
+            return null;
+        }
+
         $id = $this->session->get('_mfa_pending_user_id');
         return $id !== null ? (int)$id : null;
     }
@@ -418,7 +430,8 @@ class AuthManager
         $this->session
             ->remove('_mfa_pending_user_id')
             ->remove('_mfa_pending_remember')
-            ->remove('_mfa_pending_redirect');
+            ->remove('_mfa_pending_redirect')
+            ->remove('_mfa_pending_issued_at');
     }
 
     // -------------------------------------------------------------------------
@@ -433,9 +446,9 @@ class AuthManager
     // -------------------------------------------------------------------------
 
     /**
-     * Store a pending-MFA-setup state after successful credential verification. Used when MFA is globally on and the user has never configured it.
+     * Store a five-minute pending-MFA-setup state after successful credential verification.
      *
-     * Responsibility: Store a pending-MFA-setup state after successful credential verification. Used when MFA is globally on and the user has never configured it.
+     * Responsibility: Stores the forced-setup identity, remember flag, safe redirect and issue time without creating a full session.
      * @param int    $userId
      * @param bool   $remember
      * @param string $redirect  Safe redirect after setup completes
@@ -453,18 +466,24 @@ class AuthManager
         $this->session
             ->set('_mfa_setup_pending_user_id',  $userId)
             ->set('_mfa_setup_pending_remember', $remember)
-            ->set('_mfa_setup_pending_redirect', AuthInputGuard::localRedirect($redirect));
+            ->set('_mfa_setup_pending_redirect', AuthInputGuard::localRedirect($redirect))
+            ->set('_mfa_setup_pending_issued_at', time());
     }
 
     /**
-     * Check whether a forced-MFA-setup flow is in progress.
+     * Check whether a non-expired forced-MFA-setup flow is in progress.
      *
-     * Responsibility: Check whether a forced-MFA-setup flow is in progress.
+     * Responsibility: Rejects and clears missing or expired forced-MFA-setup state.
      * @return bool
      */
     public function hasMfaSetupPending(): bool
     {
-        return $this->session->get('_mfa_setup_pending_user_id') !== null;
+        if ($this->pendingStateIsFresh('_mfa_setup_pending_user_id', '_mfa_setup_pending_issued_at')) {
+            return true;
+        }
+
+        $this->clearMfaSetupPending();
+        return false;
     }
 
     /**
@@ -475,6 +494,10 @@ class AuthManager
      */
     public function getMfaSetupPendingUserId(): ?int
     {
+        if (!$this->hasMfaSetupPending()) {
+            return null;
+        }
+
         $id = $this->session->get('_mfa_setup_pending_user_id');
         return $id !== null ? (int)$id : null;
     }
@@ -545,7 +568,8 @@ class AuthManager
         $this->session
             ->remove('_mfa_setup_pending_user_id')
             ->remove('_mfa_setup_pending_remember')
-            ->remove('_mfa_setup_pending_redirect');
+            ->remove('_mfa_setup_pending_redirect')
+            ->remove('_mfa_setup_pending_issued_at');
     }
 
     // -------------------------------------------------------------------------
@@ -581,6 +605,25 @@ class AuthManager
             ->set('_auth_tenant_id', (int) ($user['tenant_id'] ?? 0))
             ->set('_auth_tenant_key', (string) ($user['tenant_key'] ?? 'default'))
             ->set('_auth_tenant_label', (string) ($user['tenant_label'] ?? 'Default tenant'));
+    }
+
+    /**
+     * Checks whether a privileged pending-auth transition is still usable.
+     *
+     * Responsibility: Rejects missing, expired or future-dated MFA transition state before it can create an authenticated session.
+     */
+    private function pendingStateIsFresh(string $userKey, string $issuedAtKey): bool
+    {
+        if ($this->session->get($userKey) === null) {
+            return false;
+        }
+
+        $issuedAt = (int) $this->session->get($issuedAtKey, 0);
+        $now = time();
+
+        return $issuedAt > 0
+            && $issuedAt <= $now
+            && ($now - $issuedAt) <= self::MFA_PENDING_TTL;
     }
 
     /**

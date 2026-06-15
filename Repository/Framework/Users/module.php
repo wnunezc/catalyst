@@ -140,7 +140,7 @@ return [
                 'context' => 'users',
                 'label' => __('roles.organization_hierarchy.title'),
                 'href' => '/users/organization-hierarchy',
-                'icon' => 'ti ti-building-hierarchy',
+                'icon' => 'ti ti-hierarchy-3',
                 'matches' => ['/users/organization-hierarchy'],
                 'group' => 'users',
                 'group_label' => __('ui.shell.group_access'),

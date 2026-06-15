@@ -59,6 +59,6 @@ class LogoutController extends Controller
 
         AuthManager::getInstance()->logout();
 
-        return $this->postActionSuccessRedirect($destination ?: '/', __('auth.logout.success'), null, 0);
+        return $this->postActionSuccessRedirect($destination ?: '/', __('auth.logout.success'));
     }
 }

@@ -1,5 +1,5 @@
 <div class="col-12">
-    <div class="section-card">
+    <div class="card h-100">
         <div class="card-header"><i class="fa-solid fa-layer-group me-2"></i>{{ t:devtools.orm_demo.title }}</div>
         <div class="card-body">
             <div class="row g-4">
@@ -51,15 +51,17 @@
                         {{ t:devtools.orm_demo.stage_14.description_prefix }} <span class="code-badge">app/Framework/Database/Relations/</span>.
                         {{ t:devtools.orm_demo.stage_14.description_suffix }} <span class="code-badge">__get()</span> · {{ t:devtools.orm_demo.stage_14.eager_load }} <span class="code-badge">with()</span>.
                     </p>
-                    <table class="table table-sm sys-table mb-3">
-                        <thead><tr><th>{{ t:devtools.orm_demo.columns.class }}</th><th>{{ t:devtools.orm_demo.columns.return_type }}</th><th>{{ t:devtools.orm_demo.columns.fk_location }}</th></tr></thead>
-                        <tbody>
-                            <tr><td><span class="code-badge">HasOne</span></td><td><span class="code-badge">?Model</span></td><td>{{ t:devtools.orm_demo.rows.related_table }}</td></tr>
-                            <tr><td><span class="code-badge">HasMany</span></td><td><span class="code-badge">Collection&lt;Model&gt;</span></td><td>{{ t:devtools.orm_demo.rows.related_table }}</td></tr>
-                            <tr><td><span class="code-badge">BelongsTo</span></td><td><span class="code-badge">?Model</span></td><td>{{ t:devtools.orm_demo.rows.parent_table }}</td></tr>
-                            <tr><td><span class="code-badge">BelongsToMany</span></td><td><span class="code-badge">Collection&lt;Model&gt;</span></td><td>{{ t:devtools.orm_demo.rows.pivot_table }}</td></tr>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-sm mb-3">
+                            <thead><tr><th>{{ t:devtools.orm_demo.columns.class }}</th><th>{{ t:devtools.orm_demo.columns.return_type }}</th><th>{{ t:devtools.orm_demo.columns.fk_location }}</th></tr></thead>
+                            <tbody>
+                                <tr><td><span class="code-badge">HasOne</span></td><td><span class="code-badge">?Model</span></td><td>{{ t:devtools.orm_demo.rows.related_table }}</td></tr>
+                                <tr><td><span class="code-badge">HasMany</span></td><td><span class="code-badge">Collection&lt;Model&gt;</span></td><td>{{ t:devtools.orm_demo.rows.related_table }}</td></tr>
+                                <tr><td><span class="code-badge">BelongsTo</span></td><td><span class="code-badge">?Model</span></td><td>{{ t:devtools.orm_demo.rows.parent_table }}</td></tr>
+                                <tr><td><span class="code-badge">BelongsToMany</span></td><td><span class="code-badge">Collection&lt;Model&gt;</span></td><td>{{ t:devtools.orm_demo.rows.pivot_table }}</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <p class="text-muted small mb-1 fw-semibold">{{ t:devtools.orm_demo.usage }}</p>
                     <pre class="code-pre mb-0">// Lazy load (N+1 — use only when loading one parent)
 $user->posts          // Collection&lt;Post&gt;

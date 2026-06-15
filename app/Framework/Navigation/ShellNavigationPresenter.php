@@ -90,7 +90,7 @@ final class ShellNavigationPresenter
                 ['label_key' => 'ui.product_nav.items.user_role', 'href' => '/users/roles', 'icon' => 'ti ti-shield-check'],
                 ['label_key' => 'ui.product_nav.items.user_permissions', 'href' => '/users/permissions', 'icon' => 'ti ti-key'],
                 ['label_key' => 'ui.product_nav.items.user_enroll', 'href' => '/users/enroll', 'icon' => 'ti ti-user-plus'],
-                ['label_key' => 'ui.product_nav.items.organization_hierarchy', 'href' => '/users/organization-hierarchy', 'icon' => 'ti ti-building-hierarchy'],
+                ['label_key' => 'ui.product_nav.items.organization_hierarchy', 'href' => '/users/organization-hierarchy', 'icon' => 'ti ti-hierarchy-3'],
                 ['label_key' => 'ui.product_nav.items.account_recovery', 'href' => '/users/account-recovery', 'icon' => 'ti ti-lifebuoy'],
             ],
         ],

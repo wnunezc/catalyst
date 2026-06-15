@@ -39,6 +39,7 @@ final class AuthSessionRotationArchitectureTest extends TestCase
         Assert::true(
             strpos($method, '$this->session->regenerateId(false);') < strpos($method, "'_mfa_pending_user_id'")
         );
+        Assert::contains("'_mfa_pending_issued_at'", $method);
         Assert::false(str_contains($method, 'regenerateId(true)'));
     }
 
@@ -58,6 +59,7 @@ final class AuthSessionRotationArchitectureTest extends TestCase
         Assert::true(
             strpos($method, '$this->session->regenerateId(false);') < strpos($method, "'_mfa_setup_pending_user_id'")
         );
+        Assert::contains("'_mfa_setup_pending_issued_at'", $method);
         Assert::false(str_contains($method, 'regenerateId(true)'));
     }
 
@@ -78,6 +80,16 @@ final class AuthSessionRotationArchitectureTest extends TestCase
             strpos($method, '$this->clearMfaSetupPending();') < strpos($method, '$this->session->regenerateId(false);')
         );
         Assert::false(str_contains($method, 'regenerateId(true)'));
+    }
+
+    public function testPendingMfaStatesHaveASeparateShortExpiry(): void
+    {
+        Assert::contains('private const MFA_PENDING_TTL = 300;', $this->source);
+        Assert::contains('private function pendingStateIsFresh(', $this->source);
+        Assert::contains('$this->clearPendingMfa();', $this->method('hasMfaPending'));
+        Assert::contains('$this->clearMfaSetupPending();', $this->method('hasMfaSetupPending'));
+        Assert::contains("'_mfa_pending_issued_at'", $this->method('clearPendingMfa'));
+        Assert::contains("'_mfa_setup_pending_issued_at'", $this->method('clearMfaSetupPending'));
     }
 
     private function method(string $name): string

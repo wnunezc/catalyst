@@ -125,6 +125,22 @@ final class CssOwnershipArchitectureTest extends TestCase
         Assert::false(str_contains($datagrid, 'box-shadow:'));
     }
 
+    public function testGlobalSurfaceWidthAndCardTabsCompatibilityRemainResponsibilityBased(): void
+    {
+        $surfaces = $this->read('public/assets/css/catalyst/surfaces.css');
+        $compatibility = $this->read('public/assets/css/catalyst/inspinia-runtime-compat.css');
+
+        Assert::contains('--surface-content-max-width: 1520px;', $surfaces);
+        Assert::contains('.surface-content-shell > :not([data-page-header]):not(.modal)', $surfaces);
+        Assert::contains('max-width: var(--surface-content-max-width);', $surfaces);
+        Assert::contains('.surface-content-shell > [data-page-header] > .page-header__main', $surfaces);
+        Assert::contains('.card-header:has(> .card-header-tabs)', $compatibility);
+        Assert::contains('border-bottom: 0;', $compatibility);
+        Assert::contains('.card-header > .card-header-tabs', $compatibility);
+        Assert::contains('var(--theme-nav-tabs-border-width) solid', $compatibility);
+        Assert::false(str_contains($compatibility, 'configuration-appearance'));
+    }
+
     public function testInstitutionalThemesDoNotAddSurfaceGeometry(): void
     {
         foreach ([

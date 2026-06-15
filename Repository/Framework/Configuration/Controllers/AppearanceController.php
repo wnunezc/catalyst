@@ -83,6 +83,13 @@ final class AppearanceController extends Controller
         $customizerEnabled = $payload->customizerEnabled();
         $platformTheme = $manager->sanitizeThemeConfig($payload->platformTheme());
         $data = $payload->branding();
+        $currentSettings = $manager->settings();
+        $currentBrandingSettings = is_array($currentSettings['branding'] ?? null)
+            ? $currentSettings['branding']
+            : [];
+        $data['logo_primary_path'] = (string) ($currentBrandingSettings['logo_primary_path'] ?? '');
+        $data['logo_dark_path'] = (string) ($currentBrandingSettings['logo_dark_path'] ?? '');
+        $data['favicon_path'] = (string) ($currentBrandingSettings['favicon_path'] ?? '');
 
         if ($data['theme_family'] === '') {
             $data['theme_family'] = 'inspinia';
@@ -120,9 +127,6 @@ final class AppearanceController extends Controller
             'brand_name' => 'required|max:120',
             'brand_short_name' => 'max:12',
             'brand_tagline' => 'max:120',
-            'logo_primary_path' => 'max:255',
-            'logo_dark_path' => 'max:255',
-            'favicon_path' => 'max:255',
             'pdf_watermark_text' => 'max:80',
             'pdf_watermark_font_size' => 'required|integer|min_value:24|max_value:96',
             'pdf_watermark_color' => 'required|max:7',
@@ -151,6 +155,16 @@ final class AppearanceController extends Controller
 
             if ($fileValidator->fails()) {
                 return $this->postActionErrorRedirect('/configuration/platform-appearance', $this->firstValidationError($fileValidator->errors()), 422);
+            }
+
+            $slot = match ($field) {
+                'logo_primary_file' => 'logo-primary',
+                'logo_dark_file' => 'logo-dark',
+                'favicon_file' => 'favicon',
+            };
+            $brandAssetError = $manager->brandAssetValidationError($file, $slot);
+            if ($brandAssetError !== null) {
+                return $this->postActionErrorRedirect('/configuration/platform-appearance', __($brandAssetError), 422);
             }
         }
 

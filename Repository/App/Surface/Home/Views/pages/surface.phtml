@@ -1,58 +1,66 @@
-<main class="home-surface catalyst-demo-surface" data-public-route="home">
-    <section class="home-surface__hero">
-        <div class="home-surface__copy catalyst-demo-hero__copy">
-            <div class="home-surface__tags">
-                <span class="catalyst-demo-eyebrow">{{ page.eyebrow }}</span>
-                <span class="catalyst-demo-badge">{{ page.badge }}</span>
-            </div>
-            <h1>{{ page.headline }}</h1>
-            <p class="catalyst-demo-lead">{{ page.lead }}</p>
-            <div class="catalyst-demo-actions">
-                <a class="btn btn-primary btn-lg" href="{{ page.primaryCta.href }}">{{ page.primaryCta.label }}</a>
-                <a class="btn btn-outline-primary btn-lg" href="{{ page.secondaryCta.href }}">{{ page.secondaryCta.label }}</a>
+<main class="d-grid gap-3" data-public-route="home">
+    <section class="row g-3">
+        <div class="col-12 col-lg-7">
+            <div class="card h-100">
+                <div class="card-body p-lg-5">
+                    <div class="d-flex align-items-center flex-wrap gap-2 mb-3">
+                        <span class="text-primary text-uppercase small fw-bold">{{ page.eyebrow }}</span>
+                        <span class="badge text-bg-primary">{{ page.badge }}</span>
+                    </div>
+                    <h1 class="display-4">{{ page.headline }}</h1>
+                    <p class="lead text-muted">{{ page.lead }}</p>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a class="btn btn-primary btn-lg" href="{{ page.primaryCta.href }}">{{ page.primaryCta.label }}</a>
+                        <a class="btn btn-outline-primary btn-lg" href="{{ page.secondaryCta.href }}">{{ page.secondaryCta.label }}</a>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <aside class="home-surface__map catalyst-demo-card" aria-label="{{ page.sectionsTitle }}">
-            <div class="home-surface__device" aria-hidden="true">
-                <span></span><span></span><span></span>
-            </div>
-            <h2>{{ page.sectionsTitle }}</h2>
-            <div class="home-surface__hero-cards">
-                {{#each page.heroCards}}
-                <article>
-                    <strong>{{ value }}</strong>
-                    <span>{{ label }}</span>
-                </article>
-                {{/each}}
-            </div>
-        </aside>
+        <div class="col-12 col-lg-5">
+            <aside class="card h-100" aria-label="{{ page.sectionsTitle }}">
+                <div class="card-header"><h2 class="card-title mb-0">{{ page.sectionsTitle }}</h2></div>
+                <div class="card-body d-grid gap-2">
+                    {{#each page.heroCards}}
+                    <article class="d-flex align-items-center justify-content-between gap-3 p-3 border rounded bg-body-tertiary">
+                        <strong class="font-monospace text-primary fs-5">{{ value }}</strong>
+                        <span class="text-muted">{{ label }}</span>
+                    </article>
+                    {{/each}}
+                </div>
+            </aside>
+        </div>
     </section>
 
-    <section class="home-surface__sections" aria-label="{{ page.sectionsTitle }}">
+    <section class="row g-3" aria-label="{{ page.sectionsTitle }}">
         {{#each page.sections}}
-        <article class="home-surface__section-card catalyst-demo-card">
-            <span class="home-surface__section-icon" aria-hidden="true"></span>
-            <h2>{{ title }}</h2>
-            <p>{{ body }}</p>
-            <a href="{{ href }}" class="home-surface__section-link">{{ label }}</a>
-        </article>
+        <div class="col-12 col-lg-4">
+            <article class="card h-100">
+                <div class="card-body">
+                    <h2 class="card-title">{{ title }}</h2>
+                    <p class="card-text">{{ body }}</p>
+                    <a href="{{ href }}" class="card-link">{{ label }}</a>
+                </div>
+            </article>
+        </div>
         {{/each}}
     </section>
 
-    <section class="home-surface__workflow catalyst-demo-card">
-        <div class="home-surface__workflow-intro">
-            <span class="catalyst-demo-eyebrow">{{ page.workflowTitle }}</span>
+    <section class="card">
+        <div class="card-header"><h2 class="card-title mb-0">{{ page.workflowTitle }}</h2></div>
+        <div class="card-body">
             <p>{{ page.note }}</p>
-        </div>
-        <div class="home-surface__workflow-list">
-            {{#each page.workflow}}
-            <article>
-                <span>{{ step }}</span>
-                <h3>{{ title }}</h3>
-                <p>{{ body }}</p>
-            </article>
-            {{/each}}
+            <div class="row g-3">
+                {{#each page.workflow}}
+                <div class="col-12 col-lg-4">
+                    <article class="border rounded p-3 h-100">
+                        <span class="text-primary font-monospace fw-bold">{{ step }}</span>
+                        <h3 class="h5 mt-2">{{ title }}</h3>
+                        <p class="mb-0">{{ body }}</p>
+                    </article>
+                </div>
+                {{/each}}
+            </div>
         </div>
     </section>
 </main>

@@ -80,14 +80,14 @@ final class AccountSurfaceViewModel
         $title = (string) ($scope['title'] ?? 'Catalyst');
         $layout = $authenticated
             ? [
-                'body_class' => 'catalyst-shell-body account-page-body',
+                'body_class' => 'catalyst-shell-body',
                 'shell_class' => 'wrapper',
                 'topbar_class' => 'app-topbar',
                 'sidebar_class' => 'sidenav-menu',
                 'content_class' => 'content-page',
             ]
             : [
-                'body_class' => 'catalyst-shell-body account-page-body account-guest-body',
+                'body_class' => 'catalyst-shell-body',
                 'shell_class' => 'account-guest-shell',
                 'topbar_class' => 'app-topbar',
                 'sidebar_class' => 'sidenav-menu',

@@ -224,7 +224,7 @@ final class ConfigurationLocalizationSmokeCommand extends AbstractCommand
         ], $gridPath);
 
         preg_match_all('/<h6[^>]*>(.*?)<\/h6>/s', $html, $cardMatches);
-        preg_match_all('/settings-command-section__title[^>]*>(.*?)<\/h5>/s', $html, $groupMatches);
+        preg_match_all('/data-settings-group-title[^>]*>(.*?)<\/h5>/s', $html, $groupMatches);
 
         $renderedCardTitles = array_map(
             static fn(string $value): string => trim(strip_tags(html_entity_decode($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'))),

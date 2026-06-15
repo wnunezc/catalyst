@@ -1,4 +1,4 @@
-<div class="surface-page surface-page-shell surface-content-shell surface-content-shell--xl configuration-appearance-page">
+<div class="surface-page surface-page-shell surface-content-shell surface-content-shell--xl d-grid gap-3">
     {{> "components._page-header" }}
 
     <form method="POST" action="/configuration/platform-appearance" enctype="multipart/form-data" data-catalyst="form" data-platform-appearance-form>
@@ -8,7 +8,7 @@
         <input type="hidden" name="allow_user_variant_override" value="0">
 
         <section class="card border-0 shadow-sm">
-            <div class="card-header pb-0">
+            <div class="card-header pb-0 position-relative z-1">
                 <ul class="nav nav-tabs card-header-tabs configuration-appearance-tabs" id="appearance-tabs" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="appearance-customizer-tab" type="button" role="tab" data-bs-toggle="tab" data-bs-target="#appearance-customizer" aria-controls="appearance-customizer" aria-selected="true">
@@ -25,7 +25,7 @@
                 </ul>
             </div>
 
-            <div class="card-body tab-content">
+            <div class="card-body tab-content position-relative">
                 <div class="tab-pane fade show active" id="appearance-customizer" role="tabpanel" aria-labelledby="appearance-customizer-tab" tabindex="0">
                     <div class="row g-4">
                         <div class="col-xl-4">
@@ -99,7 +99,7 @@
                                                     {{/if}}
                                                 </label>
                                             </div>
-                                            <div class="operations-option-title">
+                                            <div>
                                                 <span>{{ label }}</span>
                                                 {{#if is_closed}}<small>{{ fixed_label }}</small>{{/if}}
                                             </div>
@@ -196,34 +196,31 @@
                         </div>
 
                         <div class="col-lg-4">
-                            <label for="logo_primary_path" class="form-label">{{ t:settings.appearance.fields.logo_primary_path }}</label>
-                            <input id="logo_primary_path" type="text" class="form-control" name="logo_primary_path" value="{{ settings.logo_primary_path }}" placeholder="{{ t:settings.appearance.fields.asset_path_placeholder }}">
+                            <label for="logo_primary_file" class="form-label">{{ t:settings.appearance.fields.logo_primary_path }}</label>
                             <div class="form-text">{{ t:settings.appearance.fields.logo_primary_help }}</div>
-                            <input type="file" class="form-control mt-2" name="logo_primary_file" accept=".png,.jpg,.jpeg,.svg,.webp">
+                            <input id="logo_primary_file" type="file" class="form-control mt-2" name="logo_primary_file" accept=".png,.jpg,.jpeg,.webp" data-brand-asset-upload="logo_primary">
                             <label class="form-check mt-2">
-                                <input class="form-check-input" type="checkbox" name="reset_logo_primary" value="1">
+                                <input class="form-check-input" type="checkbox" name="reset_logo_primary" value="1" data-brand-asset-reset="logo_primary">
                                 <span class="form-check-label">{{ t:settings.appearance.fields.reset_logo_primary }}</span>
                             </label>
                         </div>
 
                         <div class="col-lg-4">
-                            <label for="logo_dark_path" class="form-label">{{ t:settings.appearance.fields.logo_dark_path }}</label>
-                            <input id="logo_dark_path" type="text" class="form-control" name="logo_dark_path" value="{{ settings.logo_dark_path }}" placeholder="{{ t:settings.appearance.fields.asset_path_placeholder }}">
+                            <label for="logo_dark_file" class="form-label">{{ t:settings.appearance.fields.logo_dark_path }}</label>
                             <div class="form-text">{{ t:settings.appearance.fields.logo_dark_help }}</div>
-                            <input type="file" class="form-control mt-2" name="logo_dark_file" accept=".png,.jpg,.jpeg,.svg,.webp">
+                            <input id="logo_dark_file" type="file" class="form-control mt-2" name="logo_dark_file" accept=".png,.jpg,.jpeg,.svg,.webp" data-brand-asset-upload="logo_dark">
                             <label class="form-check mt-2">
-                                <input class="form-check-input" type="checkbox" name="reset_logo_dark" value="1">
+                                <input class="form-check-input" type="checkbox" name="reset_logo_dark" value="1" data-brand-asset-reset="logo_dark">
                                 <span class="form-check-label">{{ t:settings.appearance.fields.reset_logo_dark }}</span>
                             </label>
                         </div>
 
                         <div class="col-lg-4">
-                            <label for="favicon_path" class="form-label">{{ t:settings.appearance.fields.favicon_path }}</label>
-                            <input id="favicon_path" type="text" class="form-control" name="favicon_path" value="{{ settings.favicon_path }}" placeholder="{{ t:settings.appearance.fields.asset_path_placeholder }}">
+                            <label for="favicon_file" class="form-label">{{ t:settings.appearance.fields.favicon_path }}</label>
                             <div class="form-text">{{ t:settings.appearance.fields.favicon_help }}</div>
-                            <input type="file" class="form-control mt-2" name="favicon_file" accept=".png,.jpg,.jpeg,.svg,.webp">
+                            <input id="favicon_file" type="file" class="form-control mt-2" name="favicon_file" accept=".png,.jpg,.jpeg,.webp" data-brand-asset-upload="favicon">
                             <label class="form-check mt-2">
-                                <input class="form-check-input" type="checkbox" name="reset_favicon" value="1">
+                                <input class="form-check-input" type="checkbox" name="reset_favicon" value="1" data-brand-asset-reset="favicon">
                                 <span class="form-check-label">{{ t:settings.appearance.fields.reset_favicon }}</span>
                             </label>
                         </div>

@@ -1,5 +1,8 @@
-<main class="account-guest-gateway account-recovery-public" data-account-recovery="mfa">
-    <section class="account-guest-gateway__card">
+<main class="container py-5" data-account-recovery="mfa">
+    <div class="row justify-content-center">
+    <div class="col-12 col-lg-5">
+    <section class="card">
+        <div class="card-body d-grid gap-3">
         <span class="account-eyebrow">{{ t:account.recovery_public.eyebrow }}</span>
         <h1>{{ t:account.recovery_public.mfa_title }}</h1>
         <p>{{ t:account.recovery_public.mfa_lead }}</p>
@@ -11,6 +14,9 @@
             </div>
             <button type="submit" class="btn btn-primary w-100">{{ t:account.recovery_public.mfa_submit }}</button>
         </form>
-        <p class="account-guest-gateway__hint">{{ t:account.recovery_public.generic_response_hint }}</p>
+        <p class="small text-muted mb-0">{{ t:account.recovery_public.generic_response_hint }}</p>
+        </div>
     </section>
+    </div>
+    </div>
 </main>

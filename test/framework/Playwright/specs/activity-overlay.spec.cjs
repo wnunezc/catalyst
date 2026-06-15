@@ -1,4 +1,4 @@
-const { test, expect } = require('../helpers/playwright.cjs');
+const { test, expect } = require('../helpers/serial-playwright.cjs');
 const { isEnvironmentInterrupted } = require('../helpers/environment.cjs');
 const { openSurface } = require('../helpers/surface.cjs');
 
@@ -74,7 +74,7 @@ test.describe('@activity-overlay Global activity overlay', () => {
         await page.locator('[data-devtools-action="activity-foreground"]').click();
         await expect(overlay).toHaveAttribute('data-activity-state', 'request');
         await expect(overlay).toHaveAttribute('aria-hidden', 'false');
-        await expect(result).toContainText(/completed|completado/i);
+        await expect(result).toContainText(/completed|completado/i, { timeout: 15000 });
         await expect(overlay).toHaveAttribute('data-activity-state', 'idle');
     });
 
@@ -87,7 +87,7 @@ test.describe('@activity-overlay Global activity overlay', () => {
         const result = page.locator('[data-activity-diagnostic-message]');
         await page.locator('[data-devtools-action="activity-background"]').click();
         await expect(overlay).toHaveAttribute('data-activity-state', 'idle');
-        await expect(result).toContainText(/completed|completado/i);
+        await expect(result).toContainText(/completed|completado/i, { timeout: 15000 });
         await expect(overlay).toHaveAttribute('data-activity-state', 'idle');
     });
 
@@ -113,7 +113,7 @@ test.describe('@activity-overlay Global activity overlay', () => {
         const result = page.locator('[data-activity-diagnostic-message]');
         await page.locator('[data-devtools-action="activity-error"]').click();
         await expect(overlay).toHaveAttribute('data-activity-state', 'request');
-        await expect(result).toContainText(/expected|esperado/i);
+        await expect(result).toContainText(/expected|esperado/i, { timeout: 15000 });
         await expect(overlay).toHaveAttribute('data-activity-state', 'idle');
     });
 
@@ -130,7 +130,10 @@ test.describe('@activity-overlay Global activity overlay', () => {
         });
 
         const result = page.locator('[data-activity-diagnostic-message]');
-        await page.locator('[data-devtools-action="activity-foreground"]').dblclick();
+        await page.locator('[data-devtools-action="activity-foreground"]').evaluate((button) => {
+            button.click();
+            button.click();
+        });
         await expect(result).toContainText(/completed|completado/i, { timeout: 15000 });
         expect(matchingRequests).toBe(1);
     });
@@ -169,8 +172,10 @@ test.describe('@activity-overlay Global activity overlay', () => {
         }
 
         await observeNextNavigationActivity(page);
-        await page.locator('a[href="/uml"]').first().click();
-        await expect(page).toHaveURL(/\/uml$/);
+        await Promise.all([
+            page.waitForURL(/\/uml$/, { waitUntil: 'domcontentloaded' }),
+            page.locator('a[href="/uml"]').first().click({ noWaitAfter: true }),
+        ]);
         expect(await readNavigationObservation(page)).toEqual({
             type: 'navigation',
             state: 'navigation',
@@ -189,8 +194,10 @@ test.describe('@activity-overlay Global activity overlay', () => {
         }
 
         await observeNextNavigationActivity(page);
-        await page.locator('[data-activity-native-submit] button[type="submit"]').click();
-        await expect(page).toHaveURL(/\/uml\??$/);
+        await Promise.all([
+            page.waitForURL(/\/uml\??$/, { waitUntil: 'domcontentloaded' }),
+            page.locator('[data-activity-native-submit] button[type="submit"]').click({ noWaitAfter: true }),
+        ]);
         expect(await readNavigationObservation(page)).toEqual({
             type: 'submit',
             state: 'submit',

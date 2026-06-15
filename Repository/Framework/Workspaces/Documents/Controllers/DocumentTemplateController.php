@@ -228,7 +228,7 @@ final class DocumentTemplateController extends Controller
             return $this->postActionErrorRedirect('/workspaces/document-templates/' . (int) $template->getKey(), $e->getMessage(), 422);
         }
 
-        return $this->postActionSuccessRedirect('/workspaces/document-templates/' . (int) $template->getKey(), __('documents.messages.preview_generated'), null, 0);
+        return $this->postActionSuccessRedirect('/workspaces/document-templates/' . (int) $template->getKey(), __('documents.messages.preview_generated'));
     }
 
     /**

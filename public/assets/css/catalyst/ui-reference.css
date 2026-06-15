@@ -108,16 +108,16 @@
     transition: opacity 0.3s ease;
 }
 
-.card.catalyst-card-closing {
+.card[data-catalyst-closing="true"] {
     opacity: 0;
 }
 
-.card.catalyst-card-collapsed > .card-body,
-.card.catalyst-card-collapsed > .card-footer {
+.card[data-catalyst-collapsed="true"] > .card-body,
+.card[data-catalyst-collapsed="true"] > .card-footer {
     display: none;
 }
 
-.card.catalyst-code-collapsed .code-body {
+.card[data-catalyst-code-collapsed="true"] .code-body {
     display: none;
 }
 
@@ -125,7 +125,7 @@
     position: relative;
 }
 
-.card-overlay {
+.activity-overlay {
     position: absolute;
     inset: 0;
     display: none;
@@ -135,7 +135,7 @@
     z-index: 3;
 }
 
-.card.is-refreshing > .card-overlay {
+.card.is-refreshing > .activity-overlay {
     display: flex;
 }
 

@@ -113,23 +113,25 @@ return static function (array $scope): array {
         ];
     }
 
+    $healthMetrics = [
+        ['label' => __('settings.health.cards.readiness'), 'value' => $health['ready_label'], 'badge_class' => $health['ready_badge_class']],
+        ['label' => __('settings.labels.environment'), 'value' => $health['environment_label']],
+        ['label' => __('settings.health.cards.checks'), 'value' => (string) ($summary['checks'] ?? 0)],
+        ['label' => __('settings.health.cards.warnings'), 'value' => (string) ($summary['warnings'] ?? 0), 'value_class' => 'text-warning'],
+        ['label' => __('settings.health.cards.failures'), 'value' => (string) ($summary['failures'] ?? 0), 'value_class' => 'text-danger'],
+    ];
+
     return [
         'page_header' => [
             'eyebrow' => __('settings.health.title'),
             'title' => (string) ($scope['pageTitle'] ?? $scope['title'] ?? __('settings.health.title')),
             'description' => $health['generated_at_label'],
-            'metrics' => [
-                ['label' => __('settings.health.cards.readiness'), 'value' => $health['ready_label'], 'badge_class' => $health['ready_badge_class']],
-                ['label' => __('settings.labels.environment'), 'value' => $health['environment_label']],
-                ['label' => __('settings.health.cards.checks'), 'value' => (string) ($summary['checks'] ?? 0)],
-                ['label' => __('settings.health.cards.warnings'), 'value' => (string) ($summary['warnings'] ?? 0), 'value_class' => 'text-warning'],
-                ['label' => __('settings.health.cards.failures'), 'value' => (string) ($summary['failures'] ?? 0), 'value_class' => 'text-danger'],
-            ],
         ],
 
         'title' => (string) ($scope['title'] ?? __('settings.health.title')),
         'pageTitle' => (string) ($scope['pageTitle'] ?? $scope['title'] ?? __('settings.health.title')),
         'health' => $health,
+        'healthMetrics' => $healthMetrics,
         'summary' => $summary,
         'routeContract' => $routeContract,
         'sectionsView' => $sectionsView,

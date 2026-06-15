@@ -58,12 +58,94 @@ function handleChange(event) {
     }
 }
 
-function handleClick(event) {
-    const trigger = event.target instanceof Element
+function copyWithFallback(value) {
+    const textarea = document.createElement('textarea');
+    const activeElement = document.activeElement;
+
+    textarea.value = value;
+    textarea.className = 'visually-hidden';
+    textarea.setAttribute('readonly', '');
+    textarea.setAttribute('aria-hidden', 'true');
+    document.body.append(textarea);
+    textarea.select();
+    textarea.setSelectionRange(0, textarea.value.length);
+
+    let copied = false;
+    try {
+        copied = document.execCommand('copy');
+    } catch {
+        copied = false;
+    } finally {
+        textarea.remove();
+        if (activeElement instanceof HTMLElement) {
+            activeElement.focus();
+        }
+    }
+
+    return copied;
+}
+
+async function writeClipboard(value) {
+    if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+        try {
+            await navigator.clipboard.writeText(value);
+            return true;
+        } catch {
+            return copyWithFallback(value);
+        }
+    }
+
+    return copyWithFallback(value);
+}
+
+async function copyCellValue(trigger) {
+    const value = trigger.dataset.gridCopyValue ?? '';
+
+    if (value === '' || !(await writeClipboard(value))) {
+        return false;
+    }
+
+    const copiedLabel = trigger.dataset.gridCopiedLabel ?? trigger.dataset.gridCopyLabel ?? '';
+    const originalLabel = trigger.dataset.gridCopyLabel ?? '';
+    const icon = trigger.querySelector('.ti');
+
+    trigger.setAttribute('aria-label', copiedLabel);
+    trigger.setAttribute('title', copiedLabel);
+    trigger.setAttribute('data-bs-original-title', copiedLabel);
+    icon?.classList.replace('ti-copy', 'ti-check');
+
+    window.setTimeout(() => {
+        trigger.setAttribute('aria-label', originalLabel);
+        trigger.setAttribute('title', originalLabel);
+        trigger.setAttribute('data-bs-original-title', originalLabel);
+        icon?.classList.replace('ti-check', 'ti-copy');
+    }, 1500);
+
+    return true;
+}
+
+async function handleClick(event) {
+    const target = event.target instanceof Element
         ? event.target.closest('[data-grid-print]')
         : null;
 
-    if (!(trigger instanceof HTMLElement) || !resolveGrid(trigger)) {
+    const copyTrigger = event.target instanceof Element
+        ? event.target.closest('[data-grid-copy]')
+        : null;
+
+    if (copyTrigger instanceof HTMLElement && resolveGrid(copyTrigger)) {
+        event.preventDefault();
+
+        try {
+            await copyCellValue(copyTrigger);
+        } catch {
+            return;
+        }
+
+        return;
+    }
+
+    if (!(target instanceof HTMLElement) || !resolveGrid(target)) {
         return;
     }
 

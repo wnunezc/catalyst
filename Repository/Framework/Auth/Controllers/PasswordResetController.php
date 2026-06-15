@@ -113,7 +113,7 @@ class PasswordResetController extends Controller
         }
 
         $message = __('auth.messages.password_reset_sent');
-        return $this->postActionSuccessRedirect('/login', $message, null, 1200);
+        return $this->postActionSuccessRedirect('/login', $message);
     }
 
     /**
@@ -200,7 +200,7 @@ class PasswordResetController extends Controller
 
         UserProvider::getInstance()->updatePassword($userId, $password);
         RememberMe::getInstance()->invalidate($userId);
-        return $this->postActionSuccessRedirect('/login', __('auth.messages.password_reset_success'), null, 1200);
+        return $this->postActionSuccessRedirect('/login', __('auth.messages.password_reset_success'));
     }
 
     /**

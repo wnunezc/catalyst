@@ -79,6 +79,7 @@ final class DataGridRowNormalizer
                     'value' => $value,
                     'class' => (string) ($column['cell_class'] ?? $column['class'] ?? ''),
                     'empty' => (string) ($column['empty'] ?? '—'),
+                    'truncate' => DataGridColumnNormalizer::normalizeTruncateConfig($column['truncate'] ?? null),
                 ];
             }
 

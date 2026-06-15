@@ -78,11 +78,11 @@
     display: none;
 }
 
-.tf-card-header-toggle {
+.card-header[data-bs-toggle="collapse"] {
     cursor: pointer;
 }
 
-.test-features-page .code-pre {
+.code-pre {
     max-height: 200px;
     overflow-y: auto;
     white-space: pre-wrap;
@@ -93,7 +93,6 @@
     --ui-ink: var(--bs-body-color);
     --uml-accent: var(--ui-accent);
     --uml-border: var(--bs-border-color);
-    --uml-tab-active-bg: var(--bs-tertiary-bg);
     --uml-diagram-bg: var(--bs-body-bg);
     --uml-code-bg: var(--bs-tertiary-bg);
 }
@@ -101,35 +100,6 @@
 .uml-showcase .ui-catalog-head {
     background: var(--theme-card-bg, var(--bs-secondary-bg));
     border-top: 3px solid var(--theme-primary, var(--bs-primary));
-}
-
-.uml-nav-tabbar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .25rem;
-    overflow-x: auto;
-}
-
-.uml-nav-tab {
-    background: transparent;
-    border: 0;
-    color: var(--bs-secondary-color);
-    padding: .625rem .875rem;
-}
-
-.uml-nav-tab.active,
-.uml-nav-tab:hover,
-.uml-nav-tab:focus-visible {
-    background: var(--uml-tab-active-bg);
-    color: var(--uml-accent);
-}
-
-.uml-tab-content {
-    display: none;
-}
-
-.uml-tab-content.active {
-    display: block;
 }
 
 .uml-diagram-wrap {
@@ -145,8 +115,7 @@
     min-width: 68rem;
 }
 
-.uml-tab-content code,
-.uml-layer-card-title {
+.tab-pane code {
     overflow-wrap: anywhere;
 }
 

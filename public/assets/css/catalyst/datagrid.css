@@ -1,6 +1,6 @@
 /* DataGrid capability: interaction layout only; Inspinia owns card and table visuals. */
 
-.datagrid-card {
+[data-datagrid] {
     overflow: hidden;
 }
 
@@ -26,6 +26,53 @@
     text-decoration: none;
 }
 
+.datagrid-cell-text {
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.datagrid-cell-copy-layout {
+    min-width: 0;
+}
+
+.datagrid-cell-text--sm {
+    max-width: 12rem;
+}
+
+.datagrid-cell-text--md {
+    max-width: 22rem;
+}
+
+.datagrid-cell-text--lg {
+    max-width: 32rem;
+}
+
+.datagrid-table-scroll--wide .datagrid-table--wide {
+    min-width: 90rem;
+}
+
+.datagrid-table-scroll--wide .datagrid-table--extreme {
+    min-width: 180rem;
+}
+
+.datagrid-table-scroll--vertical {
+    max-height: 42rem;
+    overflow: auto;
+}
+
+.datagrid-table-scroll--vertical .datagrid-table > thead {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.datagrid-table-scroll--vertical .datagrid-table > thead > tr > th {
+    background: var(--bs-body-bg);
+}
+
 .datagrid-empty-state {
     align-items: center;
     display: flex;
@@ -41,6 +88,6 @@
     justify-content: center;
 }
 
-.datagrid-card .dataTable {
+[data-datagrid] .dataTable {
     margin: 0 !important;
 }

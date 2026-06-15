@@ -1,5 +1,5 @@
 <div class="col-12">
-    <div class="section-card">
+    <div class="card h-100">
         <div class="card-header"><i class="fa-solid fa-wpforms me-2"></i>{{ t:devtools.form_events.title }}</div>
         <div class="card-body">
             <p class="text-muted small mb-3">
@@ -37,15 +37,17 @@
 
             <div class="mt-3 p-2 rounded bg-body-tertiary border">
                 <p class="text-muted small mb-1">{{ t:devtools.form_events.mapping.title }}</p>
-                <table class="table table-sm sys-table mb-0">
-                    <thead><tr><th>data-event</th><th>{{ t:devtools.form_events.mapping.php_method }}</th><th>{{ t:devtools.form_events.mapping.behavior }}</th></tr></thead>
-                    <tbody>
-                        <tr><td><span class="code-badge">save</span></td><td><span class="code-badge">onSave()</span></td><td class="small text-muted">{{ t:devtools.form_events.mapping.rows.save }}</td></tr>
-                        <tr><td><span class="code-badge">validate</span></td><td><span class="code-badge">onValidate()</span></td><td class="small text-muted">{{ t:devtools.form_events.mapping.rows.validate }}</td></tr>
-                        <tr><td><span class="code-badge">refresh</span></td><td><span class="code-badge">onRefresh()</span></td><td class="small text-muted">{{ t:devtools.form_events.mapping.rows.refresh }}</td></tr>
-                        <tr><td><span class="code-badge">redirect</span></td><td><span class="code-badge">onRedirect()</span></td><td class="small text-muted">{{ t:devtools.form_events.mapping.rows.redirect }}</td></tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-sm mb-0">
+                        <thead><tr><th>data-event</th><th>{{ t:devtools.form_events.mapping.php_method }}</th><th>{{ t:devtools.form_events.mapping.behavior }}</th></tr></thead>
+                        <tbody>
+                            <tr><td><span class="code-badge">save</span></td><td><span class="code-badge">onSave()</span></td><td class="small text-muted">{{ t:devtools.form_events.mapping.rows.save }}</td></tr>
+                            <tr><td><span class="code-badge">validate</span></td><td><span class="code-badge">onValidate()</span></td><td class="small text-muted">{{ t:devtools.form_events.mapping.rows.validate }}</td></tr>
+                            <tr><td><span class="code-badge">refresh</span></td><td><span class="code-badge">onRefresh()</span></td><td class="small text-muted">{{ t:devtools.form_events.mapping.rows.refresh }}</td></tr>
+                            <tr><td><span class="code-badge">redirect</span></td><td><span class="code-badge">onRedirect()</span></td><td class="small text-muted">{{ t:devtools.form_events.mapping.rows.redirect }}</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

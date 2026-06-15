@@ -59,6 +59,15 @@ body.catalyst-shell-body .content-page[data-simplebar] .simplebar-content > .con
     padding-bottom: 32px;
 }
 
+body.catalyst-shell-body .card-header:has(> .card-header-tabs) {
+    border-bottom: 0;
+    display: block;
+}
+
+body.catalyst-shell-body .card-header > .card-header-tabs {
+    border-bottom: var(--theme-nav-tabs-border-width) solid var(--theme-nav-tabs-border-color);
+}
+
 body.catalyst-shell-body .offcanvas-backdrop,
 body > .offcanvas-backdrop,
 .offcanvas-backdrop,

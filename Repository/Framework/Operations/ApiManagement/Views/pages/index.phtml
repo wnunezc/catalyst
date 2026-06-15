@@ -1,5 +1,18 @@
-<div class="surface-page surface-page-shell apimanagement-page">
+<div class="surface-page surface-page-shell">
     {{> "components._page-header" }}
+
+    <section class="row g-3 mb-3" aria-label="{{ t:apimanagement.index.eyebrow }}">
+        {{#each api_metrics}}
+            <div class="col-12 col-sm-4">
+                <article class="card h-100">
+                    <div class="card-body">
+                        <span class="small text-muted d-block mb-1">{{ label }}</span>
+                        <strong class="d-block">{{ value }}</strong>
+                    </div>
+                </article>
+            </div>
+        {{/each}}
+    </section>
 
     {{#if has_created_token}}
         <section class="card border-success shadow-sm mb-3">
@@ -13,15 +26,7 @@
 
     <div class="row g-3 mb-3">
         <div class="col-xl-5">
-            <section class="card border-0 shadow-sm h-100">
-                <div class="card-header">
-                    <h2 class="h5 mb-1">{{ t:apimanagement.form.card_title }}</h2>
-                    <p class="text-muted mb-0">{{ t:apimanagement.form.card_description }}</p>
-                </div>
-                <div class="card-body">
-                    {{> "components._form-builder" }}
-                </div>
-            </section>
+            {{> "components._form-builder" }}
         </div>
         <div class="col-xl-7">
             <section class="card border-0 shadow-sm h-100">
@@ -29,10 +34,10 @@
                     <h2 class="h5 mb-1">{{ t:apimanagement.catalog.title }}</h2>
                     <p class="text-muted mb-0">{{ t:apimanagement.catalog.description }}</p>
                 </div>
-                <div class="card-body p-0">
+                <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-sm align-middle mb-0">
-                            <thead>
+                        <table class="table table-striped table-hover align-middle mb-0">
+                            <thead class="thead-sm text-uppercase fs-xxs">
                             <tr>
                                 <th>{{ t:apimanagement.catalog.columns.method }}</th>
                                 <th>{{ t:apimanagement.catalog.columns.path }}</th>
@@ -62,10 +67,10 @@
             <h2 class="h5 mb-1">{{ t:apimanagement.tokens.title }}</h2>
             <p class="text-muted mb-0">{{ t:apimanagement.tokens.description }}</p>
         </div>
-        <div class="card-body p-0">
+        <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-sm align-middle mb-0">
-                    <thead>
+                <table class="table table-striped table-hover align-middle mb-0">
+                    <thead class="thead-sm text-uppercase fs-xxs">
                     <tr>
                         <th>{{ t:apimanagement.tokens.columns.name }}</th>
                         <th>{{ t:apimanagement.tokens.columns.prefix }}</th>

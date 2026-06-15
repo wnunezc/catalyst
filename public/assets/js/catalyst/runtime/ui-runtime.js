@@ -201,12 +201,11 @@ class CatalystUiRuntime {
             .register(adapter('inspinia.tables', 'scan', 'table', async (root) => {
                 return (await loadRuntimeModule('inspinia.tables', '../inspinia/tables.js')).initInspiniaTables({ root });
             }))
-            .register(adapter('shell.topbar', 'start', '.app-topbar, .catalyst-public-nav, .account-topbar', async (root) => {
+            .register(adapter('shell.topbar', 'start', '.app-topbar, .catalyst-public-nav', async (root) => {
                 const topbar = await loadRuntimeModule('shell.topbar', '../shell/topbar.js');
                 const topbarSelector = firstSelector(root, [
                     '.app-topbar',
                     '.catalyst-public-nav',
-                    '.account-topbar',
                 ]);
                 const scrollContainerSelector = firstSelector(root, [
                     '.content-page',

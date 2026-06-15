@@ -1,5 +1,5 @@
 <div class="col-12">
-    <div class="section-card">
+    <div class="card h-100">
         <div class="card-header">
             <i class="fa-solid fa-lock me-2"></i>{{ t:devtools.auth_demo.title }}
         </div>
@@ -12,14 +12,16 @@
                         <i class="fa-solid fa-circle-check me-1"></i>
                         <strong>{{ t:devtools.auth_demo.authenticated }}</strong>
                     </div>
-                    <table class="table table-sm sys-table">
-                        <tbody>
-                            <tr><th>ID</th><td>{{ auth_user.id }}</td></tr>
-                            <tr><th>{{ t:ui.labels.name }}</th><td>{{ auth_user.name }}</td></tr>
-                            <tr><th>{{ t:devtools.auth_demo.columns.email }}</th><td>{{ auth_user.email }}</td></tr>
-                            <tr><th>{{ t:devtools.auth_demo.columns.role }}</th><td>{{ auth_user.role }}</td></tr>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <tbody>
+                                <tr><th>ID</th><td>{{ auth_user.id }}</td></tr>
+                                <tr><th>{{ t:ui.labels.name }}</th><td>{{ auth_user.name }}</td></tr>
+                                <tr><th>{{ t:devtools.auth_demo.columns.email }}</th><td>{{ auth_user.email }}</td></tr>
+                                <tr><th>{{ t:devtools.auth_demo.columns.role }}</th><td>{{ auth_user.role }}</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <form data-catalyst="form" method="POST" action="/logout" class="mt-2">
                         {{{ logout_csrf_field }}}
                         <button type="submit" class="btn btn-sm btn-outline-danger">
@@ -41,21 +43,23 @@
                 </div>
                 <div class="col-12 col-lg-6">
                     <p class="text-muted small fw-semibold mb-2">{{ t:devtools.auth_demo.routes }}</p>
-                    <table class="table table-sm sys-table">
-                        <thead><tr><th>{{ t:devtools.endpoints_catalog.columns.method }}</th><th>{{ t:devtools.endpoints_catalog.columns.route }}</th></tr></thead>
-                        <tbody>
-                            <tr><td><span class="badge bg-success">GET</span></td><td><a href="/login" class="code-badge text-decoration-none">/login</a></td></tr>
-                            <tr><td><span class="badge bg-primary">POST</span></td><td><span class="code-badge">/login</span></td></tr>
-                            <tr><td><span class="badge bg-success">GET</span></td><td><a href="/register" class="code-badge text-decoration-none">/register</a></td></tr>
-                            <tr><td><span class="badge bg-primary">POST</span></td><td><span class="code-badge">/register</span></td></tr>
-                            <tr><td><span class="badge bg-success">GET</span></td><td><a href="/forgot-password" class="code-badge text-decoration-none">/forgot-password</a></td></tr>
-                            <tr><td><span class="badge bg-primary">POST</span></td><td><span class="code-badge">/forgot-password</span></td></tr>
-                            <tr><td><span class="badge bg-success">GET</span></td><td><span class="code-badge">/verify-email/{token}</span></td></tr>
-                            <tr><td><span class="badge bg-primary">POST</span></td><td><span class="code-badge">/logout</span></td></tr>
-                            <tr><td><span class="badge bg-success">GET</span></td><td><span class="code-badge">/auth/social/{provider}</span></td></tr>
-                            <tr><td><span class="badge bg-success">GET</span></td><td><span class="code-badge">/auth/social/callback/{provider}</span></td></tr>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead><tr><th>{{ t:devtools.endpoints_catalog.columns.method }}</th><th>{{ t:devtools.endpoints_catalog.columns.route }}</th></tr></thead>
+                            <tbody>
+                                <tr><td><span class="badge bg-success">GET</span></td><td><a href="/login" class="code-badge text-decoration-none">/login</a></td></tr>
+                                <tr><td><span class="badge bg-primary">POST</span></td><td><span class="code-badge">/login</span></td></tr>
+                                <tr><td><span class="badge bg-success">GET</span></td><td><a href="/register" class="code-badge text-decoration-none">/register</a></td></tr>
+                                <tr><td><span class="badge bg-primary">POST</span></td><td><span class="code-badge">/register</span></td></tr>
+                                <tr><td><span class="badge bg-success">GET</span></td><td><a href="/forgot-password" class="code-badge text-decoration-none">/forgot-password</a></td></tr>
+                                <tr><td><span class="badge bg-primary">POST</span></td><td><span class="code-badge">/forgot-password</span></td></tr>
+                                <tr><td><span class="badge bg-success">GET</span></td><td><span class="code-badge">/verify-email/{token}</span></td></tr>
+                                <tr><td><span class="badge bg-primary">POST</span></td><td><span class="code-badge">/logout</span></td></tr>
+                                <tr><td><span class="badge bg-success">GET</span></td><td><span class="code-badge">/auth/social/{provider}</span></td></tr>
+                                <tr><td><span class="badge bg-success">GET</span></td><td><span class="code-badge">/auth/social/callback/{provider}</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <p class="text-muted small mt-3 mb-1">{{ t:devtools.auth_demo.demo_credentials }}</p>
                     <code class="small">privileged@catalyst.dock / password</code>
                 </div>

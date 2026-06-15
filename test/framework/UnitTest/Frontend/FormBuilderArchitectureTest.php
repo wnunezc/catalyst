@@ -46,17 +46,25 @@ final class FormBuilderArchitectureTest extends TestCase
         $template = $this->read('boot-core/template/components/_form-builder.phtml');
         $scope = $this->read('boot-core/template/scope/components/_form-builder.php');
         $control = $this->read('boot-core/template/components/form-builder/_field-control.phtml');
+        $builder = $this->read('app/Framework/Form/FormBuilder.php');
         $styles = $this->read('public/assets/css/catalyst/form-builder.css');
         $head = $this->read('boot-core/template/_head-assets.phtml');
         $documentScope = $this->read('app/Framework/View/DocumentScope.php');
 
         Assert::contains('data-form-builder="form"', $template);
+        Assert::contains('{{#if grouped_sections}}', $template);
+        Assert::contains('data-form-builder-layout="grouped-card"', $template);
+        Assert::contains('groupSectionsInCard', $builder);
+        Assert::contains('{{ section_title }}', $template);
+        Assert::contains('{{ section_description }}', $template);
         Assert::contains('FormBuilderViewModel::build($scope)', $scope);
         Assert::contains('data-form-repeater="1"', $control);
+        Assert::contains('{{ field_wrapper_class }}', $this->read('boot-core/template/components/form-builder/_field-block.phtml'));
         Assert::contains('[data-form-dependency-hidden]', $styles);
         Assert::contains('href="{{ form_builder_asset_url }}"', $head);
         Assert::contains("AssetUrl::versioned('/assets/css/catalyst/form-builder.css')", $documentScope);
         Assert::false(str_contains($template, 'admin-form'));
+        Assert::false(str_contains($template, '{{ title }}'));
         Assert::false(str_contains($control, 'admin-repeater'));
     }
 
@@ -73,6 +81,35 @@ final class FormBuilderArchitectureTest extends TestCase
         Assert::contains('[data-repeater-add]', $builder);
         Assert::contains('data-form-autosave-key', $builder);
         Assert::false(str_contains($builder, 'DOMContentLoaded'));
+    }
+
+    public function testFormBuilderConsumersDoNotWrapSectionCardsInAnotherCard(): void
+    {
+        $consumers = [
+            'Repository/Framework/Users/Views/pages/form.phtml',
+            'Repository/Framework/Users/Views/pages/permission-form.phtml',
+            'Repository/Framework/Users/Views/pages/user-register.phtml',
+            'Repository/Framework/Workspaces/Documents/Views/pages/form.phtml',
+            'Repository/Framework/Workspaces/Media/Views/pages/form.phtml',
+            'Repository/Framework/Workspaces/Media/Views/pages/field-form.phtml',
+            'Repository/Framework/Workspaces/Catalogs/Views/pages/form.phtml',
+            'Repository/Framework/Workspaces/Catalogs/Views/pages/item-form.phtml',
+            'Repository/Framework/Operations/Automation/Views/pages/form.phtml',
+            'Repository/Framework/Operations/ApiManagement/Views/pages/index.phtml',
+        ];
+
+        foreach ($consumers as $consumer) {
+            $source = $this->read($consumer);
+            $formPosition = strpos($source, '{{> "components._form-builder" }}');
+
+            Assert::true(is_int($formPosition), "{$consumer} must consume FormBuilder.");
+
+            $prefix = substr($source, max(0, $formPosition - 240), 240);
+            Assert::false(
+                str_contains($prefix, '<div class="card-body">'),
+                "{$consumer} must not nest FormBuilder section cards inside another card body."
+            );
+        }
     }
 
     public function testActiveConsumersDoNotUseTheReplacedAdminContract(): void

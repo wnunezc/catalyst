@@ -142,6 +142,6 @@ final class ErrorResponseFactory
         $safeTicket = htmlspecialchars((string) ($ticket ?? ''), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
         $ticketHtml = $safeTicket !== '' ? '<p>Error ticket: ' . $safeTicket . '</p>' : '';
 
-        return '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>' . $safeTitle . '</title><link href="/assets/css/catalyst/error-surface.css" rel="stylesheet"></head><body class="catalyst-error-shell-body"><main class="catalyst-error-shell"><section class="catalyst-error-card"><span class="catalyst-error-card__code">' . $safeStatus . '</span><h1>' . $safeTitle . '</h1><p>' . $safeMessage . '</p>' . $ticketHtml . '<a href="/">Home</a></section></main></body></html>';
+        return '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>' . $safeTitle . '</title><link href="/assets/vendor/inspinia/css/app.min.css" rel="stylesheet"><link href="/assets/css/catalyst/error-surface.css" rel="stylesheet"></head><body class="catalyst-error-shell-body"><main class="catalyst-error-shell"><section class="card"><div class="card-body"><span class="error-status">' . $safeStatus . '</span><h1>' . $safeTitle . '</h1><p>' . $safeMessage . '</p>' . $ticketHtml . '<a href="/">Home</a></div></section></main></body></html>';
     }
 }

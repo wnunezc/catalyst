@@ -325,6 +325,8 @@ final class PlatformAppearanceManager
             ?: (string) ($catalog['logos']['dark'] ?? $lightLogo);
         $favicon = $this->normalizeAssetPath((string) ($brandingSettings['favicon_path'] ?? ''))
             ?: (string) ($catalog['favicon'] ?? $lightLogo);
+        $smallLogo = $this->normalizeAssetPath((string) ($brandingSettings['favicon_path'] ?? ''))
+            ?: '/assets/vendor/inspinia/images/logo-sm.png';
 
         return [
             'theme_family' => $family,
@@ -335,6 +337,7 @@ final class PlatformAppearanceManager
             'has_brand_tagline' => $brandTagline !== '',
             'logo_light_url' => $lightLogo,
             'logo_dark_url' => $darkLogo,
+            'logo_small_url' => $smallLogo,
             'favicon_url' => $favicon,
             'default_variant' => $this->defaultVariant(),
             'allow_user_variant_override' => $this->allowUserVariantOverride(),
@@ -371,7 +374,7 @@ final class PlatformAppearanceManager
     }
 
     /**
-     * Resolves watermark text, color, size, and supported local logo path for PDF rendering.
+     * Resolves document branding and watermark settings for PDF rendering.
      *
      * Responsibility: Resolves watermark text, color, size, and supported local logo path for PDF rendering.
      * @return array<string, mixed>
@@ -383,10 +386,10 @@ final class PlatformAppearanceManager
         $brandingSettings = is_array($settings['branding'] ?? null) ? $settings['branding'] : [];
         $theme = $this->themeDefinition((string) ($branding['theme_family'] ?? $this->themeFamily()));
         $customLogoPath = $this->resolveLocalPublicAssetPath((string) ($brandingSettings['logo_primary_path'] ?? ''));
-        $themeWatermarkLogoPath = $this->resolveLocalPublicAssetPath((string) ($theme['pdf_watermark_logo'] ?? ''));
-        $watermarkLogoPath = $this->isSupportedPdfWatermarkLogo($customLogoPath)
+        $themeDocumentLogoPath = $this->resolveLocalPublicAssetPath((string) ($theme['pdf_watermark_logo'] ?? ''));
+        $documentLogoPath = $this->isSupportedPdfWatermarkLogo($customLogoPath)
             ? $customLogoPath
-            : $themeWatermarkLogoPath;
+            : $themeDocumentLogoPath;
 
         return [
             'enabled' => (bool) $branding['pdf_watermark_enabled'],
@@ -394,9 +397,8 @@ final class PlatformAppearanceManager
             'font_size' => max(24, min(96, (int) $branding['pdf_watermark_font_size'])),
             'color' => $this->normalizeHexColor((string) $branding['pdf_watermark_color']),
             'brand_name' => (string) $branding['brand_name'],
-            'logo_path' => $watermarkLogoPath,
-            'logo_opacity' => 0.08,
-            'logo_max_width' => 280,
+            'brand_logo_path' => $documentLogoPath,
+            'brand_logo_max_width' => 120,
         ];
     }
 
@@ -409,7 +411,7 @@ final class PlatformAppearanceManager
     public function writeSettings(array $payload): void
     {
         $settings = $this->normalizeSettings(
-            $this->mergeRecursiveDistinct($this->settings(), $payload)
+            $this->mergeRecursiveDistinct($this->rawSettings(), $payload)
         );
 
         $this->config->writeSection(self::SECTION, [
@@ -431,7 +433,245 @@ final class PlatformAppearanceManager
             throw new InvalidArgumentException('Invalid branding asset slot.');
         }
 
-        return $file->store('branding/' . $slot);
+        $path = $file->store('branding/' . $slot);
+        $this->normalizeStoredBrandAsset($path, $slot);
+
+        return $path;
+    }
+
+    /**
+     * Removes excessive transparent canvas from stored raster branding assets.
+     *
+     * Responsibility: Normalizes reusable branding geometry without changing its visual proportions.
+     */
+    private function normalizeStoredBrandAsset(string $path, string $slot): void
+    {
+        $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+        if (!function_exists('imagecreatefromstring') || !in_array($extension, ['png', 'webp'], true)) {
+            return;
+        }
+
+        $contents = $this->storage->get($path, 'local');
+        $source = @imagecreatefromstring($contents);
+
+        if ($source === false) {
+            return;
+        }
+
+        if (function_exists('imagepalettetotruecolor')) {
+            imagepalettetotruecolor($source);
+        }
+
+        $bounds = $this->visibleImageBounds($source);
+        if ($bounds === null) {
+            imagedestroy($source);
+            return;
+        }
+
+        $normalized = $slot === 'favicon'
+            ? $this->normalizeFaviconCanvas($source, $bounds)
+            : $this->cropTransparentCanvas($source, $bounds);
+        imagedestroy($source);
+
+        if ($normalized === false) {
+            return;
+        }
+
+        $normalizedContents = $this->encodeNormalizedBrandAsset($normalized, $extension);
+        imagedestroy($normalized);
+
+        if ($normalizedContents !== '') {
+            $this->storage->put($path, $normalizedContents, 'local');
+        }
+    }
+
+    /**
+     * Encodes a normalized branding image using its stored file format.
+     */
+    private function encodeNormalizedBrandAsset(\GdImage $image, string $extension): string
+    {
+        ob_start();
+
+        if ($extension === 'webp' && function_exists('imagewebp')) {
+            imagewebp($image, null, 90);
+        } elseif ($extension === 'png') {
+            imagepng($image, null, 9);
+        } else {
+            ob_end_clean();
+            return '';
+        }
+
+        $contents = ob_get_clean();
+
+        return is_string($contents) ? $contents : '';
+    }
+
+    /**
+     * Finds the visible pixel bounds of an image using its alpha channel.
+     *
+     * @return array{x: int, y: int, width: int, height: int}|null
+     */
+    private function visibleImageBounds(\GdImage $image): ?array
+    {
+        $width = imagesx($image);
+        $height = imagesy($image);
+        $left = $width;
+        $top = $height;
+        $right = -1;
+        $bottom = -1;
+
+        for ($y = 0; $y < $height; $y++) {
+            for ($x = 0; $x < $width; $x++) {
+                $alpha = (imagecolorat($image, $x, $y) >> 24) & 0x7F;
+                if ($alpha >= 120) {
+                    continue;
+                }
+
+                $left = min($left, $x);
+                $top = min($top, $y);
+                $right = max($right, $x);
+                $bottom = max($bottom, $y);
+            }
+        }
+
+        if ($right < $left || $bottom < $top) {
+            return null;
+        }
+
+        return [
+            'x' => $left,
+            'y' => $top,
+            'width' => $right - $left + 1,
+            'height' => $bottom - $top + 1,
+        ];
+    }
+
+    /**
+     * Crops a wordmark to its visible content while preserving a small breathing area.
+     *
+     * @param array{x: int, y: int, width: int, height: int} $bounds
+     */
+    private function cropTransparentCanvas(\GdImage $source, array $bounds): \GdImage|false
+    {
+        $padding = max(2, (int) round($bounds['height'] * 0.04));
+        $sourceWidth = imagesx($source);
+        $sourceHeight = imagesy($source);
+        $x = max(0, $bounds['x'] - $padding);
+        $y = max(0, $bounds['y'] - $padding);
+        $width = min($sourceWidth - $x, $bounds['width'] + ($padding * 2));
+        $height = min($sourceHeight - $y, $bounds['height'] + ($padding * 2));
+        $target = $this->transparentCanvas($width, $height);
+
+        if ($target === false) {
+            return false;
+        }
+
+        imagecopy($target, $source, 0, 0, $x, $y, $width, $height);
+
+        return $target;
+    }
+
+    /**
+     * Centers a favicon's visible symbol on a compact square canvas.
+     *
+     * @param array{x: int, y: int, width: int, height: int} $bounds
+     */
+    private function normalizeFaviconCanvas(\GdImage $source, array $bounds): \GdImage|false
+    {
+        $size = 256;
+        $padding = 20;
+        $available = $size - ($padding * 2);
+        $scale = min($available / $bounds['width'], $available / $bounds['height']);
+        $width = max(1, (int) round($bounds['width'] * $scale));
+        $height = max(1, (int) round($bounds['height'] * $scale));
+        $target = $this->transparentCanvas($size, $size);
+
+        if ($target === false) {
+            return false;
+        }
+
+        imagecopyresampled(
+            $target,
+            $source,
+            (int) floor(($size - $width) / 2),
+            (int) floor(($size - $height) / 2),
+            $bounds['x'],
+            $bounds['y'],
+            $width,
+            $height,
+            $bounds['width'],
+            $bounds['height']
+        );
+
+        return $target;
+    }
+
+    /**
+     * Creates a fully transparent image canvas.
+     */
+    private function transparentCanvas(int $width, int $height): \GdImage|false
+    {
+        $canvas = imagecreatetruecolor($width, $height);
+        if ($canvas === false) {
+            return false;
+        }
+
+        imagealphablending($canvas, false);
+        imagesavealpha($canvas, true);
+        $transparent = imagecolorallocatealpha($canvas, 0, 0, 0, 127);
+        imagefill($canvas, 0, 0, $transparent);
+
+        return $canvas;
+    }
+
+    /**
+     * Returns a translation key when an uploaded asset violates a slot-specific contract.
+     *
+     * Responsibility: Validates reusable branding asset geometry before storage.
+     */
+    public function brandAssetValidationError(UploadedFile $file, string $slot): ?string
+    {
+        $mime = strtolower($file->getMimeType());
+        $rasterMimes = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp'];
+
+        if ($slot === 'logo-primary' && !in_array($mime, $rasterMimes, true)) {
+            return 'settings.appearance.messages.primary_logo_raster';
+        }
+
+        if ($slot !== 'favicon') {
+            return null;
+        }
+
+        if (!in_array($mime, $rasterMimes, true)) {
+            return 'settings.appearance.messages.favicon_raster';
+        }
+
+        $dimensions = @getimagesize($file->getPath());
+        if (!is_array($dimensions)) {
+            return 'settings.appearance.messages.invalid_brand_asset';
+        }
+
+        return (int) ($dimensions[0] ?? 0) === (int) ($dimensions[1] ?? 0)
+            ? null
+            : 'settings.appearance.messages.favicon_square';
+    }
+
+    /**
+     * Returns stored appearance settings without compatibility aliases.
+     *
+     * Responsibility: Prevents legacy aliases from overriding current nested settings during writes.
+     * @return array<string, mixed>
+     */
+    private function rawSettings(): array
+    {
+        $settings = $this->config->entry(self::SECTION, self::ENTRY, []);
+        $settings = is_array($settings) ? $settings : [];
+
+        foreach (self::BRANDING_KEYS as $key) {
+            unset($settings[$key]);
+        }
+
+        return $settings;
     }
 
     /**
@@ -757,7 +997,7 @@ final class PlatformAppearanceManager
      */
     private function isSupportedPdfWatermarkLogo(string $path): bool
     {
-        return $path !== '' && preg_match('/\.(jpe?g)$/i', $path) === 1;
+        return $path !== '' && preg_match('/\.(jpe?g|png|webp)$/i', $path) === 1;
     }
 
     /**
