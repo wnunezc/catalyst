@@ -24,10 +24,10 @@
  *     </div>
  *
  *   Policy (preferred on the field or any ancestor container):
- *     <form data-password-policy='{"minLength":8,"requireUppercase":false,"requireNumber":false,"requireSymbol":false}'>
+ *     <form data-password-policy='{"minLength":12,"requireUppercase":true,"requireLowercase":true,"requireNumber":true,"requireSymbol":true}'>
  *
  *   Legacy global policy fallback:
- *     window.CatalystPasswordPolicy = { minLength: 8, requireUppercase: false, requireNumber: false, requireSymbol: false };
+ *     window.CatalystPasswordPolicy = { minLength: 12, requireUppercase: true, requireLowercase: true, requireNumber: true, requireSymbol: true };
  *
  * @package Catalyst
  */
@@ -48,10 +48,11 @@ export class PasswordManager {
             strengthContainerClass: 'password-strength',
             policyKey:              'CatalystPasswordPolicy',
             defaultPolicy: {
-                minLength:        8,
-                requireUppercase: false,
-                requireNumber:    false,
-                requireSymbol:    false,
+                minLength:        12,
+                requireUppercase: true,
+                requireLowercase: true,
+                requireNumber:    true,
+                requireSymbol:    true,
             },
             ...options
         };
@@ -204,6 +205,7 @@ export class PasswordManager {
         if (value.length >= policy.minLength) score++;
         if (value.length >= 12)              score++;
         if (/[A-Z]/.test(value))             score++;
+        if (/[a-z]/.test(value))             score++;
         if (/[0-9]/.test(value))             score++;
         if (/[^A-Za-z0-9]/.test(value))      score++;
         return score;

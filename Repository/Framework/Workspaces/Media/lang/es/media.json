@@ -209,7 +209,9 @@
       "claim_bulk_deleted": "archivo multimedia eliminado masivamente"
     },
     "validation": {
-      "remote_storage_not_ready": "El almacenamiento remoto FTP/SFTP todavía no está configurado."
+      "remote_storage_not_ready": "El almacenamiento remoto FTP/SFTP todavía no está configurado.",
+      "blocked_extension": "La extensión de archivo \":extension\" no está permitida para cargas multimedia.",
+      "blocked_mime_type": "El tipo MIME \":mime\" no está permitido para cargas multimedia."
     }
   }
 }

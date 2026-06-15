@@ -86,6 +86,10 @@ product-specific routes, workflows, APIs and UI belong in its own `test/app`
 suite. Never add derived application specs to Catalyst or mix them into
 `test/framework`.
 
+Frozen framework route and PageHeader inventories scan framework-owned paths
+only. Valid additions under `Repository/App` must not change framework totals;
+derived projects own their additional inventory assertions in `test/app`.
+
 The Node/Playwright runtime lives in the workspace engine:
 
 ```text

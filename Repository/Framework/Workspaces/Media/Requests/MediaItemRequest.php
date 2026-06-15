@@ -36,6 +36,7 @@ use Catalyst\Framework\Http\FormRequest;
 use Catalyst\Framework\Media\MediaManager;
 use Catalyst\Framework\Metadata\MetadataManager;
 use Catalyst\Framework\Storage\StorageManager;
+use Catalyst\Helpers\Config\ConfigManager;
 use Catalyst\Helpers\Exceptions\ForbiddenException;
 use Catalyst\Helpers\Exceptions\ValidationException;
 use Catalyst\Helpers\Validation\Validator;
@@ -48,6 +49,10 @@ use Catalyst\Helpers\Validation\Validator;
  */
 final class MediaItemRequest extends FormRequest
 {
+    private const DEFAULT_ALLOWED_EXTENSIONS = ['csv', 'gif', 'jpeg', 'jpg', 'json', 'pdf', 'png', 'txt', 'webp'];
+    private const DEFAULT_BLOCKED_EXTENSIONS = ['php', 'phtml', 'phar', 'cgi', 'pl', 'htm', 'html', 'svg'];
+    private const DEFAULT_BLOCKED_MIME_TYPES = ['application/x-php', 'text/html', 'image/svg+xml'];
+
     /**
      * @var array<string, mixed>|null
      */
@@ -97,12 +102,13 @@ final class MediaItemRequest extends FormRequest
      */
     public function rules(): array
     {
+        $allowedExtensions = implode(',', $this->allowedUploadExtensions());
         $rules = [
             'name' => 'required|max:150',
             'disk' => 'required|in:local,ftp',
             'asset_file' => (int) ($this->route('id') ?? 0) > 0
-                ? 'file|mimes:csv,gif,jpeg,jpg,json,pdf,png,svg,txt,webp|max_size:10240'
-                : 'required|file|mimes:csv,gif,jpeg,jpg,json,pdf,png,svg,txt,webp|max_size:10240',
+                ? 'file|mimes:' . $allowedExtensions . '|max_size:10240'
+                : 'required|file|mimes:' . $allowedExtensions . '|max_size:10240',
         ];
 
         return array_merge($rules, MetadataManager::getInstance()->validationRules(MediaManager::RESOURCE_KEY));
@@ -185,6 +191,135 @@ final class MediaItemRequest extends FormRequest
             $errors['disk'][] = __('media.library.validation.remote_storage_not_ready');
         }
 
+        $file = $data['asset_file'] ?? null;
+        if ($file instanceof \Catalyst\Framework\Http\UploadedFile) {
+            $extension = strtolower($file->getExtension());
+            $mimeType = strtolower($file->getMimeType());
+
+            if (in_array($extension, $this->blockedUploadExtensions(), true)) {
+                $errors['asset_file'][] = __('media.library.validation.blocked_extension', ['extension' => $extension]);
+            }
+
+            if (in_array($mimeType, $this->blockedUploadMimeTypes(), true)) {
+                $errors['asset_file'][] = __('media.library.validation.blocked_mime_type', ['mime' => $mimeType]);
+            }
+        }
+
         return $errors;
+    }
+
+    /**
+     * Returns media upload extensions accepted by the form rule.
+     *
+     * SVG is disabled by default because browser-inline SVG can carry active
+     * content. Existing projects can opt in with security.security.uploads.allow_svg=true.
+     *
+     * Responsibility: Builds the extension allowlist enforced by the media upload form rule.
+     * @return string[]
+     */
+    private function allowedUploadExtensions(): array
+    {
+        $extensions = self::DEFAULT_ALLOWED_EXTENSIONS;
+
+        if ($this->allowSvgUploads()) {
+            $extensions[] = 'svg';
+        }
+
+        sort($extensions);
+        return array_values(array_unique($extensions));
+    }
+
+    /**
+     * Returns denied extensions for public media uploads.
+     *
+     * Responsibility: Resolves the configured extension denylist while honoring explicit SVG opt-in.
+     * @return string[]
+     */
+    private function blockedUploadExtensions(): array
+    {
+        $configured = $this->uploadSecurityConfig()['blocked_extensions'] ?? self::DEFAULT_BLOCKED_EXTENSIONS;
+        if (!is_array($configured)) {
+            $configured = self::DEFAULT_BLOCKED_EXTENSIONS;
+        }
+
+        $extensions = array_values(array_unique(array_filter(array_map(
+            static fn (mixed $value): string => strtolower(ltrim(trim((string) $value), '.')),
+            $configured
+        ))));
+
+        if ($this->allowSvgUploads()) {
+            $extensions = array_values(array_diff($extensions, ['svg']));
+        }
+
+        return $extensions;
+    }
+
+    /**
+     * Returns denied MIME types for public media uploads.
+     *
+     * Responsibility: Resolves the configured MIME denylist while honoring explicit SVG opt-in.
+     * @return string[]
+     */
+    private function blockedUploadMimeTypes(): array
+    {
+        $configured = $this->uploadSecurityConfig()['blocked_mime_types'] ?? self::DEFAULT_BLOCKED_MIME_TYPES;
+        if (!is_array($configured)) {
+            $configured = self::DEFAULT_BLOCKED_MIME_TYPES;
+        }
+
+        $mimeTypes = array_values(array_unique(array_filter(array_map(
+            static fn (mixed $value): string => strtolower(trim((string) $value)),
+            $configured
+        ))));
+
+        if ($this->allowSvgUploads()) {
+            $mimeTypes = array_values(array_diff($mimeTypes, ['image/svg+xml']));
+        }
+
+        return $mimeTypes;
+    }
+
+    /**
+     * Determines whether SVG uploads are explicitly allowed.
+     *
+     * Responsibility: Requires an explicit security setting before allowing active SVG content.
+     */
+    private function allowSvgUploads(): bool
+    {
+        return $this->boolean($this->uploadSecurityConfig()['allow_svg'] ?? false);
+    }
+
+    /**
+     * Reads upload security settings with fail-closed defaults.
+     *
+     * Responsibility: Loads media upload security configuration without weakening defaults on config failures.
+     * @return array<string, mixed>
+     */
+    private function uploadSecurityConfig(): array
+    {
+        try {
+            $config = ConfigManager::getInstance()->get('security.security.uploads', []);
+            return is_array($config) ? $config : [];
+        } catch (\Throwable) {
+            return [];
+        }
+    }
+
+    /**
+     * Coerces JSON/env-style booleans without trusting arbitrary strings.
+     *
+     * Responsibility: Normalizes upload security toggles into strict booleans.
+     */
+    private function boolean(mixed $value): bool
+    {
+        if (is_bool($value)) {
+            return $value;
+        }
+
+        if (is_string($value)) {
+            return in_array(strtolower(trim($value)), ['1', 'true', 'yes', 'on'], true);
+        }
+
+        return (bool) $value;
     }
 }

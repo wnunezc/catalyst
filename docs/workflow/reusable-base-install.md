@@ -127,7 +127,7 @@ When a new Catalyst release is available, update manually through Git:
 
 ```powershell
 git fetch upstream --tags
-git merge v0.2.0-rc.1
+git merge v0.2.0-rc.2
 composer install
 php public/cli.php config:sync
 php public/cli.php config:contract-smoke --json
@@ -137,9 +137,13 @@ php public/cli.php shell-navigation:smoke --json
 php public/cli.php quality:check
 ```
 
-Use the actual target tag instead of `v0.2.0-rc.1`. `update:check` does not modify
+Use the actual target tag instead of `v0.2.0-rc.2`. `update:check` does not modify
 files, branches or remotes; it only reports version information and suggested
 commands.
+
+For the corrective update from `v0.2.0-rc.1` to `v0.2.0-rc.2`, read
+`docs/workflow/release-v0.2.0-rc.2.md`. Audit the RC1 shared feature-flag
+migration journal before rollback or conflict resolution.
 
 For the structural migration from `v0.1.0-rc.8` to `v0.2.0-rc.1`, read
 `docs/workflow/release-v0.2.0-rc.1.md` before merging. Expect framework-owned

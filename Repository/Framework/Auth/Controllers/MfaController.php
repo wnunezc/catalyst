@@ -294,8 +294,11 @@ class MfaController extends Controller
 
         $secret   = (string)$mfaData['mfa_secret'];
         $verified = false;
+        $mfa = MfaManager::getInstance();
+        $users = UserProvider::getInstance();
 
-        if (MfaManager::getInstance()->verifyCode($secret, $code)) {
+        $verifiedTimeStep = $mfa->verifiedTimeStep($secret, $code);
+        if ($verifiedTimeStep !== null && $users->consumeMfaTotpStep($userId, $verifiedTimeStep)) {
             $verified = true;
         } else {
             $rawCodes    = $mfaData['mfa_backup_codes'];
@@ -303,8 +306,8 @@ class MfaController extends Controller
                 ? (array)(json_decode($rawCodes, true) ?? [])
                 : [];
 
-            if (MfaManager::getInstance()->verifyBackupCode($code, $backupCodes)) {
-                UserProvider::getInstance()->updateMfaBackupCodes($userId, $backupCodes);
+            if ($mfa->verifyBackupCode($code, $backupCodes)) {
+                $users->updateMfaBackupCodes($userId, $backupCodes);
                 $verified = true;
             }
         }

@@ -102,18 +102,20 @@ final class AuthInputGuard
     }
 
     /**
-     * Password policy is intentionally backwards-compatible: defaults mirror the
-     * existing min:8 behavior unless security.json opts into stricter flags.
+     * Returns the configured password policy with secure framework defaults.
      *
      * Supported config path:
      * security.security.password_policy = {
-     *   "min_length": 8,
-     *   "require_uppercase": false,
-     *   "require_number": false,
-     *   "require_symbol": false
+     *   "min_length": 12,
+     *   "require_uppercase": true,
+     *   "require_lowercase": true,
+     *   "require_number": true,
+     *   "require_symbol": true,
+     *   "block_common": true,
+     *   "common_passwords": []
      * }
      *
-     * @return array{minLength:int,requireUppercase:bool,requireNumber:bool,requireSymbol:bool}
+     * @return array{minLength:int,requireUppercase:bool,requireLowercase:bool,requireNumber:bool,requireSymbol:bool,blockCommon:bool,commonPasswords:list<string>}
      */
     public static function passwordPolicy(): array
     {
@@ -128,11 +130,22 @@ final class AuthInputGuard
             $policy = [];
         }
 
+        $configuredCommonPasswords = $policy['common_passwords'] ?? $policy['commonPasswords'] ?? [];
+        if (!is_array($configuredCommonPasswords)) {
+            $configuredCommonPasswords = [];
+        }
+
         return [
-            'minLength' => max(8, min(128, (int) ($policy['min_length'] ?? $policy['minLength'] ?? 8))),
-            'requireUppercase' => self::boolean($policy['require_uppercase'] ?? $policy['requireUppercase'] ?? false),
-            'requireNumber' => self::boolean($policy['require_number'] ?? $policy['requireNumber'] ?? false),
-            'requireSymbol' => self::boolean($policy['require_symbol'] ?? $policy['requireSymbol'] ?? false),
+            'minLength' => max(8, min(128, (int) ($policy['min_length'] ?? $policy['minLength'] ?? 12))),
+            'requireUppercase' => self::boolean($policy['require_uppercase'] ?? $policy['requireUppercase'] ?? true),
+            'requireLowercase' => self::boolean($policy['require_lowercase'] ?? $policy['requireLowercase'] ?? true),
+            'requireNumber' => self::boolean($policy['require_number'] ?? $policy['requireNumber'] ?? true),
+            'requireSymbol' => self::boolean($policy['require_symbol'] ?? $policy['requireSymbol'] ?? true),
+            'blockCommon' => self::boolean($policy['block_common'] ?? $policy['blockCommon'] ?? true),
+            'commonPasswords' => array_values(array_unique(array_filter(array_map(
+                static fn (mixed $value): string => self::normalizePasswordCandidate((string) $value),
+                array_merge(self::defaultCommonPasswords(), $configuredCommonPasswords)
+            )))),
         ];
     }
 
@@ -154,12 +167,20 @@ final class AuthInputGuard
             $errors[] = __('auth.validation.password_uppercase');
         }
 
+        if ($policy['requireLowercase'] && preg_match('/\p{Ll}/u', $password) !== 1) {
+            $errors[] = __('auth.validation.password_lowercase');
+        }
+
         if ($policy['requireNumber'] && preg_match('/\d/', $password) !== 1) {
             $errors[] = __('auth.validation.password_number');
         }
 
         if ($policy['requireSymbol'] && preg_match('/[^\p{L}\p{N}\s]/u', $password) !== 1) {
             $errors[] = __('auth.validation.password_symbol');
+        }
+
+        if ($policy['blockCommon'] && in_array(self::normalizePasswordCandidate($password), $policy['commonPasswords'], true)) {
+            $errors[] = __('auth.validation.password_common');
         }
 
         return $errors !== [] ? ['password' => $errors] : [];
@@ -174,6 +195,51 @@ final class AuthInputGuard
         return $fallback !== '' && str_starts_with($fallback, '/') && !str_starts_with($fallback, '//')
             ? $fallback
             : '/';
+    }
+
+
+    /**
+     * Returns a compact local denylist for highly common passwords.
+     *
+     * This is intentionally small to keep the framework self-contained. Projects
+     * may append organization-specific values through security.json.
+     *
+     * Responsibility: Supplies the baseline common-password denylist extended by project configuration.
+     * @return list<string>
+     */
+    private static function defaultCommonPasswords(): array
+    {
+        return [
+            'password',
+            'password1',
+            'password123',
+            '123456',
+            '1234567',
+            '12345678',
+            '123456789',
+            '1234567890',
+            'qwerty',
+            'qwerty123',
+            'admin',
+            'admin123',
+            'administrator',
+            'letmein',
+            'welcome',
+            'welcome1',
+            'iloveyou',
+            'catalyst',
+            'catalyst123',
+        ];
+    }
+
+    /**
+     * Normalizes password candidates for exact denylist comparisons.
+     *
+     * Responsibility: Produces a stable case-insensitive representation for denylist checks.
+     */
+    private static function normalizePasswordCandidate(string $value): string
+    {
+        return strtolower(trim($value));
     }
 
     /**

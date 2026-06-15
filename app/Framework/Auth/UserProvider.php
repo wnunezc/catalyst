@@ -49,6 +49,8 @@ class UserProvider
 {
     use SingletonTrait;
 
+    private ?bool $mfaLastTotpStepColumnAvailable = null;
+
     /**
      * @var DatabaseManager
      */
@@ -400,11 +402,17 @@ class UserProvider
                 return;
             }
 
-            $user->forceFill([
+            $payload = [
                 'mfa_secret' => $secret,
                 'mfa_enabled' => 1,
                 'mfa_backup_codes' => json_encode($hashedBackupCodes, JSON_THROW_ON_ERROR),
-            ]);
+            ];
+
+            if ($this->mfaLastTotpStepColumnExists()) {
+                $payload['mfa_last_totp_step'] = null;
+            }
+
+            $user->forceFill($payload);
             $user->save();
         } catch (Exception $e) {
             $this->logger->error('UserProvider::enableMfa failed', ['error' => $e->getMessage()]);
@@ -426,14 +434,57 @@ class UserProvider
                 return;
             }
 
-            $user->forceFill([
+            $payload = [
                 'mfa_secret' => null,
                 'mfa_enabled' => 0,
                 'mfa_backup_codes' => null,
-            ]);
+            ];
+
+            if ($this->mfaLastTotpStepColumnExists()) {
+                $payload['mfa_last_totp_step'] = null;
+            }
+
+            $user->forceFill($payload);
             $user->save();
         } catch (Exception $e) {
             $this->logger->error('UserProvider::disableMfa failed', ['error' => $e->getMessage()]);
+        }
+    }
+
+    /**
+     * Persist a successfully accepted TOTP timestep exactly once per account.
+     *
+     * Returns true when the column is not migrated yet so the patch is safe to
+     * deploy before running migrations. After migration, the atomic WHERE clause
+     * rejects reuse of the same or an older accepted timestep.
+     *
+     * Responsibility: Atomically records a tenant-scoped TOTP timestep and rejects replay after migration.
+     */
+    public function consumeMfaTotpStep(int $userId, int $timeStep): bool
+    {
+        if ($timeStep < 0 || !$this->mfaLastTotpStepColumnExists()) {
+            return true;
+        }
+
+        try {
+            $affected = $this->db->connection()->execute(
+                'UPDATE `users`
+                 SET `mfa_last_totp_step` = :step
+                 WHERE `tenant_id` = :tenant_id
+                   AND `id` = :user_id
+                   AND (`mfa_last_totp_step` IS NULL OR `mfa_last_totp_step` < :step_guard)',
+                [
+                    ':step' => $timeStep,
+                    ':tenant_id' => $this->currentTenantId(),
+                    ':user_id' => $userId,
+                    ':step_guard' => $timeStep,
+                ]
+            );
+
+            return $affected === 1;
+        } catch (Exception $e) {
+            $this->logger->error('UserProvider::consumeMfaTotpStep failed', ['error' => $e->getMessage()]);
+            return false;
         }
     }
 
@@ -471,5 +522,39 @@ class UserProvider
     private function currentTenantId(): int
     {
         return TenancyManager::getInstance()->requireCurrentTenantId();
+    }
+
+    /**
+     * Checks once per request whether the optional MFA replay-protection column exists.
+     *
+     * Responsibility: Detects migration availability once so MFA verification can deploy before schema rollout.
+     */
+    private function mfaLastTotpStepColumnExists(): bool
+    {
+        if ($this->mfaLastTotpStepColumnAvailable !== null) {
+            return $this->mfaLastTotpStepColumnAvailable;
+        }
+
+        try {
+            $row = $this->db->connection()->selectOne(
+                'SELECT 1
+                 FROM information_schema.columns
+                 WHERE table_schema = DATABASE()
+                   AND table_name = :table
+                   AND column_name = :column
+                 LIMIT 1',
+                [
+                    ':table' => 'users',
+                    ':column' => 'mfa_last_totp_step',
+                ]
+            );
+
+            $this->mfaLastTotpStepColumnAvailable = $row !== null;
+        } catch (Exception $e) {
+            $this->logger->warning('UserProvider::mfaLastTotpStepColumnExists failed', ['error' => $e->getMessage()]);
+            $this->mfaLastTotpStepColumnAvailable = false;
+        }
+
+        return $this->mfaLastTotpStepColumnAvailable;
     }
 }

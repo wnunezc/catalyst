@@ -21,7 +21,9 @@ final class AppConsumersArchitectureTest extends TestCase
         $viewModel = $this->read('Repository/Framework/Account/Support/AccountSurfaceViewModel.php');
         $styles = $this->read('public/assets/css/catalyst/account-shell.css');
 
-        Assert::contains("'body_class' => 'catalyst-shell-body account-page-body'", $viewModel);
+        Assert::contains("'body_class' => 'catalyst-shell-body'", $viewModel);
+        Assert::false(str_contains($viewModel, 'account-page-body'));
+        Assert::false(str_contains($viewModel, 'account-guest-body'));
         Assert::contains("'shell_class' => 'wrapper'", $viewModel);
         Assert::contains("'topbar_class' => 'app-topbar'", $viewModel);
         Assert::contains("'sidebar_class' => 'sidenav-menu'", $viewModel);

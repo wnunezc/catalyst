@@ -209,7 +209,9 @@
       "claim_bulk_deleted": "media asset bulk deleted"
     },
     "validation": {
-      "remote_storage_not_ready": "Remote FTP/SFTP storage is not configured yet."
+      "remote_storage_not_ready": "Remote FTP/SFTP storage is not configured yet.",
+      "blocked_extension": "File extension \":extension\" is not allowed for media uploads.",
+      "blocked_mime_type": "MIME type \":mime\" is not allowed for media uploads."
     }
   }
 }

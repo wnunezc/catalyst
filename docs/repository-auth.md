@@ -23,6 +23,10 @@ Document framework Auth module controllers, model and request payload boundaries
 
 This file is regenerated from current PHP docblocks and the runtime inventory scope for `Catalyst\Repository\Auth`. It intentionally replaces stale historical API notes with the classes and methods that exist in code now.
 
+During a pending MFA login, a valid TOTP code is accepted only when its verified
+timestep can be atomically consumed for the current tenant and account. Backup
+codes retain their existing one-time consumption contract.
+
 ## API From Docblocks
 
 ### `Catalyst\Repository\Auth\Controllers\EmailVerificationController`

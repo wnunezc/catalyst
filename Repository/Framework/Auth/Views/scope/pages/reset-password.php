@@ -37,10 +37,12 @@ return static function (array $scope): array {
     $passwordConfirmError = validation_error('password_confirm');
 
     $passwordPolicy = $scope['passwordPolicy'] ?? $scope['password_policy'] ?? [
-        'minLength' => 8,
-        'requireUppercase' => false,
-        'requireNumber' => false,
-        'requireSymbol' => false,
+        'minLength' => 12,
+        'requireUppercase' => true,
+        'requireLowercase' => true,
+        'requireNumber' => true,
+        'requireSymbol' => true,
+        'blockCommon' => true,
     ];
 
     return [

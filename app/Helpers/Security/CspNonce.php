@@ -31,6 +31,7 @@ declare(strict_types=1);
 namespace Catalyst\Helpers\Security;
 
 use Random\RandomException;
+use RuntimeException;
 
 /**
  * CspNonce — per-request Content Security Policy nonce.
@@ -59,9 +60,11 @@ class CspNonce
 
         try {
             self::$nonce = base64_encode(random_bytes(16));
-        } catch (RandomException) {
-            // Fallback: uniqid with entropy — not ideal but never fails
-            self::$nonce = base64_encode(uniqid('', true) . mt_rand());
+        } catch (RandomException $exception) {
+            throw new RuntimeException(
+                'Unable to generate a cryptographically secure CSP nonce.',
+                previous: $exception
+            );
         }
     }
 

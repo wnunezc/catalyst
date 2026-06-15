@@ -40,6 +40,12 @@ The Roles privileged form manages this metadata directly: scope and level are si
 selectors, while `role_organization_units` is synchronized from the horizontal
 organization unit multi-select.
 
+The default password policy requires 12 characters, uppercase, lowercase,
+numeric and symbol content and rejects common passwords. TOTP verification
+returns the accepted timestep; login challenges atomically consume that
+timestep through `UserProvider` so a code cannot be replayed for the same
+tenant/account after `20260615010000_add_mfa_totp_replay_guard.php` is applied.
+
 Resource permissions are declared in module metadata and evaluated by `PermissionRegistry` through `AbilitySubject`. Apps should pass domain records and contextual data through `authorizeResource()` or `canResource()` instead of embedding authorization shortcuts in controllers. Supported declarative constraints include `record_required`, `owner_field`, `owner_context_key`, `state_field` with `states_any`, `visibility_field` or `visibility_context_key` with `visibility_any`, `scope_context_key` with `scopes_any`, generic `context_any` maps, and optional `policy_ability` delegation. This keeps ownership, visibility and workflow-scope checks separate from strong tenancy requirements.
 
 Example metadata fragment:
@@ -85,7 +91,7 @@ $this->authorizeResource('update', 'documents', $document, [
 | `isRawToken()` | `public` | Checks whether a token matches the expected raw 64-character hex format. | n/a |
 | `normalizeMfaCode()` | `public` | Trims and uppercases an MFA code candidate before validation or comparison. | n/a |
 | `isMfaCodeCandidate()` | `public` | Checks whether input could be a TOTP code or backup MFA code. | n/a |
-| `passwordPolicy()` | `public` | Password policy is intentionally backwards-compatible: defaults mirror the existing min:8 behavior unless security.json opts into stricter flags. | n/a |
+| `passwordPolicy()` | `public` | Returns the configured password policy with secure framework defaults. | n/a |
 | `passwordPolicyErrors()` | `public` | Builds translated password-policy validation errors for the supplied password. | n/a |
 | `fallbackPath()` | `private` | Normalizes redirect fallback values to local absolute paths. | n/a |
 | `boolean()` | `private` | Converts config-style boolean values into strict booleans. | n/a |
@@ -140,6 +146,7 @@ $this->authorizeResource('update', 'documents', $document, [
 | `generateSecret()` | `public` | Generate a cryptographically random base32 TOTP secret. 20 bytes of entropy → 32-character base32 string. | Generate a cryptographically random base32 TOTP secret. 20 bytes of entropy → 32-character base32 string. |
 | `generateQrUri()` | `public` | Build the otpauth:// URI used by authenticator apps (Google Authenticator, Aegis, etc.). | Build the otpauth:// URI used by authenticator apps (Google Authenticator, Aegis, etc.). |
 | `verifyCode()` | `public` | Verify a 6-digit TOTP code with a ±window step tolerance. Default window=1 allows codes from the previous and next 30-second windows, accommodating minor clock drift between client and server. | Verify a 6-digit TOTP code with a ±window step tolerance. Default window=1 allows codes from the previous and next 30-second windows, accommodating minor clock drift between client and server. |
+| `verifiedTimeStep()` | `public` | Return the accepted TOTP timestep for a valid code, or null when invalid. | Exposes the verified counter so callers can persist replay protection without duplicating RFC 6238 verification logic. |
 | `normalizeTotpCode()` | `public` | Removes formatting and accepts only fixed-width numeric TOTP codes. | Removes formatting and accepts only fixed-width numeric TOTP codes. |
 | `normalizeBackupCode()` | `public` | Removes separators and uppercases a backup code for hashing or comparison. | Removes separators and uppercases a backup code for hashing or comparison. |
 | `generateBackupCodes()` | `public` | Generate $count one-time backup codes. Format: XXXX-XXXX (4 uppercase hex + dash + 4 uppercase hex). | Generate $count one-time backup codes. Format: XXXX-XXXX (4 uppercase hex + dash + 4 uppercase hex). |
@@ -292,8 +299,10 @@ $this->authorizeResource('update', 'documents', $document, [
 | `getMfaData()` | `public` | Return the MFA fields for a user (mfa_secret, mfa_enabled, mfa_backup_codes). Returns null if the user doesn't exist. | Return the MFA fields for a user (mfa_secret, mfa_enabled, mfa_backup_codes). Returns null if the user doesn't exist. |
 | `enableMfa()` | `public` | Activate MFA for a user: store the confirmed secret and backup codes. | Activate MFA for a user: store the confirmed secret and backup codes. |
 | `disableMfa()` | `public` | Deactivate MFA for a user: clear secret and backup codes. | Deactivate MFA for a user: clear secret and backup codes. |
+| `consumeMfaTotpStep()` | `public` | Persist a successfully accepted TOTP timestep exactly once per account. | Atomically records a tenant-scoped TOTP timestep and rejects replay after migration. |
 | `updateMfaBackupCodes()` | `public` | Persist an updated backup-codes list after one has been consumed. | Persist an updated backup-codes list after one has been consumed. |
 | `currentTenantId()` | `private` | Resolves the required tenant identifier for user authentication queries. | Resolves the required tenant identifier for user authentication queries. |
+| `mfaLastTotpStepColumnExists()` | `private` | Checks once per request whether the optional MFA replay-protection column exists. | Detects migration availability once so MFA verification can deploy before schema rollout. |
 
 ### `Catalyst\Framework\Authorization\AbilitySubject`
 

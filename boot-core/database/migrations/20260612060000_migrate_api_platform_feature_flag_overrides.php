@@ -6,13 +6,15 @@ use Catalyst\Framework\Database\Connection;
 use Catalyst\Framework\Database\Migration;
 
 /**
- * Migrates persisted Documents module overrides to the canonical Workspaces owner.
+ * Migrates persisted ApiPlatform module overrides to the canonical Operations owner.
  *
  * Responsibility: Preserves subject-specific feature flag behavior and records enough state for collision-safe rollback.
  */
 return new class extends Migration {
     private const string SOURCE = 'module.framework.apiplatform';
     private const string TARGET = 'module.framework.operations';
+    private const string JOURNAL = 'operations_api_platform_feature_flag_migration';
+    private const string LEGACY_SHARED_JOURNAL = 'documents_feature_flag_migration';
 
     public function getVersion(): string
     {
@@ -22,7 +24,7 @@ return new class extends Migration {
     public function up(): void
     {
         $this->statement(
-            'CREATE TABLE IF NOT EXISTS `documents_feature_flag_migration` (
+            'CREATE TABLE IF NOT EXISTS `' . self::JOURNAL . '` (
                 `source_id` BIGINT UNSIGNED NOT NULL,
                 `subject_type` VARCHAR(30) NOT NULL,
                 `subject_key` VARCHAR(180) NOT NULL,
@@ -50,11 +52,11 @@ return new class extends Migration {
                     [self::TARGET, $row['subject_type'], $row['subject_key']]
                 );
                 $journal = $connection->selectOne(
-                    'SELECT source_id FROM documents_feature_flag_migration WHERE source_id = ?',
+                    'SELECT source_id FROM ' . self::JOURNAL . ' WHERE source_id = ?',
                     [(int) $row['id']]
                 );
                 if ($journal === null) {
-                    $connection->insert('documents_feature_flag_migration', [
+                    $connection->insert(self::JOURNAL, [
                         'source_id' => (int) $row['id'],
                         'subject_type' => (string) $row['subject_type'],
                         'subject_key' => (string) $row['subject_key'],
@@ -86,9 +88,14 @@ return new class extends Migration {
 
     public function down(): void
     {
+        if (!$this->tableExists(self::JOURNAL)) {
+            $this->guardLegacySharedJournal();
+            return;
+        }
+
         $this->connection()->transaction(function (Connection $connection): void {
             $rows = $connection->select(
-                'SELECT * FROM documents_feature_flag_migration ORDER BY source_id'
+                'SELECT * FROM ' . self::JOURNAL . ' ORDER BY source_id'
             );
 
             foreach ($rows as $row) {
@@ -121,6 +128,23 @@ return new class extends Migration {
             }
         });
 
-        $this->statement('DROP TABLE IF EXISTS `documents_feature_flag_migration`');
+        $this->statement('DROP TABLE IF EXISTS `' . self::JOURNAL . '`');
+    }
+
+    /**
+     * Refuses ambiguous RC1 rollback state instead of restoring rows under the wrong owner.
+     */
+    private function guardLegacySharedJournal(): void
+    {
+        if (!$this->tableExists(self::LEGACY_SHARED_JOURNAL)) {
+            return;
+        }
+
+        $row = $this->selectOne('SELECT COUNT(*) AS aggregate FROM `' . self::LEGACY_SHARED_JOURNAL . '`');
+        if ((int) ($row['aggregate'] ?? 0) > 0) {
+            throw new \RuntimeException(
+                'The v0.2.0-rc.1 shared feature-flag rollback journal is non-empty and cannot safely identify source owners. Restore the pre-migration backup or classify the journal rows before rollback.'
+            );
+        }
     }
 };

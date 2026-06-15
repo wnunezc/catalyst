@@ -165,6 +165,7 @@ parallel governor.
 | `docs/workflow/release-v0.1.0-rc.7.md` | Catalyst v0.1.0-rc.7 Upgrade Notes |
 | `docs/workflow/release-v0.1.0-rc.8.md` | Catalyst v0.1.0-rc.8 Upgrade Notes |
 | `docs/workflow/release-v0.2.0-rc.1.md` | Catalyst v0.2.0-rc.1 migration and release notes |
+| `docs/workflow/release-v0.2.0-rc.2.md` | Catalyst v0.2.0-rc.2 corrective upgrade and release notes |
 | `docs/workflow/release-v0.1.0-rc.5.md` | Catalyst v0.1.0-rc.5 Upgrade Notes |
 | `docs/workflow/release-v0.1.0-rc.4.md` | Catalyst v0.1.0-rc.4 Upgrade Notes |
 | `docs/workflow/release-v0.1.0-rc.3.md` | Catalyst v0.1.0-rc.3 Upgrade Notes |

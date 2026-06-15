@@ -102,9 +102,9 @@ final class Roadmap4OwnershipContractTest extends TestCase
         Assert::same(42, count($testFeatureRoutes));
     }
 
-    public function testFinalRouterInventoryContainsExactlyTwoHundredSixtyNineRoutes(): void
+    public function testFinalFrameworkRouterInventoryContainsExactlyTwoHundredSixtyFourRoutes(): void
     {
-        Assert::same(269, count($this->allRouteKeys()));
+        Assert::same(264, count($this->allRouteKeys()));
     }
 
     public function testCanonicalDocumentShellSidebarAndRuntimeRemainUnique(): void
@@ -126,7 +126,7 @@ final class Roadmap4OwnershipContractTest extends TestCase
         $routes = [];
         $files = [$this->path('boot-core/routes/global-routes.php')];
 
-        foreach (['Repository/Framework', 'Repository/App/Surface'] as $directory) {
+        foreach (['Repository/Framework'] as $directory) {
             foreach ($this->phpFiles($directory) as $file) {
                 if (basename($file) === 'routes.php') {
                     $files[] = $file;

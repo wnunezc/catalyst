@@ -137,7 +137,7 @@ final class PageHeaderArchitectureTest extends TestCase
     public function testEveryCommonSurfacePageHeaderProducerProvidesHelpContent(): void
     {
         $producers = [];
-        foreach ($this->files(['Repository'], ['php']) as $file) {
+        foreach ($this->files(['Repository/Framework'], ['php']) as $file) {
             $source = file_get_contents($file);
             if (!is_string($source) || !str_contains($source, "'page_header' =>")) {
                 continue;
@@ -147,7 +147,7 @@ final class PageHeaderArchitectureTest extends TestCase
             Assert::contains("'description' =>", $source);
         }
 
-        Assert::same(42, count($producers));
+        Assert::same(41, count($producers));
     }
 
     /**

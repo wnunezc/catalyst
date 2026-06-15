@@ -40,7 +40,7 @@ Este archivo enruta la documentacion vigente de `catalyst` para que el contexto 
 | Test Features JavaScript y cobertura | `docs/ui/test-features-javascript-inventory.md` |
 | Operacion/calidad | `docs/testing.md`, `docs/quality-gate.md`, `docs/deployment.md` |
 | Setup/workflow | `docs/checklists/setup-completion-e2e.md`, `docs/workflow/*.md` |
-| Release/migration | `docs/workflow/release-v0.2.0-rc.1.md`, `docs/workflow/release-rc-checklist.md` |
+| Release/migration | `docs/workflow/release-v0.2.0-rc.2.md`, `docs/workflow/release-v0.2.0-rc.1.md`, `docs/workflow/release-rc-checklist.md` |
 | Inventario generado | `docs/runtime-inventory.md`, `docs/runtime-module-catalog.md` |
 
 ## Si tocas X, lee Y

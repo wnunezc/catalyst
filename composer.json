@@ -40,6 +40,9 @@
         "phpmailer/phpmailer": "^6.9",
         "react/http": "^1.9"
     },
+    "conflict": {
+        "guzzlehttp/psr7": "<2.10.2"
+    },
     "autoload": {
         "files": [
             "boot-core/global-function/dump-function.php"

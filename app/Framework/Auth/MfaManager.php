@@ -104,21 +104,41 @@ class MfaManager
      */
     public function verifyCode(string $secret, string $code, int $window = 1): bool
     {
+        return $this->verifiedTimeStep($secret, $code, $window) !== null;
+    }
+
+    /**
+     * Return the accepted TOTP timestep for a valid code, or null when invalid.
+     *
+     * Responsibility: Exposes the verified counter so callers can persist replay
+     * protection without duplicating RFC 6238 verification logic.
+     * @param string $secret  Base32 TOTP secret
+     * @param string $code    6-digit code supplied by the user
+     * @param int    $window  Time-step tolerance in each direction
+     * @return int|null       Accepted timestep counter or null
+     */
+    public function verifiedTimeStep(string $secret, string $code, int $window = 1): ?int
+    {
         $normalizedCode = $this->normalizeTotpCode($code);
         if ($normalizedCode === null) {
-            return false;
+            return null;
         }
 
         $key       = $this->base32Decode($secret);
         $timestamp = (int)floor(time() / self::TOTP_PERIOD);
 
         for ($offset = -$window; $offset <= $window; $offset++) {
-            if ($this->computeTotp($key, $timestamp + $offset) === $normalizedCode) {
-                return true;
+            $timeStep = $timestamp + $offset;
+            if ($timeStep < 0) {
+                continue;
+            }
+
+            if ($this->computeTotp($key, $timeStep) === $normalizedCode) {
+                return $timeStep;
             }
         }
 
-        return false;
+        return null;
     }
 
     /**

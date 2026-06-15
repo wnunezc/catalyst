@@ -22,6 +22,18 @@ Templates should escape output with `e($value)` unless a value is intentionally 
 
 Route access is enforced by middleware and verified by runtime lint. API-token routes, authenticated routes, setup routes and public routes must remain distinguishable in route docs and runtime catalog output.
 
+Secure defaults require passwords with at least 12 characters, uppercase,
+lowercase, numeric and symbol content, and reject a compact built-in list of
+common passwords. Projects may extend the denylist through
+`security.security.password_policy.common_passwords`.
+
+Accepted TOTP login challenges persist their timestep per tenant and account so
+the same or an older code cannot be replayed after the replay-guard migration is
+applied. CSP nonce generation fails closed when cryptographic randomness is
+unavailable. Media uploads deny executable, HTML and SVG active content by
+default; SVG requires the explicit `security.security.uploads.allow_svg`
+opt-in.
+
 The 13 public `/api/v1/*` routes use `ApiTokenMiddleware`; session-authenticated
 `/runtime/*` routes are internal transports, not public APIs. Removed
 `/api/notifications*`, `/api/presence*`, `/api/ws-token` and `/api/public/*`

@@ -1,7 +1,7 @@
 # Runtime Module Catalog
 
 > Auto-generated from `ModuleRegistry`, `PermissionRegistry`, `NavigationRegistry`, `ModuleInspector`, `ModuleHarnessInspector` and `ModuleLinter`.
-> Last generated: 2026-06-13 19:00:40
+> Last generated: 2026-06-15 06:56:41
 
 ## Runtime Summary
 
@@ -510,7 +510,7 @@ _No mutation routes declared for harness._
 - Surface: `authenticated-api`
 - Runtime enabled: `yes`
 - Slug: `notification`
-- Description: Authenticated notification, presence and WebSocket runtime transports.
+- Description: Authenticated notification APIs and websocket token issuance.
 - Plugin: `framework.core`
 - Views: `no`
 - Assets: `n/a`

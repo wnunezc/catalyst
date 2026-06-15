@@ -1,12 +1,12 @@
 # Runtime Inventory
 
 > Auto-generated from filesystem and PHP tokens. Run `php public/cli.php docs:inventory` to refresh.
-> Last generated: 2026-06-13 19:00:41
+> Last generated: 2026-06-15 06:56:41
 
 ## Summary
 
 - Symbols: 713
-- Templates: 177
+- Templates: 178
 - Scripts: 56
 
 ## Symbol Roots
@@ -21,7 +21,7 @@
 | Root | Count |
 |---|---:|
 | `Repository views` | 152 |
-| `boot-core/template` | 25 |
+| `boot-core/template` | 26 |
 
 ## Script Roots
 
@@ -553,7 +553,7 @@
 | `Catalyst\Helpers\Log\LoggerSettings` | `class` | `app/Helpers/Log/LoggerSettings.php` | 39 |
 | `Catalyst\Helpers\Log\LoggerWriter` | `class` | `app/Helpers/Log/LoggerWriter.php` | 42 |
 | `Catalyst\Helpers\Path\ProjectPath` | `class` | `app/Helpers/Path/ProjectPath.php` | 39 |
-| `Catalyst\Helpers\Security\CspNonce` | `class` | `app/Helpers/Security/CspNonce.php` | 46 |
+| `Catalyst\Helpers\Security\CspNonce` | `class` | `app/Helpers/Security/CspNonce.php` | 47 |
 | `Catalyst\Helpers\Security\CsrfProtection` | `class` | `app/Helpers/Security/CsrfProtection.php` | 51 |
 | `Catalyst\Helpers\Security\SensitiveValueRedactor` | `class` | `app/Helpers/Security/SensitiveValueRedactor.php` | 39 |
 | `Catalyst\Helpers\ToolBox\DrawBox` | `class` | `app/Helpers/ToolBox/DrawBox.php` | 43 |
@@ -739,7 +739,7 @@
 | `Catalyst\Repository\Workspaces\Media\Controllers\MediaLibraryController` | `class` | `Repository/Framework/Workspaces/Media/Controllers/MediaLibraryController.php` | 53 |
 | `Catalyst\Repository\Workspaces\Media\Controllers\MetadataFieldController` | `class` | `Repository/Framework/Workspaces/Media/Controllers/MetadataFieldController.php` | 53 |
 | `Catalyst\Repository\Workspaces\Media\Requests\MediaBulkSelectionRequest` | `class` | `Repository/Framework/Workspaces/Media/Requests/MediaBulkSelectionRequest.php` | 41 |
-| `Catalyst\Repository\Workspaces\Media\Requests\MediaItemRequest` | `class` | `Repository/Framework/Workspaces/Media/Requests/MediaItemRequest.php` | 49 |
+| `Catalyst\Repository\Workspaces\Media\Requests\MediaItemRequest` | `class` | `Repository/Framework/Workspaces/Media/Requests/MediaItemRequest.php` | 50 |
 | `Catalyst\Repository\Workspaces\Media\Requests\MetadataFieldDefinitionRequest` | `class` | `Repository/Framework/Workspaces/Media/Requests/MetadataFieldDefinitionRequest.php` | 47 |
 | `Catalyst\Repository\Workspaces\Media\Support\MediaLibraryFormFactory` | `class` | `Repository/Framework/Workspaces/Media/Support/MediaLibraryFormFactory.php` | 44 |
 | `Catalyst\Repository\Workspaces\Media\Support\MetadataFieldFormFactory` | `class` | `Repository/Framework/Workspaces/Media/Support/MetadataFieldFormFactory.php` | 41 |
@@ -755,6 +755,7 @@
 | `boot-core/template/components/form-builder/_field-block.phtml` | `boot-core/template` | `phtml` |
 | `boot-core/template/components/form-builder/_field-control.phtml` | `boot-core/template` | `phtml` |
 | `boot-core/template/components/_datagrid-cell.phtml` | `boot-core/template` | `phtml` |
+| `boot-core/template/components/_datagrid-toolbar.phtml` | `boot-core/template` | `phtml` |
 | `boot-core/template/components/_datagrid.phtml` | `boot-core/template` | `phtml` |
 | `boot-core/template/components/_form-builder.phtml` | `boot-core/template` | `phtml` |
 | `boot-core/template/components/_page-header.phtml` | `boot-core/template` | `phtml` |
@@ -940,9 +941,9 @@
 | `Repository/App/Surface/Store/front/script.js` | `Repository front` | 11 |
 | `Repository/Framework/Account/front/script.js` | `Repository front` | 11 |
 | `Repository/Framework/Auth/front/script.js` | `Repository front` | 2073 |
-| `Repository/Framework/Configuration/front/script.js` | `Repository front` | 12479 |
+| `Repository/Framework/Configuration/front/script.js` | `Repository front` | 13473 |
 | `Repository/Framework/DemoUi/front/script.js` | `Repository front` | 1225 |
-| `Repository/Framework/DevTools/front/script.js` | `Repository front` | 23683 |
+| `Repository/Framework/DevTools/front/script.js` | `Repository front` | 21437 |
 | `Repository/Framework/Operations/front/script.js` | `Repository front` | 132 |
 | `Repository/Framework/Users/front/script.js` | `Repository front` | 255 |
 | `Repository/Framework/Workspaces/front/script.js` | `Repository front` | 366 |
@@ -952,18 +953,18 @@
 | `public/assets/js/catalyst/catalyst.js` | `public catalyst js` | 11030 |
 | `public/assets/js/catalyst/config/defaults.js` | `public catalyst js` | 3185 |
 | `public/assets/js/catalyst/core/asset-loader.js` | `public catalyst js` | 2758 |
-| `public/assets/js/catalyst/core/declarative-actions.js` | `public catalyst js` | 2684 |
+| `public/assets/js/catalyst/core/declarative-actions.js` | `public catalyst js` | 4569 |
 | `public/assets/js/catalyst/core/http.js` | `public catalyst js` | 11831 |
 | `public/assets/js/catalyst/core/loading.js` | `public catalyst js` | 1789 |
 | `public/assets/js/catalyst/core/response-actions.js` | `public catalyst js` | 1315 |
 | `public/assets/js/catalyst/core/trusted-dom.js` | `public catalyst js` | 919 |
 | `public/assets/js/catalyst/core/utils.js` | `public catalyst js` | 6387 |
-| `public/assets/js/catalyst/datagrid/interactions.js` | `public catalyst js` | 3156 |
+| `public/assets/js/catalyst/datagrid/interactions.js` | `public catalyst js` | 5488 |
 | `public/assets/js/catalyst/forms/builder.js` | `public catalyst js` | 11565 |
-| `public/assets/js/catalyst/forms/form-handler.js` | `public catalyst js` | 12234 |
-| `public/assets/js/catalyst/forms/password.js` | `public catalyst js` | 9356 |
+| `public/assets/js/catalyst/forms/form-handler.js` | `public catalyst js` | 11865 |
+| `public/assets/js/catalyst/forms/password.js` | `public catalyst js` | 9492 |
 | `public/assets/js/catalyst/forms/validation.js` | `public catalyst js` | 707 |
-| `public/assets/js/catalyst/inspinia/card-actions.js` | `public catalyst js` | 2933 |
+| `public/assets/js/catalyst/inspinia/card-actions.js` | `public catalyst js` | 3239 |
 | `public/assets/js/catalyst/inspinia/charts.js` | `public catalyst js` | 10660 |
 | `public/assets/js/catalyst/inspinia/code-preview.js` | `public catalyst js` | 4077 |
 | `public/assets/js/catalyst/inspinia/enhancers/editors.js` | `public catalyst js` | 322 |
@@ -980,11 +981,11 @@
 | `public/assets/js/catalyst/notifications/notification.js` | `public catalyst js` | 4509 |
 | `public/assets/js/catalyst/notifications/toaster.js` | `public catalyst js` | 11394 |
 | `public/assets/js/catalyst/presence/record-presence.js` | `public catalyst js` | 6279 |
-| `public/assets/js/catalyst/runtime/activity-manager.js` | `public catalyst js` | 6600 |
+| `public/assets/js/catalyst/runtime/activity-manager.js` | `public catalyst js` | 7201 |
 | `public/assets/js/catalyst/runtime/component-registry.js` | `public catalyst js` | 2114 |
 | `public/assets/js/catalyst/runtime/event-registry.js` | `public catalyst js` | 995 |
 | `public/assets/js/catalyst/runtime/registration-queue.js` | `public catalyst js` | 1957 |
-| `public/assets/js/catalyst/runtime/ui-runtime.js` | `public catalyst js` | 20214 |
+| `public/assets/js/catalyst/runtime/ui-runtime.js` | `public catalyst js` | 20158 |
 | `public/assets/js/catalyst/shell/navigation.js` | `public catalyst js` | 6297 |
 | `public/assets/js/catalyst/shell/simplebar.js` | `public catalyst js` | 1730 |
 | `public/assets/js/catalyst/shell/status-bar.js` | `public catalyst js` | 19778 |
