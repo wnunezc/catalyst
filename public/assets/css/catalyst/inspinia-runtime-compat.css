@@ -21,6 +21,10 @@ body.catalyst-shell-body .sidenav-menu {
     flex-direction: column;
 }
 
+body.catalyst-shell-body .sidenav-menu > a.logo {
+    text-align: center;
+}
+
 body.catalyst-shell-body .sidenav-menu .scrollbar {
     flex: 1 1 auto;
     min-height: 0;
