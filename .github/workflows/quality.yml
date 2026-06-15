@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -51,8 +51,9 @@ jobs:
       - name: I18n usage lint
         run: php public/cli.php i18n:usage-lint
 
-      - name: Settings localization smoke
-        run: php public/cli.php settings:localization-smoke
+      - name: Configuration localization smoke
+        run: php public/cli.php configuration:localization-smoke
 
       - name: Quality check
         run: php public/cli.php quality:check
+
