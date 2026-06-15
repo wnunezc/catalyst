@@ -2,13 +2,14 @@
 
 ## Purpose
 
-Document notification and presence API controllers.
+Document the session-authenticated notification and presence runtime transport
+controllers. These controllers serve `/runtime/*`; they are not public APIs.
 
 ## Runtime Owners
 
 | Concern | Owner |
 |---|---|
-| Coordinates notification API responses for the current user. | `Catalyst\Repository\Notification\Controllers\NotificationController` |
+| Coordinates notification runtime responses for the current user. | `Catalyst\Repository\Notification\Controllers\NotificationController` |
 | Refreshes presence state and reports claim conflicts to clients. | `Catalyst\Repository\Notification\Controllers\PresenceController` |
 
 ## Current Behavior
@@ -22,7 +23,7 @@ This file is regenerated from current PHP docblocks and the runtime inventory sc
 - File: `Repository/Framework/Notification/Controllers/NotificationController.php`
 - Kind: `class`
 - Summary: Exposes authenticated notification queries and read-state mutations.
-- Responsibility: Coordinates notification API responses for the current user.
+- Responsibility: Coordinates notification runtime responses for the current user.
 
 | Method | Visibility | Summary | Responsibility |
 |---|---|---|---|

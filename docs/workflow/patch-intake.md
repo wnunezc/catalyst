@@ -101,4 +101,6 @@ Before commit, record:
 - verification commands and outcomes;
 - residual risk or deferred work.
 
-Store evidence under a relevant `docs/audits/**` path for non-trivial patches.
+Store durable current contracts under the relevant canonical document. Keep
+historical evidence in Git history, issue/PR discussion or the workspace
+Obsidian summaries; do not create a new `docs/audits/**` archive.

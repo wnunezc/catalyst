@@ -22,8 +22,8 @@ Catalyst is split into these active code roots:
 | `app/Framework` | Framework primitives: routing, middleware, controllers, view, database, queue, schedule, event, modules, auth, authorization, storage, mail, reporting, retention and related managers. |
 | `app/Helpers` | Config, security, logging, validation, i18n, debug, error handling and terminal formatting helpers. |
 | `app/Entities` | Shared ORM entities used by framework and repository modules. |
-| `Repository/Framework` | Framework-owned modules. Workspaces owns workspace surfaces; Operations owns operational administration including API Management; API independently owns transversal public endpoints. |
-| `Repository/App/Surface` | App-owned public/authenticated surfaces: Home, Landing, Store, Dashboard and Account. |
+| `Repository/Framework` | Framework-owned modules. Configuration, Users, Account, Workspaces, Operations and API are canonical aggregate owners for their domains. |
+| `Repository/App/Surface` | App-owned starter surfaces: Home, Landing, Store and Dashboard. |
 | `boot-core/template` | Canonical document, shared shell components and declarative template scopes. |
 | `public/assets/js/catalyst` | Shared frontend runtime modules. |
 
@@ -48,6 +48,9 @@ Catalyst is split into these active code roots:
 | `Catalyst\Repository\Workspaces` | `Repository/Framework/Workspaces/` | `docs/repository-workspaces.md` |
 | `Catalyst\Repository\Operations` | `Repository/Framework/Operations/` | `docs/repository-operations.md` |
 | `Catalyst\Repository\Api` | `Repository/Framework/Api/` | `docs/repository-api.md` |
+| `Catalyst\Repository\Configuration` | `Repository/Framework/Configuration/` | `docs/framework-configuration.md` |
+| `Catalyst\Repository\Users` | `Repository/Framework/Users/` | `docs/runtime-module-catalog.md` |
+| `Catalyst\Repository\Account` | `Repository/Framework/Account/` | `docs/runtime-module-catalog.md` |
 | `App\Surface\*` | `Repository/App/Surface/` | `docs/runtime-module-catalog.md` |
 
 ## CLI Truth Sources

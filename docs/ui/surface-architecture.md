@@ -131,9 +131,9 @@ Application behavior must not be placed in the framework suite.
 
 ## Privileged Boundary
 
-Privileged is a role, permission and business authorization concept. It may appear
-in protected routes such as `/privileged/account-recovery`, middleware, policies,
-labels and operational workflows.
+Privileged is a role, permission and business authorization concept. It may
+appear in protected routes such as `/users/account-recovery`, middleware,
+policies, labels and operational workflows.
 
 Privileged is never a global namespace, document profile, layout, shell, frontend
 runtime or CSS architecture. Privileged routes use the same document,

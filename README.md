@@ -5,7 +5,7 @@ Composer package. It is meant to be copied or cloned as the starting point for a
 web application, then configured through local environment files and the setup
 wizard.
 
-Current distribution target: `0.1.0-rc.7`.
+Current distribution target: `0.2.0-rc.1`.
 
 ## Runtime Model
 
@@ -133,6 +133,12 @@ public/assets/js/catalyst/
 public/assets/css/catalyst/
 docs/
 ```
+
+`v0.2.0-rc.1` is a structural upgrade from `v0.1.0-rc.8`. Review
+`docs/workflow/release-v0.2.0-rc.1.md` before merging it into a derived
+application. The release consolidates module ownership, the canonical document
+and shell, frontend runtime, internal transports, UI composition and testing
+ownership.
 
 To check the installed Catalyst version:
 
@@ -281,12 +287,11 @@ API.md                    Subsystem index
 
 ## Distribution Status
 
-`0.1.0-rc.8` is intended as the eighth distribution candidate for developers
-who will use Catalyst as a project base. It supersedes `0.1.0-rc.7` by
-formalizing separate `test/framework` and `test/app` ownership boundaries and
-the explicit Playwright suite selection required by derived applications. It is
-not a public Composer package and is not intended to be installed into another
-project's `vendor/` directory.
+`0.2.0-rc.1` is the first candidate of the `0.2.0` line. It supersedes
+`v0.1.0-rc.8` after the completed ROADMAP 1-7 migration sequence and is
+intended for developers who use Catalyst as a project base. It is not a public
+Composer package and is not intended to be installed into another project's
+`vendor/` directory.
 
 Before a release artifact is published, generate it from a clean checkout and
 exclude local secrets, DKIM keys, runtime storage, uploads, logs, ad-hoc zips and

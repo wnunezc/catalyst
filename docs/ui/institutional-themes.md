@@ -43,8 +43,8 @@ Los once temas están declarados en el runtime de apariencia y apoyados por:
 
 - `public/assets/css/catalyst/response-skins.css`
 - `public/assets/css/catalyst/inspinia-runtime-compat.css`
-- `public/assets/js/catalyst/modules/shell-theme-customizer.js`
-- `public/assets/js/catalyst/modules/theme-toggle.js`
+- `public/assets/js/catalyst/appearance-bootstrap.js`
+- `public/assets/js/catalyst/shell/theme-customizer.js`
 
 ## Presets institucionales cerrados
 
@@ -68,12 +68,13 @@ existe un customizer exclusivo de Privileged.
   Bootstrap si no se define un modo completo de Bootstrap.
 - Mantener `data-bs-theme` como `light`, `dark` o `system` según corresponda.
 - Aplicar el preset visual mediante el skin configurado por Catalyst/Inspinia.
-- No reactivar `response-skins.css`.
+- Mantener `response-skins.css` como fuente activa de identidad/color de los
+  cuatro presets institucionales; no usarlo para geometria o layouts.
 - No usar logos o emblemas como parte del skin visual.
 - Mantener los botones de acción como botones reales; evitar `btn-link` para
   acciones privilegiadas.
 - Preservar selección y persistencia mediante el runtime central y
-  `shell-theme-customizer.js`.
+  `shell/theme-customizer.js`.
 - No crear CSS, shell o JavaScript gobernador por tema.
 
 ## Neutral branding
@@ -90,3 +91,8 @@ El tab secundario de `/configuration/platform-appearance` concentra:
 
 Esta capa puede cambiar documentos y chrome de marca sin crear un sistema de
 temas visuales paralelo.
+
+Los uploads PNG/WebP se normalizan para reducir transparencia sobrante y se
+almacenan bajo `public/uploads/branding`. El logo primario/alternativo se
+selecciona por contraste del fondo, el favicon actua como marca compacta y la
+misma identidad configurada se consume en documentos PDF.

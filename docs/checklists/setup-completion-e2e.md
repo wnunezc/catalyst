@@ -21,7 +21,7 @@ Usar esta checklist cuando cambien:
 
 - El contrato público para saber si el framework ya quedó configurado es `ConfigManager::isConfigured(): bool`.
 - `ConfigManager::detectConfigured()` existe, pero es **privado**; no documentarlo como superficie de uso.
-- `POST /configuration/environment-setup/privileged-account` crea la cuenta privilegiada inicial.
+- `POST /configuration/environment-setup/privileged-account-account` crea la cuenta privilegiada inicial.
 - `POST /configuration/environment-setup/complete` **no** crea privileged ni consume `account_name`, `account_email` o passwords.
 - `POST /configuration/environment-setup/complete` solo finaliza si:
   - `app.json` y `db.json` existen
@@ -85,7 +85,7 @@ Criterio de éxito:
 - sigue visible la tarjeta de privileged/finalización
 - `ConfigManager::isConfigured()` seguiría resolviendo `false`
 
-## Escenario B — `POST /configuration/environment-setup/privileged-account` crea el privileged inicial
+## Escenario B — `POST /configuration/environment-setup/privileged-account-account` crea el privileged inicial
 
 Objetivo:
 - validar el contrato real de aprovisionamiento de privileged antes de finalizar
@@ -93,7 +93,7 @@ Objetivo:
 Request esperado:
 
 ```text
-POST /configuration/environment-setup/privileged-account
+POST /configuration/environment-setup/privileged-account-account
 csrf_token
 account_name
 account_email
@@ -162,7 +162,7 @@ Objetivo:
 - validar el happy path real de finalización
 
 Precondición:
-- `POST /configuration/environment-setup/privileged-account` ya creó un privileged activo
+- `POST /configuration/environment-setup/privileged-account-account` ya creó un privileged activo
 
 Happy path esperado:
 
@@ -180,7 +180,7 @@ Happy path esperado:
 Criterio de éxito:
 - `POST /configuration/environment-setup/complete` responde `200`
 - `app.project.project_config` cambia a `true`
-- el browser redirige a `/login` aproximadamente 1.5 s después
+- el browser redirige a `/login` inmediatamente después de procesar la respuesta
 - no se crea un segundo privileged; solo se completa la configuración
 
 ## Escenario E — Gate post-configuración

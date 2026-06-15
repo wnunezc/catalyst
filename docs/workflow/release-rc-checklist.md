@@ -81,7 +81,7 @@ regression, when the Docker rerun passes.
 ## Cloud Repository Configuration
 
 - `.github/workflows/quality.yml` runs Composer validation/audit, PHP lint,
-  route lint, structural lint, security check, i18n usage lint, Settings
+  route lint, structural lint, security check, i18n usage lint, Configuration
   localization smoke and `quality:check` on `main` pushes and pull requests.
 - `.github/workflows/release.yml` builds `catalyst-{version}.zip`, generates
   `sha256sum`, creates a pre-release for `v*` tags or updates assets when run

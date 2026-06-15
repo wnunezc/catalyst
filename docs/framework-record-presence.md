@@ -16,7 +16,7 @@ updates.
 | Shared template | `boot-core/template/components/_record-presence.phtml` |
 | Heartbeat and realtime projection | `public/assets/js/catalyst/presence/record-presence.js` through the central UI runtime |
 | Shared styles | `public/assets/css/catalyst/record-presence.css` |
-| Authenticated API | `Catalyst\Repository\Notification\Controllers\PresenceController` |
+| Authenticated runtime transport | `Catalyst\Repository\Notification\Controllers\PresenceController` |
 | Claim persistence and ownership | `Catalyst\Framework\Concurrency\RecordClaimManager` |
 
 ## Security

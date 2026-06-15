@@ -57,10 +57,9 @@ These virtual models are not profiles, layouts, shells, themes or alternate
 runtimes. `NavigationTreeNormalizer` accepts arbitrary depth; trees shown in
 documentation are examples, never depth limits.
 
-Canonical destinations whose physical owner is deferred remain visible as
-disabled, non-clickable nodes marked `Disconnected`. The restorable Operations
-backup and the explicit Workspaces, Operations, Users and Application debt are
-recorded in `docs/architecture/roadmap-2-module-debt.md`.
+The final navigation models contain no `Disconnected` ownership debt. Every
+canonical destination is projected from its current framework or application
+owner.
 
 ## Verification
 

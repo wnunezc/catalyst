@@ -23,6 +23,7 @@ Este archivo enruta la documentacion vigente de `catalyst` para que el contexto 
 | Routing | `docs/routing.md` |
 | Middleware | `docs/middleware.md` |
 | Modulos | `docs/modules.md` |
+| Propietarios canonicos | `docs/framework-configuration.md`, `docs/repository-workspaces.md`, `docs/repository-operations.md`, `docs/repository-api.md` |
 | Frontera app/framework | `docs/app-boundary.md` |
 | Vistas | `docs/views.md`, `docs/framework-view.md` |
 | Modals | `docs/framework-modals.md` |
@@ -39,6 +40,7 @@ Este archivo enruta la documentacion vigente de `catalyst` para que el contexto 
 | Test Features JavaScript y cobertura | `docs/ui/test-features-javascript-inventory.md` |
 | Operacion/calidad | `docs/testing.md`, `docs/quality-gate.md`, `docs/deployment.md` |
 | Setup/workflow | `docs/checklists/setup-completion-e2e.md`, `docs/workflow/*.md` |
+| Release/migration | `docs/workflow/release-v0.2.0-rc.1.md`, `docs/workflow/release-rc-checklist.md` |
 | Inventario generado | `docs/runtime-inventory.md`, `docs/runtime-module-catalog.md` |
 
 ## Si tocas X, lee Y
@@ -56,6 +58,7 @@ Este archivo enruta la documentacion vigente de `catalyst` para que el contexto 
 | modals, backdrops, dialogos, overlays | `docs/framework-modals.md`, `docs/framework-notification.md`, `docs/framework-view.md`, `docs/ui/activity-overlay.md` |
 | bootstrap, routing, kernel, entry points | `docs/architecture.md`, `docs/entry-points.md`, `docs/kernel.md`, `docs/routing.md` |
 | setup/config | `docs/checklists/setup-completion-e2e.md`, `docs/helpers-config.md` |
+| Configuration, Workspaces, Operations, API | `docs/framework-configuration.md`, `docs/repository-workspaces.md`, `docs/repository-operations.md`, `docs/repository-api.md` |
 | modulos, navegacion, permisos, assets | `docs/modules.md`, `docs/runtime-module-catalog.md`, `docs/ui/sidebar-navigation.md` |
 | organizaciones, jerarquias, unidades, clasificacion visual | `docs/framework-organization.md`, `docs/framework-auth.md` |
 | frontera app/framework, updates upstream | `docs/app-boundary.md`, `docs/workflow/reusable-base-install.md` |

@@ -10,8 +10,10 @@ surfaces; their focused coverage remains in separate specs.
 
 ## Route And View Inventory
 
-The controller exposes 85 active URLs backed by 84 unique generated preview
-documents. `/demo-ui` and `/demo-ui/alerts` both render `ui-alerts.html`.
+The module declares 40 GET/HEAD route patterns. Its parameterized chart and
+table patterns expand to an executable catalog of 85 active URLs backed by 84
+unique generated preview documents. `/demo-ui` and `/demo-ui/alerts` both
+render `ui-alerts.html`.
 
 | Family | URLs | Preview documents | Resolver |
 |---|---:|---:|---|
@@ -22,7 +24,7 @@ documents. `/demo-ui` and `/demo-ui/alerts` both render `ui-alerts.html`.
 | ECharts | 11 | 11 | `/demo-ui/charts/{family}/{page}` |
 | Static/custom tables | 2 | 2 | `/demo-ui/tables/{page}` |
 | DataTables | 15 | 15 | `/demo-ui/tables/datatables/{page}` |
-| Total | 85 | 84 | Demo UI module on the shared Catalyst document shell |
+| Total expanded catalog | 85 | 84 | Produced by 40 declared route patterns on the shared Catalyst document shell |
 
 The versioned executable catalog is
 `test/framework/Playwright/fixtures/demo-ui-catalog.cjs`. It contains every

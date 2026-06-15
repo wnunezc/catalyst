@@ -510,7 +510,7 @@ _No mutation routes declared for harness._
 - Surface: `authenticated-api`
 - Runtime enabled: `yes`
 - Slug: `notification`
-- Description: Authenticated notification APIs and websocket token issuance.
+- Description: Authenticated notification, presence and WebSocket runtime transports.
 - Plugin: `framework.core`
 - Views: `no`
 - Assets: `n/a`

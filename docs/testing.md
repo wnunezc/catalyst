@@ -44,6 +44,11 @@ routes, 49 Workspaces routes, 21 Operations routes, 6 Framework API routes,
 13 public `/api/v1/*` routes, zero legacy Repository owners, zero aliases and
 no `/operations` overview.
 
+The post-ROADMAP-7 framework registry contains `295` parallel cases, `106`
+serial cases and one sequential auth setup. The app registry contains `8`
+parallel and `3` serial cases. These counts describe prepared discovery; do not
+claim a fresh baseline without reviewing the corresponding execution result.
+
 ## PHP Unit Tests
 
 Unit tests live in:
@@ -215,6 +220,11 @@ removed without updating coverage. Every active trigger or distinct chained
 transition must have an independent E2E interaction case. Rendered capabilities
 without a visible runtime consumer must be documented and must not be opened by
 bypassing the UI.
+
+The account/app-shell modal integration contract is covered at the shared
+runtime level by `ui-runtime-dynamic.spec.cjs`: trusted inserted markup is
+rescanned idempotently, active modals are placed at body level, layering is
+checked and close cleanup leaves no modal/backdrop/body residue.
 
 ## Operational Notes
 

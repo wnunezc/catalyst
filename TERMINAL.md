@@ -1,7 +1,7 @@
 # Catalyst Framework - Terminal Commands Reference
 
 > Purpose: concise reference for the real CLI surface registered by `public/cli.php`
-> Last Updated: 2026-05-19 (RM-36/RM-39 closeout)
+> Last Updated: 2026-06-15 (v0.2.0-rc.1 documentation consolidation)
 
 ## Entry Point
 
@@ -97,16 +97,16 @@ php public/cli.php claims:list --active
 php public/cli.php help
 php public/cli.php inspect:modules
 php public/cli.php inspect:module framework.devtools
-php public/cli.php inspect:module framework.media
-php public/cli.php inspect:module framework.documents
-php public/cli.php inspect:module framework.automation
+php public/cli.php inspect:module framework.configuration
+php public/cli.php inspect:module framework.users
+php public/cli.php inspect:module framework.account
+php public/cli.php inspect:module framework.workspaces
+php public/cli.php inspect:module framework.operations
 php public/cli.php inspect:module framework.api
-php public/cli.php inspect:module framework.catalogs
 php public/cli.php inspect:lint
-php public/cli.php inspect:harness --module framework.roles --json
-php public/cli.php inspect:harness --module framework.media --json
-php public/cli.php inspect:harness --module framework.documents --json
-php public/cli.php inspect:harness --module framework.automation --json
+php public/cli.php inspect:harness --module framework.users --json
+php public/cli.php inspect:harness --module framework.workspaces --json
+php public/cli.php inspect:harness --module framework.operations --json
 php public/cli.php inspect:harness --module framework.api --json
 php public/cli.php docs:sync-runtime
 php public/cli.php claims:list --active --json
@@ -160,12 +160,15 @@ php public/cli.php schedule:run --task=framework.queue.prune-history --force
 - `make:crud` is the canonical admin CRUD scaffold over the current framework stack; it now emits the guarded module, entity, request, migration, bulk/soft-delete flow and audit-ready wiring from `public/cli.php`.
 - `make:crud` now also supports `--optimistic-locking=1`, which wires `HasOptimisticLockingTrait`, a `lock_version` column and hidden form state into generated admin modules.
 - The admin authorization baseline is now resource-driven: generated CRUD requests/controllers and framework admin modules should prefer `authorizeResource(...)` / `AbilitySubject` over ad-hoc permission string checks.
-- The audit baseline is now operational, not just metadata fields: inspect `/audit-log` for runtime traces of ORM/repository changes and framework events after DB-backed actions run.
+- The audit baseline is now operational, not just metadata fields: inspect `/operations/audit-log` for runtime traces of ORM/repository changes and framework events after DB-backed actions run.
 - `claims:list`, `claims:release` and `concurrency:smoke` are the canonical PA-01 operational probes; do not invent ad-hoc claim tables or per-module lock metadata outside this surface.
 - `timeline:smoke` and `catalogs:smoke` are the canonical PA-09/PA-11 verification probes; if the host cannot resolve `WSDD-MySql-Server`, run them inside `WSDD-Web-Server-PHP8.4`.
 - `PA-01` is now adopted in the live framework admin runtime: Documents, Automation, Media and Roles/Permissions must extend the canonical claim/token + `lock_version` flow instead of introducing local concurrency semantics.
-- RM-29/RM-30 do not add a dedicated CLI command: the canonical runtime surfaces are `/media-fields` and `/media-library`, while CLI verification should go through `inspect:module framework.media`, `inspect:harness --module framework.media`, `inspect:lint` and `docs:sync-runtime`.
-- RM-31/RM-35 tampoco agregan un comando CLI exclusivo por subsistema: las superficies canonicas son `/document-templates`, `/automation-rules`, `/operations/api-management` y `/api/v1/*`, mientras que la verificacion CLI debe apoyarse en `inspect:module`, `inspect:harness`, `inspect:lint`, `docs:sync-runtime`, `queue:*` y `schedule:*`.
+- Media fields, media library, catalogs, documents, module designer and locale
+  tools are Workspaces capabilities. CLI verification should go through
+  `inspect:module framework.workspaces`, `inspect:harness --module
+  framework.workspaces`, `inspect:lint` and `docs:sync-runtime`.
+- RM-31/RM-35 tampoco agregan un comando CLI exclusivo por subsistema: las superficies canonicas son `/workspaces/document-templates`, `/operations/automation-rules`, `/operations/api-management` y `/api/v1/*`, mientras que la verificacion CLI debe apoyarse en `inspect:module`, `inspect:harness`, `inspect:lint`, `docs:sync-runtime`, `queue:*` y `schedule:*`.
 - RM-36/RM-39 centralizan su gobierno operativo en `/operations`: feature flags, plugins, deployments y tenancy no deben abrirse como paneles paralelos en `/setup` ni en DevTools.
 - `status` ahora expone un bloque `Platform` con feature flags, plugins, perfiles de deploy y baseline de tenancy; usarlo como snapshot rapido antes de ejecutar cambios operativos.
 - `feature-flags:set` y `plugin:toggle` son mutaciones reales y auditables; los flags/runtime read-only deben rechazarse en CLI y UI en lugar de inventar bypasses.

@@ -60,7 +60,8 @@ patterns and should not be used for new headers.
 ## Buttons
 
 Surface actions must render as `<button>` controls. Navigation buttons
-use `data-catalyst-href` and are handled by the global `ui-actions.js` module.
+use `data-catalyst-href` and are handled by the global
+`core/declarative-actions.js` capability mounted by the central runtime.
 
 Allowed examples:
 

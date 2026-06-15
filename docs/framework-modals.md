@@ -31,6 +31,18 @@ destroys owned instances before trusted DOM replacement, then rescans the new
 content. Demo UI modules must not call
 `initBootstrapComponents()` or another UI runtime themselves.
 
+The shared document loads the central UI runtime for every complete HTML
+surface, including framework Account surfaces and application surfaces that use
+the canonical document. A module must not call `initShellRuntime()` or create a
+second runtime governor.
+
+Derived modules that render declarative modal markup into a runtime-managed
+document rely on the central runtime scan. After trusted dynamic insertion they
+must dispatch `catalyst:dom:updated` with the inserted root so the runtime can
+rescan idempotently. Direct `initBootstrapComponents()` calls are reserved for
+standalone integrations that intentionally do not use the canonical Catalyst
+document/runtime.
+
 Third-party Catalyst modules must follow these rules:
 
 - Use Bootstrap modal markup with a stable `id`.
@@ -42,6 +54,8 @@ Third-party Catalyst modules must follow these rules:
   overlays.
 - On a runtime-owned surface, use declarative Bootstrap markup or
   `Catalyst.modal`; do not start another component initializer.
+- Do not call `initBootstrapComponents()` from a surface or module work asset
+  already rendered inside the canonical document.
 - Runtime-owned programmatic triggers use `data-catalyst-modal-action`; surface
   scripts must not instantiate, import or invoke a modal manager.
 - Dynamic modal HTML must be trusted HTML produced by Catalyst controllers and
@@ -82,6 +96,14 @@ Current exhaustive active-surface coverage:
   modals.
 - Demo UI inventory plus every direct modal trigger, chained modal transition
   and varying-content trigger.
+- Dynamic runtime insertion, repeated rescans, body-level modal placement,
+  layering, visible close/Escape behavior and residue cleanup through
+  `ui-runtime-dynamic.spec.cjs` and the shared modal helper.
+
+This resolves the integration ambiguity documented in GitHub issue #13. The
+former `boot-core/template/layouts/account.phtml` premise no longer exists:
+Account and derived canonical-document consumers use the central runtime;
+standalone integrations own their explicit Bootstrap initializer.
 
 The suite guarantees the active runtime inventory it asserts. A new modal
 trigger added to one of these surfaces must update the corresponding inventory
@@ -93,7 +115,7 @@ the runtime inventory without test coverage.
 Every PageHeader producer outside Demo UI supplies surface-specific help
 content through its description. Generated
 `DemoUi/form-layout.html` modal markup has no active route/controller mapping.
-Settings `modal-cache` is rendered but intentionally has no visible trigger
+Configuration `modal-cache` is rendered but intentionally has no visible trigger
 outside production; the development suite asserts that inactive contract
 instead of opening it by bypassing the UI.
 

@@ -7,8 +7,11 @@ shared Catalyst document and shell.
 
 ## Common Layout Inventory
 
-The authoritative common-layout inventory contains `117` active HTML URLs
-projected through `50` page templates.
+The ROADMAP-5 common-layout inventory contains `117` active HTML URLs projected
+through `50` page templates, including the 40 expanded Demo UI URLs counted by
+that audit. This is narrower than the ROADMAP-7 inventory of every complete
+HTML surface outside `/demo-ui*`; the two inventories must not be added or
+treated as equivalent.
 
 | Owner | HTML URLs | Page templates | Treatment |
 |---|---:|---:|---|

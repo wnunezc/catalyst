@@ -68,8 +68,8 @@ ancestros.
 
 Workspaces y Operations tienen propietarios físicos activos para todas sus
 superficies incluidas. Sus nodos son clicables y no usan badges
-`Disconnected`. La deuda transversal pendiente pertenece a transportes y
-companions, no a nodos del sidebar.
+`Disconnected`. La migracion final no conserva deuda de propietarios,
+transportes o companions en el sidebar.
 
 ## Limite entre navegacion principal y navegacion secundaria
 
@@ -93,7 +93,7 @@ solo aporta catálogo y selección. Las demás superficies usan los proveedores
 privilegiado o Application del documento común, sin perfiles, wrappers,
 layouts, shells, temas ni runtimes alternativos.
 
-Los grupos privilegiados deben respetar la taxonomia curada y usar metadata declarativa de modulo (`context`, `group`, `group_label`, `group_order`, `order`, `matches`, `icon`, `visibility`) para descubrir superficies faltantes, permisos, iconos y active state. No se deben duplicar rutas en `_demo-product-shell.php`, pero tampoco se debe permitir que manifests incompletos destruyan la organizacion visual del menu.
+Los grupos privilegiados deben respetar la taxonomia curada y usar metadata declarativa de modulo (`context`, `group`, `group_label`, `group_order`, `order`, `matches`, `icon`, `visibility`) para descubrir superficies, permisos, iconos y active state. No se deben construir árboles paralelos fuera de los proveedores y del `NavigationRegistry`, pero tampoco se debe permitir que manifests incompletos destruyan la organizacion visual del menu.
 
 Para evitar duplicidad, el contexto activo no se renderiza otra vez como link en el sidebar. La tarjeta de contexto y el titulo del bloque indican el dominio actual; el bloque `Otras áreas` contiene solo saltos a dominios inactivos.
 
@@ -115,8 +115,8 @@ Las rutas auxiliares, callbacks, aliases legacy y smoke helpers no deben convert
 
 - `/users/register` vive como hija de `Usuarios`;
 - `/test-features/layout-test` se mantiene como diagnóstico DevTools sin entrada primaria;
-- `/test-features/*` conserva su contrato existente y no participa en esta
-  migración.
+- `/test-features/*` consume el documento, shell y runtime comunes, pero solo
+  sus entradas principales pertenecen al sidebar.
 
 ## Recomendaciones para futuros modulos
 
@@ -131,4 +131,3 @@ Las rutas auxiliares, callbacks, aliases legacy y smoke helpers no deben convert
 
 - Si se agregan demasiados grupos o demasiadas hijas por grupo, el beneficio visual puede degradarse y el sidebar volver a sentirse denso.
 - La taxonomia del menu depende de criterios del scope; si cambian contextos o patrones de ruta, la agrupacion debe revisarse en conjunto.
-- La evidencia historica exacta de cuando aparecio cada grupo en v1 o v2 queda pendiente de verificacion sin los ZIP intermedios.

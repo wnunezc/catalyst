@@ -10,8 +10,8 @@ Document the current Catalyst appearance runtime for shell theme policy, neutral
 |---|---|
 | Appearance normalization and persistence | `Catalyst\Framework\Appearance\PlatformAppearanceManager` |
 | Appearance privileged route | `Catalyst\Repository\Configuration\Controllers\AppearanceController` |
-| Theme frontend runtime | `public/assets/js/catalyst/modules/theme-toggle.js` |
-| Shell customizer runtime | `public/assets/js/catalyst/modules/shell-theme-customizer.js` |
+| Early appearance bootstrap | `public/assets/js/catalyst/appearance-bootstrap.js` |
+| Shell customizer runtime | `public/assets/js/catalyst/shell/theme-customizer.js` through the central UI runtime |
 | Response skins CSS | `public/assets/css/catalyst/response-skins.css` |
 
 ## Current Behavior
@@ -21,6 +21,10 @@ The canonical privileged surface is `/configuration/platform-appearance`. Config
 The document loads framework base and generic UI CSS first, module CSS next,
 and global theme CSS last. Themes override the shared visual contract and do
 not depend on Demo UI scopes or surface-specific wrappers.
+
+Branding uploads are normalized and stored under `public/uploads/branding`.
+The primary/alternate logos, compact favicon mark and configured PDF identity
+are consumed globally; they do not create a theme, layout or surface profile.
 
 ## Operational Notes
 

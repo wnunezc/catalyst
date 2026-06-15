@@ -11,6 +11,7 @@ Track progressive Playwright coverage without bulk-migrating legacy specs.
 | Settings setup | `/configuration/environment-setup` | Inventory contract plus every visible settings modal trigger | `settings-modals.spec.cjs` |
 | DevTools | `/test-features` | confirm, alert, dynamic HTML, dynamic form, API-triggered modal, wait modal | `devtools-modals.spec.cjs` |
 | Demo UI modal reference | `/demo-ui/modals` | Inventory contract, every direct trigger, chained transitions and varying-content triggers | `demo-ui-modals.spec.cjs` |
+| Canonical account/app integration contract | Runtime-managed inserted DOM | Central runtime rescan, idempotent activation, body-level layering and residue cleanup | `ui-runtime-dynamic.spec.cjs` |
 
 ## Test Features Inventory
 
@@ -48,7 +49,7 @@ shell. The following focused specs are prepared for individual execution:
 
 | Surface | Representative routes | Coverage |
 |---|---|---|
-| Application shell | Workspaces, Operations, Roles, Settings, DevTools | `shell-layout.spec.cjs` |
+| Application shell | Workspaces, Operations, Users, Configuration, DevTools | `shell-layout.spec.cjs` |
 | Canonical owners | Six Workspaces and five Operations representative routes | `canonical-owners.spec.cjs` |
 | Auth | Login, forgot password, email verification | `surface-auth-layout.spec.cjs` |
 | Auth session lifecycle | Protected redirect, credential login, MFA challenge, session rotation, CSRF-protected logout, remember-token removal and stale-session rejection | `auth-session-lifecycle.spec.cjs` |
@@ -90,8 +91,9 @@ the absence of the removed `shell-dropdowns.js` governor. They must be executed
 through the workspace runner with `--suite framework`, one surface spec at a
 time.
 
-Account, Dashboard, Home, Landing and Store are application-owned consumers.
-Their functional specs live under `test/app/Playwright` and use `--suite app`.
+Dashboard, Home, Landing and Store are application-owned consumers. Account is
+framework-owned; the app suite references representative Account routes only as
+canonical-document integration evidence for derived consumers.
 
 `datagrid-runtime.spec.cjs` additionally verifies the neutral DataGrid template,
 shared stylesheet, runtime-owned print action, selection state and bulk-action

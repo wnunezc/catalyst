@@ -21,7 +21,8 @@ the same canonical shell.
 
 ## Entry point configuration
 
-The privileged role controls the initial behavior from Framework Settings:
+The privileged role controls the initial behavior from Framework
+Configuration:
 
 - **Primary Entry Point** decides what `/` does.
 - **Secondary Entry Point** is used when the primary entry point requires a

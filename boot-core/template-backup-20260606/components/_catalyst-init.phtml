@@ -1,8 +1,0 @@
-<script type="application/json" id="catalyst-runtime-config" nonce="{{ csp_nonce }}">{{{ catalyst_runtime_config_json }}}</script>
-
-{{#if has_work_js}}
-{{#unless suppress_work_assets}}
-<script type="module" src="/assets/js/work/{{ work_asset_slug }}/script.js?v={{ work_js_asset_version }}"></script>
-{{/unless}}
-{{/if}}
-{{! Work CSS is injected by layout/style_links to keep CSS in <head> and preserve CSP/order. }}

@@ -9,7 +9,8 @@
 - **Name**: `catalyst/framework`
 - **Type**: project
 - **License**: proprietary
-- **Version**: 1.0.0-dev
+- **Distribution version**: defined by `catalyst.json`; Composer does not
+  declare a package version because Catalyst is distributed as a project base.
 
 ### PHP Requirements
 - **Minimum PHP Version**: 8.4

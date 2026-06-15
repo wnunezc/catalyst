@@ -52,11 +52,8 @@ $pairs = @(
     @{ Source = 'Repository/App/Surface/Dashboard/front/style.css'; Target = 'public/assets/css/work/dashboard/style.css' },
     @{ Source = 'Repository/Framework/Configuration/front/style.css'; Target = 'public/assets/css/work/configuration/style.css' },
     @{ Source = 'Repository/Framework/Operations/front/style.css'; Target = 'public/assets/css/work/operations/style.css' },
-    @{ Source = 'Repository/Framework/Roles/front/style.css'; Target = 'public/assets/css/work/roles/style.css' },
-    @{ Source = 'Repository/Framework/Automation/front/style.css'; Target = 'public/assets/css/work/automation/style.css' },
-    @{ Source = 'Repository/Framework/Catalogs/front/style.css'; Target = 'public/assets/css/work/catalogs/style.css' },
-    @{ Source = 'Repository/Framework/Documents/front/style.css'; Target = 'public/assets/css/work/documents/style.css' },
-    @{ Source = 'Repository/Framework/Media/front/style.css'; Target = 'public/assets/css/work/media/style.css' },
+    @{ Source = 'Repository/Framework/Users/front/style.css'; Target = 'public/assets/css/work/users/style.css' },
+    @{ Source = 'Repository/Framework/Workspaces/front/style.css'; Target = 'public/assets/css/work/workspaces/style.css' },
     @{ Source = 'Repository/Framework/DevTools/front/style.css'; Target = 'public/assets/css/work/devtools/style.css' }
 )
 
@@ -84,10 +81,10 @@ $pairs | ForEach-Object {
     '/configuration/plugins',
     '/configuration/platform-appearance',
     '/operations/api-management',
-    '/audit-log',
-    '/roles',
-    '/permissions',
-    '/catalogs'
+    '/operations/audit-log',
+    '/users/roles',
+    '/users/permissions',
+    '/workspaces/catalogs'
 )
 ```
 

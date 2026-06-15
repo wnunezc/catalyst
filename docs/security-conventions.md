@@ -22,7 +22,12 @@ Templates should escape output with `e($value)` unless a value is intentionally 
 
 Route access is enforced by middleware and verified by runtime lint. API-token routes, authenticated routes, setup routes and public routes must remain distinguishable in route docs and runtime catalog output.
 
-The 13 public `/api/v1/*` routes use `ApiTokenMiddleware`; session-authenticated `/api/notifications*`, `/api/presence*`, `/api/ws-token` and App `/api/public/*` companions are internal transports, not public APIs. Deployments must hide process errors and local paths. Tenancy diagnostics must omit raw configuration, hosts, DSN, credentials and secrets.
+The 13 public `/api/v1/*` routes use `ApiTokenMiddleware`; session-authenticated
+`/runtime/*` routes are internal transports, not public APIs. Removed
+`/api/notifications*`, `/api/presence*`, `/api/ws-token` and `/api/public/*`
+paths must not be reintroduced as aliases. Deployments must hide process errors
+and local paths. Tenancy diagnostics must omit raw configuration, hosts, DSN,
+credentials and secrets.
 
 ## Operational Notes
 

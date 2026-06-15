@@ -50,16 +50,22 @@ The ROADMAP-3 public API contract contains exactly these 13 bearer-token routes:
 
 These routes preserve `ApiTokenMiddleware`, abilities, throttling and payload/error contracts.
 
-## Internal Transport Debt
+## Internal Runtime Transports
 
-The following routes are not public APIs and remain pending normalization:
+Session-authenticated shell transports are not public APIs. Their canonical
+family is `/runtime/*`:
 
-| Kind | Current routes | Future family |
-|---|---|---|
-| Shell/runtime transport | `/api/notifications`, `/api/notifications/unread-count`, `/api/notifications/read-all`, `/api/notifications/{id}/read`, `/api/presence/{resourceKey}/{recordId}/heartbeat`, `/api/ws-token` | `/runtime/*` |
-| App companions | `/api/public/home`, `/api/public/landing`, `/api/public/store`, `/api/public/dashboard` | `/surfaces/{surface}/data` |
+- `/runtime/notifications`
+- `/runtime/notifications/unread-count`
+- `/runtime/notifications/read-all`
+- `/runtime/notifications/{id}/read`
+- `/runtime/presence/{resourceKey}/{recordId}/heartbeat`
+- `/runtime/websocket/token`
+- `/runtime/flash/dismiss`
 
-No compatibility aliases or partial future destinations are active.
+The former `/api/notifications*`, `/api/presence*`, `/api/ws-token` and
+`/api/public/*` routes are removed. No compatibility aliases or app companion
+replacements are active.
 
 ## Operational Notes
 

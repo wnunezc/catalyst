@@ -23,7 +23,9 @@ All HTML routes use `/operations/*`. `/operations` is not an overview route. The
 - Deployments validates a configured profile allowlist, preserves mutation throttling, supports artifact-free dry-run and hides process errors and local paths from HTTP output.
 - Tenancy is read-only and projects only safe diagnostic fields; it does not expose hosts, DSN, credentials, secrets or raw configuration.
 - The three Operations-owned Automation `/api/v1/*` routes preserve `ApiTokenMiddleware`, abilities, throttling and response/error contracts.
-- Internal notification, presence, WebSocket and App companion transports remain separate technical debt and are not public APIs.
+- Notification, presence, WebSocket and flash transports are internal
+  `/runtime/*` contracts and are not public APIs. The former App companions
+  `/api/public/*` were removed without replacements or aliases.
 
 ## Verification
 

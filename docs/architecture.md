@@ -18,9 +18,13 @@ Describe the current Catalyst architecture and act as the central index for the 
 
 ## Current Behavior
 
-Catalyst is a PHP 8.4 MVC framework with a small kernel, explicit HTTP/CLI entry points, framework-owned reusable modules under `Repository/Framework`, app-owned surfaces under `Repository/App/Surface`, and runtime-generated documentation inventories. The current module catalog reports 13 modules with structural lint OK.
+Catalyst is a PHP 8.4 MVC framework with a small kernel, explicit HTTP/CLI entry points, framework-owned reusable modules under `Repository/Framework`, app-owned surfaces under `Repository/App/Surface`, and runtime-generated documentation inventories. The current module catalog reports 14 modules with structural lint OK.
 
-Workspaces and Operations are canonical aggregate owners for privileged surfaces. Workspaces owns 49 routes and six connected surfaces; Operations owns 21 routes and five connected surfaces. The independent Framework API owner holds six transversal routes. Together they preserve the 76 included routes and 13 public APIs under `/api/v1/*`.
+Configuration, Users, Account, Workspaces and Operations are canonical
+aggregate owners. Workspaces owns 49 routes, Operations owns 21 routes and the
+independent Framework API owner holds six transversal routes. Together
+Workspaces, Operations and API preserve the 76 ROADMAP-3 routes and 13 public
+APIs under `/api/v1/*`.
 
 The architecture uses separated owners instead of single large classes: routes are registered, compiled, collected and dispatched by different route classes; modules are declared, discovered, inspected and linted by different module classes; views render templates while trusted HTML, inline JSON and token rendering are separate security boundaries.
 
@@ -97,12 +101,14 @@ parallel governor.
 | `docs/framework-datagrid.md` | Catalyst Framework DataGrid |
 | `docs/framework-enums.md` | Catalyst\Framework\Enums |
 | `docs/framework-event.md` | Catalyst\Framework\Event |
+| `docs/framework-form-builder.md` | Catalyst Framework FormBuilder |
 | `docs/framework-geo.md` | Catalyst\Framework\Geo |
 | `docs/framework-mail.md` | Catalyst\Framework\Mail |
 | `docs/framework-modals.md` | Catalyst Framework Modals |
 | `docs/framework-notification.md` | Catalyst\Framework\Notification |
 | `docs/framework-organization.md` | Catalyst Framework Organization |
 | `docs/framework-queue.md` | Catalyst\Framework\Queue |
+| `docs/framework-record-presence.md` | Catalyst Framework RecordPresence |
 | `docs/framework-reporting.md` | Catalyst Framework Reporting |
 | `docs/framework-schedule.md` | Catalyst\Framework\Schedule |
 | `docs/framework-scaffolding.md` | Catalyst Framework Scaffolding |
@@ -154,8 +160,11 @@ parallel governor.
 | `docs/views.md` | Views Index |
 | `docs/workflow/first-run.md` | First Run Workflow |
 | `docs/workflow/patch-intake.md` | Patch Intake Workflow |
+| `docs/workflow/release-v0.1.0-rc.2.md` | Catalyst v0.1.0-rc.2 Upgrade Notes |
 | `docs/workflow/release-v0.1.0-rc.6.md` | Catalyst v0.1.0-rc.6 Upgrade Notes |
 | `docs/workflow/release-v0.1.0-rc.7.md` | Catalyst v0.1.0-rc.7 Upgrade Notes |
+| `docs/workflow/release-v0.1.0-rc.8.md` | Catalyst v0.1.0-rc.8 Upgrade Notes |
+| `docs/workflow/release-v0.2.0-rc.1.md` | Catalyst v0.2.0-rc.1 migration and release notes |
 | `docs/workflow/release-v0.1.0-rc.5.md` | Catalyst v0.1.0-rc.5 Upgrade Notes |
 | `docs/workflow/release-v0.1.0-rc.4.md` | Catalyst v0.1.0-rc.4 Upgrade Notes |
 | `docs/workflow/release-v0.1.0-rc.3.md` | Catalyst v0.1.0-rc.3 Upgrade Notes |
