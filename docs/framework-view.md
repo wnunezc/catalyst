@@ -32,7 +32,10 @@ therefore receives the complete shared shell without declaring a profile.
 Exceptional surfaces may explicitly set `show_topbar`, `show_sidebar`,
 `show_status_bar`, `show_theme_customizer`, shell classes and navigation data.
 Those values control capabilities inside the same document; they do not select
-another renderer or template tree.
+another renderer or template tree. A blank guest state that hides topbar,
+sidebar and status bar should keep `shell_class` on the shared `wrapper` but
+avoid `content-page`, because `content-page` is the internal workspace content
+slot and reserves the sidenav geometry.
 
 `ViewTokenRenderer` is used for declarative `.phtml` templates and constrained
 fragments. `TrustedHtml`, `InlineJson` and the allowlist sanitizer are security

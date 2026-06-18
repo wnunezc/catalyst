@@ -1,6 +1,6 @@
 const { test, expect } = require('../helpers/playwright.cjs');
 
-test.describe('@surface-error Error surface layout', () => {
+test.describe('@surface-error @surface-error-layout Error surface layout', () => {
     test('404 renders through the canonical document and runtime', async ({ page }) => {
         const response = await page.goto('/missing-catalyst-surface', { waitUntil: 'domcontentloaded' });
 

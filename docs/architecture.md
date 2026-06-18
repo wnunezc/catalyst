@@ -36,9 +36,11 @@ surface-specific document wrappers.
 
 The document composes `_html-open.phtml`, `_head.phtml`, `shell.phtml` and
 `_body-scripts.phtml`. Topbar, sidebar, status bar and the theme customizer are
-capabilities of the shared shell. Exceptional surfaces such as Auth, Public,
-Account guest and Error control visibility and CSS classes through explicit
-scope values; they do not select another layout.
+capabilities of the shared shell. Exceptional surfaces such as Auth, Public and Error control visibility
+and CSS classes through explicit scope values; they do not select another
+layout. Guest application states that need no chrome must reuse the shared
+`wrapper` / `content-page` shell with topbar, sidebar and status bar disabled;
+they must not introduce surface-specific guest shell classes.
 
 Catalyst uses one frontend governor. `_body-scripts.phtml` loads
 `runtime/ui-runtime.js` directly at the end of the body. The runtime owns

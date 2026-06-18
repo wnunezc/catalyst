@@ -110,8 +110,10 @@ class CsrfMiddleware extends CoreMiddleware
                 // Return the appropriate error response based on a request type
                 if ($this->expectsJson($request) || $isAjax) {
                     return new JsonResponse([
-                        'success'   => false,
-                        'message'   => 'Your session expired. Please refresh the page and try again.',
+                        'success' => false,
+                        'code' => 'form_state_expired',
+                        'message' => 'This form is no longer valid due to inactivity. Please refresh the page before continuing. Unsaved changes may be lost.',
+                        'refresh_required' => true,
                         'new_token' => CsrfProtection::getInstance()->generateToken(),
                     // Use a standard forbidden status. In this stack, non-standard 419
                     // responses can be surfaced by the web server as 500.
@@ -120,7 +122,7 @@ class CsrfMiddleware extends CoreMiddleware
 
                 // For regular form submissions: flash a friendly message and redirect back
                 FlashMessage::getInstance()->error(
-                    'Your session expired. The page has been refreshed — please try again.'
+                    'This form is no longer valid due to inactivity. Please refresh the page before continuing. Unsaved changes may be lost.'
                 );
                 $referer = $request->getHeaders('Referer') ?? $request->getHeaders('referer') ?? '/';
                 return new RedirectResponse((string)$referer);

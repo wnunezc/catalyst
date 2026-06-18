@@ -1,5 +1,13 @@
 # Catalyst\Framework\Controllers
 
+Forms marked with `data-catalyst="form"` are JSON consumers. Their controller
+actions must return `JsonResponse` envelopes directly or use the existing
+post-action redirect helpers, which convert redirects into JSON when
+`expectsJson()` is true. If such a form receives HTML or a followed redirect,
+the shared HTTP runtime reports a Catalyst form contract mismatch instead of a
+generic response snippet. Traditional forms without the attribute continue to
+use normal HTML redirects.
+
 ## Purpose
 
 Document controller and flash response primitives used by routed modules.

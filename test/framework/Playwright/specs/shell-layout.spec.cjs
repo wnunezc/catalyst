@@ -94,3 +94,90 @@ test.describe('@shell-layout Application shell layout', () => {
         });
     }
 });
+
+test.describe('@shell-mobile-sidebar Mobile shell sidebar', () => {
+    test('tablet runtime closes the sidebar and supports toggle, swipe and backdrop dismissal', async ({ page }) => {
+        await page.setViewportSize({ width: 800, height: 1280 });
+        await openSurface(page, expect, '/configuration/application-health', { requireTriggers: false });
+        await expect(page.locator('body.catalyst-shell-body')).toHaveAttribute('data-catalyst-ui-runtime', 'ready');
+        await expect(page.locator('.app-topbar')).toBeVisible();
+        await expect(page.locator('#catalyst-status-bar')).toBeVisible();
+
+        const html = page.locator('html');
+        const sidebar = page.locator('.sidenav-menu');
+        const toggle = page.locator('[data-shell-sidebar-toggle]:visible');
+        const backdrop = page.locator('.catalyst-shell-sidebar-backdrop');
+
+        await expect(html).not.toHaveClass(/sidebar-enable/);
+        await expect(sidebar).toBeHidden();
+
+        await toggle.click();
+        await expect(html).toHaveClass(/sidebar-enable/);
+        await expect(sidebar).toBeVisible();
+        await expect(backdrop).toBeVisible();
+
+        await backdrop.click({ position: { x: 10, y: 10 } });
+        await expect(html).not.toHaveClass(/sidebar-enable/);
+        await expect(sidebar).toBeHidden();
+
+        await page.dispatchEvent('body', 'pointerdown', {
+            pointerId: 1,
+            pointerType: 'touch',
+            clientX: 4,
+            clientY: 500,
+            isPrimary: true,
+        });
+        await page.dispatchEvent('body', 'pointerup', {
+            pointerId: 1,
+            pointerType: 'touch',
+            clientX: 180,
+            clientY: 505,
+            isPrimary: true,
+        });
+        await expect(html).toHaveClass(/sidebar-enable/);
+
+        await page.dispatchEvent('body', 'pointerdown', {
+            pointerId: 2,
+            pointerType: 'touch',
+            clientX: 250,
+            clientY: 500,
+            isPrimary: true,
+        });
+        await page.dispatchEvent('body', 'pointerup', {
+            pointerId: 2,
+            pointerType: 'touch',
+            clientX: 40,
+            clientY: 505,
+            isPrimary: true,
+        });
+        await expect(html).not.toHaveClass(/sidebar-enable/);
+    });
+
+    test('desktop runtime keeps the sidebar fixed and visible', async ({ page }) => {
+        await page.setViewportSize({ width: 1440, height: 900 });
+        await openShellSurface(page, '/configuration/application-health');
+
+        await expect(page.locator('html')).not.toHaveClass(/sidebar-enable/);
+        await expect(page.locator('.sidenav-menu')).toBeVisible();
+    });
+});
+
+test.describe('@roles-edit-error-regression Roles edit error handling', () => {
+    test('first available role edit surface does not fall into the bootstrap error fallback', async ({ page }) => {
+        await openShellSurface(page, '/users/roles');
+
+        const editLink = page.locator('a[href^="/users/roles/"][href$="/edit"]').first();
+
+        if (await editLink.count() === 0) {
+            test.skip(true, 'No role edit link is available in the current fixture state.');
+            return;
+        }
+
+        await editLink.click();
+        await page.waitForLoadState('domcontentloaded');
+
+        await expect(page.locator('body')).not.toContainText('Error template is not found for: handler_error');
+        await expect(page.locator('body')).not.toContainText('Allowed memory size');
+        await expect(page.locator('form[action^="/users/roles/"]')).toBeVisible();
+    });
+});

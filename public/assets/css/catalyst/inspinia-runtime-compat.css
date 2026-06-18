@@ -30,6 +30,31 @@ body.catalyst-shell-body .sidenav-menu .scrollbar {
     min-height: 0;
 }
 
+.catalyst-shell-sidebar-backdrop {
+    background: rgba(0, 0, 0, 0.45);
+    border: 0;
+    display: none;
+    inset: 0 0 32px;
+    padding: 0;
+    position: fixed;
+    z-index: 1050;
+}
+
+.catalyst-shell-sidebar-backdrop.show {
+    display: block;
+}
+
+@media (max-width: 991.98px) {
+    body.catalyst-shell-body .app-topbar,
+    body.catalyst-shell-body .content-page {
+        margin-inline-start: 0;
+    }
+
+    body.catalyst-shell-body.catalyst-shell-no-scroll .content-page {
+        pointer-events: none;
+    }
+}
+
 body.catalyst-shell-body .content-page,
 html[data-sidenav-size=condensed] body.catalyst-shell-body .content-page {
     height: calc(100vh - var(--theme-topbar-height) - 32px);

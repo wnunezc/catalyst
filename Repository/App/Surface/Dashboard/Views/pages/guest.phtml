@@ -1,24 +1,26 @@
-<main class="container py-5" data-account-guest="true">
-    <div class="row justify-content-center">
-    <div class="col-12 col-lg-5">
-    <section class="card">
-        <div class="card-body d-grid gap-3">
-        <span class="account-eyebrow">{{ t:dashboard.guest.eyebrow }}</span>
-        <h1>{{ t:dashboard.guest.title }}</h1>
-        <p>{{ t:dashboard.guest.lead }}</p>
-        <div class="d-flex flex-wrap gap-2">
-            <a href="/login" class="btn btn-primary">
-                <i class="ti ti-login-2 me-1"></i>
-                {{ t:dashboard.guest.login }}
-            </a>
-            <a href="/register" class="btn btn-outline-secondary">
-                <i class="ti ti-user-plus me-1"></i>
-                {{ t:dashboard.guest.register }}
-            </a>
+<section class="min-vh-100 d-flex align-items-center justify-content-center py-5" data-account-guest="true" aria-labelledby="account-guest-title">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-5">
+                <section class="card shadow-sm">
+                    <div class="card-body d-grid gap-3">
+                        <span class="account-eyebrow">{{ t:dashboard.guest.eyebrow }}</span>
+                        <h1 id="account-guest-title" class="mb-0">{{ t:dashboard.guest.title }}</h1>
+                        <p class="mb-0">{{ t:dashboard.guest.lead }}</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a href="/login" class="btn btn-primary">
+                                <i class="ti ti-login-2 me-1" aria-hidden="true"></i>
+                                {{ t:dashboard.guest.login }}
+                            </a>
+                            <a href="/register" class="btn btn-outline-secondary">
+                                <i class="ti ti-user-plus me-1" aria-hidden="true"></i>
+                                {{ t:dashboard.guest.register }}
+                            </a>
+                        </div>
+                        <p class="small text-muted mb-0">{{ t:dashboard.guest.hint }}</p>
+                    </div>
+                </section>
+            </div>
         </div>
-        <p class="small text-muted mb-0">{{ t:dashboard.guest.hint }}</p>
-        </div>
-    </section>
     </div>
-    </div>
-</main>
+</section>

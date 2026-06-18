@@ -94,22 +94,108 @@ export function applyShellMenuState(options = {}) {
 export function initShellSidebar(options = {}) {
     const html = document.documentElement;
     const body = document.body;
+    const mobileMedia = window.matchMedia('(max-width: 991.98px)');
     const noScrollClass = typeof options.noScrollClass === 'string' && options.noScrollClass !== ''
         ? options.noScrollClass
         : 'catalyst-shell-no-scroll';
+    const configuredSize = html.getAttribute('data-sidenav-size') || 'default';
+    let touchStart = null;
 
-    const keepSidebarFixed = () => {
-        html.setAttribute('data-sidenav-size', 'default');
-        html.classList.remove('sidebar-enable');
-        body.classList.remove(noScrollClass);
+    const backdrop = document.createElement('button');
+    backdrop.type = 'button';
+    backdrop.className = 'catalyst-shell-sidebar-backdrop';
+    backdrop.setAttribute('aria-label', 'Close navigation');
+    body.appendChild(backdrop);
 
-        try {
-            window.sessionStorage.removeItem('catalyst-shell-sidebar-size');
-        } catch (_) {}
+    const updateToggleState = (expanded) => {
+        document.querySelectorAll('[data-shell-sidebar-toggle]').forEach((toggle) => {
+            toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+        });
     };
 
-    keepSidebarFixed();
-    window.addEventListener('resize', keepSidebarFixed, { passive: true });
+    const setOpen = (open) => {
+        const expanded = mobileMedia.matches && open;
+        html.classList.toggle('sidebar-enable', expanded);
+        body.classList.toggle(noScrollClass, expanded);
+        backdrop.classList.toggle('show', expanded);
+        updateToggleState(expanded);
+    };
+
+    const applyResponsiveState = (showDuringBoot = false) => {
+        if (mobileMedia.matches) {
+            html.setAttribute('data-sidenav-size', 'offcanvas');
+            setOpen(showDuringBoot);
+            return;
+        }
+
+        html.setAttribute('data-sidenav-size', configuredSize === 'offcanvas' ? 'default' : configuredSize);
+        setOpen(false);
+    };
+
+    document.querySelectorAll('[data-shell-sidebar-toggle]').forEach((toggle) => {
+        if (!(toggle instanceof HTMLElement) || toggle.dataset.shellSidebarBound === 'true') {
+            return;
+        }
+
+        toggle.dataset.shellSidebarBound = 'true';
+        toggle.addEventListener('click', (event) => {
+            if (!mobileMedia.matches) {
+                return;
+            }
+
+            event.preventDefault();
+            setOpen(!html.classList.contains('sidebar-enable'));
+        });
+    });
+
+    backdrop.addEventListener('click', () => setOpen(false));
+
+    body.addEventListener('pointerdown', (event) => {
+        if (!mobileMedia.matches || event.pointerType !== 'touch') {
+            return;
+        }
+
+        touchStart = { x: event.clientX, y: event.clientY };
+    }, { passive: true });
+
+    body.addEventListener('pointerup', (event) => {
+        if (!mobileMedia.matches || event.pointerType !== 'touch' || touchStart === null) {
+            touchStart = null;
+            return;
+        }
+
+        const deltaX = event.clientX - touchStart.x;
+        const deltaY = Math.abs(event.clientY - touchStart.y);
+        const startedAtEdge = touchStart.x <= 32;
+        touchStart = null;
+
+        if (deltaY > 80 || Math.abs(deltaX) < 80) {
+            return;
+        }
+
+        if (deltaX > 0 && startedAtEdge) {
+            setOpen(true);
+        } else if (deltaX < 0 && html.classList.contains('sidebar-enable')) {
+            setOpen(false);
+        }
+    }, { passive: true });
+
+    body.querySelectorAll('.sidenav-menu a.side-nav-link[href]').forEach((link) => {
+        link.addEventListener('click', () => {
+            if (mobileMedia.matches && !link.hasAttribute('data-shell-collapse')) {
+                setOpen(false);
+            }
+        });
+    });
+
+    document.addEventListener('catalyst:ui:ready', () => {
+        if (mobileMedia.matches) {
+            setOpen(false);
+        }
+    }, { once: true });
+
+    mobileMedia.addEventListener('change', () => applyResponsiveState(false));
+    applyResponsiveState(mobileMedia.matches);
 }
 
 export function initShellSectionCollapses(options = {}) {

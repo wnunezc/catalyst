@@ -10,6 +10,20 @@ El sidebar actual usa el shell común de Inspinia con un contenedor de altura co
 
 Esto resuelve un problema practico del estado previo: menus largos obligaban a perder contexto o a depender del scroll del documento completo.
 
+## Comportamiento móvil y tablet
+
+El mismo shell común usa el modo `offcanvas` nativo de Inspinia hasta
+`991.98px`. Durante el arranque el sidebar puede permanecer visible detrás del
+overlay de actividad; al emitirse `catalyst:ui:ready` se cierra
+automáticamente. El logo pequeño del topbar actúa como toggle en ese rango,
+sin perder su navegación normal en desktop.
+
+El adaptador global `public/assets/js/catalyst/shell/navigation.js` también
+controla backdrop, bloqueo de scroll y gestos táctiles: swipe desde el borde
+izquierdo abre; swipe hacia la izquierda, selección de una ruta o toque sobre
+el backdrop cierra. No existe un runtime, layout ni stylesheet por superficie
+para este comportamiento.
+
 ## Agrupacion visual
 
 La navegacion ya no se presenta como una lista plana uniforme.
@@ -43,6 +57,7 @@ Comportamiento actual:
 - el grupo o submenu activo abre por defecto;
 - los demas grupos arrancan cerrados para evitar una lista vertical interminable;
 - `public/assets/js/catalyst/shell/navigation.js` controla los colapsadores;
+- el mismo adaptador controla el estado offcanvas móvil y tablet;
 - `ui-runtime.js` carga ese adaptador una sola vez cuando detecta
   `.sidenav-menu`;
 - ninguna superficie inicializa un segundo gobernador para el sidebar.

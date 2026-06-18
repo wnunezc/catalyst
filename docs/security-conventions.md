@@ -34,6 +34,12 @@ unavailable. Media uploads deny executable, HTML and SVG active content by
 default; SVG requires the explicit `security.security.uploads.allow_svg`
 opt-in.
 
+CSRF rejection does not claim that the authenticated session expired. AJAX
+requests receive the `form_state_expired` code, `refresh_required: true` and a
+replacement CSRF token. Traditional forms receive the same inactivity message
+through flash state and redirect back. The invalid submission remains rejected;
+this contract improves classification without weakening CSRF validation.
+
 The 13 public `/api/v1/*` routes use `ApiTokenMiddleware`; session-authenticated
 `/runtime/*` routes are internal transports, not public APIs. Removed
 `/api/notifications*`, `/api/presence*`, `/api/ws-token` and `/api/public/*`

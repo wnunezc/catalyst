@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalyst error</title>
+</head>
+<body>
+<main>
+    <h1>Catalyst error</h1>
+    <p>Sorry, an error occurred while processing your request.</p>
+
+    <?php if (($errorArray['ticket'] ?? '') !== ''): ?>
+        <p><strong>Error ticket:</strong> <code><?= htmlspecialchars((string) $errorArray['ticket'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?></code></p>
+    <?php endif; ?>
+
+    <?php if (($errorArray['occurred_at'] ?? '') !== ''): ?>
+        <p><strong>Occurred at:</strong> <time><?= htmlspecialchars((string) $errorArray['occurred_at'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?></time></p>
+    <?php endif; ?>
+</main>
+</body>
+</html>

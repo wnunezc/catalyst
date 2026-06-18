@@ -50,6 +50,8 @@ shell. The following focused specs are prepared for individual execution:
 | Surface | Representative routes | Coverage |
 |---|---|---|
 | Application shell | Workspaces, Operations, Users, Configuration, DevTools | `shell-layout.spec.cjs` |
+| Mobile/tablet shell sidebar | Automatic post-boot close, topbar toggle, backdrop, swipe gestures and desktop fixed state | `shell-layout.spec.cjs` (`@shell-mobile-sidebar`) |
+| Roles edit error regression | First available `/users/roles/{id}/edit` avoids bootstrap fallback and renders its form | `shell-layout.spec.cjs` (`@roles-edit-error-regression`) |
 | Canonical owners | Six Workspaces and five Operations representative routes | `canonical-owners.spec.cjs` |
 | Auth | Login, forgot password, email verification | `surface-auth-layout.spec.cjs` |
 | Auth session lifecycle | Protected redirect, credential login, MFA challenge, session rotation, CSRF-protected logout, remember-token removal and stale-session rejection | `auth-session-lifecycle.spec.cjs` |

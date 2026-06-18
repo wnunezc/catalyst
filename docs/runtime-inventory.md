@@ -1,7 +1,7 @@
 # Runtime Inventory
 
 > Auto-generated from filesystem and PHP tokens. Run `php public/cli.php docs:inventory` to refresh.
-> Last generated: 2026-06-15 06:56:41
+> Last generated: 2026-06-15 08:45:49
 
 ## Summary
 

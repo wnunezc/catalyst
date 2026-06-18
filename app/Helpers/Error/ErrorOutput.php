@@ -45,10 +45,15 @@ class ErrorOutput
 {
     use SingletonTrait;
 
+    private const int MAX_DESCRIPTION_LENGTH = 2048;
+    private const int MAX_TRACE_LENGTH = 16384;
+
     /**
      * Path to error templates
      */
     private const string TEMPLATE_PATH = PD . '/boot-core/template/errors/';
+
+    private bool $renderingWebError = false;
 
     /**
      * Output the error information based on environment (CLI or Web).
@@ -60,7 +65,9 @@ class ErrorOutput
      */
     public function display(array $errorData): void
     {
-        $errorData['micro_time'] = microtime(true);
+        $occurredAt = microtime(true);
+        $errorData['micro_time'] = $occurredAt;
+        $errorData['occurred_at'] = date('Y-m-d H:i:s T', (int) $occurredAt);
 
         ErrorLogger::logError($errorData);
 
@@ -128,30 +135,134 @@ class ErrorOutput
      */
     private function displayWeb(array $errorData): void
     {
-        // Determine which template to use based on the environment
-        $templateName = IS_DEVELOPMENT ? 'handler_error' : 'handler_error_no';
-        $templatePath = $this->resolveTemplatePath($templateName);
-
-        // Generate source code view for development mode
-        $source = '';
-        if (IS_DEVELOPMENT && isset($errorData['file']) && isset($errorData['line'])) {
-            $source = $this->getCodeSnippet($errorData['file'], $errorData['line']);
+        if ($this->renderingWebError) {
+            echo $this->fallbackHtml([
+                'class' => 'ErrorHandler',
+                'type' => 'Recursive error rendering failure',
+                'description' => 'The error response could not be rendered safely.',
+                'ticket' => $errorData['ticket'] ?? $errorData['micro_time'] ?? '',
+                'occurred_at' => $errorData['occurred_at'] ?? '',
+            ]);
+            return;
         }
 
-        // Extract error data to make them available in the template
-        extract(['errorArray' => $errorData, 'source' => $source]);
+        $this->renderingWebError = true;
 
-        // Render the template
-        if ($templatePath !== null && file_exists($templatePath)) {
-            include $templatePath;
-        } else {
-            // Fallback if the template is missing
-            echo '<h1>Error</h1>';
-            echo '<p>Error template is not found for: ' . htmlspecialchars($templateName) . '</p>';
-            if (IS_DEVELOPMENT) {
-                echo '<pre>' . print_r($errorData, true) . '</pre>';
+        try {
+            $templateName = IS_DEVELOPMENT ? 'handler_error' : 'handler_error_no';
+            $templatePath = $this->resolveTemplatePath($templateName);
+            $safeErrorData = $this->boundedErrorData($errorData);
+            $source = '';
+
+            if (IS_DEVELOPMENT && $safeErrorData['file'] !== '' && $safeErrorData['line'] > 0) {
+                $source = $this->getCodeSnippet($safeErrorData['file'], $safeErrorData['line']);
             }
+
+            if ($templatePath !== null && file_exists($templatePath)) {
+                extract(['errorArray' => $safeErrorData, 'source' => $source]);
+                include $templatePath;
+                return;
+            }
+
+            echo $this->fallbackHtml($safeErrorData, $source);
+        } catch (\Throwable) {
+            echo $this->fallbackHtml([
+                'class' => 'ErrorHandler',
+                'type' => 'Error rendering failure',
+                'description' => 'The original error was logged, but its response could not be rendered.',
+                'ticket' => $errorData['ticket'] ?? $errorData['micro_time'] ?? '',
+                'occurred_at' => $errorData['occurred_at'] ?? '',
+            ]);
+        } finally {
+            $this->renderingWebError = false;
         }
+    }
+
+    /**
+     * Builds the dependency-free response used when bootstrap templates are unavailable.
+     *
+     * @param array<string, mixed> $errorData
+     */
+    private function fallbackHtml(array $errorData, string $source = ''): string
+    {
+        $class = $this->escape((string) ($errorData['class'] ?? 'Error'));
+        $type = $this->escape((string) ($errorData['type'] ?? 'Unhandled error'));
+        $description = $this->escape((string) ($errorData['description'] ?? 'An unexpected error occurred.'));
+        $ticket = $this->escape((string) ($errorData['ticket'] ?? $errorData['micro_time'] ?? ''));
+        $occurredAt = $this->escape((string) ($errorData['occurred_at'] ?? ''));
+        $file = $this->escape((string) ($errorData['file'] ?? ''));
+        $line = (int) ($errorData['line'] ?? 0);
+        $trace = $this->escape((string) ($errorData['trace_msg'] ?? ''));
+        $details = '';
+
+        if (IS_DEVELOPMENT) {
+            $location = $file !== '' ? '<p><strong>Location:</strong> <code>' . $file . ':' . $line . '</code></p>' : '';
+            $traceHtml = $trace !== '' ? '<h2>Trace</h2><pre><code>' . $trace . '</code></pre>' : '';
+            $sourceHtml = $source !== '' ? '<h2>Source</h2>' . $source : '';
+            $details = '<p><strong>Class:</strong> ' . $class . '</p>'
+                . '<p><strong>Type:</strong> ' . $type . '</p>'
+                . $location
+                . $traceHtml
+                . $sourceHtml;
+        }
+
+        $ticketHtml = $ticket !== '' ? '<p><strong>Error ticket:</strong> <code>' . $ticket . '</code></p>' : '';
+        $occurredAtHtml = $occurredAt !== ''
+            ? '<p><strong>Occurred at:</strong> <time>' . $occurredAt . '</time></p>'
+            : '';
+
+        return '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">'
+            . '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
+            . '<title>Catalyst error</title></head><body><main>'
+            . '<h1>Catalyst error</h1><p>' . $description . '</p>'
+            . $ticketHtml . $occurredAtHtml . $details
+            . '</main></body></html>';
+    }
+
+    /**
+     * Keeps only scalar diagnostic fields and caps their rendered size.
+     *
+     * @param array<string, mixed> $errorData
+     * @return array<string, mixed>
+     */
+    private function boundedErrorData(array $errorData): array
+    {
+        return [
+            'class' => $this->boundedString($errorData['class'] ?? 'Error', 256),
+            'type' => $this->boundedString($errorData['type'] ?? 'Unhandled error', 256),
+            'description' => $this->boundedString(
+                $errorData['description'] ?? 'An unexpected error occurred.',
+                self::MAX_DESCRIPTION_LENGTH
+            ),
+            'file' => $this->boundedString($errorData['file'] ?? '', 1024),
+            'line' => max(0, (int) ($errorData['line'] ?? 0)),
+            'trace_msg' => $this->boundedString($errorData['trace_msg'] ?? '', self::MAX_TRACE_LENGTH),
+            'ticket' => $this->boundedString(
+                $errorData['ticket'] ?? $errorData['micro_time'] ?? '',
+                128
+            ),
+            'occurred_at' => $this->boundedString($errorData['occurred_at'] ?? '', 128),
+            'micro_time' => $this->boundedString($errorData['micro_time'] ?? '', 128),
+        ];
+    }
+
+    private function boundedString(mixed $value, int $maximumLength): string
+    {
+        if (!is_scalar($value) && !$value instanceof \Stringable) {
+            return '';
+        }
+
+        $string = (string) $value;
+        if (strlen($string) <= $maximumLength) {
+            return $string;
+        }
+
+        return substr($string, 0, $maximumLength) . "\n[truncated]";
+    }
+
+    private function escape(string $value): string
+    {
+        return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
     }
 
     /**

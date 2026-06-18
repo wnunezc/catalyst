@@ -80,9 +80,13 @@ Do not render placeholder identities such as `Catalyst User` for guests.
 
 ## Dashboard rule
 
-`/dashboard` is an authenticated application/demo dashboard. It is not the
-framework privileged console. It should demonstrate ERP-style cards,
-activity, metrics and workflows that implementers can replace.
+`/dashboard` is an application/demo dashboard entry point. Authenticated users
+see the account dashboard inside the standard internal shell. Anonymous users
+may see a centered guest gateway, but that gateway must still render through
+`document.phtml` and `shell.phtml` using the shared `wrapper` / `content-page`
+classes with topbar, sidebar and status bar disabled. It must not create an
+`account-guest-shell`, `account-guest-content` or any other surface-specific
+shell geometry.
 
 Framework privileged remains under protected configuration/operation routes.
 

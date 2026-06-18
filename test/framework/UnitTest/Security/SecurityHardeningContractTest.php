@@ -82,6 +82,17 @@ final class SecurityHardeningContractTest extends TestCase
         Assert::contains('"blocked_mime_type"', $spanish);
     }
 
+    public function testCsrfFailureUsesFormStateExpiredContract(): void
+    {
+        $middleware = $this->read('app/Framework/Middleware/CsrfMiddleware.php');
+
+        Assert::contains("'code' => 'form_state_expired'", $middleware);
+        Assert::contains("'refresh_required' => true", $middleware);
+        Assert::contains("'new_token' =>", $middleware);
+        Assert::contains('This form is no longer valid due to inactivity.', $middleware);
+        Assert::false(str_contains($middleware, 'Your session expired.'));
+    }
+
     private function read(string $relative): string
     {
         $source = file_get_contents(

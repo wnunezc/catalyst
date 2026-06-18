@@ -42,7 +42,8 @@ final class ShellArchitectureTest extends TestCase
         $linter = $this->read('app/Framework/Module/ModuleLinter.php');
 
         Assert::contains("'body_class' => (string) (\$scope['body_class'] ?? 'catalyst-shell-body')", $scope);
-        Assert::contains('catalyst-shell-sidebar-size', $navigation);
+        Assert::contains("html.setAttribute('data-sidenav-size', 'offcanvas')", $navigation);
+        Assert::false(str_contains($navigation, 'catalyst-shell-sidebar-size'));
         Assert::contains('shell-navigation-not-registry-driven', $linter);
         Assert::false(str_contains($scope, 'active_admin_context'));
         Assert::false(str_contains($navigation, 'catalyst-admin-sidebar-size'));
@@ -216,6 +217,32 @@ final class ShellArchitectureTest extends TestCase
         Assert::contains('body.catalyst-shell-body .content-page[data-simplebar] > .simplebar-wrapper,', $compat);
         Assert::contains('body.catalyst-shell-body .content-page[data-simplebar] .simplebar-content {', $compat);
         Assert::contains('data-simplebar=""', $content);
+    }
+
+    public function testMobileSidebarRemainsOwnedByTheGlobalShellRuntime(): void
+    {
+        $navigation = $this->read('public/assets/js/catalyst/shell/navigation.js');
+        $compat = $this->read('public/assets/css/catalyst/inspinia-runtime-compat.css');
+        $topbar = $this->read('boot-core/template/_topbar.phtml');
+
+        Assert::contains('data-shell-sidebar-toggle', $topbar);
+        Assert::contains("document.addEventListener('catalyst:ui:ready'", $navigation);
+        Assert::contains("html.classList.toggle('sidebar-enable'", $navigation);
+        Assert::contains('pointerdown', $navigation);
+        Assert::contains('pointerup', $navigation);
+        Assert::contains('catalyst-shell-sidebar-backdrop', $navigation);
+        Assert::contains('@media (max-width: 991.98px)', $compat);
+        Assert::contains('.catalyst-shell-sidebar-backdrop', $compat);
+        Assert::false(str_contains($navigation, 'keepSidebarFixed'));
+    }
+
+    public function testAjaxFormRuntimeDiagnosesHtmlResponseMismatch(): void
+    {
+        $http = $this->read('public/assets/js/catalyst/core/http.js');
+        $formHandler = $this->read('public/assets/js/catalyst/forms/form-handler.js');
+
+        Assert::contains('Catalyst form contract mismatch:', $http);
+        Assert::contains('expectedContentType: \'application/json\'', $formHandler);
     }
 
     /** @return list<string> */

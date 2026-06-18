@@ -19,6 +19,16 @@ Document runtime error capture, logging and output helpers.
 
 This file is regenerated from current PHP docblocks and the runtime inventory scope for `Catalyst\Helpers\Error`. It intentionally replaces stale historical API notes with the classes and methods that exist in code now.
 
+The bootstrap path remains installed by `boot-core/requirement-loader/error-catcher.php`
+through the existing `auto_prepend_file` and entrypoint fallback contract.
+`ErrorOutput` logs before selecting CLI or web output. Web development errors
+use `boot-core/template/errors/handler_error.phtml`; production errors use
+`handler_error_no.phtml`. Both receive bounded display data. The development
+template may show diagnostic detail, while production exposes only a generic
+message plus the same `micro_time` ticket and occurrence time used to locate the
+structured log entry. A dependency-free bounded fallback remains available if
+either bootstrap template cannot be rendered.
+
 ## API From Docblocks
 
 ### `Catalyst\Helpers\Error\ErrorCatcher`

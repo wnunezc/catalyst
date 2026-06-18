@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalyst development error</title>
+</head>
+<body>
+<main>
+    <h1>Catalyst development error</h1>
+    <p><?= htmlspecialchars((string) ($errorArray['description'] ?? 'An unexpected error occurred.'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?></p>
+
+    <?php if (($errorArray['ticket'] ?? '') !== ''): ?>
+        <p><strong>Error ticket:</strong> <code><?= htmlspecialchars((string) $errorArray['ticket'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?></code></p>
+    <?php endif; ?>
+
+    <?php if (($errorArray['occurred_at'] ?? '') !== ''): ?>
+        <p><strong>Occurred at:</strong> <time><?= htmlspecialchars((string) $errorArray['occurred_at'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?></time></p>
+    <?php endif; ?>
+
+    <p><strong>Class:</strong> <?= htmlspecialchars((string) ($errorArray['class'] ?? 'Error'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?></p>
+    <p><strong>Type:</strong> <?= htmlspecialchars((string) ($errorArray['type'] ?? 'Unhandled error'), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?></p>
+
+    <?php if (($errorArray['file'] ?? '') !== ''): ?>
+        <p>
+            <strong>Location:</strong>
+            <code><?= htmlspecialchars((string) $errorArray['file'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>:<?= (int) ($errorArray['line'] ?? 0) ?></code>
+        </p>
+    <?php endif; ?>
+
+    <?php if (($errorArray['trace_msg'] ?? '') !== ''): ?>
+        <h2>Trace</h2>
+        <pre><code><?= htmlspecialchars((string) $errorArray['trace_msg'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?></code></pre>
+    <?php endif; ?>
+
+    <?php if ($source !== ''): ?>
+        <h2>Source</h2>
+        <?= $source ?>
+    <?php endif; ?>
+</main>
+</body>
+</html>

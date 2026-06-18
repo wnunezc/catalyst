@@ -69,6 +69,13 @@ fixed. The body and `.wrapper` do not own vertical scrolling; `.content-page`
 owns the available area between the shared topbar and status bar, and its
 existing SimpleBar content wrapper performs vertical scrolling.
 
+Blank guest states that intentionally hide topbar, sidebar and status bar must
+still render through the canonical document and `shell.phtml`, but they must not
+use `.content-page`. Inspinia's `.content-page` reserves the sidenav offset, so
+blank states use the shared `.wrapper` shell with Bootstrap utility classes on
+the content slot, for example `w-100 min-vh-100`, and center their card from the
+view markup with existing utilities.
+
 Public, Auth and Error surfaces use their own capability classes and retain
 document scrolling where their surface contract requires it. Component-level
 scroll containers such as tables, editors and modal bodies remain independent.

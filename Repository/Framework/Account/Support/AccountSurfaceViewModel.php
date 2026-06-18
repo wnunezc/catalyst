@@ -87,11 +87,12 @@ final class AccountSurfaceViewModel
                 'content_class' => 'content-page',
             ]
             : [
-                'body_class' => 'catalyst-shell-body',
-                'shell_class' => 'account-guest-shell',
+                'body_class' => 'bg-body',
+                'shell_class' => 'wrapper',
                 'topbar_class' => 'app-topbar',
                 'sidebar_class' => 'sidenav-menu',
-                'content_class' => 'account-guest-content',
+                'content_class' => 'w-100 min-vh-100',
+                'html_sidenav_size' => 'offcanvas',
             ];
 
         return array_merge([
@@ -116,7 +117,7 @@ final class AccountSurfaceViewModel
             'is_account_guest' => !$authenticated,
             'show_topbar' => $authenticated,
             'show_sidebar' => $authenticated,
-            'show_status_bar' => true,
+            'show_status_bar' => $authenticated,
             'show_theme_customizer' => false,
             'show_auth_brand_panel' => false,
             'surface_context' => 'account',

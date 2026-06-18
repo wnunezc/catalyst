@@ -38,6 +38,10 @@ export function isJsonContentType(contentType) {
  * @returns {string}
  */
 export function summarizeResponseError(error, maxLength = 200) {
+    if (error?.code === 'catalyst_form_contract_mismatch') {
+        return error.message;
+    }
+
     if (error?.body) {
         const snippet = String(error.body).replace(/\s+/g, ' ').trim().slice(0, maxLength);
         const prefix = error.status ? `Unexpected response (HTTP ${error.status}). ` : 'Unexpected response. ';
@@ -208,7 +212,7 @@ export class HttpClient {
             ...options,
         });
 
-        const data = await this.parseJsonResponse(response);
+        const data = await this.parseJsonResponse(response, options);
         return { response, data };
     }
 
@@ -268,6 +272,7 @@ export class HttpClient {
 
         delete prepared.acceptJson;
         delete prepared.background;
+        delete prepared.expectedContentType;
         delete prepared.form;
         delete prepared.json;
         delete prepared.xhr;
@@ -366,9 +371,10 @@ export class HttpClient {
      * Parse a Response as JSON and throw a rich error when the payload is not JSON.
      *
      * @param {Response} response
+     * @param {Object} options
      * @returns {Promise<any>}
      */
-    async parseJsonResponse(response) {
+    async parseJsonResponse(response, options = {}) {
         const contentType = response.headers.get('content-type') || '';
         const body = await response.text();
 
@@ -380,12 +386,17 @@ export class HttpClient {
             return JSON.parse(body);
         }
 
-        const error = new Error(
-            `Expected JSON response but received ${contentType || 'unknown content type'} (HTTP ${response.status}).`
+        const isHtml = contentType.includes('text/html') || /^\s*<!doctype html|^\s*<html/i.test(body);
+        const error = new Error(isHtml && options.expectedContentType === 'application/json'
+            ? 'Catalyst form contract mismatch: this form uses data-catalyst="form", so the server must return JSON. The response was HTML or a followed redirect.'
+            : `Expected JSON response but received ${contentType || 'unknown content type'} (HTTP ${response.status}).`
         );
         error.status = response.status;
         error.body = body;
         error.response = response;
+        error.code = isHtml && options.expectedContentType === 'application/json'
+            ? 'catalyst_form_contract_mismatch'
+            : 'unexpected_response_content_type';
         throw error;
     }
 

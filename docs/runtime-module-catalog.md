@@ -1,7 +1,7 @@
 # Runtime Module Catalog
 
 > Auto-generated from `ModuleRegistry`, `PermissionRegistry`, `NavigationRegistry`, `ModuleInspector`, `ModuleHarnessInspector` and `ModuleLinter`.
-> Last generated: 2026-06-15 06:56:41
+> Last generated: 2026-06-15 08:45:50
 
 ## Runtime Summary
 

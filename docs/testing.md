@@ -121,6 +121,18 @@ node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalys
 Pop-Location
 ```
 
+Run only the mobile/tablet sidebar contract:
+
+```powershell
+Push-Location D:\OpsZone\DevWorkspace\Engines\Playwright
+node .\scripts\run-project-tests.js D:\OpsZone\DevWorkspace\Projects\Web\catalyst --suite framework --project stateful-serial --grep "@shell-mobile-sidebar" --workers 1 --no-deps
+Pop-Location
+```
+
+This focused run consumes the existing persistent authenticated state. If that
+state redirects to MFA and the shared MFA-Forge broker is unavailable, report
+the run as interrupted by the environment rather than as a product failure.
+
 Run only the user login, MFA and logout lifecycle:
 
 ```powershell

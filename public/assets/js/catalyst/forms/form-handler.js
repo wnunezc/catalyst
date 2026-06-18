@@ -175,6 +175,7 @@ export class FormHandler {
             const { data } = await this.http.json(action, {
                 method: method.toUpperCase(),
                 form: formData,
+                expectedContentType: 'application/json',
             });
 
             // Inject field-level validation errors
