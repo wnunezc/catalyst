@@ -98,6 +98,12 @@ test.describe('@shell-layout Application shell layout', () => {
 test.describe('@shell-mobile-sidebar Mobile shell sidebar', () => {
     test('tablet runtime closes the sidebar and supports toggle, swipe and backdrop dismissal', async ({ page }) => {
         await page.setViewportSize({ width: 800, height: 1280 });
+        await page.addInitScript(() => {
+            window.__catalystPageErrors = [];
+            window.addEventListener('error', (event) => {
+                window.__catalystPageErrors.push(event.message);
+            });
+        });
         await openSurface(page, expect, '/configuration/application-health', { requireTriggers: false });
         await expect(page.locator('body.catalyst-shell-body')).toHaveAttribute('data-catalyst-ui-runtime', 'ready');
         await expect(page.locator('.app-topbar')).toBeVisible();
@@ -107,18 +113,24 @@ test.describe('@shell-mobile-sidebar Mobile shell sidebar', () => {
         const sidebar = page.locator('.sidenav-menu');
         const toggle = page.locator('[data-shell-sidebar-toggle]:visible');
         const backdrop = page.locator('.catalyst-shell-sidebar-backdrop');
+        const activityOverlay = page.locator('[data-catalyst-activity-overlay]');
 
+        await expect(toggle).toHaveJSProperty('tagName', 'BUTTON');
+        await expect(html).toHaveAttribute('data-sidenav-size', 'offcanvas');
         await expect(html).not.toHaveClass(/sidebar-enable/);
-        await expect(sidebar).toBeHidden();
+        await expect(sidebar).toHaveCSS('opacity', '0');
+        expect(await sidebar.evaluate((element) => element.getBoundingClientRect().right)).toBeLessThanOrEqual(0);
 
         await toggle.click();
         await expect(html).toHaveClass(/sidebar-enable/);
-        await expect(sidebar).toBeVisible();
+        await expect(sidebar).toHaveCSS('opacity', '1');
+        expect(await sidebar.evaluate((element) => element.getBoundingClientRect().left)).toBeGreaterThanOrEqual(0);
         await expect(backdrop).toBeVisible();
+        await expect(activityOverlay).toHaveAttribute('data-activity-state', 'idle');
 
-        await backdrop.click({ position: { x: 10, y: 10 } });
+        await backdrop.click({ position: { x: 700, y: 100 } });
         await expect(html).not.toHaveClass(/sidebar-enable/);
-        await expect(sidebar).toBeHidden();
+        await expect(sidebar).toHaveCSS('opacity', '0');
 
         await page.dispatchEvent('body', 'pointerdown', {
             pointerId: 1,
@@ -151,12 +163,15 @@ test.describe('@shell-mobile-sidebar Mobile shell sidebar', () => {
             isPrimary: true,
         });
         await expect(html).not.toHaveClass(/sidebar-enable/);
+        await expect(sidebar).toHaveCSS('opacity', '0');
+        expect(await page.evaluate(() => window.__catalystPageErrors)).toEqual([]);
     });
 
     test('desktop runtime keeps the sidebar fixed and visible', async ({ page }) => {
         await page.setViewportSize({ width: 1440, height: 900 });
         await openShellSurface(page, '/configuration/application-health');
 
+        await expect(page.locator('html')).toHaveAttribute('data-sidenav-size', 'default');
         await expect(page.locator('html')).not.toHaveClass(/sidebar-enable/);
         await expect(page.locator('.sidenav-menu')).toBeVisible();
     });

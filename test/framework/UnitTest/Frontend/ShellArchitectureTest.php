@@ -226,7 +226,10 @@ final class ShellArchitectureTest extends TestCase
         $topbar = $this->read('boot-core/template/_topbar.phtml');
 
         Assert::contains('data-shell-sidebar-toggle', $topbar);
+        Assert::contains('<button type="button" class="logo-light', $topbar);
+        Assert::false(str_contains($topbar, '<a href="{{ brand_home_href }}" class="logo-light" data-shell-sidebar-toggle'));
         Assert::contains("document.addEventListener('catalyst:ui:ready'", $navigation);
+        Assert::contains('applyResponsiveState(false);', $navigation);
         Assert::contains("html.classList.toggle('sidebar-enable'", $navigation);
         Assert::contains('pointerdown', $navigation);
         Assert::contains('pointerup', $navigation);

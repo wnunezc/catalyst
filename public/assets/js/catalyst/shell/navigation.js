@@ -114,6 +114,10 @@ export function initShellSidebar(options = {}) {
     };
 
     const setOpen = (open) => {
+        if (mobileMedia.matches) {
+            html.setAttribute('data-sidenav-size', 'offcanvas');
+        }
+
         const expanded = mobileMedia.matches && open;
         html.classList.toggle('sidebar-enable', expanded);
         body.classList.toggle(noScrollClass, expanded);
@@ -189,9 +193,7 @@ export function initShellSidebar(options = {}) {
     });
 
     document.addEventListener('catalyst:ui:ready', () => {
-        if (mobileMedia.matches) {
-            setOpen(false);
-        }
+        applyResponsiveState(false);
     }, { once: true });
 
     mobileMedia.addEventListener('change', () => applyResponsiveState(false));

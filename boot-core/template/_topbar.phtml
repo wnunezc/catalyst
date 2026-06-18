@@ -19,14 +19,14 @@
     <div class="container-fluid topbar-menu">
         <div class="d-flex align-items-center gap-2">
             <div class="logo-topbar">
-                <a href="{{ brand_home_href }}" class="logo-light" data-shell-sidebar-toggle aria-controls="sidenav-menu">
+                <button type="button" class="logo-light border-0 bg-transparent p-0" data-shell-sidebar-toggle aria-controls="sidenav-menu" aria-label="{{ sidebar_label }}">
                     <span class="logo-lg"><img src="{{ brand_logo_dark_url }}" alt="{{ brand_name }}"></span>
                     <span class="logo-sm"><img src="{{ brand_logo_small_url }}" alt="{{ brand_name }}"></span>
-                </a>
-                <a href="{{ brand_home_href }}" class="logo-dark" data-shell-sidebar-toggle aria-controls="sidenav-menu">
+                </button>
+                <button type="button" class="logo-dark border-0 bg-transparent p-0" data-shell-sidebar-toggle aria-controls="sidenav-menu" aria-label="{{ sidebar_label }}">
                     <span class="logo-lg"><img src="{{ brand_logo_light_url }}" alt="{{ brand_name }}"></span>
                     <span class="logo-sm"><img src="{{ brand_logo_small_url }}" alt="{{ brand_name }}"></span>
-                </a>
+                </button>
             </div>
 
             {{#if topbar_is_account_surface}}
