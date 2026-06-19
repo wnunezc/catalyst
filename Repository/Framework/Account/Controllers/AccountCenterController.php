@@ -32,9 +32,11 @@ namespace Catalyst\Repository\Account\Controllers;
 
 use Catalyst\Repository\Account\Requests\MfaRecoveryRequest;
 use Catalyst\Repository\Account\Requests\SupportRecoveryRequest;
+use Catalyst\Repository\Account\Services\AccountAvatarService;
 use Catalyst\Repository\Account\Services\AccountRecoveryService;
 use Catalyst\Repository\Account\Services\AccountSecurityService;
 use Catalyst\Repository\Account\Support\AccountSurfaceViewModel;
+use App\Repositories\UserProfileRepository;
 use Catalyst\Framework\Auth\AuthManager;
 use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\RedirectResponse;
@@ -56,9 +58,37 @@ final class AccountCenterController extends Controller
      */
     public function profile(): Response
     {
+        $user = AuthManager::getInstance()->user() ?? [];
+        $profile = (new UserProfileRepository())->findByUserId((int) ($user['id'] ?? 0));
+        $avatarPath = $profile !== null ? (string) ($profile->avatar_path ?? '') : '';
+        $avatar = new AccountAvatarService();
+
         return $this->render('profile', __('account.profile.title'), [
-            'account_user' => AuthManager::getInstance()->user() ?? [],
+            'account_user' => $user,
+            'account_avatar_src' => $avatar->url($avatarPath),
+            'auth_avatar_src' => $avatar->url($avatarPath),
         ]);
+    }
+
+    public function updateAvatar(Request $request): Response
+    {
+        $user = AuthManager::getInstance()->user() ?? [];
+        $userId = (int) ($user['id'] ?? 0);
+
+        if ($userId <= 0) {
+            return $this->postActionErrorRedirect('/account/profile', __('messages.request_not_authorized'), 403);
+        }
+
+        $profile = (new UserProfileRepository())->findByUserId($userId);
+        $oldPath = $profile !== null ? (string) ($profile->avatar_path ?? '') : '';
+
+        try {
+            (new AccountAvatarService())->update($userId, $request->file('avatar'), $oldPath);
+        } catch (\RuntimeException $exception) {
+            return $this->postActionErrorRedirect('/account/profile', $exception->getMessage(), 422);
+        }
+
+        return $this->postActionSuccessRedirect('/account/profile', __('account.messages.avatar_updated'));
     }
 
     /**

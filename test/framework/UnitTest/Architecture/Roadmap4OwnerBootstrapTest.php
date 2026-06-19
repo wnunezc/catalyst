@@ -37,10 +37,10 @@ final class Roadmap4OwnerBootstrapTest extends TestCase
     {
         Assert::false(is_dir($this->path('Repository/Framework/Roles')));
         Assert::false(is_dir($this->path('Repository/App/Surface/Account')));
-        Assert::same(31, $this->routeCount(
+        Assert::same(35, $this->routeCount(
             $this->read('Repository/Framework/Users/routes.php')
         ));
-        Assert::same(19, $this->routeCount(
+        Assert::same(20, $this->routeCount(
             $this->read('Repository/Framework/Account/routes.php')
         ));
     }

@@ -131,12 +131,18 @@
     "visual_token": "Token visual",
     "color": "Color",
     "order": "Orden",
-    "save": "Guardar",
+            "save": "Guardar",
+            "update": "Actualizar",
     "messages": {
       "organization_saved": "Organización guardada.",
       "unit_saved": "Unidad organizacional guardada.",
       "scope_saved": "Ámbito jerárquico guardado.",
       "level_saved": "Nivel jerárquico guardado.",
+      "organization_deleted": "Organizacion eliminada.",
+      "unit_deleted": "Unidad organizacional eliminada.",
+      "scope_deleted": "Ambito jerarquico eliminado.",
+      "level_deleted": "Nivel jerarquico eliminado.",
+      "delete_blocked": "Bloqueado: %s",
       "invalid_payload": "Revisa los datos de jerarquía organizacional.",
       "invalid_key": "Usa minúsculas, números y guiones para las claves.",
       "invalid_color": "Usa un color hexadecimal como #1f7a8c.",
@@ -246,7 +252,8 @@
         "password": "Contraseña",
         "password_confirm": "Confirmar contraseña",
         "role": "Rol inicial",
-        "email_verified": "Verificación de correo"
+        "email_verified": "Verificación de correo",
+        "onboarding": "Onboarding seguro"
       },
       "placeholders": {
         "name": "Ejemplo: Juan Pérez",
@@ -261,6 +268,7 @@
       },
       "help": {
         "password": "Usa una contraseña temporal segura. El usuario podrá cambiarla después.",
+        "onboarding": "Catalyst generara una credencial temporal interna, enviara un enlace seguro para definir contrasena y, si aplica, incluira verificacion de correo. El administrador nunca ve ni decide la contrasena del usuario.",
         "role": "Este rol se guardará en la tabla pivote user_roles.",
         "email_verified": "Para usuarios creados por gestión privilegiada, lo más práctico es marcarlos como verificados."
       },
@@ -274,6 +282,8 @@
       "email_exists": "Ya existe un usuario registrado con ese correo.",
       "create_error": "No se pudo crear el usuario:",
       "created": "Usuario registrado correctamente.",
+      "created_onboarding_sent": "Usuario registrado y correo de onboarding enviado.",
+      "created_onboarding_mail_failed": "Usuario registrado, pero no se pudo enviar el correo de onboarding. Revisa la configuracion de correo y reenvia onboarding antes de compartir acceso.",
       "user_not_found": "Usuario no encontrado."
     },
     "enroll": {
@@ -286,7 +296,7 @@
         "identity_title": "Perfil de identidad",
         "identity_description": "Registra la identidad mínima de la cuenta requerida por el framework.",
         "security_title": "Credencial inicial",
-        "security_description": "Asigna una contraseña temporal segura para el primer ciclo de acceso.",
+        "security_description": "Catalyst crea un enlace seguro de configuracion en vez de exponer una contrasena al administrador.",
         "access_title": "Acceso inicial",
         "access_description": "Asigna el rol inicial y el estado de verificación de este usuario."
       }

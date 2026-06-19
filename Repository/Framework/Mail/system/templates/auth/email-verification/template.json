@@ -1,0 +1,18 @@
+{
+  "key": "auth.email_verification",
+  "name": "Email verification",
+  "translation_catalog": "mail_auth_email_verification",
+  "translation_namespace": "auth.email_verification",
+  "html_template": "layout.html",
+  "text_template": "text.txt",
+  "required_placeholders": [
+    "name",
+    "app_name",
+    "verification_link"
+  ],
+  "sample_payload": {
+    "name": "Example User",
+    "app_name": "Catalyst",
+    "verification_link": "https://example.test/verify-email/token"
+  }
+}

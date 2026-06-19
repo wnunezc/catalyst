@@ -354,7 +354,7 @@ export class HttpClient {
 
                 if (this.notificationHandler?.processResponse) {
                     if (options.deferNotifications === true) {
-                        window.setTimeout(() => this.notificationHandler?.processResponse(data), 0);
+                        this.processNotificationsWhenActivityIdle(data);
                     } else {
                         this.notificationHandler.processResponse(data);
                     }
@@ -365,6 +365,42 @@ export class HttpClient {
         }
 
         return response;
+    }
+
+    /**
+     * Render foreground notifications only after the matching activity overlay token is idle.
+     *
+     * @param {Object} data
+     */
+    processNotificationsWhenActivityIdle(data) {
+        let released = false;
+        let fallbackTimer = null;
+
+        const render = () => {
+            if (released) {
+                return;
+            }
+
+            released = true;
+            if (fallbackTimer !== null) {
+                window.clearTimeout(fallbackTimer);
+            }
+
+            window.requestAnimationFrame(() => this.notificationHandler?.processResponse(data));
+        };
+
+        const overlay = document.querySelector('[data-catalyst-activity-overlay]');
+        const isIdle = !(overlay instanceof HTMLElement)
+            || overlay.dataset.activityState === 'idle'
+            || document.body?.getAttribute('aria-busy') !== 'true';
+
+        if (isIdle) {
+            render();
+            return;
+        }
+
+        document.addEventListener('catalyst:activity:idle', render, { once: true });
+        fallbackTimer = window.setTimeout(render, 1500);
     }
 
     /**

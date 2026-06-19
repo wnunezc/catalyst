@@ -39,10 +39,10 @@ final class OrganizationHierarchyController extends Controller
         return $this->view('users.organization-hierarchy', [
             'title' => (string)__('roles.organization_hierarchy.title'),
             'pageTitle' => (string)__('roles.organization_hierarchy.title'),
-            'organizations' => $this->organizations->organizations(),
-            'units' => $this->organizations->units(),
-            'scopes' => $this->organizations->scopes(),
-            'levels' => $this->organizations->levels(),
+            'organizations' => $this->withDependencies('organization', $this->organizations->organizations()),
+            'units' => $this->withDependencies('unit', $this->organizations->units()),
+            'scopes' => $this->withDependencies('scope', $this->organizations->scopes()),
+            'levels' => $this->withDependencies('level', $this->organizations->levels()),
         ]);
     }
 
@@ -151,6 +151,26 @@ final class OrganizationHierarchyController extends Controller
         return $this->postActionSuccessRedirect('/users/organization-hierarchy', (string)__('roles.organization_hierarchy.messages.level_saved'));
     }
 
+    public function destroyOrganization(Request $request, string $id): Response
+    {
+        return $this->destroy(fn () => $this->organizations->deleteOrganization((int)$id), (string)__('roles.organization_hierarchy.messages.organization_deleted'));
+    }
+
+    public function destroyUnit(Request $request, string $id): Response
+    {
+        return $this->destroy(fn () => $this->organizations->deleteUnit((int)$id), (string)__('roles.organization_hierarchy.messages.unit_deleted'));
+    }
+
+    public function destroyScope(Request $request, string $id): Response
+    {
+        return $this->destroy(fn () => $this->organizations->deleteScope((int)$id), (string)__('roles.organization_hierarchy.messages.scope_deleted'));
+    }
+
+    public function destroyLevel(Request $request, string $id): Response
+    {
+        return $this->destroy(fn () => $this->organizations->deleteLevel((int)$id), (string)__('roles.organization_hierarchy.messages.level_deleted'));
+    }
+
     private function requiredText(Request $request, string $key, int $max): string
     {
         $value = trim((string)$request->input($key, ''));
@@ -233,5 +253,34 @@ final class OrganizationHierarchyController extends Controller
     private function message(Throwable $e): string
     {
         return $e instanceof InvalidArgumentException ? $e->getMessage() : (string)__('roles.organization_hierarchy.messages.save_failed');
+    }
+
+    /**
+     * @param array<int, array<string, mixed>> $rows
+     * @return array<int, array<string, mixed>>
+     */
+    private function withDependencies(string $type, array $rows): array
+    {
+        foreach ($rows as $index => $row) {
+            $rows[$index]['dependencies'] = $this->organizations->dependencyCounts($type, (int)($row['id'] ?? 0));
+        }
+
+        return $rows;
+    }
+
+    /**
+     * @param callable(): null $operation
+     */
+    private function destroy(callable $operation, string $message): Response
+    {
+        $this->authorizeResource('manage', 'roles');
+
+        try {
+            $operation();
+        } catch (Throwable $e) {
+            return $this->postActionErrorRedirect('/users/organization-hierarchy', $this->message($e), 409);
+        }
+
+        return $this->postActionSuccessRedirect('/users/organization-hierarchy', $message);
     }
 }

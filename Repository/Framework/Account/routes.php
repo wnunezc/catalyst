@@ -48,6 +48,9 @@ Translator::getInstance()->addPath(
 
 $router->get('/account/profile', [AccountCenterController::class, 'profile'])
        ->middleware(AuthMiddleware::class);
+$router->post('/account/profile/avatar', [AccountCenterController::class, 'updateAvatar'])
+       ->middleware(AuthMiddleware::class)
+       ->throttle('privileged_mutation');
 $router->get('/account/security', [AccountCenterController::class, 'security'])
        ->middleware(AuthMiddleware::class);
 $router->get('/account/security/mfa', [AccountCenterController::class, 'mfa'])

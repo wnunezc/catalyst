@@ -1,27 +1,27 @@
 # Runtime Inventory
 
 > Auto-generated from filesystem and PHP tokens. Run `php public/cli.php docs:inventory` to refresh.
-> Last generated: 2026-06-15 08:45:49
+> Last generated: 2026-06-19 05:06:28
 
 ## Summary
 
-- Symbols: 713
-- Templates: 178
+- Symbols: 719
+- Templates: 184
 - Scripts: 56
 
 ## Symbol Roots
 
 | Root | Count |
 |---|---:|
-| `Repository` | 184 |
-| `app` | 529 |
+| `Repository` | 186 |
+| `app` | 533 |
 
 ## Template Roots
 
 | Root | Count |
 |---|---:|
-| `Repository views` | 152 |
-| `boot-core/template` | 26 |
+| `Repository views` | 156 |
+| `boot-core/template` | 28 |
 
 ## Script Roots
 
@@ -323,10 +323,13 @@
 | `Catalyst\Framework\Localization\AtomicLocaleCatalogWriter` | `class` | `app/Framework/Localization/AtomicLocaleCatalogWriter.php` | 13 |
 | `Catalyst\Framework\Localization\LocalizationManager` | `class` | `app/Framework/Localization/LocalizationManager.php` | 45 |
 | `Catalyst\Framework\Mail\DkimGenerator` | `class` | `app/Framework/Mail/DkimGenerator.php` | 45 |
+| `Catalyst\Framework\Mail\EmailAssetManager` | `class` | `app/Framework/Mail/EmailAssetManager.php` | 15 |
+| `Catalyst\Framework\Mail\EmailTemplateManager` | `class` | `app/Framework/Mail/EmailTemplateManager.php` | 18 |
 | `Catalyst\Framework\Mail\MailAttachment` | `class` | `app/Framework/Mail/MailAttachment.php` | 42 |
 | `Catalyst\Framework\Mail\MailManager` | `class` | `app/Framework/Mail/MailManager.php` | 55 |
 | `Catalyst\Framework\Mail\MailMessage` | `class` | `app/Framework/Mail/MailMessage.php` | 45 |
 | `Catalyst\Framework\Mail\MailTemplate` | `class` | `app/Framework/Mail/MailTemplate.php` | 46 |
+| `Catalyst\Framework\Mail\OutboundEmailService` | `class` | `app/Framework/Mail/OutboundEmailService.php` | 10 |
 | `Catalyst\Framework\Media\MediaManager` | `class` | `app/Framework/Media/MediaManager.php` | 48 |
 | `Catalyst\Framework\Media\MediaRepository` | `class` | `app/Framework/Media/MediaRepository.php` | 47 |
 | `Catalyst\Framework\Metadata\MetadataFieldRepository` | `class` | `app/Framework/Metadata/MetadataFieldRepository.php` | 47 |
@@ -368,6 +371,7 @@
 | `Catalyst\Framework\Module\ModuleInspector` | `class` | `app/Framework/Module/ModuleInspector.php` | 49 |
 | `Catalyst\Framework\Module\ModuleLinter` | `class` | `app/Framework/Module/ModuleLinter.php` | 46 |
 | `Catalyst\Framework\Module\ModuleLocalizationDecorator` | `class` | `app/Framework/Module/ModuleLocalizationDecorator.php` | 39 |
+| `Catalyst\Framework\Module\ModuleManagementService` | `class` | `app/Framework/Module/ModuleManagementService.php` | 15 |
 | `Catalyst\Framework\Module\ModuleManifestBuilder` | `class` | `app/Framework/Module/ModuleManifestBuilder.php` | 41 |
 | `Catalyst\Framework\Module\ModuleManifestLoader` | `class` | `app/Framework/Module/ModuleManifestLoader.php` | 41 |
 | `Catalyst\Framework\Module\ModuleRegistry` | `class` | `app/Framework/Module/ModuleRegistry.php` | 42 |
@@ -391,7 +395,7 @@
 | `Catalyst\Framework\Notification\NotificationType` | `enum` | `app/Framework/Notification/NotificationType.php` | 42 |
 | `Catalyst\Framework\Organization\OrganizationClassification` | `class` | `app/Framework/Organization/OrganizationClassification.php` | 15 |
 | `Catalyst\Framework\Organization\OrganizationClassificationPresenter` | `class` | `app/Framework/Organization/OrganizationClassificationPresenter.php` | 13 |
-| `Catalyst\Framework\Organization\OrganizationRepository` | `class` | `app/Framework/Organization/OrganizationRepository.php` | 19 |
+| `Catalyst\Framework\Organization\OrganizationRepository` | `class` | `app/Framework/Organization/OrganizationRepository.php` | 20 |
 | `Catalyst\Framework\Plugin\PluginManager` | `class` | `app/Framework/Plugin/PluginManager.php` | 48 |
 | `Catalyst\Framework\Plugin\PluginRegistry` | `class` | `app/Framework/Plugin/PluginRegistry.php` | 41 |
 | `Catalyst\Framework\Presence\RecordPresenceManager` | `class` | `app/Framework/Presence/RecordPresenceManager.php` | 43 |
@@ -572,15 +576,16 @@
 | `Catalyst\Helpers\Validation\ValidationRunner` | `class` | `app/Helpers/Validation/ValidationRunner.php` | 52 |
 | `Catalyst\Helpers\Validation\Validator` | `class` | `app/Helpers/Validation/Validator.php` | 39 |
 | `Catalyst\Kernel` | `class` | `app/Kernel.php` | 69 |
-| `Catalyst\Repository\Account\Controllers\AccountCenterController` | `class` | `Repository/Framework/Account/Controllers/AccountCenterController.php` | 50 |
+| `Catalyst\Repository\Account\Controllers\AccountCenterController` | `class` | `Repository/Framework/Account/Controllers/AccountCenterController.php` | 52 |
 | `Catalyst\Repository\Account\Controllers\AccountRecoveryController` | `class` | `Repository/Framework/Account/Controllers/AccountRecoveryController.php` | 47 |
 | `Catalyst\Repository\Account\Repositories\AccountRecoveryRepository` | `class` | `Repository/Framework/Account/Repositories/AccountRecoveryRepository.php` | 44 |
 | `Catalyst\Repository\Account\Requests\MfaRecoveryRequest` | `class` | `Repository/Framework/Account/Requests/MfaRecoveryRequest.php` | 42 |
 | `Catalyst\Repository\Account\Requests\SupportRecoveryRequest` | `class` | `Repository/Framework/Account/Requests/SupportRecoveryRequest.php` | 42 |
+| `Catalyst\Repository\Account\Services\AccountAvatarService` | `class` | `Repository/Framework/Account/Services/AccountAvatarService.php` | 13 |
 | `Catalyst\Repository\Account\Services\AccountDashboardService` | `class` | `Repository/Framework/Account/Services/AccountDashboardService.php` | 43 |
 | `Catalyst\Repository\Account\Services\AccountRecoveryService` | `class` | `Repository/Framework/Account/Services/AccountRecoveryService.php` | 47 |
 | `Catalyst\Repository\Account\Services\AccountSecurityService` | `class` | `Repository/Framework/Account/Services/AccountSecurityService.php` | 43 |
-| `Catalyst\Repository\Account\Support\AccountSurfaceViewModel` | `class` | `Repository/Framework/Account/Support/AccountSurfaceViewModel.php` | 42 |
+| `Catalyst\Repository\Account\Support\AccountSurfaceViewModel` | `class` | `Repository/Framework/Account/Support/AccountSurfaceViewModel.php` | 46 |
 | `Catalyst\Repository\Api\Controllers\CalendarApiController` | `class` | `Repository/Framework/Api/Controllers/CalendarApiController.php` | 23 |
 | `Catalyst\Repository\Api\Controllers\CatalogApiController` | `class` | `Repository/Framework/Api/Controllers/CatalogApiController.php` | 12 |
 | `Catalyst\Repository\Api\Controllers\VersionApiController` | `class` | `Repository/Framework/Api/Controllers/VersionApiController.php` | 50 |
@@ -590,7 +595,7 @@
 | `Catalyst\Repository\Auth\Controllers\LogoutController` | `class` | `Repository/Framework/Auth/Controllers/LogoutController.php` | 44 |
 | `Catalyst\Repository\Auth\Controllers\MfaController` | `class` | `Repository/Framework/Auth/Controllers/MfaController.php` | 49 |
 | `Catalyst\Repository\Auth\Controllers\PasswordResetController` | `class` | `Repository/Framework/Auth/Controllers/PasswordResetController.php` | 50 |
-| `Catalyst\Repository\Auth\Controllers\RegisterController` | `class` | `Repository/Framework/Auth/Controllers/RegisterController.php` | 50 |
+| `Catalyst\Repository\Auth\Controllers\RegisterController` | `class` | `Repository/Framework/Auth/Controllers/RegisterController.php` | 51 |
 | `Catalyst\Repository\Auth\Controllers\SocialAuthController` | `class` | `Repository/Framework/Auth/Controllers/SocialAuthController.php` | 47 |
 | `Catalyst\Repository\Auth\Models\User` | `class` | `Repository/Framework/Auth/Models/User.php` | 51 |
 | `Catalyst\Repository\Auth\Requests\EmailVerificationTokenRequest` | `class` | `Repository/Framework/Auth/Requests/EmailVerificationTokenRequest.php` | 44 |
@@ -702,7 +707,7 @@
 | `Catalyst\Repository\Users\Controllers\OrganizationHierarchyController` | `class` | `Repository/Framework/Users/Controllers/OrganizationHierarchyController.php` | 20 |
 | `Catalyst\Repository\Users\Controllers\PermissionsController` | `class` | `Repository/Framework/Users/Controllers/PermissionsController.php` | 51 |
 | `Catalyst\Repository\Users\Controllers\RolesController` | `class` | `Repository/Framework/Users/Controllers/RolesController.php` | 53 |
-| `Catalyst\Repository\Users\Controllers\UserManagementController` | `class` | `Repository/Framework/Users/Controllers/UserManagementController.php` | 52 |
+| `Catalyst\Repository\Users\Controllers\UserManagementController` | `class` | `Repository/Framework/Users/Controllers/UserManagementController.php` | 55 |
 | `Catalyst\Repository\Users\Controllers\UserRolesController` | `class` | `Repository/Framework/Users/Controllers/UserRolesController.php` | 46 |
 | `Catalyst\Repository\Users\Requests\PermissionBulkSelectionRequest` | `class` | `Repository/Framework/Users/Requests/PermissionBulkSelectionRequest.php` | 41 |
 | `Catalyst\Repository\Users\Requests\PermissionPayloadRequest` | `class` | `Repository/Framework/Users/Requests/PermissionPayloadRequest.php` | 43 |
@@ -736,6 +741,7 @@
 | `Catalyst\Repository\Workspaces\Localization\Requests\LocaleCreateRequest` | `class` | `Repository/Framework/Workspaces/Localization/Requests/LocaleCreateRequest.php` | 12 |
 | `Catalyst\Repository\Workspaces\Localization\Requests\LocaleSyncRequest` | `class` | `Repository/Framework/Workspaces/Localization/Requests/LocaleSyncRequest.php` | 12 |
 | `Catalyst\Repository\Workspaces\Localization\Requests\LocalizationSettingsRequest` | `class` | `Repository/Framework/Workspaces/Localization/Requests/LocalizationSettingsRequest.php` | 12 |
+| `Catalyst\Repository\Workspaces\MailTemplates\Controllers\MailTemplateController` | `class` | `Repository/Framework/Workspaces/MailTemplates/Controllers/MailTemplateController.php` | 21 |
 | `Catalyst\Repository\Workspaces\Media\Controllers\MediaLibraryController` | `class` | `Repository/Framework/Workspaces/Media/Controllers/MediaLibraryController.php` | 53 |
 | `Catalyst\Repository\Workspaces\Media\Controllers\MetadataFieldController` | `class` | `Repository/Framework/Workspaces/Media/Controllers/MetadataFieldController.php` | 53 |
 | `Catalyst\Repository\Workspaces\Media\Requests\MediaBulkSelectionRequest` | `class` | `Repository/Framework/Workspaces/Media/Requests/MediaBulkSelectionRequest.php` | 41 |
@@ -743,7 +749,7 @@
 | `Catalyst\Repository\Workspaces\Media\Requests\MetadataFieldDefinitionRequest` | `class` | `Repository/Framework/Workspaces/Media/Requests/MetadataFieldDefinitionRequest.php` | 47 |
 | `Catalyst\Repository\Workspaces\Media\Support\MediaLibraryFormFactory` | `class` | `Repository/Framework/Workspaces/Media/Support/MediaLibraryFormFactory.php` | 44 |
 | `Catalyst\Repository\Workspaces\Media\Support\MetadataFieldFormFactory` | `class` | `Repository/Framework/Workspaces/Media/Support/MetadataFieldFormFactory.php` | 41 |
-| `Catalyst\Repository\Workspaces\ModuleDesigner\Controllers\ModuleDesignerController` | `class` | `Repository/Framework/Workspaces/ModuleDesigner/Controllers/ModuleDesignerController.php` | 21 |
+| `Catalyst\Repository\Workspaces\ModuleDesigner\Controllers\ModuleDesignerController` | `class` | `Repository/Framework/Workspaces/ModuleDesigner/Controllers/ModuleDesignerController.php` | 22 |
 | `Catalyst\Repository\Workspaces\ModuleDesigner\Requests\ModuleDesignerRequest` | `class` | `Repository/Framework/Workspaces/ModuleDesigner/Requests/ModuleDesignerRequest.php` | 20 |
 | `Catalyst\Repository\Workspaces\ModuleDesigner\Support\ModuleDesignerPreviewToken` | `class` | `Repository/Framework/Workspaces/ModuleDesigner/Support/ModuleDesignerPreviewToken.php` | 12 |
 | `Catalyst\Repository\Workspaces\Support\WorkspacesAccessContract` | `class` | `Repository/Framework/Workspaces/Support/WorkspacesAccessContract.php` | 17 |
@@ -761,6 +767,8 @@
 | `boot-core/template/components/_page-header.phtml` | `boot-core/template` | `phtml` |
 | `boot-core/template/components/_record-presence.phtml` | `boot-core/template` | `phtml` |
 | `boot-core/template/document.phtml` | `boot-core/template` | `phtml` |
+| `boot-core/template/errors/handler_error.phtml` | `boot-core/template` | `phtml` |
+| `boot-core/template/errors/handler_error_no.phtml` | `boot-core/template` | `phtml` |
 | `boot-core/template/errors/surface.phtml` | `boot-core/template` | `phtml` |
 | `boot-core/template/exports/datagrid-xls.phtml` | `boot-core/template` | `phtml` |
 | `boot-core/template/scope/components/_datagrid.php` | `boot-core/template` | `php` |
@@ -927,8 +935,12 @@
 | `Repository/Framework/Workspaces/Media/Views/scope/pages/form.php` | `Repository views` | `php` |
 | `Repository/Framework/Workspaces/Media/Views/scope/pages/index.php` | `Repository views` | `php` |
 | `Repository/Framework/Workspaces/Views/pages/localization/index.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Workspaces/Views/pages/mail-templates/editor.phtml` | `Repository views` | `phtml` |
+| `Repository/Framework/Workspaces/Views/pages/mail-templates/index.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/Workspaces/Views/pages/module-designer/index.phtml` | `Repository views` | `phtml` |
 | `Repository/Framework/Workspaces/Views/scope/pages/localization/index.php` | `Repository views` | `php` |
+| `Repository/Framework/Workspaces/Views/scope/pages/mail-templates/editor.php` | `Repository views` | `php` |
+| `Repository/Framework/Workspaces/Views/scope/pages/mail-templates/index.php` | `Repository views` | `php` |
 | `Repository/Framework/Workspaces/Views/scope/pages/module-designer/index.php` | `Repository views` | `php` |
 
 ## Scripts
@@ -954,14 +966,14 @@
 | `public/assets/js/catalyst/config/defaults.js` | `public catalyst js` | 3185 |
 | `public/assets/js/catalyst/core/asset-loader.js` | `public catalyst js` | 2758 |
 | `public/assets/js/catalyst/core/declarative-actions.js` | `public catalyst js` | 4569 |
-| `public/assets/js/catalyst/core/http.js` | `public catalyst js` | 11831 |
+| `public/assets/js/catalyst/core/http.js` | `public catalyst js` | 13605 |
 | `public/assets/js/catalyst/core/loading.js` | `public catalyst js` | 1789 |
 | `public/assets/js/catalyst/core/response-actions.js` | `public catalyst js` | 1315 |
 | `public/assets/js/catalyst/core/trusted-dom.js` | `public catalyst js` | 919 |
 | `public/assets/js/catalyst/core/utils.js` | `public catalyst js` | 6387 |
 | `public/assets/js/catalyst/datagrid/interactions.js` | `public catalyst js` | 5488 |
 | `public/assets/js/catalyst/forms/builder.js` | `public catalyst js` | 11565 |
-| `public/assets/js/catalyst/forms/form-handler.js` | `public catalyst js` | 11865 |
+| `public/assets/js/catalyst/forms/form-handler.js` | `public catalyst js` | 11922 |
 | `public/assets/js/catalyst/forms/password.js` | `public catalyst js` | 9492 |
 | `public/assets/js/catalyst/forms/validation.js` | `public catalyst js` | 707 |
 | `public/assets/js/catalyst/inspinia/card-actions.js` | `public catalyst js` | 3239 |
@@ -986,7 +998,7 @@
 | `public/assets/js/catalyst/runtime/event-registry.js` | `public catalyst js` | 995 |
 | `public/assets/js/catalyst/runtime/registration-queue.js` | `public catalyst js` | 1957 |
 | `public/assets/js/catalyst/runtime/ui-runtime.js` | `public catalyst js` | 20158 |
-| `public/assets/js/catalyst/shell/navigation.js` | `public catalyst js` | 6297 |
+| `public/assets/js/catalyst/shell/navigation.js` | `public catalyst js` | 9359 |
 | `public/assets/js/catalyst/shell/simplebar.js` | `public catalyst js` | 1730 |
 | `public/assets/js/catalyst/shell/status-bar.js` | `public catalyst js` | 19778 |
 | `public/assets/js/catalyst/shell/theme-customizer.js` | `public catalyst js` | 12390 |

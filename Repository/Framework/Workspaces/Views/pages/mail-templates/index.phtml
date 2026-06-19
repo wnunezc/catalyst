@@ -1,0 +1,77 @@
+<div class="surface-page surface-page-shell">
+    {{> "components._page-header" }}
+
+    <section class="card mb-3">
+        <div class="card-body">
+            <form method="GET" action="/workspaces/mail-templates" class="row g-2 align-items-end">
+                <div class="col-12 col-md-4">
+                    <label class="form-label" for="mail-origin">{{ t:workspaces.mail_templates.filters.origin }}</label>
+                    <select id="mail-origin" name="origin" class="form-select">
+                        {{#each origin_options}}<option value="{{ value }}"{{#if selected}} selected{{/if}}>{{ label }}</option>{{/each}}
+                    </select>
+                </div>
+                <div class="col-12 col-md-5">
+                    <label class="form-label" for="mail-domain">{{ t:workspaces.mail_templates.filters.domain }}</label>
+                    <input id="mail-domain" name="domain" class="form-control" value="{{ domain_filter }}">
+                </div>
+                <div class="col-12 col-md-3"><button class="btn btn-outline-primary w-100" type="submit">{{ t:workspaces.mail_templates.filters.apply }}</button></div>
+            </form>
+        </div>
+    </section>
+
+    <section class="card mb-3">
+        <div class="card-header"><h2 class="h5 mb-0">{{ t:workspaces.mail_templates.list.title }}</h2></div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover align-middle mb-0" data-mail-template-list>
+                    <thead><tr><th>{{ t:workspaces.mail_templates.fields.name }}</th><th>{{ t:workspaces.mail_templates.fields.key }}</th><th>{{ t:workspaces.mail_templates.fields.origin }}</th><th>{{ t:workspaces.mail_templates.fields.locales }}</th><th></th></tr></thead>
+                    <tbody>
+                    {{#each templates}}
+                        <tr data-mail-template-row="{{ key }}">
+                            <td>{{ name }}</td>
+                            <td><code>{{ key }}</code></td>
+                            <td><span class="badge text-bg-light">{{ origin }}</span></td>
+                            <td>{{ locale_count }}</td>
+                            <td class="text-end"><a class="btn btn-sm btn-outline-primary" href="{{ href }}">{{ t:workspaces.mail_templates.actions.open }}</a></td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            {{#unless has_templates}}<div class="p-4 text-muted">{{ t:workspaces.mail_templates.list.empty }}</div>{{/unless}}
+        </div>
+    </section>
+
+    <section class="card">
+        <div class="card-header"><h2 class="h5 mb-0">{{ t:workspaces.mail_templates.assets.title }}</h2></div>
+        <div class="card-body">
+            <form method="POST" action="/workspaces/mail-templates/assets" enctype="multipart/form-data" data-catalyst="form" class="row g-2 mb-3">
+                {{{ csrfField }}}
+                <div class="col-12 col-md-9"><input class="form-control" type="file" name="asset" accept=".png,.jpg,.jpeg,.webp,.gif" required></div>
+                <div class="col-12 col-md-3"><button class="btn btn-primary w-100" type="submit">{{ t:workspaces.mail_templates.assets.upload }}</button></div>
+            </form>
+            <div class="table-responsive">
+                <table class="table table-sm align-middle mb-0">
+                    <thead><tr><th>{{ t:workspaces.mail_templates.assets.name }}</th><th>{{ t:workspaces.mail_templates.fields.origin }}</th><th>{{ t:workspaces.mail_templates.assets.size }}</th><th></th></tr></thead>
+                    <tbody>
+                    {{#each assets}}
+                        <tr data-mail-asset="{{ name }}">
+                            <td><a href="{{ url }}" target="_blank" rel="noopener">{{ name }}</a></td>
+                            <td>{{ origin }}</td>
+                            <td>{{ size }}</td>
+                            <td class="text-end">
+                                {{#if managed}}
+                                <form method="POST" action="{{ delete_action }}" data-catalyst="form" class="d-inline">
+                                    {{{ csrfField }}}
+                                    <button class="btn btn-sm btn-outline-danger" type="submit">{{ t:workspaces.mail_templates.actions.delete }}</button>
+                                </form>
+                                {{/if}}
+                            </td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>

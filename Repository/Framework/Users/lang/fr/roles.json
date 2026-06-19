@@ -69,6 +69,36 @@
     "empty": "No roles defined."
   },
   "users": {
+    "form": {
+      "labels": {
+        "name": "Full name",
+        "email": "Email address",
+        "role": "Initial role",
+        "email_verified": "Email verification",
+        "onboarding": "Secure onboarding"
+      },
+      "placeholders": {
+        "name": "Example: Jane Doe",
+        "email": "user@domain.com"
+      },
+      "default_role_label": "User",
+      "options": {
+        "email_verified_yes": "Mark as verified",
+        "email_verified_no": "Leave pending verification"
+      },
+      "help": {
+        "onboarding": "Catalyst will generate an internal temporary credential, email a secure password setup link, and optionally include email verification. The administrator never sees or chooses the user's password.",
+        "role": "This role will be stored in the user_roles pivot table.",
+        "email_verified": "For users created by privileged, the practical default is to mark them as verified."
+      },
+      "actions": {
+        "submit": "Register user"
+      }
+    },
+    "messages": {
+      "created_onboarding_sent": "User registered and onboarding email sent.",
+      "created_onboarding_mail_failed": "User registered, but onboarding email could not be sent. Review mail configuration and resend onboarding before sharing access."
+    },
     "enroll": {
       "toolbar_label": "Enrollment policy",
       "identity_badge": "Identity",
@@ -79,7 +109,7 @@
         "identity_title": "Identity profile",
         "identity_description": "Register the minimum account identity required by the framework.",
         "security_title": "Credential policy",
-        "security_description": "Assign a temporary secure password for the first login cycle.",
+        "security_description": "Catalyst creates a secure setup link instead of exposing a password to administrators.",
         "access_title": "Initial access",
         "access_description": "Assign the starting role and verification state for this user."
       }

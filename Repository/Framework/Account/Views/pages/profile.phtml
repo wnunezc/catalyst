@@ -41,10 +41,23 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="alert alert-info mb-0">
-                        <i class="ti ti-info-circle"></i>
-                        <p>{{ t:account.profile.editing_note }}</p>
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <img src="{{ account_avatar_src }}" alt="{{ t:account.profile.avatar_alt }}" class="rounded-circle border" width="72" height="72">
+                        <div>
+                            <h3 class="h6 mb-1">{{ t:account.profile.avatar_title }}</h3>
+                            <p class="text-muted mb-0">{{ t:account.profile.avatar_hint }}</p>
+                        </div>
                     </div>
+                    <form method="POST" action="/account/profile/avatar" enctype="multipart/form-data" data-catalyst="form" class="row g-3">
+                        {{{ csrfField }}}
+                        <div class="col-12">
+                            <label class="form-label" for="account-avatar">{{ t:account.profile.avatar_label }}</label>
+                            <input id="account-avatar" name="avatar" type="file" class="form-control" accept="image/jpeg,image/png,image/webp" required>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">{{ t:account.profile.avatar_submit }}</button>
+                        </div>
+                    </form>
                 </div>
             </article>
         </div>

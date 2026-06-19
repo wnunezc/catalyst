@@ -89,6 +89,17 @@ final class ActivityArchitectureTest extends TestCase
         Assert::contains('delete prepared.background', $http);
     }
 
+    public function testForegroundNotificationsWaitForActivityIdleAndRenderAboveOverlay(): void
+    {
+        $http = $this->read('public/assets/js/catalyst/core/http.js');
+        $notifications = $this->read('public/assets/css/catalyst/notifications.css');
+
+        Assert::contains('processNotificationsWhenActivityIdle', $http);
+        Assert::contains("'catalyst:activity:idle'", $http);
+        Assert::contains('requestAnimationFrame', $http);
+        Assert::contains('z-index: 2050;', $notifications);
+    }
+
     public function testAutomaticRuntimeTransportsAreExplicitlyBackground(): void
     {
         foreach ([

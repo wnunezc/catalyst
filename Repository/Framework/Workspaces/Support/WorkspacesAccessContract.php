@@ -22,6 +22,7 @@ final class WorkspacesAccessContract
     public const MEDIA_LIBRARY = 'manage-workspaces-media-library';
     public const DOCUMENT_TEMPLATES = 'manage-workspaces-document-templates';
     public const LOCALIZATION = 'manage-workspaces-localization';
+    public const MAIL_TEMPLATES = 'manage-workspaces-mail-templates';
 
     /**
      * Returns every canonical Workspaces permission in navigation order.
@@ -39,6 +40,7 @@ final class WorkspacesAccessContract
             self::MEDIA_LIBRARY,
             self::DOCUMENT_TEMPLATES,
             self::LOCALIZATION,
+            self::MAIL_TEMPLATES,
         ];
     }
 

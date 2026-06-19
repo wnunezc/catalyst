@@ -13,10 +13,132 @@ Document mail message, template, DKIM and attachment primitives.
 | Configure PHPMailer and deliver framework mail messages. | `Catalyst\Framework\Mail\MailManager` |
 | Hold and validate per-message mail state for PHPMailer delivery. | `Catalyst\Framework\Mail\MailMessage` |
 | Render mail templates from the configured email template root. | `Catalyst\Framework\Mail\MailTemplate` |
+| Resolve JSON email templates with locale fallback and placeholder validation. | `Catalyst\Framework\Mail\EmailTemplateManager` |
+| Render and deliver outbound template emails with safe delivery logging. | `Catalyst\Framework\Mail\OutboundEmailService` |
 
 ## Current Behavior
 
 This file is regenerated from current PHP docblocks and the runtime inventory scope for `Catalyst\Framework\Mail`. It intentionally replaces stale historical API notes with the classes and methods that exist in code now.
+
+## Framework Mail Template Tool
+
+The privileged manager is available at `/workspaces/mail-templates` to users
+with `manage-workspaces-mail-templates`. It lists framework defaults, creates
+versionable managed templates, edits localized copy and message structure,
+previews HTML and text, manages images and sends test messages.
+
+Safe preview uses the same foreground form contract as the rest of the
+framework UI. The POST action renders the template, stores a one-time preview
+state in the authenticated session, and returns JSON with a redirect target so
+the activity overlay and toaster lifecycle remain consistent. It does not
+return a full HTML page directly to a `data-catalyst="form"` request.
+
+Framework outbound email should go through
+`OutboundEmailService::sendTemplate()`. Applications identify templates by
+logical key and never resolve physical paths:
+
+```php
+$result = $outboundEmail->sendTemplate(
+    'users.enrollment_onboarding',
+    $recipientEmail,
+    $recipientName,
+    [
+        'user_name' => $recipientName,
+        'action_url' => $setupUrl,
+    ],
+    $recipientLocale
+);
+```
+
+### Source Layout
+
+All template resources remain framework-owned:
+
+```text
+Repository/Framework/Mail/
++-- system/
+|   +-- templates/{domain}/{template}/
+|   +-- lang/{locale}/{catalog}.json
+|   +-- assets/
++-- managed/
+    +-- templates/{domain}/{template}/
+    +-- lang/{locale}/{catalog}.json
+    +-- assets/
+```
+
+`system` contains immutable defaults shipped by Catalyst. `managed` contains
+web-managed overrides and custom templates that remain visible to Git. Editing
+a system template creates a managed override; deleting that override restores
+the system behavior. `Repository/App/Mail` is not used.
+
+Each template directory contains:
+
+- `template.json`: key, display name, translation catalog and namespace,
+  structure filenames, required placeholders and sample payload.
+- `layout.html`: HTML structure.
+- `text.txt`: plain-text structure.
+
+### Localized Content
+
+Mail uses the standard Catalyst `Translator`. A manifest declares a catalog
+such as `mail_users_enrollment_onboarding` and a namespace such as
+`users.enrollment_onboarding`. The corresponding catalogs are regular
+`lang/{locale}/{catalog}.json` files and therefore participate in Locale Tools
+coverage, locale initialization, synchronization and configured fallback.
+
+Example catalog:
+
+```json
+{
+  "users": {
+    "enrollment_onboarding": {
+      "subject": "Welcome to :brand_name",
+      "heading": "Hello, :user_name",
+      "action_label": "Configure my password"
+    }
+  }
+}
+```
+
+HTML and text structures use `{{ t:users.enrollment_onboarding.heading }}` for
+localized copy and `{{ action_url }}` for escaped runtime values. Translator
+replacements keep the existing `:name` syntax.
+
+### Layouts, Branding and Images
+
+Use `{{ brand_name }}` and `{{ brand_logo_url }}` to consume Platform
+Appearance branding. Additional images are uploaded through the tool and stored
+under `Repository/Framework/Mail/managed/assets`. Their generated public copies
+live under `public/assets/work/framework-mail/managed`.
+
+Template source must reference registered assets using `{{ asset:name }}`.
+Images are validated by detected MIME and are limited to PNG, JPEG, WebP or GIF
+files up to 2 MB. An image cannot be removed while a template references it.
+
+### Creating and Personalizing Templates
+
+1. Open Workspaces, then Mail Templates after Locale Tools.
+2. Create a managed template or open a system template and choose Customize.
+3. Declare its stable key, translation catalog, namespace, required variables
+   and sample payload.
+4. Edit HTML and text structure.
+5. Select each supported locale and edit its catalog copy.
+6. Validate and preview both renderings.
+7. Optionally upload images and send a test message.
+8. Save the managed source for version control.
+
+To return a customized framework template to its distributed default, remove
+the managed override from its detail screen. The system source is never
+modified.
+
+### Existing Consumers
+
+Registration verification and privileged user enrollment use stable system
+keys. Their copy, layout and images can be customized in Workspaces without
+changing their controllers. Delivery failures return an administrative status
+without exposing setup tokens, temporary credentials or transport secrets.
+
+The complete implementation rules live in `TOOL-Mail.md`.
 
 ## API From Docblocks
 

@@ -2,24 +2,18 @@
 
 declare(strict_types=1);
 
-namespace CatalystTest\Authorization;
+namespace CatalystTest\Integration\Authorization;
 
 use Catalyst\Framework\Authorization\CanonicalPermissionGrantMigrator;
 use Catalyst\Framework\Database\Connection;
 use Catalyst\Repository\Operations\Support\OperationsAccessContract;
 use Catalyst\Repository\Workspaces\Support\WorkspacesAccessContract;
+use CatalystTest\Integration\Support\MySqlIntegrationTestCase;
 use CatalystTest\Support\Assert;
-use CatalystTest\TestCase;
-use PDO;
 use Throwable;
 
-final class CanonicalPermissionGrantMigratorTest extends TestCase
+final class CanonicalPermissionGrantMigratorMysqlTest extends MySqlIntegrationTestCase
 {
-    public function setUp(): void
-    {
-        require_once dirname(__DIR__, 4) . '/boot-core/requirement-loader/error-catcher.php';
-    }
-
     public function testMigratesEquivalentGrantsIdempotentlyAndRollsBack(): void
     {
         $connection = $this->database();
@@ -110,62 +104,55 @@ final class CanonicalPermissionGrantMigratorTest extends TestCase
 
     private function database(): Connection
     {
-        $pdo = new PDO('sqlite::memory:');
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo = $this->pdo();
         $pdo->exec(
             'CREATE TABLE permissions (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                tenant_id INTEGER NOT NULL,
-                name TEXT NOT NULL,
-                slug TEXT NOT NULL,
-                description TEXT,
-                created_at TEXT DEFAULT CURRENT_TIMESTAMP,
-                UNIQUE (tenant_id, name),
-                UNIQUE (tenant_id, slug)
-            )'
+                id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                tenant_id BIGINT UNSIGNED NOT NULL,
+                name VARCHAR(191) NOT NULL,
+                slug VARCHAR(191) NOT NULL,
+                description VARCHAR(255) NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                UNIQUE KEY permissions_tenant_name_unique (tenant_id, name),
+                UNIQUE KEY permissions_tenant_slug_unique (tenant_id, slug)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci'
         );
         $pdo->exec(
             'CREATE TABLE roles (
-                id INTEGER PRIMARY KEY,
-                tenant_id INTEGER NOT NULL,
-                name TEXT NOT NULL,
-                slug TEXT NOT NULL
-            )'
+                id BIGINT UNSIGNED NOT NULL PRIMARY KEY,
+                tenant_id BIGINT UNSIGNED NOT NULL,
+                name VARCHAR(191) NOT NULL,
+                slug VARCHAR(191) NOT NULL
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci'
         );
         $pdo->exec(
             'CREATE TABLE role_permissions (
-                role_id INTEGER NOT NULL,
-                permission_id INTEGER NOT NULL,
-                tenant_id INTEGER NOT NULL,
+                role_id BIGINT UNSIGNED NOT NULL,
+                permission_id BIGINT UNSIGNED NOT NULL,
+                tenant_id BIGINT UNSIGNED NOT NULL,
                 PRIMARY KEY (role_id, permission_id)
-            )'
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci'
         );
         $pdo->exec(
             'CREATE TABLE canonical_permission_migration_permissions (
-                migration_key TEXT NOT NULL,
-                tenant_id INTEGER NOT NULL,
-                permission_id INTEGER NOT NULL,
-                target_slug TEXT NOT NULL,
+                migration_key VARCHAR(191) NOT NULL,
+                tenant_id BIGINT UNSIGNED NOT NULL,
+                permission_id BIGINT UNSIGNED NOT NULL,
+                target_slug VARCHAR(191) NOT NULL,
                 PRIMARY KEY (migration_key, tenant_id, permission_id)
-            )'
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci'
         );
         $pdo->exec(
             'CREATE TABLE canonical_permission_migration_grants (
-                migration_key TEXT NOT NULL,
-                tenant_id INTEGER NOT NULL,
-                role_id INTEGER NOT NULL,
-                permission_id INTEGER NOT NULL,
+                migration_key VARCHAR(191) NOT NULL,
+                tenant_id BIGINT UNSIGNED NOT NULL,
+                role_id BIGINT UNSIGNED NOT NULL,
+                permission_id BIGINT UNSIGNED NOT NULL,
                 PRIMARY KEY (migration_key, tenant_id, role_id, permission_id)
-            )'
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci'
         );
 
-        return new class ($pdo) extends Connection {
-            public function __construct(PDO $pdo)
-            {
-                parent::__construct('', 0, '', '', '', 'permission-transition-test');
-                $this->pdo = $pdo;
-            }
-        };
+        return $this->connection();
     }
 
     private function seedLegacyPermissions(Connection $connection): void
@@ -243,7 +230,7 @@ final class CanonicalPermissionGrantMigratorTest extends TestCase
             (array) ($operations['permissions'] ?? [])
         );
 
-        if (count($definitions) !== 11) {
+        if (count($definitions) !== count(WorkspacesAccessContract::permissions()) + count(OperationsAccessContract::permissions())) {
             return false;
         }
 

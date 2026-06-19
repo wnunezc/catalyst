@@ -29,7 +29,7 @@ final class WorkspacesOperationsOwnershipContractTest extends TestCase
         }
     }
 
-    public function testExactlySeventySixRoutesBelongToTheCanonicalOwners(): void
+    public function testExactlyEightyEightRoutesBelongToTheCanonicalOwners(): void
     {
         $actual = [];
 
@@ -47,7 +47,7 @@ final class WorkspacesOperationsOwnershipContractTest extends TestCase
         ksort($actual);
         ksort($expected);
 
-        Assert::same(76, count($actual));
+        Assert::same(88, count($actual));
         Assert::same(array_keys($expected), array_keys($actual));
     }
 
@@ -171,10 +171,22 @@ final class WorkspacesOperationsOwnershipContractTest extends TestCase
             'GET /workspaces/module-designer',
             'POST /workspaces/module-designer/preview',
             'POST /workspaces/module-designer/generate',
+            'POST /workspaces/module-designer/modules/{key}/delete',
             'GET /workspaces/locale-tools',
             'POST /workspaces/locale-tools/settings',
             'POST /workspaces/locale-tools/create-locale',
             'POST /workspaces/locale-tools/sync-locale',
+            'GET /workspaces/mail-templates',
+            'POST /workspaces/mail-templates',
+            'GET /workspaces/mail-templates/create',
+            'POST /workspaces/mail-templates/assets',
+            'POST /workspaces/mail-templates/assets/{name}/delete',
+            'GET /workspaces/mail-templates/{key}',
+            'POST /workspaces/mail-templates/{key}',
+            'POST /workspaces/mail-templates/{key}/preview',
+            'POST /workspaces/mail-templates/{key}/test',
+            'POST /workspaces/mail-templates/{key}/restore',
+            'POST /workspaces/mail-templates/{key}/delete',
             'GET /operations/audit-log',
             'GET /operations/audit-log/{id}',
             'GET /operations/api-management',
@@ -224,6 +236,7 @@ final class WorkspacesOperationsOwnershipContractTest extends TestCase
             'manage-workspaces-media-library',
             'manage-workspaces-document-templates',
             'manage-workspaces-localization',
+            'manage-workspaces-mail-templates',
             'manage-operations-deployments',
             'manage-operations-tenancy',
             'manage-operations-audit-log',

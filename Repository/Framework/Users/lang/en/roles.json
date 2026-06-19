@@ -131,12 +131,18 @@
     "visual_token": "Visual token",
     "color": "Color",
     "order": "Order",
-    "save": "Save",
+            "save": "Save",
+            "update": "Update",
     "messages": {
       "organization_saved": "Organization saved.",
       "unit_saved": "Organization unit saved.",
       "scope_saved": "Hierarchy scope saved.",
       "level_saved": "Hierarchy level saved.",
+      "organization_deleted": "Organization deleted.",
+      "unit_deleted": "Organization unit deleted.",
+      "scope_deleted": "Hierarchy scope deleted.",
+      "level_deleted": "Hierarchy level deleted.",
+      "delete_blocked": "Locked: %s",
       "invalid_payload": "Review the organization hierarchy payload.",
       "invalid_key": "Use lowercase letters, numbers and hyphens for keys.",
       "invalid_color": "Use a hex color like #1f7a8c.",
@@ -246,7 +252,8 @@
         "password": "Password",
         "password_confirm": "Confirm password",
         "role": "Initial role",
-        "email_verified": "Email verification"
+        "email_verified": "Email verification",
+        "onboarding": "Secure onboarding"
       },
       "placeholders": {
         "name": "Example: Jane Doe",
@@ -261,6 +268,7 @@
       },
       "help": {
         "password": "Use a secure temporary password. The user will be able to change it later.",
+        "onboarding": "Catalyst will generate an internal temporary credential, email a secure password setup link, and optionally include email verification. The administrator never sees or chooses the user's password.",
         "role": "This role will be stored in the user_roles pivot table.",
         "email_verified": "For users created by privileged, the practical default is to mark them as verified."
       },
@@ -274,6 +282,8 @@
       "email_exists": "A user with that email address is already registered.",
       "create_error": "The user could not be created:",
       "created": "User registered successfully.",
+      "created_onboarding_sent": "User registered and onboarding email sent.",
+      "created_onboarding_mail_failed": "User registered, but onboarding email could not be sent. Review mail configuration and resend onboarding before sharing access.",
       "user_not_found": "User not found."
     },
     "enroll": {
@@ -286,7 +296,7 @@
         "identity_title": "Identity profile",
         "identity_description": "Register the minimum account identity required by the framework.",
         "security_title": "Credential policy",
-        "security_description": "Assign a temporary secure password for the first login cycle.",
+        "security_description": "Catalyst creates a secure setup link instead of exposing a password to administrators.",
         "access_title": "Initial access",
         "access_description": "Assign the starting role and verification state for this user."
       }

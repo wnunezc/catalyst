@@ -61,6 +61,7 @@ final class UserProfile extends Model
         'organization',
         'position',
         'department',
+        'avatar_path',
         'created_at',
         'updated_at',
         'created_by',

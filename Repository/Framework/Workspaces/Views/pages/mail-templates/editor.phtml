@@ -1,0 +1,96 @@
+<div class="surface-page surface-page-shell">
+    {{> "components._page-header" }}
+
+    <div class="d-flex flex-wrap gap-2 mb-3" aria-label="{{ t:workspaces.mail_templates.fields.locales }}">
+        {{#each locale_options}}<a href="{{ href }}" class="btn btn-sm{{#if selected}} btn-primary{{else}} btn-outline-secondary{{/if}}">{{ label }}</a>{{/each}}
+    </div>
+
+    <form method="POST" action="{{ form_action }}" data-catalyst="form" class="row g-3">
+        {{{ csrfField }}}
+        <input type="hidden" name="locale" value="{{ locale }}">
+        <div class="col-12 col-lg-8">
+            <section class="card mb-3">
+                <div class="card-header"><h2 class="h5 mb-0">{{ t:workspaces.mail_templates.sections.definition }}</h2></div>
+                <div class="card-body row g-3">
+                    <div class="col-12 col-md-7"><label class="form-label" for="mail-name">{{ t:workspaces.mail_templates.fields.name }}</label><input id="mail-name" class="form-control" name="name" value="{{ name }}" required></div>
+                    <div class="col-12 col-md-5"><label class="form-label" for="mail-key">{{ t:workspaces.mail_templates.fields.key }}</label><input id="mail-key" class="form-control" name="key" value="{{ key }}"{{#unless creating}} readonly{{/unless}} required></div>
+                    <div class="col-12 col-md-6"><label class="form-label" for="mail-catalog">{{ t:workspaces.mail_templates.fields.catalog }}</label><input id="mail-catalog" class="form-control" name="translation_catalog" value="{{ translation_catalog }}" required></div>
+                    <div class="col-12 col-md-6"><label class="form-label" for="mail-namespace">{{ t:workspaces.mail_templates.fields.namespace }}</label><input id="mail-namespace" class="form-control" name="translation_namespace" value="{{ translation_namespace }}" required></div>
+                    <div class="col-12 col-md-6"><label class="form-label" for="mail-placeholders">{{ t:workspaces.mail_templates.fields.placeholders }}</label><textarea id="mail-placeholders" class="form-control font-monospace" rows="7" name="required_placeholders_json">{{ required_placeholders_json }}</textarea></div>
+                    <div class="col-12 col-md-6"><label class="form-label" for="mail-payload">{{ t:workspaces.mail_templates.fields.sample_payload }}</label><textarea id="mail-payload" class="form-control font-monospace" rows="7" name="sample_payload_json">{{ sample_payload_json }}</textarea></div>
+                </div>
+            </section>
+            <section class="card mb-3">
+                <div class="card-header"><h2 class="h5 mb-0">{{ t:workspaces.mail_templates.sections.content }}</h2></div>
+                <div class="card-body row g-3">
+                    <div class="col-12"><label class="form-label" for="mail-html">HTML</label><textarea id="mail-html" class="form-control font-monospace" rows="14" name="html" required>{{ html }}</textarea></div>
+                    <div class="col-12"><label class="form-label" for="mail-text">{{ t:workspaces.mail_templates.fields.text }}</label><textarea id="mail-text" class="form-control font-monospace" rows="8" name="text" required>{{ text }}</textarea></div>
+                </div>
+            </section>
+            <section class="card">
+                <div class="card-header"><h2 class="h5 mb-0">{{ t:workspaces.mail_templates.sections.translation }}: {{ locale }}</h2></div>
+                <div class="card-body"><textarea class="form-control font-monospace" rows="16" name="catalog_json" required>{{ catalog_json }}</textarea></div>
+            </section>
+        </div>
+        <div class="col-12 col-lg-4">
+            <section class="card mb-3">
+                <div class="card-header"><h2 class="h5 mb-0">{{ t:workspaces.mail_templates.sections.actions }}</h2></div>
+                <div class="card-body d-grid gap-2">
+                    <span class="badge text-bg-light">{{ origin }}</span>
+                    <button class="btn btn-primary" type="submit">{{ t:workspaces.mail_templates.actions.save }}</button>
+                </div>
+            </section>
+        </div>
+    </form>
+
+    {{#unless creating}}
+    <div class="row g-3 mt-1">
+        <div class="col-12 col-lg-8">
+            <section class="card">
+                <div class="card-header"><h2 class="h5 mb-0">{{ t:workspaces.mail_templates.preview.title }}</h2></div>
+                <div class="card-body">
+                    <form method="POST" action="{{ preview_action }}" data-catalyst="form" class="mb-3">
+                        {{{ csrfField }}}
+                        <input type="hidden" name="locale" value="{{ locale }}">
+                        <input type="hidden" name="sample_payload_json" value="{{ sample_payload_json }}">
+                        <button class="btn btn-outline-primary" type="submit">{{ t:workspaces.mail_templates.actions.preview }}</button>
+                    </form>
+                    {{#if has_preview}}
+                        <h3 class="h6">{{ preview_subject }}</h3>
+                        <div class="ratio ratio-16x9">
+                            <iframe sandbox title="{{ t:workspaces.mail_templates.preview.html }}" class="border" srcdoc="{{ preview_html }}"></iframe>
+                        </div>
+                        <pre class="mt-3 mb-0">{{ preview_text }}</pre>
+                    {{/if}}
+                </div>
+            </section>
+        </div>
+        <div class="col-12 col-lg-4">
+            <section class="card mb-3">
+                <div class="card-header"><h2 class="h5 mb-0">{{ t:workspaces.mail_templates.test.title }}</h2></div>
+                <div class="card-body">
+                    <form method="POST" action="{{ test_action }}" data-catalyst="form" class="d-grid gap-2">
+                        {{{ csrfField }}}
+                        <input type="hidden" name="locale" value="{{ locale }}">
+                        <input type="hidden" name="sample_payload_json" value="{{ sample_payload_json }}">
+                        <input class="form-control" type="email" name="test_email" placeholder="name@example.com" required>
+                        <button class="btn btn-outline-primary" type="submit">{{ t:workspaces.mail_templates.actions.send_test }}</button>
+                    </form>
+                </div>
+            </section>
+            {{#if can_restore}}
+            <form method="POST" action="{{ restore_action }}" data-catalyst="form" class="mb-2">
+                {{{ csrfField }}}
+                <button class="btn btn-outline-warning w-100" type="submit">{{ t:workspaces.mail_templates.actions.restore }}</button>
+            </form>
+            {{/if}}
+            {{#if can_delete}}
+            <form method="POST" action="{{ delete_action }}" data-catalyst="form">
+                {{{ csrfField }}}
+                <button class="btn btn-outline-danger w-100" type="submit">{{ t:workspaces.mail_templates.actions.delete }}</button>
+            </form>
+            {{/if}}
+        </div>
+    </div>
+    {{/unless}}
+</div>

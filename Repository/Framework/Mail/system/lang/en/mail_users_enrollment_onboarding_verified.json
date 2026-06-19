@@ -1,0 +1,11 @@
+{
+  "users": {
+    "enrollment_onboarding_verified": {
+      "subject": "Your :app_name account is ready",
+      "heading": "Hello, :name",
+      "introduction": "An administrator created your :app_name account.",
+      "action_label": "Set your password",
+      "footer": "If you did not expect this account, ignore this message and contact your administrator."
+    }
+  }
+}

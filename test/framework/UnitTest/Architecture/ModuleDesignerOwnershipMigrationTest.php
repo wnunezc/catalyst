@@ -16,12 +16,12 @@ final class ModuleDesignerOwnershipMigrationTest extends TestCase
         $this->root = dirname(__DIR__, 4);
     }
 
-    public function testModuleDesignerIsOwnedByWorkspacesWithThreeSafeRoutes(): void
+    public function testModuleDesignerIsOwnedByWorkspacesWithFourSafeRoutes(): void
     {
         $routes = $this->read('Repository/Framework/Workspaces/routes.php');
 
         Assert::true(is_dir($this->root . '/Repository/Framework/Workspaces/ModuleDesigner'));
-        Assert::same(3, $this->routeCount($routes, '/workspaces/module-designer'));
+        Assert::same(4, $this->routeCount($routes, '/workspaces/module-designer'));
         Assert::contains(
             "get('/workspaces/module-designer', [ModuleDesignerController::class, 'index'])",
             $routes
@@ -32,6 +32,10 @@ final class ModuleDesignerOwnershipMigrationTest extends TestCase
         );
         Assert::contains(
             "post('/workspaces/module-designer/generate', [ModuleDesignerController::class, 'generate'])",
+            $routes
+        );
+        Assert::contains(
+            "post('/workspaces/module-designer/modules/{key}/delete', [ModuleDesignerController::class, 'destroy'])",
             $routes
         );
         Assert::false(str_contains($routes, "get('/workspaces/module-designer/preview'"));

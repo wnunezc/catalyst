@@ -23,5 +23,7 @@ test intentionally reports diagnostic data. Throw an exception or use
 - Keep tests independent and short.
 - Do not open a browser.
 - Do not rely on WSDD, Docker, MFA, network services or local OS applications.
+- Do not use SQLite or in-memory database harnesses for framework database
+  behavior. Put MySQL/MariaDB-backed coverage in `test/framework/IntegrationTest`.
 - Put environment-backed behavior in CLI smokes or Playwright tests instead.
 - Do not place passwords or other credentials in test source files.

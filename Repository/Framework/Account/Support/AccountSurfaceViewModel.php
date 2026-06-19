@@ -30,7 +30,11 @@ declare(strict_types=1);
 
 namespace Catalyst\Repository\Account\Support;
 
+use App\Repositories\UserProfileRepository;
 use Catalyst\Framework\Auth\AuthManager;
+use Catalyst\Framework\View\TrustedHtml;
+use Catalyst\Repository\Account\Services\AccountAvatarService;
+use Catalyst\Helpers\Security\CsrfProtection;
 use Catalyst\Helpers\I18n\Translator;
 
 /**
@@ -77,6 +81,9 @@ final class AccountSurfaceViewModel
         $authUser = AuthManager::getInstance()->user() ?? [];
         $authName = trim((string) ($authUser['name'] ?? ''));
         $authEmail = trim((string) ($authUser['email'] ?? ''));
+        $profile = (new UserProfileRepository())->findByUserId((int) ($authUser['id'] ?? 0));
+        $avatarPath = $profile !== null ? (string) ($profile->avatar_path ?? '') : '';
+        $avatarSrc = (new AccountAvatarService())->url($avatarPath);
         $title = (string) ($scope['title'] ?? 'Catalyst');
         $layout = $authenticated
             ? [
@@ -102,7 +109,7 @@ final class AccountSurfaceViewModel
             'auth_name' => $authName !== '' ? $authName : __('account.shell.fallback_user'),
             'auth_email' => $authEmail,
             'has_auth_email' => $authEmail !== '',
-            'auth_avatar_src' => (string) ($scope['auth_avatar_src'] ?? '/assets/vendor/inspinia/images/users/user-1.jpg'),
+            'auth_avatar_src' => (string) ($scope['auth_avatar_src'] ?? $avatarSrc),
             'auth_menu_label' => __('ui.product_nav.account_toggle'),
             'navigation_model' => 'application',
             'has_breadcrumbs' => !empty($scope['breadcrumb_items']),
@@ -121,6 +128,7 @@ final class AccountSurfaceViewModel
             'show_theme_customizer' => false,
             'show_auth_brand_panel' => false,
             'surface_context' => 'account',
+            'csrfField' => TrustedHtml::fromString(CsrfProtection::getInstance()->getTokenField()),
         ], $layout, $scope);
     }
 

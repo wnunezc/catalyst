@@ -55,10 +55,18 @@
                 "title": "Módulos registrados",
                 "name": "Módulo",
                 "scope": "Alcance",
-                "routes": "Rutas"
+                "status": "Estado",
+                "routes": "Rutas",
+                "dependencies": "Dependencias",
+                "actions": "Acciones",
+                "delete": "Eliminar",
+                "status_enabled": "Activo",
+                "status_disabled": "Inactivo"
             },
             "messages": {
                 "module_created": "Módulo creado:",
+                "module_deleted": "Módulo eliminado de forma segura.",
+                "delete_blocked": "El borrado del módulo fue bloqueado.",
                 "preview_failed": "No fue posible generar la previsualización del scaffold.",
                 "generation_failed": "No fue posible generar el módulo. No se expusieron detalles internos de la excepción."
             },
@@ -121,6 +129,88 @@
                 "labels_complete": "Cada idioma soportado requiere una etiqueta no vacía."
             }
         },
+        "mail_templates": {
+            "title": "Plantillas de correo",
+            "detail": "Detalle de plantilla",
+            "eyebrow": "Workspace de correo del framework",
+            "description": "Administra estructura, textos localizados e imágenes versionables de los correos del framework.",
+            "editor_description": "Edita la fuente administrada, el catálogo de traducción y el payload seguro de previsualización.",
+            "navigation": {
+                "label": "Plantillas de correo",
+                "hint": "Administra plantillas e imágenes de correo multi-idioma."
+            },
+            "list": {
+                "title": "Plantillas registradas",
+                "empty": "No hay plantillas de correo registradas."
+            },
+            "filters": {
+                "origin": "Origen",
+                "domain": "Dominio",
+                "all": "Todos los orígenes",
+                "apply": "Aplicar filtros"
+            },
+            "fields": {
+                "name": "Nombre",
+                "key": "Clave de plantilla",
+                "origin": "Origen",
+                "locales": "Idiomas",
+                "catalog": "Catálogo de traducción",
+                "namespace": "Namespace de traducción",
+                "placeholders": "JSON de variables requeridas",
+                "sample_payload": "JSON del payload de ejemplo",
+                "text": "Texto plano"
+            },
+            "sections": {
+                "definition": "Definición",
+                "content": "Estructura del mensaje",
+                "translation": "Catálogo localizado",
+                "actions": "Acciones de plantilla"
+            },
+            "actions": {
+                "create": "Crear plantilla de correo",
+                "open": "Abrir",
+                "back": "Volver a plantillas",
+                "save": "Guardar fuente administrada",
+                "preview": "Generar previsualización",
+                "send_test": "Enviar prueba",
+                "restore": "Restaurar original del framework",
+                "delete": "Eliminar"
+            },
+            "assets": {
+                "title": "Imágenes de correo",
+                "upload": "Cargar imagen",
+                "name": "Recurso",
+                "size": "Tamaño"
+            },
+            "preview": {
+                "title": "Previsualización segura",
+                "html": "Previsualización HTML del correo"
+            },
+            "test": {
+                "title": "Envío de prueba"
+            },
+            "test_recipient": "Destinatario de prueba de plantilla",
+            "messages": {
+                "not_found": "No se encontró la plantilla de correo seleccionada.",
+                "created": "Plantilla de correo administrada creada.",
+                "updated": "Plantilla de correo administrada actualizada.",
+                "preview_generated": "Previsualización de correo generada.",
+                "restored": "Se eliminó el override y se restauró el original del framework.",
+                "deleted": "Plantilla de correo administrada eliminada.",
+                "system_delete_blocked": "Las plantillas system del framework no se pueden eliminar.",
+                "test_sent": "Correo de prueba entregado.",
+                "test_failed": "Falló el envío del correo de prueba.",
+                "asset_uploaded": "Imagen de correo cargada y publicada.",
+                "asset_deleted": "Imagen de correo administrada eliminada."
+            },
+            "validation": {
+                "sample_payload": "El payload de ejemplo debe ser un objeto JSON.",
+                "catalog": "El catálogo de traducción debe ser un objeto JSON.",
+                "placeholders": "Las variables requeridas deben ser una lista JSON.",
+                "test_email": "Ingresa un correo de prueba válido.",
+                "asset_required": "Selecciona una imagen válida."
+            }
+        },
         "permissions": {
             "catalogs": {
                 "label": "Gestionar catálogos de Workspaces",
@@ -145,6 +235,10 @@
             "localization": {
                 "label": "Gestionar localización",
                 "description": "Gestionar catálogos de idiomas y herramientas de localización de Workspaces."
+            },
+            "mail_templates": {
+                "label": "Gestionar plantillas de correo de Workspaces",
+                "description": "Gestionar plantillas multi-idioma y recursos de correo propiedad del framework."
             }
         }
 }

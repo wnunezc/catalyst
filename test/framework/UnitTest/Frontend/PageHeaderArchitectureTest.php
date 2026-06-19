@@ -147,7 +147,7 @@ final class PageHeaderArchitectureTest extends TestCase
             Assert::contains("'description' =>", $source);
         }
 
-        Assert::same(41, count($producers));
+        Assert::same(43, count($producers));
     }
 
     /**

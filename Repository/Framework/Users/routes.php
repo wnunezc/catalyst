@@ -37,9 +37,13 @@ $router->post('/users/roles/{id}/permissions', [RolesController::class, 'syncPer
 
 $router->get('/users/organization-hierarchy', [OrganizationHierarchyController::class, 'index'])->middleware($manageRolesMiddleware);
 $router->post('/users/organization-hierarchy/organizations', [OrganizationHierarchyController::class, 'storeOrganization'])->middleware($manageRolesMiddleware)->throttle('privileged_mutation');
+$router->post('/users/organization-hierarchy/organizations/{id}/delete', [OrganizationHierarchyController::class, 'destroyOrganization'])->middleware($manageRolesMiddleware)->throttle('privileged_mutation');
 $router->post('/users/organization-hierarchy/units', [OrganizationHierarchyController::class, 'storeUnit'])->middleware($manageRolesMiddleware)->throttle('privileged_mutation');
+$router->post('/users/organization-hierarchy/units/{id}/delete', [OrganizationHierarchyController::class, 'destroyUnit'])->middleware($manageRolesMiddleware)->throttle('privileged_mutation');
 $router->post('/users/organization-hierarchy/scopes', [OrganizationHierarchyController::class, 'storeScope'])->middleware($manageRolesMiddleware)->throttle('privileged_mutation');
+$router->post('/users/organization-hierarchy/scopes/{id}/delete', [OrganizationHierarchyController::class, 'destroyScope'])->middleware($manageRolesMiddleware)->throttle('privileged_mutation');
 $router->post('/users/organization-hierarchy/levels', [OrganizationHierarchyController::class, 'storeLevel'])->middleware($manageRolesMiddleware)->throttle('privileged_mutation');
+$router->post('/users/organization-hierarchy/levels/{id}/delete', [OrganizationHierarchyController::class, 'destroyLevel'])->middleware($manageRolesMiddleware)->throttle('privileged_mutation');
 
 $router->get('/users/permissions/create', [PermissionsController::class, 'create'])->middleware($manageRolesMiddleware);
 $router->post('/users/permissions', [PermissionsController::class, 'store'])->middleware($manageRolesMiddleware)->throttle('privileged_mutation');

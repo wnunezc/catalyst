@@ -17,6 +17,7 @@ const shellSurfaces = [
     '/workspaces/catalogs',
     '/workspaces/document-templates',
     '/workspaces/locale-tools',
+    '/workspaces/mail-templates',
     '/workspaces/media-library',
     '/workspaces/module-designer',
     '/uml',

@@ -17,8 +17,8 @@ final class Roadmap4RbacOwnershipTest extends TestCase
             Assert::contains("Catalyst\\Repository\\Users\\Controllers\\{$controller}", $users);
         }
 
-        Assert::same(31, count($this->routeKeys($users)));
-        Assert::same(18, substr_count($users, "->throttle('privileged_mutation')"));
+        Assert::same(35, count($this->routeKeys($users)));
+        Assert::same(22, substr_count($users, "->throttle('privileged_mutation')"));
         Assert::false(is_dir($this->path('Repository/Framework/Roles')));
     }
 

@@ -41,6 +41,7 @@ final class CanonicalOwnerBootstrapTest extends TestCase
                 'manage-workspaces-media-library',
                 'manage-workspaces-document-templates',
                 'manage-workspaces-localization',
+                'manage-workspaces-mail-templates',
             ],
             WorkspacesAccessContract::permissions()
         );

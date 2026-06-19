@@ -1,0 +1,11 @@
+{
+  "users": {
+    "enrollment_onboarding_verified": {
+      "subject": "Tu cuenta de :app_name está lista",
+      "heading": "Hola, :name",
+      "introduction": "Un administrador creó tu cuenta en :app_name.",
+      "action_label": "Definir mi contraseña",
+      "footer": "Si no esperabas esta cuenta, ignora este mensaje y contacta a tu administrador."
+    }
+  }
+}

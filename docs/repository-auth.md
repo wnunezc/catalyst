@@ -27,6 +27,14 @@ During a pending MFA login, a valid TOTP code is accepted only when its verified
 timestep can be atomically consumed for the current tenant and account. Backup
 codes retain their existing one-time consumption contract.
 
+The authenticated account profile surface exposes profile-photo management at
+`/account/profile`. Users can upload JPEG, PNG or WebP images up to 2 MB through
+the guarded `POST /account/profile/avatar` form. The service validates detected
+MIME type, stores the image under framework-managed user avatar storage,
+persists the relative path in `user_profiles.avatar_path`, updates the shell
+avatar source, and removes the replaced file on successful update without
+exposing local storage paths to the UI.
+
 ## API From Docblocks
 
 ### `Catalyst\Repository\Auth\Controllers\EmailVerificationController`

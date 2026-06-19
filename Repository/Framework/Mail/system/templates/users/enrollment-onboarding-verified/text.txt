@@ -1,0 +1,6 @@
+{{ t:users.enrollment_onboarding_verified.heading }}
+
+{{ t:users.enrollment_onboarding_verified.introduction }}
+{{ setup_link }}
+
+{{ t:users.enrollment_onboarding_verified.footer }}

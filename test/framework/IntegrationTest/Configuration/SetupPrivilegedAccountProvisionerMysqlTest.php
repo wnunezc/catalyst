@@ -2,23 +2,18 @@
 
 declare(strict_types=1);
 
-namespace CatalystTest\Configuration;
+namespace CatalystTest\Integration\Configuration;
 
 use Catalyst\Helpers\Config\ConfigManager;
 use Catalyst\Helpers\Log\Logger;
 use Catalyst\Repository\Configuration\Services\SetupPrivilegedAccountProvisioner;
+use CatalystTest\Integration\Support\MySqlIntegrationTestCase;
 use CatalystTest\Support\Assert;
-use CatalystTest\TestCase;
 use PDO;
 use RuntimeException;
 
-final class SetupPrivilegedAccountProvisionerTest extends TestCase
+final class SetupPrivilegedAccountProvisionerMysqlTest extends MySqlIntegrationTestCase
 {
-    public function setUp(): void
-    {
-        require_once dirname(__DIR__, 4) . '/boot-core/constant/sys-constant.php';
-    }
-
     public function testCreatesActiveVerifiedPrivilegedAccountAndRoleAssignmentAtomically(): void
     {
         $pdo = $this->database(true);
@@ -49,42 +44,41 @@ final class SetupPrivilegedAccountProvisionerTest extends TestCase
             return;
         }
 
-            Assert::true(false, 'Expected role assignment failure to roll back privileged account creation.');
+        Assert::true(false, 'Expected role assignment failure to roll back privileged account creation.');
     }
 
     private function database(bool $withAssignments): PDO
     {
-        $pdo = new PDO('sqlite::memory:');
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo = $this->pdo();
         $pdo->exec(
             'CREATE TABLE users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                tenant_id INTEGER NOT NULL,
-                name TEXT NOT NULL,
-                email TEXT NOT NULL UNIQUE,
-                password TEXT NOT NULL,
-                active INTEGER NOT NULL,
-                email_verified INTEGER NOT NULL
-            )'
+                id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                tenant_id BIGINT UNSIGNED NOT NULL,
+                name VARCHAR(191) NOT NULL,
+                email VARCHAR(191) NOT NULL UNIQUE,
+                password VARCHAR(255) NOT NULL,
+                active TINYINT(1) NOT NULL,
+                email_verified TINYINT(1) NOT NULL
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci'
         );
         $pdo->exec(
             'CREATE TABLE roles (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                tenant_id INTEGER NOT NULL,
-                name TEXT NOT NULL,
-                slug TEXT NOT NULL UNIQUE,
-                description TEXT
-            )'
+                id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                tenant_id BIGINT UNSIGNED NOT NULL,
+                name VARCHAR(191) NOT NULL,
+                slug VARCHAR(191) NOT NULL UNIQUE,
+                description VARCHAR(255) NULL
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci'
         );
 
         if ($withAssignments) {
             $pdo->exec(
                 'CREATE TABLE user_roles (
-                    user_id INTEGER NOT NULL,
-                    role_id INTEGER NOT NULL,
-                    tenant_id INTEGER NOT NULL,
+                    user_id BIGINT UNSIGNED NOT NULL,
+                    role_id BIGINT UNSIGNED NOT NULL,
+                    tenant_id BIGINT UNSIGNED NOT NULL,
                     PRIMARY KEY (user_id, role_id)
-                )'
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci'
             );
         }
 

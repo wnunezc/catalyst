@@ -55,10 +55,18 @@
                 "title": "Registered modules",
                 "name": "Module",
                 "scope": "Scope",
-                "routes": "Routes"
+                "status": "Status",
+                "routes": "Routes",
+                "dependencies": "Dependencies",
+                "actions": "Actions",
+                "delete": "Delete",
+                "status_enabled": "Enabled",
+                "status_disabled": "Disabled"
             },
             "messages": {
                 "module_created": "Module created:",
+                "module_deleted": "Module deleted safely.",
+                "delete_blocked": "Module delete blocked.",
                 "preview_failed": "The scaffold preview could not be generated.",
                 "generation_failed": "The module could not be generated. No internal exception details were exposed."
             },
@@ -121,6 +129,88 @@
                 "labels_complete": "Every supported locale requires a non-empty label."
             }
         },
+        "mail_templates": {
+            "title": "Mail Templates",
+            "detail": "Template detail",
+            "eyebrow": "Framework mail workspace",
+            "description": "Manage versionable framework email structure, localized copy and images.",
+            "editor_description": "Edit the managed source, translation catalog and safe preview payload.",
+            "navigation": {
+                "label": "Mail Templates",
+                "hint": "Manage localized framework email templates and assets."
+            },
+            "list": {
+                "title": "Registered templates",
+                "empty": "No email templates are registered."
+            },
+            "filters": {
+                "origin": "Origin",
+                "domain": "Domain",
+                "all": "All origins",
+                "apply": "Apply filters"
+            },
+            "fields": {
+                "name": "Name",
+                "key": "Template key",
+                "origin": "Origin",
+                "locales": "Locales",
+                "catalog": "Translation catalog",
+                "namespace": "Translation namespace",
+                "placeholders": "Required placeholders JSON",
+                "sample_payload": "Sample payload JSON",
+                "text": "Plain text"
+            },
+            "sections": {
+                "definition": "Definition",
+                "content": "Message structure",
+                "translation": "Localized catalog",
+                "actions": "Template actions"
+            },
+            "actions": {
+                "create": "Create mail template",
+                "open": "Open",
+                "back": "Back to templates",
+                "save": "Save managed source",
+                "preview": "Generate preview",
+                "send_test": "Send test",
+                "restore": "Restore framework default",
+                "delete": "Delete"
+            },
+            "assets": {
+                "title": "Mail images",
+                "upload": "Upload image",
+                "name": "Asset",
+                "size": "Size"
+            },
+            "preview": {
+                "title": "Safe preview",
+                "html": "HTML email preview"
+            },
+            "test": {
+                "title": "Test delivery"
+            },
+            "test_recipient": "Mail template test recipient",
+            "messages": {
+                "not_found": "The selected mail template was not found.",
+                "created": "Managed mail template created.",
+                "updated": "Managed mail template updated.",
+                "preview_generated": "Mail preview generated.",
+                "restored": "The managed override was removed and the framework default restored.",
+                "deleted": "Managed mail template deleted.",
+                "system_delete_blocked": "Framework system templates cannot be deleted.",
+                "test_sent": "Test email delivered.",
+                "test_failed": "Test email delivery failed.",
+                "asset_uploaded": "Mail image uploaded and published.",
+                "asset_deleted": "Managed mail image deleted."
+            },
+            "validation": {
+                "sample_payload": "Sample payload must be a JSON object.",
+                "catalog": "Translation catalog must be a JSON object.",
+                "placeholders": "Required placeholders must be a JSON list.",
+                "test_email": "Enter a valid test recipient email.",
+                "asset_required": "Select a valid image to upload."
+            }
+        },
         "permissions": {
             "catalogs": {
                 "label": "Manage workspace catalogs",
@@ -145,6 +235,10 @@
             "localization": {
                 "label": "Manage localization",
                 "description": "Manage workspace locale catalogs and localization tools."
+            },
+            "mail_templates": {
+                "label": "Manage Workspaces mail templates",
+                "description": "Manage framework-owned localized email templates and assets."
             }
         }
 }

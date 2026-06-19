@@ -66,6 +66,7 @@ shell. The following focused specs are prepared for individual execution:
 | Global FormBuilder | `/workspaces/media-fields/create` | `form-builder-runtime.spec.cjs` |
 | Global RecordPresence | First available `/operations/automation-rules/{id}` | `record-presence-runtime.spec.cjs` |
 | Global activity overlay | `/test-features`, `/uml` | `activity-overlay.spec.cjs` |
+| Framework mail templates | `/workspaces/mail-templates`, `/users/enroll` | `mail-template-manager.spec.cjs` |
 | Demo UI recursive model | `/demo-ui/charts/apex/line` | `navigation-models.spec.cjs` |
 | Framework model | `/configuration/application-health` | `navigation-models.spec.cjs` |
 | Application model | `/account/profile` | `navigation-models.spec.cjs` |
@@ -117,10 +118,10 @@ application data.
 ## ROADMAP-7 Complete Coverage
 
 `fixtures/roadmap7-surface-inventory.cjs` is the executable registry for all
-`117` included GET/HEAD routes:
+`120` included GET/HEAD routes:
 
 - `5` application-owned routes run in the app suite;
-- `100` framework routes are read-only and run in `surface-parallel`;
+- `103` framework routes are read-only and run in `surface-parallel`;
 - `12` framework routes own session state, redirects, token flows or observable
   side effects and run in `stateful-serial`;
 - anonymous Demo UI, Auth, error and route-ownership specs also run in

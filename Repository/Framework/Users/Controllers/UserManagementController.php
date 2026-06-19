@@ -31,13 +31,16 @@ declare(strict_types=1);
 namespace Catalyst\Repository\Users\Controllers;
 
 use Catalyst\Framework\DataGrid\DataGrid;
+use Catalyst\Framework\Auth\TokenRepository;
 use Catalyst\Framework\Auth\UserDirectoryRepository;
 use Catalyst\Framework\Auth\UserProvider;
 use Catalyst\Framework\Authorization\RoleRepository;
 use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
+use Catalyst\Framework\Mail\OutboundEmailService;
 use Catalyst\Framework\Session\SessionManager;
+use Catalyst\Helpers\Config\ConfigManager;
 use Catalyst\Repository\Users\Requests\UserEnrollmentRequest;
 use Catalyst\Repository\Users\Support\RbacLabelPresenter;
 use Catalyst\Repository\Users\Support\UserEnrollmentFormFactory;
@@ -64,7 +67,8 @@ class UserManagementController extends Controller
         RoleRepository $roles,
         UserProvider $users,
         UserDirectoryRepository $userDirectory,
-        private readonly UserEnrollmentFormFactory $enrollmentFormFactory
+        private readonly UserEnrollmentFormFactory $enrollmentFormFactory,
+        private readonly OutboundEmailService $outboundEmail = new OutboundEmailService()
     ) {
         parent::__construct();
 
@@ -277,7 +281,7 @@ class UserManagementController extends Controller
             $userId = $this->users->create(
                 $payload['name'],
                 $payload['email'],
-                $payload['password'],
+                $this->generateTemporaryPassword(),
                 $roleSlug,
                 $verified
             );
@@ -291,14 +295,26 @@ class UserManagementController extends Controller
             return $this->redirect('/users/enroll');
         }
 
+        $mailResult = $this->sendEnrollmentOnboarding(
+            $userId,
+            $payload['email'],
+            $payload['name'],
+            $verified
+        );
+        $message = $mailResult['sent']
+            ? __('roles.users.messages.created_onboarding_sent')
+            : __('roles.users.messages.created_onboarding_mail_failed');
+
         if ($this->expectsJson()) {
-            return $this->jsonSuccessWithToast(
-                ['user_id' => $userId],
-                __('roles.users.messages.created')
+            $this->toast($mailResult['sent'] ? 'success' : 'warning', $message);
+
+            return $this->jsonSuccess(
+                ['user_id' => $userId, 'mail_sent' => $mailResult['sent']],
+                $message
             )->withRedirect('/users');
         }
 
-        $this->toast('success', __('roles.users.messages.created'));
+        $this->toast($mailResult['sent'] ? 'success' : 'warning', $message);
         return $this->redirect('/users');
     }
 
@@ -318,6 +334,85 @@ class UserManagementController extends Controller
         }
 
         return 'user';
+    }
+
+    /**
+     * Generates an internal credential that is never displayed to administrators.
+     */
+    private function generateTemporaryPassword(): string
+    {
+        return rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
+    }
+
+    /**
+     * Sends the secure onboarding email with password setup and optional verification links.
+     *
+     * @return array{sent:bool, template:string, locale:string, message:string}
+     */
+    private function sendEnrollmentOnboarding(int $userId, string $email, string $name, bool $verified): array
+    {
+        $appUrl = $this->resolveAppUrl();
+        $setupToken = TokenRepository::getInstance()->createPasswordResetToken($userId);
+        $payload = [
+            'name' => $name,
+            'app_name' => $this->resolveAppName(),
+            'setup_link' => $appUrl . '/reset-password/' . $setupToken,
+        ];
+        $template = 'users.enrollment_onboarding_verified';
+
+        if (!$verified) {
+            $payload['verification_link'] = $appUrl . '/verify-email/' . TokenRepository::getInstance()->createVerificationToken($userId);
+            $template = 'users.enrollment_onboarding_unverified';
+        }
+
+        return $this->outboundEmail->sendTemplate($template, $email, $name, $payload, $this->resolveLocale());
+    }
+
+    private function resolveAppUrl(): string
+    {
+        try {
+            $configManager = $GLOBALS['APP_CONFIGURATION'] ?? ConfigManager::getInstance();
+            if ($configManager instanceof ConfigManager) {
+                $url = rtrim((string) ($configManager->entry('app', 'project')['project_url'] ?? ''), '/');
+                if ($url !== '') {
+                    return $url;
+                }
+            }
+        } catch (\Throwable) {
+        }
+
+        $env = defined('GET_ENV_VAR') && is_array(GET_ENV_VAR) ? GET_ENV_VAR : [];
+
+        return rtrim((string) ($env['APP_URL'] ?? 'https://catalyst.dock'), '/');
+    }
+
+    private function resolveAppName(): string
+    {
+        try {
+            $configManager = $GLOBALS['APP_CONFIGURATION'] ?? ConfigManager::getInstance();
+            if ($configManager instanceof ConfigManager) {
+                $name = trim((string) ($configManager->entry('app', 'project')['project_name'] ?? ''));
+                if ($name !== '') {
+                    return $name;
+                }
+            }
+        } catch (\Throwable) {
+        }
+
+        return 'Catalyst';
+    }
+
+    private function resolveLocale(): string
+    {
+        try {
+            $configManager = $GLOBALS['APP_CONFIGURATION'] ?? ConfigManager::getInstance();
+            if ($configManager instanceof ConfigManager) {
+                return (string) ($configManager->entry('app', 'project')['project_lang'] ?? 'en');
+            }
+        } catch (\Throwable) {
+        }
+
+        return 'en';
     }
 
     /**

@@ -1,0 +1,6 @@
+{{ t:auth.email_verification.heading }}
+
+{{ t:auth.email_verification.introduction }}
+{{ verification_link }}
+
+{{ t:auth.email_verification.expiration }}

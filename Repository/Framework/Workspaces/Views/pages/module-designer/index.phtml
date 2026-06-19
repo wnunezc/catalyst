@@ -111,9 +111,36 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-striped table-hover align-middle mb-0">
-                            <thead><tr><th>{{ t:workspaces.module_designer.modules.name }}</th><th>{{ t:workspaces.module_designer.modules.scope }}</th><th>{{ t:workspaces.module_designer.modules.routes }}</th></tr></thead>
+                            <thead>
+                                <tr>
+                                    <th>{{ t:workspaces.module_designer.modules.name }}</th>
+                                    <th>{{ t:workspaces.module_designer.modules.scope }}</th>
+                                    <th>{{ t:workspaces.module_designer.modules.status }}</th>
+                                    <th>{{ t:workspaces.module_designer.modules.routes }}</th>
+                                    <th>{{ t:workspaces.module_designer.modules.dependencies }}</th>
+                                    <th class="text-end">{{ t:workspaces.module_designer.modules.actions }}</th>
+                                </tr>
+                            </thead>
                             <tbody>
-                            {{#each registered_modules}}<tr><td>{{ name }}</td><td>{{ scope }}</td><td>{{ routes }}</td></tr>{{/each}}
+                            {{#each registered_modules}}
+                                <tr data-module-designer-row="{{ key }}">
+                                    <td>{{ name }}</td>
+                                    <td>{{ scope }}</td>
+                                    <td><span class="badge text-bg-light">{{ status }}</span></td>
+                                    <td>{{ routes }}</td>
+                                    <td>{{ dependencies }}</td>
+                                    <td class="text-end">
+                                        {{#if delete_allowed}}
+                                            <form method="POST" action="{{ delete_action }}" data-catalyst="form" class="d-inline">
+                                                {{{ csrfField }}}
+                                                <button type="submit" class="btn btn-sm btn-outline-danger">{{ t:workspaces.module_designer.modules.delete }}</button>
+                                            </form>
+                                        {{else}}
+                                            <span class="badge text-bg-secondary">{{ delete_block_reason }}</span>
+                                        {{/if}}
+                                    </td>
+                                </tr>
+                            {{/each}}
                             </tbody>
                         </table>
                     </div>

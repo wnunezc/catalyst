@@ -155,7 +155,8 @@ final class FormBuilderViewModel
             'textarea_value' => $scalarFieldValue,
             'checkbox_hidden_value' => (string) ($field['hidden_value'] ?? '0'),
             'checkbox_checked_value' => (string) ($field['checked_value'] ?? '1'),
-            'checkbox_checked' => (string) ($fieldValue ?? '') === (string) ($field['checked_value'] ?? '1'),
+            'checkbox_checked' => $fieldType === 'checkbox'
+                && $scalarFieldValue === (string) ($field['checked_value'] ?? '1'),
             'checkbox_label' => (string) ($field['help'] ?? $field['label'] ?? ''),
             'options' => [],
             'has_items' => false,

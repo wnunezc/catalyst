@@ -23,10 +23,10 @@ final class Roadmap4OwnershipContractTest extends TestCase
         Assert::false(is_dir($this->path('Repository/Framework/Roles')));
         Assert::false(is_dir($this->path('Repository/App/Surface/Account')));
 
-        Assert::same(31, count($this->routeKeys(
+        Assert::same(35, count($this->routeKeys(
             $this->read('Repository/Framework/Users/routes.php')
         )));
-        Assert::same(19, count($this->routeKeys(
+        Assert::same(20, count($this->routeKeys(
             $this->read('Repository/Framework/Account/routes.php')
         )));
     }
@@ -90,7 +90,7 @@ final class Roadmap4OwnershipContractTest extends TestCase
     public function testFrozenOwnersAndSurfacesKeepTheirRouteCounts(): void
     {
         Assert::same(29, $this->routeCount('Repository/Framework/Configuration/routes.php'));
-        Assert::same(49, $this->routeCount('Repository/Framework/Workspaces/routes.php'));
+        Assert::same(61, $this->routeCount('Repository/Framework/Workspaces/routes.php'));
         Assert::same(21, $this->routeCount('Repository/Framework/Operations/routes.php'));
         Assert::same(6, $this->routeCount('Repository/Framework/Api/routes.php'));
         Assert::same(40, $this->routeCount('Repository/Framework/DemoUi/routes.php'));
@@ -102,9 +102,9 @@ final class Roadmap4OwnershipContractTest extends TestCase
         Assert::same(42, count($testFeatureRoutes));
     }
 
-    public function testFinalFrameworkRouterInventoryContainsExactlyTwoHundredSixtyFourRoutes(): void
+    public function testFinalFrameworkRouterInventoryContainsExactlyTwoHundredEightyOneRoutes(): void
     {
-        Assert::same(264, count($this->allRouteKeys()));
+        Assert::same(281, count($this->allRouteKeys()));
     }
 
     public function testCanonicalDocumentShellSidebarAndRuntimeRemainUnique(): void

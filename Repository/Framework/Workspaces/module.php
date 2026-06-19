@@ -33,6 +33,9 @@ return [
             '/workspaces/document-templates/{id}/edit',
             '/workspaces/module-designer',
             '/workspaces/locale-tools',
+            '/workspaces/mail-templates',
+            '/workspaces/mail-templates/create',
+            '/workspaces/mail-templates/{key}',
         ],
         'api' => [
             '/api/v1/document-templates',
@@ -48,6 +51,7 @@ return [
             '/workspaces/document-templates',
             '/workspaces/module-designer',
             '/workspaces/locale-tools',
+            '/workspaces/mail-templates',
             '/api/v1/document-templates',
         ],
     ],
@@ -61,6 +65,13 @@ return [
         ],
         [
             'patterns' => ['/workspaces/module-designer'],
+            'middleware_all' => [
+                AuthMiddleware::class,
+                RoleMiddleware::class,
+            ],
+        ],
+        [
+            'patterns' => ['/workspaces/mail-templates'],
             'middleware_all' => [
                 AuthMiddleware::class,
                 RoleMiddleware::class,
@@ -157,6 +168,14 @@ return [
             'resource' => 'workspaces-localization',
             'role_fallback_any' => ['admin'],
         ],
+        [
+            'slug' => 'manage-workspaces-mail-templates',
+            'label' => __('workspaces.permissions.mail_templates.label'),
+            'description' => __('workspaces.permissions.mail_templates.description'),
+            'action' => 'manage',
+            'resource' => 'workspaces-mail-templates',
+            'role_fallback_any' => ['admin'],
+        ],
     ],
     'permission_migrations' => [],
     'health_checks' => [],
@@ -176,6 +195,21 @@ return [
                 'order' => 20,
                 'visibility' => [
                     ['permissions_any' => ['manage-workspaces-localization']],
+                ],
+            ],
+            [
+                'context' => 'workspaces',
+                'label' => __('workspaces.mail_templates.navigation.label'),
+                'href' => '/workspaces/mail-templates',
+                'icon' => 'ti ti-mail-cog',
+                'matches' => ['/workspaces/mail-templates'],
+                'group' => 'module-tools',
+                'group_label' => __('workspaces.module_designer.navigation.group'),
+                'group_order' => 10,
+                'hint' => __('workspaces.mail_templates.navigation.hint'),
+                'order' => 30,
+                'visibility' => [
+                    ['permissions_any' => ['manage-workspaces-mail-templates']],
                 ],
             ],
             [
@@ -261,6 +295,26 @@ return [
                 'pattern' => '/workspaces/locale-tools',
                 'trail' => [
                     ['label' => __('workspaces.localization.navigation.label'), 'href' => null],
+                ],
+            ],
+            [
+                'pattern' => '/workspaces/mail-templates/create',
+                'trail' => [
+                    ['label' => __('workspaces.mail_templates.title'), 'href' => '/workspaces/mail-templates'],
+                    ['label' => __('workspaces.mail_templates.actions.create'), 'href' => null],
+                ],
+            ],
+            [
+                'pattern' => '/workspaces/mail-templates/{key}',
+                'trail' => [
+                    ['label' => __('workspaces.mail_templates.title'), 'href' => '/workspaces/mail-templates'],
+                    ['label' => __('workspaces.mail_templates.detail'), 'href' => null],
+                ],
+            ],
+            [
+                'pattern' => '/workspaces/mail-templates',
+                'trail' => [
+                    ['label' => __('workspaces.mail_templates.title'), 'href' => null],
                 ],
             ],
             [

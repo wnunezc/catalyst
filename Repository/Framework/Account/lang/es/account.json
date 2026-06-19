@@ -39,8 +39,16 @@
     "role": "Rol",
     "tenant": "Tenant",
     "scope_title": "Alcance funcional",
-    "scope_hint": "En esta etapa el perfil es informativo; la edición debe incorporarse con requests y auditoría específicos.",
-    "editing_note": "La edición de perfil queda separada para no mezclar cambios de identidad con el flujo de recuperación de cuenta."
+    "scope_hint": "Actualiza la foto de cuenta usada por el shell autenticado.",
+    "editing_note": "La edición de perfil queda separada para no mezclar cambios de identidad con el flujo de recuperación de cuenta.",
+    "avatar_title": "Foto de perfil",
+    "avatar_hint": "JPEG, PNG o WebP de hasta 2 MB.",
+    "avatar_label": "Subir foto",
+    "avatar_submit": "Actualizar foto",
+    "avatar_alt": "Foto de perfil actual",
+    "avatar_required": "Selecciona una foto de perfil para subir.",
+    "avatar_too_large": "La foto de perfil debe pesar 2 MB o menos.",
+    "avatar_invalid_type": "La foto de perfil debe ser JPEG, PNG o WebP."
   },
   "mfa": {
     "eyebrow": "Segundo factor",
@@ -115,7 +123,8 @@
     "mfa_recovery_sent": "Si la cuenta existe y aplica, enviaremos un enlace de recuperación.",
     "mfa_recovery_success": "MFA fue restablecido. Inicia sesión y configura MFA nuevamente si el sistema lo solicita.",
     "recovery_token_invalid": "El enlace de recuperación no es válido o expiró.",
-    "support_request_created": "Solicitud recibida. Soporte deberá revisar el caso antes de aprobar cualquier cambio."
+    "support_request_created": "Solicitud recibida. Soporte deberá revisar el caso antes de aprobar cualquier cambio.",
+    "avatar_updated": "Foto de perfil actualizada."
   },
   "events": {
     "now": "Ahora",

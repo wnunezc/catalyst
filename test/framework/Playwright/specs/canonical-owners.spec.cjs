@@ -9,6 +9,7 @@ const representatives = [
     '/workspaces/media-library',
     '/workspaces/document-templates',
     '/workspaces/locale-tools',
+    '/workspaces/mail-templates',
     '/operations/deployments',
     '/operations/tenancy',
     '/operations/audit-log',

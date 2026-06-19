@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CatalystTest\Frontend;
 
 use Catalyst\Framework\Form\FormBuilder;
+use Catalyst\Framework\Form\FormBuilderViewModel;
 use CatalystTest\Support\Assert;
 use CatalystTest\TestCase;
 
@@ -81,6 +82,46 @@ final class FormBuilderArchitectureTest extends TestCase
         Assert::contains('[data-repeater-add]', $builder);
         Assert::contains('data-form-autosave-key', $builder);
         Assert::false(str_contains($builder, 'DOMContentLoaded'));
+    }
+
+    public function testMultipleSelectArrayValuesDoNotTriggerCheckboxStringConversion(): void
+    {
+        set_error_handler(static function (int $severity, string $message): bool {
+            throw new \RuntimeException($message, $severity);
+        });
+
+        try {
+            $viewModel = FormBuilderViewModel::build([
+                'form' => [
+                    'sections' => [
+                        [
+                            'fields' => [
+                                [
+                                    'type' => 'select',
+                                    'name' => 'organization_unit_ids',
+                                    'multiple' => true,
+                                    'value' => [2, '4'],
+                                    'options' => [
+                                        ['value' => '1', 'label' => 'Finance'],
+                                        ['value' => '2', 'label' => 'Support'],
+                                        ['value' => '4', 'label' => 'Ops'],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ]);
+        } finally {
+            restore_error_handler();
+        }
+
+        $field = $viewModel['sections'][0]['fields'][0] ?? [];
+
+        Assert::same('organization_unit_ids[]', $field['name'] ?? null);
+        Assert::same('', $field['value'] ?? null);
+        Assert::same(false, $field['checkbox_checked'] ?? null);
+        Assert::same([false, true, true], array_column($field['options'] ?? [], 'selected'));
     }
 
     public function testFormBuilderConsumersDoNotWrapSectionCardsInAnotherCard(): void

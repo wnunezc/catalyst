@@ -55,15 +55,13 @@ final class UserEnrollmentRequest
      * Returns the normalized enrollment payload.
      *
      * Responsibility: Returns the normalized enrollment payload.
-     * @return array<string, string>
+     * @return array{name:string,email:string,role:string,email_verified:string}
      */
     public function payload(): array
     {
         return [
             'name' => trim((string) $this->request->input('name', '')),
             'email' => trim((string) $this->request->input('email', '')),
-            'password' => (string) $this->request->input('password', ''),
-            'password_confirm' => (string) $this->request->input('password_confirm', ''),
             'role' => trim((string) $this->request->input('role', 'user')),
             'email_verified' => (string) $this->request->input('email_verified', '1'),
         ];
@@ -81,23 +79,13 @@ final class UserEnrollmentRequest
         $validator = new Validator($payload, [
             'name' => 'required|min:2|max:255',
             'email' => 'required|email|max:255',
-            'password' => 'required|min:8',
-            'password_confirm' => 'required',
             'role' => 'required|max:50',
         ], [
             'name' => __('roles.users.form.labels.name'),
             'email' => __('roles.users.form.labels.email'),
-            'password' => __('roles.users.form.labels.password'),
-            'password_confirm' => __('roles.users.form.labels.password_confirm'),
             'role' => __('roles.users.form.labels.role'),
         ]);
-        $errors = $validator->fails() ? $validator->errors() : [];
-
-        if (($payload['password'] ?? '') !== ($payload['password_confirm'] ?? '')) {
-            $errors['password_confirm'][] = __('auth.validation.password_mismatch');
-        }
-
-        return $errors;
+        return $validator->fails() ? $validator->errors() : [];
     }
 
     /**

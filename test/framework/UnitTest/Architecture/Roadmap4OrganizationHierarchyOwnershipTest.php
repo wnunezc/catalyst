@@ -14,8 +14,9 @@ final class Roadmap4OrganizationHierarchyOwnershipTest extends TestCase
         $users = $this->read('Repository/Framework/Users/routes.php');
 
         Assert::contains('Catalyst\\Repository\\Users\\Controllers\\OrganizationHierarchyController', $users);
-        Assert::same(5, substr_count($users, "'/users/organization-hierarchy"));
+        Assert::same(9, substr_count($users, "'/users/organization-hierarchy"));
         Assert::same(4, substr_count($users, "OrganizationHierarchyController::class, 'store"));
+        Assert::same(4, substr_count($users, "OrganizationHierarchyController::class, 'destroy"));
         Assert::true(is_file($this->path('Repository/Framework/Users/Controllers/OrganizationHierarchyController.php')));
         Assert::false(is_dir($this->path('Repository/Framework/Roles')));
     }

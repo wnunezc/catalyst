@@ -5,7 +5,7 @@ Composer package. It is meant to be copied or cloned as the starting point for a
 web application, then configured through local environment files and the setup
 wizard.
 
-Current distribution target: `0.2.0-rc.2`.
+Current distribution target: `0.2.0-rc.4`.
 
 ## Runtime Model
 
@@ -143,6 +143,12 @@ ownership.
 `v0.2.0-rc.2` is the corrective and security-hardening follow-up. Review
 `docs/workflow/release-v0.2.0-rc.2.md` before updating from RC1, especially
 when the RC1 feature-flag migration journal contains persisted rows.
+
+`v0.2.0-rc.4` is the corrective framework management follow-up. Review
+`docs/workflow/release-v0.2.0-rc.4.md` before updating from RC3, especially
+when adopting Workspaces mail templates, secure enrollment onboarding,
+organization hierarchy management, Module Designer management or the account
+profile photo migration.
 
 To check the installed Catalyst version:
 
@@ -291,11 +297,12 @@ API.md                    Subsystem index
 
 ## Distribution Status
 
-`0.2.0-rc.2` supersedes `v0.2.0-rc.1` with corrective migration ownership,
-portable framework tests and security hardening. The `0.2.0` line is intended
-for developers who use Catalyst as a project base. It is not a public Composer
-package and is not intended to be installed into another project's `vendor/`
-directory.
+`0.2.0-rc.4` supersedes `v0.2.0-rc.3` with framework management corrections,
+secure enrollment onboarding, Workspaces mail templates, organization hierarchy
+management, Module Designer management and profile photo support. The `0.2.0`
+line is intended for developers who use Catalyst as a project base. It is not a
+public Composer package and is not intended to be installed into another
+project's `vendor/` directory.
 
 Before a release artifact is published, generate it from a clean checkout and
 exclude local secrets, DKIM keys, runtime storage, uploads, logs, ad-hoc zips and

@@ -33,10 +33,29 @@
             {{#if organizationRows}}
                 <div class="table-responsive">
                     <table class="table table-striped table-hover align-middle mb-0">
-                        <thead><tr><th>{{ t:roles.common.name }}</th><th>{{ t:roles.common.slug }}</th><th>{{ t:roles.common.description }}</th></tr></thead>
+                        <thead><tr><th>{{ t:roles.common.name }}</th><th>{{ t:roles.common.slug }}</th><th>{{ t:roles.common.description }}</th><th>{{ t:roles.common.actions }}</th></tr></thead>
                         <tbody>
                         {{#each organizationRows}}
-                            <tr><td>{{ name }}</td><td><code>{{ slug }}</code></td><td class="text-muted">{{ description }}</td></tr>
+                            <tr>
+                                <td><input class="form-control form-control-sm" form="org-update-{{ id }}" name="name" value="{{ name }}" maxlength="160" required></td>
+                                <td><code>{{ slug }}</code></td>
+                                <td><input class="form-control form-control-sm" form="org-update-{{ id }}" name="description" value="{{ description }}" maxlength="255"></td>
+                                <td>
+                                    <form id="org-update-{{ id }}" data-catalyst="form" method="POST" action="/users/organization-hierarchy/organizations" class="d-inline">
+                                        {{{ csrfField }}}
+                                        <input type="hidden" name="slug" value="{{ slug }}">
+                                        <button class="btn btn-outline-primary btn-sm" type="submit">{{ t:roles.organization_hierarchy.update }}</button>
+                                    </form>
+                                    {{#if is_locked}}
+                                        <span class="badge text-bg-secondary">{{ lock_reason }}</span>
+                                    {{else}}
+                                        <form data-catalyst="form" method="POST" action="{{ delete_action }}" class="d-inline">
+                                            {{{ csrfField }}}
+                                            <button class="btn btn-outline-danger btn-sm" type="submit">{{ t:roles.common.delete }}</button>
+                                        </form>
+                                    {{/if}}
+                                </td>
+                            </tr>
                         {{/each}}
                         </tbody>
                     </table>
@@ -79,10 +98,32 @@
             {{#if scopeRows}}
                 <div class="table-responsive">
                     <table class="table table-striped table-hover align-middle mb-0">
-                        <thead><tr><th>{{ t:roles.organization_hierarchy.organization }}</th><th>{{ t:roles.organization_hierarchy.scope_key }}</th><th>{{ t:roles.organization_hierarchy.label }}</th></tr></thead>
+                        <thead><tr><th>{{ t:roles.organization_hierarchy.organization }}</th><th>{{ t:roles.organization_hierarchy.scope_key }}</th><th>{{ t:roles.organization_hierarchy.label }}</th><th>{{ t:roles.common.actions }}</th></tr></thead>
                         <tbody>
                         {{#each scopeRows}}
-                            <tr><td>{{ organization_name }}</td><td><code>{{ scope_key }}</code></td><td>{{ label }}</td></tr>
+                            <tr>
+                                <td>{{ organization_name }}</td>
+                                <td><code>{{ scope_key }}</code></td>
+                                <td><input class="form-control form-control-sm" form="scope-update-{{ id }}" name="label" value="{{ label }}" maxlength="160" required></td>
+                                <td>
+                                    <form id="scope-update-{{ id }}" data-catalyst="form" method="POST" action="/users/organization-hierarchy/scopes" class="d-inline">
+                                        {{{ csrfField }}}
+                                        <input type="hidden" name="organization_id" value="{{ organization_id }}">
+                                        <input type="hidden" name="scope_key" value="{{ scope_key }}">
+                                        <input type="hidden" name="visual_token" value="">
+                                        <input type="hidden" name="color" value="">
+                                        <button class="btn btn-outline-primary btn-sm" type="submit">{{ t:roles.organization_hierarchy.update }}</button>
+                                    </form>
+                                    {{#if is_locked}}
+                                        <span class="badge text-bg-secondary">{{ lock_reason }}</span>
+                                    {{else}}
+                                        <form data-catalyst="form" method="POST" action="{{ delete_action }}" class="d-inline">
+                                            {{{ csrfField }}}
+                                            <button class="btn btn-outline-danger btn-sm" type="submit">{{ t:roles.common.delete }}</button>
+                                        </form>
+                                    {{/if}}
+                                </td>
+                            </tr>
                         {{/each}}
                         </tbody>
                     </table>
@@ -125,10 +166,32 @@
             {{#if levelRows}}
                 <div class="table-responsive">
                     <table class="table table-striped table-hover align-middle mb-0">
-                        <thead><tr><th>{{ t:roles.organization_hierarchy.scope }}</th><th>{{ t:roles.organization_hierarchy.code }}</th><th>{{ t:roles.organization_hierarchy.label }}</th><th>{{ t:roles.organization_hierarchy.order }}</th></tr></thead>
+                        <thead><tr><th>{{ t:roles.organization_hierarchy.scope }}</th><th>{{ t:roles.organization_hierarchy.code }}</th><th>{{ t:roles.organization_hierarchy.label }}</th><th>{{ t:roles.organization_hierarchy.order }}</th><th>{{ t:roles.common.actions }}</th></tr></thead>
                         <tbody>
                         {{#each levelRows}}
-                            <tr><td>{{ scope_label }}</td><td><code>{{ code }}</code></td><td>{{ label }}</td><td>{{ level_order }}</td></tr>
+                            <tr>
+                                <td>{{ scope_label }}</td>
+                                <td><code>{{ code }}</code></td>
+                                <td><input class="form-control form-control-sm" form="level-update-{{ id }}" name="label" value="{{ label }}" maxlength="160" required></td>
+                                <td><input class="form-control form-control-sm" form="level-update-{{ id }}" name="level_order" type="number" value="{{ level_order }}"></td>
+                                <td>
+                                    <form id="level-update-{{ id }}" data-catalyst="form" method="POST" action="/users/organization-hierarchy/levels" class="d-inline">
+                                        {{{ csrfField }}}
+                                        <input type="hidden" name="scope_id" value="{{ scope_id }}">
+                                        <input type="hidden" name="code" value="{{ code }}">
+                                        <input type="hidden" name="visual_token" value="">
+                                        <button class="btn btn-outline-primary btn-sm" type="submit">{{ t:roles.organization_hierarchy.update }}</button>
+                                    </form>
+                                    {{#if is_locked}}
+                                        <span class="badge text-bg-secondary">{{ lock_reason }}</span>
+                                    {{else}}
+                                        <form data-catalyst="form" method="POST" action="{{ delete_action }}" class="d-inline">
+                                            {{{ csrfField }}}
+                                            <button class="btn btn-outline-danger btn-sm" type="submit">{{ t:roles.common.delete }}</button>
+                                        </form>
+                                    {{/if}}
+                                </td>
+                            </tr>
                         {{/each}}
                         </tbody>
                     </table>
@@ -171,10 +234,32 @@
             {{#if unitRows}}
                 <div class="table-responsive">
                     <table class="table table-striped table-hover align-middle mb-0">
-                        <thead><tr><th>{{ t:roles.organization_hierarchy.organization }}</th><th>{{ t:roles.common.name }}</th><th>{{ t:roles.organization_hierarchy.code }}</th><th>{{ t:roles.organization_hierarchy.unit_type }}</th></tr></thead>
+                        <thead><tr><th>{{ t:roles.organization_hierarchy.organization }}</th><th>{{ t:roles.common.name }}</th><th>{{ t:roles.organization_hierarchy.code }}</th><th>{{ t:roles.organization_hierarchy.unit_type }}</th><th>{{ t:roles.common.actions }}</th></tr></thead>
                         <tbody>
                         {{#each unitRows}}
-                            <tr><td>{{ organization_name }}</td><td>{{ name }}</td><td><code>{{ code }}</code></td><td>{{ unit_type }}</td></tr>
+                            <tr>
+                                <td>{{ organization_name }}</td>
+                                <td><input class="form-control form-control-sm" form="unit-update-{{ id }}" name="name" value="{{ name }}" maxlength="160" required></td>
+                                <td><code>{{ code }}</code></td>
+                                <td><input class="form-control form-control-sm" form="unit-update-{{ id }}" name="unit_type" value="{{ unit_type }}" maxlength="80"></td>
+                                <td>
+                                    <form id="unit-update-{{ id }}" data-catalyst="form" method="POST" action="/users/organization-hierarchy/units" class="d-inline">
+                                        {{{ csrfField }}}
+                                        <input type="hidden" name="organization_id" value="{{ organization_id }}">
+                                        <input type="hidden" name="code" value="{{ code }}">
+                                        <input type="hidden" name="sort_order" value="{{ sort_order }}">
+                                        <button class="btn btn-outline-primary btn-sm" type="submit">{{ t:roles.organization_hierarchy.update }}</button>
+                                    </form>
+                                    {{#if is_locked}}
+                                        <span class="badge text-bg-secondary">{{ lock_reason }}</span>
+                                    {{else}}
+                                        <form data-catalyst="form" method="POST" action="{{ delete_action }}" class="d-inline">
+                                            {{{ csrfField }}}
+                                            <button class="btn btn-outline-danger btn-sm" type="submit">{{ t:roles.common.delete }}</button>
+                                        </form>
+                                    {{/if}}
+                                </td>
+                            </tr>
                         {{/each}}
                         </tbody>
                     </table>

@@ -35,12 +35,13 @@ Este archivo enruta la documentacion vigente de `catalyst` para que el contexto 
 | Secuencias transaccionales | `docs/sequences.md` |
 | Queue/event/schedule | `docs/framework-event.md`, `docs/framework-queue.md`, `docs/framework-schedule.md` |
 | Organization hierarchy | `docs/framework-organization.md` |
+| Correo y plantillas multi-idioma | `TOOL-Mail.md`, `docs/framework-mail.md` |
 | UI actual | `docs/ui/surface-architecture.md`, `docs/ui/css-ownership.md`, `docs/ui/activity-overlay.md` y contratos puntuales bajo `docs/ui/` |
 | Demo UI JavaScript y cobertura | `docs/ui/demo-ui-javascript-inventory.md` |
 | Test Features JavaScript y cobertura | `docs/ui/test-features-javascript-inventory.md` |
 | Operacion/calidad | `docs/testing.md`, `docs/quality-gate.md`, `docs/deployment.md` |
 | Setup/workflow | `docs/checklists/setup-completion-e2e.md`, `docs/workflow/*.md` |
-| Release/migration | `docs/workflow/release-v0.2.0-rc.3.md`, `docs/workflow/release-v0.2.0-rc.2.md`, `docs/workflow/release-v0.2.0-rc.1.md`, `docs/workflow/release-rc-checklist.md` |
+| Release/migration | `docs/workflow/release-v0.2.0-rc.4.md`, `docs/workflow/release-v0.2.0-rc.3.md`, `docs/workflow/release-v0.2.0-rc.2.md`, `docs/workflow/release-v0.2.0-rc.1.md`, `docs/workflow/release-rc-checklist.md` |
 | Inventario generado | `docs/runtime-inventory.md`, `docs/runtime-module-catalog.md` |
 
 ## Si tocas X, lee Y
@@ -61,6 +62,7 @@ Este archivo enruta la documentacion vigente de `catalyst` para que el contexto 
 | Configuration, Workspaces, Operations, API | `docs/framework-configuration.md`, `docs/repository-workspaces.md`, `docs/repository-operations.md`, `docs/repository-api.md` |
 | modulos, navegacion, permisos, assets | `docs/modules.md`, `docs/runtime-module-catalog.md`, `docs/ui/sidebar-navigation.md` |
 | organizaciones, jerarquias, unidades, clasificacion visual | `docs/framework-organization.md`, `docs/framework-auth.md` |
+| correo, SMTP, plantillas, layouts e imagenes de email | `TOOL-Mail.md`, `docs/framework-mail.md`, `docs/framework-appearance.md` |
 | frontera app/framework, updates upstream | `docs/app-boundary.md`, `docs/workflow/reusable-base-install.md` |
 | specs grandes, apps derivadas, mapeo de producto | `docs/spec-to-catalyst-guide.md`, `docs/framework-scaffolding.md`, `docs/app-boundary.md` |
 | clases existentes o nuevas | `STRUCTURE.md`, `docs/runtime-inventory.md` |

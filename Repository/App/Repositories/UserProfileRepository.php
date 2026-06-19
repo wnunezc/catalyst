@@ -80,6 +80,23 @@ final class UserProfileRepository
         }
     }
 
+    public function updateAvatarPath(int $userId, string $avatarPath): UserProfile
+    {
+        $profile = $this->findByUserId($userId);
+
+        if (!$profile instanceof UserProfile) {
+            $profile = new UserProfile([
+                'tenant_id' => $this->currentTenantId(),
+                'user_id' => $userId,
+            ]);
+        }
+
+        $profile->fill(['avatar_path' => $avatarPath]);
+        $profile->save();
+
+        return $profile;
+    }
+
     /**
      * Counts profiles available in the current tenant.
      *

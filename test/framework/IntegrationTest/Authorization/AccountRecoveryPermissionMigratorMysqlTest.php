@@ -2,22 +2,16 @@
 
 declare(strict_types=1);
 
-namespace CatalystTest\Authorization;
+namespace CatalystTest\Integration\Authorization;
 
 use Catalyst\Framework\Authorization\AccountRecoveryPermissionMigrator;
 use Catalyst\Framework\Database\Connection;
+use CatalystTest\Integration\Support\MySqlIntegrationTestCase;
 use CatalystTest\Support\Assert;
-use CatalystTest\TestCase;
-use PDO;
 use RuntimeException;
 
-final class AccountRecoveryPermissionMigratorTest extends TestCase
+final class AccountRecoveryPermissionMigratorMysqlTest extends MySqlIntegrationTestCase
 {
-    public function setUp(): void
-    {
-        require_once dirname(__DIR__, 4) . '/boot-core/requirement-loader/error-catcher.php';
-    }
-
     public function testCreatesMissingPermissionWithoutGrantingItAndRollsBack(): void
     {
         $connection = $this->database();
@@ -92,41 +86,34 @@ final class AccountRecoveryPermissionMigratorTest extends TestCase
 
     private function database(): Connection
     {
-        $pdo = new PDO('sqlite::memory:');
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo = $this->pdo();
         $pdo->exec(
             'CREATE TABLE permissions (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                tenant_id INTEGER NOT NULL,
-                name TEXT NOT NULL,
-                slug TEXT NOT NULL,
-                description TEXT,
-                UNIQUE (tenant_id, slug)
-            )'
+                id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                tenant_id BIGINT UNSIGNED NOT NULL,
+                name VARCHAR(191) NOT NULL,
+                slug VARCHAR(191) NOT NULL,
+                description VARCHAR(255) NULL,
+                UNIQUE KEY permissions_tenant_slug_unique (tenant_id, slug)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci'
         );
         $pdo->exec(
             'CREATE TABLE role_permissions (
-                role_id INTEGER NOT NULL,
-                permission_id INTEGER NOT NULL,
-                tenant_id INTEGER NOT NULL,
+                role_id BIGINT UNSIGNED NOT NULL,
+                permission_id BIGINT UNSIGNED NOT NULL,
+                tenant_id BIGINT UNSIGNED NOT NULL,
                 PRIMARY KEY (role_id, permission_id)
-            )'
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci'
         );
         $pdo->exec(
             'CREATE TABLE account_recovery_permission_migrations (
-                tenant_id INTEGER NOT NULL,
-                permission_id INTEGER NOT NULL,
+                tenant_id BIGINT UNSIGNED NOT NULL,
+                permission_id BIGINT UNSIGNED NOT NULL,
                 PRIMARY KEY (tenant_id, permission_id)
-            )'
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci'
         );
 
-        return new class ($pdo) extends Connection {
-            public function __construct(PDO $pdo)
-            {
-                parent::__construct('', 0, '', '', '', 'account-recovery-permission-test');
-                $this->pdo = $pdo;
-            }
-        };
+        return $this->connection();
     }
 
     private function permissionCount(Connection $connection): int

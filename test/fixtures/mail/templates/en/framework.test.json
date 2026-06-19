@@ -1,0 +1,6 @@
+{
+    "subject": "Hello {{ name }}",
+    "html": "<p>Hello {{ name }}</p><p><a href=\"{{ link }}\">Open</a></p>",
+    "text": "Hello {{ name }}\n{{ link }}",
+    "required_placeholders": ["name", "link"]
+}

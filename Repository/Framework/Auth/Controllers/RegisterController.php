@@ -37,8 +37,9 @@ use Catalyst\Framework\Auth\UserProvider;
 use Catalyst\Framework\Controllers\Controller;
 use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
-use Catalyst\Framework\Mail\MailManager;
+use Catalyst\Framework\Mail\OutboundEmailService;
 use Catalyst\Helpers\Config\ConfigManager;
+use Catalyst\Helpers\I18n\Translator;
 use Exception;
 
 /**
@@ -186,18 +187,18 @@ class RegisterController extends Controller
         $appUrl = $this->resolveAppUrl();
         $link   = $appUrl . '/verify-email/' . $rawToken;
 
-        $html = '<p>' . __('auth.email.verify_greeting', ['name' => e($name)]) . '</p>'
-            . '<p><a href="' . e($link) . '">' . e($link) . '</a></p>'
-            . '<p>' . __('auth.email.verify_expiry') . '</p>';
-
         try {
-            MailManager::getInstance()
-                ->init()
-                ->createMessage()
-                ->to($email, $name)
-                ->subject(__('auth.email.verify_subject'))
-                ->html($html)
-                ->send();
+            (new OutboundEmailService())->sendTemplate(
+                'auth.email_verification',
+                $email,
+                $name,
+                [
+                    'name' => $name,
+                    'app_name' => $this->resolveAppName(),
+                    'verification_link' => $link,
+                ],
+                Translator::getInstance()->getLocale()
+            );
         } catch (Exception $e) {
             $this->logError('RegisterController: verification email failed', ['error' => $e->getMessage()]);
             if (defined('IS_DEVELOPMENT') && IS_DEVELOPMENT) {
@@ -225,5 +226,21 @@ class RegisterController extends Controller
 
         $env = defined('GET_ENV_VAR') && is_array(GET_ENV_VAR) ? GET_ENV_VAR : [];
         return rtrim((string)($env['APP_URL'] ?? ''), '/');
+    }
+
+    private function resolveAppName(): string
+    {
+        try {
+            $configManager = $GLOBALS['APP_CONFIGURATION'] ?? ConfigManager::getInstance();
+            if ($configManager instanceof ConfigManager) {
+                $app = $configManager->entry('app', 'project');
+                $name = trim((string) ($app['project_name'] ?? ''));
+
+                return $name !== '' ? $name : 'Catalyst';
+            }
+        } catch (\Throwable) {
+        }
+
+        return 'Catalyst';
     }
 }

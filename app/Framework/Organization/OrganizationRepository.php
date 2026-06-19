@@ -8,6 +8,7 @@ use Catalyst\Framework\Database\Connection;
 use Catalyst\Framework\Database\DatabaseManager;
 use Catalyst\Framework\Tenancy\TenancyManager;
 use Catalyst\Helpers\Log\Logger;
+use InvalidArgumentException;
 use Throwable;
 
 /**
@@ -294,6 +295,57 @@ final class OrganizationRepository
     }
 
     /**
+     * Returns dependency counts that make hierarchy records unsafe to delete.
+     *
+     * @return array<string, int>
+     */
+    public function dependencyCounts(string $type, int $id): array
+    {
+        return match ($type) {
+            'organization' => [
+                'units' => $this->countRows('organization_units', 'organization_id', $id),
+                'scopes' => $this->countRows('hierarchy_scopes', 'organization_id', $id),
+                'classifications' => $this->countRows('organization_classifications', 'organization_id', $id),
+            ],
+            'unit' => [
+                'role_links' => $this->countRows('role_organization_units', 'unit_id', $id),
+                'classifications' => $this->countRows('organization_classifications', 'unit_id', $id),
+                'children' => $this->countRows('organization_units', 'parent_id', $id),
+            ],
+            'scope' => [
+                'levels' => $this->countRows('hierarchy_levels', 'scope_id', $id),
+                'roles' => $this->countRows('roles', 'hierarchy_scope_id', $id),
+                'classifications' => $this->countRows('organization_classifications', 'scope_id', $id),
+            ],
+            'level' => [
+                'roles' => $this->countRows('roles', 'hierarchy_level_id', $id),
+                'classifications' => $this->countRows('organization_classifications', 'level_id', $id),
+            ],
+            default => throw new InvalidArgumentException('Unsupported organization hierarchy record type.'),
+        };
+    }
+
+    public function deleteOrganization(int $id): void
+    {
+        $this->deleteIfUnreferenced('organization', 'organizations', $id);
+    }
+
+    public function deleteUnit(int $id): void
+    {
+        $this->deleteIfUnreferenced('unit', 'organization_units', $id);
+    }
+
+    public function deleteScope(int $id): void
+    {
+        $this->deleteIfUnreferenced('scope', 'hierarchy_scopes', $id);
+    }
+
+    public function deleteLevel(int $id): void
+    {
+        $this->deleteIfUnreferenced('level', 'hierarchy_levels', $id);
+    }
+
+    /**
      * Returns active hierarchy level options, optionally constrained by scope.
      *
      * Responsibility: Provides ordered level choices for classification forms.
@@ -433,5 +485,38 @@ final class OrganizationRepository
     private function tenantId(): int
     {
         return TenancyManager::getInstance()->currentTenantId();
+    }
+
+    private function deleteIfUnreferenced(string $type, string $table, int $id): void
+    {
+        $dependencies = array_filter($this->dependencyCounts($type, $id), static fn (int $count): bool => $count > 0);
+        if ($dependencies !== []) {
+            throw new InvalidArgumentException('Record is referenced and cannot be deleted: ' . implode(', ', array_keys($dependencies)) . '.');
+        }
+
+        $this->connection->execute(
+            sprintf('DELETE FROM %s WHERE tenant_id = ? AND id = ?', $table),
+            [$this->tenantId(), $id]
+        );
+    }
+
+    private function countRows(string $table, string $column, int $id): int
+    {
+        try {
+            $row = $this->connection->selectOne(
+                sprintf('SELECT COUNT(*) AS total FROM %s WHERE tenant_id = ? AND %s = ?', $table, $column),
+                [$this->tenantId(), $id]
+            );
+
+            return (int) ($row['total'] ?? 0);
+        } catch (Throwable $e) {
+            $this->logger->warning('OrganizationRepository::countRows failed', [
+                'table' => $table,
+                'column' => $column,
+                'error' => $e->getMessage(),
+            ]);
+
+            return 1;
+        }
     }
 }

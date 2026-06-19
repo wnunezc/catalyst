@@ -39,8 +39,16 @@
     "role": "Role",
     "tenant": "Tenant",
     "scope_title": "Functional scope",
-    "scope_hint": "At this stage the profile is informational; editing must be added with dedicated requests and audit.",
-    "editing_note": "Profile editing stays separate so identity changes are not mixed with recovery flows."
+    "scope_hint": "Update the account photo used by the authenticated shell.",
+    "editing_note": "Profile editing stays separate so identity changes are not mixed with recovery flows.",
+    "avatar_title": "Profile photo",
+    "avatar_hint": "JPEG, PNG or WebP up to 2 MB.",
+    "avatar_label": "Upload photo",
+    "avatar_submit": "Update photo",
+    "avatar_alt": "Current profile photo",
+    "avatar_required": "Choose a profile photo to upload.",
+    "avatar_too_large": "Profile photo must be 2 MB or smaller.",
+    "avatar_invalid_type": "Profile photo must be JPEG, PNG or WebP."
   },
   "mfa": {
     "eyebrow": "Second factor",
@@ -115,7 +123,8 @@
     "mfa_recovery_sent": "If the account exists and applies, a recovery link will be sent.",
     "mfa_recovery_success": "MFA was reset. Sign in and configure MFA again if the system requires it.",
     "recovery_token_invalid": "The recovery link is invalid or expired.",
-    "support_request_created": "Request received. Support must review the case before approving any change."
+    "support_request_created": "Request received. Support must review the case before approving any change.",
+    "avatar_updated": "Profile photo updated."
   },
   "events": {
     "now": "Now",

@@ -58,7 +58,11 @@ final class ErrorOutputTest extends TestCase
         $output = (string) ob_get_clean();
 
         Assert::true(strlen($output) < 25000, 'Error fallback output must remain bounded.');
-        Assert::contains('RuntimeException', $output);
+        if (defined('IS_DEVELOPMENT') && IS_DEVELOPMENT) {
+            Assert::contains('RuntimeException', $output);
+        } else {
+            Assert::false(str_contains($output, 'RuntimeException'));
+        }
         Assert::contains('error-ticket-123', $output);
         Assert::contains('2026-06-18 01:23:45 UTC', $output);
         Assert::false(str_contains($output, $payloadMarker));

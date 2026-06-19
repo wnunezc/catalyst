@@ -14,7 +14,7 @@
 
 .catalyst-toaster-container {
     position: fixed;
-    z-index: 1090;
+    z-index: 2050;
     pointer-events: none;
     padding: 20px;
     display: flex;

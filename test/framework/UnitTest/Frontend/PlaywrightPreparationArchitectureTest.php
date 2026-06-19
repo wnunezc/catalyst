@@ -40,7 +40,7 @@ final class PlaywrightPreparationArchitectureTest extends TestCase
     {
         $inventory = $this->read('test/framework/Playwright/fixtures/roadmap7-surface-inventory.cjs');
 
-        Assert::contains('const expectedIncludedRouteCount = 117', $inventory);
+        Assert::contains('const expectedIncludedRouteCount = 120', $inventory);
         Assert::contains("'parallel-readonly'", $inventory);
         Assert::contains("'serial-stateful'", $inventory);
         Assert::contains("'html'", $inventory);

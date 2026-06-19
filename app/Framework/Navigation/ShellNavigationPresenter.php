@@ -67,6 +67,7 @@ final class ShellNavigationPresenter
                 ['label_key' => 'ui.product_nav.items.media_library', 'href' => '/workspaces/media-library', 'icon' => 'ti ti-photo'],
                 ['label_key' => 'ui.product_nav.items.document_template', 'href' => '/workspaces/document-templates', 'icon' => 'ti ti-file-description'],
                 ['label_key' => 'ui.product_nav.items.locale_tools', 'href' => '/workspaces/locale-tools', 'icon' => 'ti ti-language'],
+                ['label_key' => 'ui.product_nav.items.mail_templates', 'href' => '/workspaces/mail-templates', 'icon' => 'ti ti-mail-cog'],
             ],
         ],
         'operations' => [

@@ -21,8 +21,6 @@ final class UserEnrollmentRequestTest extends TestCase
         $request = new UserEnrollmentRequest($this->request([
             'name' => 'Valid User',
             'email' => 'valid@example.test',
-            'password' => 'correct-password',
-            'password_confirm' => 'correct-password',
             'role' => 'user',
             'email_verified' => '1',
         ]));
@@ -30,6 +28,8 @@ final class UserEnrollmentRequestTest extends TestCase
 
         Assert::same([], $request->errors($payload));
         Assert::same('valid@example.test', $payload['email']);
+        Assert::false(isset($payload['password']));
+        Assert::false(isset($payload['password_confirm']));
     }
 
     public function testRejectsInvalidInputAndNeverReplaysPasswords(): void
@@ -37,8 +37,6 @@ final class UserEnrollmentRequestTest extends TestCase
         $request = new UserEnrollmentRequest($this->request([
             'name' => 'A',
             'email' => 'invalid',
-            'password' => 'short',
-            'password_confirm' => 'different',
             'role' => '',
             'email_verified' => '0',
         ]));
@@ -48,11 +46,24 @@ final class UserEnrollmentRequestTest extends TestCase
 
         Assert::true(isset($errors['name']));
         Assert::true(isset($errors['email']));
-        Assert::true(isset($errors['password']));
-        Assert::true(isset($errors['password_confirm']));
+        Assert::false(isset($errors['password']));
+        Assert::false(isset($errors['password_confirm']));
         Assert::true(isset($errors['role']));
         Assert::false(isset($replayable['password']));
         Assert::false(isset($replayable['password_confirm']));
+    }
+
+    public function testEnrollmentFormDoesNotExposeAdminPasswordFields(): void
+    {
+        $factory = file_get_contents(dirname(__DIR__, 4) . '/Repository/Framework/Users/Support/UserEnrollmentFormFactory.php');
+
+        if (!is_string($factory)) {
+            throw new \RuntimeException('Unable to read user enrollment form factory.');
+        }
+
+        Assert::false(str_contains($factory, "'password' =>"));
+        Assert::false(str_contains($factory, "'password_confirm' =>"));
+        Assert::contains('onboarding', $factory);
     }
 
     /**

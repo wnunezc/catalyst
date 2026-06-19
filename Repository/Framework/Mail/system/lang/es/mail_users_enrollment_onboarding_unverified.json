@@ -1,0 +1,12 @@
+{
+  "users": {
+    "enrollment_onboarding_unverified": {
+      "subject": "Activa tu cuenta de :app_name",
+      "heading": "Hola, :name",
+      "introduction": "Un administrador creó tu cuenta en :app_name. Verifica primero tu correo.",
+      "verify_action": "Verificar correo electrónico",
+      "setup_introduction": "Luego define tu contraseña con el enlace seguro de configuración.",
+      "setup_action": "Definir mi contraseña"
+    }
+  }
+}

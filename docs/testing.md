@@ -16,6 +16,7 @@ workspace harness without ad hoc scripts.
 | Runtime docs inventory | `Catalyst\Framework\Cli\Commands\DocsInventoryCommand` |
 | Runtime module sync | `Catalyst\Framework\Cli\Commands\DocsSyncRuntimeCommand` |
 | Framework PHP unit harness | `test/framework/UnitTest` |
+| Framework PHP integration harness | `test/framework/IntegrationTest` |
 | Application PHP unit harness | `test/app/UnitTest` |
 | Catalyst framework Playwright specs | `test/framework/Playwright` |
 | Derived application Playwright specs | `test/app/Playwright` |
@@ -69,6 +70,24 @@ Catalyst currently does not require PHPUnit or Pest. The local runner is
 intentionally small and dependency-free. Unit tests cover pure PHP logic:
 helpers, services, config normalization, validators, internal contracts and
 regressions that do not need a browser.
+
+## PHP Integration Tests
+
+Framework integration tests live in:
+
+```text
+test/framework/IntegrationTest
+```
+
+Run them with:
+
+```powershell
+php test\framework\IntegrationTest\run.php
+```
+
+This harness is for database-backed framework contracts that must execute
+against MySQL/MariaDB. It creates a temporary database per test and drops it in
+teardown. Do not use SQLite harnesses for Catalyst framework tests.
 
 ## Playwright Tests
 

@@ -1,4 +1,4 @@
-const expectedIncludedRouteCount = 117;
+const expectedIncludedRouteCount = 120;
 
 const routePatterns = [
     '/',
@@ -111,6 +111,9 @@ const routePatterns = [
     '/workspaces/document-templates/{id}',
     '/workspaces/document-templates/{id}/edit',
     '/workspaces/locale-tools',
+    '/workspaces/mail-templates',
+    '/workspaces/mail-templates/create',
+    '/workspaces/mail-templates/{key}',
     '/workspaces/media-fields',
     '/workspaces/media-fields/create',
     '/workspaces/media-fields/{id}/edit',
@@ -275,6 +278,11 @@ const discovery = {
         from: '/workspaces/document-templates',
         selector: '[data-catalyst-href^="/workspaces/document-templates/"], a[href^="/workspaces/document-templates/"]',
         pattern: /^\/workspaces\/document-templates\/\d+\/edit$/,
+    },
+    '/workspaces/mail-templates/{key}': {
+        from: '/workspaces/mail-templates',
+        selector: 'a[href^="/workspaces/mail-templates/"]',
+        pattern: /^\/workspaces\/mail-templates\/[a-z0-9._-]+$/,
     },
     '/workspaces/media-fields/{id}/edit': {
         from: '/workspaces/media-fields',

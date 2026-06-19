@@ -34,17 +34,17 @@
                     <div class="row g-3 mb-4">
                         {{#each permissionRows}}
                             <label class="col-12 col-lg-6" for="{{ input_id }}">
-                                <span class="form-check border rounded p-3 h-100 d-flex align-items-start gap-2">
+                                <span class="border rounded p-3 h-100 d-flex align-items-start gap-2" data-role-permission-option>
                                     <input type="checkbox"
-                                           class="form-check-input"
+                                           class="form-check-input flex-shrink-0 mt-1"
                                            id="{{ input_id }}"
                                            name="permissions[]"
                                            value="{{ value }}"
                                            {{#if checked}}checked{{/if}}>
-                                <span class="d-grid gap-1">
-                                    <span>{{ display_name }}</span>
-                                    <code class="text-break">{{ slug }}</code>
-                                </span>
+                                    <span class="d-grid gap-1">
+                                        <span>{{ display_name }}</span>
+                                        <code class="text-break">{{ slug }}</code>
+                                    </span>
                                 </span>
                             </label>
                         {{/each}}

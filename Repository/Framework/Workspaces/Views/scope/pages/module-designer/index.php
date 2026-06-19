@@ -9,7 +9,7 @@ return static function (array $scope): array {
     $form = is_array($scope['designerForm'] ?? null) ? $scope['designerForm'] : [];
     $preview = is_array($scope['designerPreview'] ?? null) ? $scope['designerPreview'] : null;
     $result = is_array($scope['designerResult'] ?? null) ? $scope['designerResult'] : null;
-    $inspection = is_array($scope['moduleInspection'] ?? null) ? $scope['moduleInspection'] : [];
+    $managedModules = is_array($scope['managedModules'] ?? null) ? $scope['managedModules'] : [];
     $lint = is_array($scope['moduleLint'] ?? null) ? $scope['moduleLint'] : [];
     $csrf = TrustedHtml::fromString(CsrfProtection::getInstance()->getTokenField());
     $hiddenFields = [];
@@ -26,15 +26,29 @@ return static function (array $scope): array {
     }
 
     $modules = [];
-    foreach ((array) ($inspection['modules'] ?? []) as $module) {
+    foreach ($managedModules as $module) {
         if (!is_array($module)) {
             continue;
         }
 
+        $key = (string) ($module['key'] ?? '');
+        $dependencies = (int) ($module['dependency_count'] ?? 0);
+        $deleteAllowed = !empty($module['delete_allowed']);
+        $status = !empty($module['runtime']['enabled'])
+            ? __('workspaces.module_designer.modules.status_enabled')
+            : __('workspaces.module_designer.modules.status_disabled');
+
         $modules[] = [
+            'key' => $key,
             'name' => (string) ($module['name'] ?? ''),
             'scope' => (string) ($module['scope'] ?? ''),
             'routes' => count((array) ($module['routes']['owned'] ?? [])),
+            'status' => $status,
+            'dependencies' => $dependencies,
+            'delete_allowed' => $deleteAllowed,
+            'delete_block_reason' => (string) ($module['delete_block_reason'] ?? ''),
+            'delete_action' => '/workspaces/module-designer/modules/' . rawurlencode($key) . '/delete',
+            'csrfField' => $csrf,
         ];
     }
 

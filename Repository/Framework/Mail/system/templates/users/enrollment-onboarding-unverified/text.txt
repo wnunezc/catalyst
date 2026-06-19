@@ -1,0 +1,7 @@
+{{ t:users.enrollment_onboarding_unverified.heading }}
+
+{{ t:users.enrollment_onboarding_unverified.introduction }}
+{{ verification_link }}
+
+{{ t:users.enrollment_onboarding_unverified.setup_introduction }}
+{{ setup_link }}

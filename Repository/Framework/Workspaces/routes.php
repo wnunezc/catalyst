@@ -21,6 +21,7 @@ use Catalyst\Repository\Workspaces\Documents\Controllers\DocumentTemplateControl
 use Catalyst\Repository\Workspaces\Media\Controllers\MediaLibraryController;
 use Catalyst\Repository\Workspaces\Media\Controllers\MetadataFieldController;
 use Catalyst\Repository\Workspaces\Localization\Controllers\LocalizationController;
+use Catalyst\Repository\Workspaces\MailTemplates\Controllers\MailTemplateController;
 use Catalyst\Repository\Workspaces\ModuleDesigner\Controllers\ModuleDesignerController;
 use Catalyst\Repository\Workspaces\Support\WorkspacesAccessContract;
 
@@ -34,12 +35,26 @@ $moduleDesignerMiddleware = WorkspacesAccessContract::middleware(WorkspacesAcces
 $router->get('/workspaces/module-designer', [ModuleDesignerController::class, 'index'])->middleware($moduleDesignerMiddleware);
 $router->post('/workspaces/module-designer/preview', [ModuleDesignerController::class, 'preview'])->middleware($moduleDesignerMiddleware)->throttle('privileged_mutation');
 $router->post('/workspaces/module-designer/generate', [ModuleDesignerController::class, 'generate'])->middleware($moduleDesignerMiddleware)->throttle('privileged_mutation');
+$router->post('/workspaces/module-designer/modules/{key}/delete', [ModuleDesignerController::class, 'destroy'])->middleware($moduleDesignerMiddleware)->throttle('privileged_mutation');
 
 $localizationMiddleware = WorkspacesAccessContract::middleware(WorkspacesAccessContract::LOCALIZATION);
 $router->get('/workspaces/locale-tools', [LocalizationController::class, 'index'])->middleware($localizationMiddleware);
 $router->post('/workspaces/locale-tools/settings', [LocalizationController::class, 'updateSettings'])->middleware($localizationMiddleware)->throttle('privileged_mutation');
 $router->post('/workspaces/locale-tools/create-locale', [LocalizationController::class, 'createLocale'])->middleware($localizationMiddleware)->throttle('privileged_mutation');
 $router->post('/workspaces/locale-tools/sync-locale', [LocalizationController::class, 'syncLocale'])->middleware($localizationMiddleware)->throttle('privileged_mutation');
+
+$mailTemplatesMiddleware = WorkspacesAccessContract::middleware(WorkspacesAccessContract::MAIL_TEMPLATES);
+$router->get('/workspaces/mail-templates', [MailTemplateController::class, 'index'])->middleware($mailTemplatesMiddleware);
+$router->get('/workspaces/mail-templates/create', [MailTemplateController::class, 'create'])->middleware($mailTemplatesMiddleware);
+$router->post('/workspaces/mail-templates', [MailTemplateController::class, 'store'])->middleware($mailTemplatesMiddleware)->throttle('privileged_mutation');
+$router->post('/workspaces/mail-templates/assets', [MailTemplateController::class, 'storeAsset'])->middleware($mailTemplatesMiddleware)->throttle('privileged_mutation');
+$router->post('/workspaces/mail-templates/assets/{name}/delete', [MailTemplateController::class, 'destroyAsset'])->middleware($mailTemplatesMiddleware)->throttle('privileged_mutation');
+$router->get('/workspaces/mail-templates/{key}', [MailTemplateController::class, 'show'])->middleware($mailTemplatesMiddleware);
+$router->post('/workspaces/mail-templates/{key}', [MailTemplateController::class, 'update'])->middleware($mailTemplatesMiddleware)->throttle('privileged_mutation');
+$router->post('/workspaces/mail-templates/{key}/preview', [MailTemplateController::class, 'preview'])->middleware($mailTemplatesMiddleware)->throttle('privileged_mutation');
+$router->post('/workspaces/mail-templates/{key}/test', [MailTemplateController::class, 'sendTest'])->middleware($mailTemplatesMiddleware)->throttle('privileged_mutation');
+$router->post('/workspaces/mail-templates/{key}/restore', [MailTemplateController::class, 'restore'])->middleware($mailTemplatesMiddleware)->throttle('privileged_mutation');
+$router->post('/workspaces/mail-templates/{key}/delete', [MailTemplateController::class, 'destroy'])->middleware($mailTemplatesMiddleware)->throttle('privileged_mutation');
 
 View::getInstance()->addPath(
     'catalogs',

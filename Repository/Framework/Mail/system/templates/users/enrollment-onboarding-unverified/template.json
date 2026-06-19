@@ -1,0 +1,20 @@
+{
+  "key": "users.enrollment_onboarding_unverified",
+  "name": "Unverified user enrollment onboarding",
+  "translation_catalog": "mail_users_enrollment_onboarding_unverified",
+  "translation_namespace": "users.enrollment_onboarding_unverified",
+  "html_template": "layout.html",
+  "text_template": "text.txt",
+  "required_placeholders": [
+    "name",
+    "app_name",
+    "verification_link",
+    "setup_link"
+  ],
+  "sample_payload": {
+    "name": "Example User",
+    "app_name": "Catalyst",
+    "verification_link": "https://example.test/verify-email/token",
+    "setup_link": "https://example.test/reset-password/token"
+  }
+}

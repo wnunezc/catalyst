@@ -9,6 +9,7 @@ use Catalyst\Framework\Http\Request;
 use Catalyst\Framework\Http\Response;
 use Catalyst\Framework\Module\ModuleInspector;
 use Catalyst\Framework\Module\ModuleLinter;
+use Catalyst\Framework\Module\ModuleManagementService;
 use Catalyst\Framework\Module\ModuleScaffoldService;
 use Catalyst\Repository\Workspaces\ModuleDesigner\Requests\ModuleDesignerRequest;
 use Catalyst\Repository\Workspaces\ModuleDesigner\Support\ModuleDesignerPreviewToken;
@@ -82,6 +83,31 @@ final class ModuleDesignerController extends Controller
         return $this->renderDesigner($this->defaultFormState(), null, $result);
     }
 
+    public function destroy(Request $request, string $key): Response
+    {
+        $this->authorizeResource('manage', 'workspaces-module-designer');
+
+        try {
+            (new ModuleManagementService())->delete(rawurldecode($key));
+        } catch (RuntimeException $exception) {
+            $this->logger->warning('Module Designer delete blocked.', [
+                'module' => rawurldecode($key),
+                'reason' => $exception->getMessage(),
+            ]);
+
+            return $this->postActionErrorRedirect(
+                '/workspaces/module-designer',
+                __('workspaces.module_designer.messages.delete_blocked') . ' ' . $exception->getMessage(),
+                409
+            );
+        }
+
+        return $this->postActionSuccessRedirect(
+            '/workspaces/module-designer',
+            __('workspaces.module_designer.messages.module_deleted')
+        );
+    }
+
     /**
      * @param array<string, mixed> $form
      * @param array<string, mixed>|null $preview
@@ -105,6 +131,7 @@ final class ModuleDesignerController extends Controller
             'previewToken' => $previewToken,
             'moduleInspection' => (new ModuleInspector())->inspect(),
             'moduleLint' => (new ModuleLinter())->lint(),
+            'managedModules' => (new ModuleManagementService())->list(),
         ], $status);
     }
 

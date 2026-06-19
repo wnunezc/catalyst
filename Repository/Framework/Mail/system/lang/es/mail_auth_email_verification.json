@@ -1,0 +1,11 @@
+{
+  "auth": {
+    "email_verification": {
+      "subject": "Verifica tu cuenta de :app_name",
+      "heading": "Hola, :name",
+      "introduction": "Confirma tu cuenta de :app_name con este enlace seguro.",
+      "action_label": "Verificar correo electrónico",
+      "expiration": "El enlace expira pronto y solo puede usarse una vez."
+    }
+  }
+}

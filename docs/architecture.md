@@ -106,6 +106,7 @@ parallel governor.
 | `docs/framework-form-builder.md` | Catalyst Framework FormBuilder |
 | `docs/framework-geo.md` | Catalyst\Framework\Geo |
 | `docs/framework-mail.md` | Catalyst\Framework\Mail |
+| `TOOL-Mail.md` | Framework mail template implementation contract |
 | `docs/framework-modals.md` | Catalyst Framework Modals |
 | `docs/framework-notification.md` | Catalyst\Framework\Notification |
 | `docs/framework-organization.md` | Catalyst Framework Organization |
@@ -169,6 +170,7 @@ parallel governor.
 | `docs/workflow/release-v0.2.0-rc.1.md` | Catalyst v0.2.0-rc.1 migration and release notes |
 | `docs/workflow/release-v0.2.0-rc.2.md` | Catalyst v0.2.0-rc.2 corrective upgrade and release notes |
 | `docs/workflow/release-v0.2.0-rc.3.md` | Catalyst v0.2.0-rc.3 error, form and mobile shell corrections |
+| `docs/workflow/release-v0.2.0-rc.4.md` | Catalyst v0.2.0-rc.4 framework management corrections |
 | `docs/workflow/release-v0.1.0-rc.5.md` | Catalyst v0.1.0-rc.5 Upgrade Notes |
 | `docs/workflow/release-v0.1.0-rc.4.md` | Catalyst v0.1.0-rc.4 Upgrade Notes |
 | `docs/workflow/release-v0.1.0-rc.3.md` | Catalyst v0.1.0-rc.3 Upgrade Notes |

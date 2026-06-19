@@ -204,6 +204,13 @@ final class LocalizationManager
                 'path' => implode(DIRECTORY_SEPARATOR, [PD, 'boot-core', 'lang']),
                 'label' => 'boot-core',
             ],
+            [
+                'scope' => 'repository.framework.mail',
+                'path' => implode(DIRECTORY_SEPARATOR, [PD, 'Repository', 'Framework', 'Mail', 'system', 'lang']),
+                'target_path' => implode(DIRECTORY_SEPARATOR, [PD, 'Repository', 'Framework', 'Mail', 'managed', 'lang']),
+                'fallback_path' => implode(DIRECTORY_SEPARATOR, [PD, 'Repository', 'Framework', 'Mail', 'system', 'lang']),
+                'label' => 'Repository/Framework/Mail',
+            ],
         ];
 
         foreach ([
@@ -225,6 +232,12 @@ final class LocalizationManager
                 }
 
                 $directory = $entry->getPathname();
+                $normalizedDirectory = str_replace('\\', '/', $directory);
+                if (str_contains($normalizedDirectory, '/Repository/Framework/Mail/system/lang')
+                    || str_contains($normalizedDirectory, '/Repository/Framework/Mail/managed/lang')
+                ) {
+                    continue;
+                }
                 $relative = str_replace(PD . DIRECTORY_SEPARATOR, '', $directory);
                 $scope = strtolower(str_replace(DIRECTORY_SEPARATOR, '.', preg_replace('/\\\\+/', DIRECTORY_SEPARATOR, $relative) ?: $relative));
                 $roots[] = [
@@ -271,9 +284,16 @@ final class LocalizationManager
 
             foreach ($baseFiles as $baseFile) {
                 $filename = (string) basename($baseFile);
-                $targetFile = $root['path'] . DIRECTORY_SEPARATOR . $locale . DIRECTORY_SEPARATOR . $filename;
+                $targetRoot = (string) ($root['target_path'] ?? $root['path']);
+                $fallbackRoot = (string) ($root['fallback_path'] ?? $root['path']);
+                $managedTargetFile = $targetRoot . DIRECTORY_SEPARATOR . $locale . DIRECTORY_SEPARATOR . $filename;
+                $fallbackTargetFile = $fallbackRoot . DIRECTORY_SEPARATOR . $locale . DIRECTORY_SEPARATOR . $filename;
+                $targetFile = is_file($managedTargetFile) ? $managedTargetFile : $fallbackTargetFile;
                 $baseJson = $this->readJsonFile($baseFile);
-                $targetJson = is_file($targetFile) ? $this->readJsonFile($targetFile) : [];
+                $targetJson = $this->mergeRecursiveDistinct(
+                    is_file($fallbackTargetFile) ? $this->readJsonFile($fallbackTargetFile) : [],
+                    is_file($managedTargetFile) ? $this->readJsonFile($managedTargetFile) : []
+                );
                 $baseLeaves = $this->flattenLeafValues($baseJson);
                 $targetLeaves = $this->flattenLeafValues($targetJson);
                 $catalogMissingKeys = array_values(array_diff(array_keys($baseLeaves), array_keys($targetLeaves)));
@@ -285,14 +305,14 @@ final class LocalizationManager
                     'catalog' => pathinfo($filename, PATHINFO_FILENAME),
                     'base_file' => $baseFile,
                     'target_file' => $targetFile,
-                    'catalog_exists' => is_file($targetFile),
+                    'catalog_exists' => is_file($fallbackTargetFile) || is_file($managedTargetFile),
                     'missing_keys' => $catalogMissingKeys,
                     'extra_keys' => $catalogExtraKeys,
                     'base_key_count' => count($baseLeaves),
                     'translated_key_count' => count($baseLeaves) - count($catalogMissingKeys),
                 ];
 
-                if (!is_file($targetFile)) {
+                if (!is_file($fallbackTargetFile) && !is_file($managedTargetFile)) {
                     $missingCatalogs++;
                 }
 
@@ -343,13 +363,16 @@ final class LocalizationManager
                 continue;
             }
 
-            $targetDirectory = $root['path'] . DIRECTORY_SEPARATOR . $locale;
+            $targetRoot = (string) ($root['target_path'] ?? $root['path']);
+            $fallbackRoot = (string) ($root['fallback_path'] ?? $root['path']);
+            $targetDirectory = $targetRoot . DIRECTORY_SEPARATOR . $locale;
             $baseFiles = glob($baseDirectory . DIRECTORY_SEPARATOR . '*.json') ?: [];
             sort($baseFiles);
 
             foreach ($baseFiles as $baseFile) {
                 $targetFile = $targetDirectory . DIRECTORY_SEPARATOR . basename($baseFile);
-                $exists = is_file($targetFile);
+                $fallbackFile = $fallbackRoot . DIRECTORY_SEPARATOR . $locale . DIRECTORY_SEPARATOR . basename($baseFile);
+                $exists = is_file($targetFile) || is_file($fallbackFile);
                 $actions[] = [
                     'action' => $exists ? 'kept' : 'create',
                     'target' => $targetFile,
@@ -421,18 +444,24 @@ final class LocalizationManager
                 continue;
             }
 
-            $targetDirectory = $root['path'] . DIRECTORY_SEPARATOR . $locale;
+            $targetRoot = (string) ($root['target_path'] ?? $root['path']);
+            $fallbackRoot = (string) ($root['fallback_path'] ?? $root['path']);
+            $targetDirectory = $targetRoot . DIRECTORY_SEPARATOR . $locale;
             $baseFiles = glob($baseDirectory . DIRECTORY_SEPARATOR . '*.json') ?: [];
             sort($baseFiles);
 
             foreach ($baseFiles as $baseFile) {
                 $targetFile = $targetDirectory . DIRECTORY_SEPARATOR . basename($baseFile);
+                $fallbackFile = $fallbackRoot . DIRECTORY_SEPARATOR . $locale . DIRECTORY_SEPARATOR . basename($baseFile);
                 $baseJson = $this->readJsonFile($baseFile);
-                $targetJson = is_file($targetFile) ? $this->readJsonFile($targetFile) : [];
+                $targetJson = $this->mergeRecursiveDistinct(
+                    is_file($fallbackFile) ? $this->readJsonFile($fallbackFile) : [],
+                    is_file($targetFile) ? $this->readJsonFile($targetFile) : []
+                );
                 $merge = $this->mergeMissingValues($targetJson, $baseJson);
                 $missingKeys += count($merge['missing_keys']);
 
-                if ($merge['missing_keys'] === [] && is_file($targetFile)) {
+                if ($merge['missing_keys'] === [] && (is_file($targetFile) || is_file($fallbackFile))) {
                     continue;
                 }
 

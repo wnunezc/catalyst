@@ -2,6 +2,23 @@
         "module": {
             "description": "Propriétaire canonique des surfaces d'espaces de travail du framework."
         },
+        "mail_templates": {
+            "title": "Modèles d'e-mail",
+            "detail": "Détail du modèle",
+            "eyebrow": "Workspace e-mail du framework",
+            "description": "Gérer les modèles d'e-mail localisés et versionnables.",
+            "editor_description": "Modifier la source administrée et son catalogue de traduction.",
+            "navigation": {
+                "label": "Modèles d'e-mail",
+                "hint": "Gérer les modèles d'e-mail et leurs images."
+            },
+            "actions": {
+                "create": "Créer un modèle d'e-mail"
+            },
+            "messages": {
+                "preview_generated": "Aperçu de l'e-mail généré."
+            }
+        },
         "permissions": {
             "catalogs": {
                 "label": "Gérer les catalogues Workspaces",
@@ -26,6 +43,10 @@
             "localization": {
                 "label": "Gérer la localisation",
                 "description": "Gérer les catalogues de langues et les outils de localisation Workspaces."
+            },
+            "mail_templates": {
+                "label": "Gérer les modèles d'e-mail Workspaces",
+                "description": "Gérer les modèles d'e-mail localisés et les ressources appartenant au framework."
             }
         }
 }
